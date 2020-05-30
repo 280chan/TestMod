@@ -1,0 +1,91 @@
+package relics;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.FrailPower;
+import com.megacrit.cardcrawl.powers.VulnerablePower;
+import com.megacrit.cardcrawl.powers.WeakPower;
+
+import mymod.TestMod;
+import utils.MiscMethods;
+
+public class NegativeEmotionEnhancer extends MyRelic implements MiscMethods {
+	public static final String ID = "NegativeEmotionEnhancer";
+	public static final String IMG = TestMod.relicIMGPath(ID);
+	public static final String DESCRIPTION = "每回合开始获得 [R] ，轮流获得 #y脆弱 、 #y虚弱 、 #y易伤 。击败敌人时，恢复 #b1 点生命。战斗胜利时增加 #b1 点最大生命。";
+	
+	public NegativeEmotionEnhancer() {
+		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.HEAVY);
+	}
+	
+	public String getUpdatedDescription() {
+		if (AbstractDungeon.player != null) {
+			return setDescription(AbstractDungeon.player.chosenClass);
+		}
+		return setDescription(null);
+	}
+	
+	private String setDescription(PlayerClass c) {
+		return setDescription(c, DESCRIPTIONS);
+	}
+	
+	public void updateDescription(PlayerClass c) {
+		this.tips.clear();
+	    this.tips.add(new PowerTip(this.name, setDescription(c)));
+	    initializeTips();
+	}
+
+	public void onEquip() {
+		TestMod.setActivity(this);
+		if (!this.isActive)
+			return;
+		AbstractDungeon.player.energy.energyMaster++;
+    }
+	
+	public void onUnequip() {
+		if (!this.isActive)
+			return;
+		AbstractDungeon.player.energy.energyMaster--;
+    }
+	
+	public void atPreBattle() {
+		if (!this.isActive)
+			return;
+		this.counter = 0;
+	}
+	
+	public void atTurnStart() {
+		if (!this.isActive)
+			return;
+		this.counter++;
+		AbstractPlayer p = AbstractDungeon.player;
+		switch (this.counter % 3) {
+		case 1:
+			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new FrailPower(p, 1, false), 1));
+			break;
+		case 2:
+			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new WeakPower(p, 1, false), 1));
+			break;
+		case 0:
+			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new VulnerablePower(p, 1, false), 1));
+			break;
+		}
+    }
+
+	public void onVictory() {
+		if (!this.isActive)
+			return;
+		AbstractDungeon.player.increaseMaxHp(1, true);
+	}
+	
+	public void onMonsterDeath(AbstractMonster m) {
+		AbstractDungeon.player.heal(1);
+	}
+	
+}

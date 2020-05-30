@@ -1,0 +1,80 @@
+
+package cards.colorless;
+
+import basemod.abstracts.*;
+import mymod.TestMod;
+
+import com.megacrit.cardcrawl.cards.*;
+import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.monsters.*;
+import com.megacrit.cardcrawl.powers.EnergizedPower;
+import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.actions.common.*;
+
+public class BackupPower extends CustomCard {
+	public static final String ID = "BackupPower";
+	public static final String NAME = "备用能源";
+    public static final String IMG = TestMod.cardIMGPath("relic1");
+	public static final String[] DESCRIPTIONS = { "获得", "。如果回合结束时留在手中，下回合开始获得", "。" };
+	private static final String[] E = { " [R] ", " [G] ", " [B] ", " [W] " };
+	private static final int COST = 1;
+	private static final int BASE_MGC = 2;
+
+	public BackupPower() {
+		super(TestMod.makeID(ID), NAME, IMG, COST, getDescription(BASE_MGC), CardType.SKILL, CardColor.COLORLESS, CardRarity.RARE,
+				CardTarget.NONE);
+		this.baseMagicNumber = BASE_MGC;
+		this.magicNumber = this.baseMagicNumber;
+	}
+
+	public static String getDescription(int mgc) {
+		String temp = DESCRIPTIONS[0];
+		String e = E[0];
+		if (AbstractDungeon.player != null) {
+			switch (AbstractDungeon.player.chosenClass) {
+			case WATCHER:
+				e = E[3];
+				break;
+			case DEFECT:
+				e = E[2];
+				break;
+			case THE_SILENT:
+				e = E[1];
+			default:
+			}
+		}
+		if (mgc < 4 && mgc > 0) {
+			for (int i = 0; i < mgc; i++)
+				temp += e;
+		} else
+			temp += mgc + e;
+		return temp + DESCRIPTIONS[1] + e + DESCRIPTIONS[2];
+	}
+
+	public void use(final AbstractPlayer p, final AbstractMonster m) {
+		AbstractDungeon.actionManager.addToBottom(new GainEnergyAction(this.magicNumber));
+	}
+
+	public void triggerOnEndOfPlayerTurn() {
+		AbstractPlayer p = AbstractDungeon.player;
+		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new EnergizedPower(p, 1), 1));
+		super.triggerOnEndOfPlayerTurn();
+	}
+	
+	public AbstractCard makeCopy() {
+		return new BackupPower();
+	}
+
+	public void upgradeMagicNumber(int amount) {
+		super.upgradeMagicNumber(amount);
+		this.rawDescription = getDescription(this.magicNumber);
+		this.initializeDescription();
+	}
+	
+	public void upgrade() {
+		if (!this.upgraded) {
+			this.upgradeName();
+			this.upgradeMagicNumber(1);
+		}
+	}
+}

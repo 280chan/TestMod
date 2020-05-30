@@ -1,0 +1,409 @@
+{
+	"testmod-ObsoleteBoomerang":{
+		"NAME": "老旧的回旋镖",
+		"FLAVOR": "你越是使用这个回旋镖，你越会沉迷于其中。",
+		"DESCRIPTIONS":["你在你的回合中每打出一张牌，对随机敌人造成你在该回合已打出的牌数的伤害。"]
+	},
+	
+	"testmod-NoteOfAlchemist":{
+		"NAME": "炼金术师的笔记",
+		"FLAVOR": "人生重来书。",
+		"DESCRIPTIONS":["拾起时失去现有的除了该遗物的所有遗物。失去的遗物按照该规则获得新遗物:普通->罕见；罕见->稀有； 稀有->增加 #b5 点最大生命；Boss->普通； 商店->Boss；初始->商店。(超过25件遗物很可能会出bug)"]
+	},
+	
+	"testmod-ThreeSidedDice":{
+		"NAME": "三面骰",
+		"FLAVOR": "你无法理解这个物体，但觉得只要携带它，就能给你带来幸运。",
+		"DESCRIPTIONS":["每当一张牌被打出时，有 #b1/3 的概率将其消耗，有 #b1/3 的概率回复其消费的能量，有 #b1/3 的概率额外打出一次。"]
+	},
+	
+	"testmod-BlackFramedGlasses":{
+		"NAME": "黑框眼镜",
+		"FLAVOR": "这个眼镜让你感觉还能再撑一秒。",
+		"DESCRIPTIONS":["每回合使所有敌人失去 #b1 点生命，并给自己恢复 #b1 点生命。当受到大于等于生命上限的一半的伤害时，将其降为 #b1 点；如果该伤害来自自己，将其降为 #b0 点。"]
+	},
+	
+	"testmod-BouquetWithThorns":{
+		"NAME": "荆棘花束",
+		"FLAVOR": "捧着这束花，你仿佛不再需要击退你的敌人。",
+		"DESCRIPTIONS":["每场战斗开始时，获得 #b1 层荆棘；每受到一次 #y攻击 ，增加 #b1 层荆棘；每受到一次 #y攻击 伤害，额外增加 #b1 层荆棘；如果受到类型为失去生命的伤害，增加失去生命点数的荆棘。"]
+	},
+	
+	"testmod-PortableAltar":{
+		"NAME": "便携祭坛",
+		"FLAVOR": "这个祭坛给予了你强大的能力，但也贪婪地吞噬着你的生命。",
+		"DESCRIPTIONS":["战斗中每回合失去 #r1 点生命。每进入一个房间，失去 #r1 点最大生命。拾取后每通过该遗物失去 #r5 点最大生命，在战斗开始时获得 #b1 点 #y力量 ， #b1 点 #y敏捷 ， #b1 层 #y多层护甲 。"]
+	},
+	
+	"testmod-EnergyCheck":{
+		"NAME": "能量支票",
+		"FLAVOR": "有借有还，除非杀完。",
+		"DESCRIPTIONS":["当前能量不足以打出一张牌时，可以用下一回合的能量补足当前 能量 。当透支的能量超过每回合能量最大值时，超过一点失去 #r1 点生命；每多超过一点额外失去 #r1 点生命。"]
+	},
+	
+	"testmod-SevenDeadlySins":{
+		"NAME": "七原罪",
+		"FLAVOR": "原罪是人类的本性。",
+		"DESCRIPTIONS":["拾取时，如果未拥有，获得毒巫娃娃、黑石护符、蓝蜡烛，获得七原罪诅咒。如果牌组中存在每种七大罪，击败Boss后能获得一件额外的Boss遗物。"]
+	},
+	
+	"testmod-Register":{
+		"NAME": "锁存器",
+		"FLAVOR": "关机前自动保存，启动时自动读取。",
+		"DESCRIPTIONS":["你在战斗结束时拥有的超过 #b1 层的状态会在下一场战斗开始再次获得 #b1 层。( #ySL 后会失去储存的数据)"]
+	},
+	
+	"testmod-InfectionSource":{
+		"NAME": "传染源",
+		"FLAVOR": "你感到自己变得虚弱了，但同时变得能操纵病毒。",
+		"DESCRIPTIONS":["你的攻击伤害降低 #r50% 。被攻击的敌人会获得与攻击伤害相同点数层的 #y中毒 ，但只会受到 #b1 点攻击伤害。"]
+	},
+	
+	"testmod-OneHitWonder":{
+		"NAME": "一血传奇",
+		"FLAVOR": "你已知晓死亡。",
+		"DESCRIPTIONS":["当你的生命值为 #b1 时：攻击有一半几率可以直接杀死被击中的非Boss敌人；Boss敌人造成的伤害降低 #b50% ，受到的攻击伤害和未被格挡的其余伤害增加 #b50% 。"]
+	},
+	
+	"testmod-Recursion":{
+		"NAME": "递归",
+		"FLAVOR": "“人理解迭代，神理解递归 。” —— 彼得杜奇",
+		"DESCRIPTIONS":["第一回合额外抽 #b5 张牌，之后的每一回合比前一回合少抽 #r1 张牌。每 #b10 回合重置。"]
+	},
+	
+	"testmod-Temperance":{
+		"NAME": "节制",
+		"FLAVOR": "“节制是最好的医术。” —— 博恩",
+		"DESCRIPTIONS":["每当你在牌组中增加 #b3 张牌，有一次选择移除 #b1 张牌的机会。"]
+	},
+	
+	"testmod-Justice":{
+		"NAME": "正义",
+		"FLAVOR": "“有多少邪恶，就有多少正义。”",
+		"DESCRIPTIONS":["每当你获得负面状态时，获得 #b1  #y力量 。"]
+	},
+	
+	"testmod-Fortitude":{
+		"NAME": "勇敢",
+		"FLAVOR": "“勇敢不在于能够蔑视危险，而在于认请危险、战胜危险。” —— 布勒森东",
+		"DESCRIPTIONS":["如果你在回合结束时没有任何 #y格挡 ，获得 #b3  #y力量 。"]
+	},
+	
+	"testmod-Charity":{
+		"NAME": "慈善",
+		"FLAVOR": "“慈善的行为比金钱更能解除别人的痛苦。” —— 卢梭",
+		"DESCRIPTIONS":["每次获得 #y金币 数额减少 #b1 ，但增加 #b1 点最大生命。"]
+	},
+	
+	"testmod-Hope":{
+		"NAME": "希望",
+		"FLAVOR": "“希望是坚韧的拐杖，忍耐是旅行袋，携带它们，人可以登上永恒之旅。” —— 罗素",
+		"DESCRIPTIONS":["每受到一次 #y攻击 伤害，有 #b", "% 的概率回复所有生命并使所有敌人直接死亡。当手牌用完时，有 #b6.18% 的概率可以从牌组中选择将最多 #b10 张牌的复制品放入手牌。每次受到 #y攻击 伤害未触发时，其触发概率增加 #b0.618%  ，触发后增加的概率清零。"]
+	},
+	
+	"testmod-Prudence":{
+		"NAME": "宽容",
+		"FLAVOR": "有bug也不是什么重要的问题吧。",
+		"DESCRIPTIONS":["你可以在你的回合打出一切由于能量不足以外原因而不能被打出的牌。如果是 #y状态 或 #y诅咒 ，将其 #y消耗 。(连续出牌过快可能导致暂时无法触发效果，需重新打一张能正常打出的牌来恢复)"]
+	},
+	
+	"testmod-Faith":{
+		"NAME": "诚信",
+		"FLAVOR": "七美德终于做完了。",
+		"DESCRIPTIONS":["每当你进入商店时，获得离开商店就会消失的巨额金币。你在该商店购买第一件商品后，将金币恢复到获得金币前的数值。下一次进入商店时，扣除此商品价格的金币，如果不足则将金币变为 #b0 后受到 #b25% 当前生命和 #b10% 剩余欠款中较大值的伤害(至少 #b1 点)，并将剩余欠款延续至下一个商店。"]
+	},
+	
+	"testmod-AssaultLearning":{
+		"NAME": "突击学习",
+		"FLAVOR": "停一下，让我先学一学。",
+		"DESCRIPTIONS":["你的回合开始时，将你的抽牌堆顶部第一张可 #y升级 的牌在本场战斗中 #y升级 。"]
+	},
+	
+	"testmod-Muramasa":{
+		"NAME": "妖刀村正",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["每当你抽到或打出 #b0 耗能的攻击牌次数合计为 #b2 时，抽 #b1 张牌。"]
+	},
+	
+	"testmod-D_4":{
+		"NAME": "符文四面体",
+		"FLAVOR": "上面的符文无法辨识。",
+		"DESCRIPTIONS":["每当你打出一张牌时，将随机触发以下 #b4 种效果之一。 NL 将这张牌 #y消耗 ，回复其消费的能量，额外打出一次， #y夜魇 这张牌。 NL 你可以提前知道接下来一张牌将会触发的效果。", "每当你打出一张牌时，会触发随机效果。"]
+	},
+	
+	"testmod-HeartOfDaVinci":{
+		"NAME": "达芬奇之心",
+		"FLAVOR": "你现在感觉到你仿佛能接受所有恩惠。",
+		"DESCRIPTIONS":["你可以获得其他角色的遗物。如果你在拾起时没有充能球栏位，永久获得 #b1 个充能球栏位。每当你获得其他角色的遗物时，可以选择从 #b20 张该角色的卡牌中获得一张。"]
+	},
+	
+	"testmod-IncinerationGenerator":{
+		"NAME": "焚烧发电机",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["每回合开始获得", "， #y消耗 一张牌。"]
+	},
+	
+	"testmod-IndustrialRevolution":{
+		"NAME": "工业革命",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["拥有过 #y人工制品 的敌人，无法给其自身增加增益状态，无法给玩家增加负面状态。"]
+	},
+	
+	"testmod-AscensionHeart":{
+		"NAME": "进阶之心",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["依据 #y进阶等级 获得增益。"]
+	},
+	
+	"testmod-RealStoneCalender":{
+		"NAME": "真正的历石",
+		"FLAVOR": "最强遗物——历石",
+		"DESCRIPTIONS":["每回合结束，对所有敌人造成回合数的平方的伤害。每 #b7 回合重置计算伤害的回合数。"]
+	},
+	
+	"testmod-Nyarlathotep":{
+		"NAME": "奈亚拉托提普",
+		"FLAVOR": "玩牌类游戏的时候可以无限制的变出Joker，因此立于不败之地。",
+		"DESCRIPTIONS":["你成功打出且生效的牌，同时会被额外视为被 #y消耗 和被从手牌中 #y丢弃 和使用了 #y能力牌 。你 #y消耗 或 #y丢弃 的牌，同时会被额外视为另一种效果。"]
+	},
+	
+	"testmod-BalancedPeriapt":{
+		"NAME": "均衡护符",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["你的最大生命值不会再变化。当你尝试增加和减少最大生命值时，分别改为改变其数值 #b3 倍和 #b1 倍的生命。"]
+	},
+	
+	"testmod-MagicalMallet":{
+		"NAME": "万宝槌",
+		"FLAVOR": "上面的文字被人抹去了",
+		"DESCRIPTIONS":["每回合开始，记录手牌中的所有牌的耗能的最小值和最大值，将你手牌中所有耗能为这两个值的牌的耗能在本场战斗中变成另一个值。"]
+	},
+	
+	"testmod-Laevatain":{
+		"NAME": "萊瓦汀",
+		"FLAVOR": "“KA(兰)KA(兰)A(露)！” ——北凉",
+		"DESCRIPTIONS":["拾取时获得三张随机 #y诅咒 。战斗开始时获得 #b3 点 #y力量 。每 #b3 回合获得你牌组中诅咒牌数量点 #y力量 。"]
+	},
+	
+	"testmod-TimeTraveler":{
+		"NAME": "时间旅行者",
+		"FLAVOR": "El Psy Congroo",
+		"DESCRIPTIONS":["每回合开始获得", "。你初始拥有 #b100 点(最大)理性值。每次 #ySL 损失 #r50% 当前理性值，每次战斗胜利恢复 #b5 点理性值，每次休息恢复 #b10 点理性值。当理性值低于 #b20 时每次战斗结束失去 #r10 点生命上限。当理性值低于 #b10 时每回合开始失去 #r1 点生命。"]
+	},
+	
+	"testmod-Maize":{
+		"NAME": "麻薯",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["你在同一回合内打出 #b5 张 #y技能牌 时，获得 #b1 层 #y无实体 。"]
+	},
+	
+	"testmod-DragonStarHat":{
+		"NAME": "龙星帽",
+		"FLAVOR": "并没有在偷懒。",
+		"DESCRIPTIONS":["每当你在休息处休息后，充能值上限增加 #b1 。每当你经过休息处，将充能值恢复至最大。每次休息处后的战斗开始时获得充能值点 #y力量 并减少 #b1 充能。", " NL 当前上限为 #b", " ，下一场战斗开始获得 #b ", " 点 #y力量 。"]
+	},
+	
+	"testmod-SaigiyounoYou":{
+		"NAME": "西行妖",
+		"FLAVOR": "邪恶又优雅的不祥之物",
+		"DESCRIPTIONS":["每当你对敌方造成伤害时，回复 #b1 点生命。"]
+	},
+	
+	"testmod-Nine":{
+		"NAME": "⑨",
+		"FLAVOR": "这样你还GG，那你就是个BAKA！",
+		"DESCRIPTIONS":["每次受到致命伤害时无条件将生命上限数值降低 #b9 点，同时将此次伤害降为 #b1 。该遗物造成的生命上限降低不会被影响。"]
+	},
+	
+	"testmod-Motorcycle":{
+		"NAME": "阿弥陀佛",
+		"FLAVOR": "人生不能重来。",
+		"DESCRIPTIONS":["非Boss战斗中第一回合可以右击该遗物逃跑。 NL ( #ySL 后本场战斗失效)"]
+	},
+	
+	"testmod-DreamHouse":{
+		"NAME": "梦幻馆",
+		"FLAVOR": "简单，粗暴，直接。",
+		"DESCRIPTIONS":["拾取时获得 #y开心小花 和 #y灯笼 。每回合开始获得", "。你只能获得普通卡。"]
+	},
+	
+	"testmod-CrystalShield":{
+		"NAME": "水晶护盾",
+		"FLAVOR": "你构筑的防御，透过这个护盾后，看起来仿佛被模糊了。",
+		"DESCRIPTIONS":["如果你在你的回合获得过 #y格挡 ，该回合结束时获得 #b1 层 #y残影 。"]
+	},
+	
+	"testmod-BottledCurse":{
+		"NAME": "瓶装灾厄",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["拾起时，选择一张 #y诅咒牌 。在每场战斗开始时，这张牌会出现在手牌中。如果成功选择，每回合开始获得 [R] 。", "选择一张牌 ", "在每场战斗开始时，将 #y", " 放入你的手牌。每回合开始获得 [R] 。"]
+	},
+	
+	"testmod-Alchemist":{
+		"NAME": "炼金术士",
+		"FLAVOR": "无法无中生有，却可以复制一个已有的样本。",
+		"DESCRIPTIONS":["拾起时，获得 #b1 个药水栏位。每场战斗中有 #b1 次机会可以在你的回合右击该遗物来自动使用第一瓶可使用的药水，但这瓶药水不会消耗。"]
+	},
+	
+	"testmod-StringDisintegrator":{
+		"NAME": "字符粉碎机",
+		"FLAVOR": "这台机器上没有任何文字，但你不知为何能理解它的用途。",
+		"DESCRIPTIONS":["每回合开始获得", "。你在战斗中无法再看见所有牌的文字。"]
+	},
+	
+	"testmod-HarvestTotem":{
+		"NAME": "丰收图腾",
+		"FLAVOR": "尖塔住民祈求丰收的象征，仿佛能给尖塔带来生命力。",
+		"DESCRIPTIONS":["拾起时，将你的最大生命翻倍。你增加的最大生命和受到的治疗效果翻倍。普通敌人将会拥有 #b1.1 倍最大生命，精英敌人将会拥有 #b1.2 倍最大生命， #yBoss 敌人将会拥有 #b1.5 倍最大生命。"]
+	},
+	
+	"testmod-BatchProcessingSystem":{
+		"NAME": "批量处理系统",
+		"FLAVOR": "模块化运算。",
+		"DESCRIPTIONS":["每回合开始减少", "。 NL 每当你在同一回合内连续打出的两张牌耗能相同时，获得", "。"]
+	},
+	
+	"testmod-CardMagician":{
+		"NAME": "纸牌魔术师",
+		"FLAVOR": "转瞬奇迹。",
+		"DESCRIPTIONS":["在每回合开始获得", "，并将你的弃牌堆洗入抽牌堆。"]
+	},
+	
+	"testmod-NegativeEmotionEnhancer":{
+		"NAME": "负面情绪增强器",
+		"FLAVOR": "收集，分类，转化。",
+		"DESCRIPTIONS":["在每回合开始获得", "，轮流获得 #y脆弱 、 #y虚弱 、 #y易伤 。击败敌人时，恢复 #b1 点生命。战斗胜利时增加 #b1 点最大生命。"]
+	},
+	
+	"testmod-LackOfCard":{
+		"NAME": "均衡调节器",
+		"FLAVOR": "我还有费！我还能打！",
+		"DESCRIPTIONS":["回合开始时，如果手牌数不超过当前能量，额外抽 #b2 张牌，否则下一回合开始获得", "。"]
+	},
+	
+	"testmod-Brilliant":{
+		"NAME": "金币辉煌",
+		"FLAVOR": "壕气逼人",
+		"DESCRIPTIONS":["每场战斗开始时和每当敌人死亡时，对所有敌人造成当前 #y金币 数量的平方的三次根的一半的伤害。"]
+	},
+	
+	"testmod-BirthdayGift":{
+		"NAME": "生日礼物",
+		"FLAVOR": "祝我生日快乐",
+		"DESCRIPTIONS":["拾起时，将 #y金币 清零，并获得所有未拥有的非Boss加费遗物。"]
+	},
+	
+	"testmod-IWantAll":{
+		"NAME": "我全都要",
+		"FLAVOR": "小孩子才做选择；而我，全都要！",
+		"DESCRIPTIONS":["有 #b10 次机会，可以在战斗奖励界面右键点击此遗物，添加一份完全相同的该次战斗的卡牌奖励，每场战斗只能使用一次。", "这件遗物的效果已经用尽。"]
+	},
+	
+	"testmod-Antiphasic":{
+		"NAME": "反噬符文",
+		"FLAVOR": "我想要挨一顿毒打！",
+		"DESCRIPTIONS":["每当受到单次伤害数值不低于 #b25% 最大生命时，先增加 #b5 点生命上限再进行伤害结算。最大生命和受到伤害均为 #b1 时此遗物不生效。"]
+	},
+	
+	"testmod-IntensifyImprint":{
+		"NAME": "激化刻印",
+		"FLAVOR": "你还能坚持到什么时候呢？",
+		"DESCRIPTIONS":["你每对敌人造成一次伤害，你在下一回合开始前对敌人造成伤害的最终数值都会增加 #b1 。", "你在下一回合开始前对敌人造成的下一次伤害的最终数值增加 #b", " 。"]
+	},
+	
+	"testmod-KeyOfTheVoid":{
+		"NAME": "虚空之匙",
+		"FLAVOR": "虚空是这个世界的终极答案。",
+		"DESCRIPTIONS":["每场战斗结束时，你每有 #b1 件 #yBoss 遗物，从牌组中选择 #b1 张牌将其移除。", "选择", "张牌移除。"]
+	},
+	
+	"testmod-ThousandKnives":{
+		"NAME": "千支刀",
+		"FLAVOR": "不要停下来啊。",
+		"DESCRIPTIONS":["每当你抽到或打出 #b0 耗能的攻击牌时，分别将一张其复制品放入手牌或弃牌堆。打出时，手牌中每有一张 #b0 耗能的攻击牌，获得 #b1 格挡。"]
+	},
+	
+	"testmod-FatalChain":{
+		"NAME": "致命连锁",
+		"FLAVOR": "Die! Die! Die!",
+		"DESCRIPTIONS":["每当你杀死敌人时，对所有敌人造成击杀溢出伤害的 #b2.718 倍的伤害。"]
+	},
+	
+	"testmod-CyclicPeriapt":{
+		"NAME": "循环护符",
+		"FLAVOR": "不准走！再来一次。",
+		"DESCRIPTIONS":["你的每张 #y消耗 牌在每场战斗中第一次被打出时不会被 #y消耗 。"]
+	},
+	
+	"testmod-HistoricalDocuments":{
+		"NAME": "历史文献",
+		"FLAVOR": "给的状态有什么问题都不是我的问题，请向尖塔反馈。",
+		"DESCRIPTIONS":["每回合开始获得一种随机的被尖塔废弃的正面或负面状态。"]
+	},
+	
+	"testmod-EqualTreatment":{
+		"NAME": "一视同仁",
+		"FLAVOR": "一个都跑不了。",
+		"DESCRIPTIONS":["你在每回合打出的第一张指向单个敌人的牌，也会对其余所有敌人各生效一次。"]
+	},
+	
+	"testmod-ConstraintPeriapt":{
+		"NAME": "约束符文",
+		"FLAVOR": "交锋才不是最菜的呢！",
+		"DESCRIPTIONS":["战斗开始时，将 #b1 张 #y灼伤 洗入抽牌堆。回合结束时，不考虑能量因素，你手牌中每有一张不能被打出的牌，恢复 #b1 生命并对所有敌人造成 #b10 点伤害。"]
+	},
+	
+	"testmod-InjuryResistance":{
+		"NAME": "抗性护符",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["每当受到伤害后，接下来受到的伤害的最终数值都将降低 #b1 。 NL 当通过此遗物完全格挡一次伤害后，数值重置。"]
+	},
+	
+	"testmod-Déjàvu":{
+		"NAME": "既视感",
+		"FLAVOR": "Déjàvu。",
+		"DESCRIPTIONS":["如果你在回合内只出过一种类型的牌，且回合结束时没有能量剩余，下回合开始时将这些牌的复制品放入手牌，其耗能将在回合内变为 #b0 且打出时 #y消耗 。"]
+	},
+	
+	"testmod-DeterminationOfClimber":{
+		"NAME": "登山者的决心",
+		"FLAVOR": "然而某些登山者总是喜欢原地踏步。",
+		"DESCRIPTIONS":["在每场战斗内，每当你打出的牌的耗能比前一张牌高时，每高出 #b1 点，获得", "，回复 #b1 生命，抽 #b1 张牌，对所有敌人造成 #b1 伤害，获得 #b1 金币。"]
+	},
+	
+	"testmod-BloodSacrificeSpiritualization":{
+		"NAME": "血祭降灵术",
+		"FLAVOR": "血祭，降临。",
+		"DESCRIPTIONS":["战斗开始时，可以选择失去 #b10% 最大生命(至少 #b1 )的生命，从你的所有牌中选择一张牌，将其对随机目标打出。若其可被 #y升级 则在打出前将其在本局游戏 #y升级 。"]
+	},
+	
+	"testmod-LifeArmor":{
+		"NAME": "自我防御系统",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["在战斗中失去生命后，立即获得其数值的 #y格挡 ，每失去一次，下次额外获得 #b1 点。"]
+	},
+	
+	"testmod-CasingShield":{
+		"NAME": "层叠防护罩",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["每当你获得一次 #y格挡 ，本回合接下来获得的 #y格挡 数值都将增加 #b1 。"]
+	},
+	
+	"testmod-TestBox":{
+		"NAME": "Test礼物盒",
+		"FLAVOR": "来自彼君的礼物。",
+		"DESCRIPTIONS":["右键单击或右键双击本遗物，从遗物和卡牌中选择一类，再从随机的 #b3 件本 #bmod 内的该类物品中选择 #b1 件获得。使用后本遗物 #y失效 。 #r只能在0层使用 。"]
+	},
+	
+	"testmod-Acrobat":{
+		"NAME": "杂技演员",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["在回合内，每当连续打出的两张牌在手牌中的编号增减情况和上次不同时，获得 #b1 金币。"]
+	},
+	
+	"testmod-Mahjong":{
+		"NAME": "麻将",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["在战斗中进行麻将游戏，每回合开始摸一张麻将牌后选择切出一张，将其加入手牌。打出 #y宝牌 的效果翻倍。根据和牌点数获得其他效果。 NL #r这件遗物还未制作完成，只能发挥一小部分效果，并含有许多bug(初次战斗闪退，重开自动修复)若目前不想测试本遗物可选择重开。"]
+	}
+}

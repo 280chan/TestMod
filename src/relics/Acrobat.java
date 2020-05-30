@@ -1,0 +1,99 @@
+package relics;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+
+import mymod.TestMod;
+import utils.MiscMethods;
+
+public class Acrobat extends MyRelic implements MiscMethods {
+	public static final String ID = "Acrobat";
+	public static final String IMG = TestMod.relicIMGPath(ID);
+	public static final String DESCRIPTION = "在回合内，每当连续打出的两张牌在手牌中的编号增减情况和上次不同时，获得 #b1 金币。";//遗物效果的文本描叙。
+	
+	private static Color color = null;
+	
+	public int state = 0;
+	
+	public Acrobat() {
+		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.COMMON, LandingSound.CLINK);
+	}
+	
+	public String getUpdatedDescription() {
+		return DESCRIPTIONS[0];
+	}
+
+	public void updateDescription(PlayerClass c) {
+		this.tips.clear();
+	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
+	    initializeTips();
+	}
+	
+	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
+		int index = 1 + AbstractDungeon.player.hand.group.indexOf(c);
+		int state = 0;
+		if (this.counter == -1)
+			this.counter = index;
+		else if (this.counter <= index)
+			state = 1;
+		else
+			state = -1;
+		this.counter = index;
+		if (this.state * state < 0) {
+			AbstractDungeon.player.gainGold(1);
+			this.show();
+		}
+		this.updateHandGlow();
+		this.state = state;
+    }
+	
+	public void onRefreshHand() {
+		if (color == null)
+			color = this.initGlowColor();
+		this.updateHandGlow();
+	}
+	
+	private void updateHandGlow() {
+		boolean active = false;
+		for (AbstractCard c : AbstractDungeon.player.hand.group) {
+			int index = 1 + AbstractDungeon.player.hand.group.indexOf(c);
+			int state = 0;
+			if (this.counter == -1)
+				return;
+			else if (this.counter <= index)
+				state = 1;
+			else
+				state = -1;
+			if (this.state * state < 0 && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
+				this.addToGlowChangerList(c, color);
+				active = true;
+			} else
+				this.removeFromGlowList(c, color);
+		}
+		if (active)
+			this.beginLongPulse();
+		else
+			this.stopPulse();
+	}
+
+	public void atTurnStart() {
+		this.counter = -1;
+    }
+
+	public void onVictory() {
+		this.stopPulse();
+		this.counter = -1;
+	}
+	
+	public boolean canSpawn() {
+		return (Settings.isEndless) || (AbstractDungeon.floorNum <= 48);
+	}
+
+}

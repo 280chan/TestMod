@@ -1,0 +1,147 @@
+package relics;
+
+import java.util.HashMap;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
+import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
+
+import mymod.TestMod;
+import utils.MiscMethods;
+
+public class StringDisintegrator extends MyRelic implements MiscMethods {
+	public static final String ID = "StringDisintegrator";
+	public static final String IMG = TestMod.relicIMGPath(ID);
+	public static final String DESCRIPTION = "每回合开始获得 [R] 。你在战斗中无法再看见所有牌的文字。";
+	
+	private static final String EMPTY = "";
+	private static final HashMap<AbstractCard, String> DESC = new HashMap<AbstractCard, String>();
+	private static final HashMap<AbstractCard, String> NAME = new HashMap<AbstractCard, String>();
+	private static boolean trigger = false;
+	
+
+	public StringDisintegrator() {
+		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.HEAVY);
+	}
+	
+	public String getUpdatedDescription() {
+		if (AbstractDungeon.player != null) {
+			return setDescription(AbstractDungeon.player.chosenClass);
+		}
+		return setDescription(null);
+	}
+
+	private String setDescription(PlayerClass c) {
+		return this.setDescription(c, this.DESCRIPTIONS[0], this.DESCRIPTIONS[1]);
+	}
+
+	public void updateDescription(PlayerClass c) {
+		this.tips.clear();
+	    this.tips.add(new PowerTip(this.name, setDescription(c)));
+	    initializeTips();
+	}
+	
+	private static void hideAllText() {
+		hideText(AbstractDungeon.player.discardPile);
+		hideText(AbstractDungeon.player.drawPile);
+		hideText(AbstractDungeon.player.exhaustPile);
+		hideText(AbstractDungeon.player.hand);
+		hideText(AbstractDungeon.player.limbo);
+		hideText(AbstractDungeon.player.masterDeck);
+	}
+	
+	private static void hideText(CardGroup g) {
+		if (g.type == CardGroupType.MASTER_DECK) {
+			hideDeckText(g);
+		} else {
+			for (AbstractCard c : g.group)
+				hideText(c);
+		}
+	}
+	
+	private static void hideDeckText(CardGroup g) {
+		for (AbstractCard c : g.group)
+			hideDeckText(c);
+	}
+	
+	private static void hideDeckText(AbstractCard c) {
+		recordDeck(c);
+		hideText(c);
+	}
+	
+	private static void hideText(AbstractCard c) {
+		if (!c.rawDescription.equals(EMPTY)) {
+			c.rawDescription = EMPTY;
+			c.initializeDescription();
+		}
+		if (!c.name.equals(EMPTY))
+			c.name = EMPTY;
+	}
+	
+	private static void recordDeck(AbstractCard c) {
+		if (!DESC.containsKey(c))
+			DESC.put(c, c.rawDescription);
+		if (!NAME.containsKey(c))
+			NAME.put(c, c.name);
+	}
+	
+	private static void loadAllText() {
+		for (AbstractCard c : AbstractDungeon.player.masterDeck.group)
+			loadDeck(c);
+	}
+	
+	private static void loadDeck(AbstractCard c) {
+		if (DESC.containsKey(c)) {
+			c.rawDescription = DESC.get(c);
+			c.initializeDescription();
+			DESC.remove(c);
+		}
+		if (NAME.containsKey(c)) {
+			c.name = NAME.get(c);
+			NAME.remove(c);
+		}
+	}
+	
+	public void update() {
+		super.update();
+		if (!this.isActive)
+			return;
+		if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
+			if (trigger)
+				hideAllText();
+		}
+	}
+	
+	public void atPreBattle() {
+		if (!this.isActive)
+			return;
+		trigger = true;
+	}
+	
+	public void onEquip() {
+		TestMod.setActivity(this);
+		if (!this.isActive)
+			return;
+		AbstractDungeon.player.energy.energyMaster++;
+    }
+	
+	public void onUnequip() {
+		if (!this.isActive)
+			return;
+		AbstractDungeon.player.energy.energyMaster--;
+    }
+	
+	public void onVictory() {
+		if (!this.isActive)
+			return;
+		trigger = false;
+		loadAllText();
+    }
+	
+}

@@ -1,0 +1,100 @@
+package relics;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
+import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
+import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
+
+import mymod.TestMod;
+
+public class Temperance extends MyRelic {
+	private static final Logger logger = LogManager.getLogger(Temperance.class.getName());
+	public static final String ID = "Temperance";
+	public static final String IMG = TestMod.relicIMGPath(ID);
+	
+	public static final String DESCRIPTION = "每当你在牌组中增加 #b3 张牌，有一次选择移除 #b1 张牌的机会。";//遗物效果的文本描叙。
+	
+	public static int sizeToRemove;
+	public static boolean cardSelected = true;
+	public static RoomPhase phase;
+	private static CurrentScreen pre;
+	
+	public Temperance() {
+		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.MAGICAL);
+	}
+	
+	public String getUpdatedDescription() {
+		return DESCRIPTIONS[0];
+	}
+	
+	public void onObtainCard(AbstractCard card) {
+		if (!isActive)
+			return;
+		counter++;
+		if (counter == 3) {
+			counter = 0;
+			sizeToRemove++;
+			pre = AbstractDungeon.screen;
+		}
+	}
+	
+	public void update() {
+		super.update();
+		if (!isActive)
+			return;
+		if (sizeToRemove > 0) {
+			if (cardSelected) {
+				cardSelected = false;
+				if (AbstractDungeon.isScreenUp) {
+					AbstractDungeon.dynamicBanner.hide();
+					AbstractDungeon.previousScreen = AbstractDungeon.screen;
+				}
+				phase = AbstractDungeon.getCurrRoom().phase;
+				AbstractDungeon.getCurrRoom().phase = RoomPhase.INCOMPLETE;
+				AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getPurgeableCards(),
+						1, "选择移除1张牌" + sizeToRemove + "次", false, false, true, true);
+			} else if (AbstractDungeon.gridSelectScreen.selectedCards.size() == 1) {
+				cardSelected = true;
+				AbstractDungeon.topLevelEffects.add(new PurgeCardEffect(
+						(AbstractCard) AbstractDungeon.gridSelectScreen.selectedCards.get(0),
+						(float) Settings.WIDTH / 2.0F - (float) AbstractCard.IMG_WIDTH / 2.0F,
+						Settings.HEIGHT / 2.0F));
+				for (AbstractCard card : AbstractDungeon.gridSelectScreen.selectedCards) {
+					AbstractDungeon.player.masterDeck.removeCard(card);
+					AbstractDungeon.transformCard(card, true, AbstractDungeon.miscRng);
+				}
+				AbstractDungeon.getCurrRoom().phase = phase;
+				AbstractDungeon.gridSelectScreen.selectedCards.clear();
+				sizeToRemove--;
+			} else if (AbstractDungeon.screen == pre) {
+				logger.info("刚刚取消");
+				cardSelected = true;
+				AbstractDungeon.getCurrRoom().phase = phase;
+				AbstractDungeon.gridSelectScreen.selectedCards.clear();
+				sizeToRemove--;
+			}
+		}
+	}
+	
+	public void onEquip() {
+		TestMod.setActivity(this);
+		if (!isActive)
+			return;
+		counter = 0;
+    }
+	
+	public boolean canSpawn() {
+		if (!Settings.isEndless && AbstractDungeon.actNum > 1) {
+			return false;
+		}
+		return true;
+	}
+	
+}
