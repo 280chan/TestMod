@@ -7,19 +7,21 @@ import powers.AutoReboundPower;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.BerserkPower;
 import com.megacrit.cardcrawl.powers.DrawPower;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class AutoReboundSystem extends CustomCard {
 	public static final String ID = "AutoReboundSystem";
-	public static final String NAME = "自动弹回系统";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-	public static final String DESCRIPTION = "每回合开始时获得";
-	public static final String[] DESCRIPTIONS = {"每回合开始时获得", "并抽 !M! 张牌。你每回合打出的前 !M! 张可被弹回的牌，将回到抽牌堆顶部。"};
-	private static final String[] E = { " [R] ", " [G] ", " [B] ", " [W] " };
+	private static final String[] E = { " [R]", " [G]", " [B]", " [W]" };
 	private static final int COST = 3;// 卡牌费用
 	private static final int BASEMAGIC = 1;
 
@@ -34,7 +36,7 @@ public class AutoReboundSystem extends CustomCard {
 	}
 	
 	public static String getDescription(int magic) {
-		String temp = DESCRIPTIONS[0];
+		String temp = EXTENDED_DESCRIPTION[0];
 		String e = E[0];
 		if (AbstractDungeon.player != null) {
 			switch (AbstractDungeon.player.chosenClass) {
@@ -54,7 +56,7 @@ public class AutoReboundSystem extends CustomCard {
 				temp += e;
 		} else
 			temp += magic + e;
-		temp += DESCRIPTIONS[1];
+		temp += EXTENDED_DESCRIPTION[1];
 		return temp;
 	}
 	

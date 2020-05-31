@@ -5,6 +5,8 @@ import basemod.abstracts.*;
 import mymod.TestMod;
 
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.ArtifactPower;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
@@ -17,17 +19,17 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 
 public class AdversityCounterattack extends CustomCard {
     public static final String ID = "AdversityCounterattack";
-    public static final String NAME = "逆境反击";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "给予敌人 !M! 层 人工制品 ，获得 !M! 层 易伤 和1层 无实体 。随机造成该敌人增益状态层数点伤害，自身负面状态层数次。";
     private static final int COST = 1;
     private static final int BASE_MGC = 1;
     private static final int INT_AMOUNT = 1;
 
     public AdversityCounterattack() {
         super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.ATTACK, CardColor.COLORLESS, CardRarity.RARE, CardTarget.ENEMY);
-        this.baseMagicNumber = BASE_MGC;
-        this.magicNumber = this.baseMagicNumber;
+        this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {

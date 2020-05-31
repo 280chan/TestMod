@@ -48,7 +48,7 @@ public class GreedPower extends AbstractPower{
     		if (energyLeft > 0)
     			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new DrawDownPower(p, energyLeft), energyLeft));
     	}
-    	AbstractDungeon.actionManager.addToBottom(new RemoveSpecificPowerAction(this.owner, this.owner, "GreedPower"));
+    	AbstractDungeon.actionManager.addToBottom(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
     }//触发时机：当玩家回合结束时触发。
     
 }

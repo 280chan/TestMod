@@ -3,39 +3,42 @@ package cards.curse;
 
 import basemod.abstracts.*;
 import mymod.TestMod;
-import relics.Prudence;
 import relics.Sins;
+import utils.MiscMethods;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 
-public class Wrath extends CustomCard {
+public class Wrath extends CustomCard implements MiscMethods {
     public static final String ID = "Wrath";
-    public static final String NAME = "暴怒";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = " 不能被打出 。抽到这张牌时，给所有敌人增加1层 生气 。在手牌时，只能打出 攻击 牌。 虚无 。";//卡牌说明。说明里面【 !D! 】、【 !B! 】、【 !M! 】分别指代this.baseBlock、this.baseDamage、this.baseMagic。使用时记得的注意前后空格，关键字前后也要加空格
-    private static final int COST = -2;//卡牌费用
+    private static final int COST = -2;
+    private static final int BASE_MGC = 1;
 
     public Wrath() {
     	super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.CURSE, CardColor.CURSE, CardRarity.SPECIAL, CardTarget.NONE);
-        this.isEthereal = true;
+        this.magicNumber = this.baseMagicNumber = BASE_MGC;
+    	this.isEthereal = true;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
 	}
 	
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-    	return p.hasRelic(Prudence.ID) || p.hasRelic("Blue Candle");
+    	return this.hasPrudence() || p.hasRelic("Blue Candle");
 	}
 
 	public boolean canPlay(AbstractCard card) {
-		if (AbstractDungeon.player.hasRelic(Prudence.ID))
-			return true;
-		if (card.type == CardType.ATTACK)
+		if (this.hasPrudence() || card.type == CardType.ATTACK)
 			return true;
 		card.cantUseMessage = "暴怒:我无法打出 #r非攻击牌 ";
 		return false;
@@ -49,12 +52,12 @@ public class Wrath extends CustomCard {
 
 	public void triggerWhenDrawn() {
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!m.isDead && !m.isDying) {
-				AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(m, AbstractDungeon.player, new AngryPower(m, 1), 1));
+			if (!m.isDead && !m.isDying && !m.isEscaping && !m.escaped) {
+				this.addToBot(new ApplyPowerAction(m, AbstractDungeon.player, new AngryPower(m, this.magicNumber), this.magicNumber));
 			}
 		}
 	}
 
     public void upgrade() {
-    }//升级后额外增加（括号内的）值，以及升级后的各种改变
+    }
 }

@@ -3,34 +3,39 @@ package cards.curse;
 
 import basemod.abstracts.*;
 import mymod.TestMod;
-import relics.Prudence;
 import relics.Sins;
+import utils.MiscMethods;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
-public class Gluttony extends CustomCard {
+public class Gluttony extends CustomCard implements MiscMethods {
     public static final String ID = "Gluttony";
-    public static final String NAME = "暴食";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = " 不能被打出 。增加最大生命时，复制一张暴食到你的牌堆。这张牌被移除或转化时，降低20%最大生命。";//卡牌说明。说明里面【 !D! 】、【 !B! 】、【 !M! 】分别指代this.baseBlock、this.baseDamage、this.baseMagic。使用时记得的注意前后空格，关键字前后也要加空格
     private static final int COST = -2;//卡牌费用
+    private static final int BASE_MGC = 20;
 
     public Gluttony() {
     	super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.CURSE, CardColor.CURSE, CardRarity.SPECIAL, CardTarget.NONE);
+    	this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
     }
     
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-		return p.hasRelic(Prudence.ID) || p.hasRelic("Blue Candle");
+		return this.hasPrudence() || p.hasRelic("Blue Candle");
 	}
     
     public void onRemoveFromMasterDeck() {
-		AbstractDungeon.player.decreaseMaxHealth(AbstractDungeon.player.maxHealth / 5);
+		AbstractDungeon.player.decreaseMaxHealth(AbstractDungeon.player.maxHealth * this.magicNumber / 100);
     }
     
     public AbstractCard makeCopy() {

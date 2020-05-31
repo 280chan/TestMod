@@ -6,21 +6,23 @@ import mymod.TestMod;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.CardIndexAction;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 
 import java.util.ArrayList;
 
 public class CardIndex extends AbstractUpdatableCard {
     public static final String ID = "CardIndex";
-    public static final String NAME = "卡牌索引";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "初次时，从你的牌中选择 !M! 张牌从战斗移除。之后打出会视作依次打出这些牌。";//卡牌说明。说明里面【 !D! 】、【 !B! 】、【 !M! 】分别指代this.baseBlock、this.baseDamage、this.baseMagic。使用时记得的注意前后空格，关键字前后也要加空格
-    public static final String DESCRIPTION1 = "依次打出你选择了的";
-    public static final String DESCRIPTION2 = "不打出任何额外牌。";
     private static final int COST = 3;//卡牌费用
     private static final int BASE_MGC = 2;
 
@@ -59,15 +61,15 @@ public class CardIndex extends AbstractUpdatableCard {
 		if (this.cards.isEmpty())
 			return;
 		if (this.cards.get(0) == null) {
-			this.changeDescription(DESCRIPTION2, true);
+			this.changeDescription(EXTENDED_DESCRIPTION[1], true);
 			return;
 		}
-		String tmp = DESCRIPTION1;
+		String tmp = EXTENDED_DESCRIPTION[0];
 		for (AbstractCard c : this.cards) {
 			c.applyPowers();
-			tmp += c.name + "，";
+			tmp += c.name + EXTENDED_DESCRIPTION[2];
 		}
-		this.changeDescription(tmp.substring(0, tmp.length() - 1) + "。", true);
+		this.changeDescription(tmp.substring(0, tmp.length() - 1) + EXTENDED_DESCRIPTION[3], true);
 	}
 	
 	public AbstractCard makeStatEquivalentCopy() {

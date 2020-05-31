@@ -6,18 +6,21 @@ import mymod.TestMod;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.BloodthirstyAction;
 
 public class Bloodthirsty extends AbstractUpdatableCard {
     public static final String ID = "Bloodthirsty";
-    public static final String NAME = "嗜血成性";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
+	private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "吸取敌人 !M! %最大生命点生命。吸血后，全嗜血成性比例翻倍。打出其他牌降低2%(最低降至1%)。";
-    public static final String UPGRADED_DESCRIPTION = "吸取敌人 !M! %最大生命点生命。吸血后，全嗜血成性比例翻倍。打出其他牌降低1%(最低降至1%)。";
-    private static final String[] DESCRIPTIONS = { "吸取敌人 !M! %最大生命", "点生命。吸血后，全嗜血成性比例翻倍。打出其他牌降低2%(最低降至1%)。", "点生命。吸血后，全嗜血成性比例翻倍。打出其他牌降低1%(最低降至1%)。" };
     private static final int COST = 1;
     private static final int BASE_MGC = 5;
     private static final int D_MGC = -2;
@@ -62,16 +65,17 @@ public class Bloodthirsty extends AbstractUpdatableCard {
     }
 	
 	private String getDesc() {
-		String tmp = DESCRIPTIONS[0];
+		String tmp = EXTENDED_DESCRIPTION[0];
     	if (this.misc > 0 && this.onMonster && this.isHovered()) {
     		tmp += "(" + this.misc + ")";
     	}
+		tmp += EXTENDED_DESCRIPTION[1];
     	if (!this.upgraded) {
-    		tmp += DESCRIPTIONS[1];
+    		tmp += EXTENDED_DESCRIPTION[2];
     	} else {
-        	tmp += DESCRIPTIONS[2];
+        	tmp += EXTENDED_DESCRIPTION[3];
     	}
-    	return tmp;
+    	return tmp + EXTENDED_DESCRIPTION[4];
 	}
 	
 	public void doublesMagicNumber() {

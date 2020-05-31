@@ -3,28 +3,27 @@ package cards.curse;
 
 import basemod.abstracts.*;
 import mymod.TestMod;
-import relics.Prudence;
 import relics.Sins;
+import utils.MiscMethods;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 
-public class Sloth extends CustomCard {
+public class Sloth extends CustomCard implements MiscMethods {
     public static final String ID = "Sloth";
-    public static final String NAME = "怠惰";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = " 不能被打出 。第二回合起，在手牌时，每回合出牌数量不能超过本场战斗最少的单回合出牌数。这个 诅咒 在第一回合无法逃脱。";//卡牌说明。说明里面【 !D! 】、【 !B! 】、【 !M! 】分别指代this.baseBlock、this.baseDamage、this.baseMagic。使用时记得的注意前后空格，关键字前后也要加空格
     private static final int COST = -2;//卡牌费用 
-    public static final String[] EXTENDED_DESCRIPTION = {" 不能被打出 。", "在手牌时，出牌数量不能超过", "。你已经出了", "张牌。", "这个 诅咒 现在无法逃脱。"};
     
     private static int minNumCardsPlayed = -1;
-    
-    public int getMinimum() {
-    	return minNumCardsPlayed;
-    }
     
     public static void endTurn() {
     	if (minNumCardsPlayed == -1 || !checkMinimum()) {
@@ -44,11 +43,11 @@ public class Sloth extends CustomCard {
 	}
     
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-    	return p.hasRelic(Prudence.ID) || p.hasRelic("Blue Candle");
+    	return this.hasPrudence() || p.hasRelic("Blue Candle");
 	}
 
 	public boolean canPlay(AbstractCard card) {
-		if (AbstractDungeon.player.hasRelic(Prudence.ID))
+		if (this.hasPrudence())
 			return true;
 		if (checkMinimum() && minNumCardsPlayed > -1) {
 			card.cantUseMessage = "怠惰:我无法打出 #r" + minNumCardsPlayed + " 张以上的牌";

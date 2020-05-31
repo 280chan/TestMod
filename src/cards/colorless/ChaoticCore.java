@@ -7,16 +7,19 @@ import powers.ChaoticCorePower;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.defect.IncreaseMaxOrbAction;
 
 public class ChaoticCore extends CustomCard {
     public static final String ID = "ChaoticCore";
-    public static final String NAME = "混沌原核";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "获得1个充能球栏位。每受到一次伤害，获得1个充能球栏位，已满则改为触发下一个效果。每造成一次攻击伤害， 生成  !M! 个随机充能球。";
     private static final int COST = 3;
     private static final int BASE_MGC = 1;
     private static final int ORB_SLOT = 1;

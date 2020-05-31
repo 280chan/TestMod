@@ -2,20 +2,23 @@ package cards.curse;
 
 import basemod.abstracts.*;
 import mymod.TestMod;
-import relics.Prudence;
 import relics.Sins;
+import utils.MiscMethods;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.Intent;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 
-public class Envy extends CustomCard {
+public class Envy extends CustomCard implements MiscMethods {
 	public static final String ID = "Envy";
-	public static final String NAME = "嫉妒";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-	public static final String DESCRIPTION = " 不能被打出 。在手牌时，不能打出 状态 和 诅咒 牌。有敌人的意图不是攻击/debuff或防御/强化时，不能打出 攻击 /技能/ 能力 牌。";//卡牌说明。说明里面【 !D! 】、【 !B! 】、【 !M! 】分别指代this.baseBlock、this.baseDamage、this.baseMagic。使用时记得的注意前后空格，关键字前后也要加空格
 	private static final int COST = -2;//卡牌费用
 
 	public static final Intent[] ATTACK = {Intent.ATTACK, Intent.ATTACK_BUFF, Intent.ATTACK_DEBUFF, Intent.ATTACK_DEFEND};
@@ -30,11 +33,11 @@ public class Envy extends CustomCard {
 	}
 
 	public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-		return p.hasRelic(Prudence.ID) || p.hasRelic("Blue Candle");
+		return this.hasPrudence() || p.hasRelic("Blue Candle");
 	}
 
 	public boolean canPlay(AbstractCard card) {
-		if (AbstractDungeon.player.hasRelic(Prudence.ID))
+		if (this.hasPrudence())
 			return true;
 		if (card.type == CardType.CURSE || card.type == CardType.STATUS) {
 			card.cantUseMessage = "嫉妒:我无法打出 #r状态牌 或 #r诅咒牌 ";

@@ -6,27 +6,30 @@ import mymod.TestMod;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.ChangeBloodAction;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class BloodShelter extends AbstractUpdatableCard {
     public static final String ID = "BloodShelter";
-    public static final String NAME = "血之屏障";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    private static final String[] DESCRIPTIONS = { "与目标平衡到相同的生命值百分比。使双方获得两者生命值变化量绝对值之和", "点 格挡 。 消耗 。" };
     private static final int COST = 3;
     private static final int BLOCK = -1;
-    public static final String DESCRIPTION = getDescription(BLOCK, false, false);
+    private static final String DESCRIPTION = getDescription(BLOCK, false, false);
 
     private static String getDescription(int value, boolean onMonster, boolean hovered) {
-		String tmp = DESCRIPTIONS[0];
+		String tmp = EXTENDED_DESCRIPTION[0];
     	if (value > -1 && onMonster && hovered)
     		tmp += "(" + value + ")";
-    	return tmp + DESCRIPTIONS[1];
+    	return tmp + EXTENDED_DESCRIPTION[1];
     }
     
     public BloodShelter() {

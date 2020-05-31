@@ -39,11 +39,16 @@ import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 
 import mymod.TestMod;
+import relics.Prudence;
 
 public interface MiscMethods {
 	
 	public default boolean isLocalTesting() {
 		return TestMod.isLocalTest();
+	}
+	
+	public default boolean hasPrudence() {
+		return AbstractDungeon.player.hasRelic(TestMod.makeID(Prudence.ID));
 	}
 	
 	public default void addHoarderCard(CardGroup g, AbstractCard c) {

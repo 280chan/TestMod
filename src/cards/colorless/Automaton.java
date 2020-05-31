@@ -4,20 +4,23 @@ import mymod.TestMod;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import basemod.abstracts.CustomCard;
 
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
 
 public class Automaton extends CustomCard {
     public static final String ID = "Automaton";
-    public static final String NAME = "自动机";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "每当自动打出，伤害次数在本局游戏增加1。次数在本场战斗减少1。随机造成 !D! 点伤害 !M! 次。";
     private static final int COST = 2;
     private static final int ATTACK_DMG = 8;
     private static final int BASE_MGC = 1;

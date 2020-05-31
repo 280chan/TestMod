@@ -6,6 +6,7 @@ import mymod.TestMod;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
@@ -13,27 +14,29 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import actions.ArrangementAction;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.badlogic.gdx.math.MathUtils;
 
 public class Arrangement extends CustomCard {
     public static final String ID = "Arrangement";
-    public static final String NAME = "安排一下";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
+    private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "获得X点 格挡 。造成X点伤害。抽X张牌。 升级 最多X张手牌中的牌，每少 升级 一张，获得 [R] 。 消耗 。";
-    public static final String UPGRADED_DESCRIPTION = "获得 !B! 点 格挡 X次。造成 !D! 点伤害X次。抽X张牌。 升级 最多X张手牌中的牌，每少 升级 一张，获得 [R] 。 消耗 。";
-    private static final int COST = -1;//卡牌费用
-    private static final int BASE_BLK = 0;//基础格挡值
-    private static final int BASE_DMG = 0;//基础伤害值
+    private static final int COST = -1;
+    private static final int BASE_BLK = 0;
+    private static final int BASE_DMG = 0;
     private static final int BASE_MGC = 1;
 
     public Arrangement() {
         super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.ATTACK, CardColor.COLORLESS, CardRarity.RARE, CardTarget.SELF_AND_ENEMY);
-        this.baseBlock = BASE_BLK;//基础格挡值. this.block为有敏捷等加成的格挡值.
-        this.baseDamage = BASE_DMG;//基础伤害值. this.damage为有力量、钢笔尖等加成的伤害值.
+        this.baseBlock = BASE_BLK;
+        this.baseDamage = BASE_DMG;
         this.baseMagicNumber = BASE_MGC;
         this.magicNumber = this.baseMagicNumber;
         
-        this.exhaust = true;//消耗属性，false不消耗，true消耗。可在该类里调用改变。不消耗就可以赋值为false或者删掉这一行
+        this.exhaust = true;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {

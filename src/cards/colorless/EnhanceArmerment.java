@@ -14,7 +14,7 @@ public class EnhanceArmerment extends CustomCard {
     public static final String ID = "EnhanceArmerment";
     public static final String NAME = "完全支配";
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "你打出的下一张攻击牌的伤害翻倍，但其将被消耗。";
+    public static final String DESCRIPTION = "你打出的下一张攻击牌的伤害翻倍，但其将被 消耗 。";
     private static final int COST = 1;//卡牌费用
 
     public EnhanceArmerment() {

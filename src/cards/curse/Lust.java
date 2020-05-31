@@ -3,11 +3,12 @@ package cards.curse;
 
 import basemod.abstracts.*;
 import mymod.TestMod;
-import relics.Prudence;
 import relics.Sins;
+import utils.MiscMethods;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.DexterityPower;
 import com.megacrit.cardcrawl.powers.FocusPower;
@@ -16,34 +17,38 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
-public class Lust extends CustomCard {
+public class Lust extends CustomCard implements MiscMethods {
 	public static final String ID = "Lust";
-    public static final String NAME = "色欲";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = " 不能被打出 。回合结束时，失去1 力量 、1 敏捷 、1 集中 ，获得3层 易伤 、3层 虚弱 、3层 脆弱 。";//卡牌说明。说明里面【 !D! 】、【 !B! 】、【 !M! 】分别指代this.baseBlock、this.baseDamage、this.baseMagic。使用时记得的注意前后空格，关键字前后也要加空格
-    private static final int COST = -2;//卡牌费用
+    private static final int COST = -2;
+    private static final int BASE_MGC = 1;
 
     public Lust() {
     	super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.CURSE, CardColor.CURSE, CardRarity.SPECIAL, CardTarget.NONE);
+    	this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
 	}
     
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-    	return p.hasRelic(Prudence.ID) || p.hasRelic("Blue Candle");
+    	return this.hasPrudence() || p.hasRelic("Blue Candle");
 	}
 
 	public void triggerOnEndOfPlayerTurn() {
 		AbstractPlayer p = AbstractDungeon.player;
-	    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new FocusPower(p, -1), -1));
-	    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new StrengthPower(p, -1), -1));
-		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new DexterityPower(p, -1), -1));
-	    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new WeakPower(p, 3, false), 3));
-	    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new FrailPower(p, 3, false), 3));
-	    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new VulnerablePower(p, 3, false), 3));
+	    this.addToBot(new ApplyPowerAction(p, p, new FocusPower(p, -this.magicNumber), -this.magicNumber));
+	    this.addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, -this.magicNumber), -this.magicNumber));
+	    this.addToBot(new ApplyPowerAction(p, p, new DexterityPower(p, -this.magicNumber), -this.magicNumber));
+	    this.addToBot(new ApplyPowerAction(p, p, new WeakPower(p, 3, false), 3));
+	    this.addToBot(new ApplyPowerAction(p, p, new FrailPower(p, 3, false), 3));
+	    this.addToBot(new ApplyPowerAction(p, p, new VulnerablePower(p, 3, false), 3));
 	}
     
     public AbstractCard makeCopy() {

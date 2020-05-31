@@ -6,17 +6,20 @@ import mymod.TestMod;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.EnergizedPower;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class BackupPower extends CustomCard {
 	public static final String ID = "BackupPower";
-	public static final String NAME = "备用能源";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
+	private static final String[] E = { " [R]", " [G]", " [B]", " [W]" };
     public static final String IMG = TestMod.cardIMGPath("relic1");
-	public static final String[] DESCRIPTIONS = { "获得", "。如果回合结束时留在手中，下回合开始获得", "。" };
-	private static final String[] E = { " [R] ", " [G] ", " [B] ", " [W] " };
 	private static final int COST = 1;
 	private static final int BASE_MGC = 2;
 
@@ -28,7 +31,7 @@ public class BackupPower extends CustomCard {
 	}
 
 	public static String getDescription(int mgc) {
-		String temp = DESCRIPTIONS[0];
+		String temp = EXTENDED_DESCRIPTION[0];
 		String e = E[0];
 		if (AbstractDungeon.player != null) {
 			switch (AbstractDungeon.player.chosenClass) {
@@ -48,7 +51,7 @@ public class BackupPower extends CustomCard {
 				temp += e;
 		} else
 			temp += mgc + e;
-		return temp + DESCRIPTIONS[1] + e + DESCRIPTIONS[2];
+		return temp + EXTENDED_DESCRIPTION[1] + e + EXTENDED_DESCRIPTION[2];
 	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {

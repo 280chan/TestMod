@@ -21,6 +21,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame.GameMode;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.helpers.TipTracker;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
@@ -110,6 +111,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			checkOldRelicID(r.relicId);
 		for (AbstractCard c : CARDS)
 			checkOldCardID(c.cardID);
+		if (UnlockTracker.isCardSeen("Collecter"))
+			UnlockTracker.markCardAsSeen(makeID("Collector"));
 		for (AbstractCard c : Sins.SINS)
 			if (!c.cardID.equals(Pride.ID))
 				checkOldCardID(c.cardID);
@@ -201,7 +204,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	@Override
 	public void receiveEditStrings() {
-		BaseMod.loadCustomStrings(RelicStrings.class, readString("relic-strings"));
+		BaseMod.loadCustomStrings(RelicStrings.class, readString("relics"));
+		BaseMod.loadCustomStrings(CardStrings.class, readString("cards"));
 	}
 
 	@Override
@@ -212,7 +216,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		
 		AbstractCard[] card = { new DisillusionmentEcho(), new TreasureHunter(), new SubstituteBySubterfuge(),
 				new PerfectCombo(), new PulseDistributor(), new LifeRuler(), new EternalityOfKhronos(), new Wormhole(),
-				new AutoReboundSystem(), new ComboMaster(), new Collecter(), new RepeatForm(), new BloodBlade(),
+				new AutoReboundSystem(), new ComboMaster(), new Collector(), new RepeatForm(), new BloodBlade(),
 				new ShutDown(), new Provocation(), new PocketStoneCalender(), new Mystery(), new Bloodthirsty(),
 				new BloodShelter(), new Reflect(), new Dream(), new ChaoticCore(), new LimitFlipper(),
 				new ConditionedReflex(), new RabbitOfFibonacci(), new CardIndex(), new DeathImprint(),
