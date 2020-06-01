@@ -6,15 +6,18 @@ import mymod.TestMod;
 import powers.EnhanceArmermentPower;
 
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class EnhanceArmerment extends CustomCard {
     public static final String ID = "EnhanceArmerment";
-    public static final String NAME = "完全支配";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "你打出的下一张攻击牌的伤害翻倍，但其将被 消耗 。";
     private static final int COST = 1;//卡牌费用
 
     public EnhanceArmerment() {

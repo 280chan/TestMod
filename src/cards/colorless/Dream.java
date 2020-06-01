@@ -5,18 +5,21 @@ import basemod.abstracts.*;
 import mymod.TestMod;
 
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.DreamAction;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class Dream extends CustomCard {
     public static final String ID = "Dream";
-    public static final String NAME = "梦想";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
+    private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "将地狱之刃、声东击西、白噪声、发现加入手牌，其耗能在本回合变为0。 消耗 。 虚无 。";
-    public static final String UPGRADED_DESCRIPTION = "将地狱之刃、声东击西、白噪声、发现加入手牌，其耗能在本回合变为0。 虚无 。";
     private static final int COST = 3;
 
     public Dream() {

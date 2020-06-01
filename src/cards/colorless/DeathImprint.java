@@ -6,6 +6,7 @@ import powers.DeathImprintPower;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
@@ -14,12 +15,14 @@ import basemod.abstracts.CustomCard;
 import mymod.TestMod;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class DeathImprint extends CustomCard {
     public static final String ID = "DeathImprint";
-    public static final String NAME = "死亡刻印";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "造成 !D! 点伤害。如果敌人有死亡刻印，将其消去并将基础伤害增加其层数的 !M! %。否则给予敌人死亡刻印。";//卡牌说明。说明里面【 !D! 】、【 !B! 】、【 !M! 】分别指代this.baseBlock、this.baseDamage、this.baseMagic。使用时记得的注意前后空格，关键字前后也要加空格
     private static final int COST = 2;//卡牌费用
     private static final int BASE_DMG = 8;//基础伤害值
     private static final int BASE_MGC = 80;//基础伤害值

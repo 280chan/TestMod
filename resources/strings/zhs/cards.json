@@ -112,45 +112,47 @@
     "NAME": "连击专家",
     "DESCRIPTION": "对所有敌人造成 !D! 点伤害 !M! 次。每打出一次，本场战斗中基础伤害和攻击次数都增加1。"
   },
-  "Bandage Up": {
-    "NAME": "包扎",
-    "DESCRIPTION": "回复 !M! 生命。 NL 消耗 。"
+  "testmod-ConditionedReflex": {
+    "NAME": "条件反射",
+    "DESCRIPTION": "每失去一次生命，获得 !M! 层 柔韧 ，并在下回合开始时使其生效1次。"
   },
-  "Bane": {
-    "NAME": "灾祸",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 如果敌人有 中毒 状态 ，则再次造成 !D! 点伤害。"
+  "testmod-DeathImprint": {
+    "NAME": "死亡刻印",
+    "DESCRIPTION": "造成 !D! 点伤害。如果敌人有死亡刻印，将其消去并将基础伤害增加其层数的 !M! %。否则给予敌人死亡刻印。"
   },
-  "Barrage": {
-    "NAME": "弹幕齐射",
-    "DESCRIPTION": "你每拥有一个充能球，造成 !D! 点伤害。"
+  "testmod-DisillusionmentEcho": {
+    "NAME": "幻灭回响",
+    "DESCRIPTION": "你在每回合打出的第一张牌，将会额外打出X/ !M! 次。"
   },
-  "Barricade": {
-    "NAME": "壁垒",
-    "DESCRIPTION": " 格挡 不再在你的回合开始时消失。"
+  "testmod-DorothysBlackCat": {
+    "NAME": "桃乐丝的黑猫",
+    "DESCRIPTION": "每当你对敌人造成失去生命以外类型的伤害时，使所有敌人均摊失去总共 !M! %其数值的生命。"
   },
-  "Bash": {
-    "NAME": "痛击",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 给予 !M! 层 易伤 。"
+  "testmod-Dream": {
+    "NAME": "梦想",
+    "DESCRIPTION": "将地狱之刃、声东击西、白噪声、发现加入手牌，其耗能在本回合变为0。 消耗 。 虚无 。",
+    "UPGRADE_DESCRIPTION": "将地狱之刃、声东击西、白噪声、发现加入手牌，其耗能在本回合变为0。 虚无 。"
   },
-  "Battle Trance": {
-    "NAME": "战斗专注",
-    "DESCRIPTION": "抽 !M! 张牌。 NL 你在这个回合内不能再抽任何牌。"
+  "testmod-EnhanceArmerment": {
+    "NAME": "完全支配",
+    "DESCRIPTION": "你打出的下一张攻击牌的伤害翻倍，但其将被 消耗 。"
   },
-  "Beam Cell": {
-    "NAME": "光束射线",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 给予 !M! 层 易伤 。"
+  "testmod-EternalityOfKhronos": {
+    "NAME": "柯罗诺斯的永恒",
+    "DESCRIPTION": "立即结束你的回合，敌人在这回合不会执行其意图，然后开始你的下一回合。 消耗 。 虚无 。",
+    "UPGRADE_DESCRIPTION": "立即结束你的回合，敌人在这回合不会执行其意图，然后开始你的下一回合。 虚无 。"
   },
-  "Berserk": {
-    "NAME": "狂暴",
-    "DESCRIPTION": "获得 !M! 层 易伤 。 NL 在每回合开始时获得 [R] 。"
+  "testmod-FightingIntention": {
+    "NAME": "战意",
+    "DESCRIPTION": "回合开始时，每个攻击意图的敌人使你获得 !M! 点 力量 ，使攻击意图的敌人失去 !M! 点 力量 。"
   },
-  "Biased Cognition": {
-    "NAME": "偏差认知",
-    "DESCRIPTION": "获得 !M! 点 集中。 NL 在每回合开始时，失去 1 点 集中 。"
+  "testmod-HandmadeProducts": {
+    "NAME": "手工产品",
+    "DESCRIPTION": "造成你手牌中所有牌的耗能之积( !D! )点伤害。杀死敌人则耗能在本局游戏中增加 !M! 。能被多次 升级 。"
   },
-  "Bite": {
-    "NAME": "噬咬",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 回复 !M! 点生命。"
+  "testmod-HeadAttack": {
+    "NAME": "头部攻击",
+    "DESCRIPTION": "使敌人意图改变为其下一回合的意图。抽 !M! 张牌。 虚无 。"
   },
   "Blade Dance": {
     "NAME": "刀刃之舞",

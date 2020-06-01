@@ -6,18 +6,21 @@ import mymod.TestMod;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import actions.HandmadeProductsAttackAction;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class HandmadeProducts extends CustomCard {
     public static final String ID = "HandmadeProducts";
-    public static final String NAME = "手工产品";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "造成你手牌中所有牌的耗能之积( !D! )点伤害。杀死敌人则耗能在本局游戏中增加 !M! 。能被多次 升级 。";
     private static final int COST = 0;
     private static final int BASE_DMG = 0;
     private static final int BASE_MGC = 1;
@@ -50,7 +53,7 @@ public class HandmadeProducts extends CustomCard {
 				base *= c.costForTurn;
 			else if (c.cost == -1)
 				base *= EnergyPanel.totalCount;
-		if (!AbstractDungeon.player.hand.contains(this))
+		if (!AbstractDungeon.player.hand.contains(this) && !this.isInAutoplay)
 			base *= this.costForTurn;
 		return base;
 	}

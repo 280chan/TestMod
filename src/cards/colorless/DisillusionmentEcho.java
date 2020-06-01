@@ -12,6 +12,8 @@ import basemod.abstracts.*;
 import mymod.TestMod;
 
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
@@ -19,9 +21,10 @@ import actions.DisillusionmentEchoAction;
 
 public class DisillusionmentEcho extends CustomCard {
 	public static final String ID = "DisillusionmentEcho";
-	public static final String NAME = "幻灭回响";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-	public static final String DESCRIPTION = "你在每回合打出的第一张牌，将会额外打出X/ !M! 次。";
 	private static final int COST = -1;// 卡牌费用
 
 	public DisillusionmentEcho() {

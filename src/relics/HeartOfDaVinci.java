@@ -77,7 +77,8 @@ public class HeartOfDaVinci extends MyRelic{
 			this.addIfPossible(AbstractDungeon.uncommonRelicPool, r.relicId);
 			break;
 		default:
-			BaseMod.logger.info("非合理类型遗物:" + r.tier + "," + r.name);
+			System.out.println("达芬奇之心: 非合理类型遗物:" + r.tier + "," + r.name + ", 姑且加入进稀有池");
+			this.addIfPossible(AbstractDungeon.rareRelicPool, r.relicId);
 			break;
 		}
 	}

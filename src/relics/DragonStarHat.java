@@ -28,8 +28,8 @@ public class DragonStarHat extends MyRelic {
 	}
 	
 	public static void loadValue(int maxValue) {
-		if (AbstractDungeon.player.hasRelic(ID))
-			((DragonStarHat) (AbstractDungeon.player.getRelic(ID))).load(maxValue);
+		if (AbstractDungeon.player.hasRelic(TestMod.makeID(ID)))
+			((DragonStarHat) (AbstractDungeon.player.getRelic(TestMod.makeID(ID)))).load(maxValue);
 	}
 	
 	public static void resetValue() {

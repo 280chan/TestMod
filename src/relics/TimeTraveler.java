@@ -42,7 +42,7 @@ public class TimeTraveler extends MyRelic implements MiscMethods {
 	}
 	
 	private static void loadGame() {
-		relic = AbstractDungeon.player.getRelic(ID);
+		relic = AbstractDungeon.player.getRelic(TestMod.makeID(ID));
 		if (relic != null) {
 			relic.counter = san = san * (100 - SL_SAN_LOSS_PERCENT) / 100;
 			save(san);

@@ -628,7 +628,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				}
 			}
 
-			if (p.hasRelic("NoteOfAlchemist") && p.relics.get(0).relicId != "NoteOfAlchemist") {
+			/*if (p.hasRelic("NoteOfAlchemist") && p.relics.get(0).relicId != "NoteOfAlchemist") {
 				if (!NoteOfAlchemist.recorded()) {
 					if ((AbstractDungeon.floorNum < 1) || (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom() instanceof TreasureRoomBoss)) {
 						NoteOfAlchemist.equipAction();
@@ -638,12 +638,12 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				}
 			} else if (CardCrawlGame.mode == GameMode.GAMEPLAY || CardCrawlGame.mode == GameMode.DUNGEON_TRANSITION) {
 				NoteOfAlchemist.setState(false);
-			}
+			}*/
 			
 			for (MyRelic r : MY_RELICS) {
-				if (r instanceof NoteOfAlchemist) {
+				/*if (r instanceof NoteOfAlchemist) {
 					continue;
-				}
+				}*/
 				try {
 					if (MyRelic.tryEquip(r)) {
 						r.getClass().getMethod("equipAction").invoke(null);
@@ -693,7 +693,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					if (p.hand.contains(c)) {
 						AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.hoveredMonster;
 	        			c.preApplyPowers(p, m);
-	    				if (AbstractDungeon.player.hasRelic("StringDisintegrator"))
+	    				if (this.hasPrudence())
 	    					continue;
 	        			c.applyPowers();
 		    		} else {
@@ -708,9 +708,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			
 			BoxForYourself.updateThis();
 			
-			if (p.hasRelic("HeartOfDaVinci")) {
+			if (p.hasRelic(makeID(HeartOfDaVinci.ID))) {
 				if (HeartOfDaVinci.checkGetRelic()) {
-					HeartOfDaVinci hdv = (HeartOfDaVinci) p.getRelic("HeartOfDaVinci");
+					HeartOfDaVinci hdv = (HeartOfDaVinci) p.getRelic(makeID(HeartOfDaVinci.ID));
 					hdv.onGetRelic(p.relics.get(HeartOfDaVinci.size()));
 				}
 			}
@@ -766,7 +766,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receiveStartGame() {
 		if (config == null)
 			this.initSavingConfig();
-		if (AbstractDungeon.player.hasRelic("PortableAltar")) {
+		if (AbstractDungeon.player.hasRelic(makeID(PortableAltar.ID))) {
 			PortableAltar.maxHPLost = config.getInt("maxHPLost");
 		}
 		Sins.preMaxHP = config.getInt("preMaxHP");
@@ -779,10 +779,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		HeartOfDaVinci.init(AbstractDungeon.player.relics.size());
 		TimeTraveler.load(config.getInt("san"));
 		Motorcycle.loadGame();
-		NoteOfAlchemist.setState(config.getBool("recorded"));
+		// NoteOfAlchemist.setState(config.getBool("recorded"));
 		DragonStarHat.loadValue(config.getInt("HatMaxStr"));
 		Faith.load(config.getBool("FaithGained"), config.getInt("FaithPreGold"));
-		if (AbstractDungeon.player.hasRelic(Mahjong.ID)) {
+		if (AbstractDungeon.player.hasRelic(makeID(Mahjong.ID))) {
 			int[] yama = new int[37], kang = new int[config.getInt("MahjongKang")], hint = new int[kang.length + 1], hand = new int[13 - 3 * kang.length];
 			for (int i = 0; i < 37; i++)
 				yama[i] = config.getInt(Mahjong.YAMA_NAME[i]);

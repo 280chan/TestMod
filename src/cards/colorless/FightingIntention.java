@@ -6,15 +6,18 @@ import mymod.TestMod;
 import powers.FightingIntentionPower;
 
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class FightingIntention extends CustomCard {
     public static final String ID = "FightingIntention";
-    public static final String NAME = "战意";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "回合开始时，每个攻击意图的敌人使你获得 !M! 点 力量 ，使攻击意图的敌人失去 !M! 点 力量 。";
     private static final int COST = 3;
     private static final int BASE_MGC = 1;
 

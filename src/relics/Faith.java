@@ -34,9 +34,9 @@ public class Faith extends MyRelic {
 	}
 	
 	public static void load(boolean gained, int preGold) {
-		if (AbstractDungeon.player.hasRelic(ID)) {
-			((Faith) (AbstractDungeon.player.getRelic(ID))).gained = gained;
-			((Faith) (AbstractDungeon.player.getRelic(ID))).preGold = preGold;
+		if (AbstractDungeon.player.hasRelic(TestMod.makeID(ID))) {
+			((Faith) (AbstractDungeon.player.getRelic(TestMod.makeID(ID)))).gained = gained;
+			((Faith) (AbstractDungeon.player.getRelic(TestMod.makeID(ID)))).preGold = preGold;
 		}
 	}
 	

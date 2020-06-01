@@ -105,8 +105,8 @@ public class Mahjong extends MyRelic implements MiscMethods {
 	}
 	
 	public static void load(int turns, boolean reach, int[] yama, int[] kangID, int[] hintID, int[] handID) {
-		if (AbstractDungeon.player.hasRelic(ID)) {
-			Mahjong current = (Mahjong)AbstractDungeon.player.getRelic(ID);
+		if (AbstractDungeon.player.hasRelic(TestMod.makeID(ID))) {
+			Mahjong current = (Mahjong)AbstractDungeon.player.getRelic(TestMod.makeID(ID));
 			System.out.println("Mahjong开始load");
 			if (current.total(yama) == 0 || current.total(yama) == current.total(YAMA_DEFAULT)) {
 				saveLater = true;
