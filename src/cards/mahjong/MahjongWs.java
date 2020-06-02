@@ -3,19 +3,23 @@ package cards.mahjong;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
+
+import mymod.TestMod;
+
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.unique.ArmamentsAction;
 import com.megacrit.cardcrawl.actions.unique.ExhumeAction;
 import com.megacrit.cardcrawl.actions.utility.ScryAction;
 
 public class MahjongWs extends AbstractMahjongCard {
-	public static final String DESCRIPTIONS[] = { "抽 !M! 张牌。 消耗 。 虚无 。", " 预见 !M! 张牌。 消耗 。 虚无 。",
-			"升级1张手牌 !M! 次。 消耗 。 虚无 。", "从抽牌堆选择 !M! 张牌放入手牌。 消耗 。 虚无 。", "将 !M! 张随机麻将牌加入手牌。 消耗 。 虚无 。",
-			"从弃牌堆选择 !M! 张牌放入手牌。 消耗 。 虚无 。", " 发掘 !M! 张牌。 消耗 。 虚无 。", " 消耗 !M! 张手牌。 消耗 。 虚无 。",
-			"丢弃 !M! 张手牌。 消耗 。 虚无 。" };
-	public static final String UPGRADE_DESCRIPTION = "升级手牌中的所有牌。 消耗 。 虚无 。";
+	private static final String STRING_ID = "MahjongWs";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(STRING_ID));
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
+	public static final String UPGRADE_DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final int COLOR = 0;
 	private static final int BASE_MGC = 1;
     private int mode;
@@ -41,7 +45,7 @@ public class MahjongWs extends AbstractMahjongCard {
     private static String setString(int num) {
     	if (num == 0)
     		num = 5;
-    	return DESCRIPTIONS[num - 1];
+    	return EXTENDED_DESCRIPTION[num - 1];
     }
     
 	public void use(final AbstractPlayer p, final AbstractMonster m) {

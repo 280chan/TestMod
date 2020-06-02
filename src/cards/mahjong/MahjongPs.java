@@ -3,12 +3,19 @@ package cards.mahjong;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.NextTurnBlockPower;
+
+import mymod.TestMod;
+
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class MahjongPs extends AbstractMahjongCard {
-    public static final String DESCRIPTIONS[] = {"获得 !B! 点格挡。 消耗 。 虚无 。", "获得 !B! 点格挡。下回合开始获得 !B! 点格挡。 消耗 。 虚无 。"};
+	private static final String STRING_ID = "MahjongPs";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(STRING_ID));
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     private static final int COLOR = 1;
     private int mode;
 
@@ -34,7 +41,7 @@ public class MahjongPs extends AbstractMahjongCard {
     }
     
     private static String setString(int num) {
-    	return DESCRIPTIONS[num % 2];
+    	return EXTENDED_DESCRIPTION[num % 2];
     }
     
 	public void use(final AbstractPlayer p, final AbstractMonster m) {

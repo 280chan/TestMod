@@ -8,13 +8,15 @@ import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
 
 public class Mystery extends AbstractEquivalentableCard {
     public static final String ID = "Mystery";
-    public static final String NAME = "谜";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "对随机敌人造成 !D! 点伤害 !M! 次。你在本局游戏每到达过一个问号房间，伤害次数增加1。 消耗 。";
     private static final int COST = 2;
     private static final int ATTACK_DMG = 4;
     private static final int BASE_MGC = 1;

@@ -5,16 +5,19 @@ import basemod.abstracts.*;
 import mymod.TestMod;
 
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.LibrarianAction;
 
 public class Librarian extends CustomCard {
     public static final String ID = "Librarian";
-    public static final String NAME = "图书管理员";
-	public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "从X张随机无色牌选择 !M! 张加入手牌，其耗能在本场战斗降为0。 消耗 。";
-    public static final String UPGRADE_DESCRIPTION = "从X张随机无色牌选择 !M! 张加入手牌，其耗能在本场战斗降为0。接下来第X次回合开始前胜利，将其加入牌组。 消耗 。";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
+	public static final String UPGRADE_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
+    public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = -1;
     private static final int BASE_MGC = 1;
 

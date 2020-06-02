@@ -3,12 +3,19 @@ package cards.mahjong;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
+
+import mymod.TestMod;
+
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class MahjongSs extends AbstractMahjongCard {
-    public static final String DESCRIPTIONS[] = {"对所有敌人造成 !D! 点伤害。 消耗 。 虚无 。", "造成 !D! 点伤害。 消耗 。 虚无 。", "对随机敌人造成 !D! 点伤害 !M! 次。 消耗 。 虚无 。"};
+	private static final String STRING_ID = "MahjongSs";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(STRING_ID));
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     private static final int COLOR = 2;
     private int mode;
 
@@ -43,7 +50,7 @@ public class MahjongSs extends AbstractMahjongCard {
     private static String setString(int num) {
     	if (num == 0)
     		num = 5;
-    	return DESCRIPTIONS[(num - 1) % 3];
+    	return EXTENDED_DESCRIPTION[(num - 1) % 3];
     }
 
     private static CardTarget setTarget(int num) {

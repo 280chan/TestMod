@@ -7,17 +7,20 @@ import mymod.TestMod;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.TemporaryDeletionAction;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class TemporaryDeletion extends CustomCard {
     public static final String ID = "TemporaryDeletion";
-    public static final String NAME = "临时删除";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "选择一张牌，将与其稀有度相同的所有牌从本场战斗移除。每回合开始将一张其稀有度的随机牌加入手牌。 虚无 。";
     private static final int COST = 2;
 
     public TemporaryDeletion() {
@@ -33,7 +36,7 @@ public class TemporaryDeletion extends CustomCard {
         g.removeCard(this);
         for (AbstractCard c : p.hand.group)
         	c.stopGlowing();
-        AbstractDungeon.actionManager.addToBottom(new TemporaryDeletionAction(g, p));//为自身增加magicNumber层多层护甲
+        AbstractDungeon.actionManager.addToBottom(new TemporaryDeletionAction(g, p));
     }
 
     public void upgrade() {

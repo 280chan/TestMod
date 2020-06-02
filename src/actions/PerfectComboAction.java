@@ -6,7 +6,6 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.random.Random;
@@ -78,14 +77,12 @@ public class PerfectComboAction extends AbstractGameAction implements MiscMethod
 			if (AbstractDungeon.getCurrRoom().monsters.areMonstersBasicallyDead()) {
 				AbstractDungeon.actionManager.clearPostCombatActions();
 			} else if (!(this.target.hasPower("Invincible") && this.target.getPower("Invincible").amount == 0)) {
+				
 				if (roll()) {
 					AbstractDungeon.actionManager.addToBottom(this.combo());
 				}
 			}
 			
-			if (!this.skipWait && !Settings.FAST_MODE) {
-				AbstractDungeon.actionManager.addToTop(new WaitAction(POST_ATTACK_WAIT_DUR));
-			}
 		}
 	}
 

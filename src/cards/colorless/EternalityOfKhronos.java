@@ -17,7 +17,7 @@ public class EternalityOfKhronos extends CustomCard implements MiscMethods {
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    private static final int COST = 2;//卡牌费用
+    private static final int COST = 2;
 
     public EternalityOfKhronos() {
         super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.SKILL, CardColor.COLORLESS, CardRarity.RARE, CardTarget.NONE);

@@ -6,20 +6,23 @@ import mymod.TestMod;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.ModifyCostForCombatAction;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.*;  //改成自己的import
 
 public class PocketStoneCalender extends CustomCard {
-    public static final String ID = "LackOfEnergy";
-    public static final String NAME = "掌上历石";
+    public static final String ID = "PocketStoneCalender";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
+    private static final String DESCRIPTION = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[2];
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    private static final String[] DESC = {"造成回合数的平方", "( !D! )", "点伤害。打出这张牌时在本场战斗耗能增加 !M! 。抽到这张牌时在本场战斗耗能降低1。"};
-    public static final String DESCRIPTION = DESC[0] + DESC[2];
     private static final int COST = 0;//卡牌费用
     private static final int ATTACK_DMG = 0;//基础伤害值
     private static final int BASE_MGC = 2;
@@ -40,19 +43,27 @@ public class PocketStoneCalender extends CustomCard {
     	AbstractDungeon.actionManager.addToBottom(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_DIAGONAL));
     	AbstractDungeon.actionManager.addToBottom(new ModifyCostForCombatAction(this.uuid, this.magicNumber));
     }
+    
+    public void calculateCardDamage(AbstractMonster m) {
+    	int turn = GameActionManager.turn;
+    	this.baseDamage = turn * turn;
+    	super.calculateCardDamage(m);
+    	this.rawDescription = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1] + EXTENDED_DESCRIPTION[2];
+    	this.initializeDescription();
+    }
 
     public void applyPowers() {
-    	this.rawDescription = DESC[0] + DESC[1] + DESC[2];
-    	this.initializeDescription();
     	int turn = GameActionManager.turn;
     	this.baseDamage = turn * turn;
     	super.applyPowers();
+    	this.rawDescription = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1] + EXTENDED_DESCRIPTION[2];
+    	this.initializeDescription();
     }
 
     public void upgrade() {
         if (!this.upgraded) {
-            this.upgradeName();//改名，其实就是多个+
-            this.upgradeMagicNumber(-1);//升级增加的特殊常量MagicNumber
+            this.upgradeName();
+            this.upgradeMagicNumber(-1);
         }
-    }//升级后额外增加（括号内的）值，以及升级后的各种改变
+    }
 }

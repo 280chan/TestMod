@@ -5,19 +5,22 @@ import basemod.abstracts.*;
 import mymod.TestMod;
 
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.IllusoryAction;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
 public class Illusory extends CustomCard {
     public static final String ID = "Illusory";
-    public static final String NAME = "虚无缥缈";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-	public static final String[] DESCRIPTIONS = { "抽 !M! 张牌，然后将抽牌堆中所有牌附加 虚无 。其中每有一张牌已有 虚无 ，获得", "。 消耗 。 虚无 。" };
 	private static final String[] E = { " [R] ", " [G] ", " [B] ", " [W] " };
     private static final int COST = 1;
     private static final int BASE_ENG = 1;
@@ -45,7 +48,7 @@ public class Illusory extends CustomCard {
 			default:
 			}
 		}
-		return DESCRIPTIONS[0] + e + DESCRIPTIONS[1];
+		return EXTENDED_DESCRIPTION[0] + e + EXTENDED_DESCRIPTION[1];
 	}
     
 	public void triggerOnGlowCheck() {

@@ -2,6 +2,7 @@
 package cards.colorless;
 
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.ConstrictedPower;
 
@@ -9,19 +10,20 @@ import basemod.abstracts.CustomCard;
 import mymod.TestMod;
 
 import com.megacrit.cardcrawl.dungeons.*;
-
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class LifeRuler extends CustomCard {
 	public static final String ID = "LifeRuler";
-	public static final String NAME = "生命标尺";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-	public static final String DESCRIPTION = "对所有敌人施加你与目标敌人最大生命的最大公约数与当前生命的最大公约数中的较大值";
 	private static final int COST = 1;
-	private static final String DESCRIPTIONS[] = { "层缠绕。", " 消耗 。" };
+	private static final String DESCRIPTION = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1] + EXTENDED_DESCRIPTION[2];
 	
 	public LifeRuler() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION + DESCRIPTIONS[0] + DESCRIPTIONS[1], CardType.SKILL, CardColor.COLORLESS, CardRarity.RARE, CardTarget.ENEMY);
+        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.SKILL, CardColor.COLORLESS, CardRarity.RARE, CardTarget.ENEMY);
         this.exhaust = true;
     }
 
@@ -49,21 +51,21 @@ public class LifeRuler extends CustomCard {
     }
     
     private String getDesc() {
-		String tmp = DESCRIPTION;
+		String tmp = EXTENDED_DESCRIPTION[0];
     	if (this.misc > 0) {
     		tmp += "(" + this.misc + ")";
     	}
-    	tmp += DESCRIPTIONS[0];
+    	tmp += EXTENDED_DESCRIPTION[1];
     	if (!this.upgraded) {
-    		tmp += DESCRIPTIONS[1];
+    		tmp += EXTENDED_DESCRIPTION[2];
     	}
     	return tmp;
 	}
     
     public void resetAttributes() {
-    	this.rawDescription = DESCRIPTION + DESCRIPTIONS[0];
+    	this.rawDescription = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1];
     	if (!this.upgraded) {
-    		this.rawDescription += DESCRIPTIONS[1];
+    		this.rawDescription += EXTENDED_DESCRIPTION[2];
     	}
 		this.initializeDescription();
 		super.resetAttributes();
@@ -73,7 +75,7 @@ public class LifeRuler extends CustomCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.exhaust = false;
-            this.rawDescription = DESCRIPTION + DESCRIPTIONS[0];
+            this.rawDescription = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1];
     		this.initializeDescription();
         }
     }

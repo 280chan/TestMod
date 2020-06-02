@@ -17,6 +17,7 @@ import com.megacrit.cardcrawl.cards.curses.Pride;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.core.Settings.GameLanguage;
 import com.megacrit.cardcrawl.core.CardCrawlGame.GameMode;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
@@ -58,7 +59,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 5/27/2020
+ * @version 6/1/2020
  * @since 6/17/2018
  */
 
@@ -113,6 +114,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			checkOldCardID(c.cardID);
 		if (UnlockTracker.isCardSeen("Collecter"))
 			UnlockTracker.markCardAsSeen(makeID("Collector"));
+		if (UnlockTracker.isCardSeen("LackOfEnergy"))
+			UnlockTracker.markCardAsSeen(makeID("PocketStoneCalender"));
 		for (AbstractCard c : Sins.SINS)
 			if (!c.cardID.equals(Pride.ID))
 				checkOldCardID(c.cardID);
@@ -134,10 +137,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	public static String languagePrefix(String s) {
 		langPrefix = "zhs/";
-		if (langPrefix != null)
-			return langPrefix + s;
 		// TODO
-		langPrefix = Settings.language.name().toLowerCase() + "/";
+		if (Settings.language != GameLanguage.ZHS)
+			return "eng/" + s;
+			//langPrefix = Settings.language.name().toLowerCase() + "/";
 		return langPrefix + s;
 	}
 	

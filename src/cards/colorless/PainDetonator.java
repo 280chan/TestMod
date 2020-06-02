@@ -6,16 +6,19 @@ import mymod.TestMod;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 
 public class PainDetonator extends CustomCard {
     public static final String ID = "PainDetonator";
-    public static final String NAME = "痛楚起爆器";
+	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final String NAME = cardStrings.NAME;
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	public static final String IMG = TestMod.cardIMGPath("relic1");
-    public static final String DESCRIPTION = "对敌人造成其已失去生命的 !M! %的伤害( !D! )。";
     private static final int COST = 1;
     private static final int BASE_MGC = 30;
     private static final int BASE_DMG = 0;
