@@ -12,13 +12,14 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
+import mymod.TestMod;
 import relics.Hope;
 import relics.Prudence;
 import relics.TestBox;
 
 public class PrudencePatch {
 	public static boolean hasRelic(AbstractPlayer p) {
-		return p.hasRelic(Prudence.ID);
+		return p.hasRelic(TestMod.makeID(Prudence.ID));
 	}
 
 	@SpirePatch(clz = AbstractCard.class, method = "canUse")

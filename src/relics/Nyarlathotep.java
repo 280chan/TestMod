@@ -27,6 +27,10 @@ public class Nyarlathotep extends MyRelic {
 		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
+	private static boolean isThis(AbstractRelic r) {
+		return r instanceof Nyarlathotep;
+	}
+	
 	public String getUpdatedDescription() {
 		return DESCRIPTIONS[0];
 	}
@@ -42,7 +46,7 @@ public class Nyarlathotep extends MyRelic {
 	
 	private void triggerExhaustFor(AbstractCard c) {
 		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (!r.relicId.equals(ID))
+			if (!isThis(r))
 				r.onExhaust(c);
 		for (AbstractPower p : AbstractDungeon.player.powers)
 			p.onExhaust(c);
@@ -56,7 +60,7 @@ public class Nyarlathotep extends MyRelic {
 			return;
 		AbstractDungeon.player.updateCardsOnDiscard();
 		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (!r.relicId.equals(ID))
+			if (!isThis(r))
 				r.onManualDiscard();
 	}
 	

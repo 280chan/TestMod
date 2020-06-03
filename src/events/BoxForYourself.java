@@ -72,8 +72,13 @@ public class BoxForYourself extends AbstractImageEvent {
 	}
 
 	private void initializeObtainRelic() {
-		this.obtainRelic = RelicLibrary.getRelic(CardCrawlGame.playerPref.getString("BOX_RELIC", "Juzu Bracelet"))
-				.makeCopy();
+		String tmp = CardCrawlGame.playerPref.getString("BOX_RELIC", "Juzu Bracelet");
+		if (RelicLibrary.isARelic(tmp))
+			this.obtainRelic = RelicLibrary.getRelic(tmp).makeCopy();
+		else if (RelicLibrary.isARelic(TestMod.makeID(tmp)))
+			this.obtainRelic = RelicLibrary.getRelic(TestMod.makeID(tmp));
+		else
+			this.obtainRelic = RelicLibrary.getRelic("Juzu Bracelet");
 	}
 	
 	public void update() {

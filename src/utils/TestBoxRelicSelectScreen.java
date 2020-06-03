@@ -9,7 +9,7 @@ import mymod.TestMod;
 import relics.TestBox;
 
 public class TestBoxRelicSelectScreen extends RelicSelectScreen {
-	public static final String[] ILLEGAL = {"TestBox"};
+	public static final String[] ILLEGAL = {TestMod.makeID("TestBox")};
 	private TestBox box;
 	
 	public TestBoxRelicSelectScreen(boolean canSkip, String bDesc, String title, String desc, TestBox box) {

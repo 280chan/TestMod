@@ -24,7 +24,7 @@ import relics.TestBox;
 public class StringDisintegratorPatch {
 
 	private static boolean check() {
-		String id = TestMod.isLocalTest() ? TestBox.ID : StringDisintegrator.ID;
+		String id = TestMod.isLocalTest() ? TestMod.makeID(TestBox.ID) : TestMod.makeID(StringDisintegrator.ID);
 		return AbstractDungeon.floorNum > 0 && AbstractDungeon.currMapNode != null
 				&& AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT && AbstractDungeon.player.hasRelic(id);
 	}
