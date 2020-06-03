@@ -36,7 +36,7 @@ public class JusticePower extends AbstractPower implements OnReceivePowerPower, 
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature t, AbstractCreature source) {
 		if (t.isPlayer && p.type == PowerType.DEBUFF) {
-    		((Justice)AbstractDungeon.player.getRelic("Justice")).show();
+    		((Justice)AbstractDungeon.player.getRelic(TestMod.makeID(Justice.ID))).show();
     		AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(t, t, new StrengthPower(t, 1), 1));
     	}
 		return true;

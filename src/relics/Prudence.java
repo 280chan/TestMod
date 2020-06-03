@@ -92,8 +92,8 @@ public class Prudence extends MyRelic implements MiscMethods {
 			preHoveredCard = null;
 	}
 	
-	public static boolean hasThis() {
-		return AbstractDungeon.player.hasRelic(ID);
+	private static boolean isThis(AbstractRelic r) {
+		return r instanceof Prudence;
 	}
 	
 	private boolean canPlay(AbstractCard c, AbstractMonster m) {
@@ -121,7 +121,7 @@ public class Prudence extends MyRelic implements MiscMethods {
 			return true;
 		}
 		for (AbstractRelic r : p.relics)
-			if (!r.relicId.equals(ID) && !r.canPlay(c))
+			if (!isThis(r) && !r.canPlay(c))
 				return false;
 		for (AbstractBlight b : p.blights)
 			if (!b.canPlay(c))
