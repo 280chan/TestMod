@@ -1,13 +1,10 @@
 package cards.colorless;
 
-import mymod.TestMod;
-
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
-import basemod.abstracts.CustomCard;
+import cards.AbstractTestCard;
 
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
@@ -15,12 +12,11 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
 
-public class Automaton extends CustomCard {
+public class Automaton extends AbstractTestCard {
     public static final String ID = "Automaton";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-	public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = 2;
     private static final int ATTACK_DMG = 8;
     private static final int BASE_MGC = 1;
@@ -43,7 +39,7 @@ public class Automaton extends CustomCard {
     }
     
     public Automaton() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.ATTACK, CardColor.COLORLESS, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
         this.baseDamage = ATTACK_DMG;
         this.baseMagicNumber = BASE_MGC;
         this.magicNumber = this.baseMagicNumber;

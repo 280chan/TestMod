@@ -1,12 +1,10 @@
 
 package cards.colorless;
 
+import cards.AbstractTestCard;
 import cards.AbstractUpdatableCard;
-import mymod.TestMod;
-
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
@@ -15,12 +13,11 @@ import actions.BloodthirstyAction;
 
 public class Bloodthirsty extends AbstractUpdatableCard {
     public static final String ID = "Bloodthirsty";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-    public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = 1;
     private static final int BASE_MGC = 5;
     private static final int D_MGC = -2;
@@ -28,9 +25,8 @@ public class Bloodthirsty extends AbstractUpdatableCard {
     private boolean used = false;
 
     public Bloodthirsty() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.SKILL, CardColor.COLORLESS, CardRarity.UNCOMMON, CardTarget.ENEMY);
-        this.baseMagicNumber = BASE_MGC;
-        this.magicNumber = this.baseMagicNumber;
+        super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {

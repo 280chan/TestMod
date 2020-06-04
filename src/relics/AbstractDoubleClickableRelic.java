@@ -1,6 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public abstract class AbstractDoubleClickableRelic extends MyRelic {
@@ -11,8 +10,8 @@ public abstract class AbstractDoubleClickableRelic extends MyRelic {
 	private long lastClick;
 	private static final int DURATION = 300;	// 双击间隔，间隔时间内没有第二次右键，判断为单击
 
-	public AbstractDoubleClickableRelic(String id, Texture texture, RelicTier tier, LandingSound sfx) {
-		super(id, texture, tier, sfx);
+	public AbstractDoubleClickableRelic(String id, RelicTier tier, LandingSound sfx) {
+		super(id, tier, sfx);
 		this.Rclick = false;
 		this.RclickStart = false;
 		this.dCheck = false;

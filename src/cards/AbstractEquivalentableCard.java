@@ -1,15 +1,13 @@
 
 package cards;
 
-import basemod.abstracts.*;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
-public abstract class AbstractEquivalentableCard extends CustomCard {
+public abstract class AbstractEquivalentableCard extends AbstractTestCard {
 	
-	public AbstractEquivalentableCard(String id, String name, String img, int cost, String desc, CardType type,
-			CardColor color, CardRarity rarity, CardTarget target) {
-		super(id, name, img, cost, desc, type, color, rarity, target);
+	public AbstractEquivalentableCard(String id, String name, int cost, String desc, CardType type, CardRarity rarity,
+			CardTarget target) {
+		super(id, name, cost, desc, type, rarity, target);
 	}
 
 	private AbstractCard makeSameInstance() {

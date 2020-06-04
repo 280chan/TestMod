@@ -2,8 +2,6 @@ package relics;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
@@ -19,8 +17,6 @@ import powers.RecapPower;
 
 public class Register extends MyRelic{
 	public static final String ID = "Register";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "你在一场战斗中拥有的超过 #b1 层的状态会在下一场战斗开始再次获得 #b1 层。";//遗物效果的文本描叙。
 	
 	private static final ArrayList<AbstractPower> POWERS = new ArrayList<AbstractPower>();
 	
@@ -29,7 +25,7 @@ public class Register extends MyRelic{
 	}
 	
 	public Register() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.SHOP, LandingSound.CLINK);
+		super(ID, RelicTier.SHOP, LandingSound.CLINK);
 	}
 	
 	public String getUpdatedDescription() {
@@ -75,10 +71,10 @@ public class Register extends MyRelic{
 				pow.stackPower(0);
 			else if (pow.ID.equals("TimeMazePower"))
 				pow.amount = 15;
-			else if (pow.ID.equals(RecapPower.POWER_ID))
+			else if (pow instanceof RecapPower)
 				((RecapPower)pow).clear();
 			pow.updateDescription();
-			AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(p, p, pow, pow.amount));
+			this.addToTop(new ApplyPowerAction(p, p, pow, pow.amount));
 			show = true;
 		}
 		if (show) {

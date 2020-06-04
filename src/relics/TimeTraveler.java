@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.LoseHPAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -14,8 +12,6 @@ import utils.MiscMethods;
 
 public class TimeTraveler extends MyRelic implements MiscMethods {
 	public static final String ID = "TimeTraveler";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "每回合开始获得 [R] 。你初始拥有 #b100 点(最大)理性值。每次 #ySL 损失 #r50% 当前理性值，每次战斗胜利恢复 #b5 点理性值，每次休息恢复 #b10 点理性值。当理性值低于 #b20 时每次战斗结束失去 #r10 点生命上限。当理性值低于 #b10 时每回合开始失去 #r1 点生命。";
 	private static final int REST_SAN = 10;
 	private static final int VICTORY_SAN = 5;
 	private static final int MAX_HP_LOSS = 10;
@@ -54,7 +50,7 @@ public class TimeTraveler extends MyRelic implements MiscMethods {
 	}
 	
 	public TimeTraveler() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.HEAVY);
+		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
 	}
 	
 	public String getUpdatedDescription() {

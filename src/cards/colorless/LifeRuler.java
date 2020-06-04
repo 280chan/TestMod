@@ -2,35 +2,31 @@
 package cards.colorless;
 
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.ConstrictedPower;
 
-import basemod.abstracts.CustomCard;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
-public class LifeRuler extends CustomCard {
+public class LifeRuler extends AbstractTestCard {
 	public static final String ID = "LifeRuler";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-	public static final String IMG = TestMod.cardIMGPath("relic1");
 	private static final int COST = 1;
 	private static final String DESCRIPTION = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1] + EXTENDED_DESCRIPTION[2];
 	
 	public LifeRuler() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.SKILL, CardColor.COLORLESS, CardRarity.RARE, CardTarget.ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
         this.exhaust = true;
     }
 
 	public void use(final AbstractPlayer p, final AbstractMonster t) {
     	for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
 			if (!m.isDead && !m.isDying && !m.halfDead) {
-				AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(m, p, new ConstrictedPower(m, p, this.misc), this.misc));
+				this.addToBot(new ApplyPowerAction(m, p, new ConstrictedPower(m, p, this.misc), this.misc));
 			}
 		}
     }

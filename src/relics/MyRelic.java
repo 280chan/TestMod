@@ -2,6 +2,7 @@ package relics;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -52,8 +53,8 @@ public abstract class MyRelic extends CustomRelic{
 		modifyState(this.getClass(), "unequip", value);
 	}
 	
-	public MyRelic(String id, Texture texture, RelicTier tier, LandingSound sfx) {
-		super(TestMod.makeID(id), texture, tier, sfx);
+	public MyRelic(String id, RelicTier tier, LandingSound sfx) {
+		super(TestMod.makeID(id), new Texture(Gdx.files.internal(TestMod.relicIMGPath(id))), tier, sfx);
 	}
 	
 	public void show() {

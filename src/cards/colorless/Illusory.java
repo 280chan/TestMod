@@ -1,11 +1,8 @@
 
 package cards.colorless;
 
-import basemod.abstracts.*;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.IllusoryAction;
@@ -15,19 +12,18 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
-public class Illusory extends CustomCard {
+public class Illusory extends AbstractTestCard {
     public static final String ID = "Illusory";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-	public static final String IMG = TestMod.cardIMGPath("relic1");
 	private static final String[] E = { " [R] ", " [G] ", " [B] ", " [W] " };
     private static final int COST = 1;
     private static final int BASE_ENG = 1;
     private static final int BASE_MGC = 1;
 
     public Illusory() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, getDescription(BASE_ENG), CardType.SKILL, CardColor.COLORLESS, CardRarity.RARE, CardTarget.NONE);
+        super(ID, NAME, COST, getDescription(BASE_ENG), CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
         this.baseMagicNumber = BASE_MGC;
         this.magicNumber = this.baseMagicNumber;
         this.exhaust = true;
@@ -62,8 +58,8 @@ public class Illusory extends CustomCard {
 	}
 	
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	AbstractDungeon.actionManager.addToBottom(new DrawCardAction(p, this.magicNumber));
-    	AbstractDungeon.actionManager.addToBottom(new IllusoryAction());
+    	this.addToBot(new DrawCardAction(p, this.magicNumber));
+    	this.addToBot(new IllusoryAction());
     }
 
     public void upgrade() {

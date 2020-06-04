@@ -1,33 +1,27 @@
 
 package cards.colorless;
 
-import basemod.abstracts.*;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.EnergizedPower;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
-public class BackupPower extends CustomCard {
+public class BackupPower extends AbstractTestCard {
 	public static final String ID = "BackupPower";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
 	private static final String[] E = { " [R]", " [G]", " [B]", " [W]" };
-    public static final String IMG = TestMod.cardIMGPath("relic1");
 	private static final int COST = 1;
 	private static final int BASE_MGC = 2;
 
 	public BackupPower() {
-		super(TestMod.makeID(ID), NAME, IMG, COST, getDescription(BASE_MGC), CardType.SKILL, CardColor.COLORLESS, CardRarity.RARE,
-				CardTarget.NONE);
-		this.baseMagicNumber = BASE_MGC;
-		this.magicNumber = this.baseMagicNumber;
+		super(ID, NAME, COST, getDescription(BASE_MGC), CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
+		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 	}
 
 	public static String getDescription(int mgc) {

@@ -2,8 +2,6 @@ package relics;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -35,15 +33,11 @@ import com.megacrit.cardcrawl.vfx.GameSavedEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import actions.HopeAction;
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class Hope extends MyRelic implements MiscMethods {
 	public static final String ID = "Hope";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	
-	public static final String DESCRIPTION = "每受到一次 #y攻击 伤害，有 #b0.618% 的概率回复所有生命并使所有敌人直接死亡。当手牌用完时，有 #b6.18% 的概率可以从牌组中选择将最多 #b10 张牌的复制品放入手牌。每次受到 #y攻击 伤害未触发时，其触发概率增加 #b0.618%  ，触发后增加的概率清零。";//遗物效果的文本描叙。
-	
+
 	public static Random HPRng = new Random();
 	public static Random cardRng = new Random();
 	public static final int RATE = 618;
@@ -55,15 +49,15 @@ public class Hope extends MyRelic implements MiscMethods {
 	private boolean disabledUntilEndOfTurn;
 	
 	public Hope() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 		this.counter = 0;
 	}
 	
 	public String getUpdatedDescription() {
 		if (!isObtained)
-			return DESCRIPTION;
+			return DESCRIPTIONS[2];
 		if (this.counter == 0)
-			return DESCRIPTION;
+			return DESCRIPTIONS[2];
 		float rateHP = (RATE + this.counter * DELTA) / 1000f;
 		return DESCRIPTIONS[0] + rateHP + DESCRIPTIONS[1];
 	}

@@ -2,8 +2,6 @@ package relics;
 
 import java.util.Iterator;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -33,9 +31,6 @@ import utils.MiscMethods;
 
 public class Sins extends MyRelic implements MiscMethods {
 	public static final String ID = "SevenDeadlySins";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	
-	public static final String DESCRIPTION = "拾取时，如果未拥有，获得毒巫娃娃、黑石护符、蓝蜡烛，获得七原罪诅咒。如果牌组中存在每种七大罪，击败Boss后能获得一件额外的Boss遗物。";//遗物效果的文本描叙。
 	
 	public static final AbstractCard[] SINS = {new Pride(), new Lust(), new Wrath(), new Sloth(), new Envy(), new Greed(), new Gluttony()};
 	public static final AbstractRelic[] RELICS = {new DuVuDoll(), new DarkstonePeriapt(), new BlueCandle()};
@@ -54,7 +49,7 @@ public class Sins extends MyRelic implements MiscMethods {
     }
     
 	public Sins() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.SPECIAL, LandingSound.HEAVY);
+		super(ID, RelicTier.SPECIAL, LandingSound.HEAVY);
 	}
 	
 	public String getUpdatedDescription() {
@@ -172,7 +167,7 @@ public class Sins extends MyRelic implements MiscMethods {
 			return;
 		this.setTryEquip(true);
 		this.checkChangeMaxHP();
-    }//触发时机：当玩家获得该遗物时。(参考灵体外质、诅咒钥匙、天鹅绒项圈等)
+    }
 	
 	public static boolean isSin(AbstractCard c) {
 		switch (c.cardID) {

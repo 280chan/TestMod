@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
@@ -15,8 +13,6 @@ import mymod.TestMod;
 
 public class DragonStarHat extends MyRelic {
 	public static final String ID = "DragonStarHat";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "每当你在休息处休息后，充能值上限增加 #b1 。每当你经过休息处，将充能值恢复至最大。每次休息处后的战斗开始时获得充能值点 #y力量 并减少 #b1 点充能。";
 	public int maxValue = 0;
 	
 	private void save() {
@@ -37,7 +33,7 @@ public class DragonStarHat extends MyRelic {
 	}
 	
 	public DragonStarHat() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.UNCOMMON, LandingSound.FLAT);
+		super(ID, RelicTier.UNCOMMON, LandingSound.FLAT);
 	}
 	
 	public String getUpdatedDescription() {
@@ -83,16 +79,14 @@ public class DragonStarHat extends MyRelic {
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
-		if (!(room instanceof RestRoom)) {
+		if (!(room instanceof RestRoom))
 			if (this.maxValue != TestMod.config.getInt("HatMaxStr"))
 				save();
-		}
     }
 	
 	public boolean canSpawn() {
-		if (!Settings.isEndless && AbstractDungeon.actNum > 1) {
+		if (!Settings.isEndless && AbstractDungeon.actNum > 1)
 			return false;
-		}
 		return true;
 	}
 	

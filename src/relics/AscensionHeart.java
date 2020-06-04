@@ -2,8 +2,6 @@ package relics;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.relics.OnPlayerDeathRelic;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -33,7 +31,6 @@ import powers.EventHalfDamagePower;
 
 public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 	public static final String ID = "AscensionHeart";
-	public static final String IMG = TestMod.relicIMGPath(ID);
 	public static final String DESCRIPTION = "依据 #y进阶等级 获得增益。";
 	public static final String[] TEXT = new String[25];
 	public static final String[] NEGATIVE_TEXT = new String[20];
@@ -99,7 +96,7 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 
 	
 	public AscensionHeart() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.SPECIAL, LandingSound.HEAVY);
+		super(ID, RelicTier.SPECIAL, LandingSound.HEAVY);
 	}
 	
 	public String getUpdatedDescription() {

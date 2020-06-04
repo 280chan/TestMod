@@ -1,12 +1,9 @@
 
 package cards.colorless;
 
-import basemod.abstracts.*;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
@@ -17,20 +14,19 @@ import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.badlogic.gdx.math.MathUtils;
 
-public class Arrangement extends CustomCard {
+public class Arrangement extends AbstractTestCard {
     public static final String ID = "Arrangement";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
-    public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = -1;
     private static final int BASE_BLK = 0;
     private static final int BASE_DMG = 0;
     private static final int BASE_MGC = 1;
 
     public Arrangement() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.ATTACK, CardColor.COLORLESS, CardRarity.RARE, CardTarget.SELF_AND_ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.RARE, CardTarget.SELF_AND_ENEMY);
         this.baseBlock = BASE_BLK;
         this.baseDamage = BASE_DMG;
         this.baseMagicNumber = BASE_MGC;

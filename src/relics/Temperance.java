@@ -3,8 +3,6 @@ package relics;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -17,9 +15,6 @@ import mymod.TestMod;
 public class Temperance extends MyRelic {
 	private static final Logger logger = LogManager.getLogger(Temperance.class.getName());
 	public static final String ID = "Temperance";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	
-	public static final String DESCRIPTION = "每当你在牌组中增加 #b3 张牌，有一次选择移除 #b1 张牌的机会。";//遗物效果的文本描叙。
 	
 	public static int sizeToRemove;
 	public static boolean cardSelected = true;
@@ -27,7 +22,7 @@ public class Temperance extends MyRelic {
 	private static CurrentScreen pre;
 	
 	public Temperance() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.MAGICAL);
+		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

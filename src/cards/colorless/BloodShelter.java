@@ -1,26 +1,22 @@
 
 package cards.colorless;
 
+import cards.AbstractTestCard;
 import cards.AbstractUpdatableCard;
-import mymod.TestMod;
-
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.ChangeBloodAction;
 
-import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class BloodShelter extends AbstractUpdatableCard {
     public static final String ID = "BloodShelter";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-    public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = 3;
     private static final int BLOCK = -1;
     private static final String DESCRIPTION = getDescription(BLOCK, false, false);
@@ -33,7 +29,7 @@ public class BloodShelter extends AbstractUpdatableCard {
     }
     
     public BloodShelter() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.SKILL, CardColor.COLORLESS, CardRarity.RARE, CardTarget.ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
         this.baseBlock = 0;
         this.exhaust = true;
     }
@@ -41,9 +37,9 @@ public class BloodShelter extends AbstractUpdatableCard {
     public void use(final AbstractPlayer p, final AbstractMonster m) {
     	this.preApplyPowers(p, m);
     	super.applyPowers();
-        AbstractDungeon.actionManager.addToBottom(new GainBlockAction(p, p, this.block));
-        AbstractDungeon.actionManager.addToBottom(new GainBlockAction(m, p, this.block));
-        AbstractDungeon.actionManager.addToBottom(new ChangeBloodAction(p, m));
+        this.addToBot(new GainBlockAction(p, p, this.block));
+        this.addToBot(new GainBlockAction(m, p, this.block));
+        this.addToBot(new ChangeBloodAction(p, m));
     }
     
 	@Override

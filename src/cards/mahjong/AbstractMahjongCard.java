@@ -6,25 +6,28 @@ import java.util.ArrayList;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.random.Random;
 
-import basemod.abstracts.*;
+import cards.AbstractTestCard;
 import mymod.TestMod;
 import relics.Mahjong;
 import utils.MiscMethods;
 
-public abstract class AbstractMahjongCard extends CustomCard implements MiscMethods {
+public abstract class AbstractMahjongCard extends AbstractTestCard implements MiscMethods {
 	private static final String ID_PREFIX = "Mahjong";
 	private static final String[] COLOR_ID = { "m", "p", "s", "z" };
-	private static final String[] COLOR_NAME = { "万", "饼", "索" };
-	private static final String[] NUM_NAME = { "红五", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
-	private static final String[] ZI_NAME = { "东", "南", "西", "北", "白", "发", "中" };
+
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID_PREFIX);
+	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
+	private static final String[] COLOR_NAME = getNames(0);
+	private static final String[] NUM_NAME = getNames(1);
+	private static final String[] ZI_NAME = getNames(2);
 	private static final AbstractMahjongCard INSTANCE = new AbstractMahjongCard(0, 0, "", CardType.STATUS, CardTarget.NONE) {
 		@Override
 		public void upgrade() {
 		}
-
 		@Override
 		public void use(AbstractPlayer p, AbstractMonster m) {
 		}
@@ -37,6 +40,24 @@ public abstract class AbstractMahjongCard extends CustomCard implements MiscMeth
 	private int preMgc;
 	
 	private int doraApplied = 0;
+	
+	private static String[] getNames(int type) {
+		if (type == 0)
+			return getNames(0, 3);
+		if (type == 1)
+			return getNames(3, 13);
+		if (type == 2)
+			return getNames(13, 20);
+		return null;
+	}
+	
+	private static String[] getNames(int start, int end) {
+		String[] tmp = new String[end - start];
+		for (int i = 0; i < end - start; i++) {
+			tmp[i] = EXTENDED_DESCRIPTION[start + i];
+		}
+		return tmp;
+	}
 	
 	public boolean isW() {
 		return this.color == COLOR_W;
@@ -63,7 +84,7 @@ public abstract class AbstractMahjongCard extends CustomCard implements MiscMeth
 	}
 	
 	public AbstractMahjongCard(int color, int num, String desc, CardType type, CardTarget target) {
-		super(TestMod.makeID(getID(color, num)), getName(color, num), getIMG(color, num), 0, desc, type, CardColor.COLORLESS, CardRarity.SPECIAL, target);
+		super(getID(color, num), getName(color, num), 0, desc, type, CardRarity.SPECIAL, target);
 		this.color = color;
 		this.num = num;
 	}
@@ -86,10 +107,6 @@ public abstract class AbstractMahjongCard extends CustomCard implements MiscMeth
 		if (color == 3)
 			return ZI_NAME[num - 1];
 		return NUM_NAME[num] + COLOR_NAME[color];
-	}
-	
-	private static String getIMG(int color, int num) {
-		return TestMod.cardIMGPath(getID(color, num));
 	}
 	
 	public static void setRng() {

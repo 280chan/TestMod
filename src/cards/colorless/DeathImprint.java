@@ -6,37 +6,32 @@ import powers.DeathImprintPower;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import actions.DeathImprintAction;
-import basemod.abstracts.CustomCard;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-public class DeathImprint extends CustomCard {
+public class DeathImprint extends AbstractTestCard {
     public static final String ID = "DeathImprint";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    public static final String IMG = TestMod.cardIMGPath("relic1");
-    private static final int COST = 2;//卡牌费用
-    private static final int BASE_DMG = 8;//基础伤害值
-    private static final int BASE_MGC = 80;//基础伤害值
+    private static final int COST = 2;
+    private static final int BASE_DMG = 8;
+    private static final int BASE_MGC = 80;
     public boolean same = false;
 
     public DeathImprint() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.ATTACK, CardColor.COLORLESS, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;
-        this.baseMagicNumber = BASE_MGC;//特殊值，一般用来叠BUFF层数。和下一行连用。
-        this.magicNumber = this.baseMagicNumber;
+        this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	AbstractDungeon.actionManager.addToBottom(new DeathImprintAction(p, m, this.damage, this.damageTypeForTurn));//造成伤害
+    	this.addToBot(new DeathImprintAction(p, m, this.damage, this.damageTypeForTurn));
     }
 
 	public void triggerOnGlowCheck() {
@@ -49,7 +44,7 @@ public class DeathImprint extends CustomCard {
 		}
 	}
     
-	public void calculateCardDamage(AbstractMonster m) {
+	private int fakeCardDamage(AbstractMonster m) {
 		AbstractPlayer player = AbstractDungeon.player;
 		this.isDamageModified = false;
 		float tmp = this.baseDamage;
@@ -96,8 +91,26 @@ public class DeathImprint extends CustomCard {
 			if (tmp < 0.0F) {
 				tmp = 0.0F;
 			}
-			this.damage = MathUtils.floor(tmp);
 		}
+		return MathUtils.floor(tmp);
+	}
+	
+	public void calculateCardDamage(AbstractMonster m) {
+		int dmg = this.fakeCardDamage(m);
+		this.isDamageModified = false;
+		int tmp = this.baseDamage;
+		if (m != null) {
+			if (m.hasPower(DeathImprintPower.POWER_ID)) {
+				this.baseDamage += m.getPower(DeathImprintPower.POWER_ID).amount * this.magicNumber / 100f;
+				if (this.baseDamage != tmp) {
+					this.isDamageModified = true;
+				}
+			}
+		}
+		super.calculateCardDamage(m);
+		this.baseDamage = tmp;
+		if (dmg > this.damage)
+			this.damage = dmg;
 	}
     
     public void upgrade() {

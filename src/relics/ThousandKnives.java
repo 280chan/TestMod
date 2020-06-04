@@ -1,8 +1,6 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
@@ -12,18 +10,15 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class ThousandKnives extends MyRelic implements MiscMethods {
 	public static final String ID = "ThousandKnives";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "每当你抽到 #b0 耗能的攻击牌时，将一张其复制品放入手牌。每当你打出 #b0 耗能的攻击牌时，将一张其复制品放入弃牌堆。打出时，手牌中每有一张 #b0 耗能的攻击牌，获得 #b1 格挡。";//遗物效果的文本描叙。
 	
 	private static Color color = null;
 	
 	public ThousandKnives() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.SOLID);
+		super(ID, RelicTier.RARE, LandingSound.SOLID);
 	}
 	
 	public String getUpdatedDescription() {
@@ -77,15 +72,15 @@ public class ThousandKnives extends MyRelic implements MiscMethods {
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
 		if (this.isActive && checkCard(c)) {
-			AbstractDungeon.actionManager.addToBottom(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, countCards(), true));
-			AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(c.makeStatEquivalentCopy(), 1));
+			this.addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, countCards(), true));
+			this.addToBot(new MakeTempCardInDiscardAction(c.makeStatEquivalentCopy(), 1));
 			this.show();
 		}
 	}
 	
 	public void onCardDraw(final AbstractCard c) {
 		if (this.isActive && checkCard(c)) {
-			AbstractDungeon.actionManager.addToTop(new MakeTempCardInHandAction(c.makeStatEquivalentCopy()));
+			this.addToTop(new MakeTempCardInHandAction(c.makeStatEquivalentCopy()));
 			this.show();
 		}
     }

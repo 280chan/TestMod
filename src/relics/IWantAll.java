@@ -2,8 +2,6 @@ package relics;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
@@ -13,19 +11,16 @@ import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
-import mymod.TestMod;
 import potions.EscapePotion;
 
 public class IWantAll extends AbstractClickRelic {
 	public static final String ID = "IWantAll";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "有 #b10 次机会，可以在战斗奖励界面右键点击此遗物，添加一份完全相同的该次战斗的卡牌奖励，每场战斗只能使用一次。";//遗物效果的文本描叙。
 	public static final int COUNT = 10;
 	
 	private boolean victory = false;
 	
 	public IWantAll() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.SHOP, LandingSound.MAGICAL);
+		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
 		this.counter = COUNT;
 	}
 	

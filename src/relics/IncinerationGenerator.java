@@ -1,24 +1,18 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.ExhaustAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class IncinerationGenerator extends MyRelic implements MiscMethods {
 	public static final String ID = "IncinerationGenerator";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	
-	public static final String DESCRIPTION = "每回合开始获得 [R] ， #y消耗 一张牌。";//遗物效果的文本描叙。
 	
 	public IncinerationGenerator() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.HEAVY);
+		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
 	}
 	
 	public String getUpdatedDescription() {
@@ -48,7 +42,7 @@ public class IncinerationGenerator extends MyRelic implements MiscMethods {
 	
 	public void atTurnStartPostDraw() {
 		AbstractPlayer p = AbstractDungeon.player;
-		AbstractDungeon.actionManager.addToBottom(new ExhaustAction(p, p, 1, false));
+		this.addToBot(new ExhaustAction(p, p, 1, false));
 	}
 	
 }

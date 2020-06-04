@@ -2,8 +2,6 @@ package relics;
 
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
@@ -21,8 +19,6 @@ import utils.TestBoxRelicSelectScreen;
 
 public class TestBox extends AbstractDoubleClickableRelic {
 	public static final String ID = "TestBox";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "右键单击或右键双击本遗物，从遗物和卡牌中选择一类，再从随机的 #b3 件本 #bmod 内的该类物品中选择 #b1 件获得。使用后本遗物失效。";//遗物效果的文本描叙。
 	
 	public boolean relicSelected = true;
 	private boolean cardSelected = true;
@@ -43,7 +39,7 @@ public class TestBox extends AbstractDoubleClickableRelic {
 	}
 	
 	public TestBox() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.SPECIAL, LandingSound.MAGICAL);
+		super(ID, RelicTier.SPECIAL, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

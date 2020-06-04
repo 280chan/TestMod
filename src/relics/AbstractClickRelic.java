@@ -1,14 +1,13 @@
 package relics;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public abstract class AbstractClickRelic extends MyRelic {
 	private boolean RclickStart;
 	private boolean Rclick;
 
-	public AbstractClickRelic(String id, Texture texture, RelicTier tier, LandingSound sfx) {
-		super(id, texture, tier, sfx);
+	public AbstractClickRelic(String id, RelicTier tier, LandingSound sfx) {
+		super(id, tier, sfx);
 		this.Rclick = false;
 		this.RclickStart = false;
 	}

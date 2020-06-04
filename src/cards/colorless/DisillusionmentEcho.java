@@ -8,27 +8,23 @@
 
 package cards.colorless;
 
-import basemod.abstracts.*;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import actions.DisillusionmentEchoAction;
 
-public class DisillusionmentEcho extends CustomCard {
+public class DisillusionmentEcho extends AbstractTestCard {
 	public static final String ID = "DisillusionmentEcho";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-	public static final String IMG = TestMod.cardIMGPath("relic1");
-	private static final int COST = -1;// 卡牌费用
+	private static final int COST = -1;
 
 	public DisillusionmentEcho() {
-		super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.POWER, CardColor.COLORLESS, CardRarity.RARE, CardTarget.SELF);
+		super(ID, NAME, COST, DESCRIPTION, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
 		this.baseMagicNumber = 3;
 		this.magicNumber = this.baseMagicNumber;
 	}

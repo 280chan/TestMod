@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -16,8 +14,6 @@ import mymod.TestMod;
 
 public class Faith extends MyRelic {
 	public static final String ID = "Faith";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "每当你进入商店时，获得离开商店就会消失的巨额金币。你在该商店购买第一件商品后，将金币恢复到获得金币前的数值。下一次进入商店时，扣除此商品价格的金币，如果不足则将金币变为 #b0 后受到 #b25% 当前生命和 #b10% 剩余欠款中较大值的伤害(至少1点)，并将剩余欠款延续至下一个商店。";//遗物效果的文本描叙。
 	
 	private boolean gained = false;
 	private static final int TMP_GOLD = 1000000;
@@ -41,7 +37,7 @@ public class Faith extends MyRelic {
 	}
 	
 	public Faith() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.SHOP, LandingSound.CLINK);
+		super(ID, RelicTier.SHOP, LandingSound.CLINK);
 		this.counter = 0;
 	}
 	

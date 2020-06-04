@@ -3,28 +3,23 @@ package relics;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class CyclicPeriapt extends MyRelic implements MiscMethods {
 	public static final String ID = "CyclicPeriapt";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "你的每张 #y消耗 牌在每场战斗中第一次被打出时不会被 #y消耗 。";
 	
 	private static Color color = null;
 	private ArrayList<UUID> used = new ArrayList<UUID>();
 	
 	public CyclicPeriapt() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

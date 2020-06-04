@@ -1,6 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.relics.OnPlayerDeathRelic;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -11,8 +10,8 @@ public abstract class AbstractRevivalRelicToModifyDamage extends MyRelic impleme
 	protected int previousFuckHp = -1;
 	protected boolean deathTriggered = false;
 	
-	public AbstractRevivalRelicToModifyDamage(String id, Texture texture, RelicTier tier, LandingSound sfx) {
-		super(id, texture, tier, sfx);
+	public AbstractRevivalRelicToModifyDamage(String id, RelicTier tier, LandingSound sfx) {
+		super(id, tier, sfx);
 	}
 	
 	protected abstract int damageModifyCheck(AbstractPlayer p, DamageInfo info, int originalDamage);

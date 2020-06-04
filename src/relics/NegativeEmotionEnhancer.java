@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
@@ -17,11 +15,9 @@ import utils.MiscMethods;
 
 public class NegativeEmotionEnhancer extends MyRelic implements MiscMethods {
 	public static final String ID = "NegativeEmotionEnhancer";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "每回合开始获得 [R] ，轮流获得 #y脆弱 、 #y虚弱 、 #y易伤 。击败敌人时，恢复 #b1 点生命。战斗胜利时增加 #b1 点最大生命。";
 	
 	public NegativeEmotionEnhancer() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.HEAVY);
+		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
 	}
 	
 	public String getUpdatedDescription() {
@@ -67,13 +63,13 @@ public class NegativeEmotionEnhancer extends MyRelic implements MiscMethods {
 		AbstractPlayer p = AbstractDungeon.player;
 		switch (this.counter % 3) {
 		case 1:
-			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new FrailPower(p, 1, false), 1));
+			this.addToBot(new ApplyPowerAction(p, p, new FrailPower(p, 1, false), 1));
 			break;
 		case 2:
-			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new WeakPower(p, 1, false), 1));
+			this.addToBot(new ApplyPowerAction(p, p, new WeakPower(p, 1, false), 1));
 			break;
 		case 0:
-			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new VulnerablePower(p, 1, false), 1));
+			this.addToBot(new ApplyPowerAction(p, p, new VulnerablePower(p, 1, false), 1));
 			break;
 		}
     }

@@ -1,26 +1,20 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class Muramasa extends MyRelic implements MiscMethods {
 	public static final String ID = "Muramasa";
-	public static final String IMG = TestMod.relicIMGPath(ID);
 	
-	public static final String DESCRIPTION = "每当你抽到或打出 #b0 耗能的攻击牌次数合计为 #b2 时，抽 #b1 张牌。";
-
 	private static Color color = null;
 	
 	public Muramasa() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.CLINK);
+		super(ID, RelicTier.RARE, LandingSound.CLINK);
 	}
 	
 	public String getUpdatedDescription() {
@@ -33,7 +27,7 @@ public class Muramasa extends MyRelic implements MiscMethods {
 			if (counter == 2) {
 				counter = 0;
 				this.show();
-				AbstractDungeon.actionManager.addToBottom(new DrawCardAction(AbstractDungeon.player, 1));
+				this.addToBot(new DrawCardAction(AbstractDungeon.player, 1));
 			}
 		}
 	}

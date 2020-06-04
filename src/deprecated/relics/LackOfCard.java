@@ -26,7 +26,7 @@ public class LackOfCard extends MyRelic implements MiscMethods {
 	private static boolean firstTurn = false;
 	
 	public LackOfCard() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.FLAT);
+		super(ID, RelicTier.BOSS, LandingSound.FLAT);
 	}
 	
 	public String getUpdatedDescription() {

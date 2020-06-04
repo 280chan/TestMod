@@ -1,11 +1,10 @@
 
-package powers;//包名，请根据自己的包路径修改，一般在创建类的时候自动填好。
+package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.OnReceivePowerPower;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
@@ -19,7 +18,10 @@ public class JusticePower extends AbstractPower implements OnReceivePowerPower, 
     public static final String IMG = TestMod.powerIMGPath(POWER_ID);
 	public static final String DESCRIPTION = "每当你获得负面状态时，增加 #b1 力量。";
 	
-	public JusticePower(AbstractCreature owner) {
+	private Justice j;
+	
+	public JusticePower(AbstractCreature owner, Justice j) {
+		this.j = j;
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = owner;
@@ -36,8 +38,8 @@ public class JusticePower extends AbstractPower implements OnReceivePowerPower, 
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature t, AbstractCreature source) {
 		if (t.isPlayer && p.type == PowerType.DEBUFF) {
-    		((Justice)AbstractDungeon.player.getRelic(TestMod.makeID(Justice.ID))).show();
-    		AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(t, t, new StrengthPower(t, 1), 1));
+    		this.j.show();
+    		this.addToTop(new ApplyPowerAction(t, t, new StrengthPower(t, 1), 1));
     	}
 		return true;
 	}

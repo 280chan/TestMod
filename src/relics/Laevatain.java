@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
@@ -15,11 +13,9 @@ import mymod.TestMod;
 
 public class Laevatain extends MyRelic {
 	public static final String ID = "Laevatain";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "拾取时获得三张随机 #y诅咒 。战斗开始时获得 #b3 点 #y力量 。每 #b3 回合获得你牌组中诅咒牌数量点 #y力量 。";//遗物效果的文本描叙。
 	
 	public Laevatain() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.HEAVY);
+		super(ID, RelicTier.RARE, LandingSound.HEAVY);
 	}
 	
 	public String getUpdatedDescription() {
@@ -45,7 +41,7 @@ public class Laevatain extends MyRelic {
 			}
 		}
 	    AbstractDungeon.gridSelectScreen.openConfirmationGrid(group, "魔剑侵袭...");
-    }//触发时机：当玩家获得该遗物时。(参考灵体外质、诅咒钥匙、天鹅绒项圈等)
+    }
 	
 	public void atPreBattle() {
 		this.counter = 0;
@@ -62,7 +58,7 @@ public class Laevatain extends MyRelic {
 	}
 	
 	private void applyStrength(int amount) {
-		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new StrengthPower(AbstractDungeon.player, amount), amount));
+		this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new StrengthPower(AbstractDungeon.player, amount), amount));
 	}
 	
 	public void atTurnStart() {
@@ -74,10 +70,10 @@ public class Laevatain extends MyRelic {
 				this.show();
 			}
 		}
-    }//触发时机：在玩家回合开始时。
+    }
 	
 	public void onVictory() {
 		this.counter = -1;
-    }//触发时机：当玩家战斗胜利时。(参考精致折扇)
+    }
 	
 }

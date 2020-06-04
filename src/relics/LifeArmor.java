@@ -1,22 +1,16 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
-import mymod.TestMod;
-
 public class LifeArmor extends MyRelic {
 	public static final String ID = "LifeArmor";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "在战斗中失去生命后，立即获得其数值的 #y格挡 ，每失去一次，下次额外获得 #b1 点。";
 
 	public LifeArmor() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

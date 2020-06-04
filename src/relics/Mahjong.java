@@ -3,8 +3,6 @@ package relics;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
@@ -18,9 +16,7 @@ import utils.MiscMethods;
 
 public class Mahjong extends MyRelic implements MiscMethods {
 	public static final String ID = "Mahjong";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "在战斗中进行麻将游戏，每回合开始摸一张麻将牌后选择切出一张，将其加入手牌。打出宝牌的效果翻倍。根据和牌点数获得其他效果。";
-
+	
 	public static final String[] YAMA_NAME = { "w0", "w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8", "w9", "p0", "p1",
 			"p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "s0", "s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9",
 			"z1", "z2", "z3", "z4", "z5", "z6", "z7" };
@@ -51,7 +47,7 @@ public class Mahjong extends MyRelic implements MiscMethods {
 	private static boolean saveLater = false;
 	
 	public Mahjong() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.SPECIAL, LandingSound.MAGICAL);
+		super(ID, RelicTier.SPECIAL, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

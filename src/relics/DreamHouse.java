@@ -2,8 +2,6 @@ package relics;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
@@ -20,13 +18,11 @@ import utils.MiscMethods;
 
 public class DreamHouse extends MyRelic implements MiscMethods {
 	public static final String ID = "DreamHouse";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "拾取时获得 #y开心小花 和 #y灯笼 。每回合开始获得 [R] 。你只能获得普通卡。";
 	private static final AbstractRelic[] RELICS = { new HappyFlower(), new Lantern() };
 	private static final ArrayList<DreamHousePurgeCardAction> QUEUE = new ArrayList<DreamHousePurgeCardAction>();
 	
 	public DreamHouse() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.HEAVY);
+		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
 	}
 	
 	public String getUpdatedDescription() {

@@ -1,34 +1,29 @@
 
 package cards.colorless;
 
-import basemod.abstracts.*;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.ModifyCostForCombatAction;
 
-import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.*;  //改成自己的import
 
-public class PocketStoneCalender extends CustomCard {
+public class PocketStoneCalender extends AbstractTestCard {
     public static final String ID = "PocketStoneCalender";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     private static final String DESCRIPTION = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[2];
-	public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = 0;//卡牌费用
     private static final int ATTACK_DMG = 0;//基础伤害值
     private static final int BASE_MGC = 2;
 
     public PocketStoneCalender() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.ATTACK, CardColor.COLORLESS, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = ATTACK_DMG;
         this.baseMagicNumber = BASE_MGC;
         this.magicNumber = this.baseMagicNumber;
@@ -40,8 +35,8 @@ public class PocketStoneCalender extends CustomCard {
     }
     
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	AbstractDungeon.actionManager.addToBottom(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_DIAGONAL));
-    	AbstractDungeon.actionManager.addToBottom(new ModifyCostForCombatAction(this.uuid, this.magicNumber));
+    	this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_DIAGONAL));
+    	this.addToBot(new ModifyCostForCombatAction(this.uuid, this.magicNumber));
     }
     
     public void calculateCardDamage(AbstractMonster m) {

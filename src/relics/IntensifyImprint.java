@@ -1,23 +1,18 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
-import mymod.TestMod;
 import powers.IntensifyImprintPower;
 
 public class IntensifyImprint extends MyRelic {
 	public static final String ID = "IntensifyImprint";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "你每对敌人造成一次伤害，你在下一回合开始前对敌人造成伤害的最终数值都会增加 #b1 。";//遗物效果的文本描叙。
 	
 	public IntensifyImprint() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 		this.counter = -1;
 	}
 	

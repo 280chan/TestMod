@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
@@ -16,17 +14,12 @@ import com.megacrit.cardcrawl.powers.NightmarePower;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
-import mymod.TestMod;
 import powers.D_4Power;
 import utils.MiscMethods;
 
 public class D_4 extends MyRelic implements MiscMethods {
 	
 	public static final String ID = "D_4";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	
-	public static final String DESCRIPTION = "每当你打出一张牌时，将随机触发以下 #b4 种效果之一。将这张牌 #y消耗 ，回复其消费的能量，额外打出一次， #y夜魇 这张牌。你可以提前知道接下来一张牌将会触发的效果。";//遗物效果的文本描叙。
-	
 	public static Situation nextSituation = null;
 	private static final Situation[] SITUATIONS = {Situation.EXHAUST, Situation.REGAIN, Situation.DUALPLAY, Situation.NIGHTMARE};
 	private static final int LENGTH = SITUATIONS.length;
@@ -53,7 +46,7 @@ public class D_4 extends MyRelic implements MiscMethods {
 	}
 	
 	public D_4() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.MAGICAL);
+		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
@@ -81,7 +74,7 @@ public class D_4 extends MyRelic implements MiscMethods {
 			cost = card.energyOnUse;
 		else if (cost == -2)
 			cost = 0;
-		AbstractDungeon.actionManager.addToBottom(new GainEnergyAction(cost));
+		this.addToBot(new GainEnergyAction(cost));
 	}
 	
 	private void exhaust(AbstractCard card, UseCardAction action) {
@@ -91,7 +84,7 @@ public class D_4 extends MyRelic implements MiscMethods {
 	
 	private void nightmare(AbstractCard c) {
 		AbstractPlayer p = AbstractDungeon.player;
-		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new NightmarePower(p, 3, c)));
+		this.addToBot(new ApplyPowerAction(p, p, new NightmarePower(p, 3, c)));
 	}
 	
 	public void onUseCard(final AbstractCard card, final UseCardAction action) {
@@ -119,8 +112,7 @@ public class D_4 extends MyRelic implements MiscMethods {
 			}
 			this.setNextSituation();
 		}
-	}//触发时机：当一张卡被打出且卡牌效果生效后。(参考死灵之书)
-	//targetCard.可调用卡牌信息,比如稀有度、费用。
+	}
 	
 	private int getRoll(int n) {
 		return this.rng.random(n - 1);
@@ -138,21 +130,19 @@ public class D_4 extends MyRelic implements MiscMethods {
 		}
 		this.rng = this.copyRNG(AbstractDungeon.miscRng);
 		this.init();
-    }//触发时机：每一场战斗（具体作用时机未知）
+    }
 	
 	private void init() {
 		AbstractPlayer p = AbstractDungeon.player;
 		this.setNextSituation();
-		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new D_4Power(p, nextSituation)));
+		this.addToBot(new ApplyPowerAction(p, p, new D_4Power(p, nextSituation)));
 	}
 	
 	private void tryRemove() {
 		AbstractPlayer p = AbstractDungeon.player;
-		for (AbstractPower power : p.powers) {
-			if (power instanceof D_4Power) {
-				AbstractDungeon.actionManager.addToTop(new RemoveSpecificPowerAction(p, p, power.ID));
-			}
-		}
+		for (AbstractPower power : p.powers)
+			if (power instanceof D_4Power)
+				this.addToTop(new RemoveSpecificPowerAction(p, p, power.ID));
 	}
 	
 }

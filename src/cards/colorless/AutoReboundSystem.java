@@ -1,13 +1,11 @@
 
 package cards.colorless;
 
-import basemod.abstracts.*;
-import mymod.TestMod;
+import cards.AbstractTestCard;
 import powers.AutoReboundPower;
 
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.BerserkPower;
 import com.megacrit.cardcrawl.powers.DrawPower;
@@ -15,18 +13,17 @@ import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
-public class AutoReboundSystem extends CustomCard {
+public class AutoReboundSystem extends AbstractTestCard {
 	public static final String ID = "AutoReboundSystem";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-    public static final String IMG = TestMod.cardIMGPath("relic1");
 	private static final String[] E = { " [R]", " [G]", " [B]", " [W]" };
 	private static final int COST = 3;// 卡牌费用
 	private static final int BASEMAGIC = 1;
 
 	public AutoReboundSystem() {
-		super(TestMod.makeID(ID), NAME, IMG, COST, getDescription(), CardType.POWER, CardColor.COLORLESS, CardRarity.RARE, CardTarget.SELF);
+		super(ID, NAME, COST, getDescription(), CardType.POWER, CardRarity.RARE, CardTarget.SELF);
 		this.baseMagicNumber = BASEMAGIC;
 		this.magicNumber = this.baseMagicNumber;
 	}

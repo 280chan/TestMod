@@ -2,9 +2,7 @@ package relics;
 
 import java.util.HashMap;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.blights.AbstractBlight;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -24,9 +22,6 @@ import utils.MiscMethods;
 
 public class Prudence extends MyRelic implements MiscMethods {
 	public static final String ID = "Prudence";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	
-	public static final String DESCRIPTION = "你可以在你的回合打出一切由于能量不足以外原因而不能被打出的牌。如果是 #y状态 或 #y诅咒 ，将其 #y消耗 。(有许多bug被宽容了)";//遗物效果的文本描叙。
 	
 	public static AbstractPlayer p;
 	private boolean active;
@@ -37,7 +32,7 @@ public class Prudence extends MyRelic implements MiscMethods {
 	private static Color color = null;
 	
 	public Prudence() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.MAGICAL);
+		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
@@ -176,7 +171,7 @@ public class Prudence extends MyRelic implements MiscMethods {
 	}
 	
 	private void playCard(AbstractCard c, AbstractMonster hovered) {
-		AbstractDungeon.actionManager.addToBottom(new PlaySpecificCardAction(hovered, c, true));
+		this.addToBot(new PlaySpecificCardAction(hovered, c, true));
 		isDone = false;
 	}
 	

@@ -1,21 +1,15 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
-import mymod.TestMod;
-
 public class CasingShield extends MyRelic {
 	public static final String ID = "CasingShield";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "每当你获得一次 #y格挡 ，本回合接下来获得的 #y格挡 数值都将增加 #b1 。";//遗物效果的文本描叙。
 	
 	public CasingShield() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

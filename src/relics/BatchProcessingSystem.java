@@ -1,8 +1,6 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
@@ -15,13 +13,11 @@ import utils.MiscMethods;
 
 public class BatchProcessingSystem extends MyRelic implements MiscMethods {
 	public static final String ID = "BatchProcessingSystem";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "每回合开始减少 [R] 。每当你在同一回合内连续打出的两张牌耗能相同时，获得 [R] 。";//遗物效果的文本描叙。
 	
 	private static Color color = null;
 	
 	public BatchProcessingSystem() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.SOLID);
+		super(ID, RelicTier.BOSS, LandingSound.SOLID);
 	}
 	
 	public String getUpdatedDescription() {

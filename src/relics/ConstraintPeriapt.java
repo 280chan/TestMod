@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
@@ -16,16 +14,13 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class ConstraintPeriapt extends MyRelic implements MiscMethods {
 	public static final String ID = "ConstraintPeriapt";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "战斗开始时，将 #b1 张 #y灼伤 洗入抽牌堆。回合结束时，不考虑能量因素，你手牌中每有一张不能被打出的牌，恢复 #b1 生命并对所有敌人造成 #b10 点伤害。";//遗物效果的文本描叙。
-	
+
 	public ConstraintPeriapt() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
@@ -78,7 +73,7 @@ public class ConstraintPeriapt extends MyRelic implements MiscMethods {
 		}
 		for (int i = 0; i < amount; i++) {
 			p.heal(1);
-			AbstractDungeon.actionManager.addToBottom(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(10, true), DamageType.THORNS, AttackEffect.FIRE));
+			this.addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(10, true), DamageType.THORNS, AttackEffect.FIRE));
 		}
 		
     }

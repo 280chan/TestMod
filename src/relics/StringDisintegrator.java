@@ -2,8 +2,6 @@ package relics;
 
 import java.util.HashMap;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
@@ -17,8 +15,6 @@ import utils.MiscMethods;
 
 public class StringDisintegrator extends MyRelic implements MiscMethods {
 	public static final String ID = "StringDisintegrator";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "每回合开始获得 [R] 。你在战斗中无法再看见所有牌的文字。";
 	
 	private static final String EMPTY = "";
 	private static final HashMap<AbstractCard, String> DESC = new HashMap<AbstractCard, String>();
@@ -27,7 +23,7 @@ public class StringDisintegrator extends MyRelic implements MiscMethods {
 	
 
 	public StringDisintegrator() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.HEAVY);
+		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
 	}
 	
 	public String getUpdatedDescription() {

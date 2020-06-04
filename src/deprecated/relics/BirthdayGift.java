@@ -22,7 +22,7 @@ public class BirthdayGift extends MyRelic {
 	private static final AbstractRelic[] RELICS = {new AncientTeaSet(), new ArtOfWar(), new HappyFlower(), new Lantern(), new GremlinHorn(), /*new Dodecahedron(),*/ new Sundial(), new Nunchaku() };
 	
 	public BirthdayGift() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.SPECIAL, LandingSound.MAGICAL);
+		super(ID, RelicTier.SPECIAL, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

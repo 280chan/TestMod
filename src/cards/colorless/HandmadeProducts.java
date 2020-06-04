@@ -1,12 +1,9 @@
 
 package cards.colorless;
 
-import basemod.abstracts.*;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
@@ -15,18 +12,17 @@ import actions.HandmadeProductsAttackAction;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-public class HandmadeProducts extends CustomCard {
+public class HandmadeProducts extends AbstractTestCard {
     public static final String ID = "HandmadeProducts";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = 0;
     private static final int BASE_DMG = 0;
     private static final int BASE_MGC = 1;
 
     public HandmadeProducts() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.ATTACK, CardColor.COLORLESS, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;
         this.baseMagicNumber = BASE_MGC;
         this.magicNumber = this.baseMagicNumber;

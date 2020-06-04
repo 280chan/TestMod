@@ -2,11 +2,9 @@
 package cards.colorless;
 
 import cards.AbstractEquivalentableCard;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.PerfectComboAction;
@@ -20,11 +18,10 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 
 public class PerfectCombo extends AbstractEquivalentableCard {
     public static final String ID = "PerfectCombo";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-	public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = 1;
     private static final int ATTACK_DMG = 15;
     private static final int DELTA_BASE_MAGIC = 1;
@@ -33,7 +30,7 @@ public class PerfectCombo extends AbstractEquivalentableCard {
     public static final ArrayList<PerfectCombo> TO_UPDATE = new ArrayList<PerfectCombo>();
 
     public PerfectCombo() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.ATTACK, CardColor.COLORLESS, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = ATTACK_DMG;
         this.misc = BASE_CHANCE;
         this.baseMagicNumber = this.misc;
@@ -41,7 +38,7 @@ public class PerfectCombo extends AbstractEquivalentableCard {
     }
     
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-        AbstractDungeon.actionManager.addToBottom(new PerfectComboAction(m, new DamageInfo(p, this.baseDamage, this.damageTypeForTurn), AttackEffect.SLASH_HORIZONTAL, this.magicNumber));//造成伤害
+        this.addToBot(new PerfectComboAction(m, new DamageInfo(p, this.baseDamage, this.damageTypeForTurn), AttackEffect.SLASH_HORIZONTAL, this.magicNumber));//造成伤害
     }
     
     public int countUpgrades() {

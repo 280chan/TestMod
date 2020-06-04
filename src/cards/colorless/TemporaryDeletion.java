@@ -1,30 +1,25 @@
 
 package cards.colorless;
 
-import basemod.abstracts.*;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.TemporaryDeletionAction;
 
-import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-public class TemporaryDeletion extends CustomCard {
+public class TemporaryDeletion extends AbstractTestCard {
     public static final String ID = "TemporaryDeletion";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-	public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = 2;
 
     public TemporaryDeletion() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.POWER, CardColor.COLORLESS, CardRarity.UNCOMMON, CardTarget.NONE);
+        super(ID, NAME, COST, DESCRIPTION, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
         this.isEthereal = true;
     }
 
@@ -35,8 +30,8 @@ public class TemporaryDeletion extends CustomCard {
         g.group.addAll(p.discardPile.group);
         g.removeCard(this);
         for (AbstractCard c : p.hand.group)
-        	c.stopGlowing();
-        AbstractDungeon.actionManager.addToBottom(new TemporaryDeletionAction(g, p));
+        	c.beginGlowing();
+        this.addToBot(new TemporaryDeletionAction(g, p));
     }
 
     public void upgrade() {

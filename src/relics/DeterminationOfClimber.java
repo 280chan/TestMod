@@ -1,8 +1,6 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
@@ -19,18 +17,15 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class DeterminationOfClimber extends MyRelic implements MiscMethods {
 	public static final String ID = "DeterminationOfClimber";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "在每场战斗内，每当你打出的牌的耗能比前一张牌高时，每高出 #b1 点，获得 #b1 能量，回复 #b1 生命，抽 #b1 张牌，对所有敌人造成 #b1 伤害，获得 #b1 金币。";
 	
 	private static Color color = null;
 	
 	public DeterminationOfClimber() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.MAGICAL);
+		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
@@ -56,17 +51,17 @@ public class DeterminationOfClimber extends MyRelic implements MiscMethods {
 	
 	public void act(int count) {
 		AbstractCreature p = AbstractDungeon.player;
-		AbstractDungeon.actionManager.addToBottom(new GainEnergyAction(count));
-		AbstractDungeon.actionManager.addToBottom(new HealAction(p, p, count));
-		AbstractDungeon.actionManager.addToBottom(new DrawCardAction(p, count));
-		AbstractDungeon.actionManager.addToBottom(new AbstractGameAction(){
+		this.addToBot(new GainEnergyAction(count));
+		this.addToBot(new HealAction(p, p, count));
+		this.addToBot(new DrawCardAction(p, count));
+		this.addToBot(new AbstractGameAction(){
 			@Override
 			public void update() {
 				AbstractDungeon.player.gainGold(count);
 				this.isDone = true;
 			}
 		});
-		AbstractDungeon.actionManager.addToBottom(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(count, true), DamageType.THORNS, AttackEffect.BLUNT_LIGHT));
+		this.addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(count, true), DamageType.THORNS, AttackEffect.BLUNT_LIGHT));
 		this.show();
 	}
 	

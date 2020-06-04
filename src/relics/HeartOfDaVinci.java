@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
@@ -24,14 +22,10 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import actions.DaVinciLibraryAction;
 import basemod.BaseMod;
-import mymod.TestMod;
 
 public class HeartOfDaVinci extends MyRelic{
 	
 	public static final String ID = "HeartOfDaVinci";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	
-	public static final String DESCRIPTION = "你可以获得其他角色的遗物。如果你在拾起时没有充能球栏位，永久获得 #b1 个充能球栏位。每当你获得其他角色的遗物时，可以选择从 #b20 张该角色的卡牌中获得一张。";//遗物效果的文本描叙。
 	
 	private static final ArrayList<AbstractRelic> ADDED = new ArrayList<AbstractRelic>();
 	private static DaVinciLibraryAction action;
@@ -39,7 +33,7 @@ public class HeartOfDaVinci extends MyRelic{
 	public static boolean updated = false;
 	
 	public HeartOfDaVinci() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
 	public static void clear() {
@@ -269,11 +263,11 @@ public class HeartOfDaVinci extends MyRelic{
 		numRelics = AbstractDungeon.player.relics.size();
 		this.addAllCharacterRelics();
 		this.tryAddOrbSlot();
-    }//触发时机：当玩家获得该遗物时。(参考灵体外质、诅咒钥匙、天鹅绒项圈等)
+    }
 	
 	public void onUnequip() {
 		this.removeAllCharacterRelics(AbstractDungeon.player);
-    }//触发时机：当玩家失去该遗物时。(参考灵体外质、诅咒钥匙、天鹅绒项圈等)
+    }
 	
 	public boolean canSpawn() {
 		if (!Settings.isEndless && AbstractDungeon.actNum > 1) {

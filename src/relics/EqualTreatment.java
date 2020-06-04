@@ -1,8 +1,6 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget;
@@ -11,18 +9,15 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class EqualTreatment extends MyRelic implements MiscMethods {
 	public static final String ID = "EqualTreatment";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "你在每回合打出的第一张指向单个敌人的牌，也会对其余所有敌人各生效一次。";//遗物效果的文本描叙。
 	
 	private static Color color = null;
 	
 	public EqualTreatment() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

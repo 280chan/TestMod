@@ -2,8 +2,6 @@ package relics;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -16,14 +14,12 @@ import mymod.TestMod;
 
 public class HarvestTotem extends MyRelic {
 	public static final String ID = "HarvestTotem";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "拾起时，将你的最大生命翻倍。你增加的最大生命和受到的治疗效果翻倍。普通敌人将会拥有 #b1.1 倍最大生命，精英敌人将会拥有 #b1.2 倍最大生命， #yBoss 敌人将会拥有 #b1.5 倍最大生命。";//遗物效果的文本描叙。
 	
 	private static final ArrayList<AbstractCreature> DONE = new ArrayList<AbstractCreature>();
 	private static boolean init = false;
 	
 	public HarvestTotem() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.MAGICAL);
+		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
 		this.counter = -2;
 	}
 	

@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.common.LoseHPAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -11,14 +9,10 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import basemod.BaseMod;
-import mymod.TestMod;
 
 public class EnergyCheck extends MyRelic {
 	
 	public static final String ID = "EnergyCheck";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	
-	public static final String DESCRIPTION = "当前能量不足以打出一张牌时，可以用下一回合的能量补足当前 能量 。当透支的能量超过每回合能量最大值时，超过一点失去 #r1 点生命；每多超过一点额外失去 #r1 点生命。";//遗物效果的文本描叙。
 	
 	private static int preUsedEnergy = 0;
 	private static int maxEnergy;
@@ -35,7 +29,7 @@ public class EnergyCheck extends MyRelic {
 	}
 	
 	public EnergyCheck() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.MAGICAL);
+		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
@@ -58,9 +52,9 @@ public class EnergyCheck extends MyRelic {
 					}
 				}
 				if (hpToLose > 0) {
-					AbstractDungeon.actionManager.addToTop(new LoseHPAction(AbstractDungeon.player, AbstractDungeon.player, hpToLose));
+					this.addToTop(new LoseHPAction(AbstractDungeon.player, AbstractDungeon.player, hpToLose));
 				}
-				AbstractDungeon.actionManager.addToTop(new GainEnergyAction(deficiency));
+				this.addToTop(new GainEnergyAction(deficiency));
 			    isDone = false;
 			}
 		}
@@ -112,7 +106,7 @@ public class EnergyCheck extends MyRelic {
 		BaseMod.logger.info("最大能量:" + maxEnergy);
 		preUsedEnergy = 0;
 		this.counter = 0;
-    }//触发时机：每一场战斗（具体作用时机未知）
+    }
 	
 	public void onEnergyRecharge() {
 		if (!this.isActive)
@@ -142,6 +136,6 @@ public class EnergyCheck extends MyRelic {
 		if (!this.isActive)
 			return;
 		newTurn = true;
-    }//触发时机：在玩家回合结束时。
+    }
 	
 }

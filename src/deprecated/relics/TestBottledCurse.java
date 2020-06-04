@@ -20,7 +20,7 @@ public class TestBottledCurse extends AbstractBottleRelic {
 	public static final String DESCRIPTION = "拾起时，选择一张 #y诅咒牌 。在每场战斗开始时，这张牌会出现在手牌中。如果成功选择，每回合开始获得 [R] 。";//遗物效果的文本描叙。
 	
 	public TestBottledCurse() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.HEAVY);
+		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
 	}
 	
 	public String getUpdatedDescription() {

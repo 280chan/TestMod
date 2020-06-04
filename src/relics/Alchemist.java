@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -9,17 +7,12 @@ import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
-import mymod.TestMod;
-
 public class Alchemist extends AbstractClickRelic {
 	public static final String ID = "Alchemist";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "拾起时，获得 #b1 个药水栏位。每场战斗中有 #b1 次机会可以在你的回合右击该遗物来自动使用第一瓶可使用的药水，但这瓶药水不会消耗。";//遗物效果的文本描叙。
-	
 	private boolean used = false;
 	
 	public Alchemist() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

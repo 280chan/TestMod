@@ -1,8 +1,7 @@
 package cards.colorless;
 
 import cards.AbstractEquivalentableCard;
-import mymod.TestMod;
-
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -13,16 +12,15 @@ import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
 
 public class Mystery extends AbstractEquivalentableCard {
     public static final String ID = "Mystery";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-	public static final String IMG = TestMod.cardIMGPath("relic1");
     private static final int COST = 2;
     private static final int ATTACK_DMG = 4;
     private static final int BASE_MGC = 1;
 
     public Mystery() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.ATTACK, CardColor.COLORLESS, CardRarity.RARE, CardTarget.ALL_ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.RARE, CardTarget.ALL_ENEMY);
         this.baseDamage = ATTACK_DMG;
         this.baseMagicNumber = BASE_MGC;
         this.magicNumber = this.baseMagicNumber;

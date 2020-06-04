@@ -2,8 +2,6 @@ package relics;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
@@ -17,19 +15,15 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.rooms.TreasureRoom;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 
-import mymod.TestMod;
-
 public class KeyOfTheVoid extends MyRelic {
 	public static final String ID = "KeyOfTheVoid";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "每场战斗结束时，你每有一件 #yBoss 遗物，选择移除牌组中的 #b1 张牌。";
-
+	
 	private int victoryFloor = -1;
 	private boolean cardSelected = true;
 	private boolean finished = false;
 	
 	public KeyOfTheVoid() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.BOSS, LandingSound.MAGICAL);
+		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
 		this.counter = -2;
 	}
 	

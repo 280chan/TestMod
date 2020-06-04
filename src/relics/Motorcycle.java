@@ -1,7 +1,5 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -12,16 +10,12 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 
-import mymod.TestMod;
-
 public class Motorcycle extends AbstractClickRelic {
 	public static final String ID = "Motorcycle";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "非Boss战斗中第一回合可以右击该遗物逃跑。 NL ( #ySL 后本场战斗失效)";
 	private static int loadedFloor = 0;
 	
 	public Motorcycle() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
@@ -60,7 +54,7 @@ public class Motorcycle extends AbstractClickRelic {
 				return;
 			this.stopPulse();
 			AbstractDungeon.getCurrRoom().smoked = true;
-			AbstractDungeon.actionManager.addToBottom(new VFXAction(new SmokeBombEffect(p.hb.cX, p.hb.cY)));
+			this.addToBot(new VFXAction(new SmokeBombEffect(p.hb.cX, p.hb.cY)));
 			p.hideHealthBar();
 			p.isEscaping = true;
 			AbstractDungeon.overlayMenu.endTurnButton.disable();

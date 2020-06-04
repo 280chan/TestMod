@@ -19,11 +19,10 @@ import mymod.TestMod;
  */
 public class 示例遗物 extends MyRelic {
 	public static final String ID = "";
-	public static final String IMG = TestMod.relicIMGPath(ID);
 	public static final String DESCRIPTION = "";
 	
 	public 示例遗物() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

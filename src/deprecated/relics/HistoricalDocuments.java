@@ -27,7 +27,7 @@ public class HistoricalDocuments extends MyRelic {
 	public static final String DESCRIPTION = "每回合开始获得一种随机的被尖塔废弃的正面或负面状态。";
 	
 	public HistoricalDocuments() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

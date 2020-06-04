@@ -59,7 +59,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 6/1/2020
+ * @version 6/3/2020
  * @since 6/17/2018
  */
 
@@ -100,7 +100,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	public static String makeID(String id) {
-		return TestMod.MOD_ID + "-" + id;
+		if (id.length() > TestMod.MOD_ID.length() + 1 && id.substring(0, TestMod.MOD_ID.length()).equals(MOD_ID)) {
+			System.out.println("这个为什么id重复了前缀:" + id);
+			return id;
+		}
+		return MOD_ID + "-" + id;
 	}
 	
 	private static String unMakeID(String newID) {

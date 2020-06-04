@@ -1,8 +1,6 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
@@ -10,20 +8,16 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class Acrobat extends MyRelic implements MiscMethods {
 	public static final String ID = "Acrobat";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "在回合内，每当连续打出的两张牌在手牌中的编号增减情况和上次不同时，获得 #b1 金币。";//遗物效果的文本描叙。
-	
 	private static Color color = null;
 	
 	public int state = 0;
 	
 	public Acrobat() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.COMMON, LandingSound.CLINK);
+		super(ID, RelicTier.COMMON, LandingSound.CLINK);
 	}
 	
 	public String getUpdatedDescription() {

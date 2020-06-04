@@ -1,22 +1,16 @@
 package relics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.BlurPower;
 
-import mymod.TestMod;
-
 public class CrystalShield extends MyRelic {
 	public static final String ID = "CrystalShield";
-	public static final String IMG = TestMod.relicIMGPath(ID);
-	public static final String DESCRIPTION = "如果你在你的回合获得过 #y格挡 ，该回合结束时获得 #b1 层 #y残影 。";
 	
 	public CrystalShield() {
-		super(ID, new Texture(Gdx.files.internal(IMG)), RelicTier.RARE, LandingSound.CLINK);
+		super(ID, RelicTier.RARE, LandingSound.CLINK);
 	}
 	
 	public String getUpdatedDescription() {
@@ -35,7 +29,7 @@ public class CrystalShield extends MyRelic {
 			return;
 		if (this.counter == -2) {
 			AbstractPlayer p = AbstractDungeon.player;
-			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new BlurPower(p, 1), 1));
+			this.addToBot(new ApplyPowerAction(p, p, new BlurPower(p, 1), 1));
 			this.stopPulse();
 		} else {
 			this.counter = -2;
