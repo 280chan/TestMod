@@ -30,6 +30,9 @@ public class OneHitWonder extends MyRelic{
 		if (!isActive)
 			return;
 		this.controlPulse();
+		if (AbstractDungeon.currMapNode == null) {
+			return;
+		}
 		this.tryApplyDebuff();
     }
 	

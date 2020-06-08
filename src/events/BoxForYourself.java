@@ -12,6 +12,7 @@ import mymod.TestMod;
 import utils.BoxForYourselfSelectScreen;
 
 public class BoxForYourself extends AbstractImageEvent {
+	public static final String IMG = TestMod.eventIMGPath("BoxForYourself");
 	public static final String ID = TestMod.makeID("BoxForYourself");
 	public static final String NAME = "BoxForYourself";
 	public static final String CH_NAME = "给自己的盒子";
@@ -35,7 +36,7 @@ public class BoxForYourself extends AbstractImageEvent {
 	}
 
 	public BoxForYourself() {
-		super(CH_NAME, DIALOG_1, "resources/images/BoxForYourself.jpg");
+		super(CH_NAME, DIALOG_1, IMG);
 		this.imageEventText.setDialogOption(OPTIONS[0]);
 		initializeObtainRelic();
 	}

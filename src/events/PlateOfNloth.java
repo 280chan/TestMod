@@ -11,6 +11,7 @@ import mymod.TestMod;
 import utils.PlateOfNlothSelectScreen;
 
 public class PlateOfNloth extends AbstractImageEvent {
+	public static final String IMG = TestMod.eventIMGPath("BoxForYourself");
 	public static final String ID = TestMod.makeID("PlateOfNloth");
 	public static final String NAME = "PlateOfNloth";
 	public static final String CH_NAME = "恩洛斯的盘子";
@@ -35,7 +36,7 @@ public class PlateOfNloth extends AbstractImageEvent {
 	}
 
 	public PlateOfNloth() {
-		super(CH_NAME, DIALOG_1, "resources/images/BoxForYourself.jpg");
+		super(CH_NAME, DIALOG_1, IMG);
 		this.imageEventText.setDialogOption(OPTIONS[0]);
 		this.damage = AbstractDungeon.player.maxHealth;
 		if (AbstractDungeon.ascensionLevel <= 14) {

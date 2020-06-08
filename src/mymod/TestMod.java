@@ -59,7 +59,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 6/3/2020
+ * @version 6/7/2020
  * @since 6/17/2018
  */
 
@@ -891,6 +891,16 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			}
 		}
 		return (int)tmp;
+	}
+	
+	public static String eventIMGPath(String ID) {
+		String path = "resources/images/" + ID + ".jpg";
+		if (fileExist(path))
+			return path;
+		path = "resources/images/" + ID + ".png";
+		if (fileExist(path))
+			return path;
+		return eventIMGPath("relic1");
 	}
 	
 	public static String relicIMGPath(String ID) {
