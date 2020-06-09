@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
@@ -47,19 +46,19 @@ public class ArrangementAction extends AbstractGameAction {
 			return;
 		if (!this.freeToPlayOnce)
 	        this.p.energy.use(EnergyPanel.totalCount);
-		AbstractDungeon.actionManager.addToTop(new DrawCardAction(p, x));
+		this.addToTop(new DrawCardAction(p, x));
 		if (this.upgraded) {
 			for (int i = 0; i < x; i++) {
-				AbstractDungeon.actionManager.addToTop(new DamageAction(this.target, new DamageInfo(this.p, this.damage, this.damageType), AttackEffect.BLUNT_LIGHT));
+				this.addToTop(new DamageAction(this.target, new DamageInfo(this.p, this.damage, this.damageType), AttackEffect.BLUNT_LIGHT));
 			}
 			for (int i = 0; i < x; i++) {
-				AbstractDungeon.actionManager.addToTop(new GainBlockAction(p, p, this.block, true));
+				this.addToTop(new GainBlockAction(p, p, this.block, true));
 			}
 		} else {
-			AbstractDungeon.actionManager.addToTop(new DamageAction(this.target, new DamageInfo(this.p, this.damage, this.damageType), AttackEffect.BLUNT_LIGHT));
-			AbstractDungeon.actionManager.addToTop(new GainBlockAction(p, p, this.block, true));
+			this.addToTop(new DamageAction(this.target, new DamageInfo(this.p, this.damage, this.damageType), AttackEffect.BLUNT_LIGHT));
+			this.addToTop(new GainBlockAction(p, p, this.block, true));
 		}
-		AbstractDungeon.actionManager.addToBottom(new ArrangementUpgradingAction(p, x));
+		this.addToBot(new ArrangementUpgradingAction(p, x));
 	}
 	
 }

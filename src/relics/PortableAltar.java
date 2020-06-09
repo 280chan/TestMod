@@ -1,8 +1,5 @@
 package relics;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.LoseHPAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -15,11 +12,11 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import mymod.TestMod;
 
-public class PortableAltar extends MyRelic{
-	private static final Logger logger = LogManager.getLogger(TestMod.class.getName());
+public class PortableAltar extends MyRelic {
 	public static final String ID = "PortableAltar";
 	
 	public static int maxHPLost;
+	private int turn = -1;
 	
 	private void saveMaxHPLost() {
 		TestMod.saveVariable("maxHPLost", maxHPLost);
@@ -45,7 +42,7 @@ public class PortableAltar extends MyRelic{
 		}
 		maxHPLost += toLose;
 		updateCounter();
-		logger.info("最大生命累计降低:" + maxHPLost + ", 当前计数:" + counter);
+		TestMod.info("最大生命累计降低:" + maxHPLost + ", 当前计数:" + counter);
 	}
 	
 	public void loseMaxHP(int toLose) {
@@ -78,6 +75,7 @@ public class PortableAltar extends MyRelic{
 	public void atBattleStart() {
 		if (!isActive)
 			return;
+		this.turn = 0;
 		if (counter > 0) {
 			this.show();
 			AbstractPlayer p = AbstractDungeon.player;
@@ -90,6 +88,11 @@ public class PortableAltar extends MyRelic{
 	public void atTurnStart() {
 		if (!isActive)
 			return;
+		this.turn++;
+		if (this.turn <= this.counter) {
+			TestMod.info("turn= " + this.turn);
+			return;
+		}
 		this.show();
 		this.addToTop(new LoseHPAction(AbstractDungeon.player, AbstractDungeon.player, 1));
 	}
@@ -100,6 +103,7 @@ public class PortableAltar extends MyRelic{
 		this.saveMaxHPLost();
 		this.show();
 		this.loseMaxHP(1);
+		this.turn = -1;
     }
 	
 	public boolean canSpawn() {

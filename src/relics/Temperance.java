@@ -1,8 +1,5 @@
 package relics;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -13,7 +10,6 @@ import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import mymod.TestMod;
 
 public class Temperance extends MyRelic {
-	private static final Logger logger = LogManager.getLogger(Temperance.class.getName());
 	public static final String ID = "Temperance";
 	
 	public static int sizeToRemove;
@@ -69,7 +65,7 @@ public class Temperance extends MyRelic {
 				AbstractDungeon.gridSelectScreen.selectedCards.clear();
 				sizeToRemove--;
 			} else if (AbstractDungeon.screen == pre) {
-				logger.info("刚刚取消");
+				TestMod.info("刚刚取消");
 				cardSelected = true;
 				AbstractDungeon.getCurrRoom().phase = phase;
 				AbstractDungeon.gridSelectScreen.selectedCards.clear();

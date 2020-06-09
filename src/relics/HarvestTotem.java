@@ -66,7 +66,7 @@ public class HarvestTotem extends MyRelic {
 	
 	public void update() {
 		super.update();
-		if (!this.isActive || this.counter == -2 || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
+		if (!this.isActive || this.counter == -2 || AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
 			return;
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
 			if (!DONE.contains(m)) {

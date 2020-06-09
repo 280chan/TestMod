@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
@@ -28,7 +27,7 @@ public class CardIndexAction extends AbstractGameAction implements MiscMethods {
 	@Override
 	public void update() {
 		if (cards.isEmpty()) {
-    		AbstractDungeon.actionManager.addToTop(new CardIndexInitializeAction(this.c, this.amount, this.cards));
+    		this.addToTop(new CardIndexInitializeAction(this.c, this.amount, this.cards));
     	} else if (cards.size() == 1 && cards.get(0) == null) {
 
 		} else {

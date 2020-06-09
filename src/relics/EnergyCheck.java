@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-import basemod.BaseMod;
+import mymod.TestMod;
 
 public class EnergyCheck extends MyRelic {
 	
@@ -103,7 +103,7 @@ public class EnergyCheck extends MyRelic {
 		if (!this.isActive)
 			return;
 		maxEnergy = AbstractDungeon.player.energy.energyMaster;
-		BaseMod.logger.info("最大能量:" + maxEnergy);
+		TestMod.info("最大能量:" + maxEnergy);
 		preUsedEnergy = 0;
 		this.counter = 0;
     }

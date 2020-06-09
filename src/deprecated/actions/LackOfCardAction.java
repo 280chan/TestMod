@@ -1,4 +1,4 @@
-package actions;
+package deprecated.actions;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -12,6 +12,9 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import deprecated.relics.LackOfCard;
 import relics.MyRelic;
 
+/**
+ * @deprecated
+ */
 public class LackOfCardAction extends AbstractGameAction {
 	private AbstractPlayer p;
 

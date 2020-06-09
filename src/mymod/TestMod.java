@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.badlogic.gdx.Gdx;
 import com.codedisaster.steamworks.SteamAPI;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
@@ -67,6 +70,7 @@ import utils.*;
 public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber, PostDungeonInitializeSubscriber, PreUpdateSubscriber, PostUpdateSubscriber, StartGameSubscriber, PostInitializeSubscriber, OnStartBattleSubscriber, MaxHPChangeSubscriber, MiscMethods {
 	public static Mode MODE = Mode.BOX;
 	public static final String MOD_ID = "testmod";
+	public static final Logger LOGGER = LogManager.getLogger(TestMod.class.getName());
 
 	public static enum Mode {
 		TEST, CHEAT, RANDOM, RELIC, CARD, BOTH, BOX;
@@ -93,6 +97,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		public boolean box() {
 			return this == BOX;
 		}
+	}
+	
+	public static void info(String s) {
+		LOGGER.info(s);
 	}
 	
 	public static boolean isLocalTest() {

@@ -28,10 +28,10 @@ public class ComboMasterAction extends AbstractGameAction {
 	
 	public void update() {
 		if (0 < damage && checkContinue()) {
-			AbstractDungeon.actionManager.addToTop(this.next());
-			AbstractDungeon.actionManager.addToTop(new DamageAllEnemiesAction(this.p, this.multiDamage, this.damageType, AttackEffect.NONE, true));
-			AbstractDungeon.actionManager.addToTop(new SFXAction("ATTACK_HEAVY"));
-			AbstractDungeon.actionManager.addToTop(new VFXAction(this.p, new CleaveEffect(), 0.0F)); 
+			this.addToTop(this.next());
+			this.addToTop(new DamageAllEnemiesAction(this.p, this.multiDamage, this.damageType, AttackEffect.NONE, true));
+			this.addToTop(new SFXAction("ATTACK_HEAVY"));
+			this.addToTop(new VFXAction(this.p, new CleaveEffect(), 0.0F)); 
 		}
 		this.isDone = true;
 	}

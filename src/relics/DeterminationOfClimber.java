@@ -57,7 +57,7 @@ public class DeterminationOfClimber extends MyRelic implements MiscMethods {
 		this.addToBot(new AbstractGameAction(){
 			@Override
 			public void update() {
-				AbstractDungeon.player.gainGold(count);
+				p.gainGold(count);
 				this.isDone = true;
 			}
 		});
