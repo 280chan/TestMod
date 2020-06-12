@@ -2,7 +2,6 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.EnergizedPower;
@@ -12,7 +11,7 @@ import com.megacrit.cardcrawl.actions.common.*;
 
 public class BackupPower extends AbstractTestCard {
 	public static final String ID = "BackupPower";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
 	private static final String[] E = { " [R]", " [G]", " [B]", " [W]" };
@@ -49,17 +48,13 @@ public class BackupPower extends AbstractTestCard {
 	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
-		AbstractDungeon.actionManager.addToBottom(new GainEnergyAction(this.magicNumber));
+		this.addToBot(new GainEnergyAction(this.magicNumber));
 	}
 
 	public void triggerOnEndOfPlayerTurn() {
 		AbstractPlayer p = AbstractDungeon.player;
-		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new EnergizedPower(p, 1), 1));
+		this.addToBot(new ApplyPowerAction(p, p, new EnergizedPower(p, 1), 1));
 		super.triggerOnEndOfPlayerTurn();
-	}
-	
-	public AbstractCard makeCopy() {
-		return new BackupPower();
 	}
 
 	public void upgradeMagicNumber(int amount) {

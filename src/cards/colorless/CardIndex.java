@@ -1,7 +1,6 @@
 
 package cards.colorless;
 
-import cards.AbstractTestCard;
 import cards.AbstractUpdatableCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 
 public class CardIndex extends AbstractUpdatableCard {
     public static final String ID = "CardIndex";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
@@ -31,7 +30,7 @@ public class CardIndex extends AbstractUpdatableCard {
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	AbstractDungeon.actionManager.addToBottom(new CardIndexAction(this, m, this.cards));
+    	this.addToBot(new CardIndexAction(this, m, this.cards));
     }
 
     public void upgrade() {

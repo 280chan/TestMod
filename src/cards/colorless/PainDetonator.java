@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 
 public class PainDetonator extends AbstractTestCard {
     public static final String ID = "PainDetonator";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final int COST = 1;

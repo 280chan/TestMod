@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.cards.blue.Reboot;
 
 public class ShutDown extends AbstractTestCard {
     public static final String ID = "ShutDown";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;

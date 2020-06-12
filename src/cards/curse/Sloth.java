@@ -1,27 +1,19 @@
 
 package cards.curse;
 
-import basemod.abstracts.*;
-import mymod.TestMod;
+import cards.AbstractTestCurseCard;
 import relics.Sins;
-import utils.MiscMethods;
-
 import com.megacrit.cardcrawl.cards.*;
-import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 
-public class Sloth extends CustomCard implements MiscMethods {
+public class Sloth extends AbstractTestCurseCard {
     public static final String ID = "Sloth";
-	private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-    public static final String IMG = TestMod.cardIMGPath("relic1");
-    private static final int COST = -2;//卡牌费用 
     
     private static int minNumCardsPlayed = -1;
     
@@ -36,16 +28,9 @@ public class Sloth extends CustomCard implements MiscMethods {
     }
     
     public Sloth() {
-        super(TestMod.makeID(ID), NAME, IMG, COST, DESCRIPTION, CardType.CURSE, CardColor.CURSE, CardRarity.SPECIAL, CardTarget.NONE);
+        super(ID, NAME, DESCRIPTION);
     }
-
-    public void use(final AbstractPlayer p, final AbstractMonster m) {
-	}
     
-    public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-    	return this.hasPrudence() || p.hasRelic("Blue Candle");
-	}
-
 	public boolean canPlay(AbstractCard card) {
 		if (this.hasPrudence())
 			return true;
@@ -81,8 +66,5 @@ public class Sloth extends CustomCard implements MiscMethods {
 		if (Sins.isObtained())
 			return new Sloth();
 		return Sins.copyCurse();
-	}// 复制卡牌后复制的卡，如果卡组里有复制卡牌的卡每张卡都要有这个
-
-	public void upgrade() {
-	}// 升级后额外增加（括号内的）值，以及升级后的各种改变
+	}
 }

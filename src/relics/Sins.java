@@ -247,7 +247,7 @@ public class Sins extends MyRelic implements MiscMethods {
 	public static boolean isObtained() {
 		if (CardCrawlGame.mode != GameMode.GAMEPLAY && CardCrawlGame.mode != GameMode.DUNGEON_TRANSITION)
 			return true;
-		return AbstractDungeon.player.hasRelic(ID);
+		return AbstractDungeon.player.hasRelic(TestMod.makeID(ID));
 	}
 	
 	public static AbstractCard copyCurse() {

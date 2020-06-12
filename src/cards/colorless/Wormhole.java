@@ -2,6 +2,8 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
+import mymod.TestMod;
+
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
@@ -12,7 +14,7 @@ import actions.WormholeAction;
 
 public class Wormhole extends AbstractTestCard {
     public static final String ID = "Wormhole";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
@@ -31,7 +33,7 @@ public class Wormhole extends AbstractTestCard {
         g.removeCard(this);
         for (AbstractCard c : p.hand.group)
         	c.beginGlowing();
-        System.out.println("虫洞: Cardgroup大小=" + g.size());
+        TestMod.info("虫洞: Cardgroup大小=" + g.size());
         this.addToBot(new WormholeAction(g, m, !this.upgraded));
     }
 

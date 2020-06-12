@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.monsters.*;
 
 public class EternalityOfKhronos extends AbstractTestCard implements MiscMethods {
     public static final String ID = "EternalityOfKhronos";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;

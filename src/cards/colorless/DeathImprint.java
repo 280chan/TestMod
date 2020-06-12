@@ -16,7 +16,7 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class DeathImprint extends AbstractTestCard {
     public static final String ID = "DeathImprint";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final int COST = 2;
@@ -118,6 +118,6 @@ public class DeathImprint extends AbstractTestCard {
             this.upgradeName();
             this.upgradeMagicNumber(20);
         }
-    }//升级后额外增加（括号内的）值，以及升级后的各种改变
+    }
 
 }

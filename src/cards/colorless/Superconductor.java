@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class Superconductor extends AbstractTestCard {
     public static final String ID = "Superconductor";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;

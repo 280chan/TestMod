@@ -2,8 +2,6 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import mymod.TestMod;
-
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.unique.LimitBreakAction;
 import com.megacrit.cardcrawl.cards.*;
@@ -14,7 +12,7 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 
 public class LimitFlipper extends AbstractTestCard {
     public static final String ID = "LimitFlipper";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final int COST = 1;
@@ -43,12 +41,12 @@ public class LimitFlipper extends AbstractTestCard {
 	}
 	
     public void triggerOnCardPlayed(AbstractCard c) {
-		active = c.cardID.equals(TestMod.makeID(ID));
+		active = c instanceof LimitFlipper;
     }
 
     public void upgrade() {
         if (!this.upgraded) {
-            this.upgradeName();//改名，其实就是多个+
+            this.upgradeName();
             this.upgradeMagicNumber(1);
         }
     }

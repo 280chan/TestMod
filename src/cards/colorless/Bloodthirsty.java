@@ -1,11 +1,9 @@
 
 package cards.colorless;
 
-import cards.AbstractTestCard;
 import cards.AbstractUpdatableCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
@@ -13,7 +11,7 @@ import actions.BloodthirstyAction;
 
 public class Bloodthirsty extends AbstractUpdatableCard {
     public static final String ID = "Bloodthirsty";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
@@ -32,7 +30,7 @@ public class Bloodthirsty extends AbstractUpdatableCard {
     public void use(final AbstractPlayer p, final AbstractMonster m) {
     	this.preApplyPowers(p, m);
     	super.applyPowers();
-    	AbstractDungeon.actionManager.addToBottom(new BloodthirstyAction(m, p, this.magicNumber));
+    	this.addToBot(new BloodthirstyAction(m, p, this.magicNumber));
     	this.used = true;
     }
 
@@ -102,10 +100,10 @@ public class Bloodthirsty extends AbstractUpdatableCard {
     
     public void upgrade() {
         if (!this.upgraded) {
-            this.upgradeName();//改名，其实就是多个+
-            this.upgradeMagicNumber(2);//升级增加的特殊常量MagicNumber
+            this.upgradeName();
+            this.upgradeMagicNumber(2);
             this.changeDescription(UPGRADED_DESCRIPTION, true);
         }
-    }//升级后额外增加（括号内的）值，以及升级后的各种改变
+    }
 
 }

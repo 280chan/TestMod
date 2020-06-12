@@ -14,7 +14,7 @@ import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
 
 public class Automaton extends AbstractTestCard {
     public static final String ID = "Automaton";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final int COST = 2;
@@ -23,9 +23,7 @@ public class Automaton extends AbstractTestCard {
     private static final int DELTA_MGC = 1;
 
     public static void loadMagicNumber() {
-    	if (AbstractDungeon.player == null)
-    		return;
-    	if (AbstractDungeon.player.masterDeck == null)
+    	if (AbstractDungeon.player == null || AbstractDungeon.player.masterDeck == null)
     		return;
     	for (AbstractCard c : AbstractDungeon.player.masterDeck.group)
     		if (c instanceof Automaton) {

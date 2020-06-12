@@ -3,6 +3,6 @@
 	"name": "TestMod(彼君Mod)",
 	"author_list": ["彼君不触"],
 	"description": "开局选择遗物或无色牌之后可以再进行一次对应的可放弃的3选1来获得初始奖励。试做了两个事件和3瓶药水。需要BaseMod和STSLib支持。",
-	"version": "3.4.8",
+	"version": "3.4.9",
 	"dependencies": ["basemod", "stslib"]
 }

@@ -62,7 +62,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 6/7/2020
+ * @version 6/12/2020
  * @since 6/17/2018
  */
 
@@ -109,7 +109,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	public static String makeID(String id) {
 		if (id.length() > TestMod.MOD_ID.length() + 1 && id.substring(0, TestMod.MOD_ID.length()).equals(MOD_ID)) {
-			System.out.println("这个为什么id重复了前缀:" + id);
+			info("这个为什么id重复了前缀:" + id);
 			return id;
 		}
 		return MOD_ID + "-" + id;
@@ -164,12 +164,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		return Gdx.files.internal(stringsPathFix(languagePrefix(type))).readString(String.valueOf(StandardCharsets.UTF_8));
 	}
 	
+	/**
+	 * Entrance
+	 */
 	public static void initialize() {
-		new TestMod();
-	}
-
-	public TestMod() {
-		BaseMod.subscribe(this);
+		BaseMod.subscribe(new TestMod());
 	}
 
 	@Override
@@ -326,7 +325,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	private static boolean checkLatest(AbstractPlayer p) {
 		if (CardCrawlGame.playerName.equals("BrkStarshine")) {
-			System.out.println("Checked");
+			info("Checked");
 			if (latestIndex < LATEST.size()) {
 				Object o = LATEST.get(latestIndex++);
 				obtain(p, o);
@@ -536,13 +535,33 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}
 	}
 
+	public static void unlock(Object o) {
+		if (o instanceof AbstractRelic) {
+			AbstractRelic r = (AbstractRelic) o;
+			if (!UnlockTracker.isRelicSeen(r.relicId)) {
+				UnlockTracker.markRelicAsSeen(r.relicId);
+				info("成功解锁了未见过的 " + r.name);
+			}
+		} else if (o instanceof AbstractCard) {
+			AbstractCard c = (AbstractCard) o;
+			if (!UnlockTracker.isCardSeen(c.cardID)) {
+				UnlockTracker.markCardAsSeen(c.cardID);
+				info("成功解锁了未见过的 " + c.name);
+			}
+		}
+	}
+	
 	public static void unlockAll() {
+		info("开始解锁");
 		for (AbstractCard c : CARDS)
-			UnlockTracker.markCardAsSeen(c.cardID);
+			unlock(c);
+		for (AbstractCard c : Sins.SINS)
+			if (c instanceof AbstractTestCard)
+				unlock(c);
 		for (AbstractCard c : MAHJONGS)
-			UnlockTracker.markCardAsSeen(c.cardID);
+			unlock(c);
 		for (AbstractRelic r : RELICS)
-			UnlockTracker.markRelicAsSeen(r.relicId);
+			unlock(r);
 	}
 	
 	private static final ArrayList<AbstractRelic> TO_OBTAIN = new ArrayList<AbstractRelic>();
@@ -606,7 +625,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		} else if (o instanceof AbstractRelic) {
 			return obtain(p, (AbstractRelic)o, false);
 		} else {
-			System.out.println("为什么获得" + o);
+			info("为什么获得" + o);
 		}
 		return false;
 	}
@@ -870,8 +889,14 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		addEvents();
 		addPotions();
 		
+		if ("280 chan".equals(CardCrawlGame.playerName))
+			unlockAll();
+		
+		/*
 		initCheat();
 		initLatest();
+		*/
+		
 		// TODO
 	}
 

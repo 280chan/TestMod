@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.actions.common.*;
 
 public class LifeRuler extends AbstractTestCard {
 	public static final String ID = "LifeRuler";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
 	private static final int COST = 1;

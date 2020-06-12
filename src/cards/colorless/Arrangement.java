@@ -2,7 +2,6 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -15,29 +14,30 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.badlogic.gdx.math.MathUtils;
 
 public class Arrangement extends AbstractTestCard {
-    public static final String ID = "Arrangement";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	public static final String ID = "Arrangement";
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
-    private static final int COST = -1;
-    private static final int BASE_BLK = 0;
-    private static final int BASE_DMG = 0;
-    private static final int BASE_MGC = 1;
+	private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
+	private static final int COST = -1;
+	private static final int BASE_BLK = 0;
+	private static final int BASE_DMG = 0;
+	private static final int BASE_MGC = 1;
 
-    public Arrangement() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.RARE, CardTarget.SELF_AND_ENEMY);
-        this.baseBlock = BASE_BLK;
-        this.baseDamage = BASE_DMG;
-        this.baseMagicNumber = BASE_MGC;
-        this.magicNumber = this.baseMagicNumber;
-        
-        this.exhaust = true;
-    }
+	public Arrangement() {
+		super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.RARE, CardTarget.SELF_AND_ENEMY);
+		this.baseBlock = BASE_BLK;
+		this.baseDamage = BASE_DMG;
+		this.baseMagicNumber = BASE_MGC;
+		this.magicNumber = this.baseMagicNumber;
 
-    public void use(final AbstractPlayer p, final AbstractMonster m) {
-        AbstractDungeon.actionManager.addToBottom(new ArrangementAction(p, m, this.damageTypeForTurn, this.freeToPlayOnce, this.upgraded, this.energyOnUse, this.damage, this.block));//将手牌中某张非技能卡复制magicNumber次
-    }
+		this.exhaust = true;
+	}
+
+	public void use(final AbstractPlayer p, final AbstractMonster m) {
+		this.addToBot(new ArrangementAction(p, m, this.damageTypeForTurn, this.freeToPlayOnce, this.upgraded,
+				this.energyOnUse, this.damage, this.block));
+	}
     
 	public void calculateCardDamage(AbstractMonster m) {
 		AbstractPlayer player = AbstractDungeon.player;
@@ -103,18 +103,14 @@ public class Arrangement extends AbstractTestCard {
 		}
 		this.damage = MathUtils.floor(tmp);
 	}
-    
-    public AbstractCard makeCopy() {
-        return new Arrangement();
-    }//复制卡牌后复制的卡，如果卡组里有复制卡牌的卡每张卡都要有这个
 
     public void upgrade() {
         if (!this.upgraded) {
-            this.upgradeName();//改名，其实就是多个+
+            this.upgradeName();
             this.rawDescription = UPGRADED_DESCRIPTION;
             this.initializeDescription();
-            this.upgradeBlock(1);//升级增加的护甲
+            this.upgradeBlock(1);
             this.upgradeDamage(1);
         }
-    }//升级后额外增加（括号内的）值，以及升级后的各种改变
+    }
 }

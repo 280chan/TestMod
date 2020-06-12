@@ -14,7 +14,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 
 public class Illusory extends AbstractTestCard {
     public static final String ID = "Illusory";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
 	private static final String[] E = { " [R] ", " [G] ", " [B] ", " [W] " };

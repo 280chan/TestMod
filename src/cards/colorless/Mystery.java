@@ -1,7 +1,6 @@
 package cards.colorless;
 
 import cards.AbstractEquivalentableCard;
-import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -12,7 +11,7 @@ import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
 
 public class Mystery extends AbstractEquivalentableCard {
     public static final String ID = "Mystery";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final int COST = 2;

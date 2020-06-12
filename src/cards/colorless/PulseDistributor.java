@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.monsters.*;
 
 public class PulseDistributor extends AbstractTestCard {
 	public static final String ID = "PulseDistributor";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;

@@ -6,13 +6,12 @@ import powers.BloodBladePower;
 
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
-import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class BloodBlade extends AbstractTestCard {
     public static final String ID = "BloodBlade";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
@@ -26,7 +25,7 @@ public class BloodBlade extends AbstractTestCard {
     	if (BloodBladePower.hasThis(this.upgraded)) {
     		BloodBladePower.getThis(this.upgraded).onFirstGain();
     	} else {
-    		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new BloodBladePower(p, this.upgraded)));
+    		this.addToBot(new ApplyPowerAction(p, p, new BloodBladePower(p, this.upgraded)));
     	}
     }
 

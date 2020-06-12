@@ -1,7 +1,6 @@
 
 package cards.colorless;
 
-import cards.AbstractTestCard;
 import cards.AbstractUpdatableCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
@@ -14,7 +13,7 @@ import com.megacrit.cardcrawl.actions.common.*;
 
 public class BloodShelter extends AbstractUpdatableCard {
     public static final String ID = "BloodShelter";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     private static final int COST = 3;

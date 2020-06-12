@@ -10,16 +10,16 @@ import actions.ModifyCostForCombatAction;
 
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
-import com.megacrit.cardcrawl.actions.*;  //改成自己的import
+import com.megacrit.cardcrawl.actions.*;
 
 public class PocketStoneCalender extends AbstractTestCard {
     public static final String ID = "PocketStoneCalender";
-	private static final CardStrings cardStrings = AbstractTestCard.Strings(ID);
+	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
     private static final String DESCRIPTION = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[2];
-    private static final int COST = 0;//卡牌费用
-    private static final int ATTACK_DMG = 0;//基础伤害值
+    private static final int COST = 0;
+    private static final int ATTACK_DMG = 0;
     private static final int BASE_MGC = 2;
 
     public PocketStoneCalender() {
