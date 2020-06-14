@@ -19,6 +19,7 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
+import cards.AbstractTestCurseCard;
 import cards.curse.Envy;
 import cards.curse.Gluttony;
 import cards.curse.Greed;
@@ -170,18 +171,11 @@ public class Sins extends MyRelic implements MiscMethods {
     }
 	
 	public static boolean isSin(AbstractCard c) {
-		switch (c.cardID) {
-		case Pride.ID:
-		case Lust.ID:
-		case Wrath.ID:
-		case Sloth.ID:
-		case Envy.ID:
-		case Greed.ID:
-		case Gluttony.ID:
+		if (c instanceof Pride)
 			return true;
-		default:
-			return false;
-		}
+		if (c instanceof AbstractTestCurseCard)
+			return true;
+		return false;
 	}
 	
 	public void onUnequip() {

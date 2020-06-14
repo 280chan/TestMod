@@ -205,6 +205,14 @@
 		"点伤害。打出这张牌时在本场战斗耗能增加 !M! 。抽到这张牌时在本场战斗耗能降低1。"
     ]
   },
+  "testmod-PowerStrike": {
+    "NAME": "指数打击",
+    "DESCRIPTION": "",
+	"EXTENDED_DESCRIPTION": [
+		" 虚无 。所有敌人的生命降为其生命的对数，底数为",
+		"。给予所有敌人敌人个数层 无实体 。能被多次 升级 。 消耗 。"
+    ]
+  },
   "testmod-Provocation": {
     "NAME": "挑衅",
     "DESCRIPTION": "获得 !M! 点 力量 ，使敌人获得1层生气。"

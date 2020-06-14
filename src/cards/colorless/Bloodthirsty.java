@@ -25,6 +25,7 @@ public class Bloodthirsty extends AbstractUpdatableCard {
     public Bloodthirsty() {
         super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
+        this.tags.add(CardTags.HEALING);
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {

@@ -238,7 +238,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new TemporaryDeletion(), new EnhanceArmerment(), new TradeIn(), new DorothysBlackCat(),
 				new PainDetonator(), new FightingIntention(), new Reverberation(), new SelfRegulatingSystem(),
 				new Superconductor(), new BackupPower(), new Illusory(), new Librarian(), new HandmadeProducts(),
-				new Automaton() };
+				new Automaton(), new PowerStrike() };
 		// TODO
 		for (AbstractCard c : card) {
 			CARDS.add(c);
