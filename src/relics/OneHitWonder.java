@@ -6,9 +6,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
-
 import powers.OneHitWonderDebuffPower;
 
 public class OneHitWonder extends AbstractTestRelic{
@@ -43,11 +41,7 @@ public class OneHitWonder extends AbstractTestRelic{
 	private void tryApplyDebuff() {
 		boolean applied = false;
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			boolean had = false;
-			for (AbstractPower p : m.powers)
-				if (p instanceof OneHitWonderDebuffPower)
-					had = true;
-			if (m.type == EnemyType.BOSS && !had) {
+			if (m.type == EnemyType.BOSS && !OneHitWonderDebuffPower.hasThis(m)) {
 				m.powers.add(new OneHitWonderDebuffPower(m));
 				applied = true;
 			}

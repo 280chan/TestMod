@@ -1,4 +1,4 @@
-package powers;//包名，请根据自己的包路径修改，一般在创建类的时候自动填好。
+package powers;
 
 import java.util.ArrayList;
 
@@ -13,11 +13,10 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import mymod.TestMod;
 
 public class PulseDistributorPower extends AbstractPower{
-	
-	public static final String POWER_ID = "PulseDistributorPower";//能力的ID，判断有无能力、能力层数时填写该Id而不是类名。
+	public static final String POWER_ID = "PulseDistributorPower";
 	public static final String NAME = "脉冲分配";
     public static final String IMG = TestMod.powerIMGPath(POWER_ID);
-	public static final String[] DESCRIPTIONS = {"受到" + toBlue("n") + "点非失去生命的伤 NL 害，不直接损失生命值，而是在此回合开始的", "个回 NL 合内每次敌人回合结束时失去" + toBlue(1) + "点生命。"};//需要调用变量的文本描叙，例如力量（Strength）、敏捷（Dexterity）等。
+	public static final String[] DESCRIPTIONS = {"受到" + toBlue("n") + "点非失去生命的伤 NL 害，不直接损失生命值，而是在此回合开始的", "个回 NL 合内每次敌人回合结束时失去" + toBlue(1) + "点生命。"};
 	private static final String DAMAGE_DESCRIPTION = " NL 每回合失去生命值为: NL ";
 	private static final String SPLITTER = "，";
 	public int magic;
@@ -88,7 +87,7 @@ public class PulseDistributorPower extends AbstractPower{
 		boolean onCurrent = false;
 		if (info.owner != null) {
 			for (AbstractPower p : owner.powers) {
-				if (!p.ID.equals(ID)) {
+				if (!p.ID.equals(this.ID)) {
 					if (onCurrent)
 						damage = p.onAttacked(info, damage);
 				} else {
@@ -107,7 +106,7 @@ public class PulseDistributorPower extends AbstractPower{
     private void updateList(int damage) {
     	if (damage < 1)
     		return;
-		System.out.println("伤害前:" + DAMAGES);
+		TestMod.info(this.name + ":伤害前:" + DAMAGES);
     	for (int i = 0; i < damage + this.magic; i++) {
     		if (DAMAGES.size() == i) {
     			DAMAGES.add(1);
@@ -115,14 +114,14 @@ public class PulseDistributorPower extends AbstractPower{
     			DAMAGES.set(i, DAMAGES.get(i) + 1);
     		}
     	}
-		System.out.println("伤害后:" + DAMAGES);
+    	TestMod.info(this.name + ":伤害后:" + DAMAGES);
     }
     
     public void atEndOfRound() {
     	if (!this.DAMAGES.isEmpty()) {
-    		System.out.println("伤害前:" + DAMAGES);
+    		TestMod.info(this.name + ":伤害前:" + DAMAGES);
     		this.pretendAttack(AbstractDungeon.player, DAMAGES.remove(0));
-    		System.out.println("伤害后:" + DAMAGES);
+    		TestMod.info(this.name + ":伤害后:" + DAMAGES);
     		this.updateDescription();
 		}
     }
