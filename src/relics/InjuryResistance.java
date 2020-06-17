@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import powers.InjuryResistancePower;
 
-public class InjuryResistance extends MyRelic {
+public class InjuryResistance extends AbstractTestRelic {
 	public static final String ID = "InjuryResistance";
 	
 	public InjuryResistance() {
@@ -30,9 +30,8 @@ public class InjuryResistance extends MyRelic {
 	}
 	
 	private void addPower(AbstractPlayer p) {
-		if (!p.hasPower(InjuryResistancePower.POWER_ID)) {
+		if (!InjuryResistancePower.hasThis(p))
 			p.powers.add(new InjuryResistancePower(p, this));
-		}
 	}
 	
 	public void justEnteredRoom(AbstractRoom r)	{

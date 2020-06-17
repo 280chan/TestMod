@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.powers.EnergizedPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import deprecated.relics.LackOfCard;
-import relics.MyRelic;
+import relics.AbstractTestRelic;
 
 /**
  * @deprecated
@@ -28,7 +28,7 @@ public class LackOfCardAction extends AbstractGameAction {
 	public void update() {
 		if (check()) {
 			AbstractDungeon.actionManager.addToBottom(new DrawCardAction(p, this.amount));
-			((MyRelic)(p.getRelic(LackOfCard.ID))).show();
+			((AbstractTestRelic)(p.getRelic(LackOfCard.ID))).show();
 		} else {
 			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new EnergizedPower(p, 1), 1));
 		}

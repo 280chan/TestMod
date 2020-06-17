@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import actions.DéjàvuAction;
 
-public class Déjàvu extends MyRelic {
+public class Déjàvu extends AbstractTestRelic {
 	public static final String ID = "Déjàvu";
 	
 	private ArrayList<AbstractCard> list = new ArrayList<AbstractCard>();

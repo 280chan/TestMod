@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import actions.MagicalMalletAction;
 
-public class MagicalMallet extends MyRelic{
+public class MagicalMallet extends AbstractTestRelic{
 	public static final String ID = "MagicalMallet";
 	
 	public MagicalMallet() {

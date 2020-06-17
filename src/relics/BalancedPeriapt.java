@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-public class BalancedPeriapt extends MyRelic {
+public class BalancedPeriapt extends AbstractTestRelic {
 	public static final String ID = "BalancedPeriapt";
 	
 	public BalancedPeriapt() {

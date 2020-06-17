@@ -37,7 +37,7 @@ public class DeathImprint extends AbstractTestCard {
 	public void triggerOnGlowCheck() {
 		this.glowColor = AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if ((!m.isDeadOrEscaped()) && (m.hasPower(DeathImprintPower.POWER_ID))) {
+			if ((!m.isDeadOrEscaped()) && (DeathImprintPower.hasThis(m))) {
 				this.glowColor = AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
 				break;
 			}
@@ -49,8 +49,8 @@ public class DeathImprint extends AbstractTestCard {
 		this.isDamageModified = false;
 		float tmp = this.baseDamage;
 		if (m != null) {
-			if (m.hasPower(DeathImprintPower.POWER_ID)) {
-				tmp += m.getPower(DeathImprintPower.POWER_ID).amount * this.magicNumber / 100f;
+			if (DeathImprintPower.hasThis(m)) {
+				tmp += DeathImprintPower.getThis(m).amount * this.magicNumber / 100f;
 				if (this.baseDamage != (int) tmp) {
 					this.isDamageModified = true;
 				}
@@ -100,8 +100,8 @@ public class DeathImprint extends AbstractTestCard {
 		this.isDamageModified = false;
 		int tmp = this.baseDamage;
 		if (m != null) {
-			if (m.hasPower(DeathImprintPower.POWER_ID)) {
-				this.baseDamage += m.getPower(DeathImprintPower.POWER_ID).amount * this.magicNumber / 100f;
+			if (DeathImprintPower.hasThis(m)) {
+				this.baseDamage += DeathImprintPower.getThis(m).amount * this.magicNumber / 100f;
 				if (this.baseDamage != tmp) {
 					this.isDamageModified = true;
 				}

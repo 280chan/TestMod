@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import utils.MiscMethods;
 
-public class EqualTreatment extends MyRelic implements MiscMethods {
+public class EqualTreatment extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "EqualTreatment";
 	
 	private static Color color = null;

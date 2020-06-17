@@ -16,7 +16,7 @@ import actions.DreamHousePurgeCardAction;
 import mymod.TestMod;
 import utils.MiscMethods;
 
-public class DreamHouse extends MyRelic implements MiscMethods {
+public class DreamHouse extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "DreamHouse";
 	private static final AbstractRelic[] RELICS = { new HappyFlower(), new Lantern() };
 	private static final ArrayList<DreamHousePurgeCardAction> QUEUE = new ArrayList<DreamHousePurgeCardAction>();
@@ -53,7 +53,7 @@ public class DreamHouse extends MyRelic implements MiscMethods {
 	}
 	
 	public static void equipAction() {
-		MyRelic.setTryEquip(DreamHouse.class, false);
+		AbstractTestRelic.setTryEquip(DreamHouse.class, false);
 		for (AbstractRelic r : RELICS) {
 			TestMod.obtain(AbstractDungeon.player, r, false);
 		}
@@ -68,7 +68,7 @@ public class DreamHouse extends MyRelic implements MiscMethods {
     }
 
 	public static void unequipAction() {
-		MyRelic.setTryUnequip(DreamHouse.class, false);
+		AbstractTestRelic.setTryUnequip(DreamHouse.class, false);
 		for (AbstractRelic r : RELICS) {
 			AbstractDungeon.player.loseRelic(r.relicId);
 			System.out.println("梦幻馆: 移除" + r.name);

@@ -3,7 +3,7 @@ package relics;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-public class Iteration extends MyRelic{
+public class Iteration extends AbstractTestRelic{
 	
 	public static final String ID = "Recursion";
 	public static int baseHandSize;

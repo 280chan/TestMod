@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-public class SaigiyounoYou extends MyRelic {
+public class SaigiyounoYou extends AbstractTestRelic {
 	public static final String ID = "SaigiyounoYou";
 	
 	public SaigiyounoYou() {

@@ -11,12 +11,13 @@ import com.megacrit.cardcrawl.rooms.RestRoom;
 
 import mymod.TestMod;
 
-public class DragonStarHat extends MyRelic {
+public class DragonStarHat extends AbstractTestRelic {
 	public static final String ID = "DragonStarHat";
+	public static final String SAVE_NAME = "HatMaxStr";
 	public int maxValue = 0;
 	
 	private void save() {
-		TestMod.saveVariable("HatMaxStr", maxValue);
+		TestMod.save(SAVE_NAME, maxValue);
 	}
 	
 	private void load(int maxValue) {
@@ -29,7 +30,7 @@ public class DragonStarHat extends MyRelic {
 	}
 	
 	public static void resetValue() {
-		TestMod.saveVariable("HatMaxStr", 0);
+		TestMod.save(SAVE_NAME, 0);
 	}
 	
 	public DragonStarHat() {

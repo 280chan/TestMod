@@ -20,7 +20,7 @@ import actions.PlaySpecificCardAction;
 import mymod.TestMod;
 import utils.MiscMethods;
 
-public class Prudence extends MyRelic implements MiscMethods {
+public class Prudence extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "Prudence";
 	
 	public static AbstractPlayer p;

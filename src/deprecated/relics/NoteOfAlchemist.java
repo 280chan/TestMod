@@ -12,12 +12,12 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import mymod.TestMod;
-import relics.MyRelic;
+import relics.AbstractTestRelic;
 
 /**
  * @deprecated
  */
-public class NoteOfAlchemist extends MyRelic{
+public class NoteOfAlchemist extends AbstractTestRelic{
 	private static final Logger logger = LogManager.getLogger(NoteOfAlchemist.class.getName());
 	public static final String ID = "NoteOfAlchemist";//遗物Id，添加遗物、替换遗物时填写该id而不是遗物类名。
 	public static final String IMG = "resources/images/NoteOfAlchemist.png";//遗物图片路径
@@ -33,7 +33,7 @@ public class NoteOfAlchemist extends MyRelic{
 	private static ArrayList<AbstractRelic> rewards = new ArrayList<AbstractRelic>();
 	
 	public static void saveState() {
-		TestMod.saveVariable("recorded", recorded);
+		TestMod.save("recorded", recorded);
 	}
 	
 	public static boolean recorded() {

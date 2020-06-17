@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import powers.IntensifyImprintPower;
 
-public class IntensifyImprint extends MyRelic {
+public class IntensifyImprint extends AbstractTestRelic {
 	public static final String ID = "IntensifyImprint";
 	
 	public IntensifyImprint() {
@@ -62,23 +62,10 @@ public class IntensifyImprint extends MyRelic {
 		super.update();
 		if (this.counter < 0)
 			return;
-		if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
-			for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-				if (!m.hasPower(IntensifyImprintPower.POWER_ID)) {
+		if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT)
+			for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
+				if (!IntensifyImprintPower.hasThis(m))
 					m.powers.add(new IntensifyImprintPower(m, this));
-				} else if(!m.powers.get(m.powers.size() - 1).ID.equals(IntensifyImprintPower.POWER_ID)) {
-					int index = 0;
-					for (int i = 0; i < m.powers.size(); i++) {
-						if (m.powers.get(i).ID.equals(IntensifyImprintPower.POWER_ID)) {
-							index = i;
-							break;
-						}
-					}
-					m.powers.remove(index);
-					m.powers.add(new IntensifyImprintPower(m, this));
-				}
-			}
-		}
 	}
 	
 }

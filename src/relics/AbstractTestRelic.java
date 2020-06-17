@@ -10,13 +10,13 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import basemod.abstracts.CustomRelic;
 import mymod.TestMod;
 
-public abstract class MyRelic extends CustomRelic{
+public abstract class AbstractTestRelic extends CustomRelic {
 	public boolean isActive = false;
 	public boolean show = true;
 	
-	private static HashMap<Class<? extends MyRelic>, HashMap<String, Boolean>> EQUIP = new HashMap<Class<? extends MyRelic>, HashMap<String, Boolean>>();
+	private static HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>> EQUIP = new HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>>();
 	
-	public static void addToMap(MyRelic obj) {
+	public static void addToMap(AbstractTestRelic obj) {
 		if (!EQUIP.containsKey(obj.getClass())) {
 			HashMap<String, Boolean> equip = new HashMap<String, Boolean>();
 			equip.put("equip", false);
@@ -25,23 +25,23 @@ public abstract class MyRelic extends CustomRelic{
 		}
 	}
 	
-	public static boolean tryEquip(MyRelic obj) {
+	public static boolean tryEquip(AbstractTestRelic obj) {
 		return EQUIP.get(obj.getClass()).get("equip");
 	}
 	
-	public static boolean tryUnequip(MyRelic obj) {
+	public static boolean tryUnequip(AbstractTestRelic obj) {
 		return EQUIP.get(obj.getClass()).get("unequip");
 	}
 	
-	private static void modifyState(Class<? extends MyRelic> c, String key, boolean value) {
+	private static void modifyState(Class<? extends AbstractTestRelic> c, String key, boolean value) {
 		EQUIP.get(c).replace(key, value);
 	}
 	
-	protected static void setTryEquip(Class<? extends MyRelic> c, boolean value) {
+	protected static void setTryEquip(Class<? extends AbstractTestRelic> c, boolean value) {
 		modifyState(c, "equip", value);
 	}
 	
-	protected static void setTryUnequip(Class<? extends MyRelic> c, boolean value) {
+	protected static void setTryUnequip(Class<? extends AbstractTestRelic> c, boolean value) {
 		modifyState(c, "unequip", value);
 	}
 	
@@ -53,7 +53,7 @@ public abstract class MyRelic extends CustomRelic{
 		modifyState(this.getClass(), "unequip", value);
 	}
 	
-	public MyRelic(String id, RelicTier tier, LandingSound sfx) {
+	public AbstractTestRelic(String id, RelicTier tier, LandingSound sfx) {
 		super(TestMod.makeID(id), new Texture(Gdx.files.internal(TestMod.relicIMGPath(id))), tier, sfx);
 	}
 	
@@ -61,7 +61,7 @@ public abstract class MyRelic extends CustomRelic{
 		if (!show)
 			return;
 		flash();
-	    AbstractDungeon.actionManager.addToBottom(new RelicAboveCreatureAction(AbstractDungeon.player, this));
+	    this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
 	}
 	
 	public void postUpdate() {

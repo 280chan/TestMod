@@ -15,7 +15,7 @@ import mymod.TestMod;
 import powers.RecapPower;
 
 
-public class Register extends MyRelic{
+public class Register extends AbstractTestRelic{
 	public static final String ID = "Register";
 	
 	private static final ArrayList<AbstractPower> POWERS = new ArrayList<AbstractPower>();

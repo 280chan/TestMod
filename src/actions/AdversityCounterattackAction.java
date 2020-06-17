@@ -22,6 +22,8 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 	private static final float POST_ATTACK_WAIT_DUR = 0.1F;
 	private boolean skipWait;
 	private AbstractPlayer p;
+	
+	private int base;
 
 	public AdversityCounterattackAction(AbstractPlayer p, AbstractMonster m, AttackEffect effect) {
 		this.target = m;
@@ -33,6 +35,7 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 	
 	private AdversityCounterattackAction(AbstractMonster target, DamageInfo info, AttackEffect effect, int times) {
 		this.skipWait = times > 5;
+		this.base = info.base;
 		this.target = target;
 		this.info = info;
 		this.actionType = ActionType.DAMAGE;
@@ -45,14 +48,9 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 		AbstractMonster m = randomTarget();
 		if (m == null)
 			return new WaitAction(POST_ATTACK_WAIT_DUR);
-		return new AdversityCounterattackAction(m, new DamageInfo(this.p, base), attackEffect, times);
-	}
-	
-	private AbstractGameAction next(DamageInfo info, int times) {
-		AbstractMonster m = randomTarget();
-		if (m == null)
-			return new WaitAction(POST_ATTACK_WAIT_DUR);
-		return new AdversityCounterattackAction(m, info, attackEffect, times);
+		if (this.p != null)
+			return new AdversityCounterattackAction(m, new DamageInfo(this.p, base), attackEffect, times);
+		return new AdversityCounterattackAction(m, new DamageInfo(this.info.owner, base), attackEffect, times);
 	}
 	
 	private static AbstractMonster randomTarget() {
@@ -80,7 +78,7 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 		} else if (this.p != null) {
 			int baseDamage = countAmount(this.target, PowerType.BUFF);
 			int times = countAmount(this.p, PowerType.DEBUFF);
-			AbstractDungeon.actionManager.addToTop(this.next(baseDamage, times));
+			this.addToTop(this.next(baseDamage, times));
 		} else {
 			AbstractDungeon.effectList
 					.add(new FlashAtkImgEffect(this.target.hb.cX, this.target.hb.cY, this.attackEffect));
@@ -93,11 +91,11 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 				AbstractDungeon.actionManager.clearPostCombatActions();
 			} else if (this.amount > 1) {
 				if (!(this.target.hasPower("Invincible") && this.target.getPower("Invincible").amount == 0)) {
-					AbstractDungeon.actionManager.addToTop(this.next(this.info, this.amount - 1));
+					this.addToTop(this.next(this.base, this.amount - 1));
 				}
 			}
-			if (!this.skipWait && !Settings.FAST_MODE) {
-				AbstractDungeon.actionManager.addToTop(new WaitAction(POST_ATTACK_WAIT_DUR));
+			if (!this.skipWait && !Settings.FAST_MODE && this.amount < 20) {
+				this.addToTop(new WaitAction(POST_ATTACK_WAIT_DUR));
 			}
 		}
 	}

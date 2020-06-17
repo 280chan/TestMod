@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import mymod.TestMod;
 import utils.MiscMethods;
 
-public class StringDisintegrator extends MyRelic implements MiscMethods {
+public class StringDisintegrator extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "StringDisintegrator";
 	
 	private static final String EMPTY = "";

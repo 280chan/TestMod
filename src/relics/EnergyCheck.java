@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import mymod.TestMod;
 
-public class EnergyCheck extends MyRelic {
+public class EnergyCheck extends AbstractTestRelic {
 	
 	public static final String ID = "EnergyCheck";
 	

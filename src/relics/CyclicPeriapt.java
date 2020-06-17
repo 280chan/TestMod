@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 
 import utils.MiscMethods;
 
-public class CyclicPeriapt extends MyRelic implements MiscMethods {
+public class CyclicPeriapt extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "CyclicPeriapt";
 	
 	private static Color color = null;

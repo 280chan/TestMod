@@ -2,7 +2,7 @@ package relics;
 
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
-public abstract class AbstractClickRelic extends MyRelic {
+public abstract class AbstractClickRelic extends AbstractTestRelic {
 	private boolean RclickStart;
 	private boolean Rclick;
 

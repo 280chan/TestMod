@@ -4,31 +4,34 @@ import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-import mymod.TestMod;
 import relics.IntensifyImprint;
 
-public class IntensifyImprintPower extends AbstractPower implements InvisiblePower {
+public class IntensifyImprintPower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "IntensifyImprintPower";
-	public static final String NAME = "激化刻印";
-    public static final String IMG = TestMod.powerIMGPath(POWER_ID);
-	public static final String DESCRIPTION = "如果你看见这句话，请反馈bug。";
+	private static final int PRIORITY = 999999;
 	private IntensifyImprint r;
 	
+	public static boolean hasThis(AbstractCreature owner) {
+		for (AbstractPower p : owner.powers)
+			if (p instanceof IntensifyImprintPower)
+				return true;
+		return false;
+	}
+	
 	public IntensifyImprintPower(AbstractCreature owner, IntensifyImprint r) {
-		this.name = NAME;
-		this.ID = POWER_ID;
+		super(POWER_ID);
+		this.name = POWER_ID;
 		this.owner = owner;
-		this.img = ImageMaster.loadImage(IMG);
 		updateDescription();
 		this.type = PowerType.BUFF;
 		this.r = r;
+		this.priority = PRIORITY;
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTION;
+		 this.description = "";
 	}
 	
 	public void stackPower(final int stackAmount) {

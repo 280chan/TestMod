@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import utils.MiscMethods;
 
-public class Acrobat extends MyRelic implements MiscMethods {
+public class Acrobat extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "Acrobat";
 	private static Color color = null;
 	

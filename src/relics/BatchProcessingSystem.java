@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mymod.TestMod;
 import utils.MiscMethods;
 
-public class BatchProcessingSystem extends MyRelic implements MiscMethods {
+public class BatchProcessingSystem extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "BatchProcessingSystem";
 	
 	private static Color color = null;

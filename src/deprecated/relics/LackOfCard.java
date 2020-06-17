@@ -11,13 +11,13 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import actions.TriggerFirstTurnPostDrawPowersAction;
 import deprecated.powers.LackOfCardPower;
 import mymod.TestMod;
-import relics.MyRelic;
+import relics.AbstractTestRelic;
 import utils.MiscMethods;
 
 /**
  * @deprecated
  */
-public class LackOfCard extends MyRelic implements MiscMethods {
+public class LackOfCard extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "LackOfCard";
 	public static final String IMG = TestMod.cardIMGPath(ID);
 	public static final String DESCRIPTION = "回合开始时，如果手牌数不超过当前能量，额外抽 #b2 张牌，否则下一回合开始获得 [R] 。";//遗物效果的文本描叙。

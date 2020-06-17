@@ -26,6 +26,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.helpers.TipTracker;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
@@ -53,7 +54,6 @@ import basemod.interfaces.MaxHPChangeSubscriber;
 import cards.*;
 import cards.colorless.*;
 import cards.mahjong.*;
-import deprecated.relics.*;
 import events.*;
 import potions.*;
 import powers.SuperconductorNoEnergyPower;
@@ -62,14 +62,18 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 6/12/2020
+ * @version 6/15/2020
  * @since 6/17/2018
  */
 
 @SpireInitializer
-public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber, PostDungeonInitializeSubscriber, PreUpdateSubscriber, PostUpdateSubscriber, StartGameSubscriber, PostInitializeSubscriber, OnStartBattleSubscriber, MaxHPChangeSubscriber, MiscMethods {
+public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber,
+		PostDungeonInitializeSubscriber, PreUpdateSubscriber, PostUpdateSubscriber, StartGameSubscriber,
+		PostInitializeSubscriber, OnStartBattleSubscriber, MaxHPChangeSubscriber, MiscMethods {
 	public static Mode MODE = Mode.BOX;
 	public static final String MOD_ID = "testmod";
+	public static final String SAVE_NAME = "TestMod";
+	public static final String SAVE_FILE_NAME = "Common";
 	public static final Logger LOGGER = LogManager.getLogger(TestMod.class.getName());
 
 	public static enum Mode {
@@ -148,11 +152,18 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private static String langPrefix = null;
 	
 	public static String languagePrefix(String s) {
-		langPrefix = "zhs/";
+		if (langPrefix != null)
+			return langPrefix + s;
 		// TODO
-		if (Settings.language != GameLanguage.ZHS)
-			return "eng/" + s;
-			//langPrefix = Settings.language.name().toLowerCase() + "/";
+		switch (Settings.language) {
+		case ZHS:
+		case ENG:
+			langPrefix = Settings.language.name().toLowerCase() + "/";
+			break;
+		default:
+			langPrefix = "eng/";
+			break;
+		}
 		return langPrefix + s;
 	}
 	
@@ -194,16 +205,16 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		
 		for (AbstractRelic r : RELICS) {
 			BaseMod.addRelic(r, RelicType.SHARED);
-			if (r instanceof MyRelic) {
-				MY_RELICS.add((MyRelic)r);
+			if (r instanceof AbstractTestRelic) {
+				MY_RELICS.add((AbstractTestRelic)r);
 			}
 			if (r instanceof AbstractBottleRelic) {
 				BOTTLES.add((AbstractBottleRelic)r);
 			}
 		}
 		
-		for (MyRelic r : MY_RELICS) {
-			MyRelic.addToMap(r);
+		for (AbstractTestRelic r : MY_RELICS) {
+			AbstractTestRelic.addToMap(r);
 		}
 		
 		for (int i = 0; i < BOTTLES.size(); i++) {
@@ -213,13 +224,14 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 
 	public static final ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
-	private static final ArrayList<MyRelic> MY_RELICS = new ArrayList<MyRelic>();
+	private static final ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
 	private static final ArrayList<AbstractBottleRelic> BOTTLES = new ArrayList<AbstractBottleRelic>();
 	
 	@Override
 	public void receiveEditStrings() {
 		BaseMod.loadCustomStrings(RelicStrings.class, readString("relics"));
 		BaseMod.loadCustomStrings(CardStrings.class, readString("cards"));
+		BaseMod.loadCustomStrings(PowerStrings.class, readString("powers"));
 	}
 
 	@Override
@@ -359,7 +371,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private static void initCheat() {
 		addInit(INIT0, new TemporaryDeletion());
 		addInit(INIT_G, new CrystalShield(), new HeadAttack());
-		addInit(INIT_B, new HistoricalDocuments(), new Dream());
+		//addInit(INIT_B, new HistoricalDocuments(), new Dream());
 		addInit(INIT_R, new CyclicPeriapt(), new TreasureHunter());
 		addInit(INIT_G, new FatalChain(), new DeathImprint());
 		addInit(INIT_B, new Register(), new Recap());
@@ -443,11 +455,12 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}
 		if (config == null)
 			this.initSavingConfig();
-		AbstractPlayer p = AbstractDungeon.player;
 		DragonStarHat.resetValue();
 		Faith.reset();
-		NoteOfAlchemist.setState(false);
+		AscensionHeart.reset();
 		Mahjong.saveDefaultYama();
+		// NoteOfAlchemist.setState(false);
+		AbstractPlayer p = AbstractDungeon.player;
 		// 初始遗物
 		switch (MODE) {
 		case BOX:
@@ -467,56 +480,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		case TEST:
 			for (int i = 0; i < RELICS.size(); i++) {
 				switch (RELICS.get(i).relicId) {
-				case "D_4": 					continue; //*/	break;
-				case "BouquetWithThorns":		continue; //*/	break;
-				case "SevenDeadlySins":			continue; //*/	break;
-				case "ObsoleteBoomerang":		continue; //*/	break;
-				case "BlackFramedGlasses":		continue; //*/	break;
-				case "PortableAltar":			continue; //*/	break;
-				case "Register":				continue; //*/	break;
-				case "EnergyCheck":				continue; //*/	break;
-				case "InfectionSource":			continue; //*/	break;
-				case "OneHitWonder":			continue; //*/	break;
-				case "Recursion":				continue; //*/	break;
-				case "Temperance":				continue; //*/	break;
-				case "Justice":					continue; //*/	break;
-				case "Fortitude":				continue; //*/	break;
-				case "Charity":					continue; //*/	break;
-				case "Hope":					continue; //*/	break;
-				case "Prudence":				continue; //*/	break;
-				case "AssaultLearning":			continue; //*/	break;
-				case "Muramasa":				continue; //*/	break;
-				case "HeartOfDaVinci":			continue; //*/	break;
-				case "IncinerationGenerator":	continue; //*/	break;
-				case "IndustrialRevolution":/*	continue; //*/	break;
-				case "AscensionHeart":			continue; //*/	break;
-				case "Nyarlathotep":			continue; //*/	break;
-				case "RealStoneCalender":		continue; //*/	break;
-				case "BalancedPeriapt":			continue; //*/	break;
-				case "MagicalMallet":			continue; //*/	break;
-				case "Laevatain":				continue; //*/	break;
-				case "TimeTraveler":			continue; //*/	break;
-				case "Maize":					continue; //*/	break;
-				case "DragonStarHat":			continue; //*/	break;
-				case "Nine":					continue; //*/	break;
-				case "SaigiyounoYou":			continue; //*/	break;
-				case "Motorcycle":				continue; //*/	break;
-				case "DreamHouse":				continue; //*/	break;
-				case "CrystalShield":			continue; //*/	break;
-				case "BottledCurse":			continue; //*/	break;
-				case "Alchemist":				continue; //*/	break;
-				case "StringDisintegrator":		continue; //*/	break;
-				case "HarvestTotem":			continue; //*/	break;
-				case "BatchProcessingSystem":	continue; //*/	break;
-				case "CardMagician":			continue; //*/	break;
-				case "NegativeEmotionEnhancer":	continue; //*/	break;
-				case "LackOfCard":				continue; //*/	break;
-				case "Brilliant":				continue; //*/	break;
-				case "BirthdayGift":			continue; //*/	break;
-				case "IWantAll":				continue; //*/	break;
-				case "Antiphasic":				continue; //*/	break;
-				case "IntensifyImprint":		continue; //*/	break;
-				default:						continue; //*/	break;
+				
 				}
 				obtain(p, RELICS.get(i), true);
 			}
@@ -636,8 +600,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		if (p != null) {
 			for (Iterator<AbstractRelic> i = p.relics.iterator(); i.hasNext();) {
 				AbstractRelic temp = i.next();
-				if (temp instanceof MyRelic) {
-					((MyRelic)temp).preUpdate();
+				if (temp instanceof AbstractTestRelic) {
+					((AbstractTestRelic)temp).preUpdate();
 				}
 			}
 			this.updateGlow();
@@ -654,17 +618,19 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				obtain(p, TO_OBTAIN.remove(0), true);
 			}
 			
-			for (MyRelic r : MY_RELICS) {
+			for (AbstractTestRelic r : MY_RELICS) {
 				if (p.hasRelic(r.relicId)) {
-					MyRelic m = (MyRelic)p.getRelic(r.relicId);
+					AbstractTestRelic m = (AbstractTestRelic)p.getRelic(r.relicId);
 					setActivity(m);
 					setShow(m);
 				}
 			}
 
+			
 			/*if (p.hasRelic("NoteOfAlchemist") && p.relics.get(0).relicId != "NoteOfAlchemist") {
 				if (!NoteOfAlchemist.recorded()) {
-					if ((AbstractDungeon.floorNum < 1) || (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom() instanceof TreasureRoomBoss)) {
+					if ((AbstractDungeon.floorNum < 1) || (AbstractDungeon.currMapNode != null
+							&& AbstractDungeon.getCurrRoom() instanceof TreasureRoomBoss)) {
 						NoteOfAlchemist.equipAction();
 					} else if (AbstractDungeon.currMapNode != null) {
 						NoteOfAlchemist.setState(true);
@@ -673,15 +639,15 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			} else if (CardCrawlGame.mode == GameMode.GAMEPLAY || CardCrawlGame.mode == GameMode.DUNGEON_TRANSITION) {
 				NoteOfAlchemist.setState(false);
 			}*/
-			
-			for (MyRelic r : MY_RELICS) {
+
+			for (AbstractTestRelic r : MY_RELICS) {
 				/*if (r instanceof NoteOfAlchemist) {
 					continue;
 				}*/
 				try {
-					if (MyRelic.tryEquip(r)) {
+					if (AbstractTestRelic.tryEquip(r)) {
 						r.getClass().getMethod("equipAction").invoke(null);
-					} else if (MyRelic.tryUnequip(r)) {
+					} else if (AbstractTestRelic.tryUnequip(r)) {
 						r.getClass().getMethod("unequipAction").invoke(null);
 					}
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
@@ -692,8 +658,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			
 			for (Iterator<AbstractRelic> i = p.relics.iterator(); i.hasNext();) {
 				AbstractRelic temp = i.next();
-				if (temp instanceof MyRelic) {
-					((MyRelic)temp).postUpdate();
+				if (temp instanceof AbstractTestRelic) {
+					((AbstractTestRelic)temp).postUpdate();
 				}
 			}
 			
@@ -754,15 +720,15 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}
 	}
 	
-	public static void setShow(MyRelic r) {
+	public static void setShow(AbstractTestRelic r) {
 		r.show = AbstractDungeon.player.relics.size() < 26;
 	}
 	
-	public static void setActivity(MyRelic relic) {
+	public static void setActivity(AbstractTestRelic relic) {
 		int count = 0;
 		for (AbstractRelic r : AbstractDungeon.player.relics)
 			if (r.relicId.equals(relic.relicId))
-				((MyRelic)r).isActive = count++ == 0;
+				((AbstractTestRelic)r).isActive = count++ == 0;
 	}
 	
 	//private static boolean needFix;
@@ -771,16 +737,17 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public static SpireConfig config = null;
 	
 	private void initSavingConfig() {
-		DEFAULT.setProperty("maxHPLost", "0");
-		DEFAULT.setProperty("preMaxHP", "0");
-		DEFAULT.setProperty("san", "100");
-		DEFAULT.setProperty("recorded", "false");
-		DEFAULT.setProperty("HatMaxStr", "0");
-		DEFAULT.setProperty("FaithGained", "false");
-		DEFAULT.setProperty("FaithPreGold", "0");
-		DEFAULT.setProperty("MahjongTurns", "0");
-		DEFAULT.setProperty("MahjongKang", "0");
-		DEFAULT.setProperty("MahjongReach", "false");
+		DEFAULT.setProperty(PortableAltar.SAVE_NAME, "0");
+		DEFAULT.setProperty(Sins.SAVE_NAME, "0");
+		DEFAULT.setProperty(TimeTraveler.SAVE_NAME, "100");
+		// DEFAULT.setProperty("recorded", "false");
+		DEFAULT.setProperty(DragonStarHat.SAVE_NAME, "0");
+		DEFAULT.setProperty(Faith.SAVE_NAME, "false");
+		DEFAULT.setProperty(Faith.SAVE_NAME1, "0");
+		DEFAULT.setProperty(Mahjong.SAVE_KANG, "0");
+		DEFAULT.setProperty(Mahjong.SAVE_TURN, "0");
+		DEFAULT.setProperty(Mahjong.SAVE_REACH, "false");
+		DEFAULT.setProperty(AscensionHeart.SAVE_NAME, "false");
 		for (int i = 0; i < Mahjong.YAMA_NAME.length; i++)
 			DEFAULT.setProperty(Mahjong.YAMA_NAME[i], "" + Mahjong.YAMA_DEFAULT[i]);
 		for (String s : Mahjong.KANG_NAME)
@@ -790,7 +757,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		for (int i = 0; i < 13; i++)
 			DEFAULT.setProperty(Mahjong.HAND_NAME + i, "0");
 		try {
-			config = new SpireConfig("TestMod", "Common", DEFAULT);
+			config = new SpireConfig(SAVE_NAME, SAVE_FILE_NAME, DEFAULT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -800,24 +767,33 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receiveStartGame() {
 		if (config == null)
 			this.initSavingConfig();
+		
 		if (AbstractDungeon.player.hasRelic(makeID(PortableAltar.ID))) {
-			PortableAltar.maxHPLost = config.getInt("maxHPLost");
+			PortableAltar.load(config.getInt(PortableAltar.SAVE_NAME));
 		}
-		Sins.preMaxHP = config.getInt("preMaxHP");
-		if (Sins.preMaxHP != AbstractDungeon.player.maxHealth) {
-			Sins.preMaxHP = AbstractDungeon.player.maxHealth;
-			saveVariable("preMaxHP", Sins.preMaxHP);
+		
+		Sins.load(config.getInt(Sins.SAVE_NAME));
+		if (Sins.checkModified()) {
+			Sins.load(AbstractDungeon.player.maxHealth);
+			save(Sins.SAVE_NAME, Sins.preMaxHP);
 		}
 		Sins.isSelect = false;
+		
 		HeartOfDaVinci.clear();
 		HeartOfDaVinci.init(AbstractDungeon.player.relics.size());
-		TimeTraveler.load(config.getInt("san"));
+		
+		TimeTraveler.load(config.getInt(TimeTraveler.SAVE_NAME));
+		
 		Motorcycle.loadGame();
 		// NoteOfAlchemist.setState(config.getBool("recorded"));
-		DragonStarHat.loadValue(config.getInt("HatMaxStr"));
-		Faith.load(config.getBool("FaithGained"), config.getInt("FaithPreGold"));
+		
+		DragonStarHat.loadValue(config.getInt(DragonStarHat.SAVE_NAME));
+		
+		Faith.load(config.getBool(Faith.SAVE_NAME), config.getInt(Faith.SAVE_NAME1));
+		
 		if (AbstractDungeon.player.hasRelic(makeID(Mahjong.ID))) {
-			int[] yama = new int[37], kang = new int[config.getInt("MahjongKang")], hint = new int[kang.length + 1], hand = new int[13 - 3 * kang.length];
+			int[] yama = new int[37], kang = new int[config.getInt(Mahjong.SAVE_KANG)], hint = new int[kang.length + 1],
+					hand = new int[13 - 3 * kang.length];
 			for (int i = 0; i < 37; i++)
 				yama[i] = config.getInt(Mahjong.YAMA_NAME[i]);
 			for (int i = 0; i < kang.length; i++)
@@ -826,12 +802,15 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				hint[i] = config.getInt(Mahjong.DORA_NAME[i]);
 			for (int i = 0; i < hand.length; i++)
 				hand[i] = config.getInt(Mahjong.HAND_NAME + i);
-			Mahjong.load(config.getInt("MahjongTurns"), config.getBool("MahjongReach"), yama, kang, hint, hand);
+			Mahjong.load(config.getInt(Mahjong.SAVE_TURN), config.getBool(Mahjong.SAVE_REACH), yama, kang, hint, hand);
 		}
+		
 		Automaton.loadMagicNumber();
+		
+		AscensionHeart.load(config.getBool(AscensionHeart.SAVE_NAME));
 	}
 	
-	public static void saveVariable(String key, int value) {
+	public static void save(String key, int value) {
 		config.setInt(key, value);
 		try {
 			config.save();
@@ -840,7 +819,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}
 	}
 	
-	public static void saveVariable(String key, boolean value) {
+	public static void save(String key, boolean value) {
 		config.setBool(key, value);
 		try {
 			config.save();
@@ -919,8 +898,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public int receiveMapHPChange(int amount) {
 		float tmp = amount * 1f;
 		for (AbstractRelic r : AbstractDungeon.player.relics) {
-			if (r instanceof MyRelic) {
-				tmp = ((MyRelic)r).preChangeMaxHP(tmp);
+			if (r instanceof AbstractTestRelic) {
+				tmp = ((AbstractTestRelic)r).preChangeMaxHP(tmp);
 			}
 		}
 		return (int)tmp;

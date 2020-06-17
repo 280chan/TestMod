@@ -12,21 +12,23 @@ import com.megacrit.cardcrawl.rooms.ShopRoom;
 
 import mymod.TestMod;
 
-public class Faith extends MyRelic {
+public class Faith extends AbstractTestRelic {
 	public static final String ID = "Faith";
+	public static final String SAVE_NAME = "FaithGained";
+	public static final String SAVE_NAME1 = "FaithPreGold";
 	
 	private boolean gained = false;
 	private static final int TMP_GOLD = 1000000;
 	private int preGold;
 	
 	public static void reset() {
-		TestMod.saveVariable("FaithGained", false);
-		TestMod.saveVariable("FaithPreGold", 0);
+		TestMod.save(SAVE_NAME, false);
+		TestMod.save(SAVE_NAME1, 0);
 	}
 	
 	private void save() {
-		TestMod.saveVariable("FaithGained", this.gained);
-		TestMod.saveVariable("FaithPreGold", this.preGold);
+		TestMod.save(SAVE_NAME, this.gained);
+		TestMod.save(SAVE_NAME1, this.preGold);
 	}
 	
 	public static void load(boolean gained, int preGold) {

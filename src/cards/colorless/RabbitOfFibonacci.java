@@ -19,12 +19,13 @@ public class RabbitOfFibonacci extends AbstractTestCard {
     private static final int COST = 2;
     private static final int BASE_DMG = 1;
     private static final int BASE_BLK = 1;
+    private static final double ROOT5 = Math.sqrt(5);
+    private static final double LOG_PHI = Math.log((ROOT5 + 1) / 2);
 
     public RabbitOfFibonacci() {
         super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL);
         this.baseDamage = BASE_DMG;
         this.baseBlock = BASE_BLK;
-        this.misc = BASE_DMG;
         this.isMultiDamage = true;
     }
 
@@ -38,14 +39,19 @@ public class RabbitOfFibonacci extends AbstractTestCard {
     	return true;
     }
     
+    private static int f(int n) {
+    	int sign = (n % 2 == 0) ? -1 : 1;
+    	double tmp = Math.exp(LOG_PHI * n);
+    	return (int) ((tmp + sign / tmp) / ROOT5 + 0.5);
+    }
+    
     public void upgrade() {
     	this.timesUpgraded += 1;
     	this.name = NAME + "+" + this.timesUpgraded;
     	this.upgraded = true;
         this.initializeTitle();
-        int tmp = this.baseDamage;
-        this.upgradeDamage(this.misc);
-        this.upgradeBlock(this.misc);
-        this.misc = tmp;
+        int tmp = f(this.timesUpgraded + 1);
+        this.baseDamage = this.baseBlock = tmp;
+		this.upgradedDamage = this.upgradedBlock = true;
     }
 }

@@ -17,9 +17,8 @@ import mymod.TestMod;
 /**
  * @deprecated
  */
-public class 示例遗物 extends MyRelic {
+public class 示例遗物 extends AbstractTestRelic {
 	public static final String ID = "";
-	public static final String DESCRIPTION = "";
 	
 	public 示例遗物() {
 		super(ID, RelicTier.RARE, LandingSound.MAGICAL);

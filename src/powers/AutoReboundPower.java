@@ -4,20 +4,21 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.localization.PowerStrings;
 
-public class AutoReboundPower extends AbstractPower {
+public class AutoReboundPower extends AbstractTestPower {
 	public static final String POWER_ID = "AutoReboundPower";
-	public static final String NAME = "自动弹回";
-	public static final String[] DESCRIPTIONS = {"你每回合打出的前 #b", " 张可被弹回的牌，将回到抽牌堆顶部。"};
+	private static final String REGION = "rebound";
+	private static final PowerStrings PS = Strings(POWER_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	private int cardsReboundedThisTurn = 0;
 	
 	public AutoReboundPower(AbstractCreature owner, int amount) {
+		super(POWER_ID, REGION);
 		this.name = NAME;
-		this.ID = POWER_ID;
 		this.owner = owner;
 		this.amount = amount;
-		loadRegion("rebound");
 		updateDescription();
 		this.type = PowerType.BUFF;
 	}
@@ -34,14 +35,14 @@ public class AutoReboundPower extends AbstractPower {
 		return this.cardsReboundedThisTurn < this.amount;
 	}
     
-    public void onAfterUseCard(final AbstractCard card, final UseCardAction action) {
-		if ((card.type != AbstractCard.CardType.POWER) && (!card.exhaust) && (!card.exhaustOnUseOnce) && !action.exhaustCard && !card.purgeOnUse) {
-			if (card.type != CardType.CURSE && card.type != CardType.STATUS && checkAmount()) {
+	public void onAfterUseCard(final AbstractCard c, final UseCardAction action) {
+		if (c.type != CardType.POWER && !c.exhaust && !c.exhaustOnUseOnce && !action.exhaustCard && !c.purgeOnUse) {
+			if (c.type != CardType.CURSE && c.type != CardType.STATUS && checkAmount()) {
 				flash();
 				action.reboundCard = true;
 				this.cardsReboundedThisTurn++;
 			}
 		}
-    }
+	}
     
 }

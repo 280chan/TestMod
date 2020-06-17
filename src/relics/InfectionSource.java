@@ -8,8 +8,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import powers.InfectionPower;
 import powers.InfectionSourcePower;
 
-public class InfectionSource extends MyRelic {
-	
+public class InfectionSource extends AbstractTestRelic {
 	public static final String ID = "InfectionSource";
 	
 	public InfectionSource() {
@@ -24,21 +23,16 @@ public class InfectionSource extends MyRelic {
 		flash();
 		AbstractPlayer p = AbstractDungeon.player;
 		this.addToTop(new RelicAboveCreatureAction(p, this));
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!m.isDead && !m.isDying) {
-				this.addToBot(new ApplyPowerAction(m, p, new InfectionPower(m)));
-			}
-		}
+		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
+			if (!m.isDead && !m.isDying)
+				m.powers.add(new InfectionPower(m));
 		this.addToTop(new ApplyPowerAction(p, p, new InfectionSourcePower(p)));
     }
 	
 	public void atTurnStart() {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!m.isDead && !m.isDying && !m.hasPower("InfectionPower")) {
-				AbstractPlayer p = AbstractDungeon.player;
-				this.addToBot(new ApplyPowerAction(m, p, new InfectionPower(m)));
-			}
-		}
+		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
+			if (!(m.halfDead || m.isDead || m.isDying || m.escaped || m.isEscaping || InfectionPower.hasThis(m)))
+				this.addToBot(new ApplyPowerAction(m, AbstractDungeon.player, new InfectionPower(m)));
     }
 
 }

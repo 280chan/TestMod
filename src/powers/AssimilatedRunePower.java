@@ -7,29 +7,27 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.localization.PowerStrings;
 
 import mymod.TestMod;
 
-public class AssimilatedRunePower extends AbstractPower {
+public class AssimilatedRunePower extends AbstractTestPower {
 	public static final String POWER_ID = "AssimilatedRunePower";
-	public static final String NAME = "同化";
-    public static final String IMG = TestMod.powerIMGPath(POWER_ID);
-	public static final String[] DESCRIPTIONS = { "在 #b", " 回合内，将当前手牌中所有牌的基础伤害、基础格挡提升到", " #y当前手", " #y你所有", "牌 中的最高值。" };
-
+	private static final PowerStrings PS = Strings(POWER_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	private boolean upgraded = false;
 	
 	public AssimilatedRunePower(AbstractCreature owner, int amount, boolean upgraded) {
+		super(POWER_ID);
 		this.name = NAME;
-		this.ID = POWER_ID + upgraded;
+		this.ID += upgraded;
 		this.upgraded = upgraded;
 		if (this.upgraded) {
 			this.name += "+";
 		}
 		this.owner = owner;
 		this.amount = amount;
-		this.img = ImageMaster.loadImage(IMG);
 		updateDescription();
 		this.type = PowerType.BUFF;
 	}
@@ -44,13 +42,8 @@ public class AssimilatedRunePower extends AbstractPower {
 		 this.description += DESCRIPTIONS[4];
 	}
 	
-	public void stackPower(final int stackAmount) {
-		this.fontScale = 8.0f;
-        this.amount += stackAmount;
-	}
-	
 	private boolean isActive() {
-		return this.upgraded || !AbstractDungeon.player.hasPower(POWER_ID + true);
+		return this.upgraded || !AbstractDungeon.player.hasPower(TestMod.makeID(POWER_ID) + true);
 	}
 	
 	private int getValue(AbstractCard c, boolean atk) {
@@ -87,7 +80,7 @@ public class AssimilatedRunePower extends AbstractPower {
     
     public void atEndOfTurn(final boolean isPlayer) {
     	if (isPlayer) {
-    		AbstractDungeon.actionManager.addToBottom(new ReducePowerAction(this.owner, this.owner, this.ID, 1));
+    		this.addToBot(new ReducePowerAction(this.owner, this.owner, this.ID, 1));
     	}
     }
     
@@ -96,5 +89,6 @@ public class AssimilatedRunePower extends AbstractPower {
     		return this.maxIn(this.getList(), false);
     	return blockAmount;
     }
+
     
 }

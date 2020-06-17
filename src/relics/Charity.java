@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-public class Charity extends MyRelic{
+public class Charity extends AbstractTestRelic{
 	
 	public static final String ID = "Charity";
 	

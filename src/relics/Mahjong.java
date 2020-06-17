@@ -14,7 +14,7 @@ import cards.mahjong.AbstractMahjongCard;
 import mymod.TestMod;
 import utils.MiscMethods;
 
-public class Mahjong extends MyRelic implements MiscMethods {
+public class Mahjong extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "Mahjong";
 	
 	public static final String[] YAMA_NAME = { "w0", "w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8", "w9", "p0", "p1",
@@ -27,6 +27,9 @@ public class Mahjong extends MyRelic implements MiscMethods {
 	public static final String[] KANG_NAME = {"KANG0", "KANG1", "KANG2", "KANG3"};
 	public static final String[] DORA_NAME = {"DORA0", "DORA1", "DORA2", "DORA3", "DORA4"};
 	public static final String HAND_NAME = "Mahjong_HAND";
+	public static final String SAVE_KANG = "MahjongKang";
+	public static final String SAVE_TURN = "MahjongTurns";
+	public static final String SAVE_REACH = "MahjongReach";
 	
 	private ArrayList<Integer> yama = new ArrayList<Integer>();
 	private ArrayList<AbstractMahjongCard> hand = new ArrayList<AbstractMahjongCard>();
@@ -73,40 +76,40 @@ public class Mahjong extends MyRelic implements MiscMethods {
 	}
 	
 	private void saveTurns() {
-		TestMod.saveVariable("MahjongTurns", this.turns);
+		TestMod.save(SAVE_TURN, this.turns);
 	}
 	
 	public static void saveDefaultYama() {
 		for (int i = 0; i < 37; i++)
-			TestMod.saveVariable(YAMA_NAME[i], YAMA_DEFAULT[i]);
+			TestMod.save(YAMA_NAME[i], YAMA_DEFAULT[i]);
 	}
 	
 	private void save() {
-		System.out.println("Mahjong开始save");
+		TestMod.info("Mahjong开始save");
 		if (this.doraHint.isEmpty()) {
 			this.reset();
 		}
-		TestMod.saveVariable("MahjongTurns", this.turns);
-		TestMod.saveVariable("MahjongKang", this.numKang);
-		TestMod.saveVariable("MahjongReach", this.reach);
+		TestMod.save(SAVE_KANG, this.numKang);
+		TestMod.save(SAVE_TURN, this.turns);
+		TestMod.save(SAVE_REACH, this.reach);
 		for (int i = 0; i < 37; i++)
-			TestMod.saveVariable(YAMA_NAME[i], this.yama.get(i));
+			TestMod.save(YAMA_NAME[i], this.yama.get(i));
 		for (int i = 0; i < this.numKang; i++)
-			TestMod.saveVariable(KANG_NAME[i], this.kangID.get(i));
+			TestMod.save(KANG_NAME[i], this.kangID.get(i));
 		for (int i = 0; i < this.numKang + 1; i++)
-			TestMod.saveVariable(DORA_NAME[i], this.doraHint.get(i).numberID());
+			TestMod.save(DORA_NAME[i], this.doraHint.get(i).numberID());
 		for (int i = 0; i < this.hand.size(); i++)
-			TestMod.saveVariable(HAND_NAME + i, this.hand.get(i).numberID());
-		System.out.println("Mahjong save完毕");
+			TestMod.save(HAND_NAME + i, this.hand.get(i).numberID());
+		TestMod.info("Mahjong save完毕");
 	}
 	
 	public static void load(int turns, boolean reach, int[] yama, int[] kangID, int[] hintID, int[] handID) {
 		if (AbstractDungeon.player.hasRelic(TestMod.makeID(ID))) {
 			Mahjong current = (Mahjong)AbstractDungeon.player.getRelic(TestMod.makeID(ID));
-			System.out.println("Mahjong开始load");
+			TestMod.info("Mahjong开始load");
 			if (current.total(yama) == 0 || current.total(yama) == current.total(YAMA_DEFAULT)) {
 				saveLater = true;
-				System.out.println("saveLater变为true");
+				TestMod.info("saveLater变为true");
 				return;
 			}
 			current.reach = reach;
@@ -128,7 +131,7 @@ public class Mahjong extends MyRelic implements MiscMethods {
 			for (int i = 0; i < 13 - 3 * current.numKang; i++)
 				current.hand.add(AbstractMahjongCard.mahjong(handID[i]));
 			
-			System.out.println("Mahjong load完毕");
+			TestMod.info("Mahjong load完毕");
 		}
 	}
 	
@@ -139,7 +142,7 @@ public class Mahjong extends MyRelic implements MiscMethods {
 	
 	public static void setRng() {
 		rng = new Random(Settings.seed.longValue() + ((Integer)AbstractDungeon.floorNum).longValue());
-		System.out.println("rng 已设置");
+		TestMod.info("rng 已设置");
 	}
 	
 	private int ran(int range, long seedFix) {
@@ -149,7 +152,7 @@ public class Mahjong extends MyRelic implements MiscMethods {
 	}
 	
 	private void reset() {
-		System.out.println("Mahjong开始reset");
+		TestMod.info("Mahjong开始reset");
 		this.yama.clear();
 		for (int i : YAMA_DEFAULT)
 			this.yama.add(i);
@@ -165,7 +168,7 @@ public class Mahjong extends MyRelic implements MiscMethods {
 			this.clearAndSetNewHand();
 			this.doraHint();
 		}
-		System.out.println("Mahjong reset完毕");
+		TestMod.info("Mahjong reset完毕");
 	}
 	
 	private void clearAndSetNewHand() {
@@ -174,7 +177,7 @@ public class Mahjong extends MyRelic implements MiscMethods {
 			this.hand.add(this.randomFromYama());
 		for (int i = 0; i < 39; i++)
 			this.randomFromYama();
-		System.out.println("Mahjong Hand分配完毕");
+		TestMod.info("Mahjong Hand分配完毕");
 	}
 	
 	private int total(ArrayList<Integer> yama) {
@@ -240,7 +243,7 @@ public class Mahjong extends MyRelic implements MiscMethods {
 	public void atBattleStart() {
 		this.history.clear();
 		// TODO
-		System.out.println("开始战斗");
+		TestMod.info("开始战斗");
 		if (saveLater) {
 			saveLater = false;
 			this.save();

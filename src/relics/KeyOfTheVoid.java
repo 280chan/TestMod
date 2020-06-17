@@ -15,7 +15,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.rooms.TreasureRoom;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 
-public class KeyOfTheVoid extends MyRelic {
+public class KeyOfTheVoid extends AbstractTestRelic {
 	public static final String ID = "KeyOfTheVoid";
 	
 	private int victoryFloor = -1;

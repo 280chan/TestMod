@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
-public class CasingShield extends MyRelic {
+public class CasingShield extends AbstractTestRelic {
 	public static final String ID = "CasingShield";
 	
 	public CasingShield() {

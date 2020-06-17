@@ -29,71 +29,24 @@ import mymod.TestMod;
 import powers.DefenceDownPower;
 import powers.EventHalfDamagePower;
 
-public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
+public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRelic {
 	public static final String ID = "AscensionHeart";
-	public static final String DESCRIPTION = "依据 #y进阶等级 获得增益。";
-	public static final String[] TEXT = new String[25];
-	public static final String[] NEGATIVE_TEXT = new String[20];
-	public static boolean updated = false;
-	private static boolean initialized = false;
+	public static final String SAVE_NAME = "AHRevived";
 	private static boolean revived = false;
-	
 	private static boolean looping = false;
 	
-	public static void initialize() {
-		if (initialized)
-			return;
-		initialized = true;
-		int i = 0;
-		TEXT[i++] = "精英敌人奖励变得更好";
-		TEXT[i++] = "普通敌人受到伤害增加";
-		TEXT[i++] = "精英敌人受到伤害增加";
-		TEXT[i++] = "Boss敌人受到伤害增加";
-		TEXT[i++] = "Boss战后增加生命上限";
-		TEXT[i++] = "战斗开始时恢复生命";
-		TEXT[i++] = "普通敌人初始受到伤害";
-		TEXT[i++] = "精英敌人初始受到伤害";
-		TEXT[i++] = "Boss敌人初始受到伤害";
-		TEXT[i++] = "为所有诅咒增加虚无";
-		TEXT[i++] = "使用药水后恢复生命";
-		TEXT[i++] = "获得牌时概率将其升级";
-		TEXT[i++] = "Boss变富";
-		TEXT[i++] = "击败精英增加生命上限";
-		TEXT[i++] = "事件中失去的生命减少";
-		TEXT[i++] = "购买商品返还部分金币";
-		TEXT[i++] = "普通敌人-1力量";
-		TEXT[i++] = "精英敌人-1力量";
-		TEXT[i++] = "Boss敌人-1力量";
-		TEXT[i++] = "死亡时有1次复活机会";
-		TEXT[i++] = "获得卡牌时获得金币";
-		TEXT[i++] = "失去生命时获得金币";
-		TEXT[i++] = "治疗效果一半概率翻倍";
-		TEXT[i++] = "为所有状态增加虚无";
-		TEXT[i++] = "稀有遗物提供额外能量";
-		i = 0;
-		NEGATIVE_TEXT[i++] = "精英敌人奖励变得更好";
-		NEGATIVE_TEXT[i++] = "普通敌人受到伤害增加";
-		NEGATIVE_TEXT[i++] = "精英敌人受到伤害增加";
-		NEGATIVE_TEXT[i++] = "Boss敌人受到伤害增加";
-		NEGATIVE_TEXT[i++] = "Boss战后增加生命上限";
-		NEGATIVE_TEXT[i++] = "战斗开始时恢复生命";
-		NEGATIVE_TEXT[i++] = "普通敌人初始受到伤害";
-		NEGATIVE_TEXT[i++] = "精英敌人初始受到伤害";
-		NEGATIVE_TEXT[i++] = "Boss敌人初始受到伤害";
-		NEGATIVE_TEXT[i++] = "为所有诅咒增加虚无";
-		NEGATIVE_TEXT[i++] = "使用药水后恢复生命";
-		NEGATIVE_TEXT[i++] = "获得牌时概率将其升级";
-		NEGATIVE_TEXT[i++] = "Boss变富";
-		NEGATIVE_TEXT[i++] = "击败精英增加生命上限";
-		NEGATIVE_TEXT[i++] = "事件中失去的生命减少";
-		NEGATIVE_TEXT[i++] = "购买商品返还部分金币";
-		NEGATIVE_TEXT[i++] = "普通敌人-1力量";
-		NEGATIVE_TEXT[i++] = "精英敌人-1力量";
-		NEGATIVE_TEXT[i++] = "Boss敌人-1力量";
-		NEGATIVE_TEXT[i++] = "死亡时有1次复活机会";
-		
+	public static void reset() {
+		revived = false;
+		save();
 	}
-
+	
+	public static void load(boolean loadValue) {
+		revived = loadValue;
+	}
+	
+	private static void save() {
+		TestMod.save(SAVE_NAME, revived);
+	}
 	
 	public AscensionHeart() {
 		super(ID, RelicTier.SPECIAL, LandingSound.HEAVY);
@@ -102,9 +55,14 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 	public String getUpdatedDescription() {
 		if (!isObtained)
 			return DESCRIPTIONS[0];
-		String retVal = DESCRIPTION;
-		for (int i = 0; i < this.counter; i++)
-			retVal += " NL " + (i + 1) + "." + TEXT[i];
+		String retVal = DESCRIPTIONS[0];
+		for (int i = 0; i < this.counter; i++) {
+			if (i == 19 && revived) {
+				retVal += " NL " + (i + 1) + "." + DESCRIPTIONS[26];
+			} else {
+				retVal += " NL " + (i + 1) + "." + DESCRIPTIONS[i + 1];
+			}
+		}
 		return retVal;
 	}
 	
@@ -113,17 +71,12 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 	}
 	
 	private void updateDescription() {
-		if (revived) {
-			TEXT[19] = "(这个效果已用尽)";
-			initialized = false;
-		}
 		this.tips.clear();
 	    this.tips.add(new PowerTip(this.name, getUpdatedDescription()));
 	    initializeTips();
 	}
 	
 	public AbstractRelic makeCopy() {
-		initialize();
 		return new AscensionHeart();
 	}
 	
@@ -132,7 +85,7 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 	}
 	
 	private boolean checkDefenceDown(AbstractMonster m, boolean preBattle) {
-		if (!preBattle && m.hasPower("DefenceDownPower"))
+		if (!preBattle && DefenceDownPower.hasThis(m))
 			return false;
 		if (m.type == EnemyType.NORMAL && checkLevel(2))
 			return true;
@@ -166,7 +119,7 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 	public void onObtainCard(AbstractCard card) {
 		if (card.type == CardType.CURSE && checkLevel(10)) {
 			if (!card.isEthereal) {
-				card.rawDescription += " 虚无 。";
+				card.rawDescription += DESCRIPTIONS[27];
 				card.initializeDescription();
 				card.isEthereal = true;
 			}
@@ -176,7 +129,7 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 			}
 		} else if (card.type == CardType.STATUS && checkLevel(24)) {
 			if (!card.isEthereal) {
-				card.rawDescription += " 虚无 。";
+				card.rawDescription += DESCRIPTIONS[27];
 				card.initializeDescription();
 				card.isEthereal = true;
 			}
@@ -204,11 +157,11 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 		if (checkLevel(10)) {
 			for (AbstractCard card : AbstractDungeon.player.hand.group) {
 				if (card.type == CardType.CURSE && !card.isEthereal) {
-					card.rawDescription += " 虚无 。";
+					card.rawDescription += DESCRIPTIONS[27];
 					card.initializeDescription();
 					card.isEthereal = true;
 				} else if (card.type == CardType.STATUS && !card.isEthereal && checkLevel(24)) {
-					card.rawDescription += " 虚无 。";
+					card.rawDescription += DESCRIPTIONS[27];
 					card.initializeDescription();
 					card.isEthereal = true;
 				}
@@ -228,7 +181,6 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 		TestMod.setActivity(this);
 		if (!isActive)
 			return;
-		initialize();
 		this.counter = AbstractDungeon.ascensionLevel;
 		if (this.counter == 0)
 			this.counter = -1;
@@ -240,7 +192,7 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 			AbstractDungeon.player.heal(1, true);
 		}
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!m.isDead && !m.isDying && !m.halfDead) {
+			if (!m.isDead && !m.isDying && !m.halfDead && !m.isEscaping && !m.escaped) {
 				if (checkDefenceDown(m, true))
 					m.powers.add(new DefenceDownPower(m, 10));
 				if (checkReceiveDamage(m)) {
@@ -264,12 +216,10 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
     }
 	
 	public void atTurnStart() {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!m.isDead && !m.isDying && !m.halfDead) {
+		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
+			if (!m.isDead && !m.isDying && !m.halfDead && !m.isEscaping && !m.escaped)
 				if (checkDefenceDown(m, false))
 					m.powers.add(new DefenceDownPower(m, 10));
-			}
-		}
 		if (checkLevel(25)) {
 			int e = 0;
 			for (AbstractRelic r : AbstractDungeon.player.relics)
@@ -336,9 +286,10 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 	public boolean onPlayerDeath(AbstractPlayer p, DamageInfo info) {
 		if (checkLevel(20) && !revived && !AbstractDungeon.player.hasRelic("Mark of the Bloom")) {
 			revived = true;
+			save();
 			this.updateDescription();
 			AbstractDungeon.player.heal(AbstractDungeon.player.maxHealth, true);
-			return false;
+			return AbstractDungeon.player.currentHealth < 1;
 		}
 		return true;
 	}
@@ -346,8 +297,8 @@ public class AscensionHeart extends MyRelic implements OnPlayerDeathRelic {
 	public void onEnterRoom(final AbstractRoom room) {
 		if (room instanceof EventRoom) {
 			AbstractDungeon.player.powers.add(new EventHalfDamagePower(AbstractDungeon.player, this));
-		} else if (AbstractDungeon.player.hasPower("EventHalfDamagePower")) {
-			AbstractDungeon.player.powers.remove(AbstractDungeon.player.getPower("EventHalfDamagePower"));
+		} else if (EventHalfDamagePower.hasThis()) {
+			AbstractDungeon.player.powers.remove(EventHalfDamagePower.getThis());
 		}
 		if (eliteSwarm) {
 			stopEliteSwarm();

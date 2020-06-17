@@ -35,7 +35,7 @@ public abstract class AbstractTestCard extends CustomCard {
         super(TestMod.makeID(shortID), NAME, TestMod.cardIMGPath(shortID), -2, DESCRIPTION, CardType.CURSE, CardColor.CURSE, CardRarity.SPECIAL, CardTarget.NONE);
     }
 	
-	public static CardStrings Strings(String ID) {
+	protected static CardStrings Strings(String ID) {
 		return CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID));
 	}
 	

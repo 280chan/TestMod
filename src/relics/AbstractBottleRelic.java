@@ -4,7 +4,7 @@ import java.util.function.Predicate;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
-public abstract class AbstractBottleRelic extends MyRelic implements Predicate<AbstractCard> {
+public abstract class AbstractBottleRelic extends AbstractTestRelic implements Predicate<AbstractCard> {
 	protected boolean cardSelected = true;
 	public AbstractCard card = null;
 	

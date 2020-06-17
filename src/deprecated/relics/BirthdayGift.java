@@ -10,12 +10,12 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.*;
 
 import mymod.TestMod;
-import relics.MyRelic;
+import relics.AbstractTestRelic;
 
 /**
  * @deprecated
  */
-public class BirthdayGift extends MyRelic {
+public class BirthdayGift extends AbstractTestRelic {
 	public static final String ID = "BirthdayGift";
 	public static final String IMG = TestMod.cardIMGPath("relic1");
 	public static final String DESCRIPTION = "拾起时，将金币清零，并获得所有未拥有的遗物非Boss加费遗物。";//遗物效果的文本描叙。
@@ -36,7 +36,7 @@ public class BirthdayGift extends MyRelic {
 	}
 	
 	public static void equipAction() {
-		MyRelic.setTryEquip(BirthdayGift.class, false);
+		AbstractTestRelic.setTryEquip(BirthdayGift.class, false);
 		AbstractPlayer p = AbstractDungeon.player;
 		p.gold = 0;
 		for (AbstractRelic r : RELICS) {

@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import mymod.TestMod;
 
-public class Laevatain extends MyRelic {
+public class Laevatain extends AbstractTestRelic {
 	public static final String ID = "Laevatain";
 	
 	public Laevatain() {

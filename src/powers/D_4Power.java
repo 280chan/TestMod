@@ -1,38 +1,42 @@
 
-package powers;//包名，请根据自己的包路径修改，一般在创建类的时候自动填好。
+package powers;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-
+import com.megacrit.cardcrawl.localization.PowerStrings;
 import relics.D_4;
 import relics.D_4.Situation;
 
-public class D_4Power extends AbstractPower{
-	private static final String POWER_ID = "D_4Power";
-	private static final String NAME = "符文四面体";
-	private static final String DESCRIPTION = "打出下一张牌时，";
-	private static final String IMG = "resources/images/powers/" + POWER_ID;
+public class D_4Power extends AbstractTestPower {
+	public static final String POWER_ID = "D_4Power";
+	private static final PowerStrings PS = Strings(POWER_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	private static final int AMOUNT = -1;
 	public Situation situation;
 	public static boolean endTurn = false;
+	private static final int PRIORITY = -100000;
+	
+	public static String getString(Situation s) {
+		if (s != null && s.ordinal() < 4)
+			return DESCRIPTIONS[s.ordinal() + 1];
+		return DESCRIPTIONS[5];
+	}
 	
 	public D_4Power(AbstractCreature owner, Situation s) {
+		super(POWER_ID + s.ordinal());
 		this.name = NAME;
-		this.ID = POWER_ID + s.ordinal();
 		this.owner = owner;
 		this.amount = AMOUNT;
-		this.img = ImageMaster.loadImage(IMG + s.ordinal() + ".png");
 
 		this.situation = s;
 		updateDescription();
 		this.type = PowerType.BUFF;
+		this.priority = PRIORITY;
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTION + situation.toString() + "。";
+		 this.description = DESCRIPTIONS[0] + situation.toString() + DESCRIPTIONS[6];
 	}
 	
 	public void stackPower(final int stackAmount) {
@@ -41,12 +45,11 @@ public class D_4Power extends AbstractPower{
 	}
 	
     public void onRemove() {
-    	AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(owner, owner, next()));
+    	this.addToTop(new ApplyPowerAction(owner, owner, next()));
     }
     
     private D_4Power next() {
     	return new D_4Power(owner, D_4.nextSituation);
     }
-    
     
 }

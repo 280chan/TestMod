@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.monsters.*;
 
 import actions.SubstituteBySubterfugeAction;
 
-import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class SubstituteBySubterfuge extends AbstractTestCard {
@@ -16,31 +15,17 @@ public class SubstituteBySubterfuge extends AbstractTestCard {
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-	private static final String[] E = {" [R] ", " [G] ", " [B] ", " [P] "};
+	private static final String E = " [E] ";
 	private static final int COST = 0;
 
 	public SubstituteBySubterfuge() {
-		super(ID, NAME, COST, getDescription(false), CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
+		super(ID, NAME, COST, getDescription(false), CardType.SKILL, CardRarity.UNCOMMON, CardTarget.NONE);
 		this.exhaust = true;
 	}
 
 	public static String getDescription(boolean upgraded) {
 		String temp = EXTENDED_DESCRIPTION[0];
-		String e = E[0];
-		if (AbstractDungeon.player != null) {
-			switch (AbstractDungeon.player.chosenClass) {
-			case WATCHER:
-				e = E[3];
-				break;
-			case DEFECT:
-				e = E[2];
-				break;
-			case THE_SILENT:
-				e = E[1];
-			default:
-			}
-		}
-		temp += e + EXTENDED_DESCRIPTION[1];
+		temp += E + EXTENDED_DESCRIPTION[1];
 		if (!upgraded)
 			temp += EXTENDED_DESCRIPTION[2];
 		return temp;

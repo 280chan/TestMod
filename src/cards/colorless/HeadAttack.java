@@ -18,7 +18,7 @@ public class HeadAttack extends AbstractTestCard implements MiscMethods {
     private static final int BASE_MGC = 1;
     
     public HeadAttack() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.isEthereal = true;
         this.baseMagicNumber = BASE_MGC;
         this.magicNumber = this.baseMagicNumber;

@@ -10,8 +10,9 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import mymod.TestMod;
 import utils.MiscMethods;
 
-public class TimeTraveler extends MyRelic implements MiscMethods {
+public class TimeTraveler extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "TimeTraveler";
+	public static final String SAVE_NAME = "san";
 	private static final int REST_SAN = 10;
 	private static final int VICTORY_SAN = 5;
 	private static final int MAX_HP_LOSS = 10;
@@ -29,7 +30,7 @@ public class TimeTraveler extends MyRelic implements MiscMethods {
 	}
 	
 	private static void save(int value) {
-		TestMod.saveVariable("san", value);
+		TestMod.save(SAVE_NAME, value);
 	}
 	
 	public static void load(int value) {

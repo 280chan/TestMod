@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 
-public class Maize extends MyRelic {
+public class Maize extends AbstractTestRelic {
 	public static final String ID = "Maize";
 	private static final int AMOUNT = 5;
 	

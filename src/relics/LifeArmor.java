@@ -6,11 +6,11 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
-public class LifeArmor extends MyRelic {
+public class LifeArmor extends AbstractTestRelic {
 	public static final String ID = "LifeArmor";
 
 	public LifeArmor() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

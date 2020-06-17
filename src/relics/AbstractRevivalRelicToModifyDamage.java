@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-public abstract class AbstractRevivalRelicToModifyDamage extends MyRelic implements OnPlayerDeathRelic {
+public abstract class AbstractRevivalRelicToModifyDamage extends AbstractTestRelic implements OnPlayerDeathRelic {
 
 	protected int previousFuckHp = -1;
 	protected boolean deathTriggered = false;

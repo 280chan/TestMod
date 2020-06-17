@@ -23,11 +23,9 @@ public class DorothysBlackCatDamageAction extends AbstractGameAction {
 	
 	private ArrayList<AbstractMonster> canDamage() {
     	ArrayList<AbstractMonster> list = new ArrayList<AbstractMonster>();
-    	for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-    		if (!(m.isDead || m.isDying || m.escaped || m.halfDead)) {
+    	for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
+    		if (!(m.isDead || m.isDying || m.escaped || m.halfDead))
     			list.add(m);
-    		}
-    	}
     	return list;
     }
 	
@@ -36,7 +34,7 @@ public class DorothysBlackCatDamageAction extends AbstractGameAction {
 		ArrayList<AbstractMonster> list = this.canDamage();
 		int damage = (int)(this.totalDamage / list.size());
 		if (damage > 0)
-			AbstractDungeon.actionManager.addToTop(new DamageAllEnemiesAction(AbstractDungeon.player, DamageInfo.createDamageMatrix(damage, true), DamageType.HP_LOSS, AttackEffect.POISON, true));
+			this.addToTop(new DamageAllEnemiesAction(AbstractDungeon.player, DamageInfo.createDamageMatrix(damage, true), DamageType.HP_LOSS, AttackEffect.POISON, true));
 		this.isDone = true;
 	}
 

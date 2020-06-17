@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 
 import utils.MiscMethods;
 
-public class IncinerationGenerator extends MyRelic implements MiscMethods {
+public class IncinerationGenerator extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "IncinerationGenerator";
 	
 	public IncinerationGenerator() {

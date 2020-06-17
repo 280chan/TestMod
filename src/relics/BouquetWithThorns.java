@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.ThornsPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
-public class BouquetWithThorns extends MyRelic{
+public class BouquetWithThorns extends AbstractTestRelic{
 	public static final String ID = "BouquetWithThorns";
 	
 	public BouquetWithThorns() {

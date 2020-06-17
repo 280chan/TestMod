@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class Brilliant extends MyRelic {
+public class Brilliant extends AbstractTestRelic {
 	public static final String ID = "Brilliant";
 	
 	public Brilliant() {

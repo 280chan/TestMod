@@ -16,7 +16,7 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import utils.MiscMethods;
 
-public class ConstraintPeriapt extends MyRelic implements MiscMethods {
+public class ConstraintPeriapt extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "ConstraintPeriapt";
 
 	public ConstraintPeriapt() {

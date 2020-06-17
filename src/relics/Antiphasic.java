@@ -5,11 +5,11 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
-public class Antiphasic extends MyRelic {
+public class Antiphasic extends AbstractTestRelic {
 	public static final String ID = "Antiphasic";
 	
 	public Antiphasic() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
@@ -22,7 +22,7 @@ public class Antiphasic extends MyRelic {
 	    initializeTips();
 	}
 	
-	public int onAttacked(final DamageInfo info, final int damage) {//参数：info-伤害信息，damageAmount-伤害数值
+	public int onAttacked(final DamageInfo info, final int damage) {
         if (damage >= AbstractDungeon.player.maxHealth / 4.0) {
         	if (damage == AbstractDungeon.player.maxHealth && damage == 1) {
         		return damage;

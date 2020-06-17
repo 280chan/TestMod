@@ -30,11 +30,13 @@ import mymod.TestMod;
 import utils.BossRelicSelectScreen;
 import utils.MiscMethods;
 
-public class Sins extends MyRelic implements MiscMethods {
+public class Sins extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "SevenDeadlySins";
 	
 	public static final AbstractCard[] SINS = {new Pride(), new Lust(), new Wrath(), new Sloth(), new Envy(), new Greed(), new Gluttony()};
 	public static final AbstractRelic[] RELICS = {new DuVuDoll(), new DarkstonePeriapt(), new BlueCandle()};
+	
+	public static final String SAVE_NAME = "preMaxHP";
 	
 	public static int preMaxHP;
     public static boolean dontCopy = false;
@@ -45,8 +47,16 @@ public class Sins extends MyRelic implements MiscMethods {
 	private static final String RELIC_SELECT_TITLE = "七原罪:";
 	private static final String RELIC_SELECT_INFO = "请勇士选择通过试炼的奖励。";
 	
+	public static void load(int loadValue) {
+		preMaxHP = loadValue;
+	}
+	
+	public static boolean checkModified() {
+		return preMaxHP != AbstractDungeon.player.maxHealth;
+	}
+	
     private void save() {
-    	TestMod.saveVariable("preMaxHP", preMaxHP);
+    	TestMod.save(SAVE_NAME, preMaxHP);
     }
     
 	public Sins() {
@@ -153,7 +163,7 @@ public class Sins extends MyRelic implements MiscMethods {
 	
 	public static void equipAction() {
 		System.out.println("获得七原罪诅咒与遗物");
-		MyRelic.setTryEquip(Sins.class, false);
+		AbstractTestRelic.setTryEquip(Sins.class, false);
 		for (AbstractRelic r : RELICS) {
 			TestMod.obtain(AbstractDungeon.player, r, false);
 		}
@@ -185,7 +195,7 @@ public class Sins extends MyRelic implements MiscMethods {
 	}
 	
 	public static void unequipAction() {
-		MyRelic.setTryUnequip(Sins.class, false);
+		AbstractTestRelic.setTryUnequip(Sins.class, false);
 		for (int i = 0; i < AbstractDungeon.player.masterDeck.group.size(); i++) {
 			AbstractCard c = AbstractDungeon.player.masterDeck.group.get(i);
 			if (isSin(c)) {
@@ -249,7 +259,7 @@ public class Sins extends MyRelic implements MiscMethods {
 		if (isSin(c)) {
 			return copyCurse();
 		}
-		return c;
+		return c.makeCopy();
 	}
 
 }

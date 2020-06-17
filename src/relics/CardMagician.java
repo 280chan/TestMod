@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import mymod.TestMod;
 import utils.MiscMethods;
 
-public class CardMagician extends MyRelic implements MiscMethods {
+public class CardMagician extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "CardMagician";
 	
 	public CardMagician() {

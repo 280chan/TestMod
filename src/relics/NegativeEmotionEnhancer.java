@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.powers.WeakPower;
 import mymod.TestMod;
 import utils.MiscMethods;
 
-public class NegativeEmotionEnhancer extends MyRelic implements MiscMethods {
+public class NegativeEmotionEnhancer extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "NegativeEmotionEnhancer";
 	
 	public NegativeEmotionEnhancer() {

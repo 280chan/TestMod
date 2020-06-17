@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import powers.OneHitWonderDebuffPower;
 
-public class OneHitWonder extends MyRelic{
+public class OneHitWonder extends AbstractTestRelic{
 	public static final String ID = "OneHitWonder";
 	
 	private boolean getRoll() {
@@ -19,7 +19,7 @@ public class OneHitWonder extends MyRelic{
 	}
 	
 	public OneHitWonder() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

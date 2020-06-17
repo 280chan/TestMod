@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import powers.IndustrialRevolutionPower;
 import powers.InorganicPower;
 
-public class IndustrialRevolution extends MyRelic{
+public class IndustrialRevolution extends AbstractTestRelic{
 	public static final String ID = "IndustrialRevolution";
 	
 	public static final ArrayList<AbstractMonster> LIST = new ArrayList<AbstractMonster>();
@@ -39,11 +39,10 @@ public class IndustrialRevolution extends MyRelic{
 
 	private static void tryAdd() {
 		AbstractPlayer p = AbstractDungeon.player;
-		if (!p.hasPower(IndustrialRevolutionPower.POWER_ID)) {
+		if (!IndustrialRevolutionPower.hasThis(p))
 			p.powers.add(new IndustrialRevolutionPower(p));
-		}
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!m.isDead && !m.isDying && !m.halfDead && !m.hasPower(InorganicPower.POWER_ID)) {
+			if (!m.isDead && !m.isDying && !m.halfDead && !InorganicPower.hasThis(m)) {
 				if (m.hasPower("Artifact")) {
 					m.powers.add(new InorganicPower(m));
 					LIST.add(m);

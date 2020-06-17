@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 
 import actions.BloodSacrificeSpiritualizationSelectAction;
 
-public class BloodSacrificeSpiritualization extends MyRelic {
+public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 	public static final String ID = "BloodSacrificeSpiritualization";
 	
 	public BloodSacrificeSpiritualization() {

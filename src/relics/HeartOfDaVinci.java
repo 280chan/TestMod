@@ -23,7 +23,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import actions.DaVinciLibraryAction;
 import basemod.BaseMod;
 
-public class HeartOfDaVinci extends MyRelic{
+public class HeartOfDaVinci extends AbstractTestRelic{
 	
 	public static final String ID = "HeartOfDaVinci";
 	

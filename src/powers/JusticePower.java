@@ -1,38 +1,41 @@
-
 package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.OnReceivePowerPower;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
-
-import mymod.TestMod;
 import relics.Justice;
 
-public class JusticePower extends AbstractPower implements OnReceivePowerPower, InvisiblePower {
+public class JusticePower extends AbstractTestPower implements OnReceivePowerPower, InvisiblePower {
 	public static final String POWER_ID = "JusticePower";
-	public static final String NAME = "正义";
-    public static final String IMG = TestMod.powerIMGPath(POWER_ID);
-	public static final String DESCRIPTION = "每当你获得负面状态时，增加 #b1 力量。";
-	
 	private Justice j;
 	
+	public static boolean hasThis(AbstractCreature owner) {
+		for (AbstractPower p : owner.powers)
+			if (p instanceof JusticePower)
+				return true;
+		return false;
+	}
+	
 	public JusticePower(AbstractCreature owner, Justice j) {
+		super(POWER_ID);
 		this.j = j;
-		this.name = NAME;
-		this.ID = POWER_ID;
+		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
-		this.img = ImageMaster.loadImage(IMG);
 		updateDescription();
 		this.type = PowerType.BUFF;
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTION;
+		 this.description = "";
+	}
+
+	public void stackPower(int stackAmount) {
+		this.fontScale = 8.0f;
 	}
 	
 	@Override
@@ -44,4 +47,15 @@ public class JusticePower extends AbstractPower implements OnReceivePowerPower, 
 		return true;
 	}
 
+	public void onRemove() {
+		this.addToTop(new AbstractGameAction() {
+			@Override
+			public void update() {
+				this.isDone = true;
+				if (!hasThis(JusticePower.this.owner))
+					JusticePower.this.owner.powers.add(new InfectionPower(JusticePower.this.owner));
+			}
+		});
+	}
+	
 }

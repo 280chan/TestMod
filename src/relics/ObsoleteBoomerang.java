@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import actions.ObsoleteBoomerangDamageAction;
 
-public class ObsoleteBoomerang extends MyRelic{
+public class ObsoleteBoomerang extends AbstractTestRelic{
 	
 	public static final String ID = "ObsoleteBoomerang";
 	public static AttackEffect effect;

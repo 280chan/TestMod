@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
-public class Nyarlathotep extends MyRelic {
+public class Nyarlathotep extends AbstractTestRelic {
 	public static final String ID = "Nyarlathotep";
 	
 	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm" };

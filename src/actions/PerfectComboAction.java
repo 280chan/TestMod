@@ -77,9 +77,8 @@ public class PerfectComboAction extends AbstractGameAction implements MiscMethod
 			if (AbstractDungeon.getCurrRoom().monsters.areMonstersBasicallyDead()) {
 				AbstractDungeon.actionManager.clearPostCombatActions();
 			} else if (!(this.target.hasPower("Invincible") && this.target.getPower("Invincible").amount == 0)) {
-				
 				if (roll()) {
-					AbstractDungeon.actionManager.addToBottom(this.combo());
+					this.addToBot(this.combo());
 				}
 			}
 			

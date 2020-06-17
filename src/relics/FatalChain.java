@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 
 import powers.FatalChainCheckDamagePower;
 
-public class FatalChain extends MyRelic {
+public class FatalChain extends AbstractTestRelic {
 	public static final String ID = "FatalChain";
 	
 	private static final HashMap<DamageInfo, AbstractCreature> MAP = new HashMap<DamageInfo, AbstractCreature>();

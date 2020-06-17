@@ -35,7 +35,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import actions.HopeAction;
 import utils.MiscMethods;
 
-public class Hope extends MyRelic implements MiscMethods {
+public class Hope extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "Hope";
 
 	public static Random HPRng = new Random();
@@ -49,7 +49,7 @@ public class Hope extends MyRelic implements MiscMethods {
 	private boolean disabledUntilEndOfTurn;
 	
 	public Hope() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
 		this.counter = 0;
 	}
 	

@@ -12,14 +12,19 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import mymod.TestMod;
 
-public class PortableAltar extends MyRelic {
+public class PortableAltar extends AbstractTestRelic {
 	public static final String ID = "PortableAltar";
+	public static final String SAVE_NAME = "maxHPLost";
 	
-	public static int maxHPLost;
+	private static int maxHPLost;
 	private int turn = -1;
 	
+	public static void load(int loadValue) {
+		maxHPLost = loadValue;
+	}
+	
 	private void saveMaxHPLost() {
-		TestMod.saveVariable("maxHPLost", maxHPLost);
+		TestMod.save("maxHPLost", maxHPLost);
 	}
 	
 	public void reset() {

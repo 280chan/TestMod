@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.BlurPower;
 
-public class CrystalShield extends MyRelic {
+public class CrystalShield extends AbstractTestRelic {
 	public static final String ID = "CrystalShield";
 	
 	public CrystalShield() {

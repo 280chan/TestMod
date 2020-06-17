@@ -16,12 +16,12 @@ import com.megacrit.cardcrawl.powers.SkillBurnPower;
 import com.megacrit.cardcrawl.powers.TimeMazePower;
 
 import mymod.TestMod;
-import relics.MyRelic;
+import relics.AbstractTestRelic;
 
 /**
  * @deprecated
  */
-public class HistoricalDocuments extends MyRelic {
+public class HistoricalDocuments extends AbstractTestRelic {
 	public static final String ID = "HistoricalDocuments";
 	public static final String IMG = TestMod.cardIMGPath("relic1");
 	public static final String DESCRIPTION = "每回合开始获得一种随机的被尖塔废弃的正面或负面状态。";

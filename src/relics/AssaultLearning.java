@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import actions.AssaultLearningAction;
 
-public class AssaultLearning extends MyRelic {
+public class AssaultLearning extends AbstractTestRelic {
 	public static final String ID = "AssaultLearning";
 
 	public AssaultLearning() {

@@ -19,7 +19,7 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import utils.MiscMethods;
 
-public class DeterminationOfClimber extends MyRelic implements MiscMethods {
+public class DeterminationOfClimber extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "DeterminationOfClimber";
 	
 	private static Color color = null;

@@ -3,11 +3,9 @@ package relics;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-
 import powers.JusticePower;
 
-public class Justice extends MyRelic {
+public class Justice extends AbstractTestRelic {
 	public static final String ID = "Justice";
 	
 	public Justice() {
@@ -29,11 +27,7 @@ public class Justice extends MyRelic {
 		if (!isActive)
 			return;
 		AbstractPlayer p = AbstractDungeon.player;
-		boolean had = false;
-		for (AbstractPower po : p.powers)
-			if (po instanceof JusticePower)
-				had = true;
-		if (!had)
+		if (!JusticePower.hasThis(p))
 			this.addToTop(new ApplyPowerAction(p, p, new JusticePower(p, this)));
     }
 }

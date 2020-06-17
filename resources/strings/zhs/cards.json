@@ -114,7 +114,7 @@
   },
   "testmod-ConditionedReflex": {
     "NAME": "条件反射",
-    "DESCRIPTION": "每失去一次生命，获得 !M! 层 柔韧 ，并在下回合开始时使其生效1次。"
+    "DESCRIPTION": "每失去一次生命：获得 !M! 层 柔韧 ；并在下回合开始时使其生效1次。"
   },
   "testmod-DeathImprint": {
     "NAME": "死亡刻印",

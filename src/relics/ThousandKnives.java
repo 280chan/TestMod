@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import utils.MiscMethods;
 
-public class ThousandKnives extends MyRelic implements MiscMethods {
+public class ThousandKnives extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "ThousandKnives";
 	
 	private static Color color = null;

@@ -3,19 +3,20 @@ package powers;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.localization.PowerStrings;
 
-public class DrawDownPower extends AbstractPower {
+public class DrawDownPower extends AbstractTestPower {
 	public static final String POWER_ID = "DrawDownPower";
-	public static final String NAME = "抽牌变少";
-	public static final String[] DESCRIPTIONS = {"下一回合少抽 #b", " 张牌。"};
+	private static final String REGION = "lessdraw";
+	private static final PowerStrings PS = Strings(POWER_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
 	public DrawDownPower(AbstractCreature owner, int amount) {
+		super(POWER_ID, REGION);
 		this.name = NAME;
-		this.ID = POWER_ID;
 		this.owner = owner;
 		this.amount = amount;
-		loadRegion("lessdraw");
 		updateDescription();
 		this.type = PowerType.DEBUFF;
 	}
@@ -35,7 +36,7 @@ public class DrawDownPower extends AbstractPower {
 	}
 
 	public void atStartOfTurnPostDraw() {
-		AbstractDungeon.actionManager.addToBottom(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
+		this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
 	}
 
 	public void onRemove() {

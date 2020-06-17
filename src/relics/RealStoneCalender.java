@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 
-public class RealStoneCalender extends MyRelic{
+public class RealStoneCalender extends AbstractTestRelic{
 	public static final String ID = "RealStoneCalender";
 	
 	public RealStoneCalender() {

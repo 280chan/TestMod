@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.vfx.TextAboveCreatureEffect;
 
 import mymod.TestMod;
 
-public class HarvestTotem extends MyRelic {
+public class HarvestTotem extends AbstractTestRelic {
 	public static final String ID = "HarvestTotem";
 	
 	private static final ArrayList<AbstractCreature> DONE = new ArrayList<AbstractCreature>();

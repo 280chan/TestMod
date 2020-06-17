@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 
 import mymod.TestMod;
 
-public class Temperance extends MyRelic {
+public class Temperance extends AbstractTestRelic {
 	public static final String ID = "Temperance";
 	
 	public static int sizeToRemove;

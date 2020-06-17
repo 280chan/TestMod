@@ -6,15 +6,15 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-import relics.MyRelic;
+import relics.AbstractTestRelic;
 
 public class AssaultLearningAction extends AbstractGameAction {
 
 	private float startingDuration;
 
-	private MyRelic r;
+	private AbstractTestRelic r;
 	
-	public AssaultLearningAction(MyRelic r) {
+	public AssaultLearningAction(AbstractTestRelic r) {
 		this.amount = 1;
 		this.actionType = AbstractGameAction.ActionType.CARD_MANIPULATION;
 		this.startingDuration = Settings.ACTION_DUR_FAST;

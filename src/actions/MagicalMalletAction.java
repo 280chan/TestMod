@@ -6,16 +6,16 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 
-import relics.MyRelic;
+import relics.AbstractTestRelic;
 
 public class MagicalMalletAction extends AbstractGameAction {
 
 	private static final float DURATION = Settings.ACTION_DUR_XFAST;
 
-	private MyRelic r;
+	private AbstractTestRelic r;
 	private ArrayList<AbstractCard> hand;
 	
-	public MagicalMalletAction(MyRelic r, ArrayList<AbstractCard> hand) {
+	public MagicalMalletAction(AbstractTestRelic r, ArrayList<AbstractCard> hand) {
 		this.actionType = AbstractGameAction.ActionType.CARD_MANIPULATION;
 		this.duration = DURATION;
 		this.hand = hand;

@@ -17,8 +17,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import powers.D_4Power;
 import utils.MiscMethods;
 
-public class D_4 extends MyRelic implements MiscMethods {
-	
+public class D_4 extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "D_4";
 	public static Situation nextSituation = null;
 	private static final Situation[] SITUATIONS = {Situation.EXHAUST, Situation.REGAIN, Situation.DUALPLAY, Situation.NIGHTMARE};
@@ -30,18 +29,7 @@ public class D_4 extends MyRelic implements MiscMethods {
 		private Situation() {
 		}
 		public String toString() {
-			switch (this) {
-			case NIGHTMARE:
-				return " #y夜魇 这张牌";
-			case DUALPLAY:
-				return "额外打出一次";
-			case EXHAUST:
-				return "将这张牌 #y消耗 ";
-			case REGAIN:
-				return "回复消费的 #y能量 ";
-			default:
-				return "为什么会出错？？？";
-			}
+			return D_4Power.getString(this);
 		}
 	}
 	
@@ -54,7 +42,7 @@ public class D_4 extends MyRelic implements MiscMethods {
 			return DESCRIPTIONS[0];
 		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
 			return DESCRIPTIONS[0];
-		return DESCRIPTIONS[1] + " NL 下一张牌: NL " + nextSituation;
+		return DESCRIPTIONS[1] + nextSituation;
 	}
 	
 	public void updateDescription(AbstractPlayer.PlayerClass c) {
