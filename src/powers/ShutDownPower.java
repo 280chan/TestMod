@@ -4,28 +4,24 @@ import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.blue.Reboot;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.localization.PowerStrings;
 
-import mymod.TestMod;
-
-public class ShutDownPower extends AbstractPower {
+public class ShutDownPower extends AbstractTestPower {
 	public static final String POWER_ID = "ShutDownPower";
-	public static final String NAME = "关机";//能力的名称。
-	public static final String[] DESCRIPTIONS = { "每回合将 #b", " 张 #y重启", " 放入手牌。" };
-    public static final String IMG = TestMod.powerIMGPath(POWER_ID);
+	private static final PowerStrings PS = Strings(POWER_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	private boolean upgraded;
 	
 	public ShutDownPower(AbstractCreature owner, boolean upgraded, int amount) {
+		super(POWER_ID);
 		this.name = NAME;
 		if (upgraded)
 			this.name += "+";
-		this.ID = POWER_ID + upgraded;
+		this.ID += upgraded;
 		this.owner = owner;
-		this.amount = 1;
+		this.amount = amount;
 		this.upgraded = upgraded;
-		this.img = ImageMaster.loadImage(IMG);
 		updateDescription();
 		this.type = PowerType.BUFF;
 	}
@@ -37,18 +33,11 @@ public class ShutDownPower extends AbstractPower {
 		 this.description += DESCRIPTIONS[2];
 	}
 	
-	public void stackPower(final int stackAmount) {
-		this.fontScale = 8.0f;
-        this.amount += stackAmount;
-	}
-	
     public void atStartOfTurn() {
     	AbstractCard c = new Reboot();
     	if (upgraded)
     		c.upgrade();
-		for (int i = 0; i < this.amount; i++) {
-			AbstractDungeon.actionManager.addToBottom(new MakeTempCardInHandAction(c.makeStatEquivalentCopy()));
-		}
+		this.addToBot(new MakeTempCardInHandAction(c, this.amount));
     }
     
 }

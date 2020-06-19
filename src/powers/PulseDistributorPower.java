@@ -7,29 +7,42 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import mymod.TestMod;
 
-public class PulseDistributorPower extends AbstractPower{
+public class PulseDistributorPower extends AbstractTestPower {
 	public static final String POWER_ID = "PulseDistributorPower";
-	public static final String NAME = "脉冲分配";
-    public static final String IMG = TestMod.powerIMGPath(POWER_ID);
-	public static final String[] DESCRIPTIONS = {"受到" + toBlue("n") + "点非失去生命的伤 NL 害，不直接损失生命值，而是在此回合开始的", "个回 NL 合内每次敌人回合结束时失去" + toBlue(1) + "点生命。"};
-	private static final String DAMAGE_DESCRIPTION = " NL 每回合失去生命值为: NL ";
-	private static final String SPLITTER = "，";
+	private static final PowerStrings PS = Strings(POWER_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+	private static final String DAMAGE_DESCRIPTION = DESCRIPTIONS[2];
+	private static final String SPLITTER = DESCRIPTIONS[3];
 	public int magic;
 	
 	public final ArrayList<Integer> DAMAGES = new ArrayList<Integer>();
 	
+	public static boolean hasThis(AbstractPlayer owner) {
+		for (AbstractPower p : owner.powers)
+			if (p instanceof PulseDistributorPower)
+				return true;
+		return false;
+	}
+	
+	public static PulseDistributorPower getThis(AbstractPlayer owner) {
+		for (AbstractPower p : owner.powers)
+			if (p instanceof PulseDistributorPower)
+				return (PulseDistributorPower) p;
+		return null;
+	}
+	
 	public PulseDistributorPower(AbstractPlayer owner, int magic) {
+		super(POWER_ID);
 		this.name = NAME;
-		this.ID = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
 		this.magic = magic;
-		this.img = ImageMaster.loadImage(IMG);
 		this.updateDescription();
 		this.type = PowerType.BUFF;
 	}
@@ -127,7 +140,7 @@ public class PulseDistributorPower extends AbstractPower{
     }
 
 	private void pretendAttack(AbstractPlayer p, int damage) {
-		AbstractDungeon.player.damage(new DamageInfo(p, damage, DamageType.HP_LOSS));
+		p.damage(new DamageInfo(p, damage, DamageType.HP_LOSS));
 	}
     
 }

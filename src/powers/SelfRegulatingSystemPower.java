@@ -2,37 +2,29 @@ package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.OnReceivePowerPower;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-import mymod.TestMod;
-
-public class SelfRegulatingSystemPower extends AbstractPower implements OnReceivePowerPower {
-	public static final String POWER_ID = "SelfRegulatingSystemPower";//能力的ID，判断有无能力、能力层数时填写该Id而不是类名。
-	public static final String NAME = "自我调节系统";
-    public static final String IMG = TestMod.powerIMGPath(POWER_ID);
-	public static final String[] DESCRIPTIONS = {"每回合获得的首个增益状态层数增加 #b"," ，首个减益状态层数减少 #b"," 。"};
+public class SelfRegulatingSystemPower extends AbstractTestPower implements OnReceivePowerPower {
+	public static final String POWER_ID = "SelfRegulatingSystemPower";
+	private static final PowerStrings PS = Strings(POWER_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
 	private boolean buffed = false;
 	private boolean debuffed = false;
 	
 	public SelfRegulatingSystemPower(AbstractCreature owner, int amount) {
+		super(POWER_ID);
 		this.name = NAME;
-		this.ID = POWER_ID;
 		this.owner = owner;
 		this.amount = amount;
-		this.img = ImageMaster.loadImage(IMG);
 		updateDescription();
 		this.type = PowerType.BUFF;
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + this.amount + DESCRIPTIONS[2];//不需要调用变量的文本更新方式。
-	}
-	
-	public void stackPower(final int stackAmount) {
-		this.fontScale = 8.0f;
-        this.amount += stackAmount;
+		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + this.amount + DESCRIPTIONS[2];
 	}
 	
     public void atStartOfTurn() {

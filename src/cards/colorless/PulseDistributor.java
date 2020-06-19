@@ -38,11 +38,11 @@ public class PulseDistributor extends AbstractTestCard {
 	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
-		if (p.hasPower(PulseDistributorPower.POWER_ID)) {
-			PulseDistributorPower power = (PulseDistributorPower)p.getPower(PulseDistributorPower.POWER_ID);
-			if (power.magic > this.magicNumber) {
-				this.addToBot(new RemoveSpecificPowerAction(p, p, PulseDistributorPower.POWER_ID));
-				this.addToBot(new ApplyPowerAction(p, p, new PulseDistributorPower(p, this.magicNumber, power.DAMAGES)));
+		if (PulseDistributorPower.hasThis(p)) {
+			PulseDistributorPower po = PulseDistributorPower.getThis(p);
+			if (po.magic > this.magicNumber) {
+				this.addToBot(new RemoveSpecificPowerAction(p, p, po));
+				this.addToBot(new ApplyPowerAction(p, p, new PulseDistributorPower(p, this.magicNumber, po.DAMAGES)));
 			}
 		} else {
 			this.addToBot(new ApplyPowerAction(p, p, new PulseDistributorPower(p, this.magicNumber)));

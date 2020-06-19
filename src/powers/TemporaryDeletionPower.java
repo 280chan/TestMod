@@ -14,26 +14,30 @@ import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-
+import com.megacrit.cardcrawl.localization.PowerStrings;
 import basemod.BaseMod;
 import mymod.TestMod;
 
-public class TemporaryDeletionPower extends AbstractPower {
+public class TemporaryDeletionPower extends AbstractTestPower {
 	public static final String POWER_ID = "TemporaryDeletionPower";
-	public static final String NAME = "临时删除";
-    public static final String IMG = TestMod.powerIMGPath(POWER_ID);
-	public static final String[] DESCRIPTIONS = {"每回合开始将", "张随机", "牌加入手牌。"};
-
-	private static final String[] RARITY = { "基础", "特殊", "普通", "罕见", "稀有", "诅咒" };
+	private static final PowerStrings PS = Strings(POWER_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+	private static final String[] RARITY = split(3, 9);
 	private CardRarity rarity;
 	private CardGroup group;
 	private int index = 0;
-	
 	private boolean fuckedRarity;
 	
+	private static String[] split(int start, int end) {
+		String[] tmp = new String[end - start];
+		for (int i = 0; i < tmp.length; i++)
+			tmp[i] = DESCRIPTIONS[start + i];
+		return tmp;
+	}
+	
 	public TemporaryDeletionPower(AbstractCreature owner, int amount, AbstractCard c) {
+		super(POWER_ID);
 		this.owner = owner;
 		this.amount = amount;
 
@@ -41,19 +45,16 @@ public class TemporaryDeletionPower extends AbstractPower {
 		
 		ArrayList<AbstractCard> list = getList(c.rarity, c.color);
 		
-		// ???
+		// ??? WTF did I write
 		if (c.rarity != CardRarity.BASIC && c.rarity != CardRarity.SPECIAL && c.color == CardColor.COLORLESS && c.type != CardType.STATUS) {
 			list.addAll(getList(c.rarity, c.color));
 		}
 		
 		this.group = getGroup(list);
-		this.img = ImageMaster.loadImage(IMG);
 		this.index = c.rarity.ordinal();
 		this.rarity = c.rarity;
 		this.name = NAME + this.rarityDesc();
-		this.ID = POWER_ID + c.color + this.index;
-		
-		
+		this.ID += "" + c.color + this.index;
 		updateDescription();
 		this.type = PowerType.BUFF;
 	}
@@ -68,11 +69,6 @@ public class TemporaryDeletionPower extends AbstractPower {
 	
 	public void updateDescription() {
 		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + this.rarityDesc() + DESCRIPTIONS[2];
-	}
-	
-	public void stackPower(final int stackAmount) {
-		this.fontScale = 8.0f;
-        this.amount += stackAmount;
 	}
 	
 	private ArrayList<AbstractCard> getList(CardRarity rarity, CardColor color) {
@@ -103,7 +99,7 @@ public class TemporaryDeletionPower extends AbstractPower {
 				}
 			}
 		}
-		System.out.println("数组大小 = " + list.size());
+		TestMod.info("临时删除power: 数组大小 = " + list.size());
 		return list;
 	}
 	
