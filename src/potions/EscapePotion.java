@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.actions.common.EscapeAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
@@ -14,18 +14,16 @@ import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 
 import mymod.TestMod;
 
-public class EscapePotion extends AbstractPotion {
+public class EscapePotion extends AbstractTestPotion {
 	public static final String POTION_ID = TestMod.makeID("EscapePotion");
-	public static final String NAME = "丢人药水";
-	public static final String[] DESCRIPTIONS = {"使一名非Boss敌人立即逃跑。"};
+	private static final PotionStrings PS = Strings(POTION_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 
 	public EscapePotion() {
 		super(NAME, POTION_ID, PotionRarity.RARE, PotionSize.SPHERE, PotionColor.WHITE);
-		this.potency = getPotency();
-		this.description = this.getDesc();
 		this.isThrown = true;
 		this.targetRequired = true;
-		this.tips.add(new PowerTip(this.name, this.description));
 	}
 
 	public String getDesc() {

@@ -1,23 +1,21 @@
 package potions;
 
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 
 import mymod.TestMod;
 import utils.MiscMethods;
 
-public class TimePotion extends AbstractPotion implements MiscMethods {
+public class TimePotion extends AbstractTestPotion implements MiscMethods {
 	public static final String POTION_ID = TestMod.makeID("TimePotion");
-	public static final String NAME = "时间女神的恶作剧";
-	public static final String[] DESCRIPTIONS = {"立即结束你的回合，敌人在这回合不会执行其意图，然后开始你的下一回合。"};
+	private static final PotionStrings PS = Strings(POTION_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 
 	public TimePotion() {
 		super(NAME, POTION_ID, PotionRarity.RARE, PotionSize.GHOST, PotionColor.SMOKE);
-		this.potency = getPotency();
-		this.description = this.getDesc();
 		this.isThrown = true;
-		this.tips.add(new PowerTip(this.name, this.description));
 	}
 
 	public String getDesc() {

@@ -26,6 +26,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.helpers.TipTracker;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -151,7 +152,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	private static String langPrefix = null;
 	
-	public static String languagePrefix(String s) {
+	public static String lanPrefix(String s) {
 		if (langPrefix != null)
 			return langPrefix + s;
 		// TODO
@@ -170,9 +171,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public static String stringsPathFix(String s) {
 		return "resources/strings/" + s + ".json";
 	}
-	
+
 	public static String readString(String type) {
-		return Gdx.files.internal(stringsPathFix(languagePrefix(type))).readString(String.valueOf(StandardCharsets.UTF_8));
+		return Gdx.files.internal(stringsPathFix(lanPrefix(type))).readString(String.valueOf(StandardCharsets.UTF_8));
 	}
 	
 	/**
@@ -196,8 +197,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new IWantAll(), new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(),
 				new Faith(), new FatalChain(), new CyclicPeriapt(), new EqualTreatment(), new ConstraintPeriapt(),
 				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new CasingShield(), new TestBox(),
-				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong()
-				};
+				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong() };
 		// 添加遗物进游戏 TODO
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);
@@ -232,13 +232,14 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		BaseMod.loadCustomStrings(RelicStrings.class, readString("relics"));
 		BaseMod.loadCustomStrings(CardStrings.class, readString("cards"));
 		BaseMod.loadCustomStrings(PowerStrings.class, readString("powers"));
+		BaseMod.loadCustomStrings(PotionStrings.class, readString("potions"));
 	}
 
 	@Override
 	public void receiveEditCards() {
-		for (AbstractCard c : Sins.SINS) {
-			BaseMod.addCard(c);
-		}
+		for (AbstractCard c : Sins.SINS)
+			if (c instanceof AbstractTestCurseCard)
+				BaseMod.addCard(c);
 		
 		AbstractCard[] card = { new DisillusionmentEcho(), new TreasureHunter(), new SubstituteBySubterfuge(),
 				new PerfectCombo(), new PulseDistributor(), new LifeRuler(), new EternalityOfKhronos(), new Wormhole(),
@@ -256,15 +257,15 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			CARDS.add(c);
 		}
 		
+		for (AbstractCard c : CARDS) {
+			BaseMod.addCard(c);
+		}
+		
 		for (int i = 0; i < 37; i++) {
 			this.addMahjongToList(AbstractMahjongCard.mahjong(i));
 		}
 		
 		//BaseMod.addCard(new Test());
-		
-		for (AbstractCard c : CARDS) {
-			BaseMod.addCard(c);
-		}
 	}
 	
 	private void addMahjongToList(AbstractMahjongCard c) {
@@ -769,10 +770,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			this.initSavingConfig();
 		
 		if (AbstractDungeon.player.hasRelic(makeID(PortableAltar.ID))) {
-			PortableAltar.load(config.getInt(PortableAltar.SAVE_NAME));
+			PortableAltar.load(getInt(PortableAltar.SAVE_NAME));
 		}
 		
-		Sins.load(config.getInt(Sins.SAVE_NAME));
+		Sins.load(getInt(Sins.SAVE_NAME));
 		if (Sins.checkModified()) {
 			Sins.load(AbstractDungeon.player.maxHealth);
 			save(Sins.SAVE_NAME, Sins.preMaxHP);
@@ -782,32 +783,40 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		HeartOfDaVinci.clear();
 		HeartOfDaVinci.init(AbstractDungeon.player.relics.size());
 		
-		TimeTraveler.load(config.getInt(TimeTraveler.SAVE_NAME));
+		TimeTraveler.load(getInt(TimeTraveler.SAVE_NAME));
 		
 		Motorcycle.loadGame();
 		// NoteOfAlchemist.setState(config.getBool("recorded"));
 		
-		DragonStarHat.loadValue(config.getInt(DragonStarHat.SAVE_NAME));
+		DragonStarHat.loadValue(getInt(DragonStarHat.SAVE_NAME));
 		
-		Faith.load(config.getBool(Faith.SAVE_NAME), config.getInt(Faith.SAVE_NAME1));
-		
+		Faith.load(getBool(Faith.SAVE_NAME), getInt(Faith.SAVE_NAME1));
+
 		if (AbstractDungeon.player.hasRelic(makeID(Mahjong.ID))) {
-			int[] yama = new int[37], kang = new int[config.getInt(Mahjong.SAVE_KANG)], hint = new int[kang.length + 1],
+			int[] yama = new int[37], kang = new int[getInt(Mahjong.SAVE_KANG)], hint = new int[kang.length + 1],
 					hand = new int[13 - 3 * kang.length];
 			for (int i = 0; i < 37; i++)
-				yama[i] = config.getInt(Mahjong.YAMA_NAME[i]);
+				yama[i] = getInt(Mahjong.YAMA_NAME[i]);
 			for (int i = 0; i < kang.length; i++)
-				kang[i] = config.getInt(Mahjong.KANG_NAME[i]);
+				kang[i] = getInt(Mahjong.KANG_NAME[i]);
 			for (int i = 0; i < kang.length + 1; i++)
-				hint[i] = config.getInt(Mahjong.DORA_NAME[i]);
+				hint[i] = getInt(Mahjong.DORA_NAME[i]);
 			for (int i = 0; i < hand.length; i++)
-				hand[i] = config.getInt(Mahjong.HAND_NAME + i);
-			Mahjong.load(config.getInt(Mahjong.SAVE_TURN), config.getBool(Mahjong.SAVE_REACH), yama, kang, hint, hand);
+				hand[i] = getInt(Mahjong.HAND_NAME + i);
+			Mahjong.load(getInt(Mahjong.SAVE_TURN), getBool(Mahjong.SAVE_REACH), yama, kang, hint, hand);
 		}
-		
+
 		Automaton.loadMagicNumber();
 		
-		AscensionHeart.load(config.getBool(AscensionHeart.SAVE_NAME));
+		AscensionHeart.load(getBool(AscensionHeart.SAVE_NAME));
+	}
+	
+	public static int getInt(String key) {
+		return config.getInt(key);
+	}
+	
+	public static boolean getBool(String key) {
+		return config.getBool(key);
 	}
 	
 	public static void save(String key, int value) {

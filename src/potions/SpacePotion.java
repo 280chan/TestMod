@@ -6,16 +6,18 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.shrines.WeMeetAgain;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import mymod.TestMod;
 
-public class SpacePotion extends AbstractPotion {
+public class SpacePotion extends AbstractTestPotion {
 	public static final String POTION_ID = TestMod.makeID("SpacePotion");
-	public static final String NAME = "空间药水";
-	public static final String[] DESCRIPTIONS = { "使用后永久增加 #b", " 个药水栏位。超过 #b10 个栏位的部分改为获得相同数量瓶随机药水。" };
+	private static final PotionStrings PS = Strings(POTION_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 
 	public SpacePotion() {
 		super(NAME, POTION_ID, PotionRarity.UNCOMMON, PotionSize.T, PotionColor.NONE);
@@ -42,7 +44,7 @@ public class SpacePotion extends AbstractPotion {
 				p.potionSlots++;
 				p.potions.add(new PotionSlot(AbstractDungeon.player.potionSlots - 1));
 			} else {
-				AbstractDungeon.actionManager.addToBottom(new ObtainPotionAction(AbstractDungeon.returnRandomPotion(true)));
+				this.addToBot(new ObtainPotionAction(AbstractDungeon.returnRandomPotion(true)));
 			}
 		}
 	}
