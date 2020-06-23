@@ -15,10 +15,10 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.screens.select.GridCardSelectScreen;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
+import mymod.TestMod;
 import utils.MiscMethods;
 
 public class DaVinciLibraryAction extends AbstractGameAction implements MiscMethods {
-
 	private float startingDuration;
 	private CardGroup group;
 	private boolean pickCard = false;
@@ -39,13 +39,24 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 		this.pickCard = true;
 		CardGroup group = new CardGroup(CardGroupType.UNSPECIFIED);
 		AbstractCard card = null;
-		for (int i = 0; i < 20; i++) {
-			card = this.group.getRandomCard(true);
-			if (!group.contains(card)) {
-				this.checkEggs(card);
-				group.addToBottom(card);
-			} else {
-				i--;
+		if (this.group.size() > 20) {
+			for (int i = 0; i < 20; i++) {
+				card = this.group.getRandomCard(true);
+				if (!group.contains(card)) {
+					this.checkEggs(card);
+					group.addToBottom(card);
+				} else {
+					i--;
+				}
+			}
+		} else {
+			for (AbstractCard c : this.group.group)
+				group.addToBottom(c);
+			while (group.size() < 20) {
+				card =  AbstractDungeon.returnTrulyRandomColorlessCardInCombat();
+				if (!group.contains(card)) {
+					group.addToBottom(card);
+				}
 			}
 		}
 		for (AbstractCard c : group.group) {
@@ -81,12 +92,12 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 	@Override
 	public void update() {
 		if (this.duration == Settings.ACTION_DUR_FAST) {
-			System.out.println("准备打开图书馆界面");
+			TestMod.info("准备打开图书馆界面");
 			openScreen();
 			tickDuration();
 		} else if ((this.pickCard) && (this.checkScreen(CurrentScreen.GRID)) && (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty())) {
 			AbstractCard c = AbstractDungeon.gridSelectScreen.selectedCards.get(0).makeCopy();
-			System.out.println("选择了" + c.name);
+			TestMod.info("选择了" + c.name);
 			for (AbstractRelic r : AbstractDungeon.player.relics) {
 				r.onObtainCard(c);
 			}
@@ -99,15 +110,15 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 			}
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
 			this.isDone = true;
-			System.out.println("已获得" + c.name);
+			TestMod.info("已获得" + c.name);
 		} else if (AbstractDungeon.screen == pre && AbstractDungeon.overlayMenu.cancelButton.isHidden) {
 			this.isDone = true;
-			System.out.println("已取消");
+			TestMod.info("已取消");
 		}
 		if (before != AbstractDungeon.screen) {
-			System.out.print("检测到界面切换：之前界面: " + before);
+			String tmp = "检测到界面切换：之前界面: " + before;
 			before = AbstractDungeon.screen;
-			System.out.println("，当前界面: " + before);
+			TestMod.info(tmp + "，当前界面: " + before);
 		}
 	}
 

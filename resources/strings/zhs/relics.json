@@ -80,13 +80,13 @@
 	"testmod-Justice":{
 		"NAME": "正义",
 		"FLAVOR": "“有多少邪恶，就有多少正义。”",
-		"DESCRIPTIONS":["每当你获得负面状态时，获得 #b1  #y力量 。"]
+		"DESCRIPTIONS":["每当你获得负面状态时，获得 #b1 #y力量 。"]
 	},
 	
 	"testmod-Fortitude":{
 		"NAME": "勇敢",
 		"FLAVOR": "“勇敢不在于能够蔑视危险，而在于认请危险、战胜危险。” —— 布勒森东",
-		"DESCRIPTIONS":["如果你在回合结束时没有任何 #y格挡 ，获得 #b3  #y力量 。"]
+		"DESCRIPTIONS":["如果你在回合结束时没有任何 #y格挡 ，获得 #b3 #y力量 。"]
 	},
 	
 	"testmod-Charity":{

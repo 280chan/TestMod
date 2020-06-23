@@ -22,6 +22,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import actions.DaVinciLibraryAction;
 import basemod.BaseMod;
+import mymod.TestMod;
 
 public class HeartOfDaVinci extends AbstractTestRelic{
 	
@@ -71,7 +72,7 @@ public class HeartOfDaVinci extends AbstractTestRelic{
 			this.addIfPossible(AbstractDungeon.uncommonRelicPool, r.relicId);
 			break;
 		default:
-			System.out.println("达芬奇之心: 非合理类型遗物:" + r.tier + "," + r.name + ", 姑且加入进稀有池");
+			TestMod.info("达芬奇之心: 非合理类型遗物:" + r.tier + "," + r.name + ", 姑且加入进稀有池");
 			this.addIfPossible(AbstractDungeon.rareRelicPool, r.relicId);
 			break;
 		}
@@ -157,7 +158,7 @@ public class HeartOfDaVinci extends AbstractTestRelic{
 		if (action != null) {
 			if (action.isDone) {
 				action = null;
-				System.out.println("结束当前选牌");
+				TestMod.info("结束当前选牌");
 			} else {
 				action.update();
 			}
@@ -169,19 +170,19 @@ public class HeartOfDaVinci extends AbstractTestRelic{
 			return;
 		numRelics++;
 		String name = this.name + ": ";
-		System.out.println(name + "获得遗物");
+		TestMod.info(name + "获得遗物");
 		ArrayList<AbstractCard> pool = new ArrayList<AbstractCard>();
 		CardColor c = getColor(r);
 		if (c == null) {
-			System.out.println(name + "非角色限定遗物");
+			TestMod.info(name + "非角色限定遗物");
 			return;
 		}
 		if (c != getColor(AbstractDungeon.player)) {
 			this.addCards(pool, c);
-			System.out.println(name + "准备开始大图书馆");
+			TestMod.info(name + "准备开始大图书馆");
 			action = new DaVinciLibraryAction(pool, AbstractDungeon.screen);
 		} else {
-			System.out.println(name + "角色本身遗物");
+			TestMod.info(name + "角色本身遗物");
 		}
 	}
 	
@@ -193,6 +194,9 @@ public class HeartOfDaVinci extends AbstractTestRelic{
 					&& ((!UnlockTracker.isCardLocked((String) c.getKey())) || (Settings.treatEverythingAsUnlocked()))) {
 				pool.add(card);
 			}
+		}
+		if (pool.size() < 20) {
+			TestMod.info("WTF! This character has less than 20 cards");
 		}
 	}
 	

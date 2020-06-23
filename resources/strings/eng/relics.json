@@ -2,7 +2,7 @@
 	"testmod-ObsoleteBoomerang":{
 		"NAME": "Obsolete Boomerang",
 		"FLAVOR": "你越是使用这个回旋镖，你越会沉迷于其中。",
-		"DESCRIPTIONS":["你在你的回合中每打出一张牌，对随机敌人造成你在该回合已打出的牌数的伤害。"]
+		"DESCRIPTIONS":["Whenever playing a card, deal a damage of the amount of cards played this turn to random enemy."]
 	},
 	
 	"testmod-NoteOfAlchemist":{
@@ -20,212 +20,212 @@
 	"testmod-BlackFramedGlasses":{
 		"NAME": "Black Framed Glasses",
 		"FLAVOR": "这个眼镜让你感觉还能再撑一秒。",
-		"DESCRIPTIONS":["每回合使所有敌人失去 #b1 点生命，并给自己恢复 #b1 点生命。当受到大于等于生命上限的一半的伤害时，将其降为 #b1 点；如果该伤害来自自己，将其降为 #b0 点。"]
+		"DESCRIPTIONS":["At the start of each turn, heal #b1 HP, every enemies lose #b1 HP. Whenever yoou would receive a unblocked damage not less than half of your Max HP, reduce it to #b1; if it comes from yourself, reduce it to #b0."]
 	},
 	
 	"testmod-BouquetWithThorns":{
 		"NAME": "Bouquet With Thorns",
 		"FLAVOR": "捧着这束花，你仿佛不再需要击退你的敌人。",
-		"DESCRIPTIONS":["每场战斗开始时，获得 #b1 层荆棘；每受到一次 #y攻击 ，增加 #b1 层荆棘；每受到一次 #y攻击 伤害，额外增加 #b1 层荆棘；如果受到类型为失去生命的伤害，增加失去生命点数的荆棘。"]
+		"DESCRIPTIONS":["At the start of each combat, gain #b1 Throns. Whenever being attacked, gain #b1 Throns; whenever you receive unblocked attack damage, gain #b1 extra Throns. Whenever damaged by losing HP, gain #b1 Throns for each HP lost in this damage."]
 	},
 	
 	"testmod-PortableAltar":{
 		"NAME": "Portable Altar",
 		"FLAVOR": "这个祭坛给予了你强大的能力，但也贪婪地吞噬着你的生命。",
-		"DESCRIPTIONS":["战斗中每回合失去 #r1 点生命。每进入一个房间，失去 #r1 点最大生命。拾取后每通过该遗物失去 #r5 点最大生命，在战斗开始时获得 #b1 点 #y力量 ， #b1 点 #y敏捷 ， #b1 层 #y多层护甲 。"]
+		"DESCRIPTIONS":["At the start of each turn, lose #r1 HP. Whenever you climb a floor, lose #r1 Max HP. For every #b5 Max HP lost through this relic: At the start of each combat, gain #b1 #yStrength,  #yDexterity and #yPlated Armor; you will not lose HP from this relic in the first #b1 turn of each combat."]
 	},
 	
 	"testmod-EnergyCheck":{
 		"NAME": "Energy Check",
 		"FLAVOR": "有借有还，除非杀完。",
-		"DESCRIPTIONS":["当前能量不足以打出一张牌时，可以用下一回合的能量补足当前 能量 。当透支的能量超过每回合能量最大值时，超过一点失去 #r1 点生命；每多超过一点额外失去 #r1 点生命。"]
+		"DESCRIPTIONS":["If you have insufficient energy to play a card, you may advance energy next turn. If the amount of energy your advanced surpass your default energy each turn, for each energy surpassed, lose #r1 HP; for each more energy surpassed, lose #r1 more HP."]
 	},
 	
 	"testmod-SevenDeadlySins":{
 		"NAME": "Seven Deadly Sins",
 		"FLAVOR": "原罪是人类的本性。",
-		"DESCRIPTIONS":["拾取时，如果未拥有，获得毒巫娃娃、黑石护符、蓝蜡烛，获得七原罪诅咒。如果牌组中存在每种七大罪，击败Boss后能获得一件额外的Boss遗物。"]
+		"DESCRIPTIONS":["Upon pickup, if not having, obtain #yDu-Vu #yDoll, #yDarkstone #yPeriapt, #yBlue #yCandle, #rCurses #rof #rSins. Whenever defeating Boss with each kind of #rSins, you may choose to obtain an extra Boss relic."]
 	},
 	
 	"testmod-Register":{
 		"NAME": "Register",
 		"FLAVOR": "关机前自动保存，启动时自动读取。",
-		"DESCRIPTIONS":["你在战斗结束时拥有的超过 #b1 层的状态会在下一场战斗开始再次获得 #b1 层。( #ySL 后会失去储存的数据)"]
+		"DESCRIPTIONS":["All the powers that were greater than #b1 at the end of a combat will be saved, you will gain #b1 of each of these powers at the start of next combat. ( #ySL will cause losing saved powers)"]
 	},
 	
 	"testmod-InfectionSource":{
 		"NAME": "Infection Source",
 		"FLAVOR": "你感到自己变得虚弱了，但同时变得能操纵病毒。",
-		"DESCRIPTIONS":["你的攻击伤害降低 #r50% 。被攻击的敌人会获得与攻击伤害相同点数层的 #y中毒 ，但只会受到 #b1 点攻击伤害。"]
+		"DESCRIPTIONS":["Your attack damage is decreased by #r50%. All enemies that attacked by you will gain same amount of #yPoison as the damage amount they should receive, however they will only lose #b1 HP from your attack."]
 	},
 	
 	"testmod-OneHitWonder":{
 		"NAME": "One Hit Wonder",
 		"FLAVOR": "你已知晓死亡。",
-		"DESCRIPTIONS":["当你的生命值为 #b1 时：攻击有一半几率可以直接杀死被击中的非Boss敌人；Boss敌人造成的伤害降低 #b50% ，受到的攻击伤害和未被格挡的其余伤害增加 #b50% 。"]
+		"DESCRIPTIONS":["Whenever your HP is #b1: your attack has half chance cause non-Boss target to die; Boss enemies' damage is decreased by #b50%, Boss enemies receive #b50% more attack damage and unblocked non-attack damage."]
 	},
 	
 	"testmod-Recursion":{
 		"NAME": "Recursion",
 		"FLAVOR": "“人理解迭代，神理解递归 。” —— 彼得杜奇",
-		"DESCRIPTIONS":["第一回合额外抽 #b5 张牌，之后的每一回合比前一回合少抽 #r1 张牌。每 #b10 回合重置。"]
+		"DESCRIPTIONS":["Draw #b5 additional cards on the first turn of each combat. For rest of turns, draw #b1 fewer card than the previous turn. Reset the progress every #b10 turns."]
 	},
 	
 	"testmod-Temperance":{
 		"NAME": "Temperance",
 		"FLAVOR": "“节制是最好的医术。” —— 博恩",
-		"DESCRIPTIONS":["每当你在牌组中增加 #b3 张牌，有一次选择移除 #b1 张牌的机会。"]
+		"DESCRIPTIONS":["Whenever you add #b3 cards to your deck, you may remove #b1 card from your deck."]
 	},
 	
 	"testmod-Justice":{
 		"NAME": "Justice",
 		"FLAVOR": "“有多少邪恶，就有多少正义。”",
-		"DESCRIPTIONS":["每当你获得负面状态时，获得 #b1  #y力量 。"]
+		"DESCRIPTIONS":["Whenever gain a negative effect, gain #b1 #yStrength. "]
 	},
 	
 	"testmod-Fortitude":{
 		"NAME": "Fortitude",
 		"FLAVOR": "“勇敢不在于能够蔑视危险，而在于认请危险、战胜危险。” —— 布勒森东",
-		"DESCRIPTIONS":["如果你在回合结束时没有任何 #y格挡 ，获得 #b3  #y力量 。"]
+		"DESCRIPTIONS":["If you end your turn without #yBlock, gain #b3 #yStrength. "]
 	},
 	
 	"testmod-Charity":{
 		"NAME": "Charity",
 		"FLAVOR": "“慈善的行为比金钱更能解除别人的痛苦。” —— 卢梭",
-		"DESCRIPTIONS":["每次获得 #y金币 数额减少 #b1 ，但增加 #b1 点最大生命。"]
+		"DESCRIPTIONS":["Whenever you gain #ygold, gain #b1 less, increase your Max HP by #b1 instead."]
 	},
 	
 	"testmod-Hope":{
 		"NAME": "Hope",
 		"FLAVOR": "“希望是坚韧的拐杖，忍耐是旅行袋，携带它们，人可以登上永恒之旅。” —— 罗素",
 		"DESCRIPTIONS":[
-			"每受到一次 #y攻击 伤害，有 #b",
-			"% 的概率回复所有生命并使所有敌人直接死亡。当手牌用完时，有 #b6.18% 的概率可以从牌组中选择将最多 #b10 张牌的复制品放入手牌。每次受到 #y攻击 伤害未触发时，其触发概率增加 #b0.618%  ，触发后增加的概率清零。"
-			"每受到一次 #y攻击 伤害，有 #b0.618% 的概率回复所有生命并使所有敌人直接死亡。当手牌用完时，有 #b6.18% 的概率可以从牌组中选择将最多 #b10 张牌的复制品放入手牌。每次受到 #y攻击 伤害未触发时，其触发概率增加 #b0.618%  ，触发后增加的概率清零。"
+			"Whenever you receive unblocked #yattack damage, you have a probablity of #b",
+			"% to be fully healed and make all enemies die. Whenever you don't have any cards in your hand, you have a probablity of #b6.18% to choose copies of a maximum of #b10 cards in your deck to put into your hand. Whenever receive #yattack damage without active, the probablity will be increased by a flat #b0.618% till it actives.",
+			"Whenever you receive unblocked #yattack damage, you have a probablity of #b0.618% to be fully healed and make all enemies die. Whenever you don't have any cards in your hand, you have a probablity of #b6.18% to choose copies of a maximum of #b10 cards in your deck to put into your hand. Whenever receive #yattack damage without active, the probablity will be increased by a flat #b0.618% till it actives."
 		]
 	},
 	
 	"testmod-Prudence":{
 		"NAME": "Prudence",
 		"FLAVOR": "有bug也不是什么重要的问题吧。",
-		"DESCRIPTIONS":["你可以在你的回合打出一切由于能量不足以外原因而不能被打出的牌。如果是 #y状态 或 #y诅咒 ，将其 #y消耗 。(连续出牌过快可能导致暂时无法触发效果，需重新打一张能正常打出的牌来恢复)"]
+		"DESCRIPTIONS":["In your turns, you can play all the cards that wouldn't be allowed to play if having sufficient energy. If it is #yStatus or #yCurse, #yExhaust it."]
 	},
 	
 	"testmod-Faith":{
 		"NAME": "Faith",
 		"FLAVOR": "七美德终于做完了。",
-		"DESCRIPTIONS":["每当你进入商店时，获得离开商店就会消失的巨额金币。你在该商店购买第一件商品后，将金币恢复到获得金币前的数值。下一次进入商店时，扣除此商品价格的金币，如果不足则将金币变为 #b0 后受到 #b25% 当前生命和 #b10% 剩余欠款中较大值的伤害(至少 #b1 点)，并将剩余欠款延续至下一个商店。"]
+		"DESCRIPTIONS":["Whenever you enter a shop, gain a huge amount of #ygold which will be removed when leaving this shop. After purchasing the first product in this shop, reset your #ygold back to what it was before gaining the huge amount of #ygold. When entering next shop, lose the amount of gold of this product's price, if your #ygold is insufficient, set your #ygold to #b0 and receive a damage of the maximum between #b25% of current HP and #b10% of the amount of overdraft, (at least #b1), the overdraft will remain for next shop."]
 	},
 	
 	"testmod-AssaultLearning":{
 		"NAME": "Assault Learning",
 		"FLAVOR": "停一下，让我先学一学。",
-		"DESCRIPTIONS":["你的回合开始时，将你的抽牌堆顶部第一张可 #y升级 的牌在本场战斗中 #y升级 。"]
+		"DESCRIPTIONS":["At the start of each turn, #upgrade the first upgradable card from top of your drawpile for rest of combat."]
 	},
 	
 	"testmod-Muramasa":{
 		"NAME": "Muramasa",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["每当你抽到或打出 #b0 耗能的攻击牌次数合计为 #b2 时，抽 #b1 张牌。"]
+		"DESCRIPTIONS":["Whenever the number of drawing and playing of #b0 cost attacks sum up to #b2, draw #b1 card."]
 	},
 	
 	"testmod-D_4":{
 		"NAME": "Runic Tetrahedron",
 		"FLAVOR": "上面的符文无法辨识。",
-		"DESCRIPTIONS":["每当你打出一张牌时，将随机触发以下 #b4 种效果之一。 NL 将这张牌 #y消耗 ，回复其消费的能量，额外打出一次， #y夜魇 这张牌。 NL 你可以提前知道接下来一张牌将会触发的效果。", "每当你打出一张牌时，会触发随机效果。 NL 下一张牌: NL "]
+		"DESCRIPTIONS":["Whenever you play a card, one of the following #b4 effects will become effective. NL #yExhaust this card, regain its energy cost, play it one more time, #yNightTerror the card. NL You can know which the effect will become effective for the next card.", "Whenever you play a card, one of the #b4 effects will become effective. NL Next effect: NL "]
 	},
 	
 	"testmod-HeartOfDaVinci":{
-		"NAME": "Heart Of DaVinci",
+		"NAME": "Heart Of Da Vinci",
 		"FLAVOR": "你现在感觉到你仿佛能接受所有恩惠。",
-		"DESCRIPTIONS":["你可以获得其他角色的遗物。如果你在拾起时没有充能球栏位，永久获得 #b1 个充能球栏位。每当你获得其他角色的遗物时，可以选择从 #b20 张该角色的卡牌中获得一张。"]
+		"DESCRIPTIONS":["Other character's relics are now obtainable. NL Whenever you pickup another character's relic, choose and add #b1 of #b20 of that character's cards to your deck."]
 	},
 	
 	"testmod-IncinerationGenerator":{
 		"NAME": "Incineration Generator",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["每回合开始获得", "， #y消耗 一张牌。"]
+		"DESCRIPTIONS":["At the start of each turn: gain", ", #yExhaust a card."]
 	},
 	
 	"testmod-IndustrialRevolution":{
 		"NAME": "Industrial Revolution",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["拥有过 #y人工制品 的敌人，无法给其自身增加增益状态，无法给玩家增加负面状态。"]
+		"DESCRIPTIONS":["Enemies that had #yArtifact, will not be able to give positive effects to themselves, nor negative effects to player."]
 	},
 	
 	"testmod-AscensionHeart":{
 		"NAME": "Ascension Heart",
 		"FLAVOR": "这个人很懒，什么都没有写。",
 		"DESCRIPTIONS":[
-			"依据 #y进阶等级 获得增益。",
-			"精英敌人奖励变得更好",
-			"普通敌人受到伤害增加",
-			"精英敌人受到伤害增加",
-			"Boss敌人受到伤害增加",
-			"Boss战后增加生命上限",
-			"战斗开始时恢复生命",
-			"普通敌人初始受到伤害",
-			"精英敌人初始受到伤害",
-			"Boss敌人初始受到伤害",
-			"为所有诅咒增加虚无",
-			"使用药水后恢复生命",
-			"获得牌时概率将其升级",
-			"Boss变富",
-			"击败精英增加生命上限",
-			"事件中失去的生命减少",
-			"购买商品返还部分金币",
-			"普通敌人-1力量",
-			"精英敌人-1力量",
-			"Boss敌人-1力量",
-			"死亡时有1次复活机会",
-			"获得卡牌时获得金币",
-			"失去生命时获得金币",
-			"治疗效果一半概率翻倍",
-			"为所有状态增加虚无",
-			"稀有遗物提供额外能量"
+			"Gain benefit according to #yAscension #yLevel. ",
+			"Better elite reward",
+			"Enemies receive more damage",
+			"Elites receive more damage",
+			"Bosses receive more damage",
+			"Increase Max HP after Boss combat",
+			"Heal at start of combat",
+			"Enemies start with damaged",
+			"Elites start with damaged",
+			"Bosses start with damaged",
+			"All curses are now ethereal",
+			"Heal when using potions",
+			"Getting cards may upgrade it",
+			"Boss is richer",
+			"Increase Max HP after Elite combat",
+			"Lose less HP in events",
+			"Purchase with some gold back",
+			"Enemies lose 1 strength",
+			"Elites lose 1 strength",
+			"Bosses lose 1 strength",
+			"Revive fully 1 time",
+			"Gain gold when adding card",
+			"Gain gold when lose HP",
+			"50% chance double healing",
+			"All status are now ethereal",
+			"Rare relics produce energy"
 		]
 	},
 	
 	"testmod-RealStoneCalender":{
 		"NAME": "The Real Stone Calender",
 		"FLAVOR": "最强遗物——历石",
-		"DESCRIPTIONS":["每回合结束，对所有敌人造成回合数的平方的伤害。每 #b7 回合重置计算伤害的回合数。"]
+		"DESCRIPTIONS":["At the end of each turn, deal the number of turn squared damage to ALL enemies. Reset turn counter for damage every #b7 turns."]
 	},
 	
 	"testmod-Nyarlathotep":{
 		"NAME": "Nyarlathotep",
 		"FLAVOR": "玩牌类游戏的时候可以无限制的变出Joker，因此立于不败之地。",
-		"DESCRIPTIONS":["你成功打出且生效的牌，同时会被额外视为被 #y消耗 和被从手牌中 #y丢弃 和使用了 #y能力牌 。你 #y消耗 或 #y丢弃 的牌，同时会被额外视为另一种效果。"]
+		"DESCRIPTIONS":["All the cards you played, will also be treated as being #yExhausted, being #yDiscarded and a #yPower. Whenever a card is #yExhausted or #yDiscarded, it will also be treated as the other one."]
 	},
 	
 	"testmod-BalancedPeriapt":{
 		"NAME": "Balanced Periapt",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["你的最大生命值不会再变化。当你尝试增加和减少最大生命值时，分别改为改变其数值 #b3 倍和 #b1 倍的生命。"]
+		"DESCRIPTIONS":["Your Max HP will never change anymore. Whenever you would change your Max HP, change your HP instead by a factor of #b3 if increase, #b1 if decrease."]
 	},
 	
 	"testmod-MagicalMallet":{
 		"NAME": "Magical Mallet",
 		"FLAVOR": "上面的文字被人抹去了",
-		"DESCRIPTIONS":["每回合开始，记录手牌中的所有牌的耗能的最小值和最大值，将你手牌中所有耗能为这两个值的牌的耗能在本场战斗中变成另一个值。"]
+		"DESCRIPTIONS":["At the start of each turn, record the maximum and minimum cost of your hand, make all cards with these two costs in your hand switch to the other cost for rest of combat."]
 	},
 	
 	"testmod-Laevatain":{
 		"NAME": "Laevatain",
 		"FLAVOR": "“KA(兰)KA(兰)A(露)！” ——北凉",
-		"DESCRIPTIONS":["拾取时获得三张随机 #y诅咒 。战斗开始时获得 #b3 点 #y力量 。每 #b3 回合获得你牌组中诅咒牌数量点 #y力量 。"]
+		"DESCRIPTIONS":["Upon pickup, obtain #b3 random #yCurse. At the start of each combat, gain #b3 #yStrength. Every #b3 turns, for each #yCurse in your deck, gain #b1 #yStrength. "]
 	},
 	
 	"testmod-TimeTraveler":{
 		"NAME": "The Time Traveler",
 		"FLAVOR": "El Psy Congroo",
-		"DESCRIPTIONS":["每回合开始获得", "。你初始拥有 #b100 点(最大)理性值。每次 #ySL 损失 #r50% 当前理性值，每次战斗胜利恢复 #b5 点理性值，每次休息恢复 #b10 点理性值。当理性值低于 #b20 时每次战斗结束失去 #r10 点生命上限。当理性值低于 #b10 时每回合开始失去 #r1 点生命。"]
+		"DESCRIPTIONS":["At the start of each turn, gain", ". You have #b100 (Max) #ySAN by default. Whenever #ySL will decrease your #ySAN by #r50%, at the end of combat, gain #b5 #ySAN, gain #b10 #ySAN when you Rest. Whenever you end combat with less than #b20 #ySAN, lose #r10 Max HP. Whenever you start a turn with less than #b10 #ySAN, lose #r1 HP."]
 	},
 	
 	"testmod-Maize":{
 		"NAME": "The Maize",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["你在同一回合内打出 #b5 张 #y技能牌 时，获得 #b1 层 #y无实体 。"]
+		"DESCRIPTIONS":["When you play #b5 #ySkill during your turn, gain #b1 #yIntangible. "]
 	},
 	
 	"testmod-DragonStarHat":{
