@@ -26,6 +26,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.helpers.TipTracker;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
@@ -233,6 +234,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		BaseMod.loadCustomStrings(CardStrings.class, readString("cards"));
 		BaseMod.loadCustomStrings(PowerStrings.class, readString("powers"));
 		BaseMod.loadCustomStrings(PotionStrings.class, readString("potions"));
+		BaseMod.loadCustomStrings(EventStrings.class, readString("events"));
 	}
 
 	@Override

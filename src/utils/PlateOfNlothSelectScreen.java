@@ -24,9 +24,7 @@ public class PlateOfNlothSelectScreen extends RelicSelectScreen {
 	
 	@Override
 	protected void afterSelected() {
-		for (int i = 0; i < this.relics.size(); i++) {
-			this.sendIndexSelected(this.relics.indexOf(this.selectedRelic));
-		}
+		this.sendIndexSelected(this.relics.indexOf(this.selectedRelic));
 	}
 
 	@Override

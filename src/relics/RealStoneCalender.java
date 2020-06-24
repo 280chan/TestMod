@@ -25,8 +25,9 @@ public class RealStoneCalender extends AbstractTestRelic{
 		int temp = this.counter * this.counter;
 		if (this.counter == 7)
 			this.counter = 0;
-		this.addToTop(new DamageAllEnemiesAction(null, DamageInfo.createDamageMatrix(temp), DamageType.THORNS, AttackEffect.BLUNT_HEAVY));
-    }
+		this.addToTop(new DamageAllEnemiesAction(null, DamageInfo.createDamageMatrix(temp, true), DamageType.THORNS, AttackEffect.BLUNT_HEAVY));
+		this.show();
+	}
 	
 	public void onVictory() {
 		this.counter = -1;
