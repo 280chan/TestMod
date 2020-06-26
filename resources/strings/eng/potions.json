@@ -1,21 +1,21 @@
 {
   "testmod-EscapePotion": {
-    "NAME": "丢人药水",
+    "NAME": "Refined Shame",
     "DESCRIPTIONS": [
-      "使一名非Boss敌人立即逃跑。"
+		"Make a non-Boss enemy escape."
     ]
   },
   "testmod-SpacePotion": {
-    "NAME": "空间药水",
+    "NAME": "Bottled Space",
     "DESCRIPTIONS": [
-      "使用后永久增加 #b",
-      " 个药水栏位。超过 #b10 个栏位的部分改为获得相同数量瓶随机药水。"
+		"Gain #b",
+		" #yPotion slot. You will not gain slots if you have #b10 or more slots, instead, gain same amount of random potions."
     ]
   },
   "testmod-TimePotion": {
-    "NAME": "时间女神的恶作剧",
+    "NAME": "Essence of Kronos",
     "DESCRIPTIONS": [
-      "立即结束你的回合，敌人在这回合不会执行其意图，然后开始你的下一回合。"
+		"End your turn, enemies will not do their intent this turn, then start your next turn."
     ]
   }
 }
