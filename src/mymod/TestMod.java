@@ -134,6 +134,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			UnlockTracker.markCardAsSeen(makeID("Collector"));
 		if (UnlockTracker.isCardSeen("LackOfEnergy"))
 			UnlockTracker.markCardAsSeen(makeID("PocketStoneCalender"));
+		if (UnlockTracker.isCardSeen("DorothysBlackCat") || UnlockTracker.isCardSeen(makeID("DorothysBlackCat")))
+			UnlockTracker.markCardAsSeen(makeID("TaurusBlackCat"));
 		for (AbstractCard c : Sins.SINS)
 			if (!c.cardID.equals(Pride.ID))
 				checkOldCardID(c.cardID);
@@ -250,7 +252,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new BloodShelter(), new Reflect(), new Dream(), new ChaoticCore(), new LimitFlipper(),
 				new ConditionedReflex(), new RabbitOfFibonacci(), new CardIndex(), new DeathImprint(),
 				new Arrangement(), new AssimilatedRune(), new AdversityCounterattack(), new Recap(), new HeadAttack(),
-				new TemporaryDeletion(), new EnhanceArmerment(), new TradeIn(), new DorothysBlackCat(),
+				new TemporaryDeletion(), new EnhanceArmerment(), new TradeIn(), new TaurusBlackCat(),
 				new PainDetonator(), new FightingIntention(), new Reverberation(), new SelfRegulatingSystem(),
 				new Superconductor(), new BackupPower(), new Illusory(), new Librarian(), new HandmadeProducts(),
 				new Automaton(), new PowerStrike() };

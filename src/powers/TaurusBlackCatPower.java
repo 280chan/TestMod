@@ -6,13 +6,13 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class DorothysBlackCatPower extends AbstractTestPower {
-	public static final String POWER_ID = "DorothysBlackCatPower";
+public class TaurusBlackCatPower extends AbstractTestPower {
+	public static final String POWER_ID = "TaurusBlackCatPower";
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
-	public DorothysBlackCatPower(AbstractCreature owner, int amount) {
+	public TaurusBlackCatPower(AbstractCreature owner, int amount) {
 		super(POWER_ID);
 		this.name = NAME;
 		this.owner = owner;
@@ -29,7 +29,7 @@ public class DorothysBlackCatPower extends AbstractTestPower {
 		this.fontScale = 8.0f;
         this.amount += stackAmount;
         for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (DorothysBlackCatEnemyPower.hasThis(m)) {
+			if (TaurusBlackCatEnemyPower.hasThis(m)) {
 				this.updateAmount(m);
 			} else {
 				this.addEnemyPower(m);
@@ -38,17 +38,17 @@ public class DorothysBlackCatPower extends AbstractTestPower {
 	}
 	
 	private void updateAmount(AbstractMonster m) {
-		AbstractPower p = DorothysBlackCatEnemyPower.getThis(m);
+		AbstractPower p = TaurusBlackCatEnemyPower.getThis(m);
 		p.stackPower(this.amount - p.amount);
 		p.updateDescription();
 	}
 	
 	private void addEnemyPower(AbstractMonster m) {
-		m.powers.add(new DorothysBlackCatEnemyPower(m, this.amount));
+		m.powers.add(new TaurusBlackCatEnemyPower(m, this.amount));
 	}
 	
 	private void removeEnemyPower(AbstractMonster m) {
-		m.powers.remove(DorothysBlackCatEnemyPower.getThis(m));
+		m.powers.remove(TaurusBlackCatEnemyPower.getThis(m));
 	}
 	
 	public void onInitialApplication() {
@@ -58,7 +58,7 @@ public class DorothysBlackCatPower extends AbstractTestPower {
 	
 	public void atStartOfTurn() {
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (!DorothysBlackCatEnemyPower.hasThis(m))
+			if (!TaurusBlackCatEnemyPower.hasThis(m))
 				this.addEnemyPower(m);
 	}
 	

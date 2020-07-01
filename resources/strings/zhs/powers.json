@@ -83,16 +83,6 @@
     	" 次。"
     ]
   },
-  "testmod-DorothysBlackCatEnemyPower": {
-    "NAME": "桃乐丝的黑猫"
-  },
-  "testmod-DorothysBlackCatPower": {
-    "NAME": "桃乐丝的黑猫",
-    "DESCRIPTIONS": [
-    	"每当你对敌人造成 #r失去生命  #y以外类型 的伤害时，使所有敌人均摊失去总共 #b",
-    	"% 其数值的生命。"
-    ]
-  },
   "testmod-DrawDownPower": {
     "NAME": "抽牌变少",
     "DESCRIPTIONS": [
@@ -224,6 +214,16 @@
     "DESCRIPTIONS": [
     	"接下来抽到的前 #b",
     	" 张耗能大于 #b0 的牌的耗能在回合内降低 #b1 。"
+    ]
+  },
+  "testmod-TaurusBlackCatEnemyPower": {
+    "NAME": "桃乐丝的黑猫"
+  },
+  "testmod-TaurusBlackCatPower": {
+    "NAME": "桃乐丝的黑猫",
+    "DESCRIPTIONS": [
+    	"每当你对敌人造成 #r失去生命  #y以外类型 的伤害时，使所有敌人均摊失去总共 #b",
+    	"% 其数值的生命。"
     ]
   },
   "testmod-TemporaryDeletionPower": {

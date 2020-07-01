@@ -124,10 +124,6 @@
     "NAME": "幻灭回响",
     "DESCRIPTION": "你在每回合打出的第一张牌，将会额外打出X/ !M! 次。"
   },
-  "testmod-DorothysBlackCat": {
-    "NAME": "桃乐丝的黑猫",
-    "DESCRIPTION": "每当你对敌人造成失去生命以外类型的伤害时，使所有敌人均摊失去总共 !M! %其数值的生命。"
-  },
   "testmod-Dream": {
     "NAME": "梦想",
     "DESCRIPTION": "将地狱之刃、声东击西、白噪声、发现加入手牌，其耗能在本回合变为0。 消耗 。 虚无 。",
@@ -270,6 +266,10 @@
     "NAME": "超导体",
     "DESCRIPTION": "本回合内：无法获得能量，手牌中所有牌耗能变为0。接下来抽到的前X张耗能大于0的牌的耗能在回合内降低1。 消耗 。",
     "UPGRADE_DESCRIPTION": "本回合内：无法获得能量，手牌中所有牌耗能变为0。接下来抽到的前X张耗能大于0的牌的耗能在回合内降低1。"
+  },
+  "testmod-TaurusBlackCat": {
+    "NAME": "桃乐丝的黑猫",
+    "DESCRIPTION": "每当你对敌人造成失去生命以外类型的伤害时，使所有敌人均摊失去总共 !M! %其数值的生命。"
   },
   "testmod-TemporaryDeletion": {
     "NAME": "临时删除",

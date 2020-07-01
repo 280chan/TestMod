@@ -9,27 +9,27 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import actions.DorothysBlackCatDamageAction;
 
-public class DorothysBlackCatEnemyPower extends AbstractTestPower implements InvisiblePower {
-	public static final String POWER_ID = "DorothysBlackCatEnemyPower";
+public class TaurusBlackCatEnemyPower extends AbstractTestPower implements InvisiblePower {
+	public static final String POWER_ID = "TaurusBlackCatEnemyPower";
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
 	private static final int PRIORITY = 100000;
 
 	public static boolean hasThis(AbstractCreature owner) {
 		for (AbstractPower p : owner.powers)
-			if (p instanceof DorothysBlackCatEnemyPower)
+			if (p instanceof TaurusBlackCatEnemyPower)
 				return true;
 		return false;
 	}
 	
 	public static AbstractPower getThis(AbstractCreature owner) {
 		for (AbstractPower p : owner.powers)
-			if (p instanceof DorothysBlackCatEnemyPower)
+			if (p instanceof TaurusBlackCatEnemyPower)
 				return p;
 		return null;
 	}
 	
-	public DorothysBlackCatEnemyPower(AbstractCreature owner, int amount) {
+	public TaurusBlackCatEnemyPower(AbstractCreature owner, int amount) {
 		super(POWER_ID);
 		this.name = NAME;
 		this.owner = owner;

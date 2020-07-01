@@ -16,6 +16,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import basemod.BaseMod;
+import cards.AbstractTestCurseCard;
+import cards.mahjong.AbstractMahjongCard;
 import mymod.TestMod;
 
 public class TemporaryDeletionPower extends AbstractTestPower {
@@ -71,11 +73,19 @@ public class TemporaryDeletionPower extends AbstractTestPower {
 		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + this.rarityDesc() + DESCRIPTIONS[2];
 	}
 	
+	private static boolean checkValid(AbstractCard c) {
+		if (c instanceof AbstractTestCurseCard)
+			return false;
+		if (c instanceof AbstractMahjongCard)
+			return false;
+		return true;
+	}
+	
 	private ArrayList<AbstractCard> getList(CardRarity rarity, CardColor color) {
 		ArrayList<AbstractCard> list = new ArrayList<AbstractCard>();
 		for (Map.Entry<String, AbstractCard> c : CardLibrary.cards.entrySet()) {
 			AbstractCard card = (AbstractCard) c.getValue();
-			if ((card.color == color) && (card.rarity == rarity)) {
+			if ((card.color == color) && (card.rarity == rarity) && checkValid(card)) {
 				list.add(card);
 			}
 		}
@@ -94,7 +104,7 @@ public class TemporaryDeletionPower extends AbstractTestPower {
 							| NoSuchMethodException | SecurityException | NoSuchFieldException e) {
 						e.printStackTrace();
 					}
-				} else if (c.color == color && c.rarity == rarity) {
+				} else if (c.color == color && c.rarity == rarity && checkValid(c)) {
 					list.add(c);
 				}
 			}
