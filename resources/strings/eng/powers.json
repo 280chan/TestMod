@@ -1,243 +1,244 @@
 {
   "testmod-AssimilatedRunePower": {
-    "NAME": "同化",
+    "NAME": "Assimilated",
     "DESCRIPTIONS": [
-    	"在 #b",
-		" 回合内，将当前手牌中所有牌的基础伤害、基础格挡提升到",
-		" #y当前手",
-		" #y你所有",
-		"牌 中的最高值。"
+    	"In #b",
+		" turns, increase base damage and block of cards in your hand to the maximum in your ",
+		" #yHand",
+		" #yDeck",
+		"."
     ]
   },
   "testmod-AutoReboundPower": {
-    "NAME": "自动弹回",
+    "NAME": "Auto Rebound",
     "DESCRIPTIONS": [
-    	"你每回合打出的前 #b",
-		" 张可被弹回的牌，将回到抽牌堆顶部。"
+    	"For each turn, put the first #b",
+		" cards you play back on the top of your draw pile."
     ]
   },
   "testmod-BloodBladePower": {
-    "NAME": "血气之刃",
+    "NAME": "Blood Blade",
     "DESCRIPTIONS": [
-    	"每次失去生命时，额外提升 #b失去生命/最大生命 的攻击伤害。提升之间相",
-		" #y加 ",
-		" #y乘 ",
-		"。",
-		" NL 当前提升: #b"
+    	"When lose HP, increase attack damage by #yHP #yloss #y/ #yMax #yHP",
+		"",
+		", #yMultiplicatively",
+		".",
+		" NL Current bonus #yAttack damage: #b"
     ]
   },
   "testmod-ChaoticCorePower": {
-    "NAME": "混沌原核",
+    "NAME": "Chaotic Core",
     "DESCRIPTIONS": [
-    	"每受到一次伤害，获得 #b1 个充能球栏位，已满则改为触发下一个效果。每造成一次 #y攻击 伤害， 生成  #b",
-		" 个随机充能球。"
+    	"Whenever you lose HP, Gain #b1 Orb slot. If Orb slot has been full, or each your #yAttack damage Channel #b",
+		" random Orbs."
     ]
   },
   "testmod-ConditionedReflexPower": {
-    "NAME": "条件反射",
+    "NAME": "Conditioned Reflex",
     "DESCRIPTIONS": [
-    	"每失去一次生命：获得 #b",
-    	" 层 #y柔韧 ；并在下回合开始时使其生效 #b1 次。",
-		" NL 下回合开始生效 #b",
-		" 次"
+    	"Whenever you lose HP: Gain #b",
+    	" #yMelleable; at the start of your next turn, make it active #b1 time.",
+		" NL At the start of your next turn, active #b",
+		" times"
     ]
   },
   "testmod-D_4Power": {
-    "NAME": "符文四面体",
+    "NAME": "Runic Tetrahedron",
     "DESCRIPTIONS": [
-    	"打出下一张牌时，",
-    	" #y夜魇 这张牌",
-		"额外打出一次",
-		"将这张牌 #y消耗",
-		"回复消费的 #y能量 ",
-		"为什么会出错？？？",
-		"。"
+    	"When you play the next card,",
+    	" #yNightmare it",
+		"Play it #b1 more time",
+		" #yExhaust it",
+		"Regain the #yRnergy it cost",
+		"WTF is this situation???",
+		"."
     ]
   },
   "testmod-DeathImprintPower": {
-    "NAME": "死亡刻印",
+    "NAME": "Imprint",
     "DESCRIPTIONS": [
-    	"每当失去生命时，增加失去生命点数的层数。",
-    	"已失去 #b",
-    	" 点生命。"
+    	"Whenever #y",
+    	" lose HP, increase same amount of #yImprint. #y",
+    	" has lost #b",
+    	" HP."
     ]
   },
   "testmod-DefenceDownPower": {
-    "NAME": "受到伤害增加",
+    "NAME": "Damage Receive Increase",
     "DESCRIPTIONS": [
-    	"受到伤害增加 #b",
-		"% 。"
+    	"Receive #b",
+		"% more damage."
     ]
   },
   "testmod-DischargedPower": {
-    "NAME": "能量减少",
+    "NAME": "Discharged",
     "DESCRIPTIONS": [
-    	"在下一回合，少获得",
-		"点能量。"
+    	"At the start of next turn, lose #b",
+		" #yEnergy."
     ]
   },
   "testmod-DisillusionmentEchoPower": {
-    "NAME": "幻灭回响",
+    "NAME": "Disillusionment Echo",
     "DESCRIPTIONS": [
-    	"你在每回合打出的第一张牌，将会额外打出 #b",
-    	" 次。"
-    ]
-  },
-  "testmod-DorothysBlackCatEnemyPower": {
-    "NAME": "桃乐丝的黑猫"
-  },
-  "testmod-DorothysBlackCatPower": {
-    "NAME": "桃乐丝的黑猫",
-    "DESCRIPTIONS": [
-    	"每当你对敌人造成 #r失去生命  #y以外类型 的伤害时，使所有敌人均摊失去总共 #b",
-    	"% 其数值的生命。"
+    	"The first card you play each turn will play #b",
+    	" more times."
     ]
   },
   "testmod-DrawDownPower": {
-    "NAME": "抽牌变少",
+    "NAME": "Draw Down",
     "DESCRIPTIONS": [
-    	"下一回合少抽 #b",
-		" 张牌。"
+    	"Draw #b",
+		" fewer cards next turn."
     ]
   },
   "testmod-EnhanceArmermentPower": {
-    "NAME": "完全支配",
+    "NAME": "Enhance Armerment",
     "DESCRIPTIONS": [
-    	"你打出的下一张攻击牌的伤害变为原来的 #b",
-		" 倍，但其将被 #y消耗 。"
+    	"Your next #yAttack will deal #b",
+		" times of its original damage, but it will also #yExhaust."
     ]
   },
-  "testmod-EnhanceFightingIntentionPower": {
-    "NAME": "战意",
+  "testmod-FightingIntentionPower": {
+    "NAME": "Fighting Intention",
     "DESCRIPTIONS": [
-    	"回合开始时，每个攻击意图的敌人使你获得 #b",
-		" 力量 ，使攻击意图的敌人失去 #b",
-		" 力量 。"
+    	"At the start of your turn, for each enemy intend to #yAttack: gain #b",
+		" #yStrength, these enemies lose #b",
+		" #yStrength."
     ]
   },
   "testmod-GreedPower": {
-    "NAME": "贪婪",
+    "NAME": "Greed",
     "DESCRIPTIONS": [
-    	"回合结束时，每有一点能量剩余，下回合少抽 #r",
-    	" 张牌；每有一张牌剩余，下回合减少 #r",
-    	" 点能量。"
+    	"At the end of your turn: For each [E] remain, draw #r",
+    	" fewer cards next turn; For each card in hand, lose #r",
+    	" [E] next turn."
     ]
   },
   "testmod-InorganicPower": {
-    "NAME": "无机物",
+    "NAME": "Inorganic",
     "DESCRIPTIONS": [
-    	"无法给 #y",
-		" 增益状态，无法给玩家负面状态。"
+    	"Can not give #y",
+		" positive effects. Can not give player negative effects."
     ]
   },
   "testmod-LibrarianPower": {
-    "NAME": "图书管理员",
+    "NAME": "Librarian",
     "DESCRIPTIONS": [
-    	"若在接下来的 #b",
-    	" 次回合开始之前胜利，将 #y",
-    	" 加入牌组。"
+    	"If win before the next #b",
+    	" turn starts, add #y",
+    	" into your deck."
     ]
   },
   "testmod-MahjongZsPower": {
-    "NAME": "麻将",
+    "NAME": "Mahjong Honer",
     "DESCRIPTIONS": [
-    	"每当你打出 #b1 张 #y麻将 牌，获得 #b1 层 #y再生 ， #b",
-    	"每当你打出 #b1 张 #y麻将 牌，获得 #b",
-		"每当你打出 #b1 张 #r非 #y攻击 牌，你造成的攻击伤害提高 #b",
-		"免疫 #b",
-		"每打出 #b1 张 #y麻将 牌，场上每有 #b1 个敌人，获得 #b",
-		"每回合开始额外触发 #b",
-		" 层 #y多层护甲 。",
-		" 层 #y真言 。",
-		"% 。加成之间相乘。",
-		" 次致命伤害，以 #b1% 最大生命复活。每打出 #b1 张牌将复活生命比例提升 #b1% ，生效后重置。",
-		" #y金币 。",
-		" 次麻将遗物。",
-		"(造成 #b",
-		"% 攻击伤害)",
-		"(生效时复活 #b",
-		"% 生命)"
+    	"Whenever play a #yMahjong card, Gain #b1 #yRegen, Gain #b",
+    	"Whenever play a #yMahjong card, Gain #b",
+		"Whenever play a #ynon-Attack card, multiplicatively increase your #yAttack damage by #b",
+		"When you would die next #b",
+		"Whenever play a #yMahjong card, for each enemy Gain #b",
+		"At the start of turn, trigger #b",
+		" #yPlated #yArmor.",
+		" #yMantra.",
+		"%.",
+		" times, heal to #b1% of your Max HP instead. Each card you play increase #b1% of your Max HP instead, reset after each resurrection. ",
+		" #yGold.",
+		" times #yMahjong #yRelic",
+		"( #b",
+		"% extra #yAttack damage)",
+		"(heal #b",
+		"% Max HP)"
     ]
   },
   "testmod-PulseDistributorPower": {
-    "NAME": "脉冲分配",
+    "NAME": "Pulse Distributor",
     "DESCRIPTIONS": [
-    	"受到 #bn 点非失去生命的伤 NL 害，不直接损失生命值，而是在此回合开始的",
-    	"个回 NL 合内每次敌人回合结束时失去 #b1 点生命。",
-    	" NL 每回合失去生命值为: NL ",
-    	"，"
+    	"When you would receive #bn damage which is not type Lose HP, don't lose HP. Instead, in next ",
+    	" enemy turns end, lose #b1 HP.",
+    	" NL Future Lose HP: NL ",
+    	", "
     ]
   },
   "testmod-RecapPower": {
-    "NAME": "前情提要",
+    "NAME": "Recap",
     "DESCRIPTIONS": [
-    	"每回合开始，打出你上一回合打出的最后 #b",
-    	" 张牌一次。(限玩家打出)"
+    	"At the start of your turn, play the last #b",
+    	" cards you played last turn."
     ]
   },
   "testmod-ReflectPower": {
-    "NAME": "反射",
+    "NAME": "Reflect",
     "DESCRIPTIONS": [
-    	"在这个回合，你的下 #b",
-    	" 张非 #y诅咒 、 #y状态 的牌会打出两次。"
+    	"In this turn, you will play the next #b",
+    	" cards twice except #yCurse and #yStatus."
     ]
   },
   "testmod-RepeatFormPower": {
-    "NAME": "复读形态",
+    "NAME": "Repeat Form",
     "DESCRIPTIONS": [
-    	"每回合开始，将 #b",
-    	" 张 #y",
-    	" 加入手牌。"
+    	"At the start of your turn, add #b",
+    	" copies of #y",
+    	" into your hand."
     ]
   },
   "testmod-ReverberationPower": {
-    "NAME": "残响",
+    "NAME": "Reverberation",
     "DESCRIPTIONS": [
-    	"每当一张非 #y诅咒 、 #y状态 牌 #y消耗 时，触发其打出时的效果 #b",
-    	" 次。"
+    	"Whenever a card except #yCurse or #yStatus #yExhausts, function it #b",
+    	" times."
     ]
   },
   "testmod-SelfRegulatingSystemPower": {
-    "NAME": "自我调节系统",
+    "NAME": "Self Regulating System",
     "DESCRIPTIONS": [
-    	"每回合获得的首个增益状态层数增加 #b",
-    	" ，首个减益状态层数减少 #b",
-    	" 。"
+    	"The first buff you Gain each turn will receive #b",
+    	" more. The first debuff you Gain each turn will receive #b",
+    	" fewer."
     ]
   },
   "testmod-ShutDownPower": {
-    "NAME": "关机",
+    "NAME": "Shut Down",
     "DESCRIPTIONS": [
-    	"每回合将 #b",
-    	" 张 #y重启",
-    	" 放入手牌。"
+    	"At the start of each turn, add #b",
+    	" #yReboot",
+    	" into your hand."
     ]
   },
   "testmod-SuperconductorNoEnergyPower": {
-    "NAME": "无法获得能量",
+    "NAME": "No Energy",
     "DESCRIPTIONS": [
-    	"本回合内，无法获得能量。"
+    	"In this turn, you can Gain no [E] anymore."
     ]
   },
   "testmod-SuperconductorPower": {
-    "NAME": "超导体",
+    "NAME": "Superconductor",
     "DESCRIPTIONS": [
-    	"接下来抽到的前 #b",
-    	" 张耗能大于 #b0 的牌的耗能在回合内降低 #b1 。"
+    	"Reduce cost of next #b",
+    	" cards you draw which greater than 0 by 1 for one turn."
+    ]
+  },
+  "testmod-TaurusBlackCatEnemyPower": {
+    "NAME": "Taurus' Black Cat"
+  },
+  "testmod-TaurusBlackCatPower": {
+    "NAME": "Taurus' Black Cat",
+    "DESCRIPTIONS": [
+    	"Whenever you deal #yNon-Lose-HP damage to enemy, all enemies Lose #b",
+    	"% of the damage HP in total."
     ]
   },
   "testmod-TemporaryDeletionPower": {
-    "NAME": "临时删除",
+    "NAME": "Temporary Deletion",
     "DESCRIPTIONS": [
-    	"每回合开始将 #b",
-    	" 张随机 #y",
-    	" 牌加入手牌。",
-    	"基础",
-    	"特殊",
-    	"普通",
-    	"罕见",
-    	"稀有",
-    	"诅咒"
+    	"At the start of each turn, add #b",
+    	" random #y",
+    	" cards in your hand.",
+    	"BASIC",
+    	"SPECIAL",
+    	"COMMON",
+    	"UNCOMMON",
+    	"RARE",
+    	"CURSE"
     ]
   }
 }

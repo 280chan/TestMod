@@ -315,20 +315,7 @@ public interface MiscMethods {
 	}
 	
 	public default String getEnergySymble(PlayerClass c) {
-		final String[] E = {" [R] ", " [G] ", " [B] ", " [W] "};
-		if (c == null)
-			return E[0];
-		switch (c) {
-		case WATCHER:
-			return E[3];
-		case DEFECT:
-			return E[2];
-		case THE_SILENT:
-			return E[1];
-		case IRONCLAD:
-		default:
-			return E[0];
-		}
+		return " [E] ";
 	}
 	
 	public default String setDescription(PlayerClass c, String... DESCRIPTIONS) {

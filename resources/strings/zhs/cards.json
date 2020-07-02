@@ -41,8 +41,8 @@
   },
   "testmod-AssimilatedRune": {
     "NAME": "同化符文",
-    "DESCRIPTION": "在本回合内，将当前手牌中所有牌的基础伤害、基础格挡提升到当前手牌中的最高值。",
-    "UPGRADE_DESCRIPTION": "在本回合内，将当前手牌中所有牌的基础伤害、基础格挡提升到你所有牌中的最高值。"
+    "DESCRIPTION": "在 !M! 回合内，将当前手牌中所有牌的基础伤害、基础格挡提升到当前手牌中的最高值。",
+    "UPGRADE_DESCRIPTION": "在 !M! 回合内，将当前手牌中所有牌的基础伤害、基础格挡提升到你所有牌中的最高值。"
   },
   "testmod-Automaton": {
     "NAME": "自动机",

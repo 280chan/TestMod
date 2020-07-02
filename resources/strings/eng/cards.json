@@ -1,346 +1,346 @@
 {
- "testmod-Envy": {
- "NAME": "Envy",
- "DESCRIPTION": " Unplayable. While in hand, you cannot play Status and Curse. If no ememy intends to attack/ inflict a Negative Effect on you or defend/ use a buff, you cannot play Attact/ Skill/ Power."
- },
- "testmod-Gluttony": {
- "NAME": "Gluttony",
- "DESCRIPTION": " Unplayable. When Max HP is raised, Add a copy of this card into your deck. If transformed or removed from your deck, lose ！M% Max HP."
- },
- "testmod-Greed": {
- "NAME": "Greed",
- "DESCRIPTION": " Unplayable. At the end of your turn, For each [E] remain, draw !M! fewer cards next turn. For each card remain, gain !M! less [E] next turn."
- },
- "testmod-Lust": {
- "NAME": "Lust",
- "DESCRIPTION": " Unplayable. At the end of your turn, lose !M! Strength, Dexterity, Focus, gain 3 Vulnerable, Weak, Frail. "
- },
- "testmod-Sloth": {
-	"NAME": "Sloth",
-	"DESCRIPTION": " Unplayable. After your second turn starts, While in hand, you cannot play more cards than the least turn. There is no escape from this Curse at frist turn.",
-	"EXTENDED_DESCRIPTION": [
-		" Unplayable.",
-		" While in hand, you cannot play more than",
-		" cards. you have played",
-		" cards.",
-		" There is no escape from this Curse."
- ]
- },
- "testmod-Wrath": {
- "NAME": "Wrath",
- "DESCRIPTION": " Unplayable. When you draw this card, Apply !M! Angry to All enemies. While in hand, you can only play Attack. Ethereal."
- },
- "testmod-AdversityCounterattack": {
- "NAME": "Adversity Counterattack",
- "DESCRIPTION": " Apply !M! Artifact. Gain !M! Vulnerable and 1 Intangible. Deal the sum of enemy's Buff damage to a random enemy the sum of your Debuff times."
- },
- "testmod-Arrangement": {
- "NAME": "Arrangement",
- "DESCRIPTION": " Gain X Block. Deal X damage. Draw X cards. Upgrade X cards in your hand, for each Upgrade less, Gain [R] . Exhaust.",
- "UPGRADE_DESCRIPTION": " Gain !B! Block X times. Deal !D! damage X times. Deal X cards. Upgrade X cards in your hand, for each Upgrade less, Gain [R] . Exhaust."
- },
- "testmod-AssimilatedRune": {
- "NAME": "Assimilated Rune",
- "DESCRIPTION": " Increase the points of cards in your hand to the maximum in your hand this turn.",
- "UPGRADE_DESCRIPTION": " Increase the points of cards in your hand to the maximum in your deck this turn."
- },
- "testmod-Automaton": {
- "NAME": "Automaton",
- "DESCRIPTION": " Whenever Autoplay, damage times +1 in this run and -1 in this combat. Deal !D! damage to random enemy !M! time."
- },
- "testmod-AutoReboundSystem": {
- "NAME": "Auto Rebound System",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"At the start of your turn, Gain",
-		"Draw !M! cards. Put the first !M! cards you play this turn on the top of your draw pile."
- ]
- },
- "testmod-BackupPower": {
- "NAME": "Backup Power",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Gain",
-		". If still in your hand at the end of the turn, Gain",
-		"next turn." 
- ]
- },
- "testmod-BloodBlade": {
- "NAME": "Blood Blade",
- "DESCRIPTION": "Increase attack damage by current HP loss / Max HP. When lose HP, increase attack damage by HP loss / Max HP.",
- "UPGRADE_DESCRIPTION": "Multiplicatively Increase attack damage by current HP loss / Max HP. When lose HP, multiplicatively increase attack damage by HP loss / Max HP."
- },
- "testmod-BloodShelter": {
- "NAME": "Blood Shelter",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Arrange HP with target to make each has same ratio. Each gain Block of the sum of change in HP.",
-		" Block . Exhaust." 
- ]
- },
- "testmod-Bloodthirsty": {
- "NAME": "Bloodthirsty",
- "DESCRIPTION": "吸取敌人 !M! %最大生命点生命.吸血后, 全嗜血成性比例翻倍.打出其他牌降低2%(最低降至1%).",
- "UPGRADE_DESCRIPTION": "吸取敌人 !M! %最大生命点生命.吸血后, 全嗜血成性比例翻倍.打出其他牌降低1%(最低降至1%).",
-	"EXTENDED_DESCRIPTION": [
-		"吸取敌人 !M! %最大生命",
-		"点生命.吸血后, 全嗜血成性比例翻倍.打出其他牌降低",
-		"2",
-		"1",
-		"%(最低降至1%)."
- ]
- },
- "testmod-CardIndex": {
- "NAME": "Card Index",
- "DESCRIPTION": "Choose !M! cards to remove from this combat. For future play, play the chosen cards.",
-	"EXTENDED_DESCRIPTION": [
-		"Play ",
-		"Play nothing else.",
-		", ",
-		"."
- ]
- },
- "testmod-ChaoticCore": {
- "NAME": "Chaotic Core",
- "DESCRIPTION": "Gain 1 Orb slot. Whenever you receive unbrocked attack damage, Gain 1 Orb slot. If Orb slot has been full, each damage Channel !M! random Orb."
- },
- "testmod-Collector": {
- "NAME": "Collector",
- "DESCRIPTION": "Deal !D! damage to all enemies. Deal !M! addmonal damage for the each relic you have."
- },
- "testmod-ComboMaster": {
- "NAME": "Combo Master",
- "DESCRIPTION": "Deal !D! damage to all enemies !M! times. Increase the damage and times of this card by 1 this combat."
- },
- "testmod-ConditionedReflex": {
- "NAME": "Conditioned Reflex",
- "DESCRIPTION": "Whenever you lose Hp, Gain !M! Melleable; at the start of your next turn, make it active !M! times."
- },
- "testmod-DeathImprint": {
- "NAME": "Death Imprint",
- "DESCRIPTION": " Deal !D! damage. If target has Imprint, remove it and increase base damage by !M! % of its amount. Otherwise, give Imprint."
- },
- "testmod-DisillusionmentEcho": {
- "NAME": "Disillusionment Echo",
- "DESCRIPTION": " The first card you play each turn will play X/ !M! more times."
- },
- "testmod-Dream": {
- "NAME": "Dream",
- "DESCRIPTION": "Add 'Infernal Blade', 'Distraction' and 'White noise' into your hand. Which cost 0 this turn. Exhaust. Ethereal.",
- "UPGRADE_DESCRIPTION": "Add 'Infernal Blade', 'Distraction', 'White noise' and 'Discovery' into your hand. Which cost 0 this turn. Ethereal."
- },
- "testmod-EnhanceArmerment": {
- "NAME": "Enhance Armerment",
- "DESCRIPTION": "Your next Attack deal double damage. Exhaust it."
- },
- "testmod-EternalityOfKhronos": {
- "NAME": "Eternality of Khronos",
- "DESCRIPTION": "End yout turn, Take an extra turn after this one. Exhaust. Ethereal.",
- "UPGRADE_DESCRIPTION": "End yout turn, Take an extra turn after this one. Ethereal."
- },
- "testmod-FightingIntention": {
- "NAME": "Fighting Intention",
- "DESCRIPTION": "At the start of yor turn, for each enemy intend to Attack, Gain !M! Strength, these enemies lose !M! Strength."
- },
- "testmod-HandmadeProducts": {
- "NAME": "Handmade Products",
- "DESCRIPTION": "Deal damage of the product of all cards' cost in your hand. If kills enemy, increase this card's cost by !M! . Can be Upgraded any number of times."
- },
- "testmod-HeadAttack": {
- "NAME": "Head Attack",
- "DESCRIPTION": "Change enemy's intention to next turn. Draw !M! cards. Ethereal."
- },
- "testmod-Illusory": {
- "NAME": "Illusory",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Draw !M! cards, all cards in draw pile become Ethereal. For each card was Ethereal, Gain",
-		". Exhaust. Ethereal."
- ]
- },
- "testmod-Librarian": {
- "NAME": "Librarian",
- "DESCRIPTION": "Choose !M! cards from X random Colorless to add in your hand. Reduce these cards'cost to 0 this combat. Exhaust.",
- "UPGRADE_DESCRIPTION": "Choose !M! cards from X random Colorless to add in your hand. Reduce these cards' cost to 0 this combat. If win in the next X turn, add these cards in your deck. Exhaust."
- },
- "testmod-LifeRuler": {
- "NAME": "Life Ruler",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Apply the maximum of the greatest common divisor of enemy's max-HP or HP",
-		" Constricted.",
-		" Exhaust."
- ]
- },
- "testmod-LimitFlipper": {
- "NAME": "Limit Flipper",
- "DESCRIPTION": "If the last card you play is 'Limit Flipper', Double your Strength. Otherwise Gain !M! Strength."
- },
- "testmod-Mystery": {
- "NAME": "Mystery",
- "DESCRIPTION": "Deal !D! damage to a random enemy !M! times. Every times you enter an unknown room this run, Deal an extra damege. Exhaust."
- },
- "testmod-PainDetonator": {
- "NAME": "Pain Detonator",
- "DESCRIPTION": "Deal damage of !M! % of HP Loss of the target ( !D! )."
- },
- "testmod-PerfectCombo": {
- "NAME": "Perfect Combo",
- "DESCRIPTION": "Deal !D! damage. Can be Upgraded any number of times. When Attack, !M! % chance to attack a random enemy again. Each Upgrade, Gain 1% probability.",
-	"EXTENDED_DESCRIPTION": [
-		"Deal !D! damage. Can be Upgraded any number of times. When Attack, !M! % chance to attack a random enemy again.",
-		"Each Upgrade, Gain 1% probability."
- ]
- },
- "testmod-PocketStoneCalender": {
- "NAME": "Pocket Stone Calender",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Deal damage of square of turn number",
-		"( !D! )",
-		". Increase this cards cost by !M! this combat. Whenever you draw this card, reduce its cost by 1 this combat."
- ]
- },
- "testmod-PowerStrike": {
- "NAME": "Power Strike",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Ethereal. Reduce all enemies' HP to its' logarithm, the base number is",
-		". Apply the number of enemies Intangible to all enemies. Can be Upgraded any number of time. Exhaust."
- ]
- },
- "testmod-Provocation": {
- "NAME": "Provocation",
- "DESCRIPTION": "Gain !M! Strength, Apply 1 Angry."
- },
- "testmod-PulseDistributor": {
- "NAME": "Pulse Distributor",
- "DESCRIPTION": "When you would receive n damage which is not type Lose HP, don't lose HP. Instead, in the next n+1 times of enemies turn end, lose 1 HP.",
-	"EXTENDED_DESCRIPTION": [
-		"When you would receive n damage which is not type Lose HP, don't lose HP. Instead, in the next n",
-		" times of enemies turn end, lose 1 HP."
- ]
- },
- "testmod-RabbitOfFibonacci": {
- "NAME": "Rabbit of Fibonacci",
- "DESCRIPTION": "Gain !B! Block. Deal !D! damage to all enemies. Upgrade this card in this combat. Can be Upgraded any number of time."
- },
- "testmod-Recap": {
- "NAME": "Recap",
- "DESCRIPTION": "At the start of your turn, play the last !M! cards you played last turn."
- },
- "testmod-Reflect": {
- "NAME": "Reflect",
- "DESCRIPTION": "In this turn, you will play the next !M! cards twice except Curse and Status."
- },
- "testmod-RepeatForm": {
- "NAME": "Repeat Form",
- "DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add a copy of it into your hand. Ethereal.",
- "UPGRADE_DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add a copy of it into your hand."
- },
- "testmod-Reverberation": {
- "NAME": "Reverberation",
- "DESCRIPTION": "Whenever a card except Curse or Status Exhaust, play it !M! times. Ethereal.",
- "UPGRADE_DESCRIPTION": "Whenever a card except Curse or Status Exhaust, play it !M! times."
- },
- "testmod-SelfRegulatingSystem": {
- "NAME": "Self Regulating System",
- "DESCRIPTION": "The first buff you Gain every turns Gain extra !M! times, The first debuff you Gain every turns reduce !M! times .",
- "UPGRADE_DESCRIPTION": "Innate. The first buff you Gain every turns Gain extra !M! times. The first debuff you Gain every turns reduce !M! times."
- },
- "testmod-ShutDown": {
- "NAME": "Shut Down",
- "DESCRIPTION": " At the start of turn, add !M! 'Reboot' into your hand.",
- "UPGRADE_DESCRIPTION": " At the start of turn, add !M! 'Reboot+' into your hand."
- },
- "testmod-SubstituteBySubterfuge": {
- "NAME": "Substitute by Subterfuge",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Gain",
-		". Choose any cards from draw pile and discard them, at the same time, shuffle the rest of your card into draw pile.",
-		" Exhaust."
- ]
- },
- "testmod-Superconductor": {
- "NAME": "Superconductor",
- "DESCRIPTION": "In this turn, you cannot Gain [E] , reduce the cost of all cards in your hand to 0. Reduce next X cards you draw which cost >0 by 1. Exhaust.",
- "UPGRADE_DESCRIPTION": "In this turn, you cannot Gain [E] , reduce the cost of all cards in your hand to 0. Reduce cost of next X cards you draw which greater than 0 by 1."
- },
- "testmod-TaurusBlackCat": {
-    "NAME": "Taurus' Black Cat",
-    "DESCRIPTION": "Whenever you deal non-Lose-HP damage to enemy, all enemies Lose !M! % of the damage HP in total."
-  },
- "testmod-TemporaryDeletion": {
- "NAME": "Temporary Deletion",
- "DESCRIPTION": "Choose a card, remove the same Rarity cards from deck this combat.At the start of turn, add a same Rarity random card into your hand. Ethereal."
- },
- "testmod-TradeIn": {
- "NAME": "Trade In",
- "DESCRIPTION": " Exhaust any number of cards in your hand, then draw that many cards, reduce the cost of all cards in your hand !M! [E] and Exhaust it. Exhaust. Ethereal."
- },
- "testmod-TreasureHunter": {
- "NAME": "Treasure Hunter",
- "DESCRIPTION": "Deal !D! damage. Choose a card from 3 random Rare card add into your hand. Exhaust.",
- "UPGRADE_DESCRIPTION": "Deal !D! damage. Choose a card from 3 random Rare card add into your hand. If Fatal, add it into deck. Exhaust."
- },
- "testmod-Wormhole": {
- "NAME": "Wormhole",
- "DESCRIPTION": "Choose a card in your draw pile, discard pile or cards in your hand. Play the chosen card and exhaust it.",
- "UPGRADE_DESCRIPTION": "Choose a card in your draw pile, discard pile or cards in your hand. Play the chosen card. If it is Curse or Status, exhaust it. "
- },
- "testmod-MahjongPs": {
- "NAME": "",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Gain !B! Block. Exhaust. Ethereal.",
-		"Gain !B! Block. Next turn, Gain !B! Block. Exhaust. Ethereal."
- ]
- },
- "testmod-MahjongSs": {
- "NAME": "",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Deal !D! damage to all enemies. Exhaust. Ethereal.",
-		"Deal !D! damage. Exhaust. Ethereal.",
-		"Deal !D! damage to random enemy !M! times. Exhaust. Ethereal."
- ]
- },
- "testmod-MahjongWs": {
- "NAME": "",
- "DESCRIPTION": "Upgrade all cards in your hand. Exhaust. Ethereal.",
-	"EXTENDED_DESCRIPTION": [
-		"Draw !M! cards. Exhaust. Ethereal.",
-		" Scry !M! cards. Exhaust. Ethereal.",
-		" Upgrade a card in your hand !M! times. Exhaust. Ethereal.",
-		"Choose !M! cards from draw pile add into your hand. Exhaust. Ethereal.",
-		"Add !M! random Mahjong into your hand.Exhaust. Ethereal.",
-		"Put !M! card fron discard pile into your hand. Exhaust. Ethereal.",
-		" Exhume !M! cards Exhaust. Ethereal.",
-		" Exhaust !M! cards in your hand. Exhaust. Ethereal.",
-		" Discard !M! cards in your hand. Exhaust. Ethereal."
- ]
- },
- "testmod-MahjongZs": {
- "NAME": "",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Whenever play a Mahjong, Gain 1 Regen, Gain !M! Plated Armor. Ethereal.",
-		"Whenever play a Mahjong, Gain !M! Mantra. Ethereal.",
-		"Whenever play a non-Attack card, multiplicatively increase your attack damage by !M! %. Ethereal.",
-		"When you would die next !M! times, heal to 1% of your max HP instead. Each cards you play increase 1% of your max HP instead, reset after every resurrection. Ethereal.",
-		"Remove all your debuff, Gain !M! Artifact. Ethereal.",
-		"Whenever play a Mahjong, Gain the number of enemies Gold. Ethereal.",
-		"At the start of turn, trigger !M! times MahjongZs. Ethereal."
- ]
- },
- "testmod-Mahjong": {
- "NAME": "",
- "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"Man", "Pin", "Sou",
-		"Red 5 ", "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ",
-		"East", "South", "West", "North", "White", "Green", "Red"
- ]
- }
+	"testmod-Envy": {
+		"NAME": "Envy",
+		"DESCRIPTION": " Unplayable. While in hand, you cannot play Status and Curse. If no ememy intends to attack/ inflict a Negative Effect on you or defend/ use a buff, you cannot play Attact/ Skill/ Power."
+	},
+	"testmod-Gluttony": {
+		"NAME": "Gluttony",
+		"DESCRIPTION": " Unplayable. When Max HP is raised, Add a copy of this card into your deck. If transformed or removed from your deck, lose ！M% Max HP."
+	},
+	"testmod-Greed": {
+		"NAME": "Greed",
+		"DESCRIPTION": " Unplayable. At the end of your turn drawing this card, For each [E] remain, draw !M! fewer cards next turn. For each card in hand, gain !M! less [E] next turn."
+	},
+	"testmod-Lust": {
+		"NAME": "Lust",
+		"DESCRIPTION": " Unplayable. At the end of your turn, lose !M! Strength, Dexterity, Focus, gain 3 Vulnerable, Weak, Frail. "
+	},
+	"testmod-Sloth": {
+		"NAME": "Sloth",
+		"DESCRIPTION": " Unplayable. After your second turn starts, While in hand, you cannot play more cards than the least turn. There is no escape from this Curse at frist turn.",
+		"EXTENDED_DESCRIPTION": [
+			" Unplayable.",
+			"While in hand, you cannot play more than ",
+			" cards. you have played ",
+			" cards.",
+			"There is no escape from this Curse."
+		]
+	},
+	"testmod-Wrath": {
+		"NAME": "Wrath",
+		"DESCRIPTION": " Unplayable. When you draw this card, Apply !M! Angry to All enemies. While in hand, you can only play Attack. Ethereal."
+	},
+	"testmod-AdversityCounterattack": {
+		"NAME": "Adversity Counterattack",
+		"DESCRIPTION": "Apply !M! Artifact. Gain !M! Vulnerable and 1 Intangible. Deal the sum of enemy's Buff damage to a random enemy the sum of your Debuff times."
+	},
+	"testmod-Arrangement": {
+		"NAME": "Arrangement",
+		"DESCRIPTION": "Gain X Block. Deal X damage. Draw X cards. Upgrade X cards in your hand, for each Upgrade less, Gain [R] . Exhaust.",
+		"UPGRADE_DESCRIPTION": "Gain !B! Block X times. Deal !D! damage X times. Deal X cards. Upgrade X cards in your hand, for each Upgrade less, Gain [R] . Exhaust."
+	},
+	"testmod-AssimilatedRune": {
+		"NAME": "Assimilated Rune",
+		"DESCRIPTION": "Increase base damage and block of cards in your hand to the maximum in your hand in !M! turns.",
+		"UPGRADE_DESCRIPTION": "Increase base damage and block of cards in your hand to the maximum in your deck in !M! turns."
+	},
+	"testmod-Automaton": {
+		"NAME": "Automaton",
+		"DESCRIPTION": "Whenever Auto-played, damage times +1 in this run. Damage times -1 in this combat. Deal !D! damage to random enemy !M! time."
+	},
+	"testmod-AutoReboundSystem": {
+		"NAME": "Auto Rebound System",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"At the start of your turn, Gain",
+			" Draw !M! cards. Put the first !M! cards you play this turn back on the top of your draw pile."
+		]
+	},
+	"testmod-BackupPower": {
+		"NAME": "Backup Power",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Gain",
+			". If still in your hand at the end of the turn, Gain",
+			" next turn." 
+		]
+	},
+	"testmod-BloodBlade": {
+		"NAME": "Blood Blade",
+		"DESCRIPTION": "Increase attack damage by current HP loss / Max HP. When lose HP, increase attack damage by HP loss / Max HP.",
+		"UPGRADE_DESCRIPTION": "Multiplicatively Increase attack damage by current HP loss / Max HP. When lose HP, multiplicatively increase attack damage by HP loss / Max HP."
+	},
+	"testmod-BloodShelter": {
+		"NAME": "Blood Shelter",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Arrange HP with target to make each has same ratio. Each gain the sum of change in HP amount",
+			" Block . Exhaust." 
+		]
+	},
+	"testmod-Bloodthirsty": {
+		"NAME": "Bloodthirsty",
+		"DESCRIPTION": "Target lose !M! % of its Max HP, heal same amount. Double ratios of all 'Bloodthirsty'. Whenever other card played, decrease 2% (down to 1%).",
+		"UPGRADE_DESCRIPTION": "Target lose !M! % of its Max HP, heal same amount. Double ratios of all 'Bloodthirsty'. Whenever other card played, decrease 1% (down to 1%).",
+		"EXTENDED_DESCRIPTION": [
+			"Target lose !M! % of its Max HP",
+			", heal same amount. Double ratios of all 'Bloodthirsty'. Whenever other card played, decrease ",
+			"2",
+			"1",
+			"% (down to 1%)."
+		]
+	},
+	"testmod-CardIndex": {
+		"NAME": "Card Index",
+		"DESCRIPTION": "Choose !M! cards to remove from this combat. For future play, play the chosen cards.",
+		"EXTENDED_DESCRIPTION": [
+			"Play ",
+			"Play nothing else.",
+			", ",
+			"."
+		]
+	},
+	"testmod-ChaoticCore": {
+		"NAME": "Chaotic Core",
+		"DESCRIPTION": "Gain 1 Orb slot. Whenever you lose HP, Gain 1 Orb slot. If Orb slot has been full, or each your attack damage Channel !M! random Orb."
+	},
+	"testmod-Collector": {
+		"NAME": "Collector",
+		"DESCRIPTION": "Deal !D! damage to all enemies. Deal !M! additional damage for each relic you have."
+	},
+	"testmod-ComboMaster": {
+		"NAME": "Combo Master",
+		"DESCRIPTION": "Deal !D! damage to all enemies !M! times. Increase the damage and times of this card by 1 this combat."
+	},
+	"testmod-ConditionedReflex": {
+		"NAME": "Conditioned Reflex",
+		"DESCRIPTION": "Whenever you lose HP: Gain !M! Melleable; at the start of your next turn, make it active 1 time."
+	},
+	"testmod-DeathImprint": {
+		"NAME": "Death Imprint",
+		"DESCRIPTION": "Deal !D! damage. If target has Imprint, remove it and increase base damage by !M! % of its amount. Otherwise, give Imprint."
+	},
+	"testmod-DisillusionmentEcho": {
+		"NAME": "Disillusionment Echo",
+		"DESCRIPTION": "The first card you play each turn will play NL X/ !M! more times."
+	},
+	"testmod-Dream": {
+		"NAME": "Dream",
+		"DESCRIPTION": "Add 'Infernal Blade', 'Distraction', 'White noise' and 'Discovery' into your hand. Which cost 0 this turn. Exhaust. Ethereal.",
+		"UPGRADE_DESCRIPTION": "Add 'Infernal Blade', 'Distraction', 'White noise' and 'Discovery' into your hand. Which cost 0 this turn. Ethereal."
+	},
+	"testmod-EnhanceArmerment": {
+		"NAME": "Enhance Armerment",
+		"DESCRIPTION": "Your next Attack deal double damage. Exhaust it."
+	},
+	"testmod-EternalityOfKhronos": {
+		"NAME": "Eternality of Khronos",
+		"DESCRIPTION": "End your turn, Take an extra turn after this one. Exhaust. Ethereal.",
+		"UPGRADE_DESCRIPTION": "End your turn, Take an extra turn after this one. Ethereal."
+	},
+	"testmod-FightingIntention": {
+		"NAME": "Fighting Intention",
+		"DESCRIPTION": "At the start of your turn, for each enemy intend to Attack, Gain !M! Strength, these enemies lose !M! Strength."
+	},
+	"testmod-HandmadeProducts": {
+		"NAME": "Handmade Products",
+		"DESCRIPTION": "Deal damage of the product of all cards' cost in your hand. If kills enemy, increase this card's cost by !M! . Can be Upgraded any number of times."
+	},
+	"testmod-HeadAttack": {
+		"NAME": "Head Attack",
+		"DESCRIPTION": "Change enemy's intention to next turn. Draw !M! cards. Ethereal."
+	},
+	"testmod-Illusory": {
+		"NAME": "Illusory",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Draw !M! cards, all cards in draw pile become Ethereal. For each card was Ethereal, Gain",
+			". Exhaust. Ethereal."
+		]
+	},
+	"testmod-Librarian": {
+		"NAME": "Librarian",
+		"DESCRIPTION": "Choose !M! cards from X random Colorless to add in your hand. Reduce these cards'cost to 0 this combat. Exhaust.",
+		"UPGRADE_DESCRIPTION": "Choose !M! cards from X random Colorless to add in your hand. Reduce these cards' cost to 0 this combat. If win in the next X turn, add these cards in your deck. Exhaust."
+	},
+	"testmod-LifeRuler": {
+		"NAME": "Life Ruler",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Apply the maximum of the greatest common divisor of enemy's max-HP or HP",
+			" Constricted.",
+			" Exhaust."
+		]
+	},
+	"testmod-LimitFlipper": {
+		"NAME": "Limit Flipper",
+		"DESCRIPTION": "If last card you play is 'Limit Flipper', double your Strength. Otherwise Gain !M! Strength."
+	},
+	"testmod-Mystery": {
+		"NAME": "Mystery",
+		"DESCRIPTION": "Deal !D! damage to a random enemy !M! times. For each ? room you entered this run, deal an extra damage. Exhaust."
+	},
+	"testmod-PainDetonator": {
+		"NAME": "Pain Detonator",
+		"DESCRIPTION": "Deal damage of !M! % of HP Loss of the target ( !D! )."
+	},
+	"testmod-PerfectCombo": {
+		"NAME": "Perfect Combo",
+		"DESCRIPTION": "Deal !D! damage. Can be Upgraded any number of times. When Attack, !M! % chance to attack a random enemy again. Each Upgrade, Gain 1% probability.",
+		"EXTENDED_DESCRIPTION": [
+			"Deal !D! damage. Can be Upgraded any number of times. When Attack, !M! % chance to attack a random enemy again.",
+			"Each Upgrade, Gain 1% probability."
+		]
+	},
+	"testmod-PocketStoneCalender": {
+		"NAME": "Pocket Stone Calender",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Deal damage of square of turn number",
+			"( !D! )",
+			". Increase this cards cost by !M! this combat. Whenever you draw this card, reduce its cost by 1 this combat."
+		]
+	},
+	"testmod-PowerStrike": {
+		"NAME": "Power Strike",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Ethereal. Reduce all enemies' HP to its logarithm, the base number is ",
+			". Apply the number of enemies Intangible to all enemies. Can be Upgraded any number of time. Exhaust."
+		]
+	},
+	"testmod-Provocation": {
+		"NAME": "Provocation",
+		"DESCRIPTION": "Gain !M! Strength, Apply 1 Angry."
+	},
+	"testmod-PulseDistributor": {
+		"NAME": "Pulse Distributor",
+		"DESCRIPTION": "When you would receive n damage which is not type Lose HP, don't lose HP. Instead, in the next n+1 times of enemies turn end, lose 1 HP.",
+		"EXTENDED_DESCRIPTION": [
+			"When you would receive n damage which is not type Lose HP, don't lose HP. Instead, in the next n",
+			" times of enemies turn end, lose 1 HP."
+		]
+	},
+	"testmod-RabbitOfFibonacci": {
+		"NAME": "Rabbit of Fibonacci",
+		"DESCRIPTION": "Gain !B! Block. Deal !D! damage to all enemies. Upgrade this card in this combat. Can be Upgraded any number of time."
+	},
+	"testmod-Recap": {
+		"NAME": "Recap",
+		"DESCRIPTION": "At the start of your turn, play the last !M! cards you played last turn."
+	},
+	"testmod-Reflect": {
+		"NAME": "Reflect",
+		"DESCRIPTION": "In this turn, you will play the next !M! cards twice except Curse and Status."
+	},
+	"testmod-RepeatForm": {
+		"NAME": "Repeat Form",
+		"DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add a copy of it into your hand. Ethereal.",
+		"UPGRADE_DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add a copy of it into your hand."
+	},
+	"testmod-Reverberation": {
+		"NAME": "Reverberation",
+		"DESCRIPTION": "Whenever a card except Curse or Status Exhausts, function it !M! times. Ethereal.",
+		"UPGRADE_DESCRIPTION": "Whenever a card except Curse or Status Exhausts, function it !M! times."
+	},
+	"testmod-SelfRegulatingSystem": {
+		"NAME": "Self Regulating System",
+		"DESCRIPTION": "The first buff you Gain each turn will receive !M! more. The first debuff you Gain each turn will receive !M! fewer.",
+		"UPGRADE_DESCRIPTION": "Innate. The first buff you Gain each turn will receive !M! more. The first debuff you Gain each turn will receive !M! fewer."
+	},
+	"testmod-ShutDown": {
+		"NAME": "Shut Down",
+		"DESCRIPTION": "At the start of each turn, add !M! 'Reboot' into your hand.",
+		"UPGRADE_DESCRIPTION": "At the start of each turn, add !M! 'Reboot+' into your hand."
+	},
+	"testmod-SubstituteBySubterfuge": {
+		"NAME": "Substitute by Subterfuge",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Gain",
+			". Choose any cards from draw pile and discard them, at the same time, shuffle the rest of your card into draw pile.",
+			" Exhaust."
+		]
+	},
+	"testmod-Superconductor": {
+		"NAME": "Superconductor",
+		"DESCRIPTION": "In this turn, you can Gain no [E] , reduce the cost of all cards in your hand to 0. Reduce cost of next X cards you draw which greater than 0 by 1 for one turn. Exhaust.",
+		"UPGRADE_DESCRIPTION": "In this turn, you cannot Gain [E] , reduce the cost of all cards in your hand to 0. Reduce cost of next X cards you draw which greater than 0 by 1 for one turn."
+	},
+	"testmod-TaurusBlackCat": {
+   		"NAME": "Taurus' Black Cat",
+   		"DESCRIPTION": "Whenever you deal non-Lose-HP damage to enemy, all enemies lose !M! % of the damage HP in total."
+	},
+	"testmod-TemporaryDeletion": {
+		"NAME": "Temporary Deletion",
+		"DESCRIPTION": "Choose a card, remove the same Rarity cards from deck this combat.At the start of turn, add a same Rarity random card into your hand. Ethereal."
+	},
+	"testmod-TradeIn": {
+		"NAME": "Trade In",
+		"DESCRIPTION": " Exhaust any number of cards in your hand, then draw that many cards, reduce the cost of all cards in your hand by !M! and make them Exhaust on play. Exhaust. Ethereal."
+	},
+	"testmod-TreasureHunter": {
+		"NAME": "Treasure Hunter",
+		"DESCRIPTION": "Deal !D! damage. Choose a card from 3 random Rare card add into your hand. Exhaust.",
+		"UPGRADE_DESCRIPTION": "Deal !D! damage. Choose a card from 3 random Rare card add into your hand. If Fatal, add it into deck. Exhaust."
+	},
+	"testmod-Wormhole": {
+		"NAME": "Wormhole",
+		"DESCRIPTION": "Choose a card in your draw pile, discard pile or cards in your hand. Play the chosen card and Exhaust it.",
+		"UPGRADE_DESCRIPTION": "Choose a card in your draw pile, discard pile or cards in your hand. Play the chosen card. If it is Curse or Status, Exhaust it. "
+	},
+	"testmod-MahjongPs": {
+		"NAME": "",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Gain !B! Block. Exhaust. Ethereal.",
+			"Gain !B! Block. Next turn, Gain !B! Block. Exhaust. Ethereal."
+		]
+	},
+	"testmod-MahjongSs": {
+		"NAME": "",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Deal !D! damage to all enemies. Exhaust. Ethereal.",
+			"Deal !D! damage. Exhaust. Ethereal.",
+			"Deal !D! damage to random enemy !M! times. Exhaust. Ethereal."
+		]
+	},
+	"testmod-MahjongWs": {
+		"NAME": "",
+		"DESCRIPTION": "Upgrade all cards in your hand. Exhaust. Ethereal.",
+		"EXTENDED_DESCRIPTION": [
+			"Draw !M! cards. Exhaust. Ethereal.",
+			" Scry !M! cards. Exhaust. Ethereal.",
+			" Upgrade a card in your hand !M! times. Exhaust. Ethereal.",
+			"Choose !M! cards from draw pile add into your hand. Exhaust. Ethereal.",
+			"Add !M! random Mahjong into your hand.Exhaust. Ethereal.",
+			"Put !M! card fron discard pile into your hand. Exhaust. Ethereal.",
+			" Exhume !M! cards Exhaust. Ethereal.",
+			" Exhaust !M! cards in your hand. Exhaust. Ethereal.",
+			" Discard !M! cards in your hand. Exhaust. Ethereal."
+		]
+	},
+	"testmod-MahjongZs": {
+		"NAME": "",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Whenever play a Mahjong card, Gain 1 Regen, Gain !M! Plated Armor. Ethereal.",
+			"Whenever play a Mahjong card, Gain !M! Mantra. Ethereal.",
+			"Whenever play a non-Attack card, multiplicatively increase your attack damage by !M! %. Ethereal.",
+			"When you would die next !M! times, heal to 1% of your max HP instead. Each cards you play increase 1% of your Max HP heal instead, reset after every resurrection. Ethereal.",
+			"Remove all your debuff, Gain !M! Artifact. Ethereal.",
+			"Whenever play a Mahjong card, for each enemy Gain !M! Gold. Ethereal.",
+			"At the start of turn, trigger !M! times Mahjong Relic. Ethereal."
+		]
+	},
+	"testmod-Mahjong": {
+		"NAME": "",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Man", "Pin", "Sou",
+			"Red 5 ", "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ",
+			"East", "South", "West", "North", "White", "Green", "Red"
+		]
+	}
 }

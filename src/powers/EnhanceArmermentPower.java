@@ -13,6 +13,7 @@ public class EnhanceArmermentPower extends AbstractTestPower {
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+	private static final int PRIORITY = 99000;
 	
 	public EnhanceArmermentPower(AbstractCreature owner, int amount) {
 		super(POWER_ID);
@@ -21,6 +22,7 @@ public class EnhanceArmermentPower extends AbstractTestPower {
 		this.amount = amount;
 		updateDescription();
 		this.type = PowerType.BUFF;
+		this.priority = PRIORITY;
 	}
 	
 	public void updateDescription() {
@@ -43,7 +45,7 @@ public class EnhanceArmermentPower extends AbstractTestPower {
     public void onUseCard(AbstractCard card, UseCardAction action) {
     	if (card.type == CardType.ATTACK) {
     		action.exhaustCard = true;
-    		this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
+    		this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
     	}
     }
     

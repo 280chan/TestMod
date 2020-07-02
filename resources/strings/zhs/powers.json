@@ -57,8 +57,9 @@
   "testmod-DeathImprintPower": {
     "NAME": "死亡刻印",
     "DESCRIPTIONS": [
-    	"每当失去生命时，增加失去生命点数的层数。",
-    	"已失去 #b",
+    	"每当 #y",
+    	" 失去生命时，增加失去生命点数的层数。 #y",
+    	" 已失去 #b",
     	" 点生命。"
     ]
   },
@@ -97,7 +98,7 @@
 		" 倍，但其将被 #y消耗 。"
     ]
   },
-  "testmod-EnhanceFightingIntentionPower": {
+  "testmod-FightingIntentionPower": {
     "NAME": "战意",
     "DESCRIPTIONS": [
     	"回合开始时，每个攻击意图的敌人使你获得 #b",
