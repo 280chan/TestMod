@@ -59,6 +59,8 @@ public class BatchProcessingSystem extends AbstractTestRelic implements MiscMeth
 	private void updateHandGlow() {
 		boolean active = false;
 		for (AbstractCard c : AbstractDungeon.player.hand.group) {
+			if (AbstractDungeon.currMapNode.room.monsters.getRandomMonster(null, true, AbstractDungeon.cardRandomRng) == null)
+				return;
 			if (c.costForTurn == this.counter && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
 				this.addToGlowChangerList(c, color);
 				active = true;

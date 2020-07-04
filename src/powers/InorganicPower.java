@@ -58,7 +58,7 @@ public class InorganicPower extends AbstractTestPower implements OnReceivePowerP
 			public void update() {
 				this.isDone = true;
 				if (!hasThis(InorganicPower.this.owner))
-					InorganicPower.this.owner.powers.add(new InfectionPower(InorganicPower.this.owner));
+					InorganicPower.this.owner.powers.add(new InorganicPower(InorganicPower.this.owner));
 			}
 		});
 	}

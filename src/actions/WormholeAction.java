@@ -10,6 +10,8 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import mymod.TestMod;
+
 public class WormholeAction extends AbstractGameAction {
 	private float startingDuration;
 	private CardGroup g;
@@ -28,7 +30,7 @@ public class WormholeAction extends AbstractGameAction {
 	@Override
 	public void update() {
 		if (this.duration == this.startingDuration) {
-			System.out.println("虫洞:开始判定可选卡牌");
+			TestMod.info("虫洞:开始判定可选卡牌");
 			switch (g.group.size()) {
 			case 1:
 				this.addToTop(new PlaySpecificCardAction((AbstractMonster)t, g.getTopCard(), getSource(g.getTopCard()), checkExhaust(g.getTopCard())));
@@ -62,7 +64,7 @@ public class WormholeAction extends AbstractGameAction {
 				System.out.println("来自于" + g.type);
 				return g;
 			}
-		System.out.println("为什么找不到" + c.name + "？？？");
+		TestMod.info("为什么找不到" + c.name + "？？？");
 		return null;
 	}
 	

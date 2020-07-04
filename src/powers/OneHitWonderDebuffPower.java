@@ -64,7 +64,7 @@ public class OneHitWonderDebuffPower extends AbstractTestPower implements Invisi
 				this.isDone = true;
 				if (!hasThis(OneHitWonderDebuffPower.this.owner))
 					OneHitWonderDebuffPower.this.owner.powers
-							.add(new InfectionPower(OneHitWonderDebuffPower.this.owner));
+							.add(new OneHitWonderDebuffPower(OneHitWonderDebuffPower.this.owner));
 			}
 		});
 	}

@@ -1,5 +1,7 @@
 package relics;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.InstantKillAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -7,6 +9,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
+
+import mymod.TestMod;
 import powers.OneHitWonderDebuffPower;
 
 public class OneHitWonder extends AbstractTestRelic{
@@ -65,8 +69,19 @@ public class OneHitWonder extends AbstractTestRelic{
 		if (isActive() && info.type == DamageType.NORMAL && target != null && !target.isPlayer) {
 			AbstractMonster m = (AbstractMonster)target;
 			if (m.type != EnemyType.BOSS && getRoll()) {
-				this.show();
-				m.currentHealth = 0;
+				TestMod.info("一血传奇：条件满足，准备秒杀" + m.name);
+				this.addToTop(new AbstractGameAction() {
+					@Override
+					public void update() {
+						this.isDone = true;
+						if (m.isDeadOrEscaped() || m.escaped) {
+							TestMod.info("一血传奇：秒杀失败，" + m.name + "已死亡或逃跑");
+							return;
+						}
+						OneHitWonder.this.show();
+						this.addToTop(new InstantKillAction(m));
+					}
+				});
 			}
 		}
 	}

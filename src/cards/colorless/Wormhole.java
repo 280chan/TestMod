@@ -4,6 +4,7 @@ package cards.colorless;
 import cards.AbstractTestCard;
 import mymod.TestMod;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
@@ -26,15 +27,20 @@ public class Wormhole extends AbstractTestCard {
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-        CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
-        g.group.addAll(p.drawPile.group);
-        g.group.addAll(p.hand.group);
-        g.group.addAll(p.discardPile.group);
-        g.removeCard(this);
-        for (AbstractCard c : p.hand.group)
-        	c.beginGlowing();
-        TestMod.info("虫洞: Cardgroup大小=" + g.size());
-        this.addToBot(new WormholeAction(g, m, !this.upgraded));
+    	this.addToBot(new AbstractGameAction(){
+			@Override
+			public void update() {
+				this.isDone = true;
+		        CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
+		        g.group.addAll(p.drawPile.group);
+		        g.group.addAll(p.hand.group);
+		        g.group.addAll(p.discardPile.group);
+		        g.removeCard(Wormhole.this);
+		        for (AbstractCard c : p.hand.group)
+		        	c.beginGlowing();
+		        TestMod.info("虫洞: Cardgroup大小=" + g.size());
+		        this.addToTop(new WormholeAction(g, m, !Wormhole.this.upgraded));
+			}});
     }
 
     public void upgrade() {

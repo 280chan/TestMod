@@ -53,7 +53,7 @@ public class JusticePower extends AbstractTestPower implements OnReceivePowerPow
 			public void update() {
 				this.isDone = true;
 				if (!hasThis(JusticePower.this.owner))
-					JusticePower.this.owner.powers.add(new InfectionPower(JusticePower.this.owner));
+					JusticePower.this.owner.powers.add(new JusticePower(JusticePower.this.owner, JusticePower.this.j));
 			}
 		});
 	}

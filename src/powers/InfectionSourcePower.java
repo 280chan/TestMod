@@ -48,7 +48,7 @@ public class InfectionSourcePower extends AbstractTestPower implements Invisible
 			public void update() {
 				this.isDone = true;
 				if (!hasThis(InfectionSourcePower.this.owner))
-					InfectionSourcePower.this.owner.powers.add(new InfectionPower(InfectionSourcePower.this.owner));
+					InfectionSourcePower.this.owner.powers.add(new InfectionSourcePower(InfectionSourcePower.this.owner));
 			}
 		});
 	}
