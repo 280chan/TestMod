@@ -822,6 +822,15 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public static boolean getBool(String key) {
 		return config.getBool(key);
 	}
+
+	public static void save(String key, String value) {
+		config.setString(key,value);
+		try {
+			config.save();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static void save(String key, int value) {
 		config.setInt(key, value);
