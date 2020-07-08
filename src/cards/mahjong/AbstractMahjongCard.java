@@ -13,9 +13,11 @@ import com.megacrit.cardcrawl.random.Random;
 import cards.AbstractTestCard;
 import mymod.TestMod;
 import relics.Mahjong;
+import utils.MahjongHelper;
+import utils.MahjongHelper.MahjongComparable;
 import utils.MiscMethods;
 
-public abstract class AbstractMahjongCard extends AbstractTestCard implements MiscMethods {
+public abstract class AbstractMahjongCard extends AbstractTestCard implements MiscMethods, MahjongComparable {
 	private static final String ID_PREFIX = "Mahjong";
 	private static final String[] COLOR_ID = { "m", "p", "s", "z" };
 
@@ -30,6 +32,10 @@ public abstract class AbstractMahjongCard extends AbstractTestCard implements Mi
 		}
 		@Override
 		public void use(AbstractPlayer p, AbstractMonster m) {
+		}
+		@Override
+		public int compareTo(MahjongComparable c) {
+			return 0;
 		}
 	};
 	public static final int COLOR_W = 0, COLOR_P = 1, COLOR_S = 2, COLOR_Z = 3;
@@ -214,6 +220,12 @@ public abstract class AbstractMahjongCard extends AbstractTestCard implements Mi
 	public void applyPowers() {
 		
 		super.applyPowers();
+	}
+
+	@Override
+	public int compareTo(MahjongComparable c) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

@@ -4,8 +4,28 @@ import cards.mahjong.AbstractMahjongCard;
 
 public interface MahjongHelper {
 	
+	public static interface MahjongComparable {
+		public abstract int compareTo(MahjongComparable c);
+	}
+	
+	static class Helper {
+		public static void sort(MahjongComparable[] cards) {
+			for (int i = 0; i < cards.length - 1; i++)
+				for (int j = 0; j < cards.length - 1 - i; j++)
+					if (cards[j].compareTo(cards[j + 1]) > 0) {
+						MahjongComparable temp = cards[j];
+						cards[j] = cards[j + 1];
+						cards[j + 1] = temp;
+					}
+		}
+	}
+	
 	static class ShunZi {
 		public AbstractMahjongCard[] cards = new AbstractMahjongCard[3];
+		
+		public ShunZi(AbstractMahjongCard... cards) {
+			this.cards = cards;
+		}
 		
 		public static boolean check(AbstractMahjongCard... cards) {
 			if (cards.length != 3)
@@ -23,13 +43,7 @@ public interface MahjongHelper {
 		}
 		
 		private static void sort(AbstractMahjongCard[] cards) {
-			for (int i = 0; i < cards.length - 1; i++)
-				for (int j = 0; j < cards.length - 1 - i; j++)
-					if (cards[j].mathNum() > cards[j + 1].mathNum()) {
-						AbstractMahjongCard temp = cards[j];
-						cards[j] = cards[j + 1];
-						cards[j + 1] = temp;
-					}
+			Helper.sort(cards);
 		}
 		
 	}
