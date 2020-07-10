@@ -8,5 +8,5 @@ public interface SaveDataTransfer {
     /**
      * Receive string to initialize
      * */
-    public void UnMarshal();
+    public void UnMarshal(String data);
 }
