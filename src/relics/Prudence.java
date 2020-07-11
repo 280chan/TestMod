@@ -42,7 +42,7 @@ public class Prudence extends AbstractTestRelic implements MiscMethods {
 	public void onRefreshHand() {
 		if (color == null)
 			color = this.initGlowColor();
-		if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT)
+		if (this.canUpdateHandGlow())
 			this.updateHandGlow();
 	}
 	

@@ -34,7 +34,8 @@ public class ThousandKnives extends AbstractTestRelic implements MiscMethods {
 	public void onRefreshHand() {
 		if (color == null)
 			color = this.initGlowColor();
-		this.updateHandGlow();
+		if (this.canUpdateHandGlow())
+			this.updateHandGlow();
 	}
 	
 	private void updateHandGlow() {

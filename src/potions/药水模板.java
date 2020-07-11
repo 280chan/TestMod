@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.powers.WeakPower;
 
@@ -12,10 +13,16 @@ import mymod.TestMod;
 /**
  * @deprecated
  */
-public class 药水模板 extends AbstractPotion {
+public class 药水模板 extends AbstractTestPotion {
 	public static final String POTION_ID = TestMod.makeID("药水ID");
-	public static final String NAME = "药水名称";
-	public static final String[] DESCRIPTIONS = {};
+	//*
+	private static final PotionStrings PS = Strings(POTION_ID);
+	private static final String NAME = PS.NAME;
+	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+	/*/
+	private static final String NAME = "Test药水";
+	private static final String[] DESCRIPTIONS = {"测试描述( #b", " )"};
+	//*/
 
 	public 药水模板() {
 		super(NAME, POTION_ID, PotionRarity.COMMON, PotionSize.SPHERE, PotionColor.WEAK);
@@ -31,8 +38,8 @@ public class 药水模板 extends AbstractPotion {
 	}
 
 	public void use(AbstractCreature target) {
-		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(target, AbstractDungeon.player,
-				new WeakPower(target, this.potency, false), this.potency));
+		this.addToBot(new ApplyPowerAction(target, AbstractDungeon.player, new WeakPower(target, this.potency, false),
+				this.potency));
 	}
 
 	public AbstractPotion makeCopy() {

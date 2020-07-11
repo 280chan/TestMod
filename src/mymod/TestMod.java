@@ -856,7 +856,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	@SuppressWarnings("unchecked")
 	private static void addPotions() {
-		Object[] potions = { EscapePotion.class, TimePotion.class, SpacePotion.class };
+		Object[] potions = { EscapePotion.class, TimePotion.class, SpacePotion.class, TestPotion.class };
 		for (Object o : potions) {
 			Class<? extends AbstractPotion> c = (Class<? extends AbstractPotion>) o;
 			try {

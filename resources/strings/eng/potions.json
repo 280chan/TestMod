@@ -1,21 +1,28 @@
 {
-  "testmod-EscapePotion": {
-    "NAME": "Refined Shame",
-    "DESCRIPTIONS": [
-		"Make a non-Boss enemy escape."
-    ]
-  },
-  "testmod-SpacePotion": {
-    "NAME": "Bottled Space",
-    "DESCRIPTIONS": [
-		"Gain #b",
-		" #yPotion slot. You will not gain slots if you have #b10 or more slots, instead, gain same amount of random potions."
-    ]
-  },
-  "testmod-TimePotion": {
-    "NAME": "Essence of Kronos",
-    "DESCRIPTIONS": [
-		"End your turn, enemies will not do their intent this turn, then start your next turn."
-    ]
-  }
+	"testmod-EscapePotion": {
+		"NAME": "Refined Shame",
+		"DESCRIPTIONS": [
+			"Make a non-Boss enemy escape."
+		]
+	},
+	"testmod-SpacePotion": {
+		"NAME": "Bottled Space",
+		"DESCRIPTIONS": [
+			"Gain #b",
+			" #yPotion slot. You will not gain slots if you have #b10 or more slots, instead, gain same amount of random potions."
+		]
+	},
+	"testmod-TimePotion": {
+		"NAME": "Essence of Kronos",
+		"DESCRIPTIONS": [
+			"End your turn, enemies will not do their intent this turn, then start your next turn."
+		]
+	},
+	"testmod-TestPotion": {
+		"NAME": "Test精华",
+		"DESCRIPTIONS": [
+			"Choose #b1 of #b3 random #yColorless cards #b",
+			" time(s), to add to your hand, it costs #b0 this turn."
+		]
+	}
 }

@@ -56,6 +56,8 @@ public class Acrobat extends AbstractTestRelic implements MiscMethods {
 	
 	private void updateHandGlow() {
 		boolean active = false;
+		if (!this.canUpdateHandGlow())
+			return;
 		for (AbstractCard c : AbstractDungeon.player.hand.group) {
 			int index = 1 + AbstractDungeon.player.hand.group.indexOf(c);
 			int state = 0;
