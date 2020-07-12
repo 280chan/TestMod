@@ -1,54 +1,57 @@
 package relics;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Random;
 
+import basemod.abstracts.CustomSavable;
+
+import cards.mahjong.*;
+import com.google.gson.reflect.TypeToken;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
-import cards.mahjong.AbstractMahjongCard;
 import mymod.TestMod;
+import utils.Mahjong.MahjongHand;
 import utils.Mahjong.MahjongWall;
 import utils.MiscMethods;
 
-public class Mahjong extends AbstractTestRelic implements MiscMethods {
+public class Mahjong extends AbstractTestRelic implements MiscMethods, CustomSavable<Mahjong> {
     public static final String ID = "Mahjong";
-
-
-    /** 麻将 牌山 */
+    /**
+     * 麻将 牌山
+     */
     private MahjongWall mahjongWall = null;
+    /**
+     * 麻将 当前遗物手牌内容
+     */
+    private MahjongHand hand = null;
+    /**
+     * 麻将 当前遗物杠牌内容
+     */
+    private ArrayList<AbstractMahjongCard> kong = new ArrayList<>(4);
 
-    /** 麻将 默认杠牌数组 */
-    public static final String[] KANG_NAME = {"KANG0", "KANG1", "KANG2", "KANG3"};
-    /** 麻将 默认宝牌个数 */
-    public static final String[] DORA_NAME = {"DORA0", "DORA1", "DORA2", "DORA3", "DORA4"};
-    public static final String HAND_NAME = "Mahjong_HAND";
-    public static final String SAVE_KANG = "MahjongKang";
-    public static final String SAVE_TURN = "MahjongTurns";
-    public static final String SAVE_REACH = "MahjongReach";
-
-    /** 麻将 当前遗物牌山残余 */
-    private final ArrayList<Integer> yama = new ArrayList<>();
-    /** 麻将 当前遗物手牌内容 */
-    private final ArrayList<AbstractMahjongCard> hand = new ArrayList<>();
-    /** 麻将 当前遗物杠牌内容 */
-    private final ArrayList<AbstractMahjongCard> kang = new ArrayList<>();
-
-    /** 麻将 当前遗物宝牌指示牌 */
-    private final ArrayList<AbstractMahjongCard> doraHint = new ArrayList<>();
-    /** 麻将 当前遗物里宝牌 */
-    private final ArrayList<AbstractMahjongCard> uraHint = new ArrayList<>();
-    /** 麻将 当前遗物 牌河历史记录的卡牌ID */
+    /**
+     * 麻将 当前遗物宝牌指示牌
+     */
+    private  ArrayList<AbstractMahjongCard> doraHint = new ArrayList<>(5);
+    /**
+     * 麻将 当前遗物里宝牌
+     */
+    private  ArrayList<AbstractMahjongCard> uraHint = new ArrayList<>(5);
+    /**
+     * 麻将 当前遗物 牌河历史记录的卡牌ID
+     */
     private final ArrayList<Integer> history = new ArrayList<>();
-    /** 麻将 当前遗物已杠牌的ID
-     * 一个杠存一个 */
-    private final ArrayList<Integer> kangID = new ArrayList<>();
 
     private static Random randomGenerator;
-    private int kangCount = 0;
+
+    /** 听牌 */
+    private boolean ready = false;
+    /** 立直 */
     private boolean reach = false;
 
     private int turns = 0;
@@ -81,42 +84,6 @@ public class Mahjong extends AbstractTestRelic implements MiscMethods {
         initializeTips();
     }
 
-    private void saveTurns() {
-        TestMod.save(SAVE_TURN, this.turns);
-    }
-
-
-    private void save() {
-        TestMod.info("Mahjong开始save");
-        if (this.doraHint.isEmpty()) {
-            this.reset();
-        }
-        TestMod.save(SAVE_KANG, this.kangCount);
-        TestMod.save(SAVE_TURN, this.turns);
-        TestMod.save(SAVE_REACH, this.reach);
-        mahjongWall.Save();
-        TestMod.info("Mahjong save完毕");
-    }
-
-    public static void load(int turns, boolean reach, int[] yama, int[] kangID, int[] hintID, int[] handID) {
-        if (AbstractDungeon.player.hasRelic(TestMod.makeID(ID))) {
-            Mahjong current = (Mahjong) AbstractDungeon.player.getRelic(TestMod.makeID(ID));
-            TestMod.info("Mahjong开始load");
-            if (current.total(yama) == 0 || current.total(yama) == current.total(YAMA_DEFAULT)) {
-                saveLater = true;
-                TestMod.info("saveLater变为true");
-                return;
-            }
-            current.reach = reach;
-            current.turns = turns;
-            current.kangCount = kangID.length;
-            current.yama.clear();
-            current.mahjongWall.Load();
-
-            TestMod.info("Mahjong load完毕");
-        }
-    }
-
     public void onEquip() {
         this.reset();
         saveLater = true;
@@ -127,21 +94,15 @@ public class Mahjong extends AbstractTestRelic implements MiscMethods {
         TestMod.info("rng 已设置");
     }
 
-    private int ran(int range, long seedFix) {
-        for (long i = 0; i < seedFix; i++)
-            randomGenerator.nextBoolean();
-        return randomGenerator.nextInt(range);
-    }
 
     private void reset() {
         TestMod.info("Mahjong开始reset");
         this.mahjongWall = new MahjongWall(randomGenerator);
-        this.kang.clear();
+        this.kong.clear();
         this.kangID.clear();
         this.doraHint.clear();
         this.uraHint.clear();
         this.history.clear();
-        this.kangCount = 0;
         this.counter = 0;
         this.turns = 0;
         if (AbstractDungeon.floorNum > 0) {
@@ -152,41 +113,26 @@ public class Mahjong extends AbstractTestRelic implements MiscMethods {
     }
 
     private void clearAndSetNewHand() {
-        this.hand.clear();
-        while (this.hand.size() < 13)
-            this.hand.add(this.randomFromYama());
-        for (int i = 0; i < 39; i++)
-            this.randomFromYama();
+
         TestMod.info("Mahjong Hand分配完毕");
     }
 
 
     private int countLeft() {
-        return this.total(this.yama) - 14 + 1 + this.kangCount;
+        return this.mahjongWall.getCurrentLeft() - 14 + 1 + this.kong.size();
     }
 
-    private AbstractMahjongCard randomFromYama() {
-        int index = this.ran(this.total(this.yama), this.historySeed());
-        for (int i = 0; i < yama.size(); i++) {
-            index -= yama.get(i);
-            if (index < 0) {
-                yama.set(i, yama.get(i) - 1);
-                index = i;
-                break;
-            }
-        }
-        return AbstractMahjongCard.mahjong(index);
-    }
-
-    public ArrayList<AbstractMahjongCard> doraHint() {
-        while (this.doraHint.size() < 1 + this.kangCount)
-            this.doraHint.add(this.randomFromYama());
-        return this.doraHint;
+    /**
+     * 翻出一张dora指示牌
+     */
+    public void doraHint() {
+        while (this.doraHint.size() < 1 + this.kong.size())
+            this.doraHint.add(this.mahjongWall.DrawCard());
     }
 
     private ArrayList<AbstractMahjongCard> uraHint() {
-        while (this.uraHint.size() < 1 + this.kangCount && this.reach)
-            this.uraHint.add(this.randomFromYama());
+        while (this.uraHint.size() < 1 + this.kong.size() && this.reach)
+            this.uraHint.add(this.mahjongWall.DrawCard());
         return this.uraHint;
     }
 
@@ -194,11 +140,24 @@ public class Mahjong extends AbstractTestRelic implements MiscMethods {
         this.doraHint();
         // TODO
     }
+    /** 是否听牌 */
+    private boolean isReady() {
+        return false
+    }
 
     private void kang(int color, int num) {
-
+        switch (color) {
+            case 0:
+                this.kong.add(new MahjongWs(num));
+            case 1:
+                this.kong.add(new MahjongPs(num));
+            case 2:
+                this.kong.add(new MahjongSs(num));
+            case 3:
+                this.kong.add(new MahjongZs(num));
+        }
         // TODO
-        this.kangCount++;
+
         this.updateDora();
     }
 
@@ -213,7 +172,6 @@ public class Mahjong extends AbstractTestRelic implements MiscMethods {
         TestMod.info("开始战斗");
         if (saveLater) {
             saveLater = false;
-            this.save();
         }
     }
 
@@ -240,18 +198,46 @@ public class Mahjong extends AbstractTestRelic implements MiscMethods {
         }
 
         // TODO
-        this.addToBot(new MakeTempCardInHandAction(this.randomFromYama()));
+        this.addToBot(new MakeTempCardInHandAction(this.mahjongWall.DrawCard()));
         if (this.countLeft() < 4)
             this.reset();
         else {
-            this.randomFromYama();
-            this.randomFromYama();
-            this.randomFromYama();
+            this.mahjongWall.DrawCard();
+            this.mahjongWall.DrawCard();
+            this.mahjongWall.DrawCard();
         }
     }
 
     public void onVictory() {
-        this.save();
+//        this.save();
+    }
+
+
+    @Override
+    public Mahjong onSave() {
+        return this;
+    }
+
+    @Override
+    public void onLoad(Mahjong mahjong) {
+
+        if (AbstractDungeon.player.hasRelic(TestMod.makeID(ID))) {
+            Mahjong current = (Mahjong) AbstractDungeon.player.getRelic(TestMod.makeID(ID));
+            TestMod.info("Mahjong开始load");
+            this.kong = mahjong.kong;
+            if (current.mahjongWall.isEmpty() || current.mahjongWall.isFull()) {
+                saveLater = true;
+                TestMod.info("saveLater变为true");
+                return;
+            }
+
+            TestMod.info("Mahjong load完毕");
+        }
+    }
+
+    @Override
+    public Type savedType() {
+        return new TypeToken<Mahjong>(){}.getType();
     }
 
 

@@ -228,8 +228,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
             AbstractTestRelic.addToMap(r);
         }
 
-        for (int i = 0; i < BOTTLES.size(); i++) {
-            BaseMod.registerBottleRelic(BOTTLES.get(i), BOTTLES.get(i));
+        for (AbstractBottleRelic bottle : BOTTLES) {
+            BaseMod.registerBottleRelic(bottle, bottle);
         }
 
     }
@@ -471,7 +471,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
         DragonStarHat.resetValue();
         Faith.reset();
         AscensionHeart.reset();
-        Mahjong.saveDefaultYama();
         // NoteOfAlchemist.setState(false);
         AbstractPlayer p = AbstractDungeon.player;
         // 初始遗物
@@ -757,18 +756,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
         DEFAULT.setProperty(DragonStarHat.SAVE_NAME, "0");
         DEFAULT.setProperty(Faith.SAVE_NAME, "false");
         DEFAULT.setProperty(Faith.SAVE_NAME1, "0");
-        DEFAULT.setProperty(Mahjong.SAVE_KANG, "0");
-        DEFAULT.setProperty(Mahjong.SAVE_TURN, "0");
-        DEFAULT.setProperty(Mahjong.SAVE_REACH, "false");
         DEFAULT.setProperty(AscensionHeart.SAVE_NAME, "false");
-        for (int i = 0; i < Mahjong.YAMA_NAME.length; i++)
-            DEFAULT.setProperty(Mahjong.YAMA_NAME[i], "" + Mahjong.YAMA_DEFAULT[i]);
-        for (String s : Mahjong.KANG_NAME)
-            DEFAULT.setProperty(s, "-1");
-        for (String s : Mahjong.DORA_NAME)
-            DEFAULT.setProperty(s, "0");
-        for (int i = 0; i < 13; i++)
-            DEFAULT.setProperty(Mahjong.HAND_NAME + i, "0");
         try {
             config = new SpireConfig(SAVE_NAME, SAVE_FILE_NAME, DEFAULT);
         } catch (IOException e) {
@@ -780,6 +768,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
     public void receiveStartGame() {
         if (config == null)
             this.initSavingConfig();
+
+
 
         if (AbstractDungeon.player.hasRelic(makeID(PortableAltar.ID))) {
             PortableAltar.load(getInt(PortableAltar.SAVE_NAME));
@@ -803,20 +793,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
         DragonStarHat.loadValue(getInt(DragonStarHat.SAVE_NAME));
 
         Faith.load(getBool(Faith.SAVE_NAME), getInt(Faith.SAVE_NAME1));
-
-        if (AbstractDungeon.player.hasRelic(makeID(Mahjong.ID))) {
-            int[] yama = new int[37], kang = new int[getInt(Mahjong.SAVE_KANG)], hint = new int[kang.length + 1],
-                    hand = new int[13 - 3 * kang.length];
-            for (int i = 0; i < 37; i++)
-                yama[i] = getInt(Mahjong.YAMA_NAME[i]);
-            for (int i = 0; i < kang.length; i++)
-                kang[i] = getInt(Mahjong.KANG_NAME[i]);
-            for (int i = 0; i < kang.length + 1; i++)
-                hint[i] = getInt(Mahjong.DORA_NAME[i]);
-            for (int i = 0; i < hand.length; i++)
-                hand[i] = getInt(Mahjong.HAND_NAME + i);
-            Mahjong.load(getInt(Mahjong.SAVE_TURN), getBool(Mahjong.SAVE_REACH), yama, kang, hint, hand);
-        }
 
         Automaton.loadMagicNumber();
 

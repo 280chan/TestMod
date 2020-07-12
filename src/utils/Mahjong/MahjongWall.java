@@ -1,16 +1,17 @@
 package utils.Mahjong;
 
-import cards.Test;
+import basemod.abstracts.CustomSavable;
 import cards.mahjong.AbstractMahjongCard;
 import com.google.gson.Gson;
 import mymod.TestMod;
-import utils.SaveDataTransfer;
 
 import java.util.*;
 
-public class MahjongWall {
+public class MahjongWall   {
 
-    class Wall implements SaveDataTransfer {
+
+
+    class Wall  {
         public ArrayList<Integer> WallList;
         public Integer Length;
 
@@ -22,17 +23,6 @@ public class MahjongWall {
         Wall() {
         }
 
-        @Override
-        public String Marshal() {
-            Gson gson = new Gson();
-            return gson.toJson(this);
-        }
-
-        @Override
-        public void UnMarshal(String data) {
-            Gson gson = new Gson();
-            gson.fromJson(data, this.getClass());
-        }
     }
 
     /**
@@ -94,6 +84,17 @@ public class MahjongWall {
     }
 
 
+    public boolean isEmpty() {
+        return this.currentWall.Length == 0;
+    }
+
+    public boolean isFull() {
+        return this.currentWall.Length.equals(this.DefaultWall.Length);
+    }
+
+    public int getCurrentLeft() {return this.currentWall.Length;}
+
+
     private Integer generateRandomCard() {
 
         int index = this.randomIndex(this.currentWall.Length, this.historyDiscardSeed());
@@ -107,15 +108,7 @@ public class MahjongWall {
         return null;
     }
 
-    public void Save() {
-        TestMod.save("MahjongWall-DefaultWall",DefaultWall.Marshal());
-        TestMod.save("MahjongWall-currentWall",currentWall.Marshal());
-    }
 
-    public void Load() {
-        DefaultWall.UnMarshal(TestMod.getString("MahjongWall-DefaultWall"));
-        currentWall.UnMarshal(TestMod.getString("MahjongWall-currentWall"));
-    }
 
 
     private int randomIndex(int range, long seedFix) {
