@@ -152,11 +152,7 @@
   },
   "testmod-Illusory": {
     "NAME": "虚无缥缈",
-    "DESCRIPTION": "",
-	"EXTENDED_DESCRIPTION": [
-		"抽 !M! 张牌，然后将抽牌堆中所有牌附加 虚无 。其中每有一张牌已有 虚无 ，获得",
-		"。 消耗 。 虚无 。"
-    ]
+    "DESCRIPTION": "抽 !M! 张牌，然后将抽牌堆中所有牌附加 虚无 。其中每有一张牌已有 虚无 ，获得 [E] 。 消耗 。 虚无 。"
   },
   "testmod-Librarian": {
     "NAME": "图书管理员",

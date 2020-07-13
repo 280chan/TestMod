@@ -19,7 +19,7 @@
 		]
 	},
 	"testmod-TestPotion": {
-		"NAME": "Test精华",
+		"NAME": "Essence of Test",
 		"DESCRIPTIONS": [
 			"Choose #b1 of #b3 random #yColorless cards #b",
 			" time(s), to add to your hand, it costs #b0 this turn."

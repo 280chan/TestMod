@@ -34,11 +34,12 @@ public class ConstraintPeriapt extends AbstractTestRelic implements MiscMethods 
 	}
 	
 	public void atPreBattle() {
-		AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDrawPileAction(new Burn(), 1, true, true));
+		this.addToBot(new MakeTempCardInDrawPileAction(new Burn(), 1, true, true));
 	}
 	
 	public void onRefreshHand() {
-		this.updateHandGlow();
+		if (this.canUpdateHandGlow())
+			this.updateHandGlow();
 	}
 	
 	private void updateHandGlow() {

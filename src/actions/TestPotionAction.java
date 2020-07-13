@@ -1,22 +1,14 @@
 package actions;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
-import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
-import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDiscardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
-import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
-
 import basemod.BaseMod;
 
 public class TestPotionAction extends AbstractGameAction {
@@ -46,8 +38,7 @@ public class TestPotionAction extends AbstractGameAction {
 	@Override
 	public void update() {
 		if (this.duration == Settings.ACTION_DUR_FAST) {
-			s.discoveryOpen();
-			s.rewardGroup = cards(this.list, AbstractDungeon.cardRandomRng);
+			s.customCombatOpen(cards(this.list, AbstractDungeon.cardRandomRng), CardRewardScreen.TEXT[1], true);
 			tickDuration();
 			return;
 		}

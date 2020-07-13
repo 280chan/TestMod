@@ -16,36 +16,15 @@ public class Illusory extends AbstractTestCard {
     public static final String ID = "Illusory";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
-	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-	private static final String[] E = { " [R] ", " [G] ", " [B] ", " [W] " };
+	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final int COST = 1;
-    private static final int BASE_ENG = 1;
     private static final int BASE_MGC = 1;
 
     public Illusory() {
-        super(ID, NAME, COST, getDescription(BASE_ENG), CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
-        this.baseMagicNumber = BASE_MGC;
-        this.magicNumber = this.baseMagicNumber;
-        this.exhaust = true;
+        super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
+        this.magicNumber = this.baseMagicNumber = BASE_MGC;
+        this.exhaust = this.isEthereal = true;
     }
-
-	public static String getDescription(int mgc) {
-		String e = E[0];
-		if (AbstractDungeon.player != null) {
-			switch (AbstractDungeon.player.chosenClass) {
-			case WATCHER:
-				e = E[3];
-				break;
-			case DEFECT:
-				e = E[2];
-				break;
-			case THE_SILENT:
-				e = E[1];
-			default:
-			}
-		}
-		return EXTENDED_DESCRIPTION[0] + e + EXTENDED_DESCRIPTION[1];
-	}
     
 	public void triggerOnGlowCheck() {
 		this.glowColor = AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();

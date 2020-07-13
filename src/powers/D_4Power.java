@@ -1,10 +1,10 @@
 
 package powers;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import relics.D_4;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import relics.D_4.Situation;
 
 public class D_4Power extends AbstractTestPower {
@@ -16,6 +16,13 @@ public class D_4Power extends AbstractTestPower {
 	public Situation situation;
 	public static boolean endTurn = false;
 	private static final int PRIORITY = -100000;
+	
+	public static boolean hasThis(AbstractPlayer p) {
+		for (AbstractPower po : p.powers)
+			if (po instanceof D_4Power)
+				return true;
+		return false;
+	}
 	
 	public static String getString(Situation s) {
 		if (s != null && s.ordinal() < 4)
@@ -43,13 +50,5 @@ public class D_4Power extends AbstractTestPower {
 		this.fontScale = 8.0f;
         this.amount = -1;
 	}
-	
-    public void onRemove() {
-    	this.addToTop(new ApplyPowerAction(owner, owner, next()));
-    }
-    
-    private D_4Power next() {
-    	return new D_4Power(owner, D_4.nextSituation);
-    }
     
 }

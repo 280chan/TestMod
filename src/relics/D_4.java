@@ -2,7 +2,6 @@ package relics;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -14,13 +13,14 @@ import com.megacrit.cardcrawl.powers.NightmarePower;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
+import mymod.TestMod;
 import powers.D_4Power;
 import utils.MiscMethods;
 
 public class D_4 extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "D_4";
-	public static Situation nextSituation = null;
-	private static final Situation[] SITUATIONS = {Situation.EXHAUST, Situation.REGAIN, Situation.DUALPLAY, Situation.NIGHTMARE};
+	private static Situation nextSituation = null;
+	private static final Situation[] SITUATIONS = Situation.values();
 	private static final int LENGTH = SITUATIONS.length;
 	private Random rng = null;
 	
@@ -76,7 +76,7 @@ public class D_4 extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public void onUseCard(final AbstractCard card, final UseCardAction action) {
-		if (!card.purgeOnUse && isActive) {
+		if (!card.isInAutoplay && isActive) {
 			AbstractMonster m = null;
 			if (action.target != null) {
 				m = (AbstractMonster) action.target;
@@ -108,29 +108,48 @@ public class D_4 extends AbstractTestRelic implements MiscMethods {
 	
 	private void setNextSituation() {
 		nextSituation = SITUATIONS[getRoll(LENGTH)];
-		this.tryRemove();
+		this.tryUpdatePower();
 		this.updateDescription(AbstractDungeon.player.chosenClass);
 	}
 	
 	public void atPreBattle() {
-		if (!isActive) {
+		if (!isActive)
 			return;
-		}
 		this.rng = this.copyRNG(AbstractDungeon.miscRng);
 		this.init();
     }
 	
-	private void init() {
-		AbstractPlayer p = AbstractDungeon.player;
-		this.setNextSituation();
-		this.addToBot(new ApplyPowerAction(p, p, new D_4Power(p, nextSituation)));
+	public void onVictory() {
+		if (!isActive)
+			return;
+		nextSituation = null;
+		this.updateDescription(AbstractDungeon.player.chosenClass);
 	}
 	
-	private void tryRemove() {
+	private void init() {
+		this.setNextSituation();
+	}
+	
+	private void tryUpdatePower() {
 		AbstractPlayer p = AbstractDungeon.player;
-		for (AbstractPower power : p.powers)
-			if (power instanceof D_4Power)
-				this.addToTop(new RemoveSpecificPowerAction(p, p, power.ID));
+		if (!D_4Power.hasThis(p)) {
+			TestMod.info(this.name + ": Init or got fucked");
+			p.powers.add(new D_4Power(p, nextSituation));
+		} else {
+			boolean changed = false;
+			for (int i = 0; i < p.powers.size(); i++) {
+				AbstractPower power = p.powers.get(i);
+				if (power instanceof D_4Power) {
+					if (!changed) {
+						changed = true;
+						p.powers.set(i, new D_4Power(p, nextSituation));
+					} else {
+						TestMod.info(this.name + ": WTF Dupe Power");
+						p.powers.remove(i--);
+					}
+				}
+			}
+		}
 	}
 	
 }

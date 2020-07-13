@@ -8,9 +8,8 @@ import com.megacrit.cardcrawl.potions.AbstractPotion;
 
 import actions.TestPotionAction;
 import mymod.TestMod;
-import utils.MiscMethods;
 
-public class TestPotion extends AbstractTestPotion implements MiscMethods {
+public class TestPotion extends AbstractTestPotion {
 	public static final String POTION_ID = TestMod.makeID("TestPotion");
 	private static final PotionStrings PS = Strings(POTION_ID);
 	private static final String NAME = PS.NAME;

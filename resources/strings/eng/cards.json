@@ -152,11 +152,7 @@
 	},
 	"testmod-Illusory": {
 		"NAME": "Illusory",
-		"DESCRIPTION": "",
-		"EXTENDED_DESCRIPTION": [
-			"Draw !M! cards, all cards in draw pile become Ethereal. For each card was Ethereal, Gain",
-			". Exhaust. Ethereal."
-		]
+		"DESCRIPTION": "Draw !M! cards, all cards in draw pile become Ethereal. For each card was Ethereal, Gain [E]. Exhaust. Ethereal."
 	},
 	"testmod-Librarian": {
 		"NAME": "Librarian",

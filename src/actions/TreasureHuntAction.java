@@ -19,7 +19,6 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import basemod.BaseMod;
 
 public class TreasureHuntAction extends AbstractGameAction {
-
 	private float startingDuration;
 	private boolean toHand;
 	private boolean toDeck;
@@ -81,9 +80,7 @@ public class TreasureHuntAction extends AbstractGameAction {
 	@Override
 	public void update() {
 		if (this.duration == Settings.ACTION_DUR_FAST) {
-			s.discoveryOpen();
-			s.rewardGroup = cards();
-
+			s.customCombatOpen(cards(), CardRewardScreen.TEXT[1], false);
 			tickDuration();
 			return;
 		}

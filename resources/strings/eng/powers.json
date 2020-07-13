@@ -46,10 +46,10 @@
     "NAME": "Runic Tetrahedron",
     "DESCRIPTIONS": [
     	"When you play the next card,",
-    	" #yNightmare it",
-		"Play it #b1 more time",
 		" #yExhaust it",
 		"Regain the #yRnergy it cost",
+		"Play it #b1 more time",
+    	" #yNightmare it",
 		"WTF is this situation???",
 		"."
     ]
