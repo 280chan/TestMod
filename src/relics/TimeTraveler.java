@@ -26,7 +26,7 @@ public class TimeTraveler extends AbstractTestRelic implements MiscMethods {
 	
 	private static void reset() {
 		save(100);
-		System.out.println("san已重置为100");
+		TestMod.info("san已重置为100");
 	}
 	
 	private static void save(int value) {
@@ -43,9 +43,9 @@ public class TimeTraveler extends AbstractTestRelic implements MiscMethods {
 		if (relic != null) {
 			relic.counter = san = san * (100 - SL_SAN_LOSS_PERCENT) / 100;
 			save(san);
-			System.out.println("san: " + relic.counter);
+			TestMod.info("san: " + relic.counter);
 		} else {
-			System.out.println("玩家没有时间旅行者或新开游戏地图");
+			TestMod.info("玩家没有时间旅行者或新开游戏地图");
 			reset();
 		}
 	}

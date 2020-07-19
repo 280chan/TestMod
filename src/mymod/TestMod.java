@@ -255,7 +255,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new TemporaryDeletion(), new EnhanceArmerment(), new TradeIn(), new TaurusBlackCat(),
 				new PainDetonator(), new FightingIntention(), new Reverberation(), new SelfRegulatingSystem(),
 				new Superconductor(), new BackupPower(), new Illusory(), new Librarian(), new HandmadeProducts(),
-				new Automaton(), new PowerStrike() };
+				new Automaton(), new PowerStrike(), new WeaknessCounterattack() };
 		// TODO
 		for (AbstractCard c : card) {
 			CARDS.add(c);
@@ -698,7 +698,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					if (p.hand.contains(c)) {
 						AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.hoveredMonster;
 	        			c.preApplyPowers(p, m);
-	    				if (this.hasPrudence())
+	    				if (this.hasStringDisintegrator())
 	    					continue;
 	        			c.applyPowers();
 		    		} else {

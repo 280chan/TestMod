@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
+import mymod.TestMod;
 import powers.RepeatFormPower;
 
 public class RepeatFormAction extends AbstractGameAction {
@@ -64,10 +65,10 @@ public class RepeatFormAction extends AbstractGameAction {
 		CardGroup[] groups = {p.discardPile, p.drawPile, p.hand};
 		for (CardGroup g : groups)
 			if (g.contains(c)) {
-				System.out.println("来自于" + g.type);
+				TestMod.info("来自于" + g.type);
 				return g;
 			}
-		System.out.println("为什么找不到" + c.name + "？？？");
+		TestMod.info("为什么找不到" + c.name + "？？？");
 		return null;
 	}
 	
@@ -77,7 +78,7 @@ public class RepeatFormAction extends AbstractGameAction {
 	
 	private void addPowerToPlayer(AbstractCard c) {
 		getSource(c).removeCard(c);
-		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, createPower(c), 1));
+		this.addToTop(new ApplyPowerAction(p, p, createPower(c), 1));
 	}
 	
 }

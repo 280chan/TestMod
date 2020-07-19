@@ -6,12 +6,11 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 
+import mymod.TestMod;
 import relics.AbstractTestRelic;
 
 public class MagicalMalletAction extends AbstractGameAction {
-
 	private static final float DURATION = Settings.ACTION_DUR_XFAST;
-
 	private AbstractTestRelic r;
 	private ArrayList<AbstractCard> hand;
 	
@@ -27,7 +26,7 @@ public class MagicalMalletAction extends AbstractGameAction {
 		this.isDone = true;
 		int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
 		for (AbstractCard c : this.hand) {
-			System.out.println(c.name + c.cost + "," + c.costForTurn);
+			TestMod.info(c.name + c.cost + "," + c.costForTurn);
 			if (c.cost < 0)
 				continue;
 			if (min > c.costForTurn)
@@ -35,7 +34,7 @@ public class MagicalMalletAction extends AbstractGameAction {
 			if (max < c.costForTurn)
 				max = c.costForTurn;
 		}
-		System.out.println("最大: " + max + ",最小: " + min);
+		TestMod.info("最大: " + max + ",最小: " + min);
 		if (min == max)
 			return;
 		if (min == Integer.MAX_VALUE && max == Integer.MIN_VALUE)

@@ -71,7 +71,7 @@ public class DreamHouse extends AbstractTestRelic implements MiscMethods {
 		AbstractTestRelic.setTryUnequip(DreamHouse.class, false);
 		for (AbstractRelic r : RELICS) {
 			AbstractDungeon.player.loseRelic(r.relicId);
-			System.out.println("梦幻馆: 移除" + r.name);
+			TestMod.info("梦幻馆: 移除" + r.name);
 		}
 	}
 	

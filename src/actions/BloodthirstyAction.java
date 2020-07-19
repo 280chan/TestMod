@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
 
 import cards.colorless.Bloodthirsty;
+import mymod.TestMod;
 import utils.MiscMethods;
 
 public class BloodthirstyAction extends AbstractGameAction implements MiscMethods {
@@ -45,7 +46,7 @@ public class BloodthirstyAction extends AbstractGameAction implements MiscMethod
 				}
 			}
 		} else {
-			System.out.println("目标为null???");
+			TestMod.info("目标为null???");
 		}
 		this.isDone = true;
 	}

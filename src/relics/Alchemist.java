@@ -7,6 +7,8 @@ import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
+import mymod.TestMod;
+
 public class Alchemist extends AbstractClickRelic {
 	public static final String ID = "Alchemist";
 	private boolean used = false;
@@ -81,9 +83,9 @@ public class Alchemist extends AbstractClickRelic {
 				} else {
 					po.use(null);
 				}
-				System.out.println("炼金术士: 使用了" + po.name);
+				TestMod.info("炼金术士: 使用了" + po.name);
 			} else {
-				System.out.println("炼金术士: 没有可使用药水");
+				TestMod.info("炼金术士: 没有可使用药水");
 				this.used = false;
 				this.toggleState(true);
 			}

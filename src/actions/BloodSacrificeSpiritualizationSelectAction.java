@@ -10,6 +10,8 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
+import mymod.TestMod;
+
 public class BloodSacrificeSpiritualizationSelectAction extends AbstractGameAction {
 	private static final float DURATION = Settings.ACTION_DUR_FAST;
 	private CardGroup g;
@@ -48,7 +50,7 @@ public class BloodSacrificeSpiritualizationSelectAction extends AbstractGameActi
 			this.p.damage(new DamageInfo(p, this.amount, DamageType.HP_LOSS));
 			AbstractCard c = AbstractDungeon.gridSelectScreen.selectedCards.get(0);
 			this.upgrade(c);
-			AbstractDungeon.actionManager.addToTop(new BloodSacrificeSpiritualizationPlayAction(p, getSource(c), c));
+			this.addToTop(new BloodSacrificeSpiritualizationPlayAction(p, getSource(c), c));
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
 			this.isDone = true;
 		}
@@ -72,10 +74,10 @@ public class BloodSacrificeSpiritualizationSelectAction extends AbstractGameActi
 		CardGroup[] groups = {p.discardPile, p.hand, p.drawPile};
 		for (CardGroup g : groups)
 			if (g.contains(c)) {
-				System.out.println("来自于" + g.type);
+				TestMod.info("来自于" + g.type);
 				return g;
 			}
-		System.out.println("为什么找不到" + c.name + "？？？");
+		TestMod.info("为什么找不到" + c.name + "？？？");
 		return null;
 	}
 	

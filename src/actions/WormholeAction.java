@@ -61,7 +61,7 @@ public class WormholeAction extends AbstractGameAction {
 		CardGroup[] groups = {p.discardPile, p.hand, p.drawPile};
 		for (CardGroup g : groups)
 			if (g.contains(c)) {
-				System.out.println("来自于" + g.type);
+				TestMod.info("来自于" + g.type);
 				return g;
 			}
 		TestMod.info("为什么找不到" + c.name + "？？？");

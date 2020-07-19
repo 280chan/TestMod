@@ -33,6 +33,7 @@ import com.megacrit.cardcrawl.vfx.GameSavedEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import actions.HopeAction;
+import mymod.TestMod;
 import utils.MiscMethods;
 
 public class Hope extends AbstractTestRelic implements MiscMethods {
@@ -87,10 +88,10 @@ public class Hope extends AbstractTestRelic implements MiscMethods {
         			r.cannotLose = false;
         		}
         		if (!m.id.equals("paleoftheancients:Reimu")) {
-        			System.out.println("希望:尝试秒杀" + m.name);
+        			TestMod.info("希望:尝试秒杀" + m.name);
         			m.die();
         		} else {
-        			System.out.println("希望:尝试跳过秒杀先古境地灵梦，尝试添加其对应遗物...");
+        			TestMod.info("希望:尝试跳过秒杀先古境地灵梦，尝试添加其对应遗物...");
         			Class<? extends AbstractDungeon> c = CardCrawlGame.dungeon.getClass();
 					try {
 						c.getMethod("addRelicReward", String.class).invoke(null, "paleoftheancients:SoulOfTheShrineMaiden");
@@ -249,13 +250,13 @@ public class Hope extends AbstractTestRelic implements MiscMethods {
 		if ((AbstractDungeon.actionManager.actions.isEmpty()) && (AbstractDungeon.player.hand.isEmpty())
 				&& (!AbstractDungeon.actionManager.turnHasEnded) && (this.canDraw) && (!AbstractDungeon.isScreenUp)) {
 			if ((AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) && (!this.disabledUntilEndOfTurn)) {
-				System.out.print("希望随机中:...");
+				TestMod.info("希望随机中:...");
 				if (roll(cardRng)) {
-					System.out.println("成功");
+					TestMod.info("成功");
 					show();
-					AbstractDungeon.actionManager.addToTop(new HopeAction());
+					this.addToTop(new HopeAction());
 				} else {
-					System.out.println("失败");
+					TestMod.info("失败");
 				}
 			}
 		}

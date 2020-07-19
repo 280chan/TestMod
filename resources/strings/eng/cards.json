@@ -285,6 +285,10 @@
 		"DESCRIPTION": "Choose a card in your draw pile, discard pile or cards in your hand. Play the chosen card and Exhaust it.",
 		"UPGRADE_DESCRIPTION": "Choose a card in your draw pile, discard pile or cards in your hand. Play the chosen card. If it is Curse or Status, Exhaust it. "
 	},
+	"testmod-WeaknessCounterattack": {
+		"NAME": "Weakness Counterattack",
+		"DESCRIPTION": "Deal !D! to random enemy !M! times. Deal 1 more time for each time enemies intent to Attack."
+	},
 	"testmod-MahjongPs": {
 		"NAME": "",
 		"DESCRIPTION": "",

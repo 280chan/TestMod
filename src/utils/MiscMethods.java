@@ -43,6 +43,7 @@ import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 
 import mymod.TestMod;
 import relics.Prudence;
+import relics.StringDisintegrator;
 
 public interface MiscMethods {
 	
@@ -52,6 +53,10 @@ public interface MiscMethods {
 	
 	public default boolean hasPrudence() {
 		return AbstractDungeon.player.hasRelic(TestMod.makeID(Prudence.ID));
+	}
+	
+	public default boolean hasStringDisintegrator() {
+		return AbstractDungeon.player.hasRelic(TestMod.makeID(StringDisintegrator.ID));
 	}
 	
 	public default void addHoarderCard(CardGroup g, AbstractCard c) {
@@ -85,7 +90,7 @@ public interface MiscMethods {
 		for (AbstractCard c : p.hand.group)
 			if (c.cardID.equals(cardID))
 				cards.add(c);
-		System.out.println("Count: " + cards.size());
+		TestMod.info("Count: " + cards.size());
 		return cards;
 	}
 	
@@ -114,25 +119,35 @@ public interface MiscMethods {
 	    public static void start() {
 	    	if (inProgress())
 	    		return;
-			AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
-			AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
-	    	startEndingTurn = true;
+	    	AbstractDungeon.actionManager.addToBottom(new AbstractGameAction(){
+				@Override
+				public void update() {
+					this.isDone = true;
+					AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
+					AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
+			    	startEndingTurn = true;
+				}});
 	    }
 	    
 	    public static void startByCard(AbstractCard c) {
 	    	if (inProgress())
 	    		return;
 			start();
-			if (!c.dontTriggerOnUseCard)
-				for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters)
-					for (AbstractPower p : monster.powers) {
-						if (p.ID.equals("Time Warp") && p.amount == 11) {
-							startByCardTimeWarpIssues(p);
-						}
-						if (p.ID.equals("ImpatiencePower") && p.amount == 14) {
-							p.amount = -1;
-						}
-					}
+			AbstractDungeon.actionManager.addToBottom(new AbstractGameAction(){
+				@Override
+				public void update() {
+					this.isDone = true;
+					if (!c.dontTriggerOnUseCard)
+						for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters)
+							for (AbstractPower p : monster.powers) {
+								if (p.ID.equals("Time Warp") && p.amount == 11) {
+									startByCardTimeWarpIssues(p);
+								}
+								if (p.ID.equals("ImpatiencePower") && p.amount == 14) {
+									p.amount = -1;
+								}
+							}
+				}});
 	    }
 	    
 	    private static void startByCardTimeWarpIssues(AbstractPower p) {
@@ -160,7 +175,7 @@ public interface MiscMethods {
 	    	for (AbstractCard c : AbstractDungeon.player.limbo.group) {
 	            AbstractDungeon.effectList.add(new ExhaustCardEffect(c));
 	        }
-	        System.out.println("limbo数量 = " + AbstractDungeon.player.limbo.size());
+	    	TestMod.info("limbo数量 = " + AbstractDungeon.player.limbo.size());
 	    	AbstractDungeon.player.limbo.group.clear();
 	        AbstractDungeon.player.releaseCard();
 	        // Start Ending Turn
@@ -317,6 +332,50 @@ public interface MiscMethods {
 		AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
 	}
 	
+	public default void autoplayInOrder(AbstractCard self, ArrayList<AbstractCard> list, AbstractMonster m) {
+		int i = 0;
+		ArrayList<CardQueueItem> queue = AbstractDungeon.actionManager.cardQueue;
+		int startIndex = AutoplayProgressManager.indexOfLastItemIn(queue) + 1;
+		ArrayList<AbstractCard> history = AbstractDungeon.actionManager.cardsPlayedThisCombat;
+		if (history.get(history.size() - 1) == self)
+			startIndex = 0;
+		
+		for (AbstractCard card : list) {
+			AbstractCard tmp = card.makeSameInstanceOf();
+			AbstractDungeon.player.limbo.addToBottom(tmp);
+			tmp.current_x = card.current_x;
+			tmp.current_y = card.current_y;
+			tmp.target_x = (Settings.WIDTH / 2.0F - 300.0F * Settings.scale);
+			tmp.target_y = (Settings.HEIGHT / 2.0F);
+			if (m != null) {
+				tmp.calculateCardDamage(m);
+			}
+			tmp.purgeOnUse = true;
+			CardQueueItem item = new CardQueueItem(tmp, m, card.energyOnUse, true, true);
+			if (!queue.isEmpty()) {
+				queue.add(i + startIndex, item);
+			} else {
+				queue.add(item);
+			}
+			AutoplayProgressManager.saveLastQueueItem(item);
+			i++;
+		}
+	}
+	
+	static class AutoplayProgressManager {
+		private static CardQueueItem lastCardQueued = null;
+		
+		private static int indexOfLastItemIn(ArrayList<CardQueueItem> list) {
+			if (lastCardQueued == null)
+				return -1;
+			return list.indexOf(lastCardQueued);
+		}
+		
+		private static void saveLastQueueItem(CardQueueItem q) {
+			lastCardQueued = q;
+		}
+	}
+	
 	public default String getEnergySymble(PlayerClass c) {
 		return " [E] ";
 	}
@@ -353,13 +412,13 @@ public interface MiscMethods {
 		private static final ArrayList<Integer> USED_COLOR = new ArrayList<Integer>();
 		private static final ArrayList<AbstractCard> HARD_GLOW_LOCK = new ArrayList<AbstractCard>();
 		
-		public static void initialize() {
+		private static void initialize() {
 			Color[] tmp = {Color.GOLD, new Color(0.0F, 1.0F, 0.0F, 0.25F), Color.PINK, Color.SKY, Color.PURPLE, Color.RED, Color.BROWN};
 			for (Color c : tmp)
 				COLOR_LIST.add(c);
 		}
 		
-		public static void addCardToList(AbstractCard c, Color color) {
+		private static void addCardToList(AbstractCard c, Color color) {
 			if (!UPDATE_LIST.contains(c)) {
 				UPDATE_LIST.add(c);
 			}
@@ -375,7 +434,7 @@ public interface MiscMethods {
 			}
 		}
 		
-		public static void removeFromList(AbstractCard c, Color color) {
+		private static void removeFromList(AbstractCard c, Color color) {
 			if (!GLOW_COLORS.containsKey(c)) {
 				if (!UPDATE_LIST.contains(c))
 					return;
@@ -407,7 +466,7 @@ public interface MiscMethods {
 				GLOW_COLORS.get(c).add(color);
 		}
 		
-		public static void updateGlow() {
+		private static void updateGlow() {
 			for (AbstractCard c : UPDATE_LIST) {
 				ArrayList<Color> list = GLOW_COLORS.get(c);
 				for (int i = 0; i < list.size(); i++) {
@@ -425,7 +484,7 @@ public interface MiscMethods {
 			}
 		}
 		
-		public static Color unusedGlowColor() {
+		private static Color unusedGlowColor() {
 			if (COLOR_LIST.isEmpty())
 				initialize();
 			if (USED_COLOR.size() >= COLOR_LIST.size())

@@ -3,6 +3,8 @@ package cards.colorless;
 
 import actions.PerfectComboAction;
 import cards.AbstractEquivalentableCard;
+import mymod.TestMod;
+
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
@@ -49,7 +51,7 @@ public class PerfectCombo extends AbstractEquivalentableCard {
         for (final AbstractCard c : group) {
         	count += c.timesUpgraded;
         	if (c.upgraded && c.timesUpgraded == 0) {
-        		System.out.println(this.cardID + ": " + c.name + "为什么没有计数");
+            	TestMod.info("完美连击" + this.cardID + ": " + c.name + "为什么没有计数");
         	}
         }
         return count;

@@ -93,12 +93,12 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
 	
 	private void replicate() {
     	if (hasDarkstonePeriapt()) {
-    		System.out.println("玩家有黑石护符,下一次不复制暴食");
+    		TestMod.info("玩家有黑石护符,下一次不复制暴食");
     		dontCopy = true;
     	}
-    	System.out.println("开始获得暴食");
+    	TestMod.info("开始获得暴食");
     	obtainCard(new Gluttony());
-    	System.out.println("获得暴食完毕");
+    	TestMod.info("获得暴食完毕");
 	}
 	
     private boolean hasDarkstonePeriapt() {
@@ -109,19 +109,19 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
     	if (AbstractDungeon.player.maxHealth == preMaxHP)
     		return;
     	boolean increase = AbstractDungeon.player.maxHealth > preMaxHP;
-		System.out.print("检测到血量上限变化,旧上限:" + preMaxHP + ",新上限:");
+    	String tmp = "检测到血量上限变化,旧上限:" + preMaxHP + ",新上限:";
 		preMaxHP = AbstractDungeon.player.maxHealth;
-		System.out.println(preMaxHP);
+		TestMod.info(tmp + preMaxHP);
     	if (increase && hasGluttony()) {
-			System.out.println("拥有暴食");
+    		TestMod.info("拥有暴食");
     		if (dontCopy) {
-    			System.out.println("暴食引起,不复制暴食");
+    			TestMod.info("暴食引起,不复制暴食");
     			dontCopy = false;
 			} else if ((AbstractDungeon.player.hasRelic("Omamori")) && (AbstractDungeon.player.getRelic("Omamori").counter != 0)) {
-    			System.out.println("御守有效,不复制暴食");
+				TestMod.info("御守有效,不复制暴食");
 				((Omamori) AbstractDungeon.player.getRelic("Omamori")).use();
 			} else {
-    			System.out.println("准备复制暴食");
+				TestMod.info("准备复制暴食");
 				replicate();
 			}
     	}
@@ -162,7 +162,7 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public static void equipAction() {
-		System.out.println("获得七原罪诅咒与遗物");
+		TestMod.info("获得七原罪诅咒与遗物");
 		AbstractTestRelic.setTryEquip(Sins.class, false);
 		for (AbstractRelic r : RELICS) {
 			TestMod.obtain(AbstractDungeon.player, r, false);
@@ -201,12 +201,12 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
 			if (isSin(c)) {
 				AbstractDungeon.player.masterDeck.group.remove(c);
 				i--;
-				System.out.println("七原罪: 移除" + c.name);
+				TestMod.info("七原罪: 移除" + c.name);
 			}
 		}
 		for (AbstractRelic r : RELICS) {
 			AbstractDungeon.player.loseRelic(r.relicId);
-			System.out.println("七原罪: 移除" + r.name);
+			TestMod.info("七原罪: 移除" + r.name);
 		}
 	}
 	

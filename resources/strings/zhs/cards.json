@@ -285,6 +285,10 @@
     "DESCRIPTION": "从抽牌堆、弃牌堆、手牌的所有牌中选出一张牌将其打出并将其 消耗 。",
     "UPGRADE_DESCRIPTION": "从抽牌堆、弃牌堆、手牌的所有牌中选出一张牌将其打出。如果是 诅咒 或 状态 牌，将其 消耗 。"
   },
+  "testmod-WeaknessCounterattack": {
+    "NAME": "弱点反击",
+    "DESCRIPTION": "对随机敌人造成 !D! 点伤害 !M! 次。伤害次数追加所有敌人的攻击次数。"
+  },
   "testmod-MahjongPs": {
     "NAME": "",
     "DESCRIPTION": "",

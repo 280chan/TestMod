@@ -1,13 +1,14 @@
 package cards.colorless;
 
 import cards.AbstractEquivalentableCard;
-import com.megacrit.cardcrawl.cards.*;
+import mymod.TestMod;
+
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
-import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
-import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
+import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
+import com.megacrit.cardcrawl.actions.common.AttackDamageRandomEnemyAction;
 
 public class Mystery extends AbstractEquivalentableCard {
     public static final String ID = "Mystery";
@@ -35,10 +36,11 @@ public class Mystery extends AbstractEquivalentableCard {
     }
     
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	System.out.println("当前卡M = " + this.magicNumber);
     	this.applyCount();
-    	this.addToBot(new SwordBoomerangAction(
-    		      AbstractDungeon.getMonsters().getRandomMonster(true), new DamageInfo(p, this.baseDamage), this.magicNumber));
+    	TestMod.info("迷：当前卡M = " + this.magicNumber);
+    	for (int i = 0; i < this.magicNumber; i++) {
+			this.addToBot(new AttackDamageRandomEnemyAction(this, AttackEffect.SLASH_HORIZONTAL));
+		}
     }
     
     private void applyCount() {

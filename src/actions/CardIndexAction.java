@@ -36,8 +36,8 @@ public class CardIndexAction extends AbstractGameAction implements MiscMethods {
     			c.applyPowers();
     			if (c.cost == -1)
     				c.energyOnUse = EnergyPanel.totalCount;
-    			this.playAgain(c, (AbstractMonster)this.target);
     		}
+			this.autoplayInOrder(this.c, cards, (AbstractMonster)this.target);
     	}
 		this.isDone = true;
 	}
