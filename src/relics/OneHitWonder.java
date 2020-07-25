@@ -12,8 +12,9 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import mymod.TestMod;
 import powers.OneHitWonderDebuffPower;
+import utils.MiscMethods;
 
-public class OneHitWonder extends AbstractTestRelic{
+public class OneHitWonder extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "OneHitWonder";
 	
 	private boolean getRoll() {
@@ -44,6 +45,8 @@ public class OneHitWonder extends AbstractTestRelic{
 	
 	private void tryApplyDebuff() {
 		boolean applied = false;
+		if (!this.hasEnemies())
+			return;
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
 			if (m.type == EnemyType.BOSS && !OneHitWonderDebuffPower.hasThis(m)) {
 				m.powers.add(new OneHitWonderDebuffPower(m));

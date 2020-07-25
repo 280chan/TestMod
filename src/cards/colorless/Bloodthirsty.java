@@ -78,7 +78,7 @@ public class Bloodthirsty extends AbstractUpdatableCard {
 	}
 	
     public void triggerOnCardPlayed(AbstractCard c) {
-    	if (!c.cardID.equals(ID) && this.used) {
+    	if (!(c instanceof Bloodthirsty) && this.used) {
     		if (!this.upgraded && this.magicNumber + D_MGC > 0) {
         		this.upgradeMagicNumber(D_MGC);
     		} else if (this.magicNumber + UPGRADED_D_MGC > 0) {

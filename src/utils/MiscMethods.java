@@ -522,5 +522,13 @@ public interface MiscMethods {
 	public default void addHardLockGlow(AbstractCard c) {
 		CardGlowChanger.addHardLockGlow(c);
 	}
+
+	public default boolean hasEnemies() {
+		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom() == null
+				|| AbstractDungeon.getCurrRoom().monsters == null
+				|| AbstractDungeon.getCurrRoom().monsters.monsters == null)
+			return false;
+		return true;
+	}
 	
 }
