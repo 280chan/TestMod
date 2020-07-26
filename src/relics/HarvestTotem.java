@@ -11,8 +11,9 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.TextAboveCreatureEffect;
 
 import mymod.TestMod;
+import utils.MiscMethods;
 
-public class HarvestTotem extends AbstractTestRelic {
+public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "HarvestTotem";
 	
 	private static final ArrayList<AbstractCreature> DONE = new ArrayList<AbstractCreature>();
@@ -53,6 +54,8 @@ public class HarvestTotem extends AbstractTestRelic {
 			return;
 		this.counter = -2;
 		DONE.clear();
+		if (!this.hasEnemies())
+			return;
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
 			if (m.type == EnemyType.BOSS)
 				increaseMaxHp(m, m.maxHealth / 2);
@@ -66,7 +69,10 @@ public class HarvestTotem extends AbstractTestRelic {
 	
 	public void update() {
 		super.update();
-		if (!this.isActive || this.counter == -2 || AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
+		if (!this.isActive || this.counter == -2 || AbstractDungeon.currMapNode == null
+				|| AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
+			return;
+		if (!this.hasEnemies())
 			return;
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
 			if (!DONE.contains(m)) {

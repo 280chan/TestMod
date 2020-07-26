@@ -34,6 +34,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	public static final String SAVE_NAME = "AHRevived";
 	private static boolean revived = false;
 	private static boolean looping = false;
+	private String desc27 = " Ethereal.";
 	
 	public static void reset() {
 		revived = false;
@@ -50,6 +51,8 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	
 	public AscensionHeart() {
 		super(ID, RelicTier.SPECIAL, LandingSound.HEAVY);
+		if (DESCRIPTIONS.length == 28)
+			desc27 = DESCRIPTIONS[27];
 	}
 	
 	public String getUpdatedDescription() {
@@ -119,7 +122,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	public void onObtainCard(AbstractCard card) {
 		if (card.type == CardType.CURSE && checkLevel(10)) {
 			if (!card.isEthereal) {
-				card.rawDescription += DESCRIPTIONS[27];
+				card.rawDescription += desc27;
 				card.initializeDescription();
 				card.isEthereal = true;
 			}
@@ -129,7 +132,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 			}
 		} else if (card.type == CardType.STATUS && checkLevel(24)) {
 			if (!card.isEthereal) {
-				card.rawDescription += DESCRIPTIONS[27];
+				card.rawDescription += desc27;
 				card.initializeDescription();
 				card.isEthereal = true;
 			}
@@ -157,11 +160,11 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		if (checkLevel(10)) {
 			for (AbstractCard card : AbstractDungeon.player.hand.group) {
 				if (card.type == CardType.CURSE && !card.isEthereal) {
-					card.rawDescription += DESCRIPTIONS[27];
+					card.rawDescription += desc27;
 					card.initializeDescription();
 					card.isEthereal = true;
 				} else if (card.type == CardType.STATUS && !card.isEthereal && checkLevel(24)) {
-					card.rawDescription += DESCRIPTIONS[27];
+					card.rawDescription += desc27;
 					card.initializeDescription();
 					card.isEthereal = true;
 				}

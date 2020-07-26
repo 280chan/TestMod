@@ -170,7 +170,9 @@
 			"Gain gold when lose HP",
 			"50% chance double healing",
 			"All status are now ethereal",
-			"Rare relics produce energy"
+			"Rare relics produce energy",
+			"(This effect has been used up)",
+			" Ethereal."
 		]
 	},
 	

@@ -7,8 +7,9 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import powers.IntensifyImprintPower;
+import utils.MiscMethods;
 
-public class IntensifyImprint extends AbstractTestRelic {
+public class IntensifyImprint extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "IntensifyImprint";
 	
 	public IntensifyImprint() {
@@ -60,7 +61,7 @@ public class IntensifyImprint extends AbstractTestRelic {
 	
 	public void update() {
 		super.update();
-		if (this.counter < 0)
+		if (this.counter < 0 || !this.hasEnemies())
 			return;
 		if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT)
 			for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
