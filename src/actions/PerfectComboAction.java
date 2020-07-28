@@ -21,6 +21,7 @@ public class PerfectComboAction extends AbstractGameAction implements MiscMethod
 	private boolean skipWait;
 	private int magic;
 	private static Random rng;
+	private static int deadLoopCounter = 0;
 
 	public PerfectComboAction(AbstractCreature target, DamageInfo info, AttackEffect effect, int magic) {
 		this(target, info, effect);
@@ -67,6 +68,7 @@ public class PerfectComboAction extends AbstractGameAction implements MiscMethod
 	public void update() {
 		if (this.shouldCancelAction()) {
 			this.isDone = true;
+			deadLoopCounter = 0;
 		} else {
 			AbstractDungeon.effectList
 					.add(new FlashAtkImgEffect(this.target.hb.cX, this.target.hb.cY, this.attackEffect));
@@ -76,10 +78,15 @@ public class PerfectComboAction extends AbstractGameAction implements MiscMethod
 			
 			if (AbstractDungeon.getCurrRoom().monsters.areMonstersBasicallyDead()) {
 				AbstractDungeon.actionManager.clearPostCombatActions();
+				deadLoopCounter = 0;
 			} else if (!(this.target.hasPower("Invincible") && this.target.getPower("Invincible").amount == 0)) {
-				if (roll()) {
+				if (roll() && deadLoopCounter < 100) {
 					this.addToBot(this.combo());
+				} else {
+					deadLoopCounter = 0;
 				}
+			} else {
+				deadLoopCounter = 0;
 			}
 			
 		}

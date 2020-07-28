@@ -254,7 +254,7 @@
 		"DESCRIPTION": "",
 		"EXTENDED_DESCRIPTION": [
 			"Gain",
-			". Choose any cards from draw pile and discard them, at the same time, shuffle the rest of your card into draw pile.",
+			". Choose any cards from draw pile and discard them, at the same time, shuffle discard pile into draw pile.",
 			" Exhaust."
 		]
 	},

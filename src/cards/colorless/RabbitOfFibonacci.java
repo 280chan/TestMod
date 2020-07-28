@@ -39,6 +39,10 @@ public class RabbitOfFibonacci extends AbstractTestCard {
     	return true;
     }
     
+    private boolean overflow() {
+    	return this.timesUpgraded > 45;
+    }
+    
     private static int f(int n) {
     	int sign = (n % 2 == 0) ? -1 : 1;
     	double tmp = Math.exp(LOG_PHI * n);
@@ -50,7 +54,12 @@ public class RabbitOfFibonacci extends AbstractTestCard {
     	this.name = NAME + "+" + this.timesUpgraded;
     	this.upgraded = true;
         this.initializeTitle();
-        int tmp = f(this.timesUpgraded + 1);
+        int tmp;
+        if (this.overflow()) {
+        	tmp = 2147450000;
+        } else {
+            tmp = f(this.timesUpgraded + 1);
+        }
         this.baseDamage = this.baseBlock = tmp;
 		this.upgradedDamage = this.upgradedBlock = true;
     }
