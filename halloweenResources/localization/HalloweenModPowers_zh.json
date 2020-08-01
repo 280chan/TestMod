@@ -1,0 +1,9 @@
+{
+  "HalloweenModGhostCostumePower": {
+    "NAME": "鬼装",
+    "DESCRIPTIONS": [
+      "每回合开始获得 #b",
+      " 种随机状态。"
+    ]
+  }
+}

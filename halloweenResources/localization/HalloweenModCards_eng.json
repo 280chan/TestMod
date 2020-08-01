@@ -1,0 +1,23 @@
+{
+	"HalloweenModCandy":{
+		"NAME": "Candy",
+		"DESCRIPTION": "Heal !M! HP. NL Upgrade all cards in your hand for the rest of combat.",
+		"UPGRADE_DESCRIPTION": "Heal !M! HP. NL Upgrade ALL your cards for the rest of combat."
+	},
+	
+	"HalloweenModGhostCostume":{
+		"NAME": "Ghost Costume",
+		"DESCRIPTION": "At the start of your turn, gain 1 random power.",
+		"UPGRADE_DESCRIPTION": "Gain 1 random power. At the start of your turn, gain 1 random power."
+	},
+	
+	"HalloweenModHalloween":{
+		"NAME": "Halloween",
+		"EXTENDED_DESCRIPTION": ["Gain !M! Strength and Dexterity. Gain", " and draw !M! card. NL Can be Upgraded any number of times. Exhaust.", " and draw !M! cards. NL Can be Upgraded any number of times. Exhaust."]
+	},
+	
+	"HalloweenModTrick":{
+		"NAME": "Trick",
+		"DESCRIPTION": "Deal !D! damage to ALL enemies. Draw 1 card for each layer of Artifact. Gain 1 Artifact for each kind of debuff. Gain !M! temporary Strength."
+	}
+}

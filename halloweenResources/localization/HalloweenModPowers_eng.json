@@ -1,0 +1,9 @@
+{
+  "HalloweenModGhostCostumePower": {
+    "NAME": "Ghost Costume",
+    "DESCRIPTIONS": [
+      "At the start of your turn, gain #b",
+      " random #yPower.", " random #yPowers."
+    ]
+  }
+}

@@ -54,7 +54,11 @@ public abstract class AbstractTestRelic extends CustomRelic {
 	}
 	
 	public AbstractTestRelic(String id, RelicTier tier, LandingSound sfx) {
-		super(TestMod.makeID(id), new Texture(Gdx.files.internal(TestMod.relicIMGPath(id))), tier, sfx);
+		this(TestMod.makeID(id), TestMod.relicIMGPath(id), tier, sfx);
+	}
+	
+	public AbstractTestRelic(String id, String path, RelicTier tier, LandingSound sfx) {
+		super(id, new Texture(Gdx.files.internal(path)), tier, sfx);
 	}
 	
 	public void show() {

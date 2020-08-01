@@ -1,0 +1,24 @@
+{
+	"HalloweenModCandy":{
+		"NAME": "糖果",
+		"DESCRIPTION": "回复 !M! 点生命。 NL 在本场战斗中 升级 手牌中的所有牌。",
+		"UPGRADE_DESCRIPTION": "回复 !M! 点生命。 NL 在本场战斗中 升级 你的所有牌。"
+	},
+	
+	"HalloweenModGhostCostume":{
+		"NAME": "鬼妆",
+		"DESCRIPTION": "每回合开始获得1种随机状态。",
+		"UPGRADE_DESCRIPTION": "获得1种随机状态。每回合开始获得1种随机状态。"
+	},
+	
+	"HalloweenModHalloween":{
+		"NAME": "万圣",
+		"EXTENDED_DESCRIPTION": ["获得 !M! 点 力量 和 敏捷 。获得", "并抽 !M! 张牌。 NL 这张牌可以被多次 升级 。 消耗 。"]
+	},
+	
+	"HalloweenModTrick":{
+		"NAME": "捣乱",
+		"DESCRIPTION": "对所有敌人造成 !D! 点伤害。每层 人工制品 抽1张牌。每种负面状态，获得1层 人工制品 。回合内获得 !M! 点 力量 。"
+	}
+	
+}

@@ -1,0 +1,7 @@
+{
+	"HalloweenModHalloween":{
+		"NAME": "Event celebration - Halloween",
+		"FLAVOR": "Trick or Treat!",
+		"DESCRIPTIONS":["Upon pickup, obtain #yBlue #yCandle. NL You will only have #yCandy, #yTrick, #yGhost #yCostume in your combat card rewards. NL Whenever you play a #rCurse, add a #yHalloween into your hand."]
+	}
+}

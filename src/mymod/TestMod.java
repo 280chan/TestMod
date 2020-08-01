@@ -1,6 +1,5 @@
 package mymod;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
@@ -20,8 +19,6 @@ import com.megacrit.cardcrawl.cards.curses.Pride;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.core.Settings.GameLanguage;
-import com.megacrit.cardcrawl.core.CardCrawlGame.GameMode;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.helpers.TipTracker;
@@ -34,7 +31,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
@@ -44,19 +40,23 @@ import actions.PerfectComboAction;
 import basemod.BaseMod;
 import basemod.helpers.RelicType;
 import basemod.interfaces.EditCardsSubscriber;
+import basemod.interfaces.EditKeywordsSubscriber;
 import basemod.interfaces.EditRelicsSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
+import basemod.interfaces.ISubscriber;
 import basemod.interfaces.PostDungeonInitializeSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import basemod.interfaces.PostUpdateSubscriber;
 import basemod.interfaces.PreUpdateSubscriber;
 import basemod.interfaces.StartGameSubscriber;
 import basemod.interfaces.OnStartBattleSubscriber;
+import basemod.interfaces.PostBattleSubscriber;
 import basemod.interfaces.MaxHPChangeSubscriber;
 import cards.*;
 import cards.colorless.*;
 import cards.mahjong.*;
 import events.*;
+import halloweenMod.mymod.HalloweenMod;
 import potions.*;
 import powers.SuperconductorNoEnergyPower;
 import relics.*;
@@ -64,14 +64,15 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 7/4/2020
+ * @version 8/1/2020
  * @since 6/17/2018
  */
 
 @SpireInitializer
-public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber,
-		PostDungeonInitializeSubscriber, PreUpdateSubscriber, PostUpdateSubscriber, StartGameSubscriber,
-		PostInitializeSubscriber, OnStartBattleSubscriber, MaxHPChangeSubscriber, MiscMethods {
+public class TestMod
+		implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber, PostDungeonInitializeSubscriber,
+		PreUpdateSubscriber, PostUpdateSubscriber, StartGameSubscriber, PostInitializeSubscriber,
+		OnStartBattleSubscriber, MaxHPChangeSubscriber, EditKeywordsSubscriber, PostBattleSubscriber, MiscMethods {
 	public static Mode MODE = Mode.BOX;
 	public static final String MOD_ID = "testmod";
 	public static final String SAVE_NAME = "TestMod";
@@ -103,6 +104,112 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		public boolean box() {
 			return this == BOX;
 		}
+	}
+	
+	private static final ArrayList<ISubscriber> SUB_MOD = new ArrayList<ISubscriber>();
+	
+	public static void subscribeSubModClass(ISubscriber sub) {
+		SUB_MOD.add(sub);
+	}
+	
+	public static void addRelicsToPool(AbstractRelic... relics) {
+		for (AbstractRelic r : relics)
+			RELICS.add(r);
+	}
+	
+	private static void editSubModRelics(ISubscriber sub) {
+		if (sub instanceof EditRelicsSubscriber) {
+			((EditRelicsSubscriber)sub).receiveEditRelics();
+		} else {
+			info(sub.getClass().getCanonicalName() + " is not EditRelicsSubscriber! skipped.");
+		}
+	}
+	
+	private static void editSubModCards(ISubscriber sub) {
+		if (sub instanceof EditCardsSubscriber) {
+			((EditCardsSubscriber)sub).receiveEditCards();
+		} else {
+			info(sub.getClass().getCanonicalName() + " is not EditCardsSubscriber! skipped.");
+		}
+	}
+	
+	private static void editSubModKeywords(ISubscriber sub) {
+		if (sub instanceof EditKeywordsSubscriber) {
+			((EditKeywordsSubscriber)sub).receiveEditKeywords();
+		} else {
+			info(sub.getClass().getCanonicalName() + " is not EditKeywordsSubscriber! skipped.");
+		}
+	}
+	
+	private static void editSubModStrings(ISubscriber sub) {
+		if (sub instanceof EditStringsSubscriber) {
+			((EditStringsSubscriber)sub).receiveEditStrings();
+		} else {
+			info(sub.getClass().getCanonicalName() + " is not EditStringsSubscriber! skipped.");
+		}
+	}
+	
+	private static void editSubModPostDungeonInit(ISubscriber sub) {
+		if (sub instanceof PostDungeonInitializeSubscriber) {
+			((PostDungeonInitializeSubscriber)sub).receivePostDungeonInitialize();
+		} else {
+			info(sub.getClass().getCanonicalName() + " is not PostDungeonInitializeSubscriber! skipped.");
+		}
+	}
+	
+	private static void editSubModPostUpdate(ISubscriber sub) {
+		if (sub instanceof PostUpdateSubscriber) {
+			((PostUpdateSubscriber)sub).receivePostUpdate();
+		} else {
+			//info(sub.getClass().getCanonicalName() + " is not PostUpdateSubscriber! skipped.");
+		}
+	}
+	
+	private static void editSubModStartGame(ISubscriber sub) {
+		if (sub instanceof StartGameSubscriber) {
+			((StartGameSubscriber)sub).receiveStartGame();
+		} else {
+			info(sub.getClass().getCanonicalName() + " is not StartGameSubscriber! skipped.");
+		}
+	}
+	
+	private static void editSubModStartBattle(ISubscriber sub, AbstractRoom r) {
+		if (sub instanceof OnStartBattleSubscriber) {
+			((OnStartBattleSubscriber)sub).receiveOnBattleStart(r);
+		} else {
+			info(sub.getClass().getCanonicalName() + " is not OnStartBattleSubscriber! skipped.");
+		}
+	}
+	
+	private static void editSubModPostBattle(ISubscriber sub, AbstractRoom r) {
+		if (sub instanceof PostBattleSubscriber) {
+			((PostBattleSubscriber)sub).receivePostBattle(r);
+		} else {
+			info(sub.getClass().getCanonicalName() + " is not OnStartBattleSubscriber! skipped.");
+		}
+	}
+
+	@Override
+	public void receiveEditKeywords() {
+		// TODO
+		switch (Settings.language) {
+		case ZHS:
+		case ZHT:
+			BaseMod.addKeyword(new String[] { "死亡刻印" }, "被标记 #y死亡刻印 的敌人在失去生命时会增加等量的层数。");
+			break;
+		default:
+			BaseMod.addKeyword(new String[] { "Imprint" }, "#yImprint will increase the amount of damage whenever the owner loses HP.");
+			break;
+		}
+		for (ISubscriber s : SUB_MOD)
+			editSubModKeywords(s);
+	}
+
+	@Override
+	public void receivePostBattle(AbstractRoom r) {
+		// TODO Auto-generated method stub
+		for (ISubscriber s : SUB_MOD)
+			editSubModPostBattle(s, r);
 	}
 	
 	public static void info(String s) {
@@ -184,6 +291,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	 */
 	public static void initialize() {
 		BaseMod.subscribe(new TestMod());
+		HalloweenMod.initialize();
 	}
 
 	@Override
@@ -205,6 +313,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);
 		}
+
+		for (ISubscriber s : SUB_MOD)
+			editSubModRelics(s);
 		
 		for (AbstractRelic r : RELICS) {
 			BaseMod.addRelic(r, RelicType.SHARED);
@@ -237,6 +348,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		BaseMod.loadCustomStrings(PowerStrings.class, readString("powers"));
 		BaseMod.loadCustomStrings(PotionStrings.class, readString("potions"));
 		BaseMod.loadCustomStrings(EventStrings.class, readString("events"));
+		for (ISubscriber s : SUB_MOD)
+			editSubModStrings(s);
 	}
 
 	@Override
@@ -268,6 +381,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		for (int i = 0; i < 37; i++) {
 			this.addMahjongToList(AbstractMahjongCard.mahjong(i));
 		}
+		
+		for (ISubscriber s : SUB_MOD)
+			editSubModCards(s);
 		
 		//BaseMod.addCard(new Test());
 	}
@@ -460,6 +576,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}
 		if (config == null)
 			this.initSavingConfig();
+		for (ISubscriber s : SUB_MOD)
+			editSubModPostDungeonInit(s);
 		DragonStarHat.resetValue();
 		Faith.reset();
 		AscensionHeart.reset();
@@ -615,6 +733,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 	@Override
 	public void receivePostUpdate() {
+		for (ISubscriber s : SUB_MOD)
+			editSubModPostUpdate(s);
 		// TODO Auto-generated method stub
 		AbstractPlayer p = AbstractDungeon.player;
 		
@@ -772,6 +892,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receiveStartGame() {
 		if (config == null)
 			this.initSavingConfig();
+
+		for (ISubscriber s : SUB_MOD)
+			editSubModStartGame(s);
 		
 		if (AbstractDungeon.player.hasRelic(makeID(PortableAltar.ID))) {
 			PortableAltar.load(getInt(PortableAltar.SAVE_NAME));
@@ -888,7 +1011,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		initCheat();
 		initLatest();
 		*/
-		
 		// TODO
 	}
 
@@ -902,6 +1024,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	@Override
 	public void receiveOnBattleStart(AbstractRoom room) {
+		for (ISubscriber s : SUB_MOD)
+			editSubModStartBattle(s, room);
 		PerfectComboAction.setRng();
 		AbstractMahjongCard.setRng();
 		Mahjong.setRng();

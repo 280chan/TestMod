@@ -118,7 +118,7 @@
   },
   "testmod-DeathImprint": {
     "NAME": "死亡刻印",
-    "DESCRIPTION": "造成 !D! 点伤害。如果敌人有死亡刻印，将其消去并将基础伤害增加其层数的 !M! %。否则给予敌人死亡刻印。"
+    "DESCRIPTION": "造成 !D! 点伤害。如果敌人有 死亡刻印 ，将其消去并将基础伤害增加其层数的 !M! %。否则给予敌人 死亡刻印 。"
   },
   "testmod-DisillusionmentEcho": {
     "NAME": "幻灭回响",
