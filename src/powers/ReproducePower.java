@@ -1,5 +1,6 @@
 package powers;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -32,7 +33,12 @@ public class ReproducePower extends AbstractTestPower {
 	
 	public void onAfterCardPlayed(AbstractCard c) {
     	if (c.equals(this.c)) {
-    		c.setCostForTurn(c.costForTurn + this.amount);
+    		this.addToBot(new AbstractGameAction(){
+				@Override
+				public void update() {
+					this.isDone = true;
+		    		c.setCostForTurn(c.costForTurn + ReproducePower.this.amount);
+				}});
     		if (!c.returnToHand)
     			c.returnToHand = true;
     		if (!c.retain)
