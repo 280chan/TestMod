@@ -368,7 +368,7 @@ public class TestMod
 				new TemporaryDeletion(), new EnhanceArmerment(), new TradeIn(), new TaurusBlackCat(),
 				new PainDetonator(), new FightingIntention(), new Reverberation(), new SelfRegulatingSystem(),
 				new Superconductor(), new BackupPower(), new Illusory(), new Librarian(), new HandmadeProducts(),
-				new Automaton(), new PowerStrike(), new WeaknessCounterattack() };
+				new Automaton(), new PowerStrike(), new WeaknessCounterattack(), new Reproduce() };
 		// TODO
 		for (AbstractCard c : card) {
 			CARDS.add(c);

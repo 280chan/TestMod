@@ -234,6 +234,10 @@
     "DESCRIPTION": "选择一张牌从本场战斗中移除。每回合将1张其复制品加入手牌。 虚无 。",
     "UPGRADE_DESCRIPTION": "选择一张牌从本场战斗中移除。每回合将1张其复制品加入手牌。"
   },
+  "testmod-Reproduce": {
+    "NAME": "复刻",
+    "DESCRIPTION": "固有 。选择一张牌，赋予 保留 、打出后回到手牌、打出后回合内耗能加 !M! 。"
+  },
   "testmod-Reverberation": {
     "NAME": "残响",
     "DESCRIPTION": "每当一张非 诅咒 、 状态 牌 消耗 时，触发其打出时的效果 !M! 次。 虚无 。",

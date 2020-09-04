@@ -138,7 +138,9 @@ public interface MiscMethods {
 				public void update() {
 					this.isDone = true;
 					if (!c.dontTriggerOnUseCard)
-						for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters)
+						for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+							boolean timecollector = false;
+							int tcIndex = -1;
 							for (AbstractPower p : monster.powers) {
 								if (p.ID.equals("Time Warp") && p.amount == 11) {
 									startByCardTimeWarpIssues(p);
@@ -146,7 +148,15 @@ public interface MiscMethods {
 								if (p.ID.equals("ImpatiencePower") && p.amount == 14) {
 									p.amount = -1;
 								}
+								if (p.ID.equals("TimeCollector") && p.amount == 11) {
+									timecollector = true;
+									tcIndex = monster.powers.indexOf(p);
+								}
 							}
+							if (timecollector && tcIndex > -1) {
+								monster.powers.remove(tcIndex);
+							}
+						}
 				}});
 	    }
 	    

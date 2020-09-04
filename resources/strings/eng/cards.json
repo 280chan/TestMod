@@ -234,6 +234,10 @@
 		"DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add a copy of it into your hand. Ethereal.",
 		"UPGRADE_DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add a copy of it into your hand."
 	},
+	"testmod-Reproduce": {
+		"NAME": "Reproduce",
+		"DESCRIPTION": "Innate . Choose a card, make it Retain, goes back hand when played, increase its cost in turn by !M! ."
+	},
 	"testmod-Reverberation": {
 		"NAME": "Reverberation",
 		"DESCRIPTION": "Whenever a card except Curse or Status Exhausts, function it !M! times. Ethereal.",

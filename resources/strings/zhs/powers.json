@@ -181,6 +181,13 @@
 			" 加入手牌。"
 		]
 	},
+	"testmod-ReproducePower":{
+		"NAME":"复刻",
+		"DESCRIPTIONS":[
+			"在本场战斗中 #y[",
+			"] 被赋予 #y保留 ， #y打出后回到手牌 ，打出后回合内耗能增加 #b1 。"
+		]
+	},
 	"testmod-ReverberationPower":{
 		"NAME":"残响",
 		"DESCRIPTIONS":[

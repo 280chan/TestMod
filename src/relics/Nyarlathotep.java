@@ -14,7 +14,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 	
 	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm" };
 	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets",
-			"paleoftheancients:SoulOfTheDefect" };
+			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky" };
 
 	public Nyarlathotep() {
 		super(ID, RelicTier.RARE, LandingSound.MAGICAL);

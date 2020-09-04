@@ -181,6 +181,13 @@
     	" into your hand."
     ]
   },
+	"testmod-ReproducePower":{
+		"NAME":"Reproduce",
+		"DESCRIPTIONS":[
+			"In this combat, #y[",
+			"] is given #yRetain, #yreturn #yto #yhand, whenever played, increase cost for turn by #b1."
+		]
+	},
   "testmod-ReverberationPower": {
     "NAME": "Reverberation",
     "DESCRIPTIONS": [
