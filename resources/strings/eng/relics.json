@@ -402,5 +402,11 @@
 		"NAME": "The Mahjong (Work In Progress)",
 		"FLAVOR": "这个人很懒，什么都没有写。",
 		"DESCRIPTIONS":["#rBUG #rALERT. #rUNFINISHED #rRELIC. 在战斗中进行麻将游戏，每回合开始摸一张麻将牌后选择切出一张，将其加入手牌。打出 #y宝牌 的效果翻倍。根据和牌点数获得其他效果。 NL #r这件遗物还未制作完成，只能发挥一小部分效果，并含有许多bug(初次战斗闪退，重开自动修复)若目前不想测试本遗物可选择重开。"]
+	},
+	
+	"testmod-ArcanaOfDestiny":{
+		"NAME": "Arcana of Destiny",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["For all enemies that have hp percentage less than player, for every #b1% less, receiving #b2% more damage. For all enemies that have hp percentage more than player, for every #b1% more, its Attack damage will be #b1% less."]
 	}
 }
