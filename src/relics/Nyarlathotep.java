@@ -11,10 +11,11 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 public class Nyarlathotep extends AbstractTestRelic {
 	public static final String ID = "Nyarlathotep";
-	
+
 	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm" };
 	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets",
-			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky" };
+			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots",
+			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter" };
 
 	public Nyarlathotep() {
 		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
