@@ -58,6 +58,7 @@ import cards.mahjong.*;
 import events.*;
 import halloweenMod.mymod.HalloweenMod;
 import potions.*;
+import powers.TheFatherPower;
 import powers.SuperconductorNoEnergyPower;
 import relics.*;
 import utils.*;
@@ -308,7 +309,8 @@ public class TestMod
 				new IWantAll(), new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(),
 				new Faith(), new FatalChain(), new CyclicPeriapt(), new EqualTreatment(), new ConstraintPeriapt(),
 				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new CasingShield(), new TestBox(),
-				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong(), new ArcanaOfDestiny() };
+				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong(), new ArcanaOfDestiny(),
+				new TheFather() };
 		// 添加遗物进游戏 TODO
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);
@@ -578,6 +580,7 @@ public class TestMod
 			this.initSavingConfig();
 		for (ISubscriber s : SUB_MOD)
 			editSubModPostDungeonInit(s);
+		TheFatherPower.clear();
 		DragonStarHat.resetValue();
 		Faith.reset();
 		AscensionHeart.reset();

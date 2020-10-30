@@ -17,7 +17,6 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 
 import basemod.BaseMod;
-import basemod.helpers.RelicType;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.EditKeywordsSubscriber;
 import basemod.interfaces.EditRelicsSubscriber;
@@ -63,7 +62,6 @@ public class HalloweenMod implements EditKeywordsSubscriber, EditRelicsSubscribe
 
 	@Override
 	public void receiveEditRelics() {
-		BaseMod.addRelic(new EventCelebration_Halloween(), RelicType.SHARED);
 		TestMod.addRelicsToPool(new EventCelebration_Halloween());
 	}
 
