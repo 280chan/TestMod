@@ -30,7 +30,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen {
 	
 	private static AbstractRelic priority() {
 		Calendar c = Calendar.getInstance();
-		int month = c.get(Calendar.MONTH); 
+		int month = c.get(Calendar.MONTH) + 1; 
 		int date = c.get(Calendar.DATE); 
 		if ((month == 10 && date == 31) || (month == 11 && date == 1))
 			return new EventCelebration_Halloween();
