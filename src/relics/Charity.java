@@ -19,8 +19,6 @@ public class Charity extends AbstractTestRelic{
 	}
 	
 	public void onGainGold() {
-		if (!this.isActive)
-			return;
 		AbstractPlayer p = AbstractDungeon.player;
 		if (p.gold > 0)
 			p.gold--;

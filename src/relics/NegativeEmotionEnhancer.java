@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.powers.FrailPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class NegativeEmotionEnhancer extends AbstractTestRelic implements MiscMethods {
@@ -38,27 +37,18 @@ public class NegativeEmotionEnhancer extends AbstractTestRelic implements MiscMe
 	}
 
 	public void onEquip() {
-		TestMod.setActivity(this);
-		if (!this.isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster++;
     }
 	
 	public void onUnequip() {
-		if (!this.isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster--;
     }
 	
 	public void atPreBattle() {
-		if (!this.isActive)
-			return;
 		this.counter = 0;
 	}
 	
 	public void atTurnStart() {
-		if (!this.isActive)
-			return;
 		this.counter++;
 		AbstractPlayer p = AbstractDungeon.player;
 		switch (this.counter % 3) {
@@ -75,8 +65,6 @@ public class NegativeEmotionEnhancer extends AbstractTestRelic implements MiscMe
     }
 
 	public void onVictory() {
-		if (!this.isActive)
-			return;
 		AbstractDungeon.player.increaseMaxHp(1, true);
 	}
 	

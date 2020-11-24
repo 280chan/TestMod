@@ -1,0 +1,77 @@
+﻿{
+	"christmas-Death":{
+		"NAME": "灾厄 - 死亡",
+		"DESCRIPTION": "造成 !D! 点伤害。如果这张牌杀死了敌人，再对某个随机目标造成伤害。每杀死一个敌人，之后的伤害次数增加 !M! 。"
+	},
+	
+	"christmas-Famine":{
+		"NAME": "灾厄 - 饥荒",
+		"DESCRIPTION": "造成 !D! 点伤害。恢复造成伤害一半的生命。如果 斩杀 ，获得 !M! 点最大生命。"
+	},
+	
+	"christmas-Plague":{
+		"NAME": "灾厄 - 瘟疫",
+		"DESCRIPTION": "获得5层毒雾。受到攻击伤害时，使所有敌人身上的中毒生效 !M! 次 。"
+	},
+	
+	"christmas-War":{
+		"NAME": "灾厄 - 战争",
+		"DESCRIPTION": "每当你造成群体伤害时，将会额外造成 !M! 次。"
+	},
+	
+	"christmas-GiftDamaged":{
+		"NAME": "圣诞礼物 - 破损",
+		"DESCRIPTION": "每当你抽到 状态 牌时，将其 消耗 并将 !M! 张随机礼物加入手牌。你的所有 礼物 牌在本场战斗中的耗能变为0，打出时将其 消耗 。"
+	},
+	
+	"christmas-GiftDisturb":{
+		"NAME": "圣诞礼物 - 干涉",
+		"DESCRIPTION": "使敌人失去X点 力量 ，并给予X-1层的 虚弱 和 易伤 。若其有 人工制品 ，额外给予1层 虚弱 一次。",
+		"UPGRADE_DESCRIPTION": "使敌人失去X+1点 力量 ，并给予X层的 虚弱 和 易伤 。若其有 人工制品 ，额外给予1层 虚弱 一次。"
+	},
+	
+	"christmas-GiftExplosion":{
+		"NAME": "圣诞礼物 - 爆破",
+		"DESCRIPTION": "每 !M! 回合获得1个3层的炸弹buff。"
+	},
+	
+	"christmas-GiftHypnosis":{
+		"NAME": "圣诞礼物 - 催眠",
+		"DESCRIPTION": "造成 !D! 点伤害。将 !M! 张 虚空 加入弃牌堆。结束你的回合，并立即开始你的下一回合。"
+	},
+	
+	"christmas-GiftInfinite":{
+		"NAME": "圣诞礼物 - 无限",
+		"DESCRIPTION": "每回合开始时将 !M! 张随机的圣诞礼物加入手牌。 ",
+		"UPGRADE_DESCRIPTION": "每回合开始时将 !M! 张随机的 升级 后的圣诞礼物加入手牌。"
+	},
+	
+	"christmas-GiftIron":{
+		"NAME": "圣诞礼物 - 钢铁",
+		"DESCRIPTION": "造成 !D! 点伤害。如果这张牌杀死了敌人，将 !M! 张随机的 升级 后的圣诞礼物加入手牌。"
+	},
+	
+	"christmas-GiftKakaa":{
+		"NAME": "圣诞礼物 - 咔咔",
+		"DESCRIPTION": "每当你打出能力牌时获得 !M! 点 力量 。",
+		"UPGRADE_DESCRIPTION": "每当你打出能力牌时获得 !M! 点 力量 。每回合开始获得 !M! 点 力量 。"
+	},
+	
+	"christmas-GiftLuck":{
+		"NAME": "圣诞礼物 - 幸运",
+		"DESCRIPTION": "抽一张牌。随机将 !M! 至 !M! +2张随机的圣诞礼物加入手牌，每加入一张就将一张 晕眩 加入弃牌堆。 消耗 。",
+		"UPGRADE_DESCRIPTION": "抽一张牌。随机将 !M! 至 !M! +2张随机的 升级 后的圣诞礼物加入手牌，每加入一张就将一张 晕眩 加入弃牌堆。 消耗 。"
+	},
+	
+	"christmas-GiftMagic":{
+		"NAME": "圣诞礼物 - 魔力",
+		"DESCRIPTION": "在你的每个空药水栏位加入随机药水。 虚无 。",
+		"UPGRADE_DESCRIPTION": "在你的每个空药水栏位加入随机药水。"
+	},
+	
+	"christmas-GiftVoid":{
+		"NAME": "圣诞礼物 - 虚空",
+		"DESCRIPTION": "将 !M! 张 虚空 加入弃牌堆。 消耗 。 虚无 。"
+	}
+	
+}

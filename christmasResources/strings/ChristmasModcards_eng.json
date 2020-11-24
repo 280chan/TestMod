@@ -1,0 +1,77 @@
+﻿{
+	"christmas-Death":{
+		"NAME": "Disaster - Death",
+		"DESCRIPTION": "Deal !D! Damage. If kills enemy, deal damage again to a random enemy with extra !M! time."
+	},
+	
+	"christmas-Famine":{
+		"NAME": "Disaster - Famine",
+		"DESCRIPTION": "Deal !D! Damage. Heal half the unblocked damage made. If Fatal, gain !M! Max HP."
+	},
+	
+	"christmas-Plague":{
+		"NAME": "Disaster - Plague",
+		"DESCRIPTION": "Gain 5 Noxious Fumes. When you receive Attack damage, make the enemy's Poison affects !M! times."
+	},
+	
+	"christmas-War":{
+		"NAME": "Disaster - War",
+		"DESCRIPTION": "Whenever you apply an AOE damage, repeat !M! times."
+	},
+	
+	"christmas-GiftDamaged":{
+		"NAME": "Christmas Gift - Damaged",
+		"DESCRIPTION": "Whenever you draw Status, Exhaust it and add !M! random Christmas Gift into your hand. Christmas Gift cost 0. Whenever you play a Christmas Gift, Exhaust it."
+	},
+	
+	"christmas-GiftDisturb":{
+		"NAME": "Christmas Gift - Disturb",
+		"DESCRIPTION": "Enemy loses X Strength, apply X-1 Weak and Vulnerable. If it has Artifact, apply 1 Weak again.",
+		"UPGRADE_DESCRIPTION": "Enemy loses X+1 Strength, apply X Weak and Vulnerable. If it has Artifact, apply 1 Weak again."
+	},
+	
+	"christmas-GiftExplosion":{
+		"NAME": "Christmas Gift - Explosion",
+		"DESCRIPTION": "Gain a 3 tier Bomb every !M! turns."
+	},
+	
+	"christmas-GiftHypnosis":{
+		"NAME": "Christmas Gift - Hypnosis",
+		"DESCRIPTION": "Deal !D! Damage. Add !M! Void into Discard Pile. End your turn and start your next turn."
+	},
+	
+	"christmas-GiftInfinite":{
+		"NAME": "Christmas Gift - Infinite",
+		"DESCRIPTION": "At the start of your turn, add !M! random Christmas Gift into your hand.",
+		"UPGRADE_DESCRIPTION": "At the start of your turn, add !M! random Upgraded Christmas Gift into your hand."
+	},
+	
+	"christmas-GiftIron":{
+		"NAME": "Christmas Gift - Iron",
+		"DESCRIPTION": "Deal !D! Damage. If kills enemy, add !M! random Upgraded Christmas Gift into your hand."
+	},
+	
+	"christmas-GiftKakaa":{
+		"NAME": "Christmas Gift - Kakaa",
+		"DESCRIPTION": "Whenever you play a Power, gain !M! Strength.",
+		"UPGRADE_DESCRIPTION": "Whenever you play a Power, gain !M! Strength. At the start of your turn, gain !M! Strength."
+	},
+	
+	"christmas-GiftLuck":{
+		"NAME": "Christmas Gift - Luck",
+		"DESCRIPTION": "Draw a card. Add !M! to !M! +2 random Christmas Gift into your hand, for each, add a Dazed into Discard Pile. Exhaust.",
+		"UPGRADE_DESCRIPTION": "Draw a card. Add !M! to !M! +2 random Upgraded Christmas Gift into your hand, for each, add a Dazed into Discard Pile. Exhaust."
+	},
+	
+	"christmas-GiftMagic":{
+		"NAME": "Christmas Gift - Magic",
+		"DESCRIPTION": "Fills all your potion slots with random potion. Ethereal.",
+		"UPGRADE_DESCRIPTION": "Fills all your potion slots with random potion."
+	},
+	
+	"christmas-GiftVoid":{
+		"NAME": "Christmas Gift - Void",
+		"DESCRIPTION": "Add !M! Void into Discard Pile. Exhaust. Ethereal."
+	}
+	
+}

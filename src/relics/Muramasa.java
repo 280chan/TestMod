@@ -33,14 +33,10 @@ public class Muramasa extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction useCardAction) {
-		if (!isActive)
-			return;
 		tryDo(c);
 	}
 	
 	public void onCardDraw(final AbstractCard c) {
-		if (!isActive)
-			return;
 		tryDo(c);
     }
 	
@@ -61,7 +57,7 @@ public class Muramasa extends AbstractTestRelic implements MiscMethods {
 			} else
 				this.removeFromGlowList(c, color);
 		}
-		if (active)
+		if (active && this.counter == 1)
 			this.beginLongPulse();
 		else
 			this.stopPulse();

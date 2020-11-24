@@ -68,9 +68,10 @@ public class Acrobat extends AbstractTestRelic implements MiscMethods {
 			else
 				state = -1;
 			if (this.state * state < 0 && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
-				this.addToGlowChangerList(c, color);
+				if (this.isActive)
+					this.addToGlowChangerList(c, color);
 				active = true;
-			} else
+			} else if (this.isActive)
 				this.removeFromGlowList(c, color);
 		}
 		if (active)

@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 public class Nyarlathotep extends AbstractTestRelic {
 	public static final String ID = "Nyarlathotep";
 
-	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm" };
+	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm", "Curiosity" };
 	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets",
 			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots",
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter" };
@@ -30,8 +30,6 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
-		if (!this.isActive)
-			return;
 		this.triggerExhaustFor(c);
 		this.triggerDiscardFor(c);
 		this.triggerUsePowerCard(c, action);
@@ -72,15 +70,11 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	public void onExhaust(final AbstractCard c) {
-		if (!this.isActive)
-			return;
 		this.triggerDiscardFor(c);
 		this.show();
     }
 	
 	public void onManualDiscard() {
-		if (!this.isActive)
-			return;
 		this.triggerExhaustFor(AbstractDungeon.player.discardPile.getTopCard());
 		this.show();
     }

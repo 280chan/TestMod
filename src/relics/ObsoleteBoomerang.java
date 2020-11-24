@@ -3,6 +3,8 @@ package relics;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -23,9 +25,7 @@ public class ObsoleteBoomerang extends AbstractTestRelic{
 	}
 	
 	public void onUseCard(final AbstractCard targetCard, final UseCardAction useCardAction) {
-		if (!isActive)
-			return;
-		if (targetCard.type == AbstractCard.CardType.STATUS && targetCard.color != AbstractCard.CardColor.COLORLESS) {
+		if (targetCard.type == CardType.STATUS && targetCard.color != CardColor.COLORLESS) {
 			return;
 		}
 		counter++;
@@ -41,8 +41,6 @@ public class ObsoleteBoomerang extends AbstractTestRelic{
 	}
 	
 	public void atTurnStart() {
-		if (!isActive)
-			return;
 		this.counter = 0;
     }
 	

@@ -70,8 +70,6 @@ public class Hope extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public int onAttacked(final DamageInfo info, final int damage) {
-		if (!isActive)
-			return damage;
 		AbstractRoom r = AbstractDungeon.getCurrRoom();
 		if (info.type == DamageType.NORMAL && damage > 0 && r.phase == RoomPhase.COMBAT && roll(HPRng)) {
         	show();
@@ -230,23 +228,17 @@ public class Hope extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public void atPreBattle() {
-		if (!isActive)
-			return;
 		HPRng = this.copyRNG(AbstractDungeon.miscRng);
 		cardRng = this.copyRNG(AbstractDungeon.miscRng);
 		this.canDraw = false;
 	}
 
 	public void atTurnStart() {
-		if (!isActive)
-			return;
 		this.canDraw = true;
 		this.disabledUntilEndOfTurn = false;
 	}
 
 	public void onRefreshHand() {
-		if (!isActive)
-			return;
 		if ((AbstractDungeon.actionManager.actions.isEmpty()) && (AbstractDungeon.player.hand.isEmpty())
 				&& (!AbstractDungeon.actionManager.turnHasEnded) && (this.canDraw) && (!AbstractDungeon.isScreenUp)) {
 			if ((AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) && (!this.disabledUntilEndOfTurn)) {

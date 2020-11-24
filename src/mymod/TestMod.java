@@ -55,6 +55,7 @@ import basemod.interfaces.MaxHPChangeSubscriber;
 import cards.*;
 import cards.colorless.*;
 import cards.mahjong.*;
+import christmasMod.mymod.ChristmasMod;
 import events.*;
 import halloweenMod.mymod.HalloweenMod;
 import potions.*;
@@ -293,6 +294,7 @@ public class TestMod
 	public static void initialize() {
 		BaseMod.subscribe(new TestMod());
 		HalloweenMod.initialize();
+		ChristmasMod.initialize();
 	}
 
 	@Override
@@ -458,32 +460,15 @@ public class TestMod
 	
 	private static int latestIndex = 0;
 	
-	private static boolean checkLatest(AbstractPlayer p) {
-		if (CardCrawlGame.playerName.equals("BrkStarshine")) {
-			info("Checked");
-			if (latestIndex < LATEST.size()) {
-				Object o = LATEST.get(latestIndex++);
-				obtain(p, o);
-				return true;
-			}
-		} else {
-			for (Object o : LATEST) {
-				if (o instanceof AbstractRelic) {
-					if(UnlockTracker.isRelicSeen(((AbstractRelic)o).relicId))
-						continue;
-				} else if (o instanceof AbstractCard) {
-					if(UnlockTracker.isCardSeen(((AbstractCard)o).cardID))
-						continue;
-				}
-				obtain(p, o);
-				return true;
-			}
+	public static Object checkLatest() {
+		if (latestIndex < LATEST.size()) {
+			return LATEST.get(latestIndex++);
 		}
-		return false;
+		return null;
 	}
 	
 	private static void initLatest() {
-		addLatest();
+		addLatest(new ArcanaOfDestiny(), new TheFather(), new Fanaticism());
 	}
 	
 	private static void addLatest(Object... list) {
@@ -597,7 +582,7 @@ public class TestMod
 			obtain(p, randomBonusRelic());
 			break;
 		case RANDOM:
-			if (!checkLatest(p))
+			if (checkLatest() == null)
 				obtain(p, randomBonusReward());
 			break;
 		case CHEAT:
@@ -1012,8 +997,8 @@ public class TestMod
 		
 		/*
 		initCheat();
-		initLatest();
 		*/
+		initLatest();
 		// TODO
 	}
 

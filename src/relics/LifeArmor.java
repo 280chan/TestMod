@@ -24,14 +24,12 @@ public class LifeArmor extends AbstractTestRelic {
 	}
 	
 	public void atPreBattle() {
-		if (!this.isActive)
-			return;
 		this.counter = 0;
 		this.beginLongPulse();
 	}
 	
 	public void onLoseHp(int amount) {
-		if (!this.isActive || AbstractDungeon.floorNum == 0)
+		if (AbstractDungeon.floorNum == 0)
 			return;
 		if (this.counter < 0)
 			return;
@@ -41,8 +39,6 @@ public class LifeArmor extends AbstractTestRelic {
 	}
 	
 	public void onVictory() {
-		if (!this.isActive)
-			return;
 		this.counter = -1;
 		this.stopPulse();
 	}

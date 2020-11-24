@@ -1,0 +1,41 @@
+﻿{
+  "testmod-GiftDamagedPower": {
+    "NAME": "Christmas Gift - Damaged",
+    "DESCRIPTIONS": [
+      "Whenever you draw a #yStatus, #yExhaust it and add #b",
+      " random #yChristmas #yGift into your hand. #yChristmas #yGift cost #b0 and #Exhaust on use."
+    ]
+  },
+  "testmod-GiftExplosionPower": {
+    "NAME": "Christmas Gift - Explosion",
+    "DESCRIPTIONS": [
+      "Every #b",
+      " turns start, gain #b",
+      " of tier #b3 #yBomb. NL Next affect in #b",
+      " turns."
+    ]
+  },
+  "testmod-GiftInfinitePower": {
+    "NAME": "Christmas Gift - Infinite",
+    "DESCRIPTIONS": [
+      "At start of each turn add #b",
+      " random",
+      " #yUpgraded",
+      " #yChristmas #yGift into your hand."
+    ]
+  },
+  "testmod-PlaguePower": {
+    "NAME": "Disaster - Plague",
+    "DESCRIPTIONS": [
+      "Whenever you receive an #Attack damage, make the enemy's #yPoison affects #b",
+      " times."
+    ]
+  },
+  "testmod-WarPower": {
+    "NAME": "Disaster - War",
+    "DESCRIPTIONS": [
+      "Whenever you apply an AOE damage, repeat the damage #b",
+      " times."
+    ]
+  }
+}

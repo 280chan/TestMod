@@ -2,11 +2,13 @@ package utils;
 
 import java.util.Calendar;
 
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
+import christmasMod.mymod.ChristmasMod;
 import halloweenMod.relics.EventCelebration_Halloween;
 import mymod.TestMod;
 import relics.TestBox;
@@ -32,9 +34,19 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen {
 		Calendar c = Calendar.getInstance();
 		int month = c.get(Calendar.MONTH) + 1; 
 		int date = c.get(Calendar.DATE); 
+		//TestMod.info("月:" + month + "日:" + date);
 		if ((month == 10 && date == 31) || (month == 11 && date == 1))
 			return new EventCelebration_Halloween();
-		// TODO
+		// TODO 圣诞
+		if (month == 12 && date > 20)
+			return ChristmasMod.randomRelic();
+		if (!Settings.seedSet) {
+			if ("BrkStarshine".equals(CardCrawlGame.playerName) || "280 chan".equals(CardCrawlGame.playerName)) {
+				Object o = TestMod.checkLatest();
+				if (o != null)
+					return (AbstractRelic) o;
+			}
+		}
 		return null;
 	}
 	

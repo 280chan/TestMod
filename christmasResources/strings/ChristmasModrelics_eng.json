@@ -1,0 +1,13 @@
+﻿{
+	"testmod-ChristmasGift":{
+		"NAME": "Christmas Gift",
+		"FLAVOR": "Merry Christmas",
+		"DESCRIPTIONS":["At start of each turn, add a random #yChristmas #yGift into your hand. Whenever you #yExhaust a card, heal #b1."]
+	},
+	
+	"testmod-GiftOfSatan":{
+		"NAME": "Gift Box of Satan",
+		"FLAVOR": "Merry Christmas",
+		"DESCRIPTIONS":["At start of each turn, add a random #yDisaster into your hand. If someone's hp ends with several #b6, for each #b6, add an extra #yDisaster. Whenever someone recieving damage amount ends with several #b6, for each #b6, add a random #yDisaster into your hand. Start from #b6th turn, you only get upgraded #yDisaster from this relic, and when you play a #yDisaster, #yExhaust it. At end of combats, right click this relic to have #b25% chance gain a #yDisaster reward."]
+	}
+}

@@ -72,7 +72,7 @@ public class ThousandKnives extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
-		if (this.isActive && checkCard(c)) {
+		if (checkCard(c)) {
 			this.addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, countCards(), true));
 			this.addToBot(new MakeTempCardInDiscardAction(c.makeStatEquivalentCopy(), 1));
 			this.show();
@@ -80,7 +80,7 @@ public class ThousandKnives extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public void onCardDraw(final AbstractCard c) {
-		if (this.isActive && checkCard(c)) {
+		if (checkCard(c)) {
 			this.addToTop(new MakeTempCardInHandAction(c.makeStatEquivalentCopy()));
 			this.show();
 		}

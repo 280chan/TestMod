@@ -1,7 +1,5 @@
 package relics;
 
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-
 import actions.AssaultLearningAction;
 
 public class AssaultLearning extends AbstractTestRelic {
@@ -16,8 +14,7 @@ public class AssaultLearning extends AbstractTestRelic {
 	}
 	
 	public void atTurnStartPostDraw() {
-		if (this.isActive)
-			AbstractDungeon.actionManager.addToBottom(new AssaultLearningAction(this));
+		this.addToBot(new AssaultLearningAction(this));
     }
 	
 }

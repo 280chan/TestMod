@@ -23,21 +23,15 @@ public class CasingShield extends AbstractTestRelic {
 	}
 
 	public void atPreBattle() {
-		if (!this.isActive)
-			return;
 		this.counter = 0;
 	}
 	
 	public void atTurnStart() {
-		if (!this.isActive)
-			return;
 		this.stopPulse();
 		this.counter = 0;
 	}
 	
 	public void onVictory() {
-		if (!this.isActive)
-			return;
 		this.stopPulse();
 		this.counter = -1;
 	}
@@ -47,12 +41,10 @@ public class CasingShield extends AbstractTestRelic {
 	}
 	
 	public int onPlayerGainedBlock(float amount) {
-		if (!this.isActive)
-			return super.onPlayerGainedBlock(amount);
 		int block = MathUtils.floor(amount) + this.counter;
 		if (amount > 0) {
 			this.beginLongPulse();
-			this.show();
+			this.flash();
 			this.counter++;
 		}
 		return block;

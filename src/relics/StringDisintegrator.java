@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class StringDisintegrator extends AbstractTestRelic implements MiscMethods {
@@ -121,15 +120,10 @@ public class StringDisintegrator extends AbstractTestRelic implements MiscMethod
 	}
 	
 	public void onEquip() {
-		TestMod.setActivity(this);
-		if (!this.isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster++;
     }
 	
 	public void onUnequip() {
-		if (!this.isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster--;
     }
 	

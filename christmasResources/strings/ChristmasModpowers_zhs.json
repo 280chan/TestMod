@@ -1,0 +1,41 @@
+﻿{
+  "testmod-GiftDamagedPower": {
+    "NAME": "圣诞礼物-破损",
+    "DESCRIPTIONS": [
+      "每当你抽到 #y状态 牌时，将其 #y消耗 并将 #b",
+      " 张随机 #y礼物 加入手牌。你的所有 #y礼物 牌在本场战斗中的耗能变为 #b0 ，打出时将其 #y消耗 。"
+    ]
+  },
+  "testmod-GiftExplosionPower": {
+    "NAME": "圣诞礼物-爆破",
+    "DESCRIPTIONS": [
+      "每 #b",
+      " 回合开始获得 #b",
+      " 个 #b3 层的炸弹buff。 NL 下次生效在 #b",
+      " 回合后。"
+    ]
+  },
+  "testmod-GiftInfinitePower": {
+    "NAME": "圣诞礼物-无限",
+    "DESCRIPTIONS": [
+      "每回合开始将 #b",
+      " 张随机随机的",
+      " #y升级 后的",
+      "圣诞礼物加入手牌。"
+    ]
+  },
+  "testmod-PlaguePower": {
+    "NAME": "瘟疫",
+    "DESCRIPTIONS": [
+      "受到攻击伤害时，使所有敌人身上的中毒生效 #b",
+      " 次 。"
+    ]
+  },
+  "testmod-WarPower": {
+    "NAME": "战争",
+    "DESCRIPTIONS": [
+      "每当你造成群体伤害时，将会额外造成 #b",
+      " 次 。"
+    ]
+  }
+}

@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class BatchProcessingSystem extends AbstractTestRelic implements MiscMethods {
@@ -38,8 +37,6 @@ public class BatchProcessingSystem extends AbstractTestRelic implements MiscMeth
 	}
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
-		if (!this.isActive)
-			return;
 		if (c.isInAutoplay)
 			return;
 		if (this.counter == c.costForTurn) {
@@ -74,9 +71,6 @@ public class BatchProcessingSystem extends AbstractTestRelic implements MiscMeth
 	}
 	
 	public void onEquip() {
-		TestMod.setActivity(this);
-		if (!this.isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster--;
 		if (color == null)
 			color = this.initGlowColor();
@@ -89,8 +83,6 @@ public class BatchProcessingSystem extends AbstractTestRelic implements MiscMeth
     }
 	
 	public void atTurnStart() {
-		if (!this.isActive)
-			return;
 		this.counter = -1;
     }
 	

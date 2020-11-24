@@ -36,15 +36,11 @@ public class Brilliant extends AbstractTestRelic {
 	}
 	
 	public void atBattleStart() {
-		if (!this.isActive)
-			return;
 		applyDamage();
 		this.show();
     }
 	
 	public void onMonsterDeath(final AbstractMonster m) {
-		if (!this.isActive)
-			return;
 		if (AbstractDungeon.getCurrRoom().monsters.areMonstersBasicallyDead() || AbstractDungeon.getCurrRoom().monsters.areMonstersDead())
 			return;
 		applyDamage();

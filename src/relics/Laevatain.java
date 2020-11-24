@@ -9,8 +9,6 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.relics.Omamori;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
-import mymod.TestMod;
-
 public class Laevatain extends AbstractTestRelic {
 	public static final String ID = "Laevatain";
 	
@@ -23,9 +21,6 @@ public class Laevatain extends AbstractTestRelic {
 	}
 	
 	public void onEquip() {
-		TestMod.setActivity(this);
-		if (!isActive)
-			return;
 		for (AbstractCard c : Sins.SINS) {
 			AbstractDungeon.curseCardPool.removeCard(c.cardID);
 		}

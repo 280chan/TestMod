@@ -19,8 +19,6 @@ public class Fortitude extends AbstractTestRelic{
 	}
 	
 	public void onPlayerEndTurn() {
-		if (!this.isActive)
-			return;
 		if (AbstractDungeon.player.currentBlock == 0) {
 			stopPulse();
 			this.show();
@@ -30,16 +28,12 @@ public class Fortitude extends AbstractTestRelic{
 	}
 
 	public void atTurnStart() {
-		if (!this.isActive)
-			return;
 		if (AbstractDungeon.player.currentBlock == 0) {
 			beginLongPulse();
 		}
 	}
 
 	public int onPlayerGainedBlock(float blockAmount) {
-		if (!this.isActive)
-			return MathUtils.floor(blockAmount);
 		if (blockAmount > 0.0F) {
 			stopPulse();
 		}
@@ -47,8 +41,6 @@ public class Fortitude extends AbstractTestRelic{
 	}
 
 	public void onVictory() {
-		if (!this.isActive)
-			return;
 		stopPulse();
 	}
 

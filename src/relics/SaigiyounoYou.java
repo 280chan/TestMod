@@ -16,7 +16,7 @@ public class SaigiyounoYou extends AbstractTestRelic {
 	}
 	
 	public void onAttack(final DamageInfo info, final int damage, final AbstractCreature target) {
-		if (this.isActive && (target == null || !target.isPlayer) && damage > 0)
+		if ((target == null || !target.isPlayer) && damage > 0)
 			AbstractDungeon.player.heal(1);
 	}
 	

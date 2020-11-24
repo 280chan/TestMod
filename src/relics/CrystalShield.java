@@ -18,15 +18,11 @@ public class CrystalShield extends AbstractTestRelic {
 	}
 
 	public void atTurnStart() {
-		if (!this.isActive)
-			return;
 		this.counter = -1;
 		this.stopPulse();
     }
 	
 	public void onPlayerEndTurn() {
-		if (!this.isActive)
-			return;
 		if (this.counter == -2) {
 			AbstractPlayer p = AbstractDungeon.player;
 			this.addToBot(new ApplyPowerAction(p, p, new BlurPower(p, 1), 1));
@@ -37,15 +33,13 @@ public class CrystalShield extends AbstractTestRelic {
     }
 	
 	public void onVictory() {
-		if (!this.isActive)
-			return;
 		this.counter = -2;
 		this.stopPulse();
     }
 	
 	public int onPlayerGainedBlock(float blockAmount) {
 		int retVal = MathUtils.floor(blockAmount);
-		if (this.isActive && retVal > 0) {
+		if (retVal > 0) {
 			this.counter = -2;
 			this.beginLongPulse();
 		}

@@ -6,7 +6,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class CardMagician extends AbstractTestRelic implements MiscMethods {
@@ -34,21 +33,14 @@ public class CardMagician extends AbstractTestRelic implements MiscMethods {
 	}
 
 	public void onEquip() {
-		TestMod.setActivity(this);
-		if (!this.isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster++;
     }
 	
 	public void onUnequip() {
-		if (!this.isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster--;
     }
 	
 	public void atTurnStart() {
-		if (!this.isActive)
-			return;
 	    if (!AbstractDungeon.player.discardPile.isEmpty())
 	    	this.addToBot(new EmptyDeckShuffleAction());
 	    this.addToBot(new ShuffleAction(AbstractDungeon.player.drawPile));

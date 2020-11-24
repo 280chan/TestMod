@@ -18,16 +18,12 @@ public class BlackFramedGlasses extends AbstractRevivalRelicToModifyDamage {
 	}
 	
 	public void atTurnStart() {
-		if (!this.isActive)
-			return;
 		show();
 		AbstractDungeon.player.heal(1);
 		this.addToBot(new DamageAllEnemiesAction(null, DamageInfo.createDamageMatrix(1, true), DamageInfo.DamageType.HP_LOSS, AttackEffect.POISON));
     }
 	
 	public int onAttacked(final DamageInfo info, final int damageAmount) {
-		if (!this.isActive)
-			return damageAmount;
 		if (2 * damageAmount >= AbstractDungeon.player.maxHealth) {
         	show();
         	if (info.owner.isPlayer || info.owner == null) {
