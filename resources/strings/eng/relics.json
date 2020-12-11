@@ -420,5 +420,11 @@
 		"NAME": "狂热",
 		"FLAVOR": "这个人很懒，什么都没有写。",
 		"DESCRIPTIONS":["At the start of each turn, gain [E], #yWrath: gain [E]. At the end of each turn, #yWrath: exit #yWrath. Otherwise, enter #yWrath. Whenever you lose hp, for each point you lose, gain #b1% hp absorb, #yWrath: gain double.", " NL Current hp absorb: #b", "%"]
+	},
+	
+	"testmod-TurbochargingSystem":{
+		"NAME": "Turbocharging System",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["Increase base damage of all your cards by amount of its cost."]
 	}
 }
