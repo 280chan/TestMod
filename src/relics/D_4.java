@@ -34,7 +34,7 @@ public class D_4 extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public D_4() {
-		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
+		super(ID, RelicTier.SPECIAL, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

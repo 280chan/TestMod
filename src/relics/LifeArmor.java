@@ -10,7 +10,7 @@ public class LifeArmor extends AbstractTestRelic {
 	public static final String ID = "LifeArmor";
 
 	public LifeArmor() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

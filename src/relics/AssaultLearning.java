@@ -6,7 +6,7 @@ public class AssaultLearning extends AbstractTestRelic {
 	public static final String ID = "AssaultLearning";
 
 	public AssaultLearning() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

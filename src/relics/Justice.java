@@ -9,7 +9,7 @@ public class Justice extends AbstractTestRelic {
 	public static final String ID = "Justice";
 	
 	public Justice() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.UNCOMMON, LandingSound.SOLID);
 	}
 	
 	public String getUpdatedDescription() {

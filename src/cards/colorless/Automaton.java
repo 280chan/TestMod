@@ -17,7 +17,7 @@ public class Automaton extends AbstractTestCard {
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int COST = 2;
+    private static final int COST = 1;
     private static final int ATTACK_DMG = 8;
     private static final int BASE_MGC = 1;
     private static final int DELTA_MGC = 1;

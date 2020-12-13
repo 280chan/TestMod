@@ -66,7 +66,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 8/1/2020
+ * @version 12/13/2020
  * @since 6/17/2018
  */
 
@@ -468,7 +468,7 @@ public class TestMod
 	}
 	
 	private static void initLatest() {
-		addLatest(new ArcanaOfDestiny(), new TheFather(), new Fanaticism());
+		addLatest(new ArcanaOfDestiny(), new TheFather(), new Fanaticism(), new TurbochargingSystem());
 	}
 	
 	private static void addLatest(Object... list) {

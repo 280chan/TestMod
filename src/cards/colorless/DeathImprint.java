@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import actions.DeathImprintAction;
 import cards.AbstractTestCard;
@@ -19,7 +20,7 @@ public class DeathImprint extends AbstractTestCard {
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int COST = 2;
+    private static final int COST = 1;
     private static final int BASE_DMG = 8;
     private static final int BASE_MGC = 80;
     public boolean same = false;
@@ -57,8 +58,8 @@ public class DeathImprint extends AbstractTestCard {
 			}
 		}
 		if ((!this.isMultiDamage) && (m != null)) {
-			if ((AbstractDungeon.player.hasRelic("WristBlade")) && ((this.costForTurn == 0) || (this.freeToPlayOnce))) {
-				tmp += 3.0F;
+			for (AbstractRelic r : player.relics) {
+				tmp = r.atDamageModify(tmp, this);
 				if (this.baseDamage != (int) tmp) {
 					this.isDamageModified = true;
 				}
@@ -69,27 +70,18 @@ public class DeathImprint extends AbstractTestCard {
 					this.isDamageModified = true;
 				}
 			}
-			if (m != null) {
-				for (AbstractPower p : m.powers) {
-					tmp = p.atDamageReceive(tmp, this.damageTypeForTurn);
-				}
+			tmp = player.stance.atDamageGive(tmp, this.damageTypeForTurn, this);
+			if (this.baseDamage != (int) tmp) {
+				this.isDamageModified = true;
 			}
 			for (AbstractPower p : player.powers) {
-				tmp = p.atDamageFinalGive(tmp, this.damageTypeForTurn);
-				if (this.baseDamage != (int) tmp) {
-					this.isDamageModified = true;
-				}
-			}
-			if (m != null) {
-				for (AbstractPower p : m.powers) {
-					tmp = p.atDamageFinalReceive(tmp, this.damageTypeForTurn);
-					if (this.baseDamage != (int) tmp) {
-						this.isDamageModified = true;
-					}
-				}
+				tmp = p.atDamageFinalGive(tmp, this.damageTypeForTurn, this);
 			}
 			if (tmp < 0.0F) {
 				tmp = 0.0F;
+			}
+			if (this.baseDamage != MathUtils.floor(tmp)) {
+				this.isDamageModified = true;
 			}
 		}
 		return MathUtils.floor(tmp);

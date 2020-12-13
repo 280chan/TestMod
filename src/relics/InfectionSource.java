@@ -12,7 +12,7 @@ public class InfectionSource extends AbstractTestRelic {
 	public static final String ID = "InfectionSource";
 	
 	public InfectionSource() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

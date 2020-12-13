@@ -20,7 +20,7 @@ public class Mystery extends AbstractEquivalentableCard {
     private static final int BASE_MGC = 1;
 
     public Mystery() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.RARE, CardTarget.ALL_ENEMY);
+        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
         this.baseDamage = ATTACK_DMG;
         this.baseMagicNumber = BASE_MGC;
         this.magicNumber = this.baseMagicNumber;
