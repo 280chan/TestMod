@@ -426,5 +426,11 @@
 		"NAME": "Turbocharging System",
 		"FLAVOR": "这个人很懒，什么都没有写。",
 		"DESCRIPTIONS":["Increase base damage of all your cards by amount of its cost."]
+	},
+	
+	"testmod-HeartOfStrike":{
+		"NAME": "Heart of Strike",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["All your #yStrike cards deal #b2 times damage, whenever you #yExhaust a #yStrike card, increase #b1 times of damage this combat.", " NL #yStrike cards deal #b", " times damage."]
 	}
 }

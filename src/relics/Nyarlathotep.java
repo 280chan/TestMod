@@ -16,7 +16,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets",
 			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots",
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",
-			"DemoExt:GalacticMedalOfValor" };
+			"DemoExt:GalacticMedalOfValor", "SynthV:C4", "Clover", "SynthV:MejaisSoulstealer" };
 
 	public Nyarlathotep() {
 		super(ID, RelicTier.RARE, LandingSound.MAGICAL);

@@ -66,7 +66,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 12/13/2020
+ * @version 12/18/2020
  * @since 6/17/2018
  */
 
@@ -312,7 +312,7 @@ public class TestMod
 				new Faith(), new FatalChain(), new CyclicPeriapt(), new EqualTreatment(), new ConstraintPeriapt(),
 				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new CasingShield(), new TestBox(),
 				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong(), new ArcanaOfDestiny(),
-				new TheFather(), new Fanaticism(), new TurbochargingSystem() };
+				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike() };
 		// 添加遗物进游戏 TODO
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);
@@ -468,7 +468,7 @@ public class TestMod
 	}
 	
 	private static void initLatest() {
-		addLatest(new ArcanaOfDestiny(), new TheFather(), new Fanaticism(), new TurbochargingSystem());
+		addLatest(new ArcanaOfDestiny(), new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike());
 	}
 	
 	private static void addLatest(Object... list) {
