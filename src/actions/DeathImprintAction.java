@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import powers.DeathImprintPower;
@@ -26,12 +25,12 @@ public class DeathImprintAction extends AbstractGameAction {
 	}
 	
 	public void update() {
-		if (this.target.hasPower(DeathImprintPower.POWER_ID)) {
-			AbstractDungeon.actionManager.addToBottom(new RemoveSpecificPowerAction(this.target, this.source, DeathImprintPower.POWER_ID));//造成伤害
-			AbstractDungeon.actionManager.addToBottom(new DamageAction(this.target, new DamageInfo(this.source, this.damage, this.damageType), AttackEffect.BLUNT_HEAVY));//造成伤害
+		if (DeathImprintPower.hasThis(this.target)) {
+			this.addToTop(new DamageAction(this.target, new DamageInfo(this.source, this.damage, this.damageType), AttackEffect.BLUNT_HEAVY));
+			this.addToTop(new RemoveSpecificPowerAction(this.target, this.source, DeathImprintPower.getThis(this.target)));
 		} else {
-			AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this.target, this.source, new DeathImprintPower(this.target, 0)));//造成伤害
-			AbstractDungeon.actionManager.addToBottom(new DamageAction(this.target, new DamageInfo(this.source, this.damage, this.damageType), AttackEffect.SLASH_DIAGONAL));//造成伤害
+			this.addToTop(new DamageAction(this.target, new DamageInfo(this.source, this.damage, this.damageType), AttackEffect.SLASH_DIAGONAL));
+			this.addToTop(new ApplyPowerAction(this.target, this.source, new DeathImprintPower(this.target, 0)));
 		}
 		this.isDone = true;
 	}
