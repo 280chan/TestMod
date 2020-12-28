@@ -6,7 +6,7 @@
 	
 	"christmas-Famine":{
 		"NAME": "灾厄 - 饥荒",
-		"DESCRIPTION": "造成 !D! 点伤害。恢复造成伤害一半的生命。如果 斩杀 ，获得 !M! 点最大生命。"
+		"DESCRIPTION": "造成 !D! 点伤害。恢复造成伤害一半的生命。 斩杀 时，获得 !M! 点最大生命。"
 	},
 	
 	"christmas-Plague":{

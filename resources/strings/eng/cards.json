@@ -1,23 +1,23 @@
 {
 	"testmod-Envy": {
 		"NAME": "Envy",
-		"DESCRIPTION": " Unplayable. While in hand, you cannot play Status and Curse. If no ememy intends to attack/ inflict a Negative Effect on you or defend/ use a buff, you cannot play Attact/ Skill/ Power."
+		"DESCRIPTION": "Exhaust. While in hand, you cannot play Status and Curse. If no ememy intends to attack/ inflict a Negative Effect on you or defend/ use a buff, you cannot play Attact/ Skill/ Power."
 	},
 	"testmod-Gluttony": {
 		"NAME": "Gluttony",
-		"DESCRIPTION": " Unplayable. When Max HP is raised, Add a copy of this card into your deck. If transformed or removed from your deck, lose ！M% Max HP."
+		"DESCRIPTION": "Exhaust. When Max HP is raised, Add a copy of this card into your deck. If transformed or removed from your deck, lose ！M% Max HP."
 	},
 	"testmod-Greed": {
 		"NAME": "Greed",
-		"DESCRIPTION": " Unplayable. At the end of your turn drawing this card, For each [E] remain, draw !M! fewer cards next turn. For each card in hand, gain !M! less [E] next turn."
+		"DESCRIPTION": "Exhaust. At the end of your turn drawing this card, For each [E] remain, draw !M! fewer cards next turn. For each card in hand, gain !M! less [E] next turn."
 	},
 	"testmod-Lust": {
 		"NAME": "Lust",
-		"DESCRIPTION": " Unplayable. At the end of your turn, lose !M! Strength, Dexterity, Focus, gain 3 Vulnerable, Weak, Frail. "
+		"DESCRIPTION": "At the end of your turn, lose !M! Strength, Dexterity, Focus, gain 3 Vulnerable, Weak, Frail. "
 	},
 	"testmod-Sloth": {
 		"NAME": "Sloth",
-		"DESCRIPTION": " Unplayable. After your second turn starts, While in hand, you cannot play more cards than the least turn. There is no escape from this Curse at frist turn.",
+		"DESCRIPTION": "After your second turn starts, While in hand, you cannot play more cards than the least turn. There is no escape from this Curse at frist turn.",
 		"EXTENDED_DESCRIPTION": [
 			" Unplayable.",
 			"While in hand, you cannot play more than ",
@@ -28,7 +28,7 @@
 	},
 	"testmod-Wrath": {
 		"NAME": "Wrath",
-		"DESCRIPTION": " Unplayable. When you draw this card, Apply !M! Angry to All enemies. While in hand, you can only play Attack. Ethereal."
+		"DESCRIPTION": "When you draw this card, Apply !M! Angry to All enemies. While in hand, you can only play Attack. Ethereal."
 	},
 	"testmod-AdversityCounterattack": {
 		"NAME": "Adversity Counterattack",

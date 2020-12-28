@@ -32,7 +32,7 @@ public abstract class AbstractTestCard extends CustomCard {
 	 * @param DESCRIPTION
 	 */
 	public AbstractTestCard(String shortID, String NAME, String DESCRIPTION) {
-        super(TestMod.makeID(shortID), NAME, TestMod.cardIMGPath(shortID), -2, DESCRIPTION, CardType.CURSE, CardColor.CURSE, CardRarity.SPECIAL, CardTarget.NONE);
+        super(TestMod.makeID(shortID), NAME, TestMod.cardIMGPath(shortID), 1, DESCRIPTION, CardType.CURSE, CardColor.CURSE, CardRarity.SPECIAL, CardTarget.NONE);
     }
 	
 	protected static CardStrings Strings(String ID) {

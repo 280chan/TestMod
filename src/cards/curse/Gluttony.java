@@ -17,6 +17,7 @@ public class Gluttony extends AbstractTestCurseCard {
     public Gluttony() {
     	super(ID, NAME, DESCRIPTION);
     	this.magicNumber = this.baseMagicNumber = BASE_MGC;
+    	this.exhaust = true;
     }
     
     public void onRemoveFromMasterDeck() {

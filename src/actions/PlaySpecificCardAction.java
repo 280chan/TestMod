@@ -21,6 +21,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 public class PlaySpecificCardAction extends AbstractGameAction {
@@ -56,6 +57,7 @@ public class PlaySpecificCardAction extends AbstractGameAction {
 			AbstractCard c = this.c;
 			this.group.group.remove(c);
 			AbstractDungeon.getCurrRoom().souls.remove(c);
+			c.isInAutoplay = true;
 			c.freeToPlayOnce = !autoUse;
 			c.exhaustOnUseOnce = this.exhausts;
 			p.limbo.group.add(c);
@@ -69,39 +71,36 @@ public class PlaySpecificCardAction extends AbstractGameAction {
 			if (!c.canUse(p, this.m)) {
 				if (autoUse) {
 					if (checkExhaust(c, false)) {
-						AbstractDungeon.actionManager
-								.addToTop(new ExhaustSpecificCardAction(c, p.limbo));
+						this.addToTop(new ExhaustSpecificCardAction(c, p.limbo));
 						p.cardsPlayedThisTurn += 1;
 						triggerPlayCard(c);
 						return;
 					} 
 					c.applyPowers();
-					AbstractDungeon.actionManager.addToTop(new PlayUnplayableCardAction(this.m, c));
-					AbstractDungeon.actionManager.addToTop(new UnlimboAction(c));
+					this.addToTop(new PlayUnplayableCardAction(this.m, c));
+					this.addToTop(new UnlimboAction(c));
 				} else {
 					if (checkExhaust(c, false)) {
-						AbstractDungeon.actionManager
-								.addToTop(new ExhaustSpecificCardAction(c, p.limbo));
+						this.addToTop(new ExhaustSpecificCardAction(c, p.limbo));
 					} else {
-						AbstractDungeon.actionManager.addToTop(new UnlimboAction(c));
-						AbstractDungeon.actionManager
-								.addToTop(new DiscardSpecificCardAction(c, p.limbo));
-						AbstractDungeon.actionManager.addToTop(new WaitAction(0.4F));
+						this.addToTop(new UnlimboAction(c));
+						this.addToTop(new DiscardSpecificCardAction(c, p.limbo));
+						this.addToTop(new WaitAction(0.4F));
 					}
 				}
 			} else {
 				c.applyPowers();
-				AbstractDungeon.actionManager.addToTop(new AbstractGameAction() {
+				this.addToTop(new AbstractGameAction() {
 					public void update() {
-						AbstractDungeon.actionManager.cardQueue.add(0, new CardQueueItem(c, PlaySpecificCardAction.this.m));
+						AbstractDungeon.actionManager.cardQueue.add(0, new CardQueueItem(c, PlaySpecificCardAction.this.m, EnergyPanel.totalCount, true, true));
 						this.isDone = true;
 					}
 				});
-				AbstractDungeon.actionManager.addToTop(new UnlimboAction(c));
+				this.addToTop(new UnlimboAction(c));
 				if (!Settings.FAST_MODE) {
-					AbstractDungeon.actionManager.addToTop(new WaitAction(Settings.ACTION_DUR_MED));
+					this.addToTop(new WaitAction(Settings.ACTION_DUR_MED));
 				} else {
-					AbstractDungeon.actionManager.addToTop(new WaitAction(Settings.ACTION_DUR_FASTER));
+					this.addToTop(new WaitAction(Settings.ACTION_DUR_FASTER));
 				}
 			}
 		}

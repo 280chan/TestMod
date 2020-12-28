@@ -12,7 +12,7 @@ public abstract class AbstractTestCurseCard extends AbstractTestCard implements 
     }
 	
 	public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-		return this.hasPrudence() || p.hasRelic("Blue Candle");
+		return true;
 	}
 	
 	public void use(final AbstractPlayer p, final AbstractMonster m) {

@@ -20,6 +20,7 @@ public class Envy extends AbstractTestCurseCard {
 
 	public Envy() {
 		super(ID, NAME, DESCRIPTION);
+		this.exhaust = true;
 	}
 
 	public boolean canPlay(AbstractCard card) {

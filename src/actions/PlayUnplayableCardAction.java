@@ -42,6 +42,7 @@ public class PlayUnplayableCardAction extends AbstractGameAction {
 		this.c.calculateCardDamage(this.m);
 		GameActionManager gam = AbstractDungeon.actionManager;
 		this.p.cardsPlayedThisTurn += 1;
+		this.c.isInAutoplay = true;
 		if (c.cost == -1) {
 			this.c.energyOnUse = EnergyPanel.getCurrentEnergy();
 		} else {

@@ -13,9 +13,10 @@ import mymod.TestMod;
 public abstract class AbstractTestRelic extends CustomRelic {
 	public boolean isActive = false;
 	public boolean show = true;
-	
-	private static HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>> EQUIP = new HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>>();
-	
+
+	private static final HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>> EQUIP = new HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>>();
+	private static final HashMap<String, Texture> IMG = new HashMap<String, Texture>();
+
 	public static void addToMap(AbstractTestRelic obj) {
 		if (!EQUIP.containsKey(obj.getClass())) {
 			HashMap<String, Boolean> equip = new HashMap<String, Boolean>();
@@ -58,7 +59,14 @@ public abstract class AbstractTestRelic extends CustomRelic {
 	}
 	
 	public AbstractTestRelic(String id, String path, RelicTier tier, LandingSound sfx) {
-		super(id, new Texture(Gdx.files.internal(path)), tier, sfx);
+		super(id, getTexture(id, path), tier, sfx);
+	}
+	
+	private static Texture getTexture(String id, String path) {
+		if (!IMG.containsKey(id)) {
+			IMG.put(id, new Texture(Gdx.files.internal(path)));
+		}
+		return IMG.get(id);
 	}
 	
 	public void show() {

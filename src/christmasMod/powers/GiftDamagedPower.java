@@ -6,6 +6,8 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.powers.AbstractPower;
+
 import christmasMod.mymod.ChristmasMod;
 import powers.AbstractTestPower;
 
@@ -16,6 +18,20 @@ public class GiftDamagedPower extends AbstractTestPower {
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
 	private static boolean check = true;
+	
+	public static boolean hasThis(AbstractCreature owner) {
+		for (AbstractPower p : owner.powers)
+			if (p instanceof GiftDamagedPower)
+				return true;
+		return false;
+	}
+	
+	public static AbstractPower getThis(AbstractCreature owner) {
+		for (AbstractPower p : owner.powers)
+			if (p instanceof GiftDamagedPower)
+				return p;
+		return null;
+	}
 	
 	public GiftDamagedPower(AbstractCreature owner, int amount) {
 		super(POWER_ID);

@@ -8,9 +8,9 @@ import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
-import christmasMod.actions.GiftHypnosisSkipTurnAction;
+import utils.MiscMethods;
 
-public class GiftHypnosis extends AbstractChristmasCard {
+public class GiftHypnosis extends AbstractChristmasCard implements MiscMethods {
     public static final String ID = "GiftHypnosis";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -29,7 +29,7 @@ public class GiftHypnosis extends AbstractChristmasCard {
     public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
 	    this.addToBot(new MakeTempCardInDiscardAction(new VoidCard(), this.magicNumber));
-	    this.addToBot(new GiftHypnosisSkipTurnAction(this));
+		this.turnSkipperStartByCard(this);
     }
 
     public void upgrade() {

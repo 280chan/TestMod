@@ -20,6 +20,7 @@ public class Greed extends AbstractTestCurseCard {
     public Greed() {
     	super(ID, NAME, DESCRIPTION);
     	this.magicNumber = this.baseMagicNumber = BASE_MGC;
+    	this.exhaust = true;
     }
 
 	public void triggerWhenDrawn() {

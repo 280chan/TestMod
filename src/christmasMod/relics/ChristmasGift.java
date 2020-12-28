@@ -3,8 +3,10 @@ package christmasMod.relics;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import christmasMod.mymod.ChristmasMod;
+import christmasMod.powers.GiftDamagedPower;
 import relics.AbstractTestRelic;
 
 public class ChristmasGift extends AbstractTestRelic {
@@ -20,9 +22,10 @@ public class ChristmasGift extends AbstractTestRelic {
 	}
 	
 	public void onCardDraw(AbstractCard c) {
-		if (AbstractDungeon.player.hasPower("GiftDamagedPower") && c.type == CardType.STATUS) {
-			AbstractDungeon.player.hand.moveToExhaustPile(c);
-			for (int i = 0; i < AbstractDungeon.player.getPower("GiftDamagedPower").amount; i++)
+		AbstractPlayer p = AbstractDungeon.player;
+		if (GiftDamagedPower.hasThis(p) && c.type == CardType.STATUS) {
+			p.hand.moveToExhaustPile(c);
+			for (int i = 0; i < GiftDamagedPower.getThis(p).amount; i++)
 				this.addToBot(new MakeTempCardInHandAction(ChristmasMod.randomGift(false)));
 		}
 	}
