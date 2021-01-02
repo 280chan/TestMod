@@ -66,7 +66,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 12/28/2020
+ * @version 1/1/2021
  * @since 6/17/2018
  */
 
@@ -372,7 +372,8 @@ public class TestMod
 				new TemporaryDeletion(), new EnhanceArmerment(), new TradeIn(), new TaurusBlackCat(),
 				new PainDetonator(), new FightingIntention(), new Reverberation(), new SelfRegulatingSystem(),
 				new Superconductor(), new BackupPower(), new Illusory(), new Librarian(), new HandmadeProducts(),
-				new Automaton(), new PowerStrike(), new WeaknessCounterattack(), new Reproduce() };
+				new Automaton(), new PowerStrike(), new WeaknessCounterattack(), new Reproduce(), new SunMoon(),
+				new VirtualReality() };
 		// TODO
 		for (AbstractCard c : card) {
 			CARDS.add(c);
@@ -1017,6 +1018,7 @@ public class TestMod
 		PerfectComboAction.setRng();
 		AbstractMahjongCard.setRng();
 		Mahjong.setRng();
+		VirtualReality.reset();
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.Calendar;
-
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -13,7 +11,7 @@ import halloweenMod.relics.EventCelebration_Halloween;
 import mymod.TestMod;
 import relics.TestBox;
 
-public class TestBoxRelicSelectScreen extends RelicSelectScreen {
+public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscMethods {
 	public static final String[] ILLEGAL = {TestMod.makeID("TestBox")};
 	private TestBox box;
 	
@@ -30,10 +28,9 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen {
 		return false;
 	}
 	
-	private static AbstractRelic priority() {
-		Calendar c = Calendar.getInstance();
-		int month = c.get(Calendar.MONTH) + 1; 
-		int date = c.get(Calendar.DATE); 
+	private AbstractRelic priority() {
+		int month = this.getMonth(); 
+		int date = this.getDate(); 
 		//TestMod.info("月:" + month + "日:" + date);
 		if ((month == 10 && date == 31) || (month == 11 && date == 1))
 			return new EventCelebration_Halloween();
@@ -52,7 +49,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen {
 	
 	@Override
 	protected void addRelics() {
-		AbstractRelic priority = priority();
+		AbstractRelic priority = this.priority();
 		if (priority != null)
 			this.relics.add(priority);
 		while (this.relics.size() < 3) {

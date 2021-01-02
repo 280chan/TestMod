@@ -262,6 +262,10 @@
 		" 消耗 。"
     ]
   },
+  "testmod-SunMoon": {
+    "NAME": "日月",
+    "DESCRIPTION": "对随机敌人造成当前日期点伤害月份次。"
+  },
   "testmod-Superconductor": {
     "NAME": "超导体",
     "DESCRIPTION": "本回合内：无法获得能量，手牌中所有牌耗能变为0。接下来抽到的前X张耗能大于0的牌的耗能在回合内降低1。 消耗 。",
@@ -283,6 +287,10 @@
     "NAME": "宝藏猎手",
     "DESCRIPTION": "造成 !D! 点伤害。从3张随机稀有牌中选择1张加入手牌。 消耗 。",
     "UPGRADE_DESCRIPTION": "造成 !D! 点伤害。从3张随机稀有牌中选择1张加入手牌。 斩杀 时，同时将其加入牌组。 消耗 。"
+  },
+  "testmod-VirtualReality": {
+    "NAME": "虚实",
+    "DESCRIPTION": "获得 !B! 点 格挡 。失去你上回合获得的 格挡 量的 格挡 。"
   },
   "testmod-Wormhole": {
     "NAME": "虫洞",

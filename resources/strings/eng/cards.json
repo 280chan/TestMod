@@ -262,6 +262,10 @@
 			" Exhaust."
 		]
 	},
+	"testmod-SunMoon": {
+		"NAME": "Sun Moon",
+		"DESCRIPTION": "Deal current Date damage to a random enemy current Month times."
+	},
 	"testmod-Superconductor": {
 		"NAME": "Superconductor",
 		"DESCRIPTION": "In this turn, you can Gain no [E] , reduce the cost of all cards in your hand to 0. Reduce cost of next X cards you draw which greater than 0 by 1 for one turn. Exhaust.",
@@ -283,6 +287,10 @@
 		"NAME": "Treasure Hunter",
 		"DESCRIPTION": "Deal !D! damage. Choose a card from 3 random Rare card add into your hand. Exhaust.",
 		"UPGRADE_DESCRIPTION": "Deal !D! damage. Choose a card from 3 random Rare card add into your hand. If Fatal, add it into deck. Exhaust."
+	},
+	"testmod-VirtualReality": {
+		"NAME": "Virtual Reality",
+		"DESCRIPTION": "Gain !B! Block. Lose Block by amount of Block you gained last turn."
 	},
 	"testmod-Wormhole": {
 		"NAME": "Wormhole",

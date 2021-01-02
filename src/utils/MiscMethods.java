@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.Color;
@@ -46,6 +47,14 @@ import relics.Prudence;
 import relics.StringDisintegrator;
 
 public interface MiscMethods {
+	
+	public default int getMonth() {
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
+	}
+	
+	public default int getDate() {
+		return Calendar.getInstance().get(Calendar.DATE);
+	}
 	
 	public default boolean isLocalTesting() {
 		return TestMod.isLocalTest();
