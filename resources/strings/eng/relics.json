@@ -113,7 +113,7 @@
 	
 	"testmod-Muramasa":{
 		"NAME": "Muramasa",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever the number of drawing and playing of #b0 cost attacks sum up to #b2, draw #b1 card."]
 	},
 	
@@ -131,19 +131,19 @@
 	
 	"testmod-IncinerationGenerator":{
 		"NAME": "Incineration Generator",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn: gain", ", #yExhaust a card."]
 	},
 	
 	"testmod-IndustrialRevolution":{
 		"NAME": "Industrial Revolution",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Enemies that had #yArtifact, will not be able to give positive effects to themselves, nor negative effects to player."]
 	},
 	
 	"testmod-AscensionHeart":{
 		"NAME": "Ascension Heart",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":[
 			"Gain benefit according to #yAscension #yLevel. ",
 			"Better elite reward",
@@ -190,7 +190,7 @@
 	
 	"testmod-BalancedPeriapt":{
 		"NAME": "Balanced Periapt",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Your Max HP will never change anymore. Whenever you would change your Max HP, change your HP instead by a factor of #b3 if increase, #b1 if decrease."]
 	},
 	
@@ -214,7 +214,7 @@
 	
 	"testmod-Maize":{
 		"NAME": "The Maize",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["When you play #b5 #ySkill during your turn, gain #b1 #yIntangible. "]
 	},
 	
@@ -274,25 +274,25 @@
 	
 	"testmod-BatchProcessingSystem":{
 		"NAME": "Batch Processing System",
-		"FLAVOR": "模块化运算。",
+		"FLAVOR": "Modular computing.",
 		"DESCRIPTIONS":["Lose", "at the start of each turn. NL Whenever you play two cards of same cost in a row, gain", "."]
 	},
 	
 	"testmod-CardMagician":{
 		"NAME": "The Card Magician",
-		"FLAVOR": "转瞬奇迹。",
+		"FLAVOR": "A miracle in a flash.",
 		"DESCRIPTIONS":["At the start of each turn, gain", " and shuffle your discard pile into your draw pile."]
 	},
 	
 	"testmod-NegativeEmotionEnhancer":{
 		"NAME": "The Negative Emotion Enhancer",
-		"FLAVOR": "收集，分类，转化。",
+		"FLAVOR": "Collect, sort, transform.",
 		"DESCRIPTIONS":["At the start of each turn, gain", ", gain #yFragile, #yWeak, #yVulnerable in order. Whenever an enemy dies, heal #b1 HP. At the end of combat, increase your Max HP by #b1. "]
 	},
 	
 	"testmod-Brilliant":{
 		"NAME": "Brilliant",
-		"FLAVOR": "壕气逼人",
+		"FLAVOR": "Brilliant!",
 		"DESCRIPTIONS":["Whenever an enemy dies and at the start of each combat, deal an damage of half of your #ygold to the power of #b2/3 to ALL enemies."]
 	},
 	
@@ -352,7 +352,7 @@
 	
 	"testmod-InjuryResistance":{
 		"NAME": "Injury Resistance",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you lose HP, ALL future final HP loss would reduced by #b1. NL When you completely block a HP loss through this relic, reset the reduction back to #b0. "]
 	},
 	
@@ -376,61 +376,67 @@
 	
 	"testmod-LifeArmor":{
 		"NAME": "Life Armor",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you lose HP in combat, gain same amount of #yBlock, and increase future #yBlock gain through this relic by #b1 for this combat."]
 	},
 	
 	"testmod-CasingShield":{
 		"NAME": "Casing Shield",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you gain #yBlock, increase future #yBlock gain by #b1 for this turn."]
 	},
 	
 	"testmod-TestBox":{
 		"NAME": "Test Box",
-		"FLAVOR": "来自彼君的礼物。",
+		"FLAVOR": "My present.",
 		"DESCRIPTIONS":["Right click or double right click on this relic to active relic reward or card reward. You may choose a reward from #b3. #rThis #rrelic #rcan #rONLY #ractive #ronce. #rThis #rrelic #rcan #rONLY #rbe #rused #rat #rfloor #r0."]
 	},
 	
 	"testmod-Acrobat":{
 		"NAME": "The Acrobat",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["During your turn, whenever the numbering of two cards you play in a row has different change direction from the previous one, gain #b1 #ygold. "]
 	},
 	
 	"testmod-Mahjong":{
 		"NAME": "The Mahjong (Work In Progress)",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["#rBUG #rALERT. #rUNFINISHED #rRELIC. 在战斗中进行麻将游戏，每回合开始摸一张麻将牌后选择切出一张，将其加入手牌。打出 #y宝牌 的效果翻倍。根据和牌点数获得其他效果。 NL #r这件遗物还未制作完成，只能发挥一小部分效果，并含有许多bug(初次战斗闪退，重开自动修复)若目前不想测试本遗物可选择重开。"]
 	},
 	
 	"testmod-ArcanaOfDestiny":{
 		"NAME": "Arcana of Destiny",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["For all enemies that have hp percentage less than player, for every #b1% less, receiving #b2% more damage. For all enemies that have hp percentage more than player, for every #b1% more, its Attack damage will be #b1% less."]
 	},
 	
 	"testmod-TheFather":{
 		"NAME": "The Father",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you an enemy are being damage by an amount of a prime number, deal a damage of the ordinal number of that prime number to all other enemy. Whenever you an enemy are being damage by an amount of a composite number, deal damage of the ordinal number of all prime factors to the enemy. Whenever this relic cause a damage, add #b1 to its counter, whenever it reaches a prime number, gain #b1 gold."]
 	},
 	
 	"testmod-Fanaticism":{
 		"NAME": "狂热",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E], #yWrath: gain [E]. At the end of each turn, #yWrath: exit #yWrath. Otherwise, enter #yWrath. Whenever you lose hp, for each point you lose, gain #b1% hp absorb, #yWrath: gain double.", " NL Current hp absorb: #b", "%"]
 	},
 	
 	"testmod-TurbochargingSystem":{
 		"NAME": "Turbocharging System",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Increase base damage of all your cards by amount of its cost."]
 	},
 	
 	"testmod-HeartOfStrike":{
 		"NAME": "Heart of Strike",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["All your #yStrike cards deal #b2 times damage, whenever you #yExhaust a #yStrike card, increase #b1 times of damage this combat.", " NL #yStrike cards deal #b", " times damage."]
+	},
+	
+	"testmod-RainbowHikingShoes":{
+		"NAME": "Rainbow Hiking Shoes",
+		"FLAVOR": "The shoes shine light with changing color when walking.",
+		"DESCRIPTIONS":["Whenever cards with different rarity played in a row, draw #b1 card."]
 	}
 }

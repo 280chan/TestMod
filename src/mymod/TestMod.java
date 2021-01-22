@@ -312,7 +312,8 @@ public class TestMod
 				new Faith(), new FatalChain(), new CyclicPeriapt(), new EqualTreatment(), new ConstraintPeriapt(),
 				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new CasingShield(), new TestBox(),
 				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong(), new ArcanaOfDestiny(),
-				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike() };
+				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
+				new RainbowHikingShoes() };
 		// 添加遗物进游戏 TODO
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);
@@ -987,8 +988,9 @@ public class TestMod
 		
 		/**
 		 * TODO since version 3.3.9
-		 */
 		checkOldID();
+		 * end version 4.2.0
+		 */
 		
 		addEvents();
 		addPotions();
