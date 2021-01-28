@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.codedisaster.steamworks.SteamAPI;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
@@ -19,6 +20,7 @@ import com.megacrit.cardcrawl.cards.curses.Pride;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.core.Settings.GameLanguage;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.helpers.TipTracker;
@@ -38,6 +40,8 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import actions.PerfectComboAction;
 import basemod.BaseMod;
+import basemod.ModLabeledButton;
+import basemod.ModPanel;
 import basemod.helpers.RelicType;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.EditKeywordsSubscriber;
@@ -66,7 +70,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 1/1/2021
+ * @version 1/28/2021
  * @since 6/17/2018
  */
 
@@ -77,9 +81,11 @@ public class TestMod
 		OnStartBattleSubscriber, MaxHPChangeSubscriber, EditKeywordsSubscriber, PostBattleSubscriber, MiscMethods {
 	public static Mode MODE = Mode.BOX;
 	public static final String MOD_ID = "testmod";
+	public static final String MOD_NAME = "TestMod";
 	public static final String SAVE_NAME = "TestMod";
 	public static final String SAVE_FILE_NAME = "Common";
 	public static final Logger LOGGER = LogManager.getLogger(TestMod.class.getName());
+	private ModPanel settingsPanel;
 
 	public static enum Mode {
 		TEST, CHEAT, RANDOM, RELIC, CARD, BOTH, BOX;
@@ -403,49 +409,12 @@ public class TestMod
 	public static final ArrayList<AbstractCard> CARDS = new ArrayList<AbstractCard>();
 	
 	public static void removeFromPool(AbstractRelic r) {
-		switch (r.tier) {
-		case COMMON:
-			for (Iterator<String> s = AbstractDungeon.commonRelicPool.iterator(); s.hasNext();) {
-				String derp = (String) s.next();
-				if (derp.equals(r.relicId)) {
-					s.remove();
-					return;
-				}
-			}
-		case UNCOMMON:
-			for (Iterator<String> s = AbstractDungeon.uncommonRelicPool.iterator(); s.hasNext();) {
-				String derp = (String) s.next();
-				if (derp.equals(r.relicId)) {
-					s.remove();
-					return;
-				}
-			}
-		case RARE:
-			for (Iterator<String> s = AbstractDungeon.rareRelicPool.iterator(); s.hasNext();) {
-				String derp = (String) s.next();
-				if (derp.equals(r.relicId)) {
-					s.remove();
-					return;
-				}
-			}
-		case BOSS:
-			for (Iterator<String> s = AbstractDungeon.bossRelicPool.iterator(); s.hasNext();) {
-				String derp = (String) s.next();
-				if (derp.equals(r.relicId)) {
-					s.remove();
-					return;
-				}
-			}
-		case SHOP:
-			for (Iterator<String> s = AbstractDungeon.shopRelicPool.iterator(); s.hasNext();) {
-				String derp = (String) s.next();
-				if (derp.equals(r.relicId)) {
-					s.remove();
-					return;
-				}
-			}
-		default:
-		}
+		String id = r.relicId;
+		AbstractDungeon.commonRelicPool.remove(id);
+		AbstractDungeon.uncommonRelicPool.remove(id);
+		AbstractDungeon.rareRelicPool.remove(id);
+		AbstractDungeon.bossRelicPool.remove(id);
+		AbstractDungeon.shopRelicPool.remove(id);
 	}
 	
 	private static void avoidFirstTime() {
@@ -1003,6 +972,26 @@ public class TestMod
 		*/
 		initLatest();
 		// TODO
+		initializeModPanel();
+	}
+	
+	private void initializeModPanel() {
+		Texture badgeTexture = new Texture(powerIMGPath("relic1"));
+		this.settingsPanel = new ModPanel();
+		// ModLabeledButton filterRelics;
+		/*if (Settings.language == GameLanguage.ZHS) {
+			filterRelics = new ModLabeledButton("筛选遗物", 350.0F, 300.0F, this.settingsPanel, (button) -> {
+				// new RelicFilterSelectScreen().open();
+			});
+		}*/
+		// this.settingsPanel.addUIElement(filterRelics);
+		if (Settings.language == GameLanguage.ZHS) {
+			BaseMod.registerModBadge(badgeTexture, MOD_NAME, "彼君不触",
+					"遗物、卡牌、事件、药水。", this.settingsPanel);
+		} else {
+			BaseMod.registerModBadge(badgeTexture, MOD_NAME, "280chan",
+					"Fun relics, cards, events, potions.", this.settingsPanel);
+		}
 	}
 
 	public static <T> T randomItem(ArrayList<T> list, Random rng) {

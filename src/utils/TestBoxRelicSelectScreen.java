@@ -32,7 +32,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		int month = this.getMonth(); 
 		int date = this.getDate(); 
 		//TestMod.info("月:" + month + "日:" + date);
-		if ((month == 10 && date == 31) || (month == 11 && date == 1))
+		if ((month == 10 && date > 25) || (month == 11 && date < 6))
 			return new EventCelebration_Halloween();
 		// TODO 圣诞
 		if (month == 12 && date > 20)

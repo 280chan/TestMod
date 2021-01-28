@@ -28,7 +28,7 @@ public class HandmadeProductsAttackAction extends AbstractGameAction implements 
 
 	private void modify(AbstractCard c) {
 		if (c.cost > -1)
-			c.updateCost(c.cost + this.amount);
+			c.updateCost(this.amount);
 		c.applyPowers();
 		c.baseDamage = 0;
 	}

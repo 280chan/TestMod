@@ -24,8 +24,7 @@ public class HandmadeProducts extends AbstractTestCard {
     public HandmadeProducts() {
         super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;
-        this.baseMagicNumber = BASE_MGC;
-        this.magicNumber = this.baseMagicNumber;
+        this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
@@ -49,8 +48,6 @@ public class HandmadeProducts extends AbstractTestCard {
 				base *= c.costForTurn;
 			else if (c.cost == -1)
 				base *= EnergyPanel.totalCount;
-		if (!AbstractDungeon.player.hand.contains(this) && !this.isInAutoplay)
-			base *= this.costForTurn;
 		return base;
 	}
     
@@ -61,7 +58,19 @@ public class HandmadeProducts extends AbstractTestCard {
     public void upgrade() {
     	this.timesUpgraded++;
     	this.name = NAME + "+" + this.timesUpgraded;
-    	this.initializeTitle();
         this.upgradeBaseCost(1);
+    	this.initializeTitle();
     }
+    
+    protected void upgradeBaseCost(int newBaseCost) {
+		int diff = this.costForTurn - this.cost;
+		this.cost = newBaseCost;
+		if (this.costForTurn >= 0) {
+			this.costForTurn = this.cost + diff;
+		}
+		if (this.costForTurn < 0) {
+			this.costForTurn = 0;
+		}
+		this.upgradedCost = true;
+	}
 }
