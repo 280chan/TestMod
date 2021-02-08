@@ -24,8 +24,9 @@ public class RepeatFormAction extends AbstractGameAction {
 		this.p = p;
 	}
 	
-	public RepeatFormAction(AbstractCard thisCard) {
-		this(AbstractDungeon.player, createGroup(thisCard));
+	public RepeatFormAction(AbstractPlayer p, AbstractCard thisCard) {
+		this(p, createGroup(thisCard));
+		this.amount = thisCard.magicNumber;
 	}
 
 	private static CardGroup createGroup(AbstractCard c) {
@@ -42,6 +43,10 @@ public class RepeatFormAction extends AbstractGameAction {
 	
 	@Override
 	public void update() {
+		if (this.amount < 1) {
+			this.isDone = true;
+			return;
+		}
 		if (this.duration == DURATION) {
 			switch (g.group.size()) {
 			case 1:
@@ -60,9 +65,8 @@ public class RepeatFormAction extends AbstractGameAction {
 		tickDuration();
 	}
 
-	private static CardGroup getSource(AbstractCard c) {
-		AbstractPlayer p = AbstractDungeon.player;
-		CardGroup[] groups = {p.discardPile, p.drawPile, p.hand};
+	private CardGroup getSource(AbstractCard c) {
+		CardGroup[] groups = {this.p.discardPile, this.p.drawPile, this.p.hand};
 		for (CardGroup g : groups)
 			if (g.contains(c)) {
 				TestMod.info("来自于" + g.type);
@@ -73,12 +77,12 @@ public class RepeatFormAction extends AbstractGameAction {
 	}
 	
 	private RepeatFormPower createPower(AbstractCard c) {
-		return new RepeatFormPower(p, 1, c);
+		return new RepeatFormPower(p, this.amount, c);
 	}
 	
 	private void addPowerToPlayer(AbstractCard c) {
-		getSource(c).removeCard(c);
-		this.addToTop(new ApplyPowerAction(p, p, createPower(c), 1));
+		this.getSource(c).removeCard(c);
+		this.addToTop(new ApplyPowerAction(p, p, createPower(c), this.amount));
 	}
 	
 }

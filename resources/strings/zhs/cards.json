@@ -231,8 +231,8 @@
   },
   "testmod-RepeatForm": {
     "NAME": "复读形态",
-    "DESCRIPTION": "选择一张牌从本场战斗中移除。每回合将1张其复制品加入手牌。 虚无 。",
-    "UPGRADE_DESCRIPTION": "选择一张牌从本场战斗中移除。每回合将1张其复制品加入手牌。"
+    "DESCRIPTION": "选择一张牌从本场战斗中移除。每回合将 !M! 张其复制品加入手牌。 虚无 。",
+    "UPGRADE_DESCRIPTION": "选择一张牌从本场战斗中移除。每回合将 !M! 张其复制品加入手牌。"
   },
   "testmod-Reproduce": {
     "NAME": "复刻",

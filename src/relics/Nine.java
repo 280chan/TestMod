@@ -36,10 +36,7 @@ public class Nine extends AbstractRevivalRelicToModifyDamage {
 
 	@Override
 	protected boolean resetHpCheck(AbstractPlayer p, int damageAmount) {
-		if (damageAmount >= p.currentHealth) {
-			return true;
-		}
-		return false;
+		return true;
 	}
 	
 }

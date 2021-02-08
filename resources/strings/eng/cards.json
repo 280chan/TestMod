@@ -231,8 +231,8 @@
 	},
 	"testmod-RepeatForm": {
 		"NAME": "Repeat Form",
-		"DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add a copy of it into your hand. Ethereal.",
-		"UPGRADE_DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add a copy of it into your hand."
+		"DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add !M! copy of it into your hand. Ethereal.",
+		"UPGRADE_DESCRIPTION": "Choose a card and remove it this combat. At the start of your turn, add !M! copy of it into your hand."
 	},
 	"testmod-Reproduce": {
 		"NAME": "Reproduce",

@@ -70,7 +70,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 1/28/2021
+ * @version 2/6/2021
  * @since 6/17/2018
  */
 
@@ -319,7 +319,7 @@ public class TestMod
 				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new CasingShield(), new TestBox(),
 				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong(), new ArcanaOfDestiny(),
 				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
-				new RainbowHikingShoes() };
+				new RainbowHikingShoes(), new GoldenSoul() };
 		// 添加遗物进游戏 TODO
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);

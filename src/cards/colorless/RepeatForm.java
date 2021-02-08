@@ -16,14 +16,16 @@ public class RepeatForm extends AbstractTestCard {
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String UPGRADE_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
 	private static final int COST = 3;
+	private static final int BASE_MGC = 1;
 
 	public RepeatForm() {
         super(ID, NAME, COST, DESCRIPTION, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
         this.isEthereal = true;
+        this.magicNumber = this.baseMagicNumber = BASE_MGC;
 	}
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.addToBot(new RepeatFormAction(this));
+    	this.addToBot(new RepeatFormAction(p, this));
     }
 
     public void upgrade() {

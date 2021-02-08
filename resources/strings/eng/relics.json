@@ -417,7 +417,7 @@
 	},
 	
 	"testmod-Fanaticism":{
-		"NAME": "狂热",
+		"NAME": "Fanaticism",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E], #yWrath: gain [E]. At the end of each turn, #yWrath: exit #yWrath. Otherwise, enter #yWrath. Whenever you lose hp, for each point you lose, gain #b1% hp absorb, #yWrath: gain double.", " NL Current hp absorb: #b", "%"]
 	},
@@ -438,5 +438,11 @@
 		"NAME": "Rainbow Hiking Shoes",
 		"FLAVOR": "The shoes shine light with changing color when walking.",
 		"DESCRIPTIONS":["Whenever cards with different rarity played in a row, draw #b1 card."]
+	},
+	
+	"testmod-GoldenSoul":{
+		"NAME": "Golden Soul",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Upon pickup, lose #b75% of your #yMaximum #yhp. Whenever receive a fatal damage, instead of losing hp, lose same amount of #yGold, if you don't have enough #yGold, lose all and take rest of damage."]
 	}
 }
