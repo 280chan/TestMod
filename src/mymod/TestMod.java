@@ -70,7 +70,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 2/6/2021
+ * @version 2/12/2021
  * @since 6/17/2018
  */
 
@@ -302,6 +302,12 @@ public class TestMod
 		HalloweenMod.initialize();
 		ChristmasMod.initialize();
 	}
+	
+	private static void initLatest() {
+		addLatest(new RandomTest(), new GoldenSoul(), new TurbochargingSystem(), new ArcanaOfDestiny());
+		addLatestCard(new SunMoon(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
+				new HandmadeProducts(), new Automaton(), new PowerStrike());
+	}
 
 	@Override
 	public void receiveEditRelics() {
@@ -319,7 +325,7 @@ public class TestMod
 				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new CasingShield(), new TestBox(),
 				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong(), new ArcanaOfDestiny(),
 				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
-				new RainbowHikingShoes(), new GoldenSoul() };
+				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest() };
 		// 添加遗物进游戏 TODO
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);
@@ -423,28 +429,36 @@ public class TestMod
 	}
 	
 	private static final ArrayList<Object> LATEST = new ArrayList<Object>();
+	private static final ArrayList<Object> LATEST_CARD = new ArrayList<Object>();
 	private static final ArrayList<ArrayList<Object>> INIT0 = new ArrayList<ArrayList<Object>>();
 	private static final ArrayList<ArrayList<Object>> INIT = new ArrayList<ArrayList<Object>>();
 	private static final ArrayList<ArrayList<Object>> INIT_R = new ArrayList<ArrayList<Object>>();
 	private static final ArrayList<ArrayList<Object>> INIT_G = new ArrayList<ArrayList<Object>>();
 	private static final ArrayList<ArrayList<Object>> INIT_B = new ArrayList<ArrayList<Object>>();
 	
-	private static int latestIndex = 0;
+	private static int latestIndex = 0, latestCard;
 	
-	public static Object checkLatest() {
-		if (latestIndex < LATEST.size()) {
-			return LATEST.get(latestIndex++);
+	public static Object checkLatest(boolean relic) {
+		if (relic) {
+			if (latestIndex < LATEST.size()) {
+				return LATEST.get(latestIndex++);
+			}
+		} else {
+			if (latestCard < LATEST_CARD.size()) {
+				return LATEST_CARD.get(latestCard++);
+			}
 		}
 		return null;
-	}
-	
-	private static void initLatest() {
-		addLatest(new TheFather(), new Fanaticism(), new ArcanaOfDestiny(), new TurbochargingSystem());
 	}
 	
 	private static void addLatest(Object... list) {
 		for (Object o : list)
 			LATEST.add(o);
+	}
+	
+	private static void addLatestCard(Object... list) {
+		for (Object o : list)
+			LATEST_CARD.add(o);
 	}
 	
 	private static void initCheat() {
@@ -553,7 +567,7 @@ public class TestMod
 			obtain(p, randomBonusRelic());
 			break;
 		case RANDOM:
-			if (checkLatest() == null)
+			if (checkLatest(true) == null)
 				obtain(p, randomBonusReward());
 			break;
 		case CHEAT:

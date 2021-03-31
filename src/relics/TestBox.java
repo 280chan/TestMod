@@ -6,18 +6,23 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
+import christmasMod.mymod.ChristmasMod;
+import halloweenMod.relics.EventCelebration_Halloween;
 import mymod.TestMod;
+import utils.MiscMethods;
 import utils.TestBoxRelicSelectScreen;
 
-public class TestBox extends AbstractDoubleClickableRelic {
+public class TestBox extends AbstractDoubleClickableRelic implements MiscMethods {
 	public static final String ID = "TestBox";
 	
 	public boolean relicSelected = true;
@@ -79,26 +84,42 @@ public class TestBox extends AbstractDoubleClickableRelic {
 		}
 	}
 	
+	private boolean checkFoolsDay() {
+		return this.getMonth() == 4 && this.getDate() == 1;
+	}
+	
+	private static final String FOOLS_DAY = "愚人节快乐";
+	
 	@Override
 	protected void onRightClick() {
-		if (this.counter == -2 || this.invalidFloor())
-			return;
-		this.checkRandomSet();
-		new TestBoxRelicSelectScreen(true, "选择获得一件遗物，或者跳过。", "Test礼物盒", "礼物，道具，灾厄，或者逃避", this).open();
-		this.counter = -2;
-	}
-	
-	private void checkRandomSet() {
-		if (this.rng == null)
-			this.setRandom();
-	}
-	
-	public void setRandom() {
-		this.rng = new Random(Settings.seed);
+		if (this.checkFoolsDay()) {
+			this.card();
+		} else {
+			this.relic();
+		}
 	}
 	
 	@Override
 	protected void onDoubleRightClick() {
+		if (this.checkFoolsDay()) {
+			this.relic();
+		} else {
+			this.card();
+		}
+	}
+	
+	private void relic() {
+		if (this.counter == -2 || this.invalidFloor())
+			return;
+		String desc = "Test礼物盒";
+		if (this.checkFoolsDay())
+			desc = FOOLS_DAY;
+		this.checkRandomSet();
+		new TestBoxRelicSelectScreen(true, "选择获得一件遗物，或者跳过。", desc, "礼物，道具，灾厄，或者逃避", this).open();
+		this.counter = -2;
+	}
+	
+	private void card() {
 		if (this.counter == -2 || this.invalidFloor())
 			return;
 		this.checkRandomSet();
@@ -111,9 +132,12 @@ public class TestBox extends AbstractDoubleClickableRelic {
 		AbstractDungeon.getCurrRoom().phase = RoomPhase.INCOMPLETE;
 		this.cardSelected = false;
 		CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
+		AbstractCard c = this.priority();
+		if (c != null)
+			g.group.add(c);
 		while(g.group.size() < 3) {
 			boolean repeat = false;
-			AbstractCard c = TestMod.randomItem(TestMod.CARDS, this.rng);
+			c = TestMod.randomItem(TestMod.CARDS, this.rng);
 			for (AbstractCard ca : g.group)
 				if (ca.cardID.equals(c.cardID))
 					repeat = true;
@@ -122,9 +146,32 @@ public class TestBox extends AbstractDoubleClickableRelic {
 			g.group.add(c);
 			UnlockTracker.markCardAsSeen(c.cardID);
 		}
-		AbstractDungeon.gridSelectScreen.open(g, 1, "选择一张牌", false, false, true, false);
+		String desc = "选择一张牌";
+		if (this.checkFoolsDay())
+			desc = FOOLS_DAY;
+		AbstractDungeon.gridSelectScreen.open(g, 1, desc, false, false, true, false);
 		AbstractDungeon.overlayMenu.cancelButton.show("跳过");
 		this.counter = -2;
+	}
+	
+	private void checkRandomSet() {
+		if (this.rng == null)
+			this.setRandom();
+	}
+	
+	public void setRandom() {
+		this.rng = new Random(Settings.seed);
+	}
+	
+	private AbstractCard priority() {
+		if (!Settings.seedSet) {
+			if ("BrkStarshine".equals(CardCrawlGame.playerName) || "280 chan".equals(CardCrawlGame.playerName)) {
+				Object o = TestMod.checkLatest(false);
+				if (o != null)
+					return (AbstractCard) o;
+			}
+		}
+		return null;
 	}
 
 }

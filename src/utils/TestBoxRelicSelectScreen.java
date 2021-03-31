@@ -39,7 +39,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 			return ChristmasMod.randomRelic();
 		if (!Settings.seedSet) {
 			if ("BrkStarshine".equals(CardCrawlGame.playerName) || "280 chan".equals(CardCrawlGame.playerName)) {
-				Object o = TestMod.checkLatest();
+				Object o = TestMod.checkLatest(true);
 				if (o != null)
 					return (AbstractRelic) o;
 			}

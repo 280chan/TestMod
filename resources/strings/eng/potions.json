@@ -21,7 +21,7 @@
 	"testmod-TestPotion": {
 		"NAME": "Essence of Test",
 		"DESCRIPTIONS": [
-			"Choose #b1 of #b3 random #yColorless cards #b",
+			"Choose #b1 of #b3 random #yTest cards #b",
 			" time(s), to add to your hand, it costs #b0 this turn."
 		]
 	}

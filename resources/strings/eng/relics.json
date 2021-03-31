@@ -444,5 +444,11 @@
 		"NAME": "Golden Soul",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Upon pickup, lose #b75% of your #yMaximum #yhp. Whenever receive a fatal damage, instead of losing hp, lose same amount of #yGold, if you don't have enough #yGold, lose all and take rest of damage."]
+	},
+	
+	"testmod-RandomTest":{
+		"NAME": "Random Test",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["At the start of each combat, add a random #yTest card to your hand. Whenever you play a #yColorless card, a random card in your hand costs #b1 less for the turn."]
 	}
 }
