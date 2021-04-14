@@ -1,5 +1,7 @@
 package potions;
 
+import java.lang.reflect.InvocationTargetException;
+
 import com.megacrit.cardcrawl.actions.common.ObtainPotionAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -41,12 +43,36 @@ public class SpacePotion extends AbstractTestPotion {
 		while (tmp > 0) {
 			tmp--;
 			if (p.potionSlots < 10) {
-				p.potionSlots++;
-				p.potions.add(new PotionSlot(AbstractDungeon.player.potionSlots - 1));
+				if (!checkMultiplayerVaporFunnel()) {
+					p.potionSlots++;
+					p.potions.add(new PotionSlot(AbstractDungeon.player.potionSlots - 1));
+				}
 			} else {
 				this.addToBot(new ObtainPotionAction(AbstractDungeon.returnRandomPotion(true)));
 			}
 		}
+	}
+	
+	private static boolean checkMultiplayerVaporFunnel() {
+		if (AbstractDungeon.player.hasBlight("VaporFunnel")) {
+			try {
+				Class<?> networkHelper = Class.forName("chronoMods.steam.NetworkHelper");
+				Class<?> dataType = Class.forName("chronoMods.steam.NetworkHelper$dataType");
+				Object[] types = dataType.getEnumConstants();
+				Object addPotionSlot = null;
+				for (Object type : types) {
+					if (((Enum)type).name().equals("AddPotionSlot")) {
+						addPotionSlot = type;
+						break;
+					}
+				}
+				networkHelper.getDeclaredMethod("sendData", dataType).invoke(null, addPotionSlot);
+				return true;
+			} catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 
 	public boolean canUse() {

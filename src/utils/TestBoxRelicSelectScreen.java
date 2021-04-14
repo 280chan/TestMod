@@ -1,5 +1,6 @@
 package utils;
 
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -36,13 +37,15 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 			return new EventCelebration_Halloween();
 		// TODO 圣诞
 		if (month == 12 && date > 20)
-			return ChristmasMod.randomRelic();
-		if (!Settings.seedSet) {
+			return ChristmasMod.randomRelic().makeCopy();
+		if (!Settings.seedSet || Loader.isModLoaded("chronoMods")) {
 			if ("BrkStarshine".equals(CardCrawlGame.playerName) || "280 chan".equals(CardCrawlGame.playerName)) {
 				Object o = TestMod.checkLatest(true);
 				if (o != null)
 					return (AbstractRelic) o;
 			}
+		} else {
+			TestMod.info("自定种子，玩家名：" + CardCrawlGame.playerName);
 		}
 		return null;
 	}

@@ -299,7 +299,7 @@
 	"testmod-IWantAll":{
 		"NAME": "I Want All",
 		"FLAVOR": "小孩子才做选择；而我，全都要！",
-		"DESCRIPTIONS":["You have #b10 chances to right click on this relic at the combat reward screen, to make a copy of the card reward, once maximum each combat.", "This relic has been used up."]
+		"DESCRIPTIONS":["You have #b10 chances to right click on this relic at the combat reward screen, to make a copy of the card reward.", "This relic has been used up."]
 	},
 	
 	"testmod-Antiphasic":{
@@ -450,5 +450,17 @@
 		"NAME": "Random Test",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each combat, add a random #yTest card to your hand. Whenever you play a #yColorless card, a random card in your hand costs #b1 less for the turn."]
+	},
+	
+	"testmod-TemporaryBarricade":{
+		"NAME": "Temporary Barricade",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["At start of each turn, if you have #yBlock, gain [E]. Right click this relic to toggle. When active: Gain #yBarricade at start of each combat. At start of each turn, reduce your #yBlock to its natural logarithm raised to power of #b2.5 ."]
+	},
+	
+	"testmod-RetroFilter":{
+		"NAME": "Retro Filter",
+		"FLAVOR": "这个阴间滤镜能让商人视灰色如粪土…这家伙这么精明是怎么被骗过去的？",
+		"DESCRIPTIONS":["Price of #yColorless cards in shop is reduced from #b120% of normal card price to #b60%, for each normal card you have decrease an extra #b1%. Whenever you play a #yColorless card, gain #b1 #yGold."]
 	}
 }

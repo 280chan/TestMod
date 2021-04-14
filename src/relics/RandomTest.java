@@ -46,7 +46,7 @@ public class RandomTest extends AbstractTestRelic implements MiscMethods {
 						return;
 					ArrayList<AbstractCard> toRemove = new ArrayList<AbstractCard>();
 					for (AbstractCard c : list)
-						if (c.costForTurn == 0 || c.freeToPlayOnce)
+						if (c.cost == -2 || c.costForTurn == 0 || c.freeToPlayOnce)
 							toRemove.add(c);
 					if (toRemove.size() < list.size())
 						for (AbstractCard c : toRemove)

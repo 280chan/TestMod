@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -54,7 +55,7 @@ public class IWantAll extends AbstractClickRelic {
 		}
     }
 	
-	private void addReward() {
+	private static void addReward() {
 		ArrayList<RewardItem> bonus = new ArrayList<RewardItem>();
 		for (RewardItem r : AbstractDungeon.combatRewardScreen.rewards) {
 			if (r.type == RewardType.CARD) {
@@ -75,13 +76,24 @@ public class IWantAll extends AbstractClickRelic {
 		AbstractDungeon.combatRewardScreen.positionRewards();
 	}
 	
+	private static boolean checkReward() {
+		for (RewardItem r : AbstractDungeon.combatRewardScreen.rewards)
+			if (r.type == RewardType.CARD)
+				return true;
+		return false;
+	}
+	
 	@Override
 	protected void onRightClick() {
 		if (this.victory) {
-			this.toggleState(false);
-			this.addReward();
+			if (!checkReward()) {
+				this.toggleState(false);
+				return;
+			}
+			addReward();
 			this.counter--;
 			if (this.counter == 0) {
+				this.toggleState(false);
 				this.counter = -2;
 				this.description = this.DESCRIPTIONS[1];
 				this.tips.clear();
@@ -91,8 +103,14 @@ public class IWantAll extends AbstractClickRelic {
 		}
 	}
 	
+	public static void loadVictory() {
+		for (AbstractRelic r : AbstractDungeon.player.relics)
+			if (r instanceof IWantAll)
+				r.onVictory();
+	}
+	
 	public boolean canSpawn() {
-		if (!Settings.isEndless && AbstractDungeon.actNum > 1) {
+		if (!Settings.isEndless && AbstractDungeon.actNum > 2) {
 			return false;
 		}
 		return true;

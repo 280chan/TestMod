@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.codedisaster.steamworks.SteamAPI;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -40,8 +41,10 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import actions.PerfectComboAction;
 import basemod.BaseMod;
+import basemod.DevConsole;
 import basemod.ModLabeledButton;
 import basemod.ModPanel;
+import basemod.ReflectionHacks;
 import basemod.helpers.RelicType;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.EditKeywordsSubscriber;
@@ -304,8 +307,9 @@ public class TestMod
 	}
 	
 	private static void initLatest() {
-		addLatest(new RandomTest(), new GoldenSoul(), new TurbochargingSystem(), new ArcanaOfDestiny());
-		addLatestCard(new SunMoon(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
+		addLatest(new TemporaryBarricade(), new RetroFilter(), new RandomTest(), new GoldenSoul(), new GremlinBalance(),
+				new IWantAll(), new TurbochargingSystem(), new ArcanaOfDestiny());
+		addLatestCard(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
 	}
 
@@ -325,7 +329,8 @@ public class TestMod
 				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new CasingShield(), new TestBox(),
 				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong(), new ArcanaOfDestiny(),
 				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
-				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest() };
+				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest(), new TemporaryBarricade(),
+				new GremlinBalance(), new RetroFilter() };
 		// 添加遗物进游戏 TODO
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);
@@ -543,6 +548,7 @@ public class TestMod
 	
 	@Override
 	public void receivePostDungeonInitialize() {
+		enableConsoleMultiplayer();
 		if (AbstractDungeon.floorNum > 1) {
 			return;
 		}
@@ -909,6 +915,10 @@ public class TestMod
 		Automaton.loadMagicNumber();
 		
 		AscensionHeart.load(getBool(AscensionHeart.SAVE_NAME));
+		
+		TemporaryBarricade.pulseLoader();
+		
+		IWantAll.loadVictory();
 	}
 	
 	public static int getInt(String key) {
@@ -1070,6 +1080,17 @@ public class TestMod
 	
 	public static boolean fileExist(String path) {
 		return Gdx.files.internal(path).exists();
+	}
+	
+	private static void enableConsoleMultiplayer() {
+		if ("280 chan".equals(CardCrawlGame.playerName) && Loader.isModLoaded("chronoMods")) {
+			if (!DevConsole.enabled) {
+				DevConsole.enabled = true;
+				info("控制台未激活，现已激活");
+			} else {
+				info("控制台已经激活，跳过");
+			}
+		}
 	}
 	
 }
