@@ -14,9 +14,8 @@ import com.megacrit.cardcrawl.relics.Lantern;
 
 import actions.DreamHousePurgeCardAction;
 import mymod.TestMod;
-import utils.MiscMethods;
 
-public class DreamHouse extends AbstractTestRelic implements MiscMethods {
+public class DreamHouse extends AbstractTestRelic {
 	public static final String ID = "DreamHouse";
 	private static final AbstractRelic[] RELICS = { new HappyFlower(), new Lantern() };
 	private static final ArrayList<DreamHousePurgeCardAction> QUEUE = new ArrayList<DreamHousePurgeCardAction>();
@@ -26,19 +25,12 @@ public class DreamHouse extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public String getUpdatedDescription() {
-		if (AbstractDungeon.player == null)
-			return setDescription(null);
-		return setDescription(AbstractDungeon.player.chosenClass);
-	}
-	
-	private String setDescription(PlayerClass c) {
-		return this.setDescription(c, this.DESCRIPTIONS[0], this.DESCRIPTIONS[1]);
+		return this.DESCRIPTIONS[0];
 	}
 	  
 	public void updateDescription(PlayerClass c) {
-		this.description = setDescription(c);
 		this.tips.clear();
-		this.tips.add(new PowerTip(this.name, this.description));
+		this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
 		initializeTips();
 	}
 	

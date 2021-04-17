@@ -20,7 +20,7 @@ import utils.MiscMethods;
 public class LackOfCard extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "LackOfCard";
 	public static final String IMG = TestMod.cardIMGPath(ID);
-	public static final String DESCRIPTION = "回合开始时，如果手牌数不超过当前能量，额外抽 #b2 张牌，否则下一回合开始获得 [R] 。";//遗物效果的文本描叙。
+	public static final String DESCRIPTION = "回合开始时，如果手牌数不超过当前能量，额外抽 #b2 张牌，否则下一回合开始获得 [E] 。";//遗物效果的文本描叙。
 	private static final int DRAW = 2;
 	
 	private static boolean firstTurn = false;
@@ -30,19 +30,12 @@ public class LackOfCard extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public String getUpdatedDescription() {
-		if (AbstractDungeon.player != null) {
-			return setDescription(AbstractDungeon.player.chosenClass);
-		}
-		return setDescription(null);
+		return this.DESCRIPTIONS[0];
 	}
-	
-	private String setDescription(PlayerClass c) {
-		return setDescription(c, DESCRIPTIONS);
-	}
-	
+
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, setDescription(c)));
+	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
 	    initializeTips();
 	}
 	

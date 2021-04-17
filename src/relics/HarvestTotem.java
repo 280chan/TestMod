@@ -10,14 +10,13 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.TextAboveCreatureEffect;
 
-import mymod.TestMod;
 import utils.MiscMethods;
 
 public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "HarvestTotem";
 	
 	private static final ArrayList<AbstractCreature> DONE = new ArrayList<AbstractCreature>();
-	private static boolean init = false;
+	private boolean init = false;
 	
 	public HarvestTotem() {
 		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
@@ -29,12 +28,9 @@ public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public void onEquip() {
-		TestMod.setActivity(this);
-		if (!this.isActive)
-			return;
-		init = true;
+		this.init = true;
 		AbstractDungeon.player.increaseMaxHp(AbstractDungeon.player.maxHealth, false);
-		init = false;
+		this.init = false;
     }
 	
 	private static void increaseMaxHp(AbstractCreature m, int amount) {
@@ -92,7 +88,7 @@ public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public int onPlayerHeal(int healAmount) {
-		if (!this.isActive || init)
+		if (this.init)
 			return healAmount;
         return 2 * healAmount;
     }
@@ -106,7 +102,7 @@ public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
     }
 	
 	public float preChangeMaxHP(float amount) {
-		if (amount > 0 && this.isActive && !init)
+		if (amount > 0 && !this.init)
 			return 2 * amount;
 		return amount;
 	}

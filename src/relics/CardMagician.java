@@ -16,19 +16,12 @@ public class CardMagician extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public String getUpdatedDescription() {
-		if (AbstractDungeon.player != null) {
-			return setDescription(AbstractDungeon.player.chosenClass);
-		}
-		return setDescription(null);
-	}
-
-	private String setDescription(PlayerClass c) {
-		return this.setDescription(c, this.DESCRIPTIONS[0], this.DESCRIPTIONS[1]);
+		return this.DESCRIPTIONS[0];
 	}
 
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, setDescription(c)));
+	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
 	    initializeTips();
 	}
 

@@ -1,9 +1,5 @@
 package patches;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
@@ -16,6 +12,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 
+import basemod.ReflectionHacks;
 import mymod.TestMod;
 import relics.StringDisintegrator;
 import relics.TestBox;
@@ -114,6 +111,16 @@ public class StringDisintegratorPatch {
 		}
 	}
 	
+	private static void methodInvoke(String name, AbstractCard c, SpriteBatch sb) {
+		ReflectionHacks.privateMethod(AbstractCard.class, name, SpriteBatch.class).invoke(c, sb);
+	}
+	
+	private static void methodInvokeWithBoolean(String name, AbstractCard c, SpriteBatch sb) {
+		boolean hovered = ReflectionHacks.getPrivate(c, AbstractCard.class, "hovered");
+		ReflectionHacks.privateMethod(AbstractCard.class, name, SpriteBatch.class, boolean.class, boolean.class)
+				.invoke(c, sb, hovered, false);
+	}
+	
 	private static void renderRewardCard(AbstractCard c, SpriteBatch sb) {
 		if (Settings.hideCards)
 			return;
@@ -125,56 +132,20 @@ public class StringDisintegratorPatch {
 		if (!isOnScreen) {
 			return;
 		}
-		Method tmp;
-		Field f;
 		try {
 			if (!c.isFlipped) {
-				tmp = AbstractCard.class.getDeclaredMethod("updateGlow");
-				tmp.setAccessible(true);
-				tmp.invoke(c);
-				tmp.setAccessible(false);
-				
-				tmp = AbstractCard.class.getDeclaredMethod("renderGlow", SpriteBatch.class);
-				tmp.setAccessible(true);
-				tmp.invoke(c, sb);
-				tmp.setAccessible(false);
-				
-				f = AbstractCard.class.getDeclaredField("hovered");
-				f.setAccessible(true);
-				tmp = AbstractCard.class.getDeclaredMethod("renderImage", SpriteBatch.class, boolean.class, boolean.class);
-				tmp.setAccessible(true);
-				tmp.invoke(c, sb, f.getBoolean(c), false);
-				tmp.setAccessible(false);
-				f.setAccessible(false);
-
-				tmp = AbstractCard.class.getDeclaredMethod("renderType", SpriteBatch.class);
-				tmp.setAccessible(true);
-				tmp.invoke(c, sb);
-				tmp.setAccessible(false);
-
-				tmp = AbstractCard.class.getDeclaredMethod("renderTint", SpriteBatch.class);
-				tmp.setAccessible(true);
-				tmp.invoke(c, sb);
-				tmp.setAccessible(false);
-
-				tmp = AbstractCard.class.getDeclaredMethod("renderEnergy", SpriteBatch.class);
-				tmp.setAccessible(true);
-				tmp.invoke(c, sb);
-				tmp.setAccessible(false);
+				ReflectionHacks.privateMethod(AbstractCard.class, "updateGlow").invoke(c);
+				methodInvoke("renderGlow", c, sb);
+				methodInvokeWithBoolean("renderImage", c, sb);
+				methodInvoke("renderType", c, sb);
+				methodInvoke("renderTint", c, sb);
+				methodInvoke("renderEnergy", c, sb);
 			} else {
-				f = AbstractCard.class.getDeclaredField("hovered");
-				f.setAccessible(true);
-				tmp = AbstractCard.class.getDeclaredMethod("renderBack", SpriteBatch.class, Boolean.class, Boolean.class);
-				tmp.setAccessible(true);
-				tmp.invoke(c, sb, f.getBoolean(c), false);
-				tmp.setAccessible(false);
-				f.setAccessible(false);
-				c.hb.render(sb);
+				methodInvokeWithBoolean("renderBack", c, sb);
 			}
-		} catch (NoSuchMethodException | SecurityException | NoSuchFieldException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (SecurityException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
-		
 		c.hb.render(sb);
 	}
 	

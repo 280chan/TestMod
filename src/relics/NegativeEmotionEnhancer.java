@@ -10,9 +10,7 @@ import com.megacrit.cardcrawl.powers.FrailPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
 
-import utils.MiscMethods;
-
-public class NegativeEmotionEnhancer extends AbstractTestRelic implements MiscMethods {
+public class NegativeEmotionEnhancer extends AbstractTestRelic {
 	public static final String ID = "NegativeEmotionEnhancer";
 	
 	public NegativeEmotionEnhancer() {
@@ -20,19 +18,12 @@ public class NegativeEmotionEnhancer extends AbstractTestRelic implements MiscMe
 	}
 	
 	public String getUpdatedDescription() {
-		if (AbstractDungeon.player != null) {
-			return setDescription(AbstractDungeon.player.chosenClass);
-		}
-		return setDescription(null);
-	}
-	
-	private String setDescription(PlayerClass c) {
-		return setDescription(c, DESCRIPTIONS);
+		return DESCRIPTIONS[0];
 	}
 	
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, setDescription(c)));
+	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
 	    initializeTips();
 	}
 

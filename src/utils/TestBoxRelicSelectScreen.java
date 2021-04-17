@@ -38,14 +38,16 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		// TODO 圣诞
 		if (month == 12 && date > 20)
 			return ChristmasMod.randomRelic().makeCopy();
-		if (!Settings.seedSet || Loader.isModLoaded("chronoMods")) {
+		if (!Settings.seedSet) {
 			if ("BrkStarshine".equals(CardCrawlGame.playerName) || "280 chan".equals(CardCrawlGame.playerName)) {
 				Object o = TestMod.checkLatest(true);
 				if (o != null)
 					return (AbstractRelic) o;
 			}
-		} else {
-			TestMod.info("自定种子，玩家名：" + CardCrawlGame.playerName);
+		} else if (Loader.isModLoaded("chronoMods") && "BrkStarshine".equals(CardCrawlGame.playerName)) {
+			Object o = TestMod.checkLatest(true);
+			if (o != null)
+				return (AbstractRelic) o;
 		}
 		return null;
 	}

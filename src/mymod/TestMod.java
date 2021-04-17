@@ -548,7 +548,6 @@ public class TestMod
 	
 	@Override
 	public void receivePostDungeonInitialize() {
-		enableConsoleMultiplayer();
 		if (AbstractDungeon.floorNum > 1) {
 			return;
 		}
@@ -997,6 +996,8 @@ public class TestMod
 		initLatest();
 		// TODO
 		initializeModPanel();
+		
+		enableConsoleMultiplayer();
 	}
 	
 	private void initializeModPanel() {
@@ -1017,9 +1018,9 @@ public class TestMod
 					"Fun relics, cards, events, potions.", this.settingsPanel);
 		}
 	}
-
+	
 	public static <T> T randomItem(ArrayList<T> list, Random rng) {
-		return list.get(rng.random(list.size()) - 1);
+		return list.get(rng.random(list.size() - 1));
 	}
 	
 	public static <T> T randomItem(ArrayList<T> list, java.util.Random rng) {
@@ -1084,11 +1085,10 @@ public class TestMod
 	
 	private static void enableConsoleMultiplayer() {
 		if ("280 chan".equals(CardCrawlGame.playerName) && Loader.isModLoaded("chronoMods")) {
-			if (!DevConsole.enabled) {
-				DevConsole.enabled = true;
-				info("控制台未激活，现已激活");
-			} else {
-				info("控制台已经激活，跳过");
+			try {
+				ReflectionHacks.setPrivateStatic(Class.forName("chronoMods.TogetherManager"), "debug", Boolean.TRUE);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
 	}

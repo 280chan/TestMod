@@ -18,19 +18,16 @@ import com.megacrit.cardcrawl.actions.common.RollMoveAction;
 import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
-import com.megacrit.cardcrawl.actions.watcher.ChooseOneAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.daily.mods.Careless;
 import com.megacrit.cardcrawl.daily.mods.ControlledChaos;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ModHelper;
-import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -393,19 +390,6 @@ public interface MiscMethods {
 		private static void saveLastQueueItem(CardQueueItem q) {
 			lastCardQueued = q;
 		}
-	}
-	
-	public default String getEnergySymble(PlayerClass c) {
-		return " [E] ";
-	}
-	
-	public default String setDescription(PlayerClass c, String... DESCRIPTIONS) {
-		String e = this.getEnergySymble(c);
-		String ret = DESCRIPTIONS[0];
-		for (int i = 1; i < DESCRIPTIONS.length; i++) {
-			ret += e + DESCRIPTIONS[i];
-		}
-		return ret;
 	}
 	
 	public default void rollIntent(AbstractMonster m) {

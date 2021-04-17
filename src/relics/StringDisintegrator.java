@@ -10,9 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
-import utils.MiscMethods;
-
-public class StringDisintegrator extends AbstractTestRelic implements MiscMethods {
+public class StringDisintegrator extends AbstractTestRelic {
 	public static final String ID = "StringDisintegrator";
 	
 	private static final String EMPTY = "";
@@ -26,19 +24,12 @@ public class StringDisintegrator extends AbstractTestRelic implements MiscMethod
 	}
 	
 	public String getUpdatedDescription() {
-		if (AbstractDungeon.player != null) {
-			return setDescription(AbstractDungeon.player.chosenClass);
-		}
-		return setDescription(null);
-	}
-
-	private String setDescription(PlayerClass c) {
-		return this.setDescription(c, this.DESCRIPTIONS[0], this.DESCRIPTIONS[1]);
+		return this.DESCRIPTIONS[0];
 	}
 
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, setDescription(c)));
+	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
 	    initializeTips();
 	}
 	

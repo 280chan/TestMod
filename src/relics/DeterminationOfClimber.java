@@ -1,11 +1,11 @@
 package relics;
 
 import com.badlogic.gdx.graphics.Color;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
+import com.megacrit.cardcrawl.actions.common.GainGoldAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -29,19 +29,12 @@ public class DeterminationOfClimber extends AbstractTestRelic implements MiscMet
 	}
 	
 	public String getUpdatedDescription() {
-		if (AbstractDungeon.player == null)
-			return setDescription(null);
-		return setDescription(AbstractDungeon.player.chosenClass);
-	}
-	
-	private String setDescription(PlayerClass c) {
-		return this.setDescription(c, this.DESCRIPTIONS[0], this.DESCRIPTIONS[1]);
+		return this.DESCRIPTIONS[0];
 	}
 
 	public void updateDescription(PlayerClass c) {
-		this.description = this.setDescription(c);
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.description));
+	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
 	    initializeTips();
 	}
 	
@@ -54,13 +47,7 @@ public class DeterminationOfClimber extends AbstractTestRelic implements MiscMet
 		this.addToBot(new GainEnergyAction(count));
 		this.addToBot(new HealAction(p, p, count));
 		this.addToBot(new DrawCardAction(p, count));
-		this.addToBot(new AbstractGameAction(){
-			@Override
-			public void update() {
-				p.gainGold(count);
-				this.isDone = true;
-			}
-		});
+		this.addToBot(new GainGoldAction(count));
 		this.addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(count, true), DamageType.THORNS, AttackEffect.BLUNT_LIGHT));
 		this.show();
 	}

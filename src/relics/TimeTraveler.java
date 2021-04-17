@@ -8,9 +8,8 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import mymod.TestMod;
-import utils.MiscMethods;
 
-public class TimeTraveler extends AbstractTestRelic implements MiscMethods {
+public class TimeTraveler extends AbstractTestRelic {
 	public static final String ID = "TimeTraveler";
 	public static final String SAVE_NAME = "san";
 	private static final int REST_SAN = 10;
@@ -55,19 +54,12 @@ public class TimeTraveler extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public String getUpdatedDescription() {
-		if (AbstractDungeon.player != null) {
-			return setDescription(AbstractDungeon.player.chosenClass);
-		}
-		return setDescription(null);
-	}
-
-	private String setDescription(PlayerClass c) {
-		return this.setDescription(c, this.DESCRIPTIONS[0], this.DESCRIPTIONS[1]);
+		return this.DESCRIPTIONS[0];
 	}
 
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, setDescription(c)));
+	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
 	    initializeTips();
 	}
 	
@@ -96,18 +88,18 @@ public class TimeTraveler extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public void onEquip() {
+		AbstractDungeon.player.energy.energyMaster++;
 		TestMod.setActivity(this);
 		if (!this.isActive)
 			return;
 		this.counter = 100;
-		AbstractDungeon.player.energy.energyMaster += 1;
 		relic = this;
     }
 	
 	public void onUnequip() {
+		AbstractDungeon.player.energy.energyMaster--;
 		if (!this.isActive)
 			return;
-		AbstractDungeon.player.energy.energyMaster -= 1;
 		relic = null;
     }
 	

@@ -45,8 +45,8 @@ public class MahjongZs extends AbstractMahjongCard {
 				@Override
 				public void update() {
 					this.isDone = true;
-					this.addToBot(new RemoveDebuffsAction(p));
-					this.addToBot(new ApplyPowerAction(p, p, new ArtifactPower(p, MahjongZs.this.magicNumber), MahjongZs.this.magicNumber));
+					this.addToTop(new ApplyPowerAction(p, p, new ArtifactPower(p, MahjongZs.this.magicNumber), MahjongZs.this.magicNumber));
+					this.addToTop(new RemoveDebuffsAction(p));
 				}});
 		} else {
 			this.addToBot(new ApplyPowerAction(p, p, new MahjongZsPower(p, this, this.magicNumber), this.magicNumber));

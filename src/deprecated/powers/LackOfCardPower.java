@@ -1,6 +1,5 @@
 package deprecated.powers;
 
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -29,13 +28,9 @@ public class LackOfCardPower extends AbstractPower implements MiscMethods {
 		updateDescription();//调用该方法（第36行）的文本更新函数,更新一次文本描叙，不可缺少。
 		this.type = PowerType.BUFF;//能力种类，可以不填写，会默认为PowerType.BUFF。PowerType.BUFF不会被人工制品抵消，PowerType.DEBUFF会被人工制品抵消。
 	}
-
-	private String setDescription(PlayerClass c) {
-		return this.setDescription(c, DESCRIPTIONS[0]+ this.amount + DESCRIPTIONS[1], DESCRIPTIONS[2]);
-	}
 	
 	public void updateDescription() {
-		 this.description = this.setDescription(AbstractDungeon.player.chosenClass);
+		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + " E " + DESCRIPTIONS[2];
 	}
 	
 	public void stackPower(final int stackAmount) {

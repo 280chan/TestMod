@@ -6,7 +6,6 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.DexterityPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
-import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import halloweenMod.mymod.HalloweenMod;
@@ -17,7 +16,7 @@ public class Halloween extends AbstractCard {
     private static CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String NAME = cardStrings.NAME;
     private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-    private static final String[] E = {" [R] ", " [G] ", " [B] ", " [W] "};
+    private static final String E = "[E] ";
     private static final int COST = 0;
     private static final int BASE_MGC = 1;
     
@@ -38,31 +37,14 @@ public class Halloween extends AbstractCard {
     private static String getDescription() {
 		return getDescription(BASE_MGC);
 	}
-	
-    private static String getEnergySymble() {
-    	if (AbstractDungeon.player != null) {
-			switch (AbstractDungeon.player.chosenClass) {
-			case WATCHER:
-				return E[3];
-			case DEFECT:
-				return E[2];
-			case THE_SILENT:
-				return E[1];
-			case IRONCLAD:
-			default:
-				return E[0];
-			}
-		} else
-			return E[0];
-    }
     
 	private static String getDescription(int magic) {
-		String temp = EXTENDED_DESCRIPTION[0];
+		String temp = EXTENDED_DESCRIPTION[0] + " ";
 		if (magic < 4)
 			for (int i = 0; i < magic; i++)
-				temp += getEnergySymble();
+				temp += E;
 		else
-			temp += " !M! " + getEnergySymble();
+			temp += "!M! " + E;
 		if (magic > 1 && EXTENDED_DESCRIPTION.length > 2)
 			return temp + EXTENDED_DESCRIPTION[2];
 		else

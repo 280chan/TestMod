@@ -1,8 +1,6 @@
 
 package cards.colorless;
 
-import java.lang.reflect.Field;
-
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.AttackDamageRandomEnemyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -12,6 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.Intent;
 
+import basemod.ReflectionHacks;
 import cards.AbstractTestCard;
 
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -59,23 +58,13 @@ public class WeaknessCounterattack extends AbstractTestCard {
 				}
 			} else {
 				if (checkIntent(m.intent)) {
-					Field tmp;
 					try {
-						tmp = AbstractMonster.class.getDeclaredField("isMultiDmg");
-						tmp.setAccessible(true);
-						if ((boolean) tmp.get(m)) {
-							tmp = AbstractMonster.class.getDeclaredField("intentMultiAmt");
-							tmp.setAccessible(true);
-							int amount = (int) tmp.get(m);
-							if (amount > 1)
-								count += amount;
-							else
-								count++;
-						} else {
+						int amount = ReflectionHacks.getPrivate(m, AbstractMonster.class, "intentMultiAmt");
+						if (amount > 1)
+							count += amount;
+						else
 							count++;
-						}
-					} catch (NoSuchFieldException | SecurityException | IllegalArgumentException
-							| IllegalAccessException e) {
+					} catch (SecurityException | IllegalArgumentException e) {
 						e.printStackTrace();
 					}
 				}
