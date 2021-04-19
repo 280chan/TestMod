@@ -40,7 +40,7 @@ public class RabbitOfFibonacci extends AbstractTestCard {
     }
     
     private boolean overflow() {
-    	return this.timesUpgraded > 45;
+    	return this.timesUpgraded > 44;
     }
     
     private static int f(int n) {
@@ -58,7 +58,7 @@ public class RabbitOfFibonacci extends AbstractTestCard {
         if (this.overflow()) {
         	tmp = 2147450000;
         } else {
-            tmp = f(this.timesUpgraded + 1);
+            tmp = f(this.timesUpgraded + 2);
         }
         this.baseDamage = this.baseBlock = tmp;
 		this.upgradedDamage = this.upgradedBlock = true;

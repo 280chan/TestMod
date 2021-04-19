@@ -132,7 +132,7 @@
 	"testmod-IncinerationGenerator":{
 		"NAME": "Incineration Generator",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn: gain [E], #yExhaust a card."]
+		"DESCRIPTIONS":["At the start of each turn: gain [E] , #yExhaust a card."]
 	},
 	
 	"testmod-IndustrialRevolution":{
@@ -209,7 +209,7 @@
 	"testmod-TimeTraveler":{
 		"NAME": "The Time Traveler",
 		"FLAVOR": "El Psy Congroo",
-		"DESCRIPTIONS":["At the start of each turn, gain [E]. You have #b100 (Max) #ySAN by default. Whenever #ySL will decrease your #ySAN by #r50%, at the end of combat, gain #b5 #ySAN, gain #b10 #ySAN when you Rest. Whenever you end combat with less than #b20 #ySAN, lose #r10 Max HP. Whenever you start a turn with less than #b10 #ySAN, lose #r1 HP."]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . You have #b100 (Max) #ySAN by default. Whenever #ySL will decrease your #ySAN by #r50%, at the end of combat, gain #b5 #ySAN, gain #b10 #ySAN when you Rest. Whenever you end combat with less than #b20 #ySAN, lose #r10 Max HP. Whenever you start a turn with less than #b10 #ySAN, lose #r1 HP."]
 	},
 	
 	"testmod-Maize":{
@@ -275,7 +275,7 @@
 	"testmod-BatchProcessingSystem":{
 		"NAME": "Batch Processing System",
 		"FLAVOR": "Modular computing.",
-		"DESCRIPTIONS":["Lose [E] at the start of each turn. NL Whenever you play two cards of same cost in a row, gain [E]."]
+		"DESCRIPTIONS":["Lose [E] at the start of each turn. NL Whenever you play two cards of same cost in a row, gain [E] ."]
 	},
 	
 	"testmod-CardMagician":{
@@ -287,7 +287,7 @@
 	"testmod-NegativeEmotionEnhancer":{
 		"NAME": "The Negative Emotion Enhancer",
 		"FLAVOR": "Collect, sort, transform.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E], gain #yFragile, #yWeak, #yVulnerable in order. Whenever an enemy dies, heal #b1 HP. At the end of combat, increase your Max HP by #b1. "]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] , gain #yFragile, #yWeak, #yVulnerable in order. Whenever an enemy dies, heal #b1 HP. At the end of combat, increase your Max HP by #b1. "]
 	},
 	
 	"testmod-Brilliant":{
@@ -365,7 +365,7 @@
 	"testmod-DeterminationOfClimber":{
 		"NAME": "The Determination Of Climber",
 		"FLAVOR": "然而某些登山者总是喜欢原地踏步。",
-		"DESCRIPTIONS":["Whenever you play a card cost more than the previous one, for every more cost, gain [E], heal #b1, draw #b1, deal #b1 damage to ALL enemies, gain #b1 #ygold. "]
+		"DESCRIPTIONS":["Whenever you play a card cost more than the previous one, for every more cost, gain [E] , heal #b1, draw #b1, deal #b1 damage to ALL enemies, gain #b1 #ygold. "]
 	},
 	
 	"testmod-BloodSacrificeSpiritualization":{
@@ -419,7 +419,7 @@
 	"testmod-Fanaticism":{
 		"NAME": "Fanaticism",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E], #yWrath: gain [E]. At the end of each turn, #yWrath: exit #yWrath. Otherwise, enter #yWrath. Whenever you lose hp, for each point you lose, gain #b1% hp absorb, #yWrath: gain double.", " NL Current hp absorb: #b", "%"]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] , #yWrath: gain [E] . At the end of each turn, #yWrath: exit #yWrath. Otherwise, enter #yWrath. Whenever you lose hp, for each point you lose, gain #b1% hp absorb, #yWrath: gain double.", " NL Current hp absorb: #b", "%"]
 	},
 	
 	"testmod-TurbochargingSystem":{
@@ -455,7 +455,13 @@
 	"testmod-TemporaryBarricade":{
 		"NAME": "Temporary Barricade",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At start of each turn, if you have #yBlock, gain [E]. Right click this relic to toggle. When active: Gain #yBarricade at start of each combat. At start of each turn, reduce your #yBlock to its natural logarithm raised to power of #b2.5 ."]
+		"DESCRIPTIONS":["At start of each turn, if you have #yBlock, gain [E] . Right click this relic to toggle. When active: Gain #yBarricade at start of each combat. At start of each turn, reduce your #yBlock to its natural logarithm raised to power of #b2.5 ."]
+	},
+	
+	"testmod-GremlinBalance":{
+		"NAME": "Gremlin Balance",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["At start of each turn, gain [E] for each enemy has no more hp than you, draw #b1 card for each enemy has no less hp than you."]
 	},
 	
 	"testmod-RetroFilter":{

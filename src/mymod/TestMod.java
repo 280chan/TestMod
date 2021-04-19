@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -551,6 +552,9 @@ public class TestMod
 		if (AbstractDungeon.floorNum > 1) {
 			return;
 		}
+		
+		checkEnableConsoleMultiplayer();
+		
 		if (config == null)
 			this.initSavingConfig();
 		for (ISubscriber s : SUB_MOD)
@@ -997,7 +1001,7 @@ public class TestMod
 		// TODO
 		initializeModPanel();
 		
-		enableConsoleMultiplayer();
+		//enableConsoleMultiplayer();
 	}
 	
 	private void initializeModPanel() {
@@ -1083,10 +1087,30 @@ public class TestMod
 		return Gdx.files.internal(path).exists();
 	}
 	
-	private static void enableConsoleMultiplayer() {
-		if ("280 chan".equals(CardCrawlGame.playerName) && Loader.isModLoaded("chronoMods")) {
+	private static void changeConsoleMultiplayer(boolean value) throws ClassNotFoundException {
+		ReflectionHacks.setPrivateStatic(Class.forName("chronoMods.TogetherManager"), "debug", value);
+	}
+	
+	private static boolean checkSteamName(Object remotePlayer) {
+		return "彼君不触".equals(ReflectionHacks.getPrivate(remotePlayer, remotePlayer.getClass(), "userName"));
+	}
+	
+	private static void checkEnableConsoleMultiplayer() {
+		if (Loader.isModLoaded("chronoMods")) {
 			try {
-				ReflectionHacks.setPrivateStatic(Class.forName("chronoMods.TogetherManager"), "debug", Boolean.TRUE);
+				if ("280 chan".equals(CardCrawlGame.playerName)) {
+					changeConsoleMultiplayer(true);
+				} else {
+					CopyOnWriteArrayList<?> players = ReflectionHacks
+							.getPrivateStatic(Class.forName("chronoMods.TogetherManager"), "players");
+					for (Object player : players) {
+						if (checkSteamName(player)) {
+							changeConsoleMultiplayer(true);
+							return;
+						}
+					}
+					changeConsoleMultiplayer(false);
+				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
