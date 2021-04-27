@@ -40,7 +40,7 @@ public class KeyOfTheVoid extends AbstractTestRelic {
 	private int getNum() {
 		int count = 0;
 		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (r.tier == RelicTier.BOSS)
+			if (!(r instanceof KeyOfTheVoid) && r.tier == RelicTier.BOSS)
 				count++;
 		return count;
 	}
@@ -60,6 +60,10 @@ public class KeyOfTheVoid extends AbstractTestRelic {
 	}
 	
 	private void initPurgeCard() {
+		if (this.getNum() == 0) {
+			this.finished = true;
+			return;
+		}
 		this.cardSelected = false;
 		if (AbstractDungeon.isScreenUp) {
 			AbstractDungeon.dynamicBanner.hide();

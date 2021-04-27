@@ -317,7 +317,7 @@
 	"testmod-KeyOfTheVoid":{
 		"NAME": "The Key Of The Void",
 		"FLAVOR": "虚空是这个世界的终极答案。",
-		"DESCRIPTIONS":["At the end of combat, for each #yBoss relic you have, remove #b1 card from your deck.", "Choose to remove ", " card(s) from your deck."]
+		"DESCRIPTIONS":["At the end of combat, for each other #yBoss relic you have, remove #b1 card from your deck.", "Choose to remove ", " card(s) from your deck."]
 	},
 	
 	"testmod-ThousandKnives":{

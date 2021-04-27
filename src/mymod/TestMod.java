@@ -308,8 +308,15 @@ public class TestMod
 	}
 	
 	private static void initLatest() {
-		addLatest(new TemporaryBarricade(), new RetroFilter(), new RandomTest(), new GoldenSoul(), new GremlinBalance(),
-				new IWantAll(), new TurbochargingSystem(), new ArcanaOfDestiny());
+		addLatest(new RandomTest(), new GoldenSoul(), new GremlinBalance(), new IWantAll(), new TemporaryBarricade(),
+				new TurbochargingSystem());
+		addBadRelics(new PortableAltar(), new Sins(), new Register(), new InfectionSource(), new OneHitWonder(),
+				new IndustrialRevolution(), new Nyarlathotep(), new BalancedPeriapt(), new MagicalMallet(),
+				new DragonStarHat(), new Nine(), new Motorcycle(), new DreamHouse(), new HarvestTotem(),
+				new LifeArmor(), new NegativeEmotionEnhancer(), new IWantAll(), new Antiphasic(), new KeyOfTheVoid(),
+				new CyclicPeriapt(), new ConstraintPeriapt(), new InjuryResistance(), new Acrobat(),
+				new TurbochargingSystem(), new HeartOfStrike(), new GoldenSoul(), new RandomTest(),
+				new TemporaryBarricade(), new RetroFilter());
 		addLatestCard(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
 	}
@@ -435,6 +442,7 @@ public class TestMod
 	}
 	
 	private static final ArrayList<Object> LATEST = new ArrayList<Object>();
+	public static final ArrayList<AbstractRelic> BAD_RELICS = new ArrayList<AbstractRelic>();
 	private static final ArrayList<Object> LATEST_CARD = new ArrayList<Object>();
 	private static final ArrayList<ArrayList<Object>> INIT0 = new ArrayList<ArrayList<Object>>();
 	private static final ArrayList<ArrayList<Object>> INIT = new ArrayList<ArrayList<Object>>();
@@ -465,6 +473,11 @@ public class TestMod
 	private static void addLatestCard(Object... list) {
 		for (Object o : list)
 			LATEST_CARD.add(o);
+	}
+	
+	private static void addBadRelics(AbstractRelic... list) {
+		for (AbstractRelic r : list)
+			BAD_RELICS.add(r);
 	}
 	
 	private static void initCheat() {
@@ -1087,8 +1100,11 @@ public class TestMod
 		return Gdx.files.internal(path).exists();
 	}
 	
+	public static boolean spireWithFriendLogger = true;
+	
 	private static void changeConsoleMultiplayer(boolean value) throws ClassNotFoundException {
 		ReflectionHacks.setPrivateStatic(Class.forName("chronoMods.TogetherManager"), "debug", value);
+		spireWithFriendLogger = !value;
 	}
 	
 	private static boolean checkSteamName(Object remotePlayer) {

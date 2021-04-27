@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.CombustPower;
+import com.megacrit.cardcrawl.powers.EchoPower;
 import com.megacrit.cardcrawl.powers.PanachePower;
 
 import mymod.TestMod;
@@ -73,6 +74,8 @@ public class Register extends AbstractTestRelic{
 				pow.amount = 15;
 			else if (pow instanceof RecapPower)
 				((RecapPower)pow).clear();
+			else if (pow instanceof EchoPower)
+				pow.atStartOfTurn();
 			pow.updateDescription();
 			this.addToTop(new ApplyPowerAction(p, p, pow, pow.amount));
 			show = true;

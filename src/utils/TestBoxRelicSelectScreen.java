@@ -52,24 +52,31 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		return null;
 	}
 	
+	private AbstractRelic randomRelic(boolean priority) {
+		return TestMod.randomItem((priority ? TestMod.BAD_RELICS : TestMod.RELICS), this.box.rng);
+	}
+	
+	private void addAndMarkAsSeen(AbstractRelic r) {
+		this.relics.add(r);
+		UnlockTracker.markRelicAsSeen(r.relicId);
+	}
+	
 	@Override
 	protected void addRelics() {
 		AbstractRelic priority = this.priority();
 		if (priority != null)
-			this.relics.add(priority);
+			addAndMarkAsSeen(priority);
 		while (this.relics.size() < 3) {
 			boolean repeat = false;
-			AbstractRelic r = TestMod.randomItem(TestMod.RELICS, this.box.rng);
+			AbstractRelic r = randomRelic(priority != null);
 			if (this.checkIllegal(r.relicId))
 				continue;
-			for (AbstractRelic re : this.relics) {
+			for (AbstractRelic re : this.relics)
 				if (re.relicId.equals(r.relicId))
 					repeat = true;
-			}
 			if (repeat)
 				continue;
-			this.relics.add(r);
-			UnlockTracker.markRelicAsSeen(r.relicId);
+			addAndMarkAsSeen(r);
 		}
 	}
 

@@ -347,7 +347,7 @@
 	"testmod-KeyOfTheVoid":{
 		"NAME": "虚空之匙",
 		"FLAVOR": "虚空是这个世界的终极答案。",
-		"DESCRIPTIONS":["每场战斗结束时，你每有 #b1 件 #yBoss 遗物，从牌组中选择 #b1 张牌将其移除。", "选择", "张牌移除。"]
+		"DESCRIPTIONS":["每场战斗结束时，你每有 #b1 件其他 #yBoss 遗物，从牌组中选择 #b1 张牌将其移除。", "选择", "张牌移除。"]
 	},
 	
 	"testmod-ThousandKnives":{
