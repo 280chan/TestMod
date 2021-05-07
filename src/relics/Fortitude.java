@@ -11,7 +11,7 @@ public class Fortitude extends AbstractTestRelic{
 	public static final String ID = "Fortitude";
 	
 	public Fortitude() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

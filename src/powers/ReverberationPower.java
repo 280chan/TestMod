@@ -53,9 +53,23 @@ public class ReverberationPower extends AbstractTestPower {
 					return;
 				AbstractMonster m = list.get(AbstractDungeon.cardRandomRng.random(0, list.size() - 1));
 				c.calculateCardDamage(m);
+				if (c.cost == -1 && !c.freeToPlayOnce)
+					c.freeToPlayOnce = true;
 				c.use(AbstractDungeon.player, m);
 				if (size > 1)
 					next(c, size - 1);
+				else if (c.cost == -1)
+					resetXcost(c);
+			}
+		});
+	}
+	
+	private void resetXcost(AbstractCard c) {
+		this.addToBot(new AbstractGameAction() {
+			@Override
+			public void update() {
+				this.isDone = true;
+				c.freeToPlayOnce = false;
 			}
 		});
 	}

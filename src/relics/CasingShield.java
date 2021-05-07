@@ -9,7 +9,7 @@ public class CasingShield extends AbstractTestRelic {
 	public static final String ID = "CasingShield";
 	
 	public CasingShield() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
