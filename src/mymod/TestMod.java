@@ -317,7 +317,7 @@ public class TestMod
 				new CyclicPeriapt(), new ConstraintPeriapt(), new InjuryResistance(), new Acrobat(),
 				new TurbochargingSystem(), new HeartOfStrike(), new GoldenSoul(), new RandomTest(),
 				new TemporaryBarricade(), new RetroFilter());
-		addLatestCard(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Reproduce(),
+		addLatestCard(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
 	}
 
@@ -399,7 +399,7 @@ public class TestMod
 				new PainDetonator(), new FightingIntention(), new Reverberation(), new SelfRegulatingSystem(),
 				new Superconductor(), new BackupPower(), new Illusory(), new Librarian(), new HandmadeProducts(),
 				new Automaton(), new PowerStrike(), new WeaknessCounterattack(), new Reproduce(), new SunMoon(),
-				new VirtualReality() };
+				new VirtualReality(), new Plague() };
 		// TODO
 		for (AbstractCard c : card) {
 			CARDS.add(c);

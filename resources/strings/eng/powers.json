@@ -1,186 +1,193 @@
 {
-  "testmod-AssimilatedRunePower": {
-    "NAME": "Assimilated",
-    "DESCRIPTIONS": [
-    	"In #b",
-		" turns, increase base damage and block of cards in your hand to the maximum in your ",
-		" #yHand",
-		" #yDeck",
-		"."
-    ]
-  },
-  "testmod-AutoReboundPower": {
-    "NAME": "Auto Rebound",
-    "DESCRIPTIONS": [
-    	"For each turn, put the first #b",
-		" cards you play back on the top of your draw pile."
-    ]
-  },
-  "testmod-BloodBladePower": {
-    "NAME": "Blood Blade",
-    "DESCRIPTIONS": [
-    	"When lose HP, increase attack damage by #yHP #yloss #y/ #yMax #yHP",
-		"",
-		", #yMultiplicatively",
-		".",
-		" NL Current bonus #yAttack damage: #b"
-    ]
-  },
-  "testmod-ChaoticCorePower": {
-    "NAME": "Chaotic Core",
-    "DESCRIPTIONS": [
-    	"Whenever you lose HP, Gain #b1 Orb slot. If Orb slot has been full, or each your #yAttack damage Channel #b",
-		" random Orbs."
-    ]
-  },
-  "testmod-ConditionedReflexPower": {
-    "NAME": "Conditioned Reflex",
-    "DESCRIPTIONS": [
-    	"Whenever you lose HP: Gain #b",
-    	" #yMelleable; at the start of your next turn, make it active #b1 time.",
-		" NL At the start of your next turn, active #b",
-		" times"
-    ]
-  },
-  "testmod-D_4Power": {
-    "NAME": "Runic Tetrahedron",
-    "DESCRIPTIONS": [
-    	"When you play the next card,",
-		" #yExhaust it",
-		"Regain the #yRnergy it cost",
-		"Play it #b1 more time",
-    	" #yNightmare it",
-		"WTF is this situation???",
-		"."
-    ]
-  },
-  "testmod-DeathImprintPower": {
-    "NAME": "Imprint",
-    "DESCRIPTIONS": [
-    	"Whenever #y",
-    	" lose HP, increase same amount of #yImprint. #y",
-    	" has lost #b",
-    	" HP."
-    ]
-  },
-  "testmod-DefenceDownPower": {
-    "NAME": "Damage Receive Increase",
-    "DESCRIPTIONS": [
-    	"Receive #b",
-		"% more damage."
-    ]
-  },
-  "testmod-DischargedPower": {
-    "NAME": "Discharged",
-    "DESCRIPTIONS": [
-    	"At the start of next turn, lose #b",
-		" #yEnergy."
-    ]
-  },
-  "testmod-DisillusionmentEchoPower": {
-    "NAME": "Disillusionment Echo",
-    "DESCRIPTIONS": [
-    	"The first card you play each turn will play #b",
-    	" more times."
-    ]
-  },
-  "testmod-DrawDownPower": {
-    "NAME": "Draw Down",
-    "DESCRIPTIONS": [
-    	"Draw #b",
-		" fewer cards next turn."
-    ]
-  },
-  "testmod-EnhanceArmermentPower": {
-    "NAME": "Enhance Armerment",
-    "DESCRIPTIONS": [
-    	"Your next #yAttack will deal #b",
-		" times of its original damage, but it will also #yExhaust."
-    ]
-  },
-  "testmod-FightingIntentionPower": {
-    "NAME": "Fighting Intention",
-    "DESCRIPTIONS": [
-    	"At the start of your turn, for each enemy intend to #yAttack: gain #b",
-		" #yStrength, these enemies lose #b",
-		" #yStrength."
-    ]
-  },
-  "testmod-GreedPower": {
-    "NAME": "Greed",
-    "DESCRIPTIONS": [
-    	"At the end of your turn: For each [E] remain, draw #r",
-    	" fewer cards next turn; For each card in hand, lose #r",
-    	" [E] next turn."
-    ]
-  },
-  "testmod-InorganicPower": {
-    "NAME": "Inorganic",
-    "DESCRIPTIONS": [
-    	"Can not give #y",
-		" positive effects. Can not give player negative effects."
-    ]
-  },
-  "testmod-LibrarianPower": {
-    "NAME": "Librarian",
-    "DESCRIPTIONS": [
-    	"If win before the next #b",
-    	" turn starts, add #y",
-    	" into your deck."
-    ]
-  },
-  "testmod-MahjongZsPower": {
-    "NAME": "Mahjong Honer",
-    "DESCRIPTIONS": [
-    	"Whenever play a #yMahjong card, Gain #b1 #yRegen, Gain #b",
-    	"Whenever play a #yMahjong card, Gain #b",
-		"Whenever play a #ynon-Attack card, multiplicatively increase your #yAttack damage by #b",
-		"When you would die next #b",
-		"Whenever play a #yMahjong card, for each enemy Gain #b",
-		"At the start of turn, trigger #b",
-		" #yPlated #yArmor.",
-		" #yMantra.",
-		"%.",
-		" times, heal to #b1% of your Max HP instead. Each card you play increase #b1% of your Max HP instead, reset after each resurrection. ",
-		" #yGold.",
-		" times #yMahjong #yRelic",
-		"( #b",
-		"% extra #yAttack damage)",
-		"(heal #b",
-		"% Max HP)"
-    ]
-  },
-  "testmod-PulseDistributorPower": {
-    "NAME": "Pulse Distributor",
-    "DESCRIPTIONS": [
-    	"When you would receive #bn damage which is not type Lose HP, don't lose HP. Instead, in next ",
-    	" enemy turns end, lose #b1 HP.",
-    	" NL Future Lose HP: NL ",
-    	", "
-    ]
-  },
-  "testmod-RecapPower": {
-    "NAME": "Recap",
-    "DESCRIPTIONS": [
-    	"At the start of your turn, play the last #b",
-    	" cards you played last turn."
-    ]
-  },
-  "testmod-ReflectPower": {
-    "NAME": "Reflect",
-    "DESCRIPTIONS": [
-    	"In this turn, you will play the next #b",
-    	" cards twice except #yCurse and #yStatus."
-    ]
-  },
-  "testmod-RepeatFormPower": {
-    "NAME": "Repeat Form",
-    "DESCRIPTIONS": [
-    	"At the start of your turn, add #b",
-    	" copies of #y",
-    	" into your hand."
-    ]
-  },
+	"testmod-AssimilatedRunePower": {
+		"NAME": "Assimilated",
+		"DESCRIPTIONS": [
+			"In #b",
+			" turns, increase base damage and block of cards in your hand to the maximum in your ",
+			" #yHand",
+			" #yDeck",
+			"."
+		]
+	},
+	"testmod-AutoReboundPower": {
+		"NAME": "Auto Rebound",
+		"DESCRIPTIONS": [
+			"For each turn, put the first #b",
+			" cards you play back on the top of your draw pile."
+		]
+	},
+	"testmod-BloodBladePower": {
+		"NAME": "Blood Blade",
+		"DESCRIPTIONS": [
+			"When lose HP, increase attack damage by #yHP #yloss #y/ #yMax #yHP",
+			"",
+			", #yMultiplicatively",
+			".",
+			" NL Current bonus #yAttack damage: #b"
+		]
+	},
+	"testmod-ChaoticCorePower": {
+		"NAME": "Chaotic Core",
+		"DESCRIPTIONS": [
+			"Whenever you lose HP, Gain #b1 Orb slot. If Orb slot has been full, or each your #yAttack damage Channel #b",
+			" random Orbs."
+		]
+	},
+	"testmod-ConditionedReflexPower": {
+		"NAME": "Conditioned Reflex",
+		"DESCRIPTIONS": [
+			"Whenever you lose HP: Gain #b",
+			" #yMelleable; at the start of your next turn, make it active #b1 time.",
+			" NL At the start of your next turn, active #b",
+			" times"
+		]
+	},
+	"testmod-D_4Power": {
+		"NAME": "Runic Tetrahedron",
+		"DESCRIPTIONS": [
+			"When you play the next card,",
+			" #yExhaust it",
+			"Regain the #yRnergy it cost",
+			"Play it #b1 more time",
+			" #yNightmare it",
+			"WTF is this situation???",
+			"."
+		]
+	},
+	"testmod-DeathImprintPower": {
+		"NAME": "Imprint",
+		"DESCRIPTIONS": [
+			"Whenever #y",
+			" lose HP, increase same amount of #yImprint. #y",
+			" has lost #b",
+			" HP."
+		]
+	},
+	"testmod-DefenceDownPower": {
+		"NAME": "Damage Receive Increase",
+		"DESCRIPTIONS": [
+			"Receive #b",
+			"% more damage."
+		]
+	},
+	"testmod-DischargedPower": {
+		"NAME": "Discharged",
+		"DESCRIPTIONS": [
+			"At the start of next turn, lose #b",
+			" #yEnergy."
+		]
+	},
+	"testmod-DisillusionmentEchoPower": {
+		"NAME": "Disillusionment Echo",
+		"DESCRIPTIONS": [
+			"The first card you play each turn will play #b",
+			" more times."
+		]
+	},
+	"testmod-DrawDownPower": {
+		"NAME": "Draw Down",
+		"DESCRIPTIONS": [
+			"Draw #b",
+			" fewer cards next turn."
+		]
+	},
+	"testmod-EnhanceArmermentPower": {
+		"NAME": "Enhance Armerment",
+		"DESCRIPTIONS": [
+			"Your next #yAttack will deal #b",
+			" times of its original damage, but it will also #yExhaust."
+		]
+	},
+	"testmod-FightingIntentionPower": {
+		"NAME": "Fighting Intention",
+		"DESCRIPTIONS": [
+			"At the start of your turn, for each enemy intend to #yAttack: gain #b",
+			" #yStrength, these enemies lose #b",
+			" #yStrength."
+		]
+	},
+	"testmod-GreedPower": {
+		"NAME": "Greed",
+		"DESCRIPTIONS": [
+			"At the end of your turn: For each [E] remain, draw #r",
+			" fewer cards next turn; For each card in hand, lose #r",
+			" [E] next turn."
+		]
+	},
+	"testmod-InorganicPower": {
+		"NAME": "Inorganic",
+		"DESCRIPTIONS": [
+			"Can not give #y",
+			" positive effects. Can not give player negative effects."
+		]
+	},
+	"testmod-LibrarianPower": {
+		"NAME": "Librarian",
+		"DESCRIPTIONS": [
+			"If win before the next #b",
+			" turn starts, add #y",
+			" into your deck."
+		]
+	},
+	"testmod-MahjongZsPower": {
+		"NAME": "Mahjong Honer",
+		"DESCRIPTIONS": [
+			"Whenever play a #yMahjong card, Gain #b1 #yRegen, Gain #b",
+			"Whenever play a #yMahjong card, Gain #b",
+			"Whenever play a #ynon-Attack card, multiplicatively increase your #yAttack damage by #b",
+			"When you would die next #b",
+			"Whenever play a #yMahjong card, for each enemy Gain #b",
+			"At the start of turn, trigger #b",
+			" #yPlated #yArmor.",
+			" #yMantra.",
+			"%.",
+			" times, heal to #b1% of your Max HP instead. Each card you play increase #b1% of your Max HP instead, reset after each resurrection. ",
+			" #yGold.",
+			" times #yMahjong #yRelic",
+			"( #b",
+			"% extra #yAttack damage)",
+			"(heal #b",
+			"% Max HP)"
+		]
+	},
+	"testmod-PlaguePower":{
+		"NAME":"Plague",
+		"DESCRIPTIONS":[
+			"At start of each turn, apply #b",
+			" #yPoison, #yConstricted and #yChoked to random enemy. Whenever you play a #yPower card, make all enemies' #yPoison and #yConstricted affect once."
+		]
+	},
+	"testmod-PulseDistributorPower": {
+		"NAME": "Pulse Distributor",
+		"DESCRIPTIONS": [
+			"When you would receive #bn damage which is not type Lose HP, don't lose HP. Instead, in next ",
+			" enemy turns end, lose #b1 HP.",
+			" NL Future Lose HP: NL ",
+			", "
+		]
+	},
+	"testmod-RecapPower": {
+		"NAME": "Recap",
+		"DESCRIPTIONS": [
+			"At the start of your turn, play the last #b",
+			" cards you played last turn."
+		]
+	},
+	"testmod-ReflectPower": {
+		"NAME": "Reflect",
+		"DESCRIPTIONS": [
+			"In this turn, you will play the next #b",
+			" cards twice except #yCurse and #yStatus."
+		]
+	},
+	"testmod-RepeatFormPower": {
+		"NAME": "Repeat Form",
+		"DESCRIPTIONS": [
+			"At the start of your turn, add #b",
+			" copies of #y",
+			" into your hand."
+		]
+	},
 	"testmod-ReproducePower":{
 		"NAME":"Reproduce",
 		"DESCRIPTIONS":[
@@ -188,64 +195,64 @@
 			"] is given #yRetain, #yreturn #yto #yhand, whenever played, increase cost for turn by #b1."
 		]
 	},
-  "testmod-ReverberationPower": {
-    "NAME": "Reverberation",
-    "DESCRIPTIONS": [
-    	"Whenever a card except #yCurse or #yStatus #yExhausts, function it #b",
-    	" times."
-    ]
-  },
-  "testmod-SelfRegulatingSystemPower": {
-    "NAME": "Self Regulating System",
-    "DESCRIPTIONS": [
-    	"The first buff you Gain each turn will receive #b",
-    	" more. The first debuff you Gain each turn will receive #b",
-    	" fewer."
-    ]
-  },
-  "testmod-ShutDownPower": {
-    "NAME": "Shut Down",
-    "DESCRIPTIONS": [
-    	"At the start of each turn, add #b",
-    	" #yReboot",
-    	" into your hand."
-    ]
-  },
-  "testmod-SuperconductorNoEnergyPower": {
-    "NAME": "No Energy",
-    "DESCRIPTIONS": [
-    	"In this turn, you can Gain no [E] anymore."
-    ]
-  },
-  "testmod-SuperconductorPower": {
-    "NAME": "Superconductor",
-    "DESCRIPTIONS": [
-    	"Reduce cost of next #b",
-    	" cards you draw which greater than 0 by 1 for one turn."
-    ]
-  },
-  "testmod-TaurusBlackCatEnemyPower": {
-    "NAME": "Taurus' Black Cat"
-  },
-  "testmod-TaurusBlackCatPower": {
-    "NAME": "Taurus' Black Cat",
-    "DESCRIPTIONS": [
-    	"Whenever you deal #yNon-Lose-HP damage to enemy, all enemies Lose #b",
-    	"% of the damage HP in total."
-    ]
-  },
-  "testmod-TemporaryDeletionPower": {
-    "NAME": "Temporary Deletion",
-    "DESCRIPTIONS": [
-    	"At the start of each turn, add #b",
-    	" random #y",
-    	" cards in your hand.",
-    	"BASIC",
-    	"SPECIAL",
-    	"COMMON",
-    	"UNCOMMON",
-    	"RARE",
-    	"CURSE"
-    ]
-  }
+	"testmod-ReverberationPower": {
+		"NAME": "Reverberation",
+		"DESCRIPTIONS": [
+			"Whenever a card except #yCurse or #yStatus #yExhausts, function it #b",
+			" times."
+		]
+	},
+	"testmod-SelfRegulatingSystemPower": {
+		"NAME": "Self Regulating System",
+		"DESCRIPTIONS": [
+			"The first buff you Gain each turn will receive #b",
+			" more. The first debuff you Gain each turn will receive #b",
+			" fewer."
+		]
+	},
+	"testmod-ShutDownPower": {
+		"NAME": "Shut Down",
+		"DESCRIPTIONS": [
+			"At the start of each turn, add #b",
+			" #yReboot",
+			" into your hand."
+		]
+	},
+	"testmod-SuperconductorNoEnergyPower": {
+		"NAME": "No Energy",
+		"DESCRIPTIONS": [
+			"In this turn, you can Gain no [E] anymore."
+		]
+	},
+	"testmod-SuperconductorPower": {
+		"NAME": "Superconductor",
+		"DESCRIPTIONS": [
+			"Reduce cost of next #b",
+			" cards you draw which greater than 0 by 1 for one turn."
+		]
+	},
+	"testmod-TaurusBlackCatEnemyPower": {
+		"NAME": "Taurus' Black Cat"
+	},
+	"testmod-TaurusBlackCatPower": {
+		"NAME": "Taurus' Black Cat",
+		"DESCRIPTIONS": [
+			"Whenever you deal #yNon-Lose-HP damage to enemy, all enemies Lose #b",
+			"% of the damage HP in total."
+		]
+	},
+	"testmod-TemporaryDeletionPower": {
+		"NAME": "Temporary Deletion",
+		"DESCRIPTIONS": [
+			"At the start of each turn, add #b",
+			" random #y",
+			" cards in your hand.",
+			"BASIC",
+			"SPECIAL",
+			"COMMON",
+			"UNCOMMON",
+			"RARE",
+			"CURSE"
+		]
+	}
 }

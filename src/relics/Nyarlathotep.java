@@ -9,10 +9,13 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
+import mymod.TestMod;
+
 public class Nyarlathotep extends AbstractTestRelic {
 	public static final String ID = "Nyarlathotep";
 
-	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm", "Curiosity" };
+	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm", "Curiosity",
+			TestMod.makeID("PlaguePower") };
 	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets",
 			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots",
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",

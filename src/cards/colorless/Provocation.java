@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class Provocation extends AbstractTestCard {
@@ -15,7 +16,7 @@ public class Provocation extends AbstractTestCard {
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final int COST = 1;
-    private static final int BASE_MGC = 3;
+    private static final int BASE_MGC = 4;
     
     public Provocation() {
         super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY);
@@ -24,13 +25,20 @@ public class Provocation extends AbstractTestCard {
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, this.magicNumber), this.magicNumber));
-		this.addToBot(new ApplyPowerAction(m, p, new AngryPower(m, 1), 1, true));
+		this.addToBot(new AbstractGameAction(){
+			@Override
+			public void update() {
+				this.isDone = true;
+				if (!m.hasPower(AngryPower.POWER_ID))
+					this.addToTop(new ApplyPowerAction(m, p, new AngryPower(m, 1), 1, true));
+			}
+		});
 	}
     
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(1);
+            this.upgradeMagicNumber(2);
         }
     }
 }

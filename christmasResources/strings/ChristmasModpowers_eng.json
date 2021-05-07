@@ -24,10 +24,10 @@
       " #yChristmas #yGift into your hand."
     ]
   },
-  "testmod-PlaguePower": {
+  "testmod-christmas-PlaguePower": {
     "NAME": "Disaster - Plague",
     "DESCRIPTIONS": [
-      "Whenever you receive an #Attack damage, make the enemy's #yPoison affects #b",
+      "Whenever you receive an #Attack damage, make all enemies' #yPoison affects #b",
       " times."
     ]
   },

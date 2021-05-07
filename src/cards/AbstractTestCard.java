@@ -21,7 +21,8 @@ public abstract class AbstractTestCard extends CustomCard {
 	 */
 	public AbstractTestCard(String shortID, String NAME, int COST, String DESCRIPTION, CardType type, CardRarity rarity, CardTarget target) {
         super(TestMod.makeID(shortID), NAME, TestMod.cardIMGPath(shortID), COST, DESCRIPTION, type, CardColor.COLORLESS, rarity, target);
-    }
+        
+	}
 	
 	/**
 	 * 诅咒用

@@ -23,12 +23,11 @@ public class PlaguePoisonActAction extends AbstractGameAction {
 	@Override
 	public void update() {
 		this.isDone = true;
-		if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
-			if (!AbstractDungeon.getMonsters().areMonstersBasicallyDead() && p.amount > 0) {
-				p.flashWithoutSound();
-				AbstractDungeon.actionManager.addToTop(
-						new PoisonLoseHpAction(p.owner, this.source, p.amount, AbstractGameAction.AttackEffect.POISON));
-			}
+		if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT
+				&& !AbstractDungeon.getMonsters().areMonstersBasicallyDead() && p.amount > 0) {
+			p.flashWithoutSound();
+			this.addToTop(
+					new PoisonLoseHpAction(p.owner, this.source, p.amount, AbstractGameAction.AttackEffect.POISON));
 		}
 	}
 

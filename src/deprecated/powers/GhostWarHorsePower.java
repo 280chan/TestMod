@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-import actions.GhostWarHorseAction;
+import deprecated.actions.GhostWarHorseAction;
 /**
  * @deprecated
  */

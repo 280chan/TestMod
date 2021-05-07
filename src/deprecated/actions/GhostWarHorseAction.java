@@ -1,4 +1,4 @@
-package actions;
+package deprecated.actions;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -12,6 +12,9 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.DexterityPower;
 import com.megacrit.cardcrawl.powers.WraithFormPower;
 
+/**
+ * @deprecated
+ */
 public class GhostWarHorseAction extends AbstractGameAction {
 	private static final float DURATION = Settings.ACTION_DUR_FAST;
 	private CardType cardType;

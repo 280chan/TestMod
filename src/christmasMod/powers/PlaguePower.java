@@ -6,11 +6,13 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.PoisonPower;
+
 import christmasMod.actions.PlaguePoisonActAction;
 import powers.AbstractTestPower;
 
 public class PlaguePower extends AbstractTestPower {
-	public static final String POWER_ID = "PlaguePower";
+	public static final String POWER_ID = "christmas-PlaguePower";
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
@@ -31,9 +33,9 @@ public class PlaguePower extends AbstractTestPower {
 	private void effect() {
 		boolean acted = false;
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (m.hasPower("Poison")) {
+			if (m.hasPower(PoisonPower.POWER_ID)) {
 				for (int i = 0; i < this.amount; i++)
-					this.addToTop(new PlaguePoisonActAction(this.owner, m.getPower("Poison")));
+					this.addToTop(new PlaguePoisonActAction(this.owner, m.getPower(PoisonPower.POWER_ID)));
 				acted = true;
 			}
 		}
