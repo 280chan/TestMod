@@ -1,5 +1,7 @@
 package relics;
 
+import java.util.ArrayList;
+
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -15,13 +17,38 @@ public class Nyarlathotep extends AbstractTestRelic {
 	public static final String ID = "Nyarlathotep";
 
 	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm", "Curiosity",
-			TestMod.makeID("PlaguePower") };
+			TestMod.makeID("PlagueActPower") };
 	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets",
 			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots",
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",
 			"DemoExt:GalacticMedalOfValor", "SynthV:C4", "Clover", "SynthV:MejaisSoulstealer",
-			"youkari:Boundary_crack" };
-
+			"youkari:Boundary_crack", "BirthdayGift-Icosahedron" };
+	private static final ArrayList<String> POWER_LIST = new ArrayList<String>();
+	private static final ArrayList<String> RELIC_LIST = new ArrayList<String>();
+	
+	private static void addToList(ArrayList<String> target, String id) {
+		if (!target.contains(id))
+			target.add(id);
+	}
+	
+	public static void addPowerList(ArrayList<String> list) {
+		POWER_LIST.addAll(list);
+	}
+	
+	public static void addPowerList(String... list) {
+		for (String id : list)
+			addToList(POWER_LIST, id);
+	}
+	
+	public static void addRelicList(ArrayList<String> list) {
+		RELIC_LIST.addAll(list);
+	}
+	
+	public static void addRelicList(String... list) {
+		for (String id : list)
+			addToList(RELIC_LIST, id);
+	}
+	
 	public Nyarlathotep() {
 		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}

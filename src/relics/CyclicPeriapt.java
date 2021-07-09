@@ -19,7 +19,7 @@ public class CyclicPeriapt extends AbstractTestRelic implements MiscMethods {
 	private ArrayList<UUID> used = new ArrayList<UUID>();
 	
 	public CyclicPeriapt() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

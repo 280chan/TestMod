@@ -468,5 +468,23 @@
 		"NAME": "Retro Filter",
 		"FLAVOR": "这个阴间滤镜能让商人视灰色如粪土…这家伙这么精明是怎么被骗过去的？",
 		"DESCRIPTIONS":["Price of #yColorless cards in shop is reduced from #b120% of normal card price to #b60%, for each normal card you have decrease an extra #b1%. Whenever you play a #yColorless card, gain #b1 #yGold."]
+	},
+	
+	"testmod-DominatorOfWeakness":{
+		"NAME": "Dominator of Weakness",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":[" #yVulnerable and #yWeakened no longer only affect once on enemies, instead it will affect its amount times."]
+	},
+	
+	"testmod-ShadowAmulet":{
+		"NAME": "Shadow Amulet",
+		"FLAVOR": "你失去的那些一切，都会悄无声息的守护着你。",
+		"DESCRIPTIONS":["Whenever you lose #bn #yBlock, you gain #b1 #yBlock when turn ends for the following #bn turns.", "Following #yBlock gain when your turn end:"]
+	},
+	
+	"testmod-HyperplasticTissue":{
+		"NAME": "Hyperplastic Tissue",
+		"FLAVOR": "杀不死你的，都会让你更加强大。",
+		"DESCRIPTIONS":["Increase maximum hand size by #b1 for rest of the run. Whenever you draw a #yStatus or #yCurse card, increase maximum hand size by #b1 for rest of the combat."]
 	}
 }

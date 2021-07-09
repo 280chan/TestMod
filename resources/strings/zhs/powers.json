@@ -154,7 +154,13 @@
 		"NAME":"瘟疫",
 		"DESCRIPTIONS":[
 			"每回合开始使随机敌人获得 #b",
-			" 层 #y中毒 、 #y缠绕 、 #y勒脖 。每当你打出 #y能力牌 ，使所有敌人的 #y中毒 、 #y缠绕 生效一次。"
+			" 层 #y中毒 、 #y缠绕 、 #y勒脖 。"
+		]
+	},
+	"testmod-PlagueActPower":{
+		"NAME":"瘟疫 - 触发",
+		"DESCRIPTIONS":[
+			"每当你打出 #y能力牌 ，使所有敌人的 #y中毒 、 #y缠绕 生效一次。"
 		]
 	},
 	"testmod-PulseDistributorPower":{

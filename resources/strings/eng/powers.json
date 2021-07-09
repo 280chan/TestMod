@@ -154,7 +154,13 @@
 		"NAME":"Plague",
 		"DESCRIPTIONS":[
 			"At start of each turn, apply #b",
-			" #yPoison, #yConstricted and #yChoked to random enemy. Whenever you play a #yPower card, make all enemies' #yPoison and #yConstricted affect once."
+			" #yPoison, #yConstricted and #yChoked to random enemy."
+		]
+	},
+	"testmod-PlagueActPower":{
+		"NAME":"Plague",
+		"DESCRIPTIONS":[
+			"Whenever you play a #yPower card, make all enemies' #yPoison and #yConstricted affect once."
 		]
 	},
 	"testmod-PulseDistributorPower": {

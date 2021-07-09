@@ -14,6 +14,7 @@ public class Plague extends AbstractTestCard {
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
+	private static final String UPGRADE_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
     private static final int COST = -1;
 
     public Plague() {
@@ -27,8 +28,10 @@ public class Plague extends AbstractTestCard {
     
     public void upgrade() {
         if (!this.upgraded) {
-            this.upgradeName();
             this.isEthereal = false;
+        	this.rawDescription = UPGRADE_DESCRIPTION;
+        	this.initializeDescription();
+            this.upgradeName();
         }
     }
 }

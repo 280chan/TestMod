@@ -1,9 +1,6 @@
 package powers;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.utility.UseCardAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -11,8 +8,6 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.ChokePower;
 import com.megacrit.cardcrawl.powers.ConstrictedPower;
 import com.megacrit.cardcrawl.powers.PoisonPower;
-
-import christmasMod.actions.PlaguePoisonActAction;
 
 public class PlaguePower extends AbstractTestPower {
 	public static final String POWER_ID = "PlaguePower";
@@ -58,19 +53,5 @@ public class PlaguePower extends AbstractTestPower {
 		}
 		this.flashWithoutSound();
     }
-	
-	public void onUseCard(AbstractCard c, UseCardAction action) {
-		if (c.type == CardType.POWER)
-			for (AbstractCreature m : AbstractDungeon.getCurrRoom().monsters.monsters)
-				if (!m.isDeadOrEscaped())
-					this.actPower(m);
-	}
-	
-	private void actPower(AbstractCreature m) {
-		if (m.hasPower(PoisonPower.POWER_ID))
-			this.addToTop(new PlaguePoisonActAction(this.owner, m.getPower(PoisonPower.POWER_ID)));
-		if (m.hasPower(ConstrictedPower.POWER_ID))
-			m.getPower(ConstrictedPower.POWER_ID).atEndOfTurn(false);
-	}
 
 }

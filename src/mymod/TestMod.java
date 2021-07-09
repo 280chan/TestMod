@@ -338,7 +338,8 @@ public class TestMod
 				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong(), new ArcanaOfDestiny(),
 				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
 				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest(), new TemporaryBarricade(),
-				new GremlinBalance(), new RetroFilter() };
+				new GremlinBalance(), new RetroFilter(), new DominatorOfWeakness(), new ShadowAmulet(),
+				new HyperplasticTissue() };
 		// 添加遗物进游戏 TODO
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);
@@ -1127,6 +1128,37 @@ public class TestMod
 					}
 					changeConsoleMultiplayer(false);
 				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void addNyarlathotepPower(ArrayList<String> list) {
+		Nyarlathotep.addPowerList(list);
+	}
+
+	public static void addNyarlathotepPower(String... list) {
+		Nyarlathotep.addPowerList(list);
+	}
+
+	public static void addNyarlathotepRelic(ArrayList<String> list) {
+		Nyarlathotep.addRelicList(list);
+	}
+
+	public static void addNyarlathotepRelic(String... list) {
+		Nyarlathotep.addRelicList(list);
+	}
+
+	private static void exampleNyarlathotepAddRelic() {
+		String instruction = "Copy this method to your mod to add a relic that makes effect when player plays a power card.";
+		if (Loader.isModLoaded("testmod")) {
+			ArrayList<String> list = new ArrayList<String>();
+			list.add("relic id0");
+			list.add("relic id1");
+			try {
+				ReflectionHacks.privateStaticMethod(Class.forName("mymod.TestMod"), "addNyarlathotepRelic",
+						new Class[] { ArrayList.class }).invoke(null, new Object[] { list });
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

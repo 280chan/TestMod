@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
+import powers.PlagueActPower;
 import powers.PlaguePower;
 
 public class PlagueAction extends AbstractGameAction {
@@ -30,8 +31,9 @@ public class PlagueAction extends AbstractGameAction {
 			effect += 2;
 			this.p.getRelic("Chemical X").flash();
 		}
+		this.addToTop(new ApplyPowerAction(p, p, new PlagueActPower(p)));
 		if (effect > 0) {
-			this.addToBot(new ApplyPowerAction(p, p, new PlaguePower(p, effect), effect));
+			this.addToTop(new ApplyPowerAction(p, p, new PlaguePower(p, effect), effect));
 			if (!this.freeToPlayOnce)
 				this.p.energy.use(EnergyPanel.totalCount);
 		}
