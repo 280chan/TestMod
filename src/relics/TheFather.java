@@ -9,6 +9,8 @@ import utils.MiscMethods;
 
 public class TheFather extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "TheFather";
+	private static boolean canUpdate = false;
+	private static int numberOfMonsters = 0;
 	
 	public TheFather() {
 		super(ID, RelicTier.RARE, LandingSound.HEAVY);
@@ -38,12 +40,23 @@ public class TheFather extends AbstractTestRelic implements MiscMethods {
 		if (TheFatherPower.isPrime(counter + 1)) {
 			this.beginLongPulse();
 		}
+		canUpdate = true;
 	}
 	
 	private void tryAdd() {
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
 			if (!TheFatherPower.hasThis(m))
 				m.powers.add(new TheFatherPower(m, this));
+	}
+	
+	public void update() {
+		super.update();
+		if (canUpdate && this.canUpdateHandGlow()) {
+			if (AbstractDungeon.getCurrRoom().monsters.monsters.size() > numberOfMonsters) {
+				tryAdd();
+				numberOfMonsters = AbstractDungeon.getCurrRoom().monsters.monsters.size();
+			}
+		}
 	}
 	
 	public void atTurnStart() {
@@ -63,7 +76,10 @@ public class TheFather extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public void onVictory() {
+		TheFatherPower.reset();
 		this.stopPulse();
+		canUpdate = false;
+		numberOfMonsters = 0;
 	}
 
 }

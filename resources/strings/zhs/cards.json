@@ -144,7 +144,7 @@
 	},
 	"testmod-HandmadeProducts": {
 		"NAME": "手工产品",
-		"DESCRIPTION": "造成你手牌中所有牌的耗能之积( !D! )点伤害。杀死敌人则耗能在本局游戏中增加 !M! 。能被多次 升级 。"
+		"DESCRIPTION": "造成你手牌中所有牌的[耗能加一]之积( !D! )点伤害。杀死敌人则耗能在本局游戏中增加 !M! 。能被多次 升级 。 升级 会将耗能变为1。"
 	},
 	"testmod-HeadAttack": {
 		"NAME": "头部攻击",

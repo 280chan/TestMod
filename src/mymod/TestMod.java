@@ -35,6 +35,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.PotionBelt;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
@@ -309,7 +310,7 @@ public class TestMod
 	
 	private static void initLatest() {
 		addLatest(new RandomTest(), new GoldenSoul(), new GremlinBalance(), new IWantAll(), new TemporaryBarricade(),
-				new TurbochargingSystem());
+				new ShadowAmulet(), new HyperplasticTissue());
 		addBadRelics(new PortableAltar(), new Sins(), new Register(), new InfectionSource(), new OneHitWonder(),
 				new IndustrialRevolution(), new Nyarlathotep(), new BalancedPeriapt(), new MagicalMallet(),
 				new DragonStarHat(), new Nine(), new Motorcycle(), new DreamHouse(), new HarvestTotem(),
@@ -1132,6 +1133,26 @@ public class TestMod
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private static void callPotionBeltPatch() {
+		try {
+			Class<?> c = Class.forName("chronoMods.coop.relics.VaporFunnel$PotionBeltPostAcquire");
+			ReflectionHacks.privateStaticMethod(c, "Prefix", PotionBelt.class).invoke(new Object[] { null });
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static boolean addPotionSlotMultiplayer() {
+		if (AbstractDungeon.player.hasBlight("VaporFunnel")) {
+			TestMod.info("拥有共享药水栏位荒疫，开始增加团队药水栏位");
+			callPotionBeltPatch();
+			return true;
+		} else if (Loader.isModLoaded("chronoMods")) {
+			TestMod.info("未拥有共享药水栏位荒疫，跳过");
+		}
+		return false;
 	}
 	
 	public static void addNyarlathotepPower(ArrayList<String> list) {

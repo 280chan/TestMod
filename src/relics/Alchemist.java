@@ -22,8 +22,10 @@ public class Alchemist extends AbstractClickRelic {
 	}
 	
 	public void onEquip() {
-		AbstractDungeon.player.potionSlots++;
-	    AbstractDungeon.player.potions.add(new PotionSlot(AbstractDungeon.player.potionSlots - 1));
+		if (!TestMod.addPotionSlotMultiplayer()) {
+			AbstractDungeon.player.potionSlots++;
+			AbstractDungeon.player.potions.add(new PotionSlot(AbstractDungeon.player.potionSlots - 1));
+		}
     }
 	
 	private void toggleState(boolean active) {

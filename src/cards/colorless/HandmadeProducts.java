@@ -45,9 +45,9 @@ public class HandmadeProducts extends AbstractTestCard {
 		int base = 1;
 		for (AbstractCard c : AbstractDungeon.player.hand.group)
 			if (c.cost > -1)
-				base *= c.costForTurn;
+				base *= (c.costForTurn + 1);
 			else if (c.cost == -1)
-				base *= EnergyPanel.totalCount;
+				base *= (EnergyPanel.totalCount + 1);
 		return base;
 	}
     

@@ -144,7 +144,7 @@
 	},
 	"testmod-HandmadeProducts": {
 		"NAME": "Handmade Products",
-		"DESCRIPTION": "Deal damage of the product of all cards' cost in your hand. If kills enemy, increase this card's cost by !M! . Can be Upgraded any number of times."
+		"DESCRIPTION": "Deal damage of the product of all cards' [cost plus 1] in your hand. If kills enemy, increase this card's cost by !M! . Can be Upgraded any number of times. Upgrade will set cost to 1."
 	},
 	"testmod-HeadAttack": {
 		"NAME": "Head Attack",

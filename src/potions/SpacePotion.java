@@ -1,7 +1,5 @@
 package potions;
 
-import java.lang.reflect.InvocationTargetException;
-
 import com.megacrit.cardcrawl.actions.common.ObtainPotionAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -43,7 +41,7 @@ public class SpacePotion extends AbstractTestPotion {
 		while (tmp > 0) {
 			tmp--;
 			if (p.potionSlots < 10) {
-				if (!checkMultiplayerVaporFunnel()) {
+				if (!TestMod.addPotionSlotMultiplayer()) {
 					p.potionSlots++;
 					p.potions.add(new PotionSlot(AbstractDungeon.player.potionSlots - 1));
 				}
@@ -51,28 +49,6 @@ public class SpacePotion extends AbstractTestPotion {
 				this.addToBot(new ObtainPotionAction(AbstractDungeon.returnRandomPotion(true)));
 			}
 		}
-	}
-	
-	private static boolean checkMultiplayerVaporFunnel() {
-		if (AbstractDungeon.player.hasBlight("VaporFunnel")) {
-			try {
-				Class<?> networkHelper = Class.forName("chronoMods.steam.NetworkHelper");
-				Class<?> dataType = Class.forName("chronoMods.steam.NetworkHelper$dataType");
-				Object[] types = dataType.getEnumConstants();
-				Object addPotionSlot = null;
-				for (Object type : types) {
-					if (((Enum)type).name().equals("AddPotionSlot")) {
-						addPotionSlot = type;
-						break;
-					}
-				}
-				networkHelper.getDeclaredMethod("sendData", dataType).invoke(null, addPotionSlot);
-				return true;
-			} catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-				e.printStackTrace();
-			}
-		}
-		return false;
 	}
 
 	public boolean canUse() {
@@ -94,4 +70,23 @@ public class SpacePotion extends AbstractTestPotion {
 	public int getPotency(int ascensionLevel) {
 		return 1;
 	}
+	/*
+	@SpirePatch(cls = "chronoMods.coop.CoopBossRelicSelectScreen", method = "open")
+	public static class CoopBossRelicSelectScreenPatch {
+		public static void Prefix(Object __instance, ArrayList<AbstractBlight> chosenBlights) {
+			if ("VaporFunnel".equals(chosenBlights.get(0).blightID) || "VaporFunnel".equals(chosenBlights.get(1).blightID)) {
+				return;
+			} else {
+				try {
+					Class<?> c = Class.forName("chronoMods.TogetherManager");
+					ArrayList<AbstractBlight> list = ReflectionHacks.getPrivateStatic(c, "teamBlights");
+					for (AbstractBlight ab : list)
+						if ("VaporFunnel".equals(ab.blightID))
+							chosenBlights.set(0, ab);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}*/
 }

@@ -1,6 +1,7 @@
 package powers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
@@ -8,6 +9,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import relics.TheFather;
@@ -16,6 +18,11 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	public static final String POWER_ID = "TheFatherPower";
 	private static final int PRIORITY = 1000;
 	private TheFather relic;
+	private static final HashMap<AbstractMonster, ArrayList<DamageAction>> MAP = new HashMap<AbstractMonster, ArrayList<DamageAction>>();
+
+	public static void reset() {
+		MAP.clear();
+	}
 	
 	public static boolean hasThis(AbstractCreature owner) {
 		for (AbstractPower p : owner.powers)
@@ -64,21 +71,40 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 		});
 	}
 	
+	private void addDamageAction(AbstractMonster m, int damage) {
+		DamageAction a = new DamageAction(m, new DamageInfo(AbstractDungeon.player, damage, DamageType.THORNS), true);
+		if (MAP.containsKey(m)) {
+			MAP.get(m).add(a);
+		} else {
+			ArrayList<DamageAction> list = new ArrayList<DamageAction>();
+			list.add(a);
+			MAP.put(m, list);
+		}
+		this.addToBot(a);
+		this.countAction();
+	}
+	
+	private static void clearDamageActions(AbstractMonster m) {
+		if (MAP.containsKey(m)) {
+			AbstractDungeon.actionManager.actions.removeAll(MAP.get(m));
+			MAP.remove(m);
+		}
+	}
+	
     public int onAttacked(final DamageInfo info, int damage) {
     	if (Prime.isPrime(damage)) {
-    		for (AbstractCreature m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-    			if (!m.equals(this.owner)) {
-    				this.addToBot(new DamageAction(m, new DamageInfo(AbstractDungeon.player, Prime.indexOf(damage), DamageType.THORNS)));
-    				this.countAction();
-    			}
-    		}
+    		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
+    			if (!m.equals(this.owner) && !m.isDeadOrEscaped())
+    				this.addDamageAction(m, Prime.indexOf(damage));
     	} else if (damage > 3) {
-    		for (int p : Prime.primeFactorOf(damage)) {
-    			this.addToBot(new DamageAction(this.owner, new DamageInfo(AbstractDungeon.player, Prime.indexOf(p), DamageType.THORNS)));
-    			this.countAction();
-    		}
+    		for (int p : Prime.primeFactorOf(damage))
+    			this.addDamageAction((AbstractMonster) this.owner, Prime.indexOf(p));
     	}
 		return damage;
+    }
+    
+    public void onDeath() {
+    	clearDamageActions((AbstractMonster) this.owner);
     }
 
     public static void clear() {
