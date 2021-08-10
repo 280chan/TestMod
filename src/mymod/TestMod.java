@@ -309,8 +309,8 @@ public class TestMod
 	}
 	
 	private static void initLatest() {
-		addLatest(new RandomTest(), new GoldenSoul(), new GremlinBalance(), new IWantAll(), new TemporaryBarricade(),
-				new ShadowAmulet(), new HyperplasticTissue());
+		addLatest(new TraineeEconomist(), new RandomTest(), new GoldenSoul(), new GremlinBalance(), new IWantAll(),
+				new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue());
 		addBadRelics(new PortableAltar(), new Sins(), new Register(), new InfectionSource(), new OneHitWonder(),
 				new IndustrialRevolution(), new Nyarlathotep(), new BalancedPeriapt(), new MagicalMallet(),
 				new DragonStarHat(), new Nine(), new Motorcycle(), new DreamHouse(), new HarvestTotem(),
@@ -340,7 +340,7 @@ public class TestMod
 				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
 				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest(), new TemporaryBarricade(),
 				new GremlinBalance(), new RetroFilter(), new DominatorOfWeakness(), new ShadowAmulet(),
-				new HyperplasticTissue() };
+				new HyperplasticTissue(), new TraineeEconomist() };
 		// 添加遗物进游戏 TODO
 		for (AbstractRelic r : relic) {
 			RELICS.add(r);

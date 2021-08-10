@@ -56,6 +56,7 @@ public class ReproduceAction extends AbstractGameAction {
 			AbstractCard tmp = AbstractDungeon.gridSelectScreen.selectedCards.get(0);
 			tmp.returnToHand = true;
 			tmp.retain = true;
+			tmp.selfRetain = true;
 			this.addPowerToPlayer(tmp);
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
 			this.isDone = true;

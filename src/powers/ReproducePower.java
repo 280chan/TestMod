@@ -43,11 +43,14 @@ public class ReproducePower extends AbstractTestPower {
     			c.returnToHand = true;
     		if (!c.retain)
     			c.retain = true;
+    		if (!c.selfRetain)
+    			c.selfRetain = true;
     	}
     }
 	
 	public void onRemove() {
 		this.c.retain = false;
 		this.c.returnToHand = false;
+		this.c.selfRetain = false;
 	}
 }

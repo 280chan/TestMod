@@ -1,13 +1,11 @@
 package relics;
 
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-import mymod.TestMod;
+import utils.MiscMethods;
 
-public class Charity extends AbstractTestRelic{
-	
+public class Charity extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "Charity";
 	
 	public Charity() {
@@ -18,19 +16,13 @@ public class Charity extends AbstractTestRelic{
 		return DESCRIPTIONS[0];
 	}
 	
-	public void onGainGold() {
-		AbstractPlayer p = AbstractDungeon.player;
-		if (p.gold > 0)
-			p.gold--;
-		else {
-			TestMod.info("Charity: WHY IS PLAYER'S GOLD NOT POSITIVE AFTER GAINING GOLD???");
-		}
-		p.increaseMaxHp(1, true);
+	public double gainGold(double amount) {
+		AbstractDungeon.player.increaseMaxHp(1, true);
 		this.show();
-    }
+		return Math.max(0, amount - 1);
+	}
 	
 	public boolean canSpawn() {
 		return (Settings.isEndless) || (AbstractDungeon.floorNum <= 48);
 	}
-	
 }

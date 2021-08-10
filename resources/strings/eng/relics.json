@@ -486,5 +486,11 @@
 		"NAME": "Hyperplastic Tissue",
 		"FLAVOR": "杀不死你的，都会让你更加强大。",
 		"DESCRIPTIONS":["Increase maximum hand size by #b1 for rest of the run. Whenever you draw a #yStatus or #yCurse card, increase maximum hand size by #b1 for rest of the combat."]
+	},
+	
+	"testmod-TraineeEconomist":{
+		"NAME": "Trainee Economist",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["Whenever you kill an enemy, your future #yGold gain increase by #b5% (add), shops prices decrease by #b5% (multiply). Killing #yElites and #yBoss enemy would be counted as #b2 and #b3 enemies respectively. ( #yGold amount will not change in rewards)", " NL Current #yGold multiplier: #b", "% NL Current price multiplier: #b", "%"]
 	}
 }

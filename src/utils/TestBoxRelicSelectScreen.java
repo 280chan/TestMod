@@ -80,17 +80,24 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		}
 	}
 
+	private void completeSelection() {
+		this.box.relicSelected = true;
+		AbstractDungeon.player.relics.remove(this.box);
+		AbstractDungeon.player.reorganizeRelics();
+	}
+	
 	@Override
 	protected void afterSelected() {
 		AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2,
 				this.selectedRelic);
+		this.selectedRelic.onEquip();
 		TestMod.removeFromPool(this.selectedRelic);
-		this.box.relicSelected = true;
+		this.completeSelection();
 	}
 
 	@Override
 	protected void afterCanceled() {
-		this.box.relicSelected = true;
+		this.completeSelection();
 	}
 
 	@Override

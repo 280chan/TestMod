@@ -534,4 +534,8 @@ public interface MiscMethods {
 		return true;
 	}
 	
+	public default double gainGold(double amount) {
+		return amount;
+	}
+	
 }
