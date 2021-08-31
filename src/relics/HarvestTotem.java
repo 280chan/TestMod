@@ -20,6 +20,7 @@ public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
 	
 	public HarvestTotem() {
 		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 		this.counter = -2;
 	}
 	

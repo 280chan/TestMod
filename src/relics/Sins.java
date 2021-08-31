@@ -61,6 +61,7 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
     
 	public Sins() {
 		super(ID, RelicTier.SPECIAL, LandingSound.HEAVY);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

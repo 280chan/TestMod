@@ -22,6 +22,8 @@ public class ChangeGainGoldAmountPatch {
 			}
 			input = modifyGoldAmountThroughList(player.powers, input);
 			input = modifyGoldAmountThroughList(player.relics, input);
+			if (input < 0)
+				input = 0;
 			amount[0] = (int) (input + 0.01);
 		}
 	}

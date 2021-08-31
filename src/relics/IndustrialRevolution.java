@@ -17,6 +17,7 @@ public class IndustrialRevolution extends AbstractTestRelic implements MiscMetho
 	
 	public IndustrialRevolution() {
 		super(ID, RelicTier.COMMON, LandingSound.FLAT);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

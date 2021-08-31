@@ -23,6 +23,7 @@ public class OneHitWonder extends AbstractTestRelic implements MiscMethods {
 	
 	public OneHitWonder() {
 		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

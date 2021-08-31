@@ -35,6 +35,7 @@ public class DragonStarHat extends AbstractTestRelic {
 	
 	public DragonStarHat() {
 		super(ID, RelicTier.UNCOMMON, LandingSound.FLAT);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

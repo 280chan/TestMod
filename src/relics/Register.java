@@ -27,6 +27,7 @@ public class Register extends AbstractTestRelic{
 	
 	public Register() {
 		super(ID, RelicTier.SHOP, LandingSound.CLINK);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

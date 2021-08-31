@@ -20,6 +20,7 @@ public class CyclicPeriapt extends AbstractTestRelic implements MiscMethods {
 	
 	public CyclicPeriapt() {
 		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

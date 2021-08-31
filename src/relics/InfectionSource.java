@@ -13,6 +13,7 @@ public class InfectionSource extends AbstractTestRelic {
 	
 	public InfectionSource() {
 		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

@@ -13,6 +13,7 @@ public class InjuryResistance extends AbstractTestRelic {
 	
 	public InjuryResistance() {
 		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

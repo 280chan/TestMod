@@ -10,6 +10,7 @@ public class BalancedPeriapt extends AbstractTestRelic {
 	
 	public BalancedPeriapt() {
 		super(ID, RelicTier.UNCOMMON, LandingSound.FLAT);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

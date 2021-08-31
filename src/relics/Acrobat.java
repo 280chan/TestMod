@@ -13,11 +13,11 @@ import utils.MiscMethods;
 public class Acrobat extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "Acrobat";
 	private static Color color = null;
-	
 	public int state = 0;
 	
 	public Acrobat() {
 		super(ID, RelicTier.COMMON, LandingSound.CLINK);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

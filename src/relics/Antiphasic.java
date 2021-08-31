@@ -10,6 +10,7 @@ public class Antiphasic extends AbstractTestRelic {
 	
 	public Antiphasic() {
 		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

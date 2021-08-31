@@ -22,6 +22,7 @@ public class DreamHouse extends AbstractTestRelic {
 	
 	public DreamHouse() {
 		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

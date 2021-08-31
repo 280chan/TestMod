@@ -9,6 +9,7 @@ public class Nine extends AbstractRevivalRelicToModifyDamage {
 	
 	public Nine() {
 		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

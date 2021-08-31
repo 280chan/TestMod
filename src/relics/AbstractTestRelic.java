@@ -13,10 +13,27 @@ import mymod.TestMod;
 public abstract class AbstractTestRelic extends CustomRelic {
 	public boolean isActive = false;
 	public boolean show = true;
-
+	
 	private static final HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>> EQUIP = new HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>>();
 	private static final HashMap<String, Texture> IMG = new HashMap<String, Texture>();
 
+	public TestTier testTier = TestTier.NORMAL;
+	protected static final TestTier BAD = TestTier.BAD;
+	protected static final TestTier NORMAL = TestTier.NORMAL;
+	protected static final TestTier GOD = TestTier.GOD;
+
+	public static enum TestTier {
+		GOD, NORMAL, BAD
+	}
+	
+	protected void setTestTier(TestTier t) {
+		this.testTier = t;
+	}
+	
+	public boolean isBad() {
+		return this.testTier == BAD;
+	}
+	
 	public static void addToMap(AbstractTestRelic obj) {
 		if (!EQUIP.containsKey(obj.getClass())) {
 			HashMap<String, Boolean> equip = new HashMap<String, Boolean>();

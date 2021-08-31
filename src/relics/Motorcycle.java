@@ -16,6 +16,7 @@ public class Motorcycle extends AbstractClickRelic {
 	
 	public Motorcycle() {
 		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

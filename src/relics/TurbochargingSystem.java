@@ -10,6 +10,7 @@ public class TurbochargingSystem extends AbstractTestRelic {
 	
 	public TurbochargingSystem() {
 		super(ID, RelicTier.COMMON, LandingSound.HEAVY);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

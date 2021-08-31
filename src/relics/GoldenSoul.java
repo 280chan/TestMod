@@ -11,6 +11,7 @@ public class GoldenSoul extends AbstractRevivalRelicToModifyDamage {
 	
 	public GoldenSoul() {
 		super(ID, RelicTier.BOSS, LandingSound.CLINK);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

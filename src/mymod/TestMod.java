@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -75,7 +76,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 2/12/2021
+ * @version 8/23/2021
  * @since 6/17/2018
  */
 
@@ -284,6 +285,9 @@ public class TestMod
 		case ENG:
 			langPrefix = Settings.language.name().toLowerCase() + "/";
 			break;
+		case ZHT:
+			langPrefix = "zhs/";
+			break;
 		default:
 			langPrefix = "eng/";
 			break;
@@ -310,14 +314,8 @@ public class TestMod
 	
 	private static void initLatest() {
 		addLatest(new TraineeEconomist(), new RandomTest(), new GoldenSoul(), new GremlinBalance(), new IWantAll(),
-				new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue());
-		addBadRelics(new PortableAltar(), new Sins(), new Register(), new InfectionSource(), new OneHitWonder(),
-				new IndustrialRevolution(), new Nyarlathotep(), new BalancedPeriapt(), new MagicalMallet(),
-				new DragonStarHat(), new Nine(), new Motorcycle(), new DreamHouse(), new HarvestTotem(),
-				new LifeArmor(), new NegativeEmotionEnhancer(), new IWantAll(), new Antiphasic(), new KeyOfTheVoid(),
-				new CyclicPeriapt(), new ConstraintPeriapt(), new InjuryResistance(), new Acrobat(),
-				new TurbochargingSystem(), new HeartOfStrike(), new GoldenSoul(), new RandomTest(),
-				new TemporaryBarricade(), new RetroFilter());
+				new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue(), new VentureCapital());
+		MY_RELICS.stream().filter(AbstractTestRelic::isBad).forEach(BAD_RELICS::add);
 		addLatestCard(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
 	}
@@ -340,14 +338,11 @@ public class TestMod
 				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
 				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest(), new TemporaryBarricade(),
 				new GremlinBalance(), new RetroFilter(), new DominatorOfWeakness(), new ShadowAmulet(),
-				new HyperplasticTissue(), new TraineeEconomist() };
+				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital() };
 		// 添加遗物进游戏 TODO
-		for (AbstractRelic r : relic) {
-			RELICS.add(r);
-		}
+		Stream.of(relic).forEach(RELICS::add);
 
-		for (ISubscriber s : SUB_MOD)
-			editSubModRelics(s);
+		SUB_MOD.forEach(TestMod::editSubModRelics);
 		
 		for (AbstractRelic r : RELICS) {
 			BaseMod.addRelic(r, RelicType.SHARED);
@@ -359,14 +354,11 @@ public class TestMod
 			}
 		}
 		
-		for (AbstractTestRelic r : MY_RELICS) {
-			AbstractTestRelic.addToMap(r);
-		}
+		MY_RELICS.forEach(AbstractTestRelic::addToMap);
 		
-		for (int i = 0; i < BOTTLES.size(); i++) {
+		/*for (int i = 0; i < BOTTLES.size(); i++) {
 			BaseMod.registerBottleRelic(BOTTLES.get(i), BOTTLES.get(i));
-		}
-		
+		}*/
 	}
 
 	public static final ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
@@ -403,20 +395,14 @@ public class TestMod
 				new Automaton(), new PowerStrike(), new WeaknessCounterattack(), new Reproduce(), new SunMoon(),
 				new VirtualReality(), new Plague() };
 		// TODO
-		for (AbstractCard c : card) {
-			CARDS.add(c);
-		}
+		Stream.of(card).forEach(CARDS::add);
 		
-		for (AbstractCard c : CARDS) {
-			BaseMod.addCard(c);
-		}
+		CARDS.forEach(BaseMod::addCard);
 		
-		for (int i = 0; i < 37; i++) {
+		for (int i = 0; i < 37; i++)
 			this.addMahjongToList(AbstractMahjongCard.mahjong(i));
-		}
 		
-		for (ISubscriber s : SUB_MOD)
-			editSubModCards(s);
+		SUB_MOD.forEach(TestMod::editSubModCards);
 		
 		//BaseMod.addCard(new Test());
 	}
@@ -475,11 +461,6 @@ public class TestMod
 	private static void addLatestCard(Object... list) {
 		for (Object o : list)
 			LATEST_CARD.add(o);
-	}
-	
-	private static void addBadRelics(AbstractRelic... list) {
-		for (AbstractRelic r : list)
-			BAD_RELICS.add(r);
 	}
 	
 	private static void initCheat() {
@@ -1058,12 +1039,9 @@ public class TestMod
 
 	@Override
 	public int receiveMapHPChange(int amount) {
-		float tmp = amount * 1f;
-		for (AbstractRelic r : AbstractDungeon.player.relics) {
-			if (r instanceof AbstractTestRelic) {
+		float tmp = amount * 1f;for (AbstractRelic r : AbstractDungeon.player.relics)
+			if (r instanceof AbstractTestRelic)
 				tmp = ((AbstractTestRelic)r).preChangeMaxHP(tmp);
-			}
-		}
 		return (int)tmp;
 	}
 	
@@ -1109,8 +1087,17 @@ public class TestMod
 		spireWithFriendLogger = !value;
 	}
 	
+	private static boolean checkMySteamName(Object o, Class<?> c) {
+		return "彼君不触".equals(ReflectionHacks.getPrivate(o, c, "userName"));
+	}
+	
 	private static boolean checkSteamName(Object remotePlayer) {
-		return "彼君不触".equals(ReflectionHacks.getPrivate(remotePlayer, remotePlayer.getClass(), "userName"));
+		Class<?> c = remotePlayer.getClass();
+		if (c.getCanonicalName().equals("chronoMods.network.steam.SteamPlayer")) {
+			return checkMySteamName(remotePlayer, c.getSuperclass());
+		} else {
+			return checkMySteamName(remotePlayer, c);
+		}
 	}
 	
 	private static void checkEnableConsoleMultiplayer() {
@@ -1121,11 +1108,9 @@ public class TestMod
 				} else {
 					CopyOnWriteArrayList<?> players = ReflectionHacks
 							.getPrivateStatic(Class.forName("chronoMods.TogetherManager"), "players");
-					for (Object player : players) {
-						if (checkSteamName(player)) {
-							changeConsoleMultiplayer(true);
-							return;
-						}
+					if (players.stream().anyMatch(TestMod::checkSteamName)) {
+						changeConsoleMultiplayer(true);
+						return;
 					}
 					changeConsoleMultiplayer(false);
 				}
@@ -1172,7 +1157,7 @@ public class TestMod
 	}
 
 	private static void exampleNyarlathotepAddRelic() {
-		String instruction = "Copy this method to your mod to add a relic that makes effect when player plays a power card.";
+		String instruction = "Copy this method to your mod, call it in receivePostInitialize() will register your relics that make effect when player plays a power card.";
 		if (Loader.isModLoaded("testmod")) {
 			ArrayList<String> list = new ArrayList<String>();
 			list.add("relic id0");

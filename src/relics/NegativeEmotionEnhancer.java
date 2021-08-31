@@ -15,6 +15,7 @@ public class NegativeEmotionEnhancer extends AbstractTestRelic {
 	
 	public NegativeEmotionEnhancer() {
 		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

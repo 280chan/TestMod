@@ -58,6 +58,7 @@ public class PortableAltar extends AbstractTestRelic {
 	
 	public PortableAltar() {
 		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

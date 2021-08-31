@@ -11,6 +11,7 @@ public class LifeArmor extends AbstractTestRelic {
 
 	public LifeArmor() {
 		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

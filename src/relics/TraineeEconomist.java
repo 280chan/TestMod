@@ -66,6 +66,7 @@ public class TraineeEconomist extends AbstractTestRelic implements MiscMethods {
     }
 	
 	public double gainGold(double amount) {
+		this.flash();
 		return amount * gainGoldRate();
 	}
 	
@@ -108,7 +109,7 @@ public class TraineeEconomist extends AbstractTestRelic implements MiscMethods {
 	}
 
 	public boolean canSpawn() {
-		return (Settings.isEndless) || (AbstractDungeon.floorNum <= 48);
+		return (Settings.isEndless) || (AbstractDungeon.actNum < 3);
 	}
 
 }

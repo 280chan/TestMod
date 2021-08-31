@@ -9,6 +9,7 @@ public class MagicalMallet extends AbstractTestRelic{
 	
 	public MagicalMallet() {
 		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
+		this.setTestTier(BAD);
 	}
 	
 	public String getUpdatedDescription() {

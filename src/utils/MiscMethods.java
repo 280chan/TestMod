@@ -503,7 +503,7 @@ public interface MiscMethods {
 	}
 	
 	public default boolean canUpdateHandGlow() {
-		return AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT;
+		return AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT;
 	}
 	
 	public default Color initGlowColor() {

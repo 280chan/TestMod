@@ -490,7 +490,13 @@
 	
 	"testmod-TraineeEconomist":{
 		"NAME": "Trainee Economist",
-		"FLAVOR": "这个人很懒，什么都没有写。",
+		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you kill an enemy, your future #yGold gain increase by #b5% (add), shops prices decrease by #b5% (multiply). Killing #yElites and #yBoss enemy would be counted as #b2 and #b3 enemies respectively. ( #yGold amount will not change in rewards)", " NL Current #yGold multiplier: #b", "% NL Current price multiplier: #b", "%"]
+	},
+	
+	"testmod-VentureCapital":{
+		"NAME": "Venture Capital",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Upon pick up, lose #All #yGold. Whenever you gain #yGold, lose #b1 #yGold. For each #b1 #yGold you lose, increase future #yGold gain by #b1% (add). ( #yGold amount will not change in rewards)", " NL Current #yGold multiplier: #b", "%"]
 	}
 }
