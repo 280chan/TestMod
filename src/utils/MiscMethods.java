@@ -76,26 +76,27 @@ public interface MiscMethods {
 			g.addToTop(c.makeStatEquivalentCopy());
 	}
 	
+	static class IdChecker {
+		String id;
+		public IdChecker(String id) {
+			this.id = id;
+		}
+		public boolean check(AbstractCard c) {
+			return this.id.equals(c.cardID);
+		}
+	}
+	
 	public default ArrayList<AbstractCard> getAllInBattleInstance(String cardID) {
+		IdChecker checker = new IdChecker(cardID);
 		ArrayList<AbstractCard> cards = new ArrayList<AbstractCard>();
 		AbstractPlayer p = AbstractDungeon.player;
 		if (p.cardInUse.cardID.equals(cardID))
 			cards.add(p.cardInUse);
-		for (AbstractCard c : p.drawPile.group)
-			if (c.cardID.equals(cardID))
-				cards.add(c);
-		for (AbstractCard c : p.discardPile.group)
-			if (c.cardID.equals(cardID))
-				cards.add(c);
-		for (AbstractCard c : p.exhaustPile.group)
-			if (c.cardID.equals(cardID))
-				cards.add(c);
-		for (AbstractCard c : p.limbo.group)
-			if (c.cardID.equals(cardID))
-				cards.add(c);
-		for (AbstractCard c : p.hand.group)
-			if (c.cardID.equals(cardID))
-				cards.add(c);
+		p.drawPile.group.stream().filter(checker::check).forEach(cards::add);
+		p.discardPile.group.stream().filter(checker::check).forEach(cards::add);
+		p.exhaustPile.group.stream().filter(checker::check).forEach(cards::add);
+		p.limbo.group.stream().filter(checker::check).forEach(cards::add);
+		p.hand.group.stream().filter(checker::check).forEach(cards::add);
 		TestMod.info("Count: " + cards.size());
 		return cards;
 	}
@@ -117,6 +118,10 @@ public interface MiscMethods {
 	    private static boolean endTurnQueued = false;
 	    private static boolean startMonsterTurn = false;
 		private static boolean startNextTurn = false;
+		
+		private static void addToBot(AbstractGameAction a) {
+			addToBot(a);
+		}
 
 		private static boolean inProgress() {
 			return startEndingTurn || endTurnQueued || startMonsterTurn || startNextTurn;
@@ -124,22 +129,23 @@ public interface MiscMethods {
 		
 	    public static void start() {
 	    	if (inProgress())
-	    		return;
-	    	AbstractDungeon.actionManager.addToBottom(new AbstractGameAction(){
+				return;
+			addToBot(new AbstractGameAction() {
 				@Override
 				public void update() {
 					this.isDone = true;
 					AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
 					AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
-			    	startEndingTurn = true;
-				}});
-	    }
+					startEndingTurn = true;
+				}
+			});
+		}
 	    
 	    public static void startByCard(AbstractCard c) {
 	    	if (inProgress())
 	    		return;
 			start();
-			AbstractDungeon.actionManager.addToBottom(new AbstractGameAction(){
+			addToBot(new AbstractGameAction(){
 				@Override
 				public void update() {
 					this.isDone = true;
@@ -172,31 +178,31 @@ public interface MiscMethods {
 			CardCrawlGame.sound.play("POWER_TIME_WARP", 0.05F);
 			AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
 			AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
-			for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
-		        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(m, m, new StrengthPower(m, 2), 2));
-		    }
+			for (AbstractMonster m : AbstractDungeon.getMonsters().monsters)
+				addToBot(new ApplyPowerAction(m, m, new StrengthPower(m, 2), 2));
 	    }
 	    
 	    private static void updateStartEndingTurn() {
 	    	if (!startEndingTurn)
 	    		return;
 	    	startEndingTurn = false;
-			for (CardQueueItem i : AbstractDungeon.actionManager.cardQueue) {
-				if (i.autoplayCard) {
-					i.card.dontTriggerOnUseCard = true;
-					AbstractDungeon.actionManager.addToBottom(new UseCardAction(i.card));
-				}
-			}
+			AbstractDungeon.actionManager.cardQueue.stream().filter(i -> {
+				return i.autoplayCard;
+			}).forEach(i -> {
+				i.card.dontTriggerOnUseCard = true;
+				addToBot(new UseCardAction(i.card));
+			});
 	    	AbstractDungeon.actionManager.cardQueue.clear();
-	    	for (AbstractCard c : AbstractDungeon.player.limbo.group) {
+	    	
+	    	for (AbstractCard c : AbstractDungeon.player.limbo.group)
 	            AbstractDungeon.effectList.add(new ExhaustCardEffect(c));
-	        }
+	    	
 	    	TestMod.info("limbo数量 = " + AbstractDungeon.player.limbo.size());
 	    	AbstractDungeon.player.limbo.group.clear();
 	        AbstractDungeon.player.releaseCard();
 	        // Start Ending Turn
 	        
-	        AbstractDungeon.actionManager.addToBottom(new NewQueueCardAction());
+	        addToBot(new NewQueueCardAction());
 	        EndTurnButton etb = AbstractDungeon.overlayMenu.endTurnButton;
 	        etb.enabled = false;
 	        etb.isGlowing = false;
@@ -225,32 +231,26 @@ public interface MiscMethods {
 			}
 	    }
 	    
+	    private static void resetAttributes(ArrayList<AbstractCard> list) {
+	    	list.forEach(AbstractCard::resetAttributes);
+	    }
+	    
 		private static void endTurn() {
 			AbstractDungeon.player.applyEndOfTurnTriggers();
 
-			AbstractDungeon.actionManager.addToBottom(new ClearCardQueueAction());
-			AbstractDungeon.actionManager.addToBottom(new DiscardAtEndOfTurnAction());
-			for (AbstractCard c : AbstractDungeon.player.drawPile.group) {
-				c.resetAttributes();
-			}
-			for (AbstractCard c : AbstractDungeon.player.discardPile.group) {
-				c.resetAttributes();
-			}
-			for (AbstractCard c : AbstractDungeon.player.hand.group) {
-				c.resetAttributes();
-			}
-			if (AbstractDungeon.player.hoveredCard != null) {
+			addToBot(new ClearCardQueueAction());
+			addToBot(new DiscardAtEndOfTurnAction());
+			
+			resetAttributes(AbstractDungeon.player.drawPile.group);
+			resetAttributes(AbstractDungeon.player.discardPile.group);
+			resetAttributes(AbstractDungeon.player.hand.group);
+			if (AbstractDungeon.player.hoveredCard != null)
 				AbstractDungeon.player.hoveredCard.resetAttributes();
-			}
 
-			AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
+			addToBot(new AbstractGameAction() {
 				public void update() {
-					AbstractDungeon.actionManager.addToBottom(new EndTurnAction());
-					if (Settings.FAST_MODE) {
-						AbstractDungeon.actionManager.addToBottom(new WaitAction(0.1F));
-					} else {
-						AbstractDungeon.actionManager.addToBottom(new WaitAction(1.2F));
-					}
+					addToBot(new EndTurnAction());
+					addToBot(new WaitAction(Settings.FAST_MODE ? 0.1F : 1.2F));
 					startMonsterTurn = true;
 					this.isDone = true;
 				}
@@ -266,9 +266,8 @@ public interface MiscMethods {
 			MonsterGroup group = AbstractDungeon.getCurrRoom().monsters;
 			for (AbstractMonster m : group.monsters) {
 				if ((!m.isDying) && (!m.isEscaping)) {
-					if (!m.hasPower("Barricade")) {
+					if (!m.hasPower("Barricade"))
 						m.loseBlock();
-					}
 					m.applyStartOfTurnPowers();
 				}
 			}
@@ -286,9 +285,8 @@ public interface MiscMethods {
 				AbstractDungeon.getCurrRoom().monsters.applyEndOfTurnPowers();
 				AbstractDungeon.player.cardsPlayedThisTurn = 0;
 				gam.orbsChanneledThisTurn.clear();
-				if (ModHelper.isModEnabled("Careless")) {
+				if (ModHelper.isModEnabled("Careless"))
 					Careless.modAction();
-				}
 				if (ModHelper.isModEnabled("ControlledChaos")) {
 					ControlledChaos.modAction();
 					AbstractDungeon.player.hand.applyPowers();
@@ -311,11 +309,10 @@ public interface MiscMethods {
 					}
 				}
 				if (!AbstractDungeon.getCurrRoom().isBattleOver) {
-					AbstractDungeon.actionManager
-							.addToBottom(new DrawCardAction(null, AbstractDungeon.player.gameHandSize, true));
+					addToBot(new DrawCardAction(null, AbstractDungeon.player.gameHandSize, true));
 					AbstractDungeon.player.applyStartOfTurnPostDrawRelics();
 					AbstractDungeon.player.applyStartOfTurnPostDrawPowers();
-					AbstractDungeon.actionManager.addToBottom(new EnableEndTurnButtonAction());
+					addToBot(new EnableEndTurnButtonAction());
 				}
 			}
 	    }
@@ -341,9 +338,8 @@ public interface MiscMethods {
 		tmp.current_y = card.current_y;
 		tmp.target_x = (Settings.WIDTH / 2.0F - 300.0F * Settings.scale);
 		tmp.target_y = (Settings.HEIGHT / 2.0F);
-		if (m != null) {
+		if (m != null)
 			tmp.calculateCardDamage(m);
-		}
 		tmp.purgeOnUse = true;
 		AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
 	}

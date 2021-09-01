@@ -76,7 +76,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 8/23/2021
+ * @version 9/1/2021
  * @since 6/17/2018
  */
 
@@ -270,7 +270,7 @@ public class TestMod
 	}
 	
 	private static void checkOldCardID(String id) {
-		if(UnlockTracker.isCardSeen(unMakeID(id)))
+		if (UnlockTracker.isCardSeen(unMakeID(id)))
 			UnlockTracker.markCardAsSeen(id);
 	}
 	
@@ -372,15 +372,12 @@ public class TestMod
 		BaseMod.loadCustomStrings(PowerStrings.class, readString("powers"));
 		BaseMod.loadCustomStrings(PotionStrings.class, readString("potions"));
 		BaseMod.loadCustomStrings(EventStrings.class, readString("events"));
-		for (ISubscriber s : SUB_MOD)
-			editSubModStrings(s);
+		SUB_MOD.forEach(TestMod::editSubModStrings);
 	}
 
 	@Override
 	public void receiveEditCards() {
-		for (AbstractCard c : Sins.SINS)
-			if (c instanceof AbstractTestCurseCard)
-				BaseMod.addCard(c);
+		Stream.of(Sins.SINS).filter(c -> {return c instanceof AbstractTestCard;}).forEach(BaseMod::addCard);
 		
 		AbstractCard[] card = { new DisillusionmentEcho(), new TreasureHunter(), new SubstituteBySubterfuge(),
 				new PerfectCombo(), new PulseDistributor(), new LifeRuler(), new EternalityOfKhronos(), new Wormhole(),
@@ -553,8 +550,7 @@ public class TestMod
 		
 		if (config == null)
 			this.initSavingConfig();
-		for (ISubscriber s : SUB_MOD)
-			editSubModPostDungeonInit(s);
+		SUB_MOD.forEach(TestMod::editSubModPostDungeonInit);
 		TheFatherPower.clear();
 		DragonStarHat.resetValue();
 		Faith.reset();
@@ -618,15 +614,10 @@ public class TestMod
 	
 	public static void unlockAll() {
 		info("开始解锁");
-		for (AbstractCard c : CARDS)
-			unlock(c);
-		for (AbstractCard c : Sins.SINS)
-			if (c instanceof AbstractTestCard)
-				unlock(c);
-		for (AbstractCard c : MAHJONGS)
-			unlock(c);
-		for (AbstractRelic r : RELICS)
-			unlock(r);
+		CARDS.forEach(TestMod::unlock);
+		Stream.of(Sins.SINS).filter(c -> {return c instanceof AbstractTestCard;}).forEach(TestMod::unlock);
+		MAHJONGS.forEach(TestMod::unlock);
+		RELICS.forEach(TestMod::unlock);
 	}
 	
 	private static final ArrayList<AbstractRelic> TO_OBTAIN = new ArrayList<AbstractRelic>();
@@ -637,11 +628,7 @@ public class TestMod
 	
 	public static AbstractRelic randomBonusRelic() {
 		ArrayList<AbstractRelic> unSeen = new ArrayList<AbstractRelic>();
-		for (AbstractRelic r : RELICS) {
-			if (!r.isSeen) {
-				unSeen.add(r);
-			}
-		}
+		RELICS.stream().filter(r -> {return !r.isSeen;}).forEach(unSeen::add);
 		if (!unSeen.isEmpty())
 			return unSeen.get((int) (Math.random() * unSeen.size()));
 		return RELICS.get((int) (Math.random() * (RELICS.size())));
@@ -663,11 +650,7 @@ public class TestMod
 		if (MODE.cheat()) {
 		}
 		ArrayList<AbstractCard> unSeen = new ArrayList<AbstractCard>();
-		for (AbstractCard c : CARDS) {
-			if (!c.isSeen) {
-				unSeen.add(c);
-			}
-		}
+		CARDS.stream().filter(c -> {return !c.isSeen;}).forEach(unSeen::add);
 		if (!unSeen.isEmpty())
 			return unSeen.get((int) (Math.random() * unSeen.size()));
 		return CARDS.get((int) (Math.random() * (CARDS.size())));
@@ -699,20 +682,18 @@ public class TestMod
 	public void receivePreUpdate() {
 		AbstractPlayer p = AbstractDungeon.player;
 		if (p != null) {
-			for (Iterator<AbstractRelic> i = p.relics.iterator(); i.hasNext();) {
-				AbstractRelic temp = i.next();
-				if (temp instanceof AbstractTestRelic) {
-					((AbstractTestRelic)temp).preUpdate();
-				}
-			}
+			p.relics.stream().filter(r -> {
+				return r instanceof AbstractTestRelic;
+			}).forEach(r -> {
+				((AbstractTestRelic) r).preUpdate();
+			});
 			this.updateGlow();
 		}
 	}
 
 	@Override
 	public void receivePostUpdate() {
-		for (ISubscriber s : SUB_MOD)
-			editSubModPostUpdate(s);
+		SUB_MOD.forEach(TestMod::editSubModPostUpdate);
 		// TODO Auto-generated method stub
 		AbstractPlayer p = AbstractDungeon.player;
 		
@@ -759,12 +740,11 @@ public class TestMod
 				}
 			}
 			
-			for (Iterator<AbstractRelic> i = p.relics.iterator(); i.hasNext();) {
-				AbstractRelic temp = i.next();
-				if (temp instanceof AbstractTestRelic) {
-					((AbstractTestRelic)temp).postUpdate();
-				}
-			}
+			p.relics.stream().filter(r -> {
+				return r instanceof AbstractTestRelic;
+			}).forEach(r -> {
+				((AbstractTestRelic) r).postUpdate();
+			});
 			
 			/*if (needFix){
 				if (p.maxHealth <= 0 && !p.isDead && !p.isDying && !p.halfDead) {
@@ -871,8 +851,7 @@ public class TestMod
 		if (config == null)
 			this.initSavingConfig();
 
-		for (ISubscriber s : SUB_MOD)
-			editSubModStartGame(s);
+		SUB_MOD.forEach(TestMod::editSubModStartGame);
 		
 		if (AbstractDungeon.player.hasRelic(makeID(PortableAltar.ID))) {
 			PortableAltar.load(getInt(PortableAltar.SAVE_NAME));
@@ -1039,10 +1018,11 @@ public class TestMod
 
 	@Override
 	public int receiveMapHPChange(int amount) {
-		float tmp = amount * 1f;for (AbstractRelic r : AbstractDungeon.player.relics)
+		float tmp = amount * 1f;
+		for (AbstractRelic r : AbstractDungeon.player.relics)
 			if (r instanceof AbstractTestRelic)
-				tmp = ((AbstractTestRelic)r).preChangeMaxHP(tmp);
-		return (int)tmp;
+				tmp = ((AbstractTestRelic) r).preChangeMaxHP(tmp);
+		return (int) tmp;
 	}
 	
 	public static String eventIMGPath(String ID) {

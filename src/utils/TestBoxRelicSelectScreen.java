@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import christmasMod.mymod.ChristmasMod;
 import halloweenMod.relics.EventCelebration_Halloween;
 import mymod.TestMod;
+import relics.AbstractTestRelic;
 import relics.TestBox;
 
 public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscMethods {
@@ -22,6 +23,10 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		this.box.relicSelected = false;
 	}
 
+	private boolean checkIllegal(AbstractRelic r) {
+		return checkIllegal(r.relicId);
+	}
+	
 	private boolean checkIllegal(String id) {
 		for (String s : ILLEGAL)
 			if (id.equals(s))
@@ -29,7 +34,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		return false;
 	}
 	
-	private AbstractRelic priority() {
+	private AbstractTestRelic priority() {
 		int month = this.getMonth(); 
 		int date = this.getDate(); 
 		//TestMod.info("月:" + month + "日:" + date);
@@ -37,23 +42,27 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 			return new EventCelebration_Halloween();
 		// TODO 圣诞
 		if (month == 12 && date > 20)
-			return ChristmasMod.randomRelic().makeCopy();
+			return (AbstractTestRelic) ChristmasMod.randomRelic().makeCopy();
 		if (!Settings.seedSet) {
 			if ("BrkStarshine".equals(CardCrawlGame.playerName) || "280 chan".equals(CardCrawlGame.playerName)) {
 				Object o = TestMod.checkLatest(true);
 				if (o != null)
-					return (AbstractRelic) o;
+					return (AbstractTestRelic) o;
 			}
 		} else if (Loader.isModLoaded("chronoMods") && "BrkStarshine".equals(CardCrawlGame.playerName)) {
 			Object o = TestMod.checkLatest(true);
 			if (o != null)
-				return (AbstractRelic) o;
+				return (AbstractTestRelic) o;
 		}
 		return null;
 	}
 	
-	private AbstractRelic randomRelic(boolean priority) {
-		return TestMod.randomItem((priority ? TestMod.BAD_RELICS : TestMod.RELICS), this.box.rng);
+	private AbstractTestRelic randomRelic(AbstractTestRelic priority) {
+		return randomRelic(priority != null);
+	}
+	
+	private AbstractTestRelic randomRelic(boolean priority) {
+		return (AbstractTestRelic) TestMod.randomItem((priority ? TestMod.BAD_RELICS : TestMod.RELICS), this.box.rng);
 	}
 	
 	private void addAndMarkAsSeen(AbstractRelic r) {
@@ -63,21 +72,12 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	
 	@Override
 	protected void addRelics() {
-		AbstractRelic priority = this.priority();
+		AbstractTestRelic priority = this.priority();
 		if (priority != null)
 			addAndMarkAsSeen(priority);
-		while (this.relics.size() < 3) {
-			boolean repeat = false;
-			AbstractRelic r = randomRelic(priority != null);
-			if (this.checkIllegal(r.relicId))
-				continue;
-			for (AbstractRelic re : this.relics)
-				if (re.relicId.equals(r.relicId))
-					repeat = true;
-			if (repeat)
-				continue;
-			addAndMarkAsSeen(r);
-		}
+		for (AbstractTestRelic r = randomRelic(priority); this.relics.size() < 3; r = randomRelic(priority))
+			if (!(this.checkIllegal(r) || this.relics.stream().anyMatch(r::sameAs)))
+				addAndMarkAsSeen(r);
 	}
 
 	private void completeSelection() {

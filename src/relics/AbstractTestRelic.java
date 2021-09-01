@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import basemod.abstracts.CustomRelic;
 import mymod.TestMod;
@@ -32,6 +33,10 @@ public abstract class AbstractTestRelic extends CustomRelic {
 	
 	public boolean isBad() {
 		return this.testTier == BAD;
+	}
+	
+	public boolean sameAs(AbstractRelic r) {
+		return this.relicId.equals(r.relicId);
 	}
 	
 	public static void addToMap(AbstractTestRelic obj) {
