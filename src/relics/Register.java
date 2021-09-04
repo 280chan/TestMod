@@ -74,7 +74,7 @@ public class Register extends AbstractTestRelic{
 			else if (pow.ID.equals("TimeMazePower"))
 				pow.amount = 15;
 			else if (pow instanceof RecapPower)
-				((RecapPower)pow).clear();
+				((RecapPower)pow).list.clear();
 			else if (pow instanceof EchoPower)
 				pow.atStartOfTurn();
 			pow.updateDescription();

@@ -36,7 +36,7 @@ public class DrawDownPower extends AbstractTestPower {
 	}
 
 	public void atStartOfTurnPostDraw() {
-		this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
+		this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
 	}
 
 	public void onRemove() {

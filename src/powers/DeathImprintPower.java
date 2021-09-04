@@ -14,10 +14,7 @@ public class DeathImprintPower extends AbstractTestPower {
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof DeathImprintPower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof DeathImprintPower;});
 	}
 	
 	public static AbstractPower getThis(AbstractCreature owner) {

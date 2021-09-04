@@ -9,7 +9,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.PoisonPower;
 
 public class InfectionPower extends AbstractTestPower implements InvisiblePower {
@@ -17,10 +16,7 @@ public class InfectionPower extends AbstractTestPower implements InvisiblePower 
 	private float tempDamage;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof InfectionPower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof InfectionPower;});
 	}
 	
 	public InfectionPower(AbstractCreature owner) {

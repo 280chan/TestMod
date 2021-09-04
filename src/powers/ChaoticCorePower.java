@@ -44,11 +44,9 @@ public class ChaoticCorePower extends AbstractTestPower {
 	
 	private int countAddOrbSlotAction() {
 		int retVal = 0;
-		for (AbstractGameAction a : AbstractDungeon.actionManager.actions) {
-			if (a instanceof IncreaseMaxOrbAction) {
+		for (AbstractGameAction a : AbstractDungeon.actionManager.actions)
+			if (a instanceof IncreaseMaxOrbAction)
 				retVal++;
-			}
-		}
 		return retVal;
 	}
 	

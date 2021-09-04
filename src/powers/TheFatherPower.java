@@ -10,8 +10,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-
 import relics.TheFather;
 
 public class TheFatherPower extends AbstractTestPower implements InvisiblePower {
@@ -25,10 +23,7 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	}
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof TheFatherPower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof TheFatherPower;});
 	}
 	
 	public TheFatherPower(AbstractCreature owner, TheFather relic) {

@@ -37,11 +37,7 @@ public class DisillusionmentEchoPower extends AbstractTestPower implements MiscM
 	}
 
 	private void playAgain(AbstractCard card, UseCardAction action) {
-		AbstractMonster m = null;
-		if (action.target != null) {
-			m = (AbstractMonster) action.target;
-		}
-		this.playAgain(card, m);
+		this.playAgain(card, action.target == null ? null : (AbstractMonster) action.target);
 	}
     
 }

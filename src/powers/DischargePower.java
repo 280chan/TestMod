@@ -1,5 +1,4 @@
-
-package powers;//包名，请根据自己的包路径修改，一般在创建类的时候自动填好。
+package powers;
 
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.actions.unique.LoseEnergyAction;
@@ -27,7 +26,7 @@ public class DischargePower extends AbstractTestPower {
     
     public void atEnergyGain() {
     	this.addToBot(new LoseEnergyAction(this.amount));
-    	this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
+    	this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
     }
 
 }

@@ -4,7 +4,6 @@ package powers;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import relics.D_4.Situation;
 
 public class D_4Power extends AbstractTestPower {
@@ -18,16 +17,11 @@ public class D_4Power extends AbstractTestPower {
 	private static final int PRIORITY = -100000;
 	
 	public static boolean hasThis(AbstractPlayer p) {
-		for (AbstractPower po : p.powers)
-			if (po instanceof D_4Power)
-				return true;
-		return false;
+		return p.powers.stream().anyMatch(po -> {return po instanceof D_4Power;});
 	}
 	
 	public static String getString(Situation s) {
-		if (s != null && s.ordinal() < 4)
-			return DESCRIPTIONS[s.ordinal() + 1];
-		return DESCRIPTIONS[5];
+		return (s != null && s.ordinal() < 4) ? DESCRIPTIONS[s.ordinal() + 1] : DESCRIPTIONS[5];
 	}
 	
 	public D_4Power(AbstractCreature owner, Situation s) {

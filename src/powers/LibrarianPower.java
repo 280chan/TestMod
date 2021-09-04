@@ -34,7 +34,7 @@ public class LibrarianPower extends AbstractTestPower {
     	this.amount--;
     	this.flashWithoutSound();
     	if (this.amount == 0)
-    		this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
+    		this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
     	else
         	this.updateDescription();
     }

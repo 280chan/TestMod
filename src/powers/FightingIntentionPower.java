@@ -1,6 +1,7 @@
 package powers;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -41,18 +42,26 @@ public class FightingIntentionPower extends AbstractTestPower {
 			return false;
 		}
 	}
+	
+	private class PowerApplier {
+		int amount;
+		PowerApplier(int amount) {
+			this.amount = amount;
+		}
+		void apply(AbstractCreature c) {
+			FightingIntentionPower.this.addToBot(
+					new ApplyPowerAction(c, FightingIntentionPower.this.owner, new StrengthPower(c, amount), amount));
+		}
+	}
 
 	public void atStartOfTurnPostDraw() {
-		ArrayList<AbstractMonster> list = new ArrayList<AbstractMonster>();
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (this.hasAttackIntent(m))
-				list.add(m);
+		ArrayList<AbstractMonster> list = AbstractDungeon.getCurrRoom().monsters.monsters.stream()
+				.filter(this::hasAttackIntent).collect(Collectors.toCollection(ArrayList::new));
 		int count = list.size() * this.amount;
 		if (count <= 0)
 			return;
-		for (AbstractMonster m : list)
-			this.addToBot(new ApplyPowerAction(m, this.owner, new StrengthPower(m, -count), -count));
-		this.addToBot(new ApplyPowerAction(this.owner, this.owner, new StrengthPower(this.owner, count), count));
+		list.forEach(new PowerApplier(-count)::apply);
+		new PowerApplier(count).apply(this.owner);
 		this.flash();
 	}
 

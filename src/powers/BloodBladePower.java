@@ -30,11 +30,7 @@ public class BloodBladePower extends AbstractTestPower {
 	
 	public void updateDescription() {
 		 this.description = DESCRIPTIONS[0];
-		 if (upgraded) {
-			 this.description += DESCRIPTIONS[2];
-		 } else {
-			 this.description += DESCRIPTIONS[1];
-		 }
+		 this.description += upgraded ? DESCRIPTIONS[2] : DESCRIPTIONS[1];
 		 this.description += DESCRIPTIONS[3];
 		 if (this.bonus > 0) {
 			 double tmp = (((int)(this.bonus * 10000 + 0.5)) / 100.0);
@@ -47,19 +43,24 @@ public class BloodBladePower extends AbstractTestPower {
 		this.amount = -1;
 	}
 	
+	private static class PowerChecker {
+		boolean flag;
+		PowerChecker(boolean upgraded) {
+			this.flag = upgraded;
+		}
+		boolean check(AbstractPower p) {
+			return p instanceof BloodBladePower && this.flag == ((BloodBladePower) p).upgraded;
+		}
+	}
+	
 	public static boolean hasThis(boolean upgraded) {
-		for (AbstractPower p : AbstractDungeon.player.powers)
-			if (p instanceof BloodBladePower)
-				if (((BloodBladePower)p).upgraded == upgraded)
-					return true;
-		return false;
+		return AbstractDungeon.player.powers.stream().anyMatch(new PowerChecker(upgraded)::check);
 	}
 	
 	public static BloodBladePower getThis(boolean upgraded) {
 		for (AbstractPower p : AbstractDungeon.player.powers)
-			if (p instanceof BloodBladePower)
-				if (((BloodBladePower)p).upgraded == upgraded)
-					return (BloodBladePower) p;
+			if (p instanceof BloodBladePower && upgraded == ((BloodBladePower) p).upgraded)
+				return (BloodBladePower) p;
 		return null;
 	}
 	

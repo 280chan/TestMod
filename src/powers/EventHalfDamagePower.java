@@ -1,4 +1,4 @@
-package powers;//包名，请根据自己的包路径修改，一般在创建类的时候自动填好。
+package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -13,10 +13,7 @@ public class EventHalfDamagePower extends AbstractTestPower implements Invisible
 	private static AscensionHeart ah = null;
 	
 	public static boolean hasThis() {
-		for (AbstractPower p : AbstractDungeon.player.powers)
-			if (p instanceof EventHalfDamagePower)
-				return true;
-		return false;
+		return AbstractDungeon.player.powers.stream().anyMatch(p -> {return p instanceof EventHalfDamagePower;});
 	}
 	
 	public static AbstractPower getThis() {

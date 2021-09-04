@@ -14,10 +14,7 @@ public class IndustrialRevolutionPower extends AbstractTestPower implements OnRe
 	}
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof IndustrialRevolutionPower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof IndustrialRevolutionPower;});
 	}
 	
 	public IndustrialRevolutionPower(AbstractCreature owner) {
@@ -39,9 +36,7 @@ public class IndustrialRevolutionPower extends AbstractTestPower implements OnRe
 	
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature t, AbstractCreature s) {
-		if (t.isPlayer && check(s) && p.type == PowerType.DEBUFF)
-			return false;
-		return true;
+		return !(t.isPlayer && check(s) && p.type == PowerType.DEBUFF);
 	}
     
 }

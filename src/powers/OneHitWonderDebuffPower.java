@@ -6,16 +6,12 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 
 public class OneHitWonderDebuffPower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "OneHitWonderDebuffPower";
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof OneHitWonderDebuffPower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof OneHitWonderDebuffPower;});
 	}
 	
 	public OneHitWonderDebuffPower(AbstractCreature owner) {

@@ -16,10 +16,7 @@ public class TaurusBlackCatEnemyPower extends AbstractTestPower implements Invis
 	private static final int PRIORITY = 100000;
 
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof TaurusBlackCatEnemyPower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof TaurusBlackCatEnemyPower;});
 	}
 	
 	public static AbstractPower getThis(AbstractCreature owner) {

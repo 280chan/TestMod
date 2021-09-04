@@ -1,6 +1,7 @@
 package powers;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -37,7 +38,7 @@ public class ReverberationPower extends AbstractTestPower {
 	}
 	
 	private boolean checkMonster(AbstractMonster m) {
-		return m.isDead || m.halfDead || m.escaped || m.isEscaping || m.isDying;
+		return !(m.isDead || m.halfDead || m.escaped || m.isEscaping || m.isDying);
 	}
 	
 	private void next(AbstractCard c, int size) {
@@ -45,10 +46,8 @@ public class ReverberationPower extends AbstractTestPower {
 			@Override
 			public void update() {
 				this.isDone = true;
-				ArrayList<AbstractMonster> list = new ArrayList<AbstractMonster>();
-				for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-					if (!checkMonster(m))
-						list.add(m);
+				ArrayList<AbstractMonster> list = AbstractDungeon.getCurrRoom().monsters.monsters.stream()
+						.filter(ReverberationPower.this::checkMonster).collect(Collectors.toCollection(ArrayList::new));
 				if (list.isEmpty())
 					return;
 				AbstractMonster m = list.get(AbstractDungeon.cardRandomRng.random(0, list.size() - 1));

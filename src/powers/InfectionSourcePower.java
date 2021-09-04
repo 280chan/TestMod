@@ -5,17 +5,13 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 
 public class InfectionSourcePower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "InfectionSourcePower";
 	private static final int PRIORITY = 1000000;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof InfectionSourcePower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof InfectionSourcePower;});
 	}
 	
 	public InfectionSourcePower(AbstractCreature owner) {

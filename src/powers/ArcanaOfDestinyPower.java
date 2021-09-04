@@ -7,16 +7,12 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 
 public class ArcanaOfDestinyPower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "ArcanaOfDestinyPower";
 	
 	public static boolean hasThis(AbstractCreature m) {
-		for (AbstractPower p : m.powers)
-			if (p instanceof ArcanaOfDestinyPower)
-				return true;
-		return false;
+		return m.powers.stream().anyMatch(p -> {return p instanceof ArcanaOfDestinyPower;});
 	}
 	
 	public ArcanaOfDestinyPower(AbstractCreature owner) {

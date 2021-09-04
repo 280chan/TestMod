@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
@@ -76,7 +77,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 9/1/2021
+ * @version 9/4/2021
  * @since 6/17/2018
  */
 
@@ -215,15 +216,22 @@ public class TestMod
 			BaseMod.addKeyword(new String[] { "Imprint" }, "#yImprint will increase the amount of damage whenever the owner loses HP.");
 			break;
 		}
-		for (ISubscriber s : SUB_MOD)
-			editSubModKeywords(s);
+		SUB_MOD.forEach(TestMod::editSubModKeywords);
 	}
 
+	private static class PostBattleTrigger {
+		AbstractRoom r;
+		PostBattleTrigger(AbstractRoom r) {
+			this.r = r;
+		}
+		void trigger(ISubscriber s) {
+			editSubModPostBattle(s, this.r);
+		}
+	}
+	
 	@Override
 	public void receivePostBattle(AbstractRoom r) {
-		// TODO Auto-generated method stub
-		for (ISubscriber s : SUB_MOD)
-			editSubModPostBattle(s, r);
+		SUB_MOD.forEach(new PostBattleTrigger(r)::trigger);
 	}
 	
 	public static void info(String s) {
@@ -315,11 +323,15 @@ public class TestMod
 	private static void initLatest() {
 		addLatest(new TraineeEconomist(), new RandomTest(), new GoldenSoul(), new GremlinBalance(), new IWantAll(),
 				new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue(), new VentureCapital());
-		MY_RELICS.stream().filter(AbstractTestRelic::isBad).forEach(BAD_RELICS::add);
+		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(Collectors.toCollection(ArrayList::new));
 		addLatestCard(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
 	}
 
+	private static void addRelic(AbstractRelic r) {
+		BaseMod.addRelic(r, RelicType.SHARED);
+	}
+	
 	@Override
 	public void receiveEditRelics() {
 		AbstractRelic[] relic = { new ObsoleteBoomerang(), new D_4(), new BlackFramedGlasses(), new BouquetWithThorns(),
@@ -340,19 +352,13 @@ public class TestMod
 				new GremlinBalance(), new RetroFilter(), new DominatorOfWeakness(), new ShadowAmulet(),
 				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital() };
 		// 添加遗物进游戏 TODO
-		Stream.of(relic).forEach(RELICS::add);
+		RELICS = Stream.of(relic).collect(Collectors.toCollection(ArrayList::new));
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
-		
-		for (AbstractRelic r : RELICS) {
-			BaseMod.addRelic(r, RelicType.SHARED);
-			if (r instanceof AbstractTestRelic) {
-				MY_RELICS.add((AbstractTestRelic)r);
-			}
-			if (r instanceof AbstractBottleRelic) {
-				BOTTLES.add((AbstractBottleRelic)r);
-			}
-		}
+		RELICS.forEach(TestMod::addRelic);
+		for (AbstractRelic r : RELICS)
+			if (r instanceof AbstractTestRelic)
+				MY_RELICS.add((AbstractTestRelic) r);
 		
 		MY_RELICS.forEach(AbstractTestRelic::addToMap);
 		
@@ -361,9 +367,9 @@ public class TestMod
 		}*/
 	}
 
-	public static final ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
-	private static final ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
-	private static final ArrayList<AbstractBottleRelic> BOTTLES = new ArrayList<AbstractBottleRelic>();
+	public static ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
+	private static ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
+	private static ArrayList<AbstractBottleRelic> BOTTLES = new ArrayList<AbstractBottleRelic>();
 	
 	@Override
 	public void receiveEditStrings() {
@@ -392,7 +398,7 @@ public class TestMod
 				new Automaton(), new PowerStrike(), new WeaknessCounterattack(), new Reproduce(), new SunMoon(),
 				new VirtualReality(), new Plague() };
 		// TODO
-		Stream.of(card).forEach(CARDS::add);
+		CARDS = Stream.of(card).collect(Collectors.toCollection(ArrayList::new));
 		
 		CARDS.forEach(BaseMod::addCard);
 		
@@ -410,7 +416,7 @@ public class TestMod
 	}
 
 	public static final ArrayList<AbstractMahjongCard> MAHJONGS = new ArrayList<AbstractMahjongCard>();
-	public static final ArrayList<AbstractCard> CARDS = new ArrayList<AbstractCard>();
+	public static ArrayList<AbstractCard> CARDS = new ArrayList<AbstractCard>();
 	
 	public static void removeFromPool(AbstractRelic r) {
 		String id = r.relicId;
@@ -427,7 +433,7 @@ public class TestMod
 	}
 	
 	private static final ArrayList<Object> LATEST = new ArrayList<Object>();
-	public static final ArrayList<AbstractRelic> BAD_RELICS = new ArrayList<AbstractRelic>();
+	public static ArrayList<AbstractRelic> BAD_RELICS = new ArrayList<AbstractRelic>();
 	private static final ArrayList<Object> LATEST_CARD = new ArrayList<Object>();
 	private static final ArrayList<ArrayList<Object>> INIT0 = new ArrayList<ArrayList<Object>>();
 	private static final ArrayList<ArrayList<Object>> INIT = new ArrayList<ArrayList<Object>>();

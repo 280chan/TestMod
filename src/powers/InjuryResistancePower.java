@@ -2,8 +2,6 @@ package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-
 import relics.InjuryResistance;
 
 public class InjuryResistancePower extends AbstractTestPower implements InvisiblePower {
@@ -12,10 +10,7 @@ public class InjuryResistancePower extends AbstractTestPower implements Invisibl
 	private InjuryResistance r;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof InjuryResistancePower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof InjuryResistancePower;});
 	}
 	
 	public InjuryResistancePower(AbstractCreature owner, InjuryResistance r) {

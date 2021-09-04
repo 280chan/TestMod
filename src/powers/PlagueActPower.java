@@ -35,9 +35,11 @@ public class PlagueActPower extends AbstractTestPower {
 	
 	public void onUseCard(AbstractCard c, UseCardAction action) {
 		if (c.type == CardType.POWER)
-			for (AbstractCreature m : AbstractDungeon.getCurrRoom().monsters.monsters)
-				if (!m.isDeadOrEscaped())
-					this.actPower(m);
+			AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(this::inBattle).forEach(this::actPower);
+	}
+	
+	private boolean inBattle(AbstractCreature m) {
+		return !m.isDeadOrEscaped();
 	}
 	
 	private void actPower(AbstractCreature m) {

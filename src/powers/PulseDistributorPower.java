@@ -24,10 +24,7 @@ public class PulseDistributorPower extends AbstractTestPower {
 	public final ArrayList<Integer> DAMAGES = new ArrayList<Integer>();
 	
 	public static boolean hasThis(AbstractPlayer owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof PulseDistributorPower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof PulseDistributorPower;});
 	}
 	
 	public static PulseDistributorPower getThis(AbstractPlayer owner) {
@@ -94,19 +91,37 @@ public class PulseDistributorPower extends AbstractTestPower {
         this.amount = -1;
 	}
 	
+	private boolean onCurrent = false;
+	
+	private boolean filter(AbstractPower p) {
+		if (this.onCurrent)
+			return true;
+		if (this.equals(p))
+			this.onCurrent = true;
+		return false;
+	}
+	
+	private static class Attacker {
+		DamageInfo info;
+		int damage;
+		Attacker(DamageInfo info, int damage) {
+			this.info = info;
+			this.damage = damage;
+		}
+		void act(AbstractPower p) {
+			this.damage = p.onAttacked(this.info, this.damage);
+		}
+	}
+	
     public int onAttacked(final DamageInfo info, int damage) {
 		if (info.type == DamageType.HP_LOSS)
 			return damage;
-		boolean onCurrent = false;
 		if (info.owner != null) {
-			for (AbstractPower p : owner.powers) {
-				if (!p.ID.equals(this.ID)) {
-					if (onCurrent)
-						damage = p.onAttacked(info, damage);
-				} else {
-					onCurrent = true;
-				}
-			}
+			Attacker attacker = new Attacker(info, damage);
+			this.owner.powers.stream().filter(this::filter).forEach(attacker::act);
+			if (this.onCurrent)
+				this.onCurrent = false;
+			damage = attacker.damage;
 		}
         GameActionManager.damageReceivedThisTurn += damage;
         GameActionManager.damageReceivedThisCombat += damage;

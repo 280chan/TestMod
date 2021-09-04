@@ -34,11 +34,7 @@ public class AssimilatedRunePower extends AbstractTestPower {
 	
 	public void updateDescription() {
 		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
-		 if (this.upgraded) {
-			 this.description += DESCRIPTIONS[3];
-		 } else {
-			 this.description += DESCRIPTIONS[2];
-		 }
+		 this.description += this.upgraded ? DESCRIPTIONS[3] : DESCRIPTIONS[2];
 		 this.description += DESCRIPTIONS[4];
 	}
 	

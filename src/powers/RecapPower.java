@@ -15,11 +15,7 @@ public class RecapPower extends AbstractTestPower implements MiscMethods {
 	private static final String NAME = PS.NAME;
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 
-	private ArrayList<AbstractCard> list = new ArrayList<AbstractCard>();
-	
-	public void clear() {
-		this.list.clear();
-	}
+	public ArrayList<AbstractCard> list = new ArrayList<AbstractCard>();
 	
 	public RecapPower(AbstractCreature owner, int amount) {
 		super(POWER_ID);
@@ -34,17 +30,19 @@ public class RecapPower extends AbstractTestPower implements MiscMethods {
 		this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
 	}
 	
+	private void play(AbstractCard c) {
+		this.addToBot(new AbstractGameAction() {
+			public void update() {
+				RecapPower.this.playAgain(c, AbstractDungeon.getCurrRoom().monsters.getRandomMonster(null, true,
+						AbstractDungeon.cardRandomRng));
+				this.isDone = true;
+			}
+		});
+	}
+	
     public void atStartOfTurn() {
-		for (AbstractCard c : this.list) {
-			this.addToBot(new AbstractGameAction() {
-				public void update() {
-					RecapPower.this.playAgain(c, AbstractDungeon.getCurrRoom().monsters.getRandomMonster(null, true,
-							AbstractDungeon.cardRandomRng));
-					this.isDone = true;
-				}
-			});
-		}
-    	this.clear();
+    	this.list.forEach(this::play);
+    	this.list.clear();
     }
     
     public void onAfterCardPlayed(final AbstractCard c) {

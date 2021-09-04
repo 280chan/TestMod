@@ -35,7 +35,7 @@ public class GreedPower extends AbstractTestPower {
 			this.addToBot(new ApplyPowerAction(p, p, new DischargePower(p, handLeft), handLeft));
 		if (energyLeft > 0)
 			this.addToBot(new ApplyPowerAction(p, p, new DrawDownPower(p, energyLeft), energyLeft));
-    	this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
+    	this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
     }
     
 }

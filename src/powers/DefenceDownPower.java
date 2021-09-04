@@ -3,7 +3,6 @@ package powers;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 
 public class DefenceDownPower extends AbstractTestPower {
 	public static final String POWER_ID = "DefenceDownPower";
@@ -12,10 +11,7 @@ public class DefenceDownPower extends AbstractTestPower {
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof DefenceDownPower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof DefenceDownPower;});
 	}
 	
 	public DefenceDownPower(AbstractCreature owner, int amount) {

@@ -25,16 +25,17 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
 	}
 	
+	private void updateEnemy(AbstractMonster m) {
+		if (TaurusBlackCatEnemyPower.hasThis(m))
+			this.updateAmount(m);
+		else
+			this.addEnemyPower(m);
+	}
+	
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
         this.amount += stackAmount;
-        for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (TaurusBlackCatEnemyPower.hasThis(m)) {
-				this.updateAmount(m);
-			} else {
-				this.addEnemyPower(m);
-			}
-		}
+        AbstractDungeon.getCurrRoom().monsters.monsters.forEach(this::updateEnemy);
 	}
 	
 	private void updateAmount(AbstractMonster m) {
@@ -52,19 +53,19 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 	}
 	
 	public void onInitialApplication() {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			this.addEnemyPower(m);
+		AbstractDungeon.getCurrRoom().monsters.monsters.forEach(this::addEnemyPower);
+	}
+	
+	private boolean needAdd(AbstractMonster m) {
+		return !TaurusBlackCatEnemyPower.hasThis(m);
 	}
 	
 	public void atStartOfTurn() {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (!TaurusBlackCatEnemyPower.hasThis(m))
-				this.addEnemyPower(m);
+		AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(this::needAdd).forEach(this::addEnemyPower);
 	}
 	
 	public void onRemove() {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			this.removeEnemyPower(m);
+		AbstractDungeon.getCurrRoom().monsters.monsters.forEach(this::removeEnemyPower);
 	}
     
 }

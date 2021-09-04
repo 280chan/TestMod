@@ -39,12 +39,7 @@ public class ReproducePower extends AbstractTestPower {
 					this.isDone = true;
 		    		c.setCostForTurn(c.costForTurn + ReproducePower.this.amount);
 				}});
-    		if (!c.returnToHand)
-    			c.returnToHand = true;
-    		if (!c.retain)
-    			c.retain = true;
-    		if (!c.selfRetain)
-    			c.selfRetain = true;
+    		c.returnToHand = c.retain = c.selfRetain = true;
     	}
     }
 	

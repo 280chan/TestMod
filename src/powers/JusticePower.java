@@ -14,10 +14,7 @@ public class JusticePower extends AbstractTestPower implements OnReceivePowerPow
 	private Justice j;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof JusticePower)
-				return true;
-		return false;
+		return owner.powers.stream().anyMatch(p -> {return p instanceof JusticePower;});
 	}
 	
 	public JusticePower(AbstractCreature owner, Justice j) {
