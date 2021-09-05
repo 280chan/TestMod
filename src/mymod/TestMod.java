@@ -219,19 +219,22 @@ public class TestMod
 		SUB_MOD.forEach(TestMod::editSubModKeywords);
 	}
 
-	private static class PostBattleTrigger {
+	private static class RoomTrigger {
 		AbstractRoom r;
-		PostBattleTrigger(AbstractRoom r) {
+		RoomTrigger(AbstractRoom r) {
 			this.r = r;
 		}
-		void trigger(ISubscriber s) {
+		void postTrigger(ISubscriber s) {
 			editSubModPostBattle(s, this.r);
+		}
+		void preTrigger(ISubscriber s) {
+			editSubModStartBattle(s, this.r);
 		}
 	}
 	
 	@Override
 	public void receivePostBattle(AbstractRoom r) {
-		SUB_MOD.forEach(new PostBattleTrigger(r)::trigger);
+		SUB_MOD.forEach(new RoomTrigger(r)::postTrigger);
 	}
 	
 	public static void info(String s) {
@@ -356,9 +359,8 @@ public class TestMod
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);
-		for (AbstractRelic r : RELICS)
-			if (r instanceof AbstractTestRelic)
-				MY_RELICS.add((AbstractTestRelic) r);
+		MY_RELICS = RELICS.stream().filter(r -> {return r instanceof AbstractTestRelic;})
+				.map(r -> {return (AbstractTestRelic) r;}).collect(Collectors.toCollection(ArrayList::new));
 		
 		MY_RELICS.forEach(AbstractTestRelic::addToMap);
 		
@@ -1013,9 +1015,8 @@ public class TestMod
 	}
 	
 	@Override
-	public void receiveOnBattleStart(AbstractRoom room) {
-		for (ISubscriber s : SUB_MOD)
-			editSubModStartBattle(s, room);
+	public void receiveOnBattleStart(AbstractRoom r) {
+		SUB_MOD.forEach(new RoomTrigger(r)::preTrigger);
 		PerfectComboAction.setRng();
 		AbstractMahjongCard.setRng();
 		Mahjong.setRng();

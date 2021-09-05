@@ -1,12 +1,16 @@
 package powers;
 
+import java.util.function.Predicate;
+
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-public class TaurusBlackCatPower extends AbstractTestPower {
+import utils.MiscMethods;
+
+public class TaurusBlackCatPower extends AbstractTestPower implements MiscMethods {
 	public static final String POWER_ID = "TaurusBlackCatPower";
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
@@ -25,17 +29,11 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
 	}
 	
-	private void updateEnemy(AbstractMonster m) {
-		if (TaurusBlackCatEnemyPower.hasThis(m))
-			this.updateAmount(m);
-		else
-			this.addEnemyPower(m);
-	}
-	
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
         this.amount += stackAmount;
-        AbstractDungeon.getCurrRoom().monsters.monsters.forEach(this::updateEnemy);
+		this.streamIfElse(AbstractDungeon.getCurrRoom().monsters.monsters.stream(), TaurusBlackCatEnemyPower::hasThis,
+				this::updateAmount, this::addEnemyPower);
 	}
 	
 	private void updateAmount(AbstractMonster m) {
@@ -56,12 +54,10 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 		AbstractDungeon.getCurrRoom().monsters.monsters.forEach(this::addEnemyPower);
 	}
 	
-	private boolean needAdd(AbstractMonster m) {
-		return !TaurusBlackCatEnemyPower.hasThis(m);
-	}
-	
 	public void atStartOfTurn() {
-		AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(this::needAdd).forEach(this::addEnemyPower);
+		AbstractDungeon.getCurrRoom().monsters.monsters.stream()
+				.filter(((Predicate<AbstractMonster>) TaurusBlackCatEnemyPower::hasThis).negate())
+				.forEach(this::addEnemyPower);
 	}
 	
 	public void onRemove() {

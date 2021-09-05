@@ -18,10 +18,7 @@ public class DeathImprintPower extends AbstractTestPower {
 	}
 	
 	public static AbstractPower getThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof DeathImprintPower)
-				return p;
-		return null;
+		return owner.powers.stream().filter(p -> {return p instanceof DeathImprintPower;}).findAny().orElse(null);
 	}
 	
 	public DeathImprintPower(AbstractCreature owner, int amount) {

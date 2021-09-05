@@ -3,6 +3,11 @@ package utils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.RandomXS128;
@@ -532,6 +537,16 @@ public interface MiscMethods {
 	
 	public default double gainGold(double amount) {
 		return amount;
+	}
+	
+	public default <T> void streamIfElse(Stream<T> s, Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
+		List<T> list = s.collect(Collectors.toList());
+		for (T t : list) {
+			if (p.test(t))
+				c1.accept(t);
+			else
+				c2.accept(t);
+		}
 	}
 	
 }

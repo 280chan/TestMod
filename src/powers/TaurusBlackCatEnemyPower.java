@@ -20,10 +20,8 @@ public class TaurusBlackCatEnemyPower extends AbstractTestPower implements Invis
 	}
 	
 	public static AbstractPower getThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof TaurusBlackCatEnemyPower)
-				return p;
-		return null;
+		return owner.powers.stream().filter(p -> {return p instanceof TaurusBlackCatEnemyPower;})
+				.findAny().orElse(null);
 	}
 	
 	public TaurusBlackCatEnemyPower(AbstractCreature owner, int amount) {

@@ -17,10 +17,8 @@ public class EventHalfDamagePower extends AbstractTestPower implements Invisible
 	}
 	
 	public static AbstractPower getThis() {
-		for (AbstractPower p : AbstractDungeon.player.powers)
-			if (p instanceof EventHalfDamagePower)
-				return p;
-		return null;
+		return AbstractDungeon.player.powers.stream().filter(p -> {return p instanceof EventHalfDamagePower;})
+				.findAny().orElse(null);
 	}
 	
 	public EventHalfDamagePower(AbstractCreature owner, AscensionHeart relic) {

@@ -58,16 +58,12 @@ public class BloodBladePower extends AbstractTestPower {
 	}
 	
 	public static BloodBladePower getThis(boolean upgraded) {
-		for (AbstractPower p : AbstractDungeon.player.powers)
-			if (p instanceof BloodBladePower && upgraded == ((BloodBladePower) p).upgraded)
-				return (BloodBladePower) p;
-		return null;
+		return (BloodBladePower) AbstractDungeon.player.powers.stream().filter(new PowerChecker(upgraded)::check)
+				.findAny().orElse(null);
 	}
 	
     public float atDamageGive(final float damage, final DamageType type) {
-        if (type != DamageType.HP_LOSS)
-        	return damage * (1 + this.bonus);
-        return damage;
+    	return type != DamageType.HP_LOSS ? damage * (1 + this.bonus) : damage;
     }
     
     public void onFirstGain() {

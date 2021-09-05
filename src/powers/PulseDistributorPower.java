@@ -28,10 +28,8 @@ public class PulseDistributorPower extends AbstractTestPower {
 	}
 	
 	public static PulseDistributorPower getThis(AbstractPlayer owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof PulseDistributorPower)
-				return (PulseDistributorPower) p;
-		return null;
+		return (PulseDistributorPower) owner.powers.stream().filter(p -> {return p instanceof PulseDistributorPower;})
+			.findAny().orElse(null);
 	}
 	
 	public PulseDistributorPower(AbstractPlayer owner, int magic) {
@@ -118,7 +116,7 @@ public class PulseDistributorPower extends AbstractTestPower {
 			return damage;
 		if (info.owner != null) {
 			Attacker attacker = new Attacker(info, damage);
-			this.owner.powers.stream().filter(this::filter).forEach(attacker::act);
+			this.owner.powers.stream().filter(this::filter).forEachOrdered(attacker::act);
 			if (this.onCurrent)
 				this.onCurrent = false;
 			damage = attacker.damage;
