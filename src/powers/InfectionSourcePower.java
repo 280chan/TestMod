@@ -1,12 +1,13 @@
 package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 
-public class InfectionSourcePower extends AbstractTestPower implements InvisiblePower {
+import utils.MiscMethods;
+
+public class InfectionSourcePower extends AbstractTestPower implements InvisiblePower, MiscMethods {
 	public static final String POWER_ID = "InfectionSourcePower";
 	private static final int PRIORITY = 1000000;
 	
@@ -33,19 +34,13 @@ public class InfectionSourcePower extends AbstractTestPower implements Invisible
 	}
     
     public float atDamageFinalGive(final float damage, final DamageInfo.DamageType type) {
-        if (type == DamageType.NORMAL)
-        	return damage * 0.5F;
-    	return damage;
+    	return type == DamageType.NORMAL ? damage * 0.5F : damage;
     }
 
     public void onRemove() {
-		this.addToTop(new AbstractGameAction() {
-			@Override
-			public void update() {
-				this.isDone = true;
-				if (!hasThis(InfectionSourcePower.this.owner))
-					InfectionSourcePower.this.owner.powers.add(new InfectionSourcePower(InfectionSourcePower.this.owner));
-			}
+		this.addTmpActionToTop(() -> {
+			if (!hasThis(this.owner))
+				this.owner.powers.add(new InfectionSourcePower(this.owner));
 		});
 	}
 

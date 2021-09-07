@@ -46,20 +46,18 @@ public class BatchProcessingSystem extends AbstractTestRelic implements MiscMeth
 	}
 	
 	private void updateHandGlow() {
-		boolean active = false;
 		if (!this.canUpdateHandGlow())
 			return;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
-			if (c.costForTurn == this.counter && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
-				this.addToGlowChangerList(c, color);
-				active = true;
-			} else
-				this.removeFromGlowList(c, color);
-		}
-		if (active)
+		this.streamIfElse(AbstractDungeon.player.hand.group.stream(), c -> {
+			return c.costForTurn == this.counter && c.hasEnoughEnergy()
+					&& c.cardPlayable(AbstractDungeon.getRandomMonster());
+		}, c -> {
+			this.addToGlowChangerList(c, color);
 			this.beginLongPulse();
-		else
+		}, c -> {
+			this.removeFromGlowList(c, color);
 			this.stopPulse();
+		});
 	}
 	
 	public void onEquip() {

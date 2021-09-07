@@ -17,7 +17,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -59,13 +58,8 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		if (!isObtained)
 			return DESCRIPTIONS[0];
 		String retVal = DESCRIPTIONS[0];
-		for (int i = 0; i < this.counter; i++) {
-			if (i == 19 && revived) {
-				retVal += " NL " + (i + 1) + "." + DESCRIPTIONS[26];
-			} else {
-				retVal += " NL " + (i + 1) + "." + DESCRIPTIONS[i + 1];
-			}
-		}
+		for (int i = 0; i < this.counter; i++)
+			retVal += " NL " + (i + 1) + "." + DESCRIPTIONS[i == 19 && revived ? 26 : i + 1];
 		return retVal;
 	}
 	
@@ -77,10 +71,6 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		this.tips.clear();
 	    this.tips.add(new PowerTip(this.name, getUpdatedDescription()));
 	    initializeTips();
-	}
-	
-	public AbstractRelic makeCopy() {
-		return new AscensionHeart();
 	}
 	
 	public boolean checkLevel(int level) {
@@ -147,29 +137,24 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	}
 	
 	public void onPlayerEndTurn() {
-		if (checkLevel(10)) {
-			for (AbstractCard c : AbstractDungeon.player.hand.group) {
-				if (c.type == CardType.CURSE) {
-					c.exhaust = true;
-				}
-			}
-		}
+		if (checkLevel(10))
+			AbstractDungeon.player.hand.group.stream().filter(c -> { return c.type == CardType.CURSE; })
+				.forEach(c -> { c.exhaust = true; });
     }
 	
+	private void setEthereal(AbstractCard c) {
+		c.rawDescription += desc27;
+		c.initializeDescription();
+		c.isEthereal = true;
+	}
+	
+	private boolean checkAddEthereal(AbstractCard c) {
+		return (c.type == CardType.CURSE && !c.isEthereal && checkLevel(10))
+				|| (c.type == CardType.STATUS && !c.isEthereal && checkLevel(24));
+	}
+	
 	public void onRefreshHand() {
-		if (checkLevel(10)) {
-			for (AbstractCard card : AbstractDungeon.player.hand.group) {
-				if (card.type == CardType.CURSE && !card.isEthereal) {
-					card.rawDescription += desc27;
-					card.initializeDescription();
-					card.isEthereal = true;
-				} else if (card.type == CardType.STATUS && !card.isEthereal && checkLevel(24)) {
-					card.rawDescription += desc27;
-					card.initializeDescription();
-					card.isEthereal = true;
-				}
-			}
-		}
+		AbstractDungeon.player.hand.group.stream().filter(this::checkAddEthereal).forEach(this::setEthereal);
 	}
 	
 	public void onSpendGold() {
@@ -189,6 +174,10 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 			this.counter = -1;
 		this.updateDescription(AbstractDungeon.player.chosenClass);
     }
+	
+	private boolean alive(AbstractMonster m) {
+		return !(m.isDead || m.isDying || m.halfDead || m.isEscaping || m.escaped);
+	}
 	
 	public void atPreBattle() {
 		if (checkLevel(6)) {
@@ -219,15 +208,11 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
     }
 	
 	public void atTurnStart() {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (!m.isDead && !m.isDying && !m.halfDead && !m.isEscaping && !m.escaped)
-				if (checkDefenceDown(m, false))
-					m.powers.add(new DefenceDownPower(m, 10));
+		AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(this::alive)
+			.filter(m -> { return checkDefenceDown(m, false); })
+			.forEach(m -> { m.powers.add(new DefenceDownPower(m, 10));});
 		if (checkLevel(25)) {
-			int e = 0;
-			for (AbstractRelic r : AbstractDungeon.player.relics)
-				if (r.tier == RelicTier.RARE)
-					e++;
+			int e = (int) AbstractDungeon.player.relics.stream().filter(r -> {return r.tier == RelicTier.RARE;}).count();
 			if (e > 2)
 				this.addToBot(new GainEnergyAction(e / 3));
 		}

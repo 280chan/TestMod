@@ -2,14 +2,14 @@ package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.OnReceivePowerPower;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import relics.Justice;
+import utils.MiscMethods;
 
-public class JusticePower extends AbstractTestPower implements OnReceivePowerPower, InvisiblePower {
+public class JusticePower extends AbstractTestPower implements OnReceivePowerPower, InvisiblePower, MiscMethods {
 	public static final String POWER_ID = "JusticePower";
 	private Justice j;
 	
@@ -45,13 +45,9 @@ public class JusticePower extends AbstractTestPower implements OnReceivePowerPow
 	}
 
 	public void onRemove() {
-		this.addToTop(new AbstractGameAction() {
-			@Override
-			public void update() {
-				this.isDone = true;
-				if (!hasThis(JusticePower.this.owner))
-					JusticePower.this.owner.powers.add(new JusticePower(JusticePower.this.owner, JusticePower.this.j));
-			}
+		this.addTmpActionToTop(() -> {
+			if (!hasThis(this.owner))
+				this.owner.powers.add(new JusticePower(this.owner, this.j));
 		});
 	}
 	

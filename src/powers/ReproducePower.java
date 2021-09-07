@@ -1,11 +1,12 @@
 package powers;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 
-public class ReproducePower extends AbstractTestPower {
+import utils.MiscMethods;
+
+public class ReproducePower extends AbstractTestPower implements MiscMethods {
 	public static final String POWER_ID = "ReproducePower";
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
@@ -32,20 +33,15 @@ public class ReproducePower extends AbstractTestPower {
 	}
 	
 	public void onAfterCardPlayed(AbstractCard c) {
-    	if (c.equals(this.c)) {
-    		this.addToBot(new AbstractGameAction(){
-				@Override
-				public void update() {
-					this.isDone = true;
-		    		c.setCostForTurn(c.costForTurn + ReproducePower.this.amount);
-				}});
-    		c.returnToHand = c.retain = c.selfRetain = true;
+		if (c.equals(this.c)) {
+			this.addTmpActionToBot(() -> {
+				c.setCostForTurn(c.costForTurn + ReproducePower.this.amount);
+			});
+			c.returnToHand = c.retain = c.selfRetain = true;
     	}
     }
 	
 	public void onRemove() {
-		this.c.retain = false;
-		this.c.returnToHand = false;
-		this.c.selfRetain = false;
+		this.c.retain = this.c.returnToHand = this.c.selfRetain = false;
 	}
 }

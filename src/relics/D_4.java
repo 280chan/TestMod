@@ -38,11 +38,9 @@ public class D_4 extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public String getUpdatedDescription() {
-		if (!this.isObtained)
-			return DESCRIPTIONS[0];
-		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
-			return DESCRIPTIONS[0];
-		return DESCRIPTIONS[1] + nextSituation;
+		return !this.isObtained || AbstractDungeon.currMapNode == null
+				|| AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT ? DESCRIPTIONS[0]
+						: DESCRIPTIONS[1] + nextSituation;
 	}
 	
 	public void updateDescription(AbstractPlayer.PlayerClass c) {

@@ -242,7 +242,7 @@ public class TestMod
 	}
 	
 	public static boolean isLocalTest() {
-		return CardCrawlGame.playerName.equals("280 chan") && !SteamAPI.isSteamRunning();
+		return "280 chan".equals(CardCrawlGame.playerName) && !SteamAPI.isSteamRunning();
 	}
 	
 	public static String makeID(String id) {

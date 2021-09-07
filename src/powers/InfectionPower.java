@@ -2,7 +2,6 @@ package powers;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
@@ -11,7 +10,9 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.PoisonPower;
 
-public class InfectionPower extends AbstractTestPower implements InvisiblePower {
+import utils.MiscMethods;
+
+public class InfectionPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
 	public static final String POWER_ID = "InfectionPower";
 	private float tempDamage;
 	
@@ -54,14 +55,10 @@ public class InfectionPower extends AbstractTestPower implements InvisiblePower 
     	return damageAmount;
     }
 
-    public void onRemove() {
-		this.addToTop(new AbstractGameAction() {
-			@Override
-			public void update() {
-				this.isDone = true;
-				if (!hasThis(InfectionPower.this.owner))
-					InfectionPower.this.owner.powers.add(new InfectionPower(InfectionPower.this.owner));
-			}
+	public void onRemove() {
+		this.addTmpActionToTop(() -> {
+			if (!hasThis(this.owner))
+				this.owner.powers.add(new InfectionPower(this.owner));
 		});
 	}
 

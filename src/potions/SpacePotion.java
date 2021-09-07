@@ -52,14 +52,12 @@ public class SpacePotion extends AbstractTestPotion {
 	}
 
 	public boolean canUse() {
-		if ((AbstractDungeon.actionManager.turnHasEnded)
-				&& (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT)) {
+		if (AbstractDungeon.currMapNode == null)
+			return true;
+		if (AbstractDungeon.actionManager.turnHasEnded && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT)
 			return false;
-		}
-		if ((AbstractDungeon.getCurrRoom().event != null)
-				&& ((AbstractDungeon.getCurrRoom().event instanceof WeMeetAgain))) {
+		if (AbstractDungeon.getCurrRoom().event != null && AbstractDungeon.getCurrRoom().event instanceof WeMeetAgain)
 			return false;
-		}
 		return true;
 	}
 	

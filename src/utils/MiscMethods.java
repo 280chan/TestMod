@@ -45,6 +45,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 
 import mymod.TestMod;
+import potions.EscapePotion;
 import relics.Prudence;
 import relics.StringDisintegrator;
 
@@ -135,14 +136,10 @@ public interface MiscMethods {
 	    public static void start() {
 	    	if (inProgress())
 				return;
-			addToBot(new AbstractGameAction() {
-				@Override
-				public void update() {
-					this.isDone = true;
-					AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
-					AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
-					startEndingTurn = true;
-				}
+			new MiscMethods() {}.addTmpActionToBot(() -> {
+				AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
+				AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
+				startEndingTurn = true;
 			});
 		}
 	    
@@ -150,31 +147,28 @@ public interface MiscMethods {
 	    	if (inProgress())
 	    		return;
 			start();
-			addToBot(new AbstractGameAction(){
-				@Override
-				public void update() {
-					this.isDone = true;
-					if (!c.dontTriggerOnUseCard)
-						for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-							boolean timecollector = false;
-							int tcIndex = -1;
-							for (AbstractPower p : monster.powers) {
-								if (p.ID.equals("Time Warp") && p.amount == 11) {
-									startByCardTimeWarpIssues(p);
-								}
-								if (p.ID.equals("ImpatiencePower") && p.amount == 14) {
-									p.amount = -1;
-								}
-								if (p.ID.equals("TimeCollector") && p.amount == 11) {
-									timecollector = true;
-									tcIndex = monster.powers.indexOf(p);
-								}
+			new MiscMethods() {}.addTmpActionToBot(() -> {
+				if (!c.dontTriggerOnUseCard)
+					for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+						boolean timecollector = false;
+						int tcIndex = -1;
+						for (AbstractPower p : monster.powers) {
+							if (p.ID.equals("Time Warp") && p.amount == 11) {
+								startByCardTimeWarpIssues(p);
 							}
-							if (timecollector && tcIndex > -1) {
-								monster.powers.remove(tcIndex);
+							if (p.ID.equals("ImpatiencePower") && p.amount == 14) {
+								p.amount = -1;
+							}
+							if (p.ID.equals("TimeCollector") && p.amount == 11) {
+								timecollector = true;
+								tcIndex = monster.powers.indexOf(p);
 							}
 						}
-				}});
+						if (timecollector && tcIndex > -1) {
+							monster.powers.remove(tcIndex);
+						}
+					}
+			});
 	    }
 	    
 	    private static void startByCardTimeWarpIssues(AbstractPower p) {
@@ -252,13 +246,10 @@ public interface MiscMethods {
 			if (AbstractDungeon.player.hoveredCard != null)
 				AbstractDungeon.player.hoveredCard.resetAttributes();
 
-			addToBot(new AbstractGameAction() {
-				public void update() {
-					addToBot(new EndTurnAction());
-					addToBot(new WaitAction(Settings.FAST_MODE ? 0.1F : 1.2F));
-					startMonsterTurn = true;
-					this.isDone = true;
-				}
+			new MiscMethods() {}.addTmpActionToBot(() -> {
+				addToBot(new EndTurnAction());
+				addToBot(new WaitAction(Settings.FAST_MODE ? 0.1F : 1.2F));
+				startMonsterTurn = true;
 			});
 		}
 	    
@@ -268,8 +259,7 @@ public interface MiscMethods {
 	    	if (!startMonsterTurn)
 	    		return;
 	    	startMonsterTurn = false;
-			MonsterGroup group = AbstractDungeon.getCurrRoom().monsters;
-			for (AbstractMonster m : group.monsters) {
+			for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
 				if ((!m.isDying) && (!m.isEscaping)) {
 					if (!m.hasPower("Barricade"))
 						m.loseBlock();
@@ -400,13 +390,7 @@ public interface MiscMethods {
     	AbstractDungeon.actionManager.actions.clear();
     	AbstractDungeon.actionManager.actions.addAll(actions);
     	AbstractDungeon.actionManager.addToBottom(new RollMoveAction(m));
-    	AbstractDungeon.actionManager.addToBottom(new AbstractGameAction(){
-			@Override
-			public void update() {
-				AbstractDungeon.getMonsters().showIntent();
-				this.isDone = true;
-			}
-    	});
+    	this.addTmpActionToBot(AbstractDungeon.getMonsters()::showIntent);
 	}
 	
 	static class CardGlowChanger {
@@ -540,8 +524,7 @@ public interface MiscMethods {
 	}
 	
 	public default <T> void streamIfElse(Stream<T> s, Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
-		List<T> list = s.collect(Collectors.toList());
-		for (T t : list) {
+		for (T t : s.collect(Collectors.toList())) {
 			if (p.test(t))
 				c1.accept(t);
 			else
@@ -549,4 +532,27 @@ public interface MiscMethods {
 		}
 	}
 	
+	public static interface Lambda {
+		public abstract void act();
+	}
+	
+	public default void addTmpActionToTop(Lambda... lambda) {
+		AbstractDungeon.actionManager.addToTop(new AbstractGameAction() {
+			@Override
+			public void update() {
+				this.isDone = true;
+				Stream.of(lambda).forEach(Lambda::act);
+			}
+		});
+	}
+	
+	public default void addTmpActionToBot(Lambda... lambda) {
+		AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
+			@Override
+			public void update() {
+				this.isDone = true;
+				Stream.of(lambda).forEach(Lambda::act);
+			}
+		});
+	}
 }

@@ -35,11 +35,7 @@ public class ReflectPower extends AbstractTestPower implements MiscMethods {
     }
     
     private static boolean checkType(CardType t) {
-    	if (t == CardType.CURSE)
-    		return false;
-    	if (t == CardType.STATUS)
-    		return false;
-    	return true;
+    	return !(t == CardType.CURSE || t == CardType.STATUS);
     }
     
 	public void onUseCard(AbstractCard card, UseCardAction action) {

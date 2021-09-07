@@ -2,7 +2,6 @@ package powers;
 
 import java.util.ArrayList;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -31,12 +30,9 @@ public class RecapPower extends AbstractTestPower implements MiscMethods {
 	}
 	
 	private void play(AbstractCard c) {
-		this.addToBot(new AbstractGameAction() {
-			public void update() {
-				RecapPower.this.playAgain(c, AbstractDungeon.getCurrRoom().monsters.getRandomMonster(null, true,
-						AbstractDungeon.cardRandomRng));
-				this.isDone = true;
-			}
+		this.addTmpActionToBot(() -> {
+			this.playAgain(c,
+					AbstractDungeon.getCurrRoom().monsters.getRandomMonster(null, true, AbstractDungeon.cardRandomRng));
 		});
 	}
 	

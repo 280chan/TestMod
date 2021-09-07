@@ -1,13 +1,14 @@
 package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-public class OneHitWonderDebuffPower extends AbstractTestPower implements InvisiblePower {
+import utils.MiscMethods;
+
+public class OneHitWonderDebuffPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
 	public static final String POWER_ID = "OneHitWonderDebuffPower";
 	
 	public static boolean hasThis(AbstractCreature owner) {
@@ -36,32 +37,21 @@ public class OneHitWonderDebuffPower extends AbstractTestPower implements Invisi
 	}
 	
 	public int onAttacked(DamageInfo info, int damage) {
-		if (checkPlayerHealth() && info.type != DamageType.NORMAL)
-			return (int)(1.5f * damage);
-		return damage;
+		return checkPlayerHealth() && info.type != DamageType.NORMAL ? (int) (1.5f * damage) : damage;
 	}
 	
 	public float atDamageFinalGive(float damage, DamageType type) {
-		if (checkPlayerHealth())
-			return 0.5f * damage;
-		return damage;
+		return checkPlayerHealth() ? 0.5f * damage : damage;
 	}
     
 	public float atDamageFinalReceive(float damage, DamageType type) {
-		if (checkPlayerHealth() && type == DamageType.NORMAL)
-			return 1.5f * damage;
-		return damage;
+		return checkPlayerHealth() && type == DamageType.NORMAL ? 1.5f * damage : damage;
 	}
 
 	public void onRemove() {
-		this.addToTop(new AbstractGameAction() {
-			@Override
-			public void update() {
-				this.isDone = true;
-				if (!hasThis(OneHitWonderDebuffPower.this.owner))
-					OneHitWonderDebuffPower.this.owner.powers
-							.add(new OneHitWonderDebuffPower(OneHitWonderDebuffPower.this.owner));
-			}
+		this.addTmpActionToTop(() -> {
+			if (!hasThis(this.owner))
+				this.owner.powers.add(new OneHitWonderDebuffPower(this.owner));
 		});
 	}
     

@@ -43,19 +43,11 @@ public class AssimilatedRunePower extends AbstractTestPower {
 	}
 	
 	private int getValue(AbstractCard c, boolean atk) {
-		if (atk)
-			return c.baseDamage;
-		return c.baseBlock;
+		return atk ? c.baseDamage : c.baseBlock;
 	}
 	
 	private int maxIn(ArrayList<AbstractCard> list, boolean atk) {
-		int max = -999;
-		for (AbstractCard c : list) {
-			if (max < this.getValue(c, atk)) {
-				max = this.getValue(c, atk);
-			}
-		}
-		return max;
+		return list.stream().map(c -> {return this.getValue(c, atk);}).max(Integer::max).orElse(-999);
 	}
 	
 	private ArrayList<AbstractCard> getList() {
@@ -69,9 +61,7 @@ public class AssimilatedRunePower extends AbstractTestPower {
 	}
 	
     public float atDamageGive(final float damage, final DamageType type) {
-    	if (type == DamageType.NORMAL && isActive())
-    		return this.maxIn(this.getList(), true);
-    	return damage;
+    	return type == DamageType.NORMAL && isActive() ? this.maxIn(this.getList(), true) : damage;
     }
     
     public void atEndOfTurn(final boolean isPlayer) {
@@ -81,9 +71,7 @@ public class AssimilatedRunePower extends AbstractTestPower {
     }
     
     public float modifyBlock(final float blockAmount) {
-    	if (isActive())
-    		return this.maxIn(this.getList(), false);
-    	return blockAmount;
+    	return isActive() ? this.maxIn(this.getList(), false) : blockAmount;
     }
 
     

@@ -3,7 +3,6 @@ package powers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
@@ -11,8 +10,9 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import relics.TheFather;
+import utils.MiscMethods;
 
-public class TheFatherPower extends AbstractTestPower implements InvisiblePower {
+public class TheFatherPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
 	public static final String POWER_ID = "TheFatherPower";
 	private static final int PRIORITY = 1000;
 	private TheFather relic;
@@ -45,24 +45,15 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	}
 	
 	public void onRemove() {
-		this.addToTop(new AbstractGameAction() {
-			@Override
-			public void update() {
-				this.isDone = true;
-				if (!hasThis(TheFatherPower.this.owner))
-					TheFatherPower.this.owner.powers
-							.add(new TheFatherPower(TheFatherPower.this.owner, TheFatherPower.this.relic));
-			}
+		this.addTmpActionToTop(() -> {
+			if (!hasThis(this.owner))
+				this.owner.powers.add(new TheFatherPower(this.owner, this.relic));
 		});
 	}
 	
 	private void countAction() {
-		this.addToBot(new AbstractGameAction() {
-			@Override
-			public void update() {
-				this.isDone = true;
-				TheFatherPower.this.relic.count();
-			}
+		this.addTmpActionToBot(() -> {
+			this.relic.count();
 		});
 	}
 	

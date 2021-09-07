@@ -1,6 +1,5 @@
 package powers;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.defect.ChannelAction;
 import com.megacrit.cardcrawl.actions.defect.IncreaseMaxOrbAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -43,11 +42,9 @@ public class ChaoticCorePower extends AbstractTestPower {
 	}
 	
 	private int countAddOrbSlotAction() {
-		int retVal = 0;
-		for (AbstractGameAction a : AbstractDungeon.actionManager.actions)
-			if (a instanceof IncreaseMaxOrbAction)
-				retVal++;
-		return retVal;
+		return (int) AbstractDungeon.actionManager.actions.stream().filter(a -> {
+			return a instanceof IncreaseMaxOrbAction;
+		}).count();
 	}
 	
 	public int onAttacked(final DamageInfo info, final int damage) {

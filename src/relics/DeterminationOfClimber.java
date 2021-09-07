@@ -53,11 +53,7 @@ public class DeterminationOfClimber extends AbstractTestRelic implements MiscMet
 	}
 	
 	private int getValue(AbstractCard c) {
-		if (c.freeToPlayOnce || c.cost == -2)
-			return 0;
-		if (c.cost == -1)
-			return EnergyPanel.totalCount;
-		return c.costForTurn;
+		return (c.freeToPlayOnce || c.cost == -2) ? 0 : (c.cost == -1 ? EnergyPanel.totalCount : c.costForTurn);
 	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
@@ -78,20 +74,18 @@ public class DeterminationOfClimber extends AbstractTestRelic implements MiscMet
 	}
 	
 	private void updateHandGlow() {
-		boolean active = false;
 		if (!this.canUpdateHandGlow())
 			return;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
-			if (this.getValue(c) > this.counter && this.counter != -1 && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
-				this.addToGlowChangerList(c, color);
-				active = true;
-			} else
-				this.removeFromGlowList(c, color);
-		}
-		if (active)
+		this.streamIfElse(AbstractDungeon.player.hand.group.stream(), (c -> {
+			return this.getValue(c) > this.counter && this.counter != -1 && c.hasEnoughEnergy()
+					&& c.cardPlayable(AbstractDungeon.getRandomMonster());
+		}), (c) -> {
+			this.addToGlowChangerList(c, color);
 			this.beginLongPulse();
-		else
+		}, (c) -> {
+			this.removeFromGlowList(c, color);
 			this.stopPulse();
+		});
 	}
 
 	public void onVictory() {

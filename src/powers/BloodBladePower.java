@@ -72,11 +72,7 @@ public class BloodBladePower extends AbstractTestPower {
     }
     
     private void increaseRate(float rate) {
-    	if (this.upgraded) {
-    		this.bonus = (1 + this.bonus) * (1 + rate) - 1;
-    	} else {
-    		this.bonus += rate;
-    	}
+    	this.bonus = this.upgraded ? (1 + this.bonus) * (1 + rate) - 1 : this.bonus + rate;
     	this.updateDescription();
     }
     

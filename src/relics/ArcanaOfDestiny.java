@@ -1,5 +1,7 @@
 package relics;
 
+import java.util.function.Predicate;
+
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
@@ -25,12 +27,10 @@ public class ArcanaOfDestiny extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	private void tryApplyDebuff() {
-		if (!hasEnemies()) {
-			return;
-		}
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (!ArcanaOfDestinyPower.hasThis(m))
-				m.powers.add(new ArcanaOfDestinyPower(m));
+		if (hasEnemies())
+			AbstractDungeon.getMonsters().monsters.stream()
+					.filter(((Predicate<AbstractMonster>) ArcanaOfDestinyPower::hasThis).negate())
+					.forEach(ArcanaOfDestinyPower::addThis);
 	}
 	
 	public void atPreBattle() {

@@ -11,7 +11,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import utils.MiscMethods;
@@ -43,47 +42,28 @@ public class ConstraintPeriapt extends AbstractTestRelic implements MiscMethods 
 	}
 	
 	private void updateHandGlow() {
-		boolean active = false;
 		int preEnergy = EnergyPanel.totalCount;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
-			EnergyPanel.totalCount = c.costForTurn;
-			if (!this.checkPlayable(AbstractDungeon.player, c)) {
-				active = true;
-				break;
-			}
-		}
-		EnergyPanel.totalCount = preEnergy;
-		if (active)
+		this.stopPulse();
+		if (!AbstractDungeon.player.hand.group.stream().allMatch(c -> {return this.checkPlayable(AbstractDungeon.player, c);}))
 			this.beginLongPulse();
-		else
-			this.stopPulse();
+		EnergyPanel.totalCount = preEnergy;
 	}
 	
 	public void onPlayerEndTurn() {
-		int amount = 0;
 		int preEnergy = EnergyPanel.totalCount;
 		AbstractPlayer p = AbstractDungeon.player;
-		for (AbstractCard c : p.hand.group) {
-			boolean canUse = false;
-			EnergyPanel.totalCount = c.costForTurn;
-			canUse = this.checkPlayable(p, c);
-			EnergyPanel.totalCount = preEnergy;
-			if (!canUse) {
-				amount++;
-			}
-		}
+		int amount = (int) p.hand.group.stream().filter(c -> {return !this.checkPlayable(p, c);}).count();
+		EnergyPanel.totalCount = preEnergy;
+		if (amount > 0)
+			p.heal(amount);
 		for (int i = 0; i < amount; i++) {
-			p.heal(1);
 			this.addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(10, true), DamageType.THORNS, AttackEffect.FIRE));
 		}
-		
     }
 	
 	private boolean checkPlayable(AbstractPlayer p, AbstractCard c) {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (c.canUse(p, m))
-				return true;
-		return false;
+		EnergyPanel.totalCount = c.costForTurn;
+		return AbstractDungeon.getMonsters().monsters.stream().anyMatch(m -> { return c.canUse(p, m); });
 	}
 
 	public void onVictory() {

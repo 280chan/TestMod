@@ -1,18 +1,23 @@
 package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-public class ArcanaOfDestinyPower extends AbstractTestPower implements InvisiblePower {
+import utils.MiscMethods;
+
+public class ArcanaOfDestinyPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
 	public static final String POWER_ID = "ArcanaOfDestinyPower";
 	
 	public static boolean hasThis(AbstractCreature m) {
 		return m.powers.stream().anyMatch(p -> {return p instanceof ArcanaOfDestinyPower;});
+	}
+	
+	public static void addThis(AbstractCreature m) {
+		m.powers.add(new ArcanaOfDestinyPower(m));
 	}
 	
 	public ArcanaOfDestinyPower(AbstractCreature owner) {
@@ -37,37 +42,21 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 	}
 	
 	public float atDamageGive(float damage, DamageType type) {
-		float tmp, p = playerRate(AbstractDungeon.player);
-		if (this.owner.maxHealth == 0) {
-			tmp = 1f;
-		} else {
-			tmp = this.owner.currentHealth * 1f / this.owner.maxHealth;
-		}
-		if (tmp > p)
-			return damage * (1 - tmp + p);
-		return damage;
+		float tmp = this.owner.maxHealth == 0 ? 1f : this.owner.currentHealth * 1f / this.owner.maxHealth,
+				p = playerRate(AbstractDungeon.player);
+		return tmp > p ? damage * (1 - tmp + p) : damage;
 	}
 	
 	public int onAttacked(DamageInfo info, int damage) {
-		float tmp, p = playerRate(AbstractDungeon.player);
-		if (this.owner.maxHealth == 0) {
-			tmp = 0f;
-		} else {
-			tmp = this.owner.currentHealth * 1f / this.owner.maxHealth;
-		}
-		if (tmp < p)
-			return (int) (damage * (1 + 2 * (p - tmp)));
-		return damage;
+		float tmp = this.owner.maxHealth == 0 ? 0f : this.owner.currentHealth * 1f / this.owner.maxHealth,
+				p = playerRate(AbstractDungeon.player);
+		return tmp < p ? (int) (damage * (1 + 2 * (p - tmp))) : damage;
 	}
 	
 	public void onRemove() {
-		this.addToTop(new AbstractGameAction() {
-			@Override
-			public void update() {
-				this.isDone = true;
-				if (!hasThis(ArcanaOfDestinyPower.this.owner))
-					ArcanaOfDestinyPower.this.owner.powers.add(new ArcanaOfDestinyPower(ArcanaOfDestinyPower.this.owner));
-			}
+		this.addTmpActionToTop(() -> {
+			if (!hasThis(this.owner))
+				addThis(this.owner);
 		});
 	}
 

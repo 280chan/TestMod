@@ -62,11 +62,7 @@ public class TemporaryDeletionPower extends AbstractTestPower {
 	}
 	
 	private String rarityDesc() {
-		if (this.index < RARITY.length) {
-			return "[" + RARITY[index] + "]";
-		} else {
-			return "[" + this.rarity.toString() + "]";
-		}
+		return "[" + (this.index < RARITY.length ? RARITY[index] : this.rarity.toString()) + "]";
 	}
 	
 	public void updateDescription() {
@@ -74,11 +70,7 @@ public class TemporaryDeletionPower extends AbstractTestPower {
 	}
 	
 	private static boolean checkValid(AbstractCard c) {
-		if (c instanceof AbstractTestCurseCard)
-			return false;
-		if (c instanceof AbstractMahjongCard)
-			return false;
-		return true;
+		return !(c instanceof AbstractTestCurseCard || c instanceof AbstractMahjongCard);
 	}
 	
 	private ArrayList<AbstractCard> getList(CardRarity rarity, CardColor color) {

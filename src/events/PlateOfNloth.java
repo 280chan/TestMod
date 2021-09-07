@@ -36,11 +36,7 @@ public class PlateOfNloth extends AbstractTestEvent {
 		super(NAME, DESCRIPTIONS[0], IMG);
 		this.imageEventText.setDialogOption(OPTIONS[0]);
 		this.damage = AbstractDungeon.player.maxHealth;
-		if (AbstractDungeon.ascensionLevel <= 14) {
-			this.damage *= DAMAGE_PERCENT;
-		} else {
-			this.damage *= ASCENSION_DAMAGE_PERCENT;
-		}
+		this.damage *= (AbstractDungeon.ascensionLevel <= 14 ? DAMAGE_PERCENT : ASCENSION_DAMAGE_PERCENT);
 		this.damage /= 100;
 	}
 

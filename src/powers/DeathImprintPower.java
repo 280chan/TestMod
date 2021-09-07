@@ -36,11 +36,8 @@ public class DeathImprintPower extends AbstractTestPower {
 
 	public int onAttacked(DamageInfo info, int damage) {
 		if (damage > 0) {
-			if (damage < 5 && AbstractDungeon.player.hasRelic("Boot") && info.type == DamageType.NORMAL) {
-				this.amount += 5;
-			} else {
-				this.amount += damage;
-			}
+			this.amount += damage < 5 && AbstractDungeon.player.hasRelic("Boot") && info.type == DamageType.NORMAL ? 5
+					: damage;
 			this.updateDescription();
 		}
 		return damage;

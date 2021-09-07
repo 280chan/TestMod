@@ -71,12 +71,10 @@ public class BoxForYourself extends AbstractTestEvent {
 
 	private void initializeObtainRelic() {
 		String tmp = CardCrawlGame.playerPref.getString("BOX_RELIC", "Juzu Bracelet");
-		if (RelicLibrary.isARelic(tmp))
-			this.obtainRelic = RelicLibrary.getRelic(tmp).makeCopy();
-		else if (RelicLibrary.isARelic(TestMod.makeID(tmp)))
-			this.obtainRelic = RelicLibrary.getRelic(TestMod.makeID(tmp));
-		else
-			this.obtainRelic = RelicLibrary.getRelic("Juzu Bracelet");
+		this.obtainRelic = RelicLibrary
+				.getRelic(RelicLibrary.isARelic(tmp) ? tmp
+						: (RelicLibrary.isARelic(TestMod.makeID(tmp)) ? TestMod.makeID(tmp) : "Juzu Bracelet"))
+				.makeCopy();
 	}
 	
 	public void update() {

@@ -39,9 +39,7 @@ public class EnhanceArmermentPower extends AbstractTestPower {
 	}
 
 	private boolean overflowDamage(float input) {
-		if (input > 0)
-			return (int) (Math.log(input) / Math.log(2)) + this.amount > 30;
-		return false;
+		return input > 0 && (int) (Math.log(input) / Math.log(2)) + this.amount > 30;
 	}
 	
 	private int multiplier() {
@@ -52,13 +50,9 @@ public class EnhanceArmermentPower extends AbstractTestPower {
 	}
 	
 	public float atDamageFinalGive(float damage, DamageType type) {
-        if (type == DamageType.NORMAL) {
-        	if (this.overflowDamage(damage))
-        		return 2147450000;
-        	return damage * this.multiplier();
-        }
-		return damage;
-    }
+		return type == DamageType.NORMAL ? (this.overflowDamage(damage) ? 2147450000 : damage * this.multiplier())
+				: damage;
+	}
     
     public void onUseCard(AbstractCard card, UseCardAction action) {
     	if (card.type == CardType.ATTACK) {

@@ -41,14 +41,14 @@ public abstract class AbstractDoubleClickableRelic extends AbstractTestRelic {
 			}
 			this.RclickStart = false;
 		}
-		if ((this.isObtained) && (this.hb != null) && ((this.hb.hovered) && (InputHelper.justClickedRight))) {
+		if (this.isObtained && this.hb != null && this.hb.hovered && InputHelper.justClickedRight) {
 			this.RclickStart = true;
 		}
 		if (this.deltaTime() >= DURATION && this.dCheck) {
 			this.dCheck = false;
 			this.onRightClick();
 		}
-		if ((this.Rclick)) {
+		if (this.Rclick) {
 			this.Rclick = false;
 			this.dCheck = true;
 			if (this.doubleClick()) {

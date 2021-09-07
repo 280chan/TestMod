@@ -39,13 +39,9 @@ public class EventHalfDamagePower extends AbstractTestPower implements Invisible
 		this.fontScale = 8.0f;
 	}
 	
-    public int onLoseHp(int damage) {
-    	if (AbstractDungeon.currMapNode != null)
-        	if (AbstractDungeon.getCurrRoom() instanceof EventRoom)
-        		if (AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
-            		if (ah.checkLevel(15))
-            			damage /= 2;
-        return damage;
-    }
+	public int onLoseHp(int damage) {
+		return AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom() instanceof EventRoom
+				&& AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT && ah.checkLevel(15) ? damage / 2 : damage;
+	}
 
 }

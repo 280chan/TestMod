@@ -27,10 +27,7 @@ public class ShutDownPower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
-		 if (this.upgraded)
-			 this.description += "+";
-		 this.description += DESCRIPTIONS[2];
+		this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + (this.upgraded ? "+" : DESCRIPTIONS[2]);
 	}
 	
     public void atStartOfTurn() {
