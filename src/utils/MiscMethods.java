@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,6 +39,8 @@ import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.random.Random;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
@@ -46,6 +49,7 @@ import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 
 import mymod.TestMod;
 import potions.EscapePotion;
+import relics.AbstractTestRelic;
 import relics.Prudence;
 import relics.StringDisintegrator;
 
@@ -393,6 +397,26 @@ public interface MiscMethods {
     	this.addTmpActionToBot(AbstractDungeon.getMonsters()::showIntent);
 	}
 	
+	public static class ColorRegister {
+		Color c;
+		AbstractRelic r;
+		public ColorRegister(Color c) {
+			this.c = c;
+		}
+		public ColorRegister(Color c, AbstractRelic r) {
+			this(c);
+			this.r = r;
+		}
+		public void addToGlowChangerList(AbstractCard c) {
+			CardGlowChanger.addCardToList(c, this.c);
+			if (this.r != null)
+				this.r.beginLongPulse();
+		}
+		public void removeFromGlowList(AbstractCard c) {
+			CardGlowChanger.removeFromList(c, this.c);
+		}
+	}
+	
 	static class CardGlowChanger {
 		private static final ArrayList<Color> COLOR_LIST = new ArrayList<Color>();
 		private static final HashMap<AbstractCard, ArrayList<Color>> GLOW_COLORS = new HashMap<AbstractCard, ArrayList<Color>>();
@@ -523,12 +547,52 @@ public interface MiscMethods {
 		return amount;
 	}
 	
+	public default ArrayList<String> relicPool(RelicTier t) {
+		switch (t) {
+		case BOSS:
+			return AbstractDungeon.bossRelicPool;
+		case COMMON:
+			return AbstractDungeon.commonRelicPool;
+		case RARE:
+			return AbstractDungeon.rareRelicPool;
+		case SHOP:
+			return AbstractDungeon.shopRelicPool;
+		case UNCOMMON:
+			return AbstractDungeon.uncommonRelicPool;
+		case STARTER:
+		case SPECIAL:
+		case DEPRECATED:
+		default:
+			return null;
+		}
+	}
+	
 	public default <T> void streamIfElse(Stream<T> s, Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
 		for (T t : s.collect(Collectors.toList())) {
 			if (p.test(t))
 				c1.accept(t);
 			else
 				c2.accept(t);
+		}
+	}
+	
+	static <U, T, V> Function andThen(Function f, Function g) {
+		Function r = f.andThen(g);
+		return r;
+	}
+	
+	public default <T, R> void streamMaps(Stream<T> s, Consumer<R> action, Function... functions) {
+		Function<T, R> f = (Function<T, R>) Stream.of(functions).reduce(t -> t, (u, v) -> andThen(u, v));
+		s.map(f).forEach(action);
+	}
+	
+	public static interface CoConsumer<T, R> {
+		void accept(T t, R r);
+	}
+	
+	public default <T, R> void branch(Stream<T> s, Function<T, R> f, CoConsumer<T, R> action) {
+		for (T t : s.collect(Collectors.toList())) {
+			action.accept(t, f.apply(t));
 		}
 	}
 	

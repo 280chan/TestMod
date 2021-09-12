@@ -1,5 +1,7 @@
 package relics;
 
+import java.util.function.Predicate;
+
 import com.megacrit.cardcrawl.actions.common.GainGoldAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -17,10 +19,7 @@ public class RetroFilter extends AbstractTestRelic {
 	public static final int DEFAULT_RATE = 60;
 	
 	public static AbstractRelic getThis() {
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (r instanceof RetroFilter)
-				return r;
-		return null;
+		return AbstractDungeon.player.relics.stream().filter(r -> r instanceof RetroFilter).findFirst().orElse(null);
 	}
 	
 	public RetroFilter() {
@@ -37,7 +36,7 @@ public class RetroFilter extends AbstractTestRelic {
 	    initializeTips();
 	}
 	
-	private static boolean check(AbstractCard c) {
+	private boolean check(AbstractCard c) {
 		return c.color == CardColor.COLORLESS;
 	}
 	
@@ -49,13 +48,8 @@ public class RetroFilter extends AbstractTestRelic {
 	
 	public void onPreviewObtainCard(AbstractCard c) {
 		if (check(c)) {
-			int rate = DEFAULT_RATE;
-			for (AbstractCard t : AbstractDungeon.player.masterDeck.group)
-				if (!check(t))
-					rate--;
-			if (rate < 0)
-				rate = 0;
-			c.price = c.price * rate / ORIGINAL_RATE;
+			c.price = c.price * Math.max(DEFAULT_RATE - (int) AbstractDungeon.player.masterDeck.group.stream()
+					.filter(((Predicate<AbstractCard>) this::check).negate()).count(), 0) / ORIGINAL_RATE;
 		}
 	}
 	

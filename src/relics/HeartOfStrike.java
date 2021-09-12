@@ -38,10 +38,7 @@ public class HeartOfStrike extends AbstractTestRelic {
 	}
 	
 	public float atDamageModify(float damage, AbstractCard c) {
-		if (c.hasTag(CardTags.STRIKE)) {
-			return damage * this.counter;
-		}
-		return damage;
+		return c.hasTag(CardTags.STRIKE) ? damage * this.counter : damage;
 	}
 	
 	public void onVictory() {

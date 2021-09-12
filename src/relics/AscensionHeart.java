@@ -138,8 +138,9 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	
 	public void onPlayerEndTurn() {
 		if (checkLevel(10))
-			AbstractDungeon.player.hand.group.stream().filter(c -> { return c.type == CardType.CURSE; })
-				.forEach(c -> { c.exhaust = true; });
+			AbstractDungeon.player.hand.group.stream().filter(c -> c.type == CardType.CURSE).forEach(c -> {
+				c.exhaust = true;
+			});
     }
 	
 	private void setEthereal(AbstractCard c) {

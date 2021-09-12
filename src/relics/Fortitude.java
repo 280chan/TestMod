@@ -6,8 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 
-public class Fortitude extends AbstractTestRelic{
-	
+public class Fortitude extends AbstractTestRelic {
 	public static final String ID = "Fortitude";
 	
 	public Fortitude() {

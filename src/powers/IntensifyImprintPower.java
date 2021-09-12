@@ -12,7 +12,7 @@ public class IntensifyImprintPower extends AbstractTestPower implements Invisibl
 	private IntensifyImprint r;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof IntensifyImprintPower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof IntensifyImprintPower);
 	}
 	
 	public IntensifyImprintPower(AbstractCreature owner, IntensifyImprint r) {

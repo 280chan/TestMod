@@ -48,16 +48,12 @@ public class BatchProcessingSystem extends AbstractTestRelic implements MiscMeth
 	private void updateHandGlow() {
 		if (!this.canUpdateHandGlow())
 			return;
-		this.streamIfElse(AbstractDungeon.player.hand.group.stream(), c -> {
-			return c.costForTurn == this.counter && c.hasEnoughEnergy()
-					&& c.cardPlayable(AbstractDungeon.getRandomMonster());
-		}, c -> {
-			this.addToGlowChangerList(c, color);
-			this.beginLongPulse();
-		}, c -> {
-			this.removeFromGlowList(c, color);
-			this.stopPulse();
-		});
+		this.stopPulse();
+		ColorRegister cr = new ColorRegister(color, this);
+		this.streamIfElse(AbstractDungeon.player.hand.group.stream(),
+				c -> c.costForTurn == this.counter && c.hasEnoughEnergy()
+						&& c.cardPlayable(AbstractDungeon.getRandomMonster()),
+				cr::addToGlowChangerList, cr::removeFromGlowList);
 	}
 	
 	public void onEquip() {
@@ -67,8 +63,6 @@ public class BatchProcessingSystem extends AbstractTestRelic implements MiscMeth
     }
 	
 	public void onUnequip() {
-		if (!this.isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster++;
     }
 	

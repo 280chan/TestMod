@@ -16,9 +16,8 @@ public class VentureCapital extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public String getUpdatedDescription() {
-		if (this.counter < 1)
-			return DESCRIPTIONS[0];
-		return DESCRIPTIONS[0] + DESCRIPTIONS[1] + goldRatePercent() + DESCRIPTIONS[2];
+		return this.counter < 1 ? DESCRIPTIONS[0]
+				: DESCRIPTIONS[0] + DESCRIPTIONS[1] + goldRatePercent() + DESCRIPTIONS[2];
 	}
 	
 	public void updateDescription(PlayerClass c) {

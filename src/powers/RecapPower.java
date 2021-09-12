@@ -32,7 +32,7 @@ public class RecapPower extends AbstractTestPower implements MiscMethods {
 	private void play(AbstractCard c) {
 		this.addTmpActionToBot(() -> {
 			this.playAgain(c,
-					AbstractDungeon.getCurrRoom().monsters.getRandomMonster(null, true, AbstractDungeon.cardRandomRng));
+					AbstractDungeon.getMonsters().getRandomMonster(null, true, AbstractDungeon.cardRandomRng));
 		});
 	}
 	

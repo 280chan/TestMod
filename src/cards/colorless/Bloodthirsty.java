@@ -60,17 +60,9 @@ public class Bloodthirsty extends AbstractUpdatableCard {
     }
 	
 	private String getDesc() {
-		String tmp = EXTENDED_DESCRIPTION[0];
-    	if (this.misc > 0 && this.onMonster && this.isHovered()) {
-    		tmp += "(" + this.misc + ")";
-    	}
-		tmp += EXTENDED_DESCRIPTION[1];
-    	if (!this.upgraded) {
-    		tmp += EXTENDED_DESCRIPTION[2];
-    	} else {
-        	tmp += EXTENDED_DESCRIPTION[3];
-    	}
-    	return tmp + EXTENDED_DESCRIPTION[4];
+		return EXTENDED_DESCRIPTION[0]
+				+ ((this.misc > 0 && this.onMonster && this.isHovered()) ? "(" + this.misc + ")" : "")
+				+ EXTENDED_DESCRIPTION[1] + EXTENDED_DESCRIPTION[(this.upgraded ? 3 : 2)] + EXTENDED_DESCRIPTION[4];
 	}
 	
 	public void doublesMagicNumber() {

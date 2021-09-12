@@ -1,6 +1,7 @@
 package relics;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
@@ -55,32 +56,25 @@ public class IWantAll extends AbstractClickRelic {
 		}
     }
 	
+	private static RewardItem newItem(RewardItem r) {
+		RewardItem item = new RewardItem(new EscapePotion());
+		item.type = RewardType.CARD;
+		item.potion = null;
+		item.text = RewardItem.TEXT[2];
+		item.cards = r.cards.stream().map(AbstractCard::makeStatEquivalentCopy)
+				.collect(Collectors.toCollection(ArrayList::new));
+		return item;
+	}
+	
 	private static void addReward() {
-		ArrayList<RewardItem> bonus = new ArrayList<RewardItem>();
-		for (RewardItem r : AbstractDungeon.combatRewardScreen.rewards) {
-			if (r.type == RewardType.CARD) {
-				RewardItem item = new RewardItem(new EscapePotion());
-				item.type = RewardType.CARD;
-				item.potion = null;
-				item.text = RewardItem.TEXT[2];
-				item.cards = new ArrayList<AbstractCard>();
-				for (AbstractCard c : r.cards) {
-					item.cards.add(c.makeStatEquivalentCopy());
-				}
-				bonus.add(item);
-			}
-		}
-		for (RewardItem r : bonus) {
-			AbstractDungeon.combatRewardScreen.rewards.add(r);
-		}
+		AbstractDungeon.combatRewardScreen.rewards
+				.addAll(AbstractDungeon.combatRewardScreen.rewards.stream().filter(r -> r.type == RewardType.CARD)
+						.map(IWantAll::newItem).collect(Collectors.toCollection(ArrayList::new)));
 		AbstractDungeon.combatRewardScreen.positionRewards();
 	}
 	
 	private static boolean checkReward() {
-		for (RewardItem r : AbstractDungeon.combatRewardScreen.rewards)
-			if (r.type == RewardType.CARD)
-				return true;
-		return false;
+		return AbstractDungeon.combatRewardScreen.rewards.stream().anyMatch(r -> r.type == RewardType.CARD);
 	}
 	
 	@Override
@@ -104,16 +98,11 @@ public class IWantAll extends AbstractClickRelic {
 	}
 	
 	public static void loadVictory() {
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (r instanceof IWantAll)
-				r.onVictory();
+		AbstractDungeon.player.relics.stream().filter(r -> r instanceof IWantAll).forEach(AbstractRelic::onVictory);
 	}
 	
 	public boolean canSpawn() {
-		if (!Settings.isEndless && AbstractDungeon.actNum > 2) {
-			return false;
-		}
-		return true;
+		return Settings.isEndless || AbstractDungeon.actNum < 3;
 	}
 
 }

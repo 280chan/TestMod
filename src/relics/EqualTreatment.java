@@ -1,5 +1,7 @@
 package relics;
 
+import java.util.function.Predicate;
+
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -44,16 +46,17 @@ public class EqualTreatment extends AbstractTestRelic implements MiscMethods {
 		}
 	}
 	
+	private boolean alive(AbstractMonster m) {
+		return !(m.isDead || m.isDying || m.halfDead || m.isEscaping);
+	}
+	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
 		if (c.target == CardTarget.ENEMY && this.counter == -2) {
-			for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-				if (m.isDead || m.isDying || m.halfDead || m.isEscaping)
-					continue;
-				if (m.equals(action.target))
-					continue;
-				c.calculateCardDamage(m);
-				c.use(AbstractDungeon.player, m);
-			}
+			AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(this::alive)
+					.filter(((Predicate<AbstractMonster>) action.target::equals).negate()).forEach(m -> {
+						c.calculateCardDamage(m);
+						c.use(AbstractDungeon.player, m);
+					});
 			this.changeState(false);
 			this.show();
 		}
@@ -66,12 +69,10 @@ public class EqualTreatment extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	private void updateHandGlow() {
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
-			if (c.target == CardTarget.ENEMY && this.counter == -2) {
-				this.addToGlowChangerList(c, color);
-			} else
-				this.removeFromGlowList(c, color);
-		}
+		ColorRegister cr = new ColorRegister(color);
+		this.streamIfElse(AbstractDungeon.player.hand.group.stream(),
+				c -> c.target == CardTarget.ENEMY && this.counter == -2, cr::addToGlowChangerList,
+				cr::removeFromGlowList);
 	}
 	
 	public void onVictory() {

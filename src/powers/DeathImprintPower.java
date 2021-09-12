@@ -14,11 +14,11 @@ public class DeathImprintPower extends AbstractTestPower {
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof DeathImprintPower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof DeathImprintPower);
 	}
 	
 	public static AbstractPower getThis(AbstractCreature owner) {
-		return owner.powers.stream().filter(p -> {return p instanceof DeathImprintPower;}).findAny().orElse(null);
+		return owner.powers.stream().filter(p -> p instanceof DeathImprintPower).findAny().orElse(null);
 	}
 	
 	public DeathImprintPower(AbstractCreature owner, int amount) {

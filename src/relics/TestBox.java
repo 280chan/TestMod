@@ -61,23 +61,17 @@ public class TestBox extends AbstractDoubleClickableRelic implements MiscMethods
 	
 	public void update() {
 		super.update();
-		if (this.invalidFloor())
-			return;
-		if (!cardSelected) {
+		if (!this.invalidFloor() && !cardSelected) {
 			if (AbstractDungeon.gridSelectScreen.selectedCards.size() == 1) {
-				cardSelected = true;
-				for (AbstractCard c : AbstractDungeon.gridSelectScreen.selectedCards) {
-					AbstractDungeon.effectList.add(new ShowCardAndObtainEffect(c, Settings.WIDTH / 2.0F,
-							Settings.HEIGHT / 2.0F));
-				}
-				AbstractDungeon.getCurrRoom().phase = phase;
-				AbstractDungeon.gridSelectScreen.selectedCards.clear();
-				
-			} else if (AbstractDungeon.screen == pre) {
-				cardSelected = true;
-				AbstractDungeon.getCurrRoom().phase = phase;
-				AbstractDungeon.gridSelectScreen.selectedCards.clear();
+				AbstractDungeon.effectList
+						.add(new ShowCardAndObtainEffect(AbstractDungeon.gridSelectScreen.selectedCards.get(0),
+								Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
+			} else if (AbstractDungeon.screen != pre) {
+				return;
 			}
+			cardSelected = true;
+			AbstractDungeon.getCurrRoom().phase = phase;
+			AbstractDungeon.gridSelectScreen.selectedCards.clear();
 		}
 	}
 	
@@ -108,9 +102,7 @@ public class TestBox extends AbstractDoubleClickableRelic implements MiscMethods
 	private void relic() {
 		if (this.counter == -2 || this.invalidFloor())
 			return;
-		String desc = "Test礼物盒";
-		if (this.checkFoolsDay())
-			desc = FOOLS_DAY;
+		String desc = this.checkFoolsDay() ? FOOLS_DAY : "Test礼物盒";
 		this.checkRandomSet();
 		new TestBoxRelicSelectScreen(true, "选择获得一件遗物，或者跳过。", desc, "礼物，道具，灾厄，或者逃避", this).open();
 		this.counter = -2;

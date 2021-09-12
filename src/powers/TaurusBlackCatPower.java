@@ -32,7 +32,7 @@ public class TaurusBlackCatPower extends AbstractTestPower implements MiscMethod
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
         this.amount += stackAmount;
-		this.streamIfElse(AbstractDungeon.getCurrRoom().monsters.monsters.stream(), TaurusBlackCatEnemyPower::hasThis,
+		this.streamIfElse(AbstractDungeon.getMonsters().monsters.stream(), TaurusBlackCatEnemyPower::hasThis,
 				this::updateAmount, this::addEnemyPower);
 	}
 	
@@ -51,17 +51,17 @@ public class TaurusBlackCatPower extends AbstractTestPower implements MiscMethod
 	}
 	
 	public void onInitialApplication() {
-		AbstractDungeon.getCurrRoom().monsters.monsters.forEach(this::addEnemyPower);
+		AbstractDungeon.getMonsters().monsters.forEach(this::addEnemyPower);
 	}
 	
 	public void atStartOfTurn() {
-		AbstractDungeon.getCurrRoom().monsters.monsters.stream()
+		AbstractDungeon.getMonsters().monsters.stream()
 				.filter(((Predicate<AbstractMonster>) TaurusBlackCatEnemyPower::hasThis).negate())
 				.forEach(this::addEnemyPower);
 	}
 	
 	public void onRemove() {
-		AbstractDungeon.getCurrRoom().monsters.monsters.forEach(this::removeEnemyPower);
+		AbstractDungeon.getMonsters().monsters.forEach(this::removeEnemyPower);
 	}
     
 }

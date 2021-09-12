@@ -35,10 +35,8 @@ public class Acrobat extends AbstractTestRelic implements MiscMethods {
 		int state = 0;
 		if (this.counter == -1)
 			this.counter = index;
-		else if (this.counter <= index)
-			state = 1;
 		else
-			state = -1;
+			state = this.counter <= index ? 1 : -1;
 		this.counter = index;
 		if (this.state * state < 0) {
 			AbstractDungeon.player.gainGold(1);

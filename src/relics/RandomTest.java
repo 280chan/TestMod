@@ -1,9 +1,9 @@
 package relics;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.badlogic.gdx.graphics.Color;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -36,35 +36,26 @@ public class RandomTest extends AbstractTestRelic implements MiscMethods {
 	
 	public void onUseCard(AbstractCard card, UseCardAction action) {
 		if (card.color == CardColor.COLORLESS) {
-			this.addToBot(new AbstractGameAction(){
-				@Override
-				public void update() {
-					this.isDone = true;
-					ArrayList<AbstractCard> list = new ArrayList<AbstractCard>();
-					list.addAll(AbstractDungeon.player.hand.group);
-					if (list.isEmpty())
-						return;
-					ArrayList<AbstractCard> toRemove = new ArrayList<AbstractCard>();
-					for (AbstractCard c : list)
-						if (c.cost == -2 || c.costForTurn == 0 || c.freeToPlayOnce)
-							toRemove.add(c);
-					if (toRemove.size() < list.size())
-						for (AbstractCard c : toRemove)
-							list.remove(c);
-					if (list.size() == 1) {
-						reduceCost(list.get(0));
-					} else {
-						reduceCost(randomFrom(list));
-					}
-				}});
+			this.addTmpActionToBot(() -> {
+				if (!AbstractDungeon.player.hand.group.isEmpty()) {
+					List<AbstractCard> list = AbstractDungeon.player.hand.group.stream()
+							.filter(c -> c.cost > -2 && c.costForTurn != 0 && !c.freeToPlayOnce)
+							.collect(Collectors.toList());
+					reduceRandom(list.isEmpty() ? AbstractDungeon.player.hand.group : list);
+				}
+			});
 		}
+	}
+	
+	private static void reduceRandom(List<AbstractCard> list) {
+		reduceCost(list.size() == 1 ? list.get(0) : randomFrom(list));
 	}
 	
 	private static void reduceCost(AbstractCard c) {
 		c.setCostForTurn(Math.max(c.costForTurn - 1, 0));
 	}
 	
-	private static AbstractCard randomFrom(ArrayList<AbstractCard> list) {
+	private static AbstractCard randomFrom(List<AbstractCard> list) {
 		return list.get(AbstractDungeon.cardRandomRng.random(list.size() - 1));
 	}
 	

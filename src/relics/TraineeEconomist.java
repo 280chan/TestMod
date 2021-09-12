@@ -23,10 +23,9 @@ public class TraineeEconomist extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public String getUpdatedDescription() {
-		if (this.counter < 1)
-			return DESCRIPTIONS[0];
-		return DESCRIPTIONS[0] + DESCRIPTIONS[1] + goldRatePercent() + DESCRIPTIONS[2]
-				+ toPercent(this.priceRate()) + DESCRIPTIONS[3];
+		return (this.counter < 1) ? DESCRIPTIONS[0]
+				: DESCRIPTIONS[0] + DESCRIPTIONS[1] + goldRatePercent() + DESCRIPTIONS[2] + toPercent(this.priceRate())
+						+ DESCRIPTIONS[3];
 	}
 	
 	public void updateDescription(PlayerClass c) {
@@ -56,12 +55,7 @@ public class TraineeEconomist extends AbstractTestRelic implements MiscMethods {
     }
 	
 	public void onMonsterDeath(AbstractMonster m) {
-		int delta = 1;
-		if (m.type == EnemyType.ELITE)
-			delta = 2;
-		else if (m.type == EnemyType.BOSS)
-			delta = 3;
-		this.counter += delta;
+		this.counter += m.type == EnemyType.BOSS ? 3 : (m.type == EnemyType.ELITE ? 2 : 1);
 		this.updateDescription(AbstractDungeon.player.chosenClass);
     }
 	
@@ -71,10 +65,8 @@ public class TraineeEconomist extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	private void addDiscount() {
-		if ((!AbstractDungeon.player.hasRelic("The Courier"))) {
-			AbstractDungeon.shopScreen.applyDiscount(this.priceRate(), true);
-		} else {
-			AbstractDungeon.shopScreen.applyDiscount(this.priceRate(), true);
+		AbstractDungeon.shopScreen.applyDiscount(this.priceRate(), true);
+		if (AbstractDungeon.player.hasRelic("The Courier")) {
 			this.used = false;
 		}
 	}
@@ -89,8 +81,7 @@ public class TraineeEconomist extends AbstractTestRelic implements MiscMethods {
 		super.update();
 		if (!this.isObtained)
 			return;
-		if ((AbstractDungeon.currMapNode != null) && ((AbstractDungeon.getCurrRoom() instanceof ShopRoom))
-				&& (!this.used)) {
+		if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom() instanceof ShopRoom && !this.used) {
 			this.flash();
 			this.beginLongPulse();
 			this.addDiscount();
@@ -100,7 +91,7 @@ public class TraineeEconomist extends AbstractTestRelic implements MiscMethods {
 	
 	public void onEnterRoom(AbstractRoom room) {
 		this.used = false;
-		if ((room instanceof ShopRoom)) {
+		if (room instanceof ShopRoom) {
 			this.flash();
 			this.beginLongPulse();
 		} else {
@@ -109,7 +100,7 @@ public class TraineeEconomist extends AbstractTestRelic implements MiscMethods {
 	}
 
 	public boolean canSpawn() {
-		return (Settings.isEndless) || (AbstractDungeon.actNum < 3);
+		return Settings.isEndless || AbstractDungeon.actNum < 3;
 	}
 
 }

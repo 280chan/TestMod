@@ -35,7 +35,7 @@ public class ReproducePower extends AbstractTestPower implements MiscMethods {
 	public void onAfterCardPlayed(AbstractCard c) {
 		if (c.equals(this.c)) {
 			this.addTmpActionToBot(() -> {
-				c.setCostForTurn(c.costForTurn + ReproducePower.this.amount);
+				c.setCostForTurn(c.costForTurn + this.amount);
 			});
 			c.returnToHand = c.retain = c.selfRetain = true;
     	}

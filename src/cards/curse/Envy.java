@@ -2,6 +2,9 @@ package cards.curse;
 
 import cards.AbstractTestCurseCard;
 import relics.Sins;
+
+import java.util.stream.Stream;
+
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.Intent;
@@ -46,22 +49,28 @@ public class Envy extends AbstractTestCurseCard {
 	}
 	
 	private boolean hasIntentNot(Intent[] intent) {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (hasIntent(m, intent)) {
-				continue;	// 如果该敌人有intent意图，跳过
-			}
-			return true;	// 该敌人没有intent意图，返回真
-		}
-		return false;	// 所有敌人均没有intent意图，返回假
+		return !AbstractDungeon.getMonsters().monsters.stream().allMatch(new IntentChecker(intent)::check);
 	}
 	
-	private boolean hasIntent(AbstractMonster m, Intent[] intent) {
-		for (Intent i : intent) {
-			if (m.intent == i || m.isDead || m.halfDead) {
-				return true;
-			}
+	private static class IntentChecker {
+		AbstractMonster m;
+		Intent[] i;
+		IntentChecker(AbstractMonster m) {
+			this.m = m;
 		}
-		return false;
+		IntentChecker(Intent[] i) {
+			this.i = i;
+		}
+		boolean check(Intent i) {
+			return this.m.intent == i || this.m.isDead || this.m.halfDead;
+		}
+		boolean check(AbstractMonster m) {
+			return hasIntent(m, this.i);
+		}
+	}
+	
+	private static boolean hasIntent(AbstractMonster m, Intent[] intent) {
+		return Stream.of(intent).anyMatch(new IntentChecker(m)::check);
 	}
 	
 	public AbstractCard makeCopy() {

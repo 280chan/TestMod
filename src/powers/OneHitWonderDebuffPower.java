@@ -12,7 +12,7 @@ public class OneHitWonderDebuffPower extends AbstractTestPower implements Invisi
 	public static final String POWER_ID = "OneHitWonderDebuffPower";
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof OneHitWonderDebuffPower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof OneHitWonderDebuffPower);
 	}
 	
 	public OneHitWonderDebuffPower(AbstractCreature owner) {

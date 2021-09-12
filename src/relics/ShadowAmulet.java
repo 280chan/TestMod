@@ -1,24 +1,22 @@
 package relics;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 public class ShadowAmulet extends AbstractTestRelic {
 	public static final String ID = "ShadowAmulet";
 	private final ArrayList<Integer> BLOCK_TO_GAIN = new ArrayList<Integer>();
 	
-	public static ArrayList<ShadowAmulet> getThis() {
-		ArrayList<ShadowAmulet> list = new ArrayList<ShadowAmulet>();
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (r instanceof ShadowAmulet)
-				list.add((ShadowAmulet) r);
-		return list;
+	public static List<ShadowAmulet> getThis() {
+		return AbstractDungeon.player.relics.stream().filter(r -> r instanceof ShadowAmulet).map(r -> (ShadowAmulet) r)
+				.collect(Collectors.toList());
 	}
 	
 	public ShadowAmulet() {
@@ -28,10 +26,9 @@ public class ShadowAmulet extends AbstractTestRelic {
 	public String getUpdatedDescription() {
 		String temp = DESCRIPTIONS[0];
 		if (this.BLOCK_TO_GAIN != null && this.BLOCK_TO_GAIN.size() > 0) {
-			temp += DESCRIPTIONS[1];
-			for (int i : BLOCK_TO_GAIN)
-				temp += i + ", ";
-			temp.substring(0, temp.length() - 1);
+			temp += DESCRIPTIONS[1]
+					+ BLOCK_TO_GAIN.stream().map(i -> i + ", ").sequential().reduce("", (a, b) -> a + b);
+			temp = temp.substring(0, temp.length() - 1);
 		}
 		return temp;
 	}

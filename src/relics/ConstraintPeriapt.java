@@ -44,7 +44,7 @@ public class ConstraintPeriapt extends AbstractTestRelic implements MiscMethods 
 	private void updateHandGlow() {
 		int preEnergy = EnergyPanel.totalCount;
 		this.stopPulse();
-		if (!AbstractDungeon.player.hand.group.stream().allMatch(c -> {return this.checkPlayable(AbstractDungeon.player, c);}))
+		if (!AbstractDungeon.player.hand.group.stream().allMatch(c -> this.checkPlayable(AbstractDungeon.player, c)))
 			this.beginLongPulse();
 		EnergyPanel.totalCount = preEnergy;
 	}
@@ -52,18 +52,19 @@ public class ConstraintPeriapt extends AbstractTestRelic implements MiscMethods 
 	public void onPlayerEndTurn() {
 		int preEnergy = EnergyPanel.totalCount;
 		AbstractPlayer p = AbstractDungeon.player;
-		int amount = (int) p.hand.group.stream().filter(c -> {return !this.checkPlayable(p, c);}).count();
+		int amount = (int) p.hand.group.stream().filter(c -> !this.checkPlayable(p, c)).count();
 		EnergyPanel.totalCount = preEnergy;
 		if (amount > 0)
 			p.heal(amount);
 		for (int i = 0; i < amount; i++) {
-			this.addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(10, true), DamageType.THORNS, AttackEffect.FIRE));
+			this.addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(10, true), DamageType.THORNS,
+					AttackEffect.FIRE));
 		}
     }
 	
 	private boolean checkPlayable(AbstractPlayer p, AbstractCard c) {
 		EnergyPanel.totalCount = c.costForTurn;
-		return AbstractDungeon.getMonsters().monsters.stream().anyMatch(m -> { return c.canUse(p, m); });
+		return AbstractDungeon.getMonsters().monsters.stream().anyMatch(m -> c.canUse(p, m));
 	}
 
 	public void onVictory() {

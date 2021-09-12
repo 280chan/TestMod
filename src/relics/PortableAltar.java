@@ -113,10 +113,7 @@ public class PortableAltar extends AbstractTestRelic {
     }
 	
 	public boolean canSpawn() {
-		if (!Settings.isEndless && AbstractDungeon.actNum > 1) {
-			return false;
-		}
-		return true;
+		return Settings.isEndless || AbstractDungeon.actNum < 2;
 	}
 	
 }

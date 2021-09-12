@@ -42,9 +42,8 @@ public class ChaoticCorePower extends AbstractTestPower {
 	}
 	
 	private int countAddOrbSlotAction() {
-		return (int) AbstractDungeon.actionManager.actions.stream().filter(a -> {
-			return a instanceof IncreaseMaxOrbAction;
-		}).count();
+		return (int) AbstractDungeon.actionManager.actions.stream().filter(a -> a instanceof IncreaseMaxOrbAction)
+				.count();
 	}
 	
 	public int onAttacked(final DamageInfo info, final int damage) {

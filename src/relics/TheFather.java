@@ -1,5 +1,7 @@
 package relics;
 
+import java.util.function.Predicate;
+
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
@@ -42,11 +44,12 @@ public class TheFather extends AbstractTestRelic implements MiscMethods {
 		}
 		canUpdate = true;
 	}
-	
+
 	private void tryAdd() {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (!TheFatherPower.hasThis(m))
-				m.powers.add(new TheFatherPower(m, this));
+		AbstractDungeon.getMonsters().monsters.stream()
+				.filter(((Predicate<AbstractMonster>) TheFatherPower::hasThis).negate()).forEach(m -> {
+					m.powers.add(new TheFatherPower(m, this));
+				});
 	}
 	
 	public void update() {

@@ -18,9 +18,8 @@ public class IntensifyImprint extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public String getUpdatedDescription() {
-		if (this.counter < 0)
-			return DESCRIPTIONS[0];
-		return DESCRIPTIONS[0] + " NL " + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2];
+		return this.counter < 0 ? DESCRIPTIONS[0]
+				: DESCRIPTIONS[0] + " NL " + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2];
 	}
 
 	public void updateDescription(PlayerClass c) {

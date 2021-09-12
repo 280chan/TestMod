@@ -37,9 +37,7 @@ public class TemporaryBarricade extends AbstractClickRelic {
     }
 	
 	private static int f(int x) {
-		if (x > 1)
-			return (int) Math.pow(Math.log(x), 2.5);
-		return 0;
+		return (x > 1) ? (int) Math.pow(Math.log(x), 2.5) : 0;
 	}
 	
 	public void atTurnStart() {
@@ -66,9 +64,8 @@ public class TemporaryBarricade extends AbstractClickRelic {
 	}
 	
 	public static void pulseLoader() {
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (r instanceof TemporaryBarricade)
-				r.onVictory();
+		AbstractDungeon.player.relics.stream().filter(r -> r instanceof TemporaryBarricade)
+				.forEach(AbstractRelic::onVictory);
 	}
 	
 	@Override

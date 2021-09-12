@@ -26,10 +26,7 @@ public class GoldenSoul extends AbstractRevivalRelicToModifyDamage {
 	
 	public void onEquip() {
 		AbstractPlayer p = AbstractDungeon.player;
-		int goal = p.maxHealth / 4;
-		if (goal < 1)
-			goal = 1;
-		p.decreaseMaxHealth(p.maxHealth - goal);
+		p.decreaseMaxHealth(p.maxHealth - Math.max(p.maxHealth / 4, 1));
     }
 	
 	public int onLoseHpLast(int damage) {

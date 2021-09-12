@@ -25,7 +25,7 @@ public class Greed extends AbstractTestCurseCard {
 
 	public void triggerWhenDrawn() {
 		AbstractPlayer p = AbstractDungeon.player;
-		AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p, p, new GreedPower(p, this.magicNumber), this.magicNumber));
+		this.addToBot(new ApplyPowerAction(p, p, new GreedPower(p, this.magicNumber), this.magicNumber));
 	}
     
     public AbstractCard makeCopy() {

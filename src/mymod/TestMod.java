@@ -45,8 +45,6 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import actions.PerfectComboAction;
 import basemod.BaseMod;
-import basemod.DevConsole;
-import basemod.ModLabeledButton;
 import basemod.ModPanel;
 import basemod.ReflectionHacks;
 import basemod.helpers.RelicType;
@@ -77,7 +75,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 9/4/2021
+ * @version 9/7/2021
  * @since 6/17/2018
  */
 
@@ -353,7 +351,7 @@ public class TestMod
 				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
 				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest(), new TemporaryBarricade(),
 				new GremlinBalance(), new RetroFilter(), new DominatorOfWeakness(), new ShadowAmulet(),
-				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital() };
+				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital(), new VoidShard() };
 		// 添加遗物进游戏 TODO
 		RELICS = Stream.of(relic).collect(Collectors.toCollection(ArrayList::new));
 
@@ -371,7 +369,7 @@ public class TestMod
 
 	public static ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
 	private static ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
-	private static ArrayList<AbstractBottleRelic> BOTTLES = new ArrayList<AbstractBottleRelic>();
+	//private static ArrayList<AbstractBottleRelic> BOTTLES = new ArrayList<AbstractBottleRelic>();
 	
 	@Override
 	public void receiveEditStrings() {
@@ -437,11 +435,6 @@ public class TestMod
 	private static final ArrayList<Object> LATEST = new ArrayList<Object>();
 	public static ArrayList<AbstractRelic> BAD_RELICS = new ArrayList<AbstractRelic>();
 	private static final ArrayList<Object> LATEST_CARD = new ArrayList<Object>();
-	private static final ArrayList<ArrayList<Object>> INIT0 = new ArrayList<ArrayList<Object>>();
-	private static final ArrayList<ArrayList<Object>> INIT = new ArrayList<ArrayList<Object>>();
-	private static final ArrayList<ArrayList<Object>> INIT_R = new ArrayList<ArrayList<Object>>();
-	private static final ArrayList<ArrayList<Object>> INIT_G = new ArrayList<ArrayList<Object>>();
-	private static final ArrayList<ArrayList<Object>> INIT_B = new ArrayList<ArrayList<Object>>();
 	
 	private static int latestIndex = 0, latestCard;
 	
@@ -468,86 +461,6 @@ public class TestMod
 			LATEST_CARD.add(o);
 	}
 	
-	private static void initCheat() {
-		addInit(INIT0, new TemporaryDeletion());
-		addInit(INIT_G, new CrystalShield(), new HeadAttack());
-		//addInit(INIT_B, new HistoricalDocuments(), new Dream());
-		addInit(INIT_R, new CyclicPeriapt(), new TreasureHunter());
-		addInit(INIT_G, new FatalChain(), new DeathImprint());
-		addInit(INIT_B, new Register(), new Recap());
-		addInit(INIT_R, new AssaultLearning(), new RabbitOfFibonacci());
-	}
-	
-	private static void addInit(ArrayList<ArrayList<Object>> init, Object... list) {
-		ArrayList<Object> tmp = new ArrayList<Object>();
-		for (Object o : list)
-			tmp.add(o);
-		init.add(tmp);
-	}
-	
-	private static void cheatInit(AbstractPlayer p, ArrayList<Object> list) {
-		for (Object o : list) {
-			obtain(p, o);
-		}
-	}
-	
-	private void cheatInit(AbstractPlayer p) {
-		if (!INIT0.isEmpty()) {
-			cheatInit(p, INIT0.remove(0));
-			return;
-		}
-		switch (p.chosenClass) {
-		case DEFECT:
-			if (!INIT_B.isEmpty()) {
-				cheatInit(p, INIT_B.remove(0));
-				return;
-			}
-			break;
-		case IRONCLAD:
-			if (!INIT_R.isEmpty()) {
-				cheatInit(p, INIT_R.remove(0));
-				return;
-			}
-			break;
-		case THE_SILENT:
-			if (!INIT_G.isEmpty()) {
-				cheatInit(p, INIT_G.remove(0));
-				return;
-			}
-			break;
-		default:
-		}
-		if (!INIT.isEmpty()) {
-			cheatInit(p, INIT.remove(0));
-		} else {
-			MODE = Mode.RELIC;
-			
-			receivePostDungeonInitialize();
-		}
-	}
-	
-	private static Object randomBonusReward() {
-		ArrayList<Object> rewards = new ArrayList<Object>();
-		ArrayList<Object> all = new ArrayList<Object>();
-		all.addAll(CARDS);
-		all.addAll(RELICS);
-		for (AbstractRelic r : RELICS) {
-			if (!r.isSeen) {
-				rewards.add(r);
-			}
-		}
-		for (AbstractCard c : CARDS) {
-			if (!c.isSeen) {
-				rewards.add(c);
-			}
-		}
-		if (rewards.isEmpty()) {
-			return all.get((int) (Math.random() * all.size()));
-		} else {
-			return rewards.get((int) (Math.random() * rewards.size()));
-		}
-	}
-	
 	@Override
 	public void receivePostDungeonInitialize() {
 		if (AbstractDungeon.floorNum > 1) {
@@ -565,43 +478,8 @@ public class TestMod
 		AscensionHeart.reset();
 		Mahjong.saveDefaultYama();
 		// NoteOfAlchemist.setState(false);
-		AbstractPlayer p = AbstractDungeon.player;
 		// 初始遗物
-		switch (MODE) {
-		case BOX:
-			obtain(p, new TestBox());
-			break;
-		case BOTH:
-			obtain(p, randomBonusCard());
-			obtain(p, randomBonusRelic());
-			break;
-		case RANDOM:
-			if (checkLatest(true) == null)
-				obtain(p, randomBonusReward());
-			break;
-		case CHEAT:
-			cheatInit(p);
-			break;
-		case TEST:
-			for (int i = 0; i < RELICS.size(); i++) {
-				switch (RELICS.get(i).relicId) {
-				
-				}
-				obtain(p, RELICS.get(i), true);
-			}
-			AbstractDungeon.player.masterDeck.clear();
-			obtain(p, new DisillusionmentEcho(), 1);
-			obtain(p, new HeadAttack(), 0);
-			break;
-		case RELIC:
-			obtain(p, randomBonusRelic());
-			break;
-		case CARD:
-			obtain(p, randomBonusCard());
-			break;
-		default:
-			break;
-		}
+		obtain(AbstractDungeon.player, new TestBox());
 	}
 
 	public static void unlock(Object o) {
@@ -717,7 +595,6 @@ public class TestMod
 					setShow(m);
 				}
 			}
-
 			
 			/*if (p.hasRelic("NoteOfAlchemist") && p.relics.get(0).relicId != "NoteOfAlchemist") {
 				if (!NoteOfAlchemist.recorded()) {
@@ -807,7 +684,6 @@ public class TestMod
 			}
 			
 			SuperconductorNoEnergyPower.UpdateCurrentInstance();
-			
 		}
 	}
 	
@@ -905,6 +781,10 @@ public class TestMod
 		TemporaryBarricade.pulseLoader();
 		
 		IWantAll.loadVictory();
+	}
+	
+	public static boolean hasSaveData(String key) {
+		return config.has(key);
 	}
 	
 	public static int getInt(String key) {

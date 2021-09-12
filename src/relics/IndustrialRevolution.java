@@ -28,8 +28,7 @@ public class IndustrialRevolution extends AbstractTestRelic implements MiscMetho
 		if (!isActive)
 			return;
 		LIST.clear();
-		AbstractPlayer p = AbstractDungeon.player;
-		p.powers.add(new IndustrialRevolutionPower(p));
+		AbstractDungeon.player.powers.add(new IndustrialRevolutionPower(AbstractDungeon.player));
 		if (!this.hasEnemies())
 			return;
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {

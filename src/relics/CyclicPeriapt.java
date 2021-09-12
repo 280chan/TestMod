@@ -51,16 +51,12 @@ public class CyclicPeriapt extends AbstractTestRelic implements MiscMethods {
 	private void updateHandGlow() {
 		if (!this.canUpdateHandGlow())
 			return;
-		this.streamIfElse(AbstractDungeon.player.hand.group.stream(), c -> {
-			return (c.exhaust || c.exhaustOnUseOnce) && !this.used.contains(c.uuid) && c.hasEnoughEnergy()
-					&& c.cardPlayable(AbstractDungeon.getRandomMonster());
-		}, c -> {
-			this.addToGlowChangerList(c, color);
-			this.beginLongPulse();
-		}, c -> {
-			this.removeFromGlowList(c, color);
-			this.stopPulse();
-		});
+		this.stopPulse();
+		ColorRegister cr = new ColorRegister(color, this);
+		this.streamIfElse(AbstractDungeon.player.hand.group.stream(),
+				c -> (c.exhaust || c.exhaustOnUseOnce) && !this.used.contains(c.uuid) && c.hasEnoughEnergy()
+						&& c.cardPlayable(AbstractDungeon.getRandomMonster()),
+				cr::addToGlowChangerList, cr::removeFromGlowList);
 	}
 	
 	public void atPreBattle() {

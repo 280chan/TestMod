@@ -57,39 +57,33 @@ public class DragonStarHat extends AbstractTestRelic {
 		if (this.counter > 0) {
 			this.show();
 			this.addToTop(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new StrengthPower(AbstractDungeon.player, this.counter), this.counter));
-			this.counter--;
-			if (this.counter == 0)
+			if (--this.counter == 0)
 				this.stopPulse();
 		}
     }
 	
 	public void onRest() {
 	    flash();
-	    this.maxValue++;
-	    this.counter = this.maxValue;
+	    this.counter = ++this.maxValue;
 	    this.beginLongPulse();
     }
 	
 	public void onEnterRestRoom() {
-		if (TestMod.config.has("HatMaxStr"))
-			this.maxValue = TestMod.config.getInt("HatMaxStr");
+		if (TestMod.hasSaveData("HatMaxStr"))
+			this.maxValue = TestMod.getInt("HatMaxStr");
 		/*else
 			this.save();*/
-	    this.counter = this.maxValue;
-	    if (this.counter > 0)
+	    if ((this.counter = this.maxValue) > 0)
 	    	this.beginLongPulse();
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
-		if (!(room instanceof RestRoom))
-			if (this.maxValue != TestMod.config.getInt("HatMaxStr"))
-				save();
+		if (!(room instanceof RestRoom || this.maxValue == TestMod.getInt("HatMaxStr")))
+			save();
     }
 	
 	public boolean canSpawn() {
-		if (!Settings.isEndless && AbstractDungeon.actNum > 1)
-			return false;
-		return true;
+		return Settings.isEndless || AbstractDungeon.actNum < 2;
 	}
 	
 }

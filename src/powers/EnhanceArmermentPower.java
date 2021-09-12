@@ -26,12 +26,7 @@ public class EnhanceArmermentPower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		this.description = DESCRIPTIONS[0];
-		if (this.overflowMultiplier())
-			this.description += 2147483647;
-		else
-			this.description += this.multiplier();
-		this.description += DESCRIPTIONS[1];
+		this.description = DESCRIPTIONS[0] + (this.overflowMultiplier() ? 2147483647 : this.multiplier()) + DESCRIPTIONS[1];
 	}
 
 	private boolean overflowMultiplier() {

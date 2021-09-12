@@ -3,16 +3,12 @@ package relics;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 public class DominatorOfWeakness extends AbstractTestRelic {
 	public static final String ID = "DominatorOfWeakness";
 	
 	public static boolean hasThis() {
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (r instanceof DominatorOfWeakness)
-				return true;
-		return false;
+		return AbstractDungeon.player.relics.stream().anyMatch(r -> {return r instanceof DominatorOfWeakness;});
 	}
 	
 	public DominatorOfWeakness() {

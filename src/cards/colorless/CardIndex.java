@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public class CardIndex extends AbstractUpdatableCard {
     public static final String ID = "CardIndex";
@@ -39,7 +40,16 @@ public class CardIndex extends AbstractUpdatableCard {
             this.upgradeMagicNumber(1);
         }
     }
+    
+    private boolean active() {
+    	return !(this.cards.isEmpty() || this.cards.get(0) == null);
+    }
 
+    private void checkActiveActOnCard(Consumer<? super AbstractCard> action) {
+		if (this.active())
+			this.cards.forEach(action);
+    }
+    
 	@Override
 	public void preApplyPowers(AbstractPlayer p, AbstractMonster m) {
 		if (this.cards.isEmpty() || this.cards.get(0) == null)
@@ -68,53 +78,32 @@ public class CardIndex extends AbstractUpdatableCard {
 	}
 	
 	public void calculateCardDamage(AbstractMonster m) {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.calculateCardDamage(m);
+		this.checkActiveActOnCard(c -> { c.calculateCardDamage(m); });
 	}
 	
 	public void tookDamage() {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.tookDamage();
+		this.checkActiveActOnCard(AbstractCard::tookDamage);
 	}
 
 	public void didDiscard() {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.didDiscard();
+		this.checkActiveActOnCard(AbstractCard::didDiscard);
 	}
 
 	public void switchedStance() {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.switchedStance();
+		this.checkActiveActOnCard(AbstractCard::switchedStance);
 	}
 	
 	public void resetAttributes() {
 		super.resetAttributes();
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.resetAttributes();
+		this.checkActiveActOnCard(AbstractCard::resetAttributes);
 	}
 	
 	public void triggerWhenDrawn() {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.triggerWhenDrawn();
+		this.checkActiveActOnCard(AbstractCard::triggerWhenDrawn);
 	}
 
 	public void triggerWhenCopied() {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.triggerWhenCopied();
+		this.checkActiveActOnCard(AbstractCard::triggerWhenCopied);
 	}
 	
 	public AbstractCard makeCopy() {
@@ -129,73 +118,48 @@ public class CardIndex extends AbstractUpdatableCard {
 		if (AbstractDungeon.player == null || AbstractDungeon.player.masterDeck == null
 				|| AbstractDungeon.player.masterDeck.group == null)
 			return tmp;
-
-		boolean fromDeck = false;
-		for (AbstractCard c : AbstractDungeon.player.masterDeck.group)
-			if (c == this)
-				fromDeck = true;
-		if (!fromDeck)
+		if (AbstractDungeon.player.masterDeck.group.stream().noneMatch(c -> {return c == this;}))
 			((CardIndex) tmp).cards = this.cards;
-		
 		return tmp;
 	}
 	
 	public void triggerOnOtherCardPlayed(AbstractCard card) {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.triggerOnOtherCardPlayed(card);
+		this.checkActiveActOnCard(c -> { c.triggerOnOtherCardPlayed(card); });
 	}
 	
 	public void triggerOnCardPlayed(AbstractCard card) {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.triggerOnCardPlayed(card);
+		this.checkActiveActOnCard(c -> { c.triggerOnCardPlayed(card); });
     }
 	
 	public void triggerOnScry() {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.triggerOnScry();
+		this.checkActiveActOnCard(AbstractCard::triggerOnScry);
 	}
 	
 	public void onPlayCard(AbstractCard card, AbstractMonster m) {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.onPlayCard(card, m);
+		this.checkActiveActOnCard(c -> { c.onPlayCard(card, m); });
 	}
 	
 	public void onRetained() {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.onRetained();
+		this.checkActiveActOnCard(AbstractCard::onRetained);
 	}
 	
 	public void triggerOnExhaust() {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.triggerOnExhaust();
+		this.checkActiveActOnCard(AbstractCard::triggerOnExhaust);
 	}
 	
 	public void clearPowers() {
 		super.clearPowers();
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-    	for (AbstractCard c : this.cards)
-    		c.clearPowers();
+		this.checkActiveActOnCard(AbstractCard::clearPowers);
 	}
 	
 	public String toString() {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
+		if (!this.active())
 			return this.name;
-		String tmp = this.name + ":[";
-    	for (AbstractCard c : this.cards)
-    		tmp += c.name + ",";
+		String tmp = this.name + ":[" + this.cards.stream().map(c -> {
+			return c.name + ",";
+		}).reduce("", (u, v) -> {
+			return u + v;
+		});
     	return tmp.substring(0, tmp.length() - 1) + "]";
 	}
 	

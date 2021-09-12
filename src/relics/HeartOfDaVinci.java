@@ -1,13 +1,12 @@
 package relics;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
@@ -23,8 +22,9 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import actions.DaVinciLibraryAction;
 import basemod.BaseMod;
 import mymod.TestMod;
+import utils.MiscMethods;
 
-public class HeartOfDaVinci extends AbstractTestRelic{
+public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
 	
 	public static final String ID = "HeartOfDaVinci";
 	
@@ -51,31 +51,19 @@ public class HeartOfDaVinci extends AbstractTestRelic{
 		pool.add((int) (Math.random() * pool.size()), id);
 	}
 	
-	private void addToRelicPool(AbstractRelic r) {
-		switch (r.tier) {
-		case BOSS:
-			this.addIfPossible(AbstractDungeon.bossRelicPool, r.relicId);
-			break;
-		case COMMON:
-			this.addIfPossible(AbstractDungeon.commonRelicPool, r.relicId);
-			break;
-		case RARE:
-			this.addIfPossible(AbstractDungeon.rareRelicPool, r.relicId);
-			break;
-		case SHOP:
-			this.addIfPossible(AbstractDungeon.shopRelicPool, r.relicId);
-			break;
+	public ArrayList<String> relicPool(RelicTier t) {
+		switch (t) {
 		case STARTER:
-			this.addIfPossible(AbstractDungeon.rareRelicPool, r.relicId);
-			break;
-		case UNCOMMON:
-			this.addIfPossible(AbstractDungeon.uncommonRelicPool, r.relicId);
-			break;
+		case SPECIAL:
+		case DEPRECATED:
+			return AbstractDungeon.rareRelicPool;
 		default:
-			TestMod.info("达芬奇之心: 非合理类型遗物:" + r.tier + "," + r.name + ", 姑且加入进稀有池");
-			this.addIfPossible(AbstractDungeon.rareRelicPool, r.relicId);
-			break;
+			return MiscMethods.super.relicPool(t);
 		}
+	}
+	
+	private void addToRelicPool(AbstractRelic r) {
+		this.addIfPossible(this.relicPool(r.tier), r.relicId);
 	}
 	
 	private static HashMap<CardColor, HashMap<String, AbstractRelic>> map;
@@ -85,18 +73,9 @@ public class HeartOfDaVinci extends AbstractTestRelic{
 		ADDED.addAll(RelicLibrary.greenList);
 		ADDED.addAll(RelicLibrary.blueList);
 		
-		map = BaseMod.getAllCustomRelics();
-		ArrayList<HashMap<String, AbstractRelic>> all = new ArrayList<HashMap<String, AbstractRelic>>();
-		if (all.addAll(map.values())) {
-			for (HashMap<String, AbstractRelic> character : all) {
-				ADDED.addAll(character.values());
-			}
-		}
-		
-		for (AbstractRelic r : ADDED) {
-			this.addToRelicPool(r);
-		}
-		
+		(map = BaseMod.getAllCustomRelics()).values().stream().map(HashMap<String, AbstractRelic>::values)
+				.forEach(ADDED::addAll);
+		ADDED.forEach(this::addToRelicPool);
 	}
 	
 	private void removeAllCharacterRelics(AbstractPlayer p) {
@@ -205,25 +184,13 @@ public class HeartOfDaVinci extends AbstractTestRelic{
 	}
 	
 	private CardColor getColor(AbstractRelic r) {
-		if (isGreen(r))
-			return CardColor.GREEN;
-		if (isRed(r))
-			return CardColor.RED;
-		if (isBlue(r))
-			return CardColor.BLUE;
-		return getCustomColor(r);
+		return isGreen(r) ? CardColor.GREEN
+				: (isRed(r) ? CardColor.RED
+						: (isBlue(r) ? CardColor.BLUE : (isPurple(r) ? CardColor.PURPLE : getCustomColor(r))));
 	}
 	
 	private CardColor getCustomColor(AbstractRelic r) {
-		Set<CardColor> colors = map.keySet();
-		for (CardColor c : colors) {
-			ArrayList<AbstractRelic> relics = new ArrayList<AbstractRelic>();
-			relics.addAll(map.get(c).values());
-			if (inList(r, relics)) {
-				return c;
-			}
-		}
-		return null;
+		return map.keySet().stream().filter(c -> inList(r, map.get(c).values())).findFirst().orElse(null);
 	}
 	
 	private boolean isGreen(AbstractRelic r) {
@@ -237,14 +204,13 @@ public class HeartOfDaVinci extends AbstractTestRelic{
 	private boolean isBlue(AbstractRelic r) {
 		return this.inList(r, RelicLibrary.blueList);
 	}
+	
+	private boolean isPurple(AbstractRelic r) {
+		return this.inList(r, RelicLibrary.whiteList);
+	}
 
-	private boolean inList(AbstractRelic relic, ArrayList<AbstractRelic> l) {
-		for (AbstractRelic r : l) {
-			if (r.relicId.equals(relic.relicId)) {
-				return true;
-			}
-		}
-		return false;
+	private boolean inList(AbstractRelic relic, Collection<AbstractRelic> list) {
+		return list.stream().map(r -> r.relicId).anyMatch(relic.relicId::equals);
 	}
 	
 	public static boolean checkGetRelic() {
@@ -274,10 +240,7 @@ public class HeartOfDaVinci extends AbstractTestRelic{
     }
 	
 	public boolean canSpawn() {
-		if (!Settings.isEndless && AbstractDungeon.actNum > 1) {
-			return false;
-		}
-		return true;
+		return Settings.isEndless || AbstractDungeon.actNum < 2;
 	}
 	
 }

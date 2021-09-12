@@ -40,8 +40,7 @@ public class Register extends AbstractTestRelic{
 	}
 	
 	private void addPowers(ArrayList<AbstractPower> powers) {
-		for (AbstractPower p : powers)
-			POWERS.add(p);
+		POWERS.addAll(powers);
 	}
 	
 	public void onEquip() {

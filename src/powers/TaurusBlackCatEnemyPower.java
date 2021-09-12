@@ -16,12 +16,11 @@ public class TaurusBlackCatEnemyPower extends AbstractTestPower implements Invis
 	private static final int PRIORITY = 100000;
 
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof TaurusBlackCatEnemyPower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof TaurusBlackCatEnemyPower);
 	}
 	
 	public static AbstractPower getThis(AbstractCreature owner) {
-		return owner.powers.stream().filter(p -> {return p instanceof TaurusBlackCatEnemyPower;})
-				.findAny().orElse(null);
+		return owner.powers.stream().filter(p -> p instanceof TaurusBlackCatEnemyPower).findAny().orElse(null);
 	}
 	
 	public TaurusBlackCatEnemyPower(AbstractCreature owner, int amount) {

@@ -4,7 +4,6 @@ import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 public class SuperconductorNoEnergyPower extends AbstractTestPower {
@@ -26,9 +25,8 @@ public class SuperconductorNoEnergyPower extends AbstractTestPower {
 	}
 	
 	public static void UpdateCurrentInstance() {
-		for (AbstractPower p : AbstractDungeon.player.powers)
-			if (p instanceof SuperconductorNoEnergyPower)
-				((SuperconductorNoEnergyPower) p).checkEnergy();
+		AbstractDungeon.player.powers.stream().filter(p -> p instanceof SuperconductorNoEnergyPower)
+				.map(p -> (SuperconductorNoEnergyPower) p).forEach(SuperconductorNoEnergyPower::checkEnergy);
 	}
 	
 	public void updateDescription() {

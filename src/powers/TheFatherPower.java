@@ -79,12 +79,14 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower,
 	
     public int onAttacked(final DamageInfo info, int damage) {
     	if (Prime.isPrime(damage)) {
-    		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-    			if (!m.equals(this.owner) && !m.isDeadOrEscaped())
-    				this.addDamageAction(m, Prime.indexOf(damage));
+			AbstractDungeon.getMonsters().monsters.stream().filter(m -> !(m.equals(this.owner) || m.isDeadOrEscaped()))
+					.forEach(m -> {
+						this.addDamageAction(m, Prime.indexOf(damage));
+					});
     	} else if (damage > 3) {
-    		for (int p : Prime.primeFactorOf(damage))
-    			this.addDamageAction((AbstractMonster) this.owner, Prime.indexOf(p));
+			Prime.primeFactorOf(damage).forEach(p -> {
+				this.addDamageAction((AbstractMonster) this.owner, Prime.indexOf(p));
+			});
     	}
 		return damage;
     }

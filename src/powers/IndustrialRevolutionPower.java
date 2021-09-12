@@ -14,7 +14,7 @@ public class IndustrialRevolutionPower extends AbstractTestPower implements OnRe
 	}
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof IndustrialRevolutionPower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof IndustrialRevolutionPower);
 	}
 	
 	public IndustrialRevolutionPower(AbstractCreature owner) {

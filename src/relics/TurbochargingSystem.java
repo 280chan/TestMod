@@ -24,11 +24,7 @@ public class TurbochargingSystem extends AbstractTestRelic {
 	}
 	
 	public float atDamageModify(float damage, AbstractCard c) {
-		if (c.freeToPlayOnce) {
-			return damage;
-		} else if (c.cost == -1) {
-			return damage + Math.max(c.energyOnUse, EnergyPanel.totalCount);
-		}
-		return damage + c.costForTurn;
+		return c.freeToPlayOnce ? damage
+				: (c.cost == -1 ? damage + Math.max(c.energyOnUse, EnergyPanel.totalCount) : damage + c.costForTurn);
 	}
 }

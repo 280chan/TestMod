@@ -24,12 +24,12 @@ public class PulseDistributorPower extends AbstractTestPower {
 	public final ArrayList<Integer> DAMAGES = new ArrayList<Integer>();
 	
 	public static boolean hasThis(AbstractPlayer owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof PulseDistributorPower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof PulseDistributorPower);
 	}
 	
 	public static PulseDistributorPower getThis(AbstractPlayer owner) {
-		return (PulseDistributorPower) owner.powers.stream().filter(p -> {return p instanceof PulseDistributorPower;})
-			.findAny().orElse(null);
+		return (PulseDistributorPower) owner.powers.stream().filter(p -> p instanceof PulseDistributorPower).findAny()
+				.orElse(null);
 	}
 	
 	public PulseDistributorPower(AbstractPlayer owner, int magic) {

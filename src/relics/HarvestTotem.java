@@ -89,9 +89,7 @@ public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public int onPlayerHeal(int healAmount) {
-		if (this.init)
-			return healAmount;
-        return 2 * healAmount;
+		return this.init ? healAmount : 2 * healAmount;
     }
 	
 	public void atTurnStart() {
@@ -103,16 +101,11 @@ public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
     }
 	
 	public float preChangeMaxHP(float amount) {
-		if (amount > 0 && !this.init)
-			return 2 * amount;
-		return amount;
+		return (amount > 0 && !this.init) ? 2 * amount : amount;
 	}
 	
 	public boolean canSpawn() {
-		if (!Settings.isEndless && AbstractDungeon.actNum > 1) {
-			return false;
-		}
-		return true;
+		return Settings.isEndless && AbstractDungeon.actNum < 2;
 	}
 	
 }

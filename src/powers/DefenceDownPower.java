@@ -11,7 +11,7 @@ public class DefenceDownPower extends AbstractTestPower {
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof DefenceDownPower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof DefenceDownPower);
 	}
 	
 	public DefenceDownPower(AbstractCreature owner, int amount) {

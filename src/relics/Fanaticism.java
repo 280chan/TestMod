@@ -17,10 +17,7 @@ public class Fanaticism extends AbstractTestRelic {
 	}
 	
 	public String getUpdatedDescription() {
-		if (this.counter < 0)
-			return DESCRIPTIONS[0];
-		else
-			return DESCRIPTIONS[0] + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2];
+		return this.counter < 0 ? DESCRIPTIONS[0] : DESCRIPTIONS[0] + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2];
 	}
 
 	public void updateDescription(PlayerClass c) {
@@ -67,11 +64,8 @@ public class Fanaticism extends AbstractTestRelic {
     }
 	
 	public void onLoseHp(int damage) {
-		if (AbstractDungeon.player.stance.ID.equals("Wrath")) {
-			this.modifyCounterAndUpdate(this.counter + 2 * damage);
-		} else {
-			this.modifyCounterAndUpdate(this.counter + damage);
-		}
+		this.modifyCounterAndUpdate(
+				this.counter + (AbstractDungeon.player.stance.ID.equals("Wrath") ? 2 * damage : damage));
 	}
 	
 	public void onAttack(DamageInfo info, int damage, AbstractCreature target) {

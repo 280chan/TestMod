@@ -13,8 +13,8 @@ import powers.FatalChainCheckDamagePower;
 public class FatalChain extends AbstractTestRelic {
 	public static final String ID = "FatalChain";
 	
-	private static final HashMap<DamageInfo, AbstractCreature> MAP = new HashMap<DamageInfo, AbstractCreature>();
-	public static final ArrayList<FatalChainCheckDamagePower> TO_REMOVE = new ArrayList<FatalChainCheckDamagePower>();
+	private final HashMap<DamageInfo, AbstractCreature> MAP = new HashMap<DamageInfo, AbstractCreature>();
+	public final ArrayList<FatalChainCheckDamagePower> TO_REMOVE = new ArrayList<FatalChainCheckDamagePower>();
 	
 	public FatalChain() {
 		super(ID, RelicTier.RARE, LandingSound.HEAVY);
@@ -32,26 +32,25 @@ public class FatalChain extends AbstractTestRelic {
 
 	public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
 		if (this.isActive && damageAmount > 0 && !target.isPlayer) {
-			MAP.put(info, target);
-			FatalChainCheckDamagePower p = new FatalChainCheckDamagePower(target, MAP);
+			this.MAP.put(info, target);
+			FatalChainCheckDamagePower p = new FatalChainCheckDamagePower(target, this.MAP, this);
 			target.powers.add(p);
 		}
 	}
 	
 	public void onVictory() {
 		if (this.isActive) {
-			MAP.clear();
-			TO_REMOVE.clear();
+			this.MAP.clear();
+			this.TO_REMOVE.clear();
 		}
 	}
 	
 	public void update() {
 		super.update();
-		if (!this.isActive || TO_REMOVE.isEmpty())
+		if (this.TO_REMOVE.isEmpty())
 			return;
-		for (int i = 0; i < TO_REMOVE.size(); i++)
-			TO_REMOVE.get(i).owner.powers.remove(TO_REMOVE.get(i));
-		TO_REMOVE.clear();
+		this.TO_REMOVE.stream().forEach(p -> {p.owner.powers.remove(p);});
+		this.TO_REMOVE.clear();
 	}
 
 }

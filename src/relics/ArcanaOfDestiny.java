@@ -34,8 +34,6 @@ public class ArcanaOfDestiny extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public void atPreBattle() {
-		if (AbstractDungeon.currMapNode == null)
-			return;
 		tryApplyDebuff();
     }
 

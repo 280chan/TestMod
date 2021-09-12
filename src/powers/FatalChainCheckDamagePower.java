@@ -17,8 +17,9 @@ public class FatalChainCheckDamagePower extends AbstractTestPower implements Inv
 	private HashMap<DamageInfo, AbstractCreature> map;
 	public static final double E = Math.E;
 	public boolean finished = false;
+	public FatalChain r;
 	
-	public FatalChainCheckDamagePower(AbstractCreature owner, HashMap<DamageInfo, AbstractCreature> map) {
+	public FatalChainCheckDamagePower(AbstractCreature owner, HashMap<DamageInfo, AbstractCreature> map, FatalChain r) {
 		super(POWER_ID);
 		this.name = POWER_ID;
 		this.ID += idFix++;
@@ -26,6 +27,7 @@ public class FatalChainCheckDamagePower extends AbstractTestPower implements Inv
 		updateDescription();
 		this.type = PowerType.BUFF;
 		this.map = map;
+		this.r = r;
 	}
 	
 	public void updateDescription() {
@@ -37,14 +39,14 @@ public class FatalChainCheckDamagePower extends AbstractTestPower implements Inv
 	}
     
     public int onAttacked(final DamageInfo info, final int damageAmount) {
-    	if (map.containsKey(info)) {
+    	if (this.map.containsKey(info)) {
 			int dmg;
-			if ((dmg = damageAmount - map.get(info).currentHealth) > 0) {
+			if ((dmg = damageAmount - this.map.get(info).currentHealth) > 0) {
 				int[] dmgArr = DamageInfo.createDamageMatrix((int) (dmg * E), true);
 				this.addToBot(new DamageAllEnemiesAction(AbstractDungeon.player, dmgArr, DamageType.THORNS, AttackEffect.POISON));
 			}
-			map.remove(info);
-			FatalChain.TO_REMOVE.add(this);
+			this.map.remove(info);
+			this.r.TO_REMOVE.add(this);
 		}
 		return damageAmount;
     }

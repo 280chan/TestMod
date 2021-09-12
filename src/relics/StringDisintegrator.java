@@ -46,14 +46,12 @@ public class StringDisintegrator extends AbstractTestRelic {
 		if (g.type == CardGroupType.MASTER_DECK) {
 			hideDeckText(g);
 		} else {
-			for (AbstractCard c : g.group)
-				hideText(c);
+			g.group.forEach(StringDisintegrator::hideText);
 		}
 	}
 	
 	private static void hideDeckText(CardGroup g) {
-		for (AbstractCard c : g.group)
-			hideDeckText(c);
+		g.group.forEach(StringDisintegrator::hideDeckText);
 	}
 	
 	private static void hideDeckText(AbstractCard c) {
@@ -78,8 +76,7 @@ public class StringDisintegrator extends AbstractTestRelic {
 	}
 	
 	private static void loadAllText() {
-		for (AbstractCard c : AbstractDungeon.player.masterDeck.group)
-			loadDeck(c);
+		AbstractDungeon.player.masterDeck.group.forEach(StringDisintegrator::loadDeck);
 	}
 	
 	private static void loadDeck(AbstractCard c) {

@@ -1,6 +1,7 @@
 package relics;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
@@ -45,34 +46,22 @@ public class DreamHouse extends AbstractTestRelic {
 		}
 	}
 	
+	private static void obtainRelic(AbstractRelic r) {
+		TestMod.obtain(AbstractDungeon.player, r, true);
+	}
+	
 	public static void equipAction() {
 		AbstractTestRelic.setTryEquip(DreamHouse.class, false);
-		for (AbstractRelic r : RELICS) {
-			TestMod.obtain(AbstractDungeon.player, r, false);
-		}
+		Stream.of(RELICS).forEach(DreamHouse::obtainRelic);
 	}
 	
 	public void onEquip() {
-		TestMod.setActivity(this);
-		if (!isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster++;
 		this.setTryEquip(true);
     }
-
-	public static void unequipAction() {
-		AbstractTestRelic.setTryUnequip(DreamHouse.class, false);
-		for (AbstractRelic r : RELICS) {
-			AbstractDungeon.player.loseRelic(r.relicId);
-			TestMod.info("梦幻馆: 移除" + r.name);
-		}
-	}
 	
 	public void onUnequip() {
-		if (!isActive)
-			return;
 		AbstractDungeon.player.energy.energyMaster--;
-		this.setTryUnequip(true);
     }
 	
 	public void update() {
@@ -88,10 +77,7 @@ public class DreamHouse extends AbstractTestRelic {
 	}
 	
 	public boolean canSpawn() {
-		if (!Settings.isEndless && AbstractDungeon.actNum > 1) {
-			return false;
-		}
-		return true;
+		return Settings.isEndless || AbstractDungeon.actNum < 2;
 	}
 	
 }

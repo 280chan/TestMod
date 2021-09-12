@@ -38,37 +38,30 @@ public class ThousandKnives extends AbstractTestRelic implements MiscMethods {
 			this.updateHandGlow();
 	}
 	
+	private boolean checkGlow(AbstractCard c) {
+		return checkCard(c) && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster());
+	}
+	
 	private void updateHandGlow() {
-		boolean active = false;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
-			if (checkCard(c) && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
-				this.addToGlowChangerList(c, color);
-				active = true;
-			} else
-				this.removeFromGlowList(c, color);
-		}
-		if (active)
+		ColorRegister cr = new ColorRegister(color);
+		if (AbstractDungeon.player.hand.group.stream().anyMatch(this::checkGlow))
 			this.beginLongPulse();
 		else
 			this.stopPulse();
+		this.streamIfElse(AbstractDungeon.player.hand.group.stream(), this::checkGlow, cr::addToGlowChangerList,
+				cr::removeFromGlowList);
 	}
 	
 	public void onVictory() {
 		this.stopPulse();
 	}
 	
-	private static boolean checkCard(AbstractCard c) {
+	private boolean checkCard(AbstractCard c) {
 		return (c.costForTurn == 0 || c.freeToPlayOnce) && !c.isInAutoplay && c.type == CardType.ATTACK;
 	}
 	
 	private int countCards() {
-		int count = 0;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
-			if (checkCard(c)) {
-				count++;
-			}
-		}
-		return count;
+		return (int) AbstractDungeon.player.hand.group.stream().filter(this::checkCard).count();
 	}
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {

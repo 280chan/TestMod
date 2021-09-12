@@ -17,7 +17,7 @@ public class InfectionPower extends AbstractTestPower implements InvisiblePower,
 	private float tempDamage;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof InfectionPower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof InfectionPower);
 	}
 	
 	public InfectionPower(AbstractCreature owner) {

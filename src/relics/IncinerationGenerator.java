@@ -1,7 +1,6 @@
 package relics;
 
 import com.megacrit.cardcrawl.actions.common.ExhaustAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
@@ -32,8 +31,7 @@ public class IncinerationGenerator extends AbstractTestRelic {
     }
 	
 	public void atTurnStartPostDraw() {
-		AbstractPlayer p = AbstractDungeon.player;
-		this.addToBot(new ExhaustAction(p, p, 1, false));
+		this.addToBot(new ExhaustAction(AbstractDungeon.player, AbstractDungeon.player, 1, false));
 	}
 	
 }

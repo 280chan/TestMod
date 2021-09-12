@@ -498,5 +498,11 @@
 		"NAME": "Venture Capital",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Upon pick up, lose #All #yGold. Whenever you gain #yGold, lose #b1 #yGold. For each #b1 #yGold you lose, increase future #yGold gain by #b1% (add). ( #yGold amount will not change in rewards)", " NL Current #yGold multiplier: #b", "%"]
+	},
+	
+	"testmod-VoidShard":{
+		"NAME": "Void Shard",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . You receive #r300% damage outside combats."]
 	}
 }

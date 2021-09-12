@@ -19,7 +19,7 @@ public class InorganicPower extends AbstractTestPower implements OnReceivePowerP
 	}
 
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof InorganicPower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof InorganicPower);
 	}
 	
 	public InorganicPower(AbstractCreature owner) {

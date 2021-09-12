@@ -3,7 +3,6 @@ package relics;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 
@@ -25,11 +24,10 @@ public class Maize extends AbstractTestRelic {
 
 	public void onUseCard(AbstractCard card, UseCardAction action) {
 		if (card.type == AbstractCard.CardType.SKILL) {
-			this.counter++;
-			if (this.counter == AMOUNT) {
+			if (++this.counter == AMOUNT) {
 				this.show();
-				AbstractPlayer p = AbstractDungeon.player;
-				this.addToBot(new ApplyPowerAction(p, p, new IntangiblePlayerPower(p, 1), 1));
+				this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player,
+						new IntangiblePlayerPower(AbstractDungeon.player, 1), 1));
 			}
 		}
 	}

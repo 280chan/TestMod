@@ -76,16 +76,12 @@ public class DeterminationOfClimber extends AbstractTestRelic implements MiscMet
 	private void updateHandGlow() {
 		if (!this.canUpdateHandGlow())
 			return;
-		this.streamIfElse(AbstractDungeon.player.hand.group.stream(), (c -> {
-			return this.getValue(c) > this.counter && this.counter != -1 && c.hasEnoughEnergy()
-					&& c.cardPlayable(AbstractDungeon.getRandomMonster());
-		}), (c) -> {
-			this.addToGlowChangerList(c, color);
-			this.beginLongPulse();
-		}, (c) -> {
-			this.removeFromGlowList(c, color);
-			this.stopPulse();
-		});
+		this.stopPulse();
+		ColorRegister cr = new ColorRegister(color, this);
+		this.streamIfElse(AbstractDungeon.player.hand.group.stream(),
+				(c -> this.getValue(c) > this.counter && this.counter != -1 && c.hasEnoughEnergy()
+						&& c.cardPlayable(AbstractDungeon.getRandomMonster())),
+				cr::addToGlowChangerList, cr::removeFromGlowList);
 	}
 
 	public void onVictory() {
