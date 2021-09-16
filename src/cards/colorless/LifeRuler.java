@@ -4,13 +4,14 @@ package cards.colorless;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.ConstrictedPower;
-
-import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
-public class LifeRuler extends AbstractTestCard {
+import cards.AbstractTestCard;
+import utils.MiscMethods;
+
+public class LifeRuler extends AbstractTestCard implements MiscMethods {
 	public static final String ID = "LifeRuler";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -24,20 +25,18 @@ public class LifeRuler extends AbstractTestCard {
     }
 
 	public void use(final AbstractPlayer p, final AbstractMonster t) {
-    	for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!m.isDead && !m.isDying && !m.halfDead) {
-				this.addToBot(new ApplyPowerAction(m, p, new ConstrictedPower(m, p, this.misc), this.misc));
-			}
-		}
+		this.branch(
+				AbstractDungeon.getMonsters().monsters.stream().filter(not(m -> m.isDead || m.isDying || m.halfDead)),
+				m -> new ConstrictedPower(m, p, this.misc), (m, cp) -> {
+					this.addToBot(new ApplyPowerAction(m, p, cp, this.misc));
+				});
     }
 
 	@Override
 	public void calculateCardDamage(AbstractMonster m) {
+		super.calculateCardDamage(m);
 		AbstractPlayer p = AbstractDungeon.player;
-    	if (m == null)
-    		this.misc = 0;
-    	else
-    		this.misc = Math.max(gcd(p.maxHealth, m.maxHealth), gcd(p.currentHealth, m.currentHealth));
+    	this.misc = m == null ? 0 :Math.max(gcd(p.maxHealth, m.maxHealth), gcd(p.currentHealth, m.currentHealth));
     	this.rawDescription = this.getDesc();
 		this.initializeDescription();
 	}

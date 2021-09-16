@@ -22,17 +22,12 @@ public class Mystery extends AbstractEquivalentableCard {
     public Mystery() {
         super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
         this.baseDamage = ATTACK_DMG;
-        this.baseMagicNumber = BASE_MGC;
-        this.magicNumber = this.baseMagicNumber;
+        this.magicNumber = this.baseMagicNumber = BASE_MGC;
         this.exhaust = true;
     }
 
     private static int countMystery() {
-    	int count = 0;
-    	for (String symbol : CardCrawlGame.metricData.path_taken)
-    		if (symbol.equals("?"))
-    			count++;
-    	return count;
+    	return (int) CardCrawlGame.metricData.path_taken.stream().filter("?"::equals).count();
     }
     
     public void use(final AbstractPlayer p, final AbstractMonster m) {

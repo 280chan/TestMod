@@ -27,13 +27,11 @@ public class PowerStrike extends AbstractTestCard {
     }
     
     public static String getDescription(int mgc) {
-    	if (mgc % 10 == 0) {
-    		return EXTENDED_DESCRIPTION[0] + (BASE_PHASE + mgc / 10) + EXTENDED_DESCRIPTION[1];
-    	} else if (mgc < 10) {
-    		return EXTENDED_DESCRIPTION[0] + BASE_PHASE + ". !M! " + EXTENDED_DESCRIPTION[1];
-    	}
-		return EXTENDED_DESCRIPTION[0] + (BASE_PHASE + mgc / 10) + "." + (mgc % 10) + EXTENDED_DESCRIPTION[1];
-    }
+		return EXTENDED_DESCRIPTION[0]
+				+ (mgc % 10 == 0 ? (BASE_PHASE + mgc / 10)
+						: (mgc < 10 ? BASE_PHASE + ". !M! " : (BASE_PHASE + mgc / 10) + "." + (mgc % 10)))
+				+ EXTENDED_DESCRIPTION[1];
+	}
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
     	this.addToBot(new PowerStrikeAction(p, this.magicNumber));
@@ -44,8 +42,7 @@ public class PowerStrike extends AbstractTestCard {
     }
     
     public void upgrade() {
-    	if (!this.upgraded)
-    		this.upgraded = true;
+    	this.upgraded = true;
     	this.name = NAME + "+" + ++this.timesUpgraded;
         this.initializeTitle();
         this.upgradeMagicNumber(1);

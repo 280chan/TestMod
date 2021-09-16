@@ -1,6 +1,7 @@
 package actions;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
@@ -10,7 +11,6 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.AbstractPower.PowerType;
 import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
 
@@ -22,7 +22,7 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 	private static final float POST_ATTACK_WAIT_DUR = 0.1F;
 	private boolean skipWait;
 	private AbstractPlayer p;
-	
+
 	private int base;
 
 	public AdversityCounterattackAction(AbstractPlayer p, AbstractMonster m, AttackEffect effect) {
@@ -32,7 +32,7 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 		this.attackEffect = effect;
 		this.duration = DURATION;
 	}
-	
+
 	private AdversityCounterattackAction(AbstractMonster target, DamageInfo info, AttackEffect effect, int times) {
 		this.skipWait = times > 5;
 		this.base = info.base;
@@ -46,31 +46,22 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 
 	private AbstractGameAction next(int base, int times) {
 		AbstractMonster m = randomTarget();
-		if (m == null)
-			return new WaitAction(POST_ATTACK_WAIT_DUR);
-		if (this.p != null)
-			return new AdversityCounterattackAction(m, new DamageInfo(this.p, base), attackEffect, times);
-		return new AdversityCounterattackAction(m, new DamageInfo(this.info.owner, base), attackEffect, times);
+		return m == null ? new WaitAction(POST_ATTACK_WAIT_DUR)
+				: new AdversityCounterattackAction(m, new DamageInfo(this.p != null ? this.p : this.info.owner, base),
+						attackEffect, times);
 	}
-	
+
 	private static AbstractMonster randomTarget() {
-		ArrayList<AbstractMonster> avalible = new ArrayList<AbstractMonster>();
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (!(m == null || m.isDead || m.halfDead || m.isDying || m.isEscaping))
-				avalible.add(m);
-		if (avalible.isEmpty())
-			return null;
-		return avalible.get((int) (Math.random() * avalible.size()));
+		ArrayList<AbstractMonster> avalible = AbstractDungeon.getCurrRoom().monsters.monsters.stream()
+				.filter(m -> !(m == null || m.isDead || m.halfDead || m.isDying || m.isEscaping))
+				.collect(Collectors.toCollection(ArrayList::new));
+		return avalible.isEmpty() ? null : avalible.get((int) (Math.random() * avalible.size()));
 	}
-	
+
 	private static int countAmount(AbstractCreature c, PowerType t) {
-		int tmp = 0;
-		for (AbstractPower p : c.powers)
-			if (p.type == t)
-				tmp += Math.abs(p.amount);
-		return tmp;
+		return c.powers.stream().filter(p -> p.type == t).map(p -> Math.abs(p.amount)).reduce(0, Integer::sum);
 	}
-	
+
 	public void update() {
 		this.isDone = true;
 		if (this.shouldCancelAction()) {
@@ -86,7 +77,7 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 				this.info.applyPowers(this.info.owner, this.target);
 				this.target.damage(this.info);
 			}
-			
+
 			if (AbstractDungeon.getCurrRoom().monsters.areMonstersBasicallyDead()) {
 				AbstractDungeon.actionManager.clearPostCombatActions();
 			} else if (this.amount > 1) {

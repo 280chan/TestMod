@@ -39,6 +39,14 @@ public abstract class AbstractTestRelic extends CustomRelic {
 		return this.relicId.equals(r.relicId);
 	}
 	
+	public void setAsInactive() {
+		this.isActive = false;
+	}
+	
+	public void setAsActive() {
+		this.isActive = true;
+	}
+	
 	public static void addToMap(AbstractTestRelic obj) {
 		if (!EQUIP.containsKey(obj.getClass())) {
 			HashMap<String, Boolean> equip = new HashMap<String, Boolean>();

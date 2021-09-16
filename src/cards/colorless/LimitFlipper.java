@@ -3,8 +3,6 @@ package cards.colorless;
 
 import cards.AbstractTestCard;
 
-import java.util.ArrayList;
-
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.unique.LimitBreakAction;
 import com.megacrit.cardcrawl.cards.*;
@@ -29,18 +27,13 @@ public class LimitFlipper extends AbstractTestCard {
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
-    public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	if (active) {
-    	    this.addToBot(new LimitBreakAction());
-		} else {
-			this.addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, this.magicNumber), this.magicNumber));
-		}
-    }
+	public void use(final AbstractPlayer p, final AbstractMonster m) {
+		this.addToBot(active ? new LimitBreakAction()
+				: new ApplyPowerAction(p, p, new StrengthPower(p, this.magicNumber), this.magicNumber));
+	}
 
 	public void triggerOnGlowCheck() {
-		this.glowColor = AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
-		if (active)
-			this.glowColor = AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
+		this.glowColor = active ? AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy() : AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
 	}
 	
     public void triggerOnCardPlayed(AbstractCard c) {
@@ -48,13 +41,9 @@ public class LimitFlipper extends AbstractTestCard {
     }
     
     private AbstractCard lastCard() {
-    	ArrayList<AbstractCard> list = null;
-    	if (AbstractDungeon.actionManager != null)
-    		list = AbstractDungeon.actionManager.cardsPlayedThisCombat;
-    	if (list != null && list.size() > 0)
-    		return list.get(0);
-    	return null;
-    }
+    	return AbstractDungeon.actionManager == null || AbstractDungeon.actionManager.cardsPlayedThisCombat == null
+				? null : AbstractDungeon.actionManager.cardsPlayedThisCombat.stream().findFirst().orElse(null);
+	}
     
     private void updateActive(AbstractCard c) {
     	if (c == null)

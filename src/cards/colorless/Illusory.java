@@ -27,13 +27,8 @@ public class Illusory extends AbstractTestCard {
     }
     
 	public void triggerOnGlowCheck() {
-		this.glowColor = AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
-		for (AbstractCard c : AbstractDungeon.player.drawPile.group) {
-			if (c.isEthereal) {
-				this.glowColor = AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
-				break;
-			}
-		}
+		this.glowColor = AbstractDungeon.player.drawPile.group.stream().anyMatch(c -> c.isEthereal)
+				? AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy() : AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
 	}
 	
     public void use(final AbstractPlayer p, final AbstractMonster m) {

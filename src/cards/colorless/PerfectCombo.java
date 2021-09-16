@@ -3,8 +3,6 @@ package cards.colorless;
 
 import actions.PerfectComboAction;
 import cards.AbstractEquivalentableCard;
-import mymod.TestMod;
-
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
@@ -29,9 +27,7 @@ public class PerfectCombo extends AbstractEquivalentableCard {
     public PerfectCombo() {
         super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = ATTACK_DMG;
-        this.misc = BASE_CHANCE;
-        this.baseMagicNumber = this.misc;
-        this.magicNumber = this.baseMagicNumber;
+        this.magicNumber = this.baseMagicNumber = this.misc = BASE_CHANCE;
     }
     
     public void use(final AbstractPlayer p, final AbstractMonster m) {
@@ -39,7 +35,6 @@ public class PerfectCombo extends AbstractEquivalentableCard {
     }
     
     public int countUpgrades() {
-        int count = 0;
         AbstractPlayer p = AbstractDungeon.player;
         ArrayList<AbstractCard> group = new ArrayList<AbstractCard>();
         group.addAll(p.drawPile.group);
@@ -48,13 +43,7 @@ public class PerfectCombo extends AbstractEquivalentableCard {
         if (!group.contains(this)) {
         	group.add(this);
         }
-        for (final AbstractCard c : group) {
-        	count += c.timesUpgraded;
-        	if (c.upgraded && c.timesUpgraded == 0) {
-            	TestMod.info("完美连击" + this.cardID + ": " + c.name + "为什么没有计数");
-        	}
-        }
-        return count;
+        return group.stream().mapToInt(c -> c.timesUpgraded).sum();
     }
 
     public void calculateCardDamage(AbstractMonster m) {
@@ -82,7 +71,7 @@ public class PerfectCombo extends AbstractEquivalentableCard {
     }
     
     public void upgrade() {
-    	this.timesUpgraded += 1;
+    	this.timesUpgraded++;
     	this.misc += DELTA_BASE_MAGIC;
     	this.upgradeMagicNumber(DELTA_BASE_MAGIC);
         this.upgraded = true;

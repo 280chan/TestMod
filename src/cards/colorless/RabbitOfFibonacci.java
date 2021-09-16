@@ -50,17 +50,9 @@ public class RabbitOfFibonacci extends AbstractTestCard {
     }
     
     public void upgrade() {
-    	this.timesUpgraded += 1;
-    	this.name = NAME + "+" + this.timesUpgraded;
-    	this.upgraded = true;
+    	this.name = NAME + "+" + ++this.timesUpgraded;
+    	this.upgraded = this.upgradedDamage = this.upgradedBlock = true;
         this.initializeTitle();
-        int tmp;
-        if (this.overflow()) {
-        	tmp = 2147450000;
-        } else {
-            tmp = f(this.timesUpgraded + 2);
-        }
-        this.baseDamage = this.baseBlock = tmp;
-		this.upgradedDamage = this.upgradedBlock = true;
+        this.baseDamage = this.baseBlock = this.overflow() ? 2147450000 : f(this.timesUpgraded + 2);
     }
 }

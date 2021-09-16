@@ -19,8 +19,7 @@ public class Librarian extends AbstractTestCard {
 
     public Librarian() {
         super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
-        this.baseMagicNumber = BASE_MGC;
-        this.magicNumber = this.baseMagicNumber;
+        this.magicNumber = this.baseMagicNumber = BASE_MGC;
         this.exhaust = true;
     }
 

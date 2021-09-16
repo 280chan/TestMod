@@ -14,7 +14,7 @@ public class Reproduce extends AbstractTestCard {
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int COST = 2;
+    private static final int COST = 1;
     private static final int BASE_MGC = 1;
 
     public Reproduce() {
@@ -30,7 +30,7 @@ public class Reproduce extends AbstractTestCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(1);
+            this.upgradeBaseCost(0);
         }
     }
 }

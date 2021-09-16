@@ -2,6 +2,7 @@
 package cards.colorless;
 
 import powers.DeathImprintPower;
+import utils.MiscMethods;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.*;
@@ -15,7 +16,7 @@ import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-public class DeathImprint extends AbstractTestCard {
+public class DeathImprint extends AbstractTestCard implements MiscMethods {
     public static final String ID = "DeathImprint";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -34,15 +35,11 @@ public class DeathImprint extends AbstractTestCard {
     public void use(final AbstractPlayer p, final AbstractMonster m) {
     	this.addToBot(new DeathImprintAction(p, m, this.damage, this.damageTypeForTurn));
     }
-
+    
 	public void triggerOnGlowCheck() {
-		this.glowColor = AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if ((!m.isDeadOrEscaped()) && (DeathImprintPower.hasThis(m))) {
-				this.glowColor = AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
-				break;
-			}
-		}
+		this.glowColor = (AbstractDungeon.getMonsters().monsters.stream()
+				.anyMatch(and(not(AbstractMonster::isDeadOrEscaped), DeathImprintPower::hasThis)))
+						? AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy() : AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
 	}
     
 	private int fakeCardDamage(AbstractMonster m) {

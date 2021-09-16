@@ -42,13 +42,10 @@ public class HandmadeProducts extends AbstractTestCard {
 	}
 	
 	public int product() {
-		int base = 1;
-		for (AbstractCard c : AbstractDungeon.player.hand.group)
-			if (c.cost > -1)
-				base *= (c.costForTurn + 1);
-			else if (c.cost == -1)
-				base *= (EnergyPanel.totalCount + 1);
-		return base;
+		return AbstractDungeon.player.hand.group.stream().filter(c -> c.cost > -1).map(c -> c.costForTurn + 1).reduce(1,
+				(a, b) -> a * b)
+				* AbstractDungeon.player.hand.group.stream().filter(c -> c.cost == -1)
+						.map(c -> EnergyPanel.totalCount + 1).reduce(1, (a, b) -> a * b);
 	}
     
     public boolean canUpgrade() {
@@ -56,8 +53,7 @@ public class HandmadeProducts extends AbstractTestCard {
     }
     
     public void upgrade() {
-    	this.timesUpgraded++;
-    	this.name = NAME + "+" + this.timesUpgraded;
+    	this.name = NAME + "+" + ++this.timesUpgraded;
         this.upgradeBaseCost(1);
     	this.initializeTitle();
     }

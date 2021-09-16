@@ -25,13 +25,21 @@ import mymod.TestMod;
 import utils.MiscMethods;
 
 public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
-	
 	public static final String ID = "HeartOfDaVinci";
-	
 	private static final ArrayList<AbstractRelic> ADDED = new ArrayList<AbstractRelic>();
 	private static DaVinciLibraryAction action;
 	private static int numRelics = 0;
 	public static boolean updated = false;
+	
+	public static void updateThis() {
+		if (AbstractDungeon.player.relics.stream().anyMatch(r -> r instanceof HeartOfDaVinci) && checkGetRelic())
+			getThis().onGetRelic(AbstractDungeon.player.relics.get(size()));
+	}
+	
+	public static HeartOfDaVinci getThis() {
+		return (HeartOfDaVinci) AbstractDungeon.player.relics.stream().filter(r -> r instanceof HeartOfDaVinci)
+				.findFirst().orElse(null);
+	}
 	
 	public HeartOfDaVinci() {
 		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);

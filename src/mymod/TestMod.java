@@ -20,7 +20,6 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.curses.Pride;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -75,49 +74,20 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 9/7/2021
+ * @version 9/14/2021
  * @since 6/17/2018
  */
 
 @SpireInitializer
-public class TestMod
-		implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber, PostDungeonInitializeSubscriber,
-		PreUpdateSubscriber, PostUpdateSubscriber, StartGameSubscriber, PostInitializeSubscriber,
+public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber, StartGameSubscriber,
+		PreUpdateSubscriber, PostUpdateSubscriber, PostInitializeSubscriber, PostDungeonInitializeSubscriber,
 		OnStartBattleSubscriber, MaxHPChangeSubscriber, EditKeywordsSubscriber, PostBattleSubscriber, MiscMethods {
-	public static Mode MODE = Mode.BOX;
 	public static final String MOD_ID = "testmod";
 	public static final String MOD_NAME = "TestMod";
 	public static final String SAVE_NAME = "TestMod";
 	public static final String SAVE_FILE_NAME = "Common";
 	public static final Logger LOGGER = LogManager.getLogger(TestMod.class.getName());
 	private ModPanel settingsPanel;
-
-	public static enum Mode {
-		TEST, CHEAT, RANDOM, RELIC, CARD, BOTH, BOX;
-		private Mode() {
-		}
-		public boolean test() {
-			return this == TEST;
-		}
-		public boolean cheat() {
-			return this == CHEAT;
-		}
-		public boolean random() {
-			return this == RANDOM;
-		}
-		public boolean relic() {
-			return this == RELIC;
-		}
-		public boolean card() {
-			return this == CARD;
-		}
-		public boolean both() {
-			return this == BOTH;
-		}
-		public boolean box() {
-			return this == BOX;
-		}
-	}
 	
 	private static final ArrayList<ISubscriber> SUB_MOD = new ArrayList<ISubscriber>();
 	
@@ -198,7 +168,7 @@ public class TestMod
 		if (sub instanceof PostBattleSubscriber) {
 			((PostBattleSubscriber)sub).receivePostBattle(r);
 		} else {
-			info(sub.getClass().getCanonicalName() + " is not OnStartBattleSubscriber! skipped.");
+			info(sub.getClass().getCanonicalName() + " is not PostBattleSubscriber! skipped.");
 		}
 	}
 
@@ -256,21 +226,17 @@ public class TestMod
 	}
 	
 	private static void checkOldID() {
-		for (AbstractRelic r : RELICS)
-			checkOldRelicID(r.relicId);
-		for (AbstractCard c : CARDS)
-			checkOldCardID(c.cardID);
+		RELICS.stream().map(r -> r.relicId).forEach(TestMod::checkOldRelicID);
+		CARDS.stream().map(c -> c.cardID).forEach(TestMod::checkOldCardID);
 		if (UnlockTracker.isCardSeen("Collecter"))
 			UnlockTracker.markCardAsSeen(makeID("Collector"));
 		if (UnlockTracker.isCardSeen("LackOfEnergy"))
 			UnlockTracker.markCardAsSeen(makeID("PocketStoneCalender"));
 		if (UnlockTracker.isCardSeen("DorothysBlackCat") || UnlockTracker.isCardSeen(makeID("DorothysBlackCat")))
 			UnlockTracker.markCardAsSeen(makeID("TaurusBlackCat"));
-		for (AbstractCard c : Sins.SINS)
-			if (!c.cardID.equals(Pride.ID))
-				checkOldCardID(c.cardID);
-		for (AbstractCard c : MAHJONGS)
-			checkOldCardID(c.cardID);
+		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).map(c -> c.cardID)
+				.forEach(TestMod::checkOldCardID);
+		MAHJONGS.stream().map(c -> c.cardID).forEach(TestMod::checkOldCardID);
 	}
 	
 	private static void checkOldRelicID(String id) {
@@ -357,8 +323,8 @@ public class TestMod
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);
-		MY_RELICS = RELICS.stream().filter(r -> {return r instanceof AbstractTestRelic;})
-				.map(r -> {return (AbstractTestRelic) r;}).collect(Collectors.toCollection(ArrayList::new));
+		MY_RELICS = RELICS.stream().filter(r -> r instanceof AbstractTestRelic).map(r -> (AbstractTestRelic) r)
+				.collect(Collectors.toCollection(ArrayList::new));
 		
 		MY_RELICS.forEach(AbstractTestRelic::addToMap);
 		
@@ -383,7 +349,7 @@ public class TestMod
 
 	@Override
 	public void receiveEditCards() {
-		Stream.of(Sins.SINS).filter(c -> {return c instanceof AbstractTestCard;}).forEach(BaseMod::addCard);
+		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(BaseMod::addCard);
 		
 		AbstractCard[] card = { new DisillusionmentEcho(), new TreasureHunter(), new SubstituteBySubterfuge(),
 				new PerfectCombo(), new PulseDistributor(), new LifeRuler(), new EternalityOfKhronos(), new Wormhole(),
@@ -501,7 +467,7 @@ public class TestMod
 	public static void unlockAll() {
 		info("开始解锁");
 		CARDS.forEach(TestMod::unlock);
-		Stream.of(Sins.SINS).filter(c -> {return c instanceof AbstractTestCard;}).forEach(TestMod::unlock);
+		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(TestMod::unlock);
 		MAHJONGS.forEach(TestMod::unlock);
 		RELICS.forEach(TestMod::unlock);
 	}
@@ -514,7 +480,7 @@ public class TestMod
 	
 	public static AbstractRelic randomBonusRelic() {
 		ArrayList<AbstractRelic> unSeen = new ArrayList<AbstractRelic>();
-		RELICS.stream().filter(r -> {return !r.isSeen;}).forEach(unSeen::add);
+		RELICS.stream().filter(r -> !r.isSeen).forEach(unSeen::add);
 		if (!unSeen.isEmpty())
 			return unSeen.get((int) (Math.random() * unSeen.size()));
 		return RELICS.get((int) (Math.random() * (RELICS.size())));
@@ -533,8 +499,8 @@ public class TestMod
 	}
 	
 	public static AbstractCard randomBonusCard() {
-		if (MODE.cheat()) {
-		}
+		/*if (MODE.cheat()) {
+		}*/
 		ArrayList<AbstractCard> unSeen = new ArrayList<AbstractCard>();
 		CARDS.stream().filter(c -> {return !c.isSeen;}).forEach(unSeen::add);
 		if (!unSeen.isEmpty())
@@ -576,7 +542,24 @@ public class TestMod
 			this.updateGlow();
 		}
 	}
+	
+	private static void invoke(AbstractTestRelic r, boolean equip) {
+		try {
+			r.getClass().getMethod(equip ? "equipAction" : "unequipAction").invoke(null);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			e.printStackTrace();
+		}
+	}
 
+	private void invokeEquip(AbstractTestRelic r) {
+		invoke(r, true);
+	}
+	
+	private void invokeUnequip(AbstractTestRelic r) {
+		invoke(r, false);
+	}
+	
 	@Override
 	public void receivePostUpdate() {
 		SUB_MOD.forEach(TestMod::editSubModPostUpdate);
@@ -587,15 +570,10 @@ public class TestMod
 			if (!TO_OBTAIN.isEmpty() && AbstractDungeon.topLevelEffects.isEmpty()) {
 				obtain(p, TO_OBTAIN.remove(0), true);
 			}
-			
-			for (AbstractTestRelic r : MY_RELICS) {
-				if (p.hasRelic(r.relicId)) {
-					AbstractTestRelic m = (AbstractTestRelic)p.getRelic(r.relicId);
-					setActivity(m);
-					setShow(m);
-				}
-			}
-			
+
+			MY_RELICS.stream().map(r -> r.relicId).filter(p::hasRelic).map(p::getRelic).map(r -> (AbstractTestRelic) r)
+					.peek(TestMod::setActivity).forEach(TestMod::setShow);
+
 			/*if (p.hasRelic("NoteOfAlchemist") && p.relics.get(0).relicId != "NoteOfAlchemist") {
 				if (!NoteOfAlchemist.recorded()) {
 					if ((AbstractDungeon.floorNum < 1) || (AbstractDungeon.currMapNode != null
@@ -609,28 +587,13 @@ public class TestMod
 				NoteOfAlchemist.setState(false);
 			}*/
 
-			for (AbstractTestRelic r : MY_RELICS) {
-				/*if (r instanceof NoteOfAlchemist) {
-					continue;
-				}*/
-				try {
-					if (AbstractTestRelic.tryEquip(r)) {
-						r.getClass().getMethod("equipAction").invoke(null);
-					} else if (AbstractTestRelic.tryUnequip(r)) {
-						r.getClass().getMethod("unequipAction").invoke(null);
-					}
-				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
-						| NoSuchMethodException | SecurityException e) {
-					e.printStackTrace();
-				}
-			}
+			MY_RELICS.stream().filter(AbstractTestRelic::tryEquip).forEach(this::invokeEquip);
+			MY_RELICS.stream().filter(AbstractTestRelic::tryUnequip).forEach(this::invokeUnequip);
 			
-			p.relics.stream().filter(r -> {
-				return r instanceof AbstractTestRelic;
-			}).forEach(r -> {
-				((AbstractTestRelic) r).postUpdate();
-			});
 			
+			p.relics.stream().filter(r -> r instanceof AbstractTestRelic).map(r -> (AbstractTestRelic) r)
+					.forEach(AbstractTestRelic::postUpdate);
+
 			/*if (needFix){
 				if (p.maxHealth <= 0 && !p.isDead && !p.isDying && !p.halfDead) {
 					p.maxHealth = 1;
@@ -659,7 +622,7 @@ public class TestMod
 				AbstractUpdatableCard c = i.next();
 	    		if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
 					if (p.hand.contains(c)) {
-						AbstractMonster m = AbstractDungeon.getCurrRoom().monsters.hoveredMonster;
+						AbstractMonster m = AbstractDungeon.getMonsters().hoveredMonster;
 	        			c.preApplyPowers(p, m);
 	    				if (this.hasStringDisintegrator())
 	    					continue;
@@ -676,12 +639,7 @@ public class TestMod
 			
 			BoxForYourself.updateThis();
 			
-			if (p.hasRelic(makeID(HeartOfDaVinci.ID))) {
-				if (HeartOfDaVinci.checkGetRelic()) {
-					HeartOfDaVinci hdv = (HeartOfDaVinci) p.getRelic(makeID(HeartOfDaVinci.ID));
-					hdv.onGetRelic(p.relics.get(HeartOfDaVinci.size()));
-				}
-			}
+			HeartOfDaVinci.updateThis();
 			
 			SuperconductorNoEnergyPower.UpdateCurrentInstance();
 		}
@@ -692,10 +650,9 @@ public class TestMod
 	}
 	
 	public static void setActivity(AbstractTestRelic relic) {
-		int count = 0;
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (r.relicId.equals(relic.relicId))
-				((AbstractTestRelic)r).isActive = count++ == 0;
+		AbstractDungeon.player.relics.stream().sequential().filter(r -> r.relicId.equals(relic.relicId))
+				.map(r -> (AbstractTestRelic) r).peek(AbstractTestRelic::setAsInactive).limit(1)
+				.forEach(AbstractTestRelic::setAsActive);
 	}
 	
 	//private static boolean needFix;
@@ -737,9 +694,8 @@ public class TestMod
 
 		SUB_MOD.forEach(TestMod::editSubModStartGame);
 		
-		if (AbstractDungeon.player.hasRelic(makeID(PortableAltar.ID))) {
+		if (AbstractDungeon.player.relics.stream().anyMatch(r -> r instanceof PortableAltar))
 			PortableAltar.load(getInt(PortableAltar.SAVE_NAME));
-		}
 		
 		Sins.load(getInt(Sins.SAVE_NAME));
 		if (Sins.checkModified()) {
@@ -917,30 +873,22 @@ public class TestMod
 		if (fileExist(path))
 			return path;
 		path = "resources/images/" + ID + ".png";
-		if (fileExist(path))
-			return path;
-		return eventIMGPath("relic1");
+		return fileExist(path) ? path : eventIMGPath("relic1");
 	}
 	
 	public static String relicIMGPath(String ID) {
 		String path = "resources/images/relics/" + ID + ".png";
-		if (fileExist(path))
-			return path;
-		return relicIMGPath("relic1");
+		return fileExist(path) ? path : relicIMGPath("relic1");
 	}
 	
 	public static String cardIMGPath(String ID) {
 		String path = "resources/images/cards/" + ID + ".png";
-		if (fileExist(path))
-			return path;
-		return cardIMGPath("relic1");
+		return fileExist(path) ? path : cardIMGPath("relic1");
 	}
 	
 	public static String powerIMGPath(String ID) {
 		String path = "resources/images/powers/" + ID + ".png";
-		if (fileExist(path))
-			return path;
-		return powerIMGPath("relic1");
+		return fileExist(path) ? path : powerIMGPath("relic1");
 	}
 	
 	public static boolean fileExist(String path) {
@@ -960,11 +908,8 @@ public class TestMod
 	
 	private static boolean checkSteamName(Object remotePlayer) {
 		Class<?> c = remotePlayer.getClass();
-		if (c.getCanonicalName().equals("chronoMods.network.steam.SteamPlayer")) {
-			return checkMySteamName(remotePlayer, c.getSuperclass());
-		} else {
-			return checkMySteamName(remotePlayer, c);
-		}
+		return checkMySteamName(remotePlayer,
+				c.getCanonicalName().equals("chronoMods.network.steam.SteamPlayer") ? c.getSuperclass() : c);
 	}
 	
 	private static void checkEnableConsoleMultiplayer() {

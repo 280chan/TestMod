@@ -31,6 +31,7 @@ public class Reverberation extends AbstractTestCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
+            this.upgradeMagicNumber(1);
             this.isEthereal = false;
             this.rawDescription = UPGRADED_DESCRIPTION;
             this.initializeDescription();

@@ -24,8 +24,7 @@ public class SubstituteBySubterfuge extends AbstractTestCard {
 	}
 
 	public static String getDescription(boolean upgraded) {
-		String temp = EXTENDED_DESCRIPTION[0];
-		temp += E + EXTENDED_DESCRIPTION[1];
+		String temp = EXTENDED_DESCRIPTION[0] + E + EXTENDED_DESCRIPTION[1];
 		if (!upgraded)
 			temp += EXTENDED_DESCRIPTION[2];
 		return temp;

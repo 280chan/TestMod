@@ -15,7 +15,7 @@ public class TaurusBlackCat extends AbstractTestCard {
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final int COST = 3;
-    private static final int BASE_MGC = 75;
+    private static final int BASE_MGC = 80;
 
     public TaurusBlackCat() {
         super(ID, NAME, COST, DESCRIPTION, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
@@ -29,7 +29,7 @@ public class TaurusBlackCat extends AbstractTestCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(25);
+            this.upgradeMagicNumber(20);
         }
     }
 }

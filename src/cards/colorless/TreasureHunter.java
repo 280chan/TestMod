@@ -16,11 +16,10 @@ public class TreasureHunter extends AbstractTestCard {
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
 	private static final int COST = 2;
-	private static final int BASE_DMG = 8;
+	private static final int BASE_DMG = 15;
 
 	public TreasureHunter() {
-		super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.RARE,
-				CardTarget.ENEMY);
+		super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
 		this.baseDamage = BASE_DMG;
 		this.exhaust = true;
 	}
@@ -33,6 +32,7 @@ public class TreasureHunter extends AbstractTestCard {
 	public void upgrade() {
 		if (!this.upgraded) {
 			this.upgradeName();
+			this.upgradeDamage(5);
 			this.rawDescription = UPGRADED_DESCRIPTION;
 			initializeDescription();
 		}

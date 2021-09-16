@@ -619,4 +619,16 @@ public interface MiscMethods {
 			}
 		});
 	}
+	
+    public default <T> Predicate<T> not(Predicate<T> a) {
+    	return a.negate();
+    }
+    
+    public default <T> Predicate<T> and(Predicate<T>... list) {
+    	return Stream.of(list).reduce(a -> true, Predicate::and);
+    }
+    
+    public default <T> Predicate<T> or(Predicate<T>... list) {
+    	return Stream.of(list).reduce(a -> false, Predicate::or);
+    }
 }
