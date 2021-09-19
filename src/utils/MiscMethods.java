@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,10 +44,12 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton;
+import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 
+import actions.AbstractXCostAction;
 import mymod.TestMod;
 import potions.EscapePotion;
 import relics.AbstractTestRelic;
@@ -65,6 +68,11 @@ public interface MiscMethods {
 	
 	public default boolean isLocalTesting() {
 		return TestMod.isLocalTest();
+	}
+	
+	public default void setXCostEnergy(AbstractCard c) {
+		if (c.cost == -1)
+			c.energyOnUse = EnergyPanel.totalCount;
 	}
 	
 	public default boolean hasPrudence() {
@@ -128,10 +136,6 @@ public interface MiscMethods {
 	    private static boolean endTurnQueued = false;
 	    private static boolean startMonsterTurn = false;
 		private static boolean startNextTurn = false;
-		
-		private static void addToBot(AbstractGameAction a) {
-			addToBot(a);
-		}
 
 		private static boolean inProgress() {
 			return startEndingTurn || endTurnQueued || startMonsterTurn || startNextTurn;
@@ -393,7 +397,7 @@ public interface MiscMethods {
 		m.takeTurn();
     	AbstractDungeon.actionManager.actions.clear();
     	AbstractDungeon.actionManager.actions.addAll(actions);
-    	AbstractDungeon.actionManager.addToBottom(new RollMoveAction(m));
+    	addToBot(new RollMoveAction(m));
     	this.addTmpActionToBot(AbstractDungeon.getMonsters()::showIntent);
 	}
 	
@@ -596,12 +600,17 @@ public interface MiscMethods {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public default <T> Consumer<T> combine(Consumer<T>... actions) {
+		return Stream.of(actions).reduce(t -> {}, Consumer::andThen);
+	}
+	
 	public static interface Lambda {
 		public abstract void act();
 	}
 	
 	public default void addTmpActionToTop(Lambda... lambda) {
-		AbstractDungeon.actionManager.addToTop(new AbstractGameAction() {
+		addToTop(new AbstractGameAction() {
 			@Override
 			public void update() {
 				this.isDone = true;
@@ -611,7 +620,7 @@ public interface MiscMethods {
 	}
 	
 	public default void addTmpActionToBot(Lambda... lambda) {
-		AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
+		addToBot(new AbstractGameAction() {
 			@Override
 			public void update() {
 				this.isDone = true;
@@ -620,15 +629,33 @@ public interface MiscMethods {
 		});
 	}
 	
+	public default void addTmpXCostActionToBot(AbstractCard c, Consumer<Integer> action) {
+		addToBot(new AbstractXCostAction(c, action) {});
+	}
+	
+	public static void addToTop(AbstractGameAction a) {
+		AbstractDungeon.actionManager.addToTop(a);
+	}
+	
+	public static void addToBot(AbstractGameAction a) {
+		AbstractDungeon.actionManager.addToBottom(a);
+	}
+	
     public default <T> Predicate<T> not(Predicate<T> a) {
     	return a.negate();
     }
-    
+
+	@SuppressWarnings("unchecked")
     public default <T> Predicate<T> and(Predicate<T>... list) {
     	return Stream.of(list).reduce(a -> true, Predicate::and);
     }
-    
+
+	@SuppressWarnings("unchecked")
     public default <T> Predicate<T> or(Predicate<T>... list) {
     	return Stream.of(list).reduce(a -> false, Predicate::or);
     }
+	
+	public default <T> Collector<T, ?, ArrayList<T>> collectToArrayList() {
+		return Collectors.toCollection(ArrayList::new);
+	}
 }
