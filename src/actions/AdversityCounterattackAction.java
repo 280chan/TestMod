@@ -1,8 +1,6 @@
 package actions;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -51,10 +49,10 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 						attackEffect, times);
 	}
 
-	private static AbstractMonster randomTarget() {
+	private AbstractMonster randomTarget() {
 		ArrayList<AbstractMonster> avalible = AbstractDungeon.getCurrRoom().monsters.monsters.stream()
 				.filter(m -> !(m == null || m.isDead || m.halfDead || m.isDying || m.isEscaping))
-				.collect(Collectors.toCollection(ArrayList::new));
+				.collect(this.collectToArrayList());
 		return avalible.isEmpty() ? null : avalible.get((int) (Math.random() * avalible.size()));
 	}
 
@@ -77,7 +75,6 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 				this.info.applyPowers(this.info.owner, this.target);
 				this.target.damage(this.info);
 			}
-
 			if (AbstractDungeon.getCurrRoom().monsters.areMonstersBasicallyDead()) {
 				AbstractDungeon.actionManager.clearPostCombatActions();
 			} else if (this.amount > 1) {

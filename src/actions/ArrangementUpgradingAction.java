@@ -1,6 +1,7 @@
 package actions;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
@@ -9,7 +10,9 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-public class ArrangementUpgradingAction extends AbstractGameAction {
+import utils.MiscMethods;
+
+public class ArrangementUpgradingAction extends AbstractGameAction implements MiscMethods {
 	public static final float DURATION = Settings.ACTION_DUR_FAST;
 	private ArrayList<AbstractCard> cannotUpgrade = new ArrayList<AbstractCard>();
 	AbstractPlayer p;
@@ -28,11 +31,8 @@ public class ArrangementUpgradingAction extends AbstractGameAction {
 				this.isDone = true;
 				return;
 			}
-			for (AbstractCard c : this.p.hand.group) {
-		        if (!c.canUpgrade()) {
-		        	this.cannotUpgrade.add(c);
-		        }
-		    }
+			this.cannotUpgrade = this.p.hand.group.stream().filter(not(AbstractCard::canUpgrade))
+					.collect(Collectors.toCollection(ArrayList::new));
 			if (this.cannotUpgrade.size() == this.p.hand.size()) {
 				this.gainEnergy(this.amount);
 				this.isDone = true;
@@ -45,11 +45,8 @@ public class ArrangementUpgradingAction extends AbstractGameAction {
 		}
 		if (!AbstractDungeon.handCardSelectScreen.wereCardsRetrieved) {
 			this.gainEnergy(this.amount - AbstractDungeon.handCardSelectScreen.selectedCards.size());
-			for (AbstractCard c : AbstractDungeon.handCardSelectScreen.selectedCards.group) {
-				c.upgrade();
-				c.superFlash();
-				this.p.hand.addToTop(c);
-			}
+			AbstractDungeon.handCardSelectScreen.selectedCards.group
+					.forEach(combine(AbstractCard::upgrade, AbstractCard::superFlash, this.p.hand::addToTop));
 			returnCards();
 			AbstractDungeon.handCardSelectScreen.wereCardsRetrieved = true;
 			AbstractDungeon.handCardSelectScreen.selectedCards.group.clear();
@@ -59,13 +56,11 @@ public class ArrangementUpgradingAction extends AbstractGameAction {
 	}
 	
 	private void gainEnergy(int amount) {
-		AbstractDungeon.actionManager.addToTop(new GainEnergyAction(amount));
+		this.addToTop(new GainEnergyAction(amount));
 	}
 
 	private void returnCards() {
-		for (AbstractCard c : this.cannotUpgrade) {
-			this.p.hand.addToTop(c);
-		}
+		this.cannotUpgrade.forEach(this.p.hand::addToTop);
 		this.p.hand.refreshHandLayout();
 	}
 	

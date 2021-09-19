@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
-import com.megacrit.cardcrawl.blights.AbstractBlight;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.tempCards.Shiv;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -12,8 +11,6 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
@@ -37,59 +34,35 @@ public class PlayUnplayableCardAction extends AbstractGameAction {
 			this.isDone = true;
 		}
 	}
+
+	private boolean isShiv(AbstractCard c) {
+		return c instanceof Shiv;
+	}
 	
 	private void dequeueCard() {
 		this.c.calculateCardDamage(this.m);
 		GameActionManager gam = AbstractDungeon.actionManager;
-		this.p.cardsPlayedThisTurn += 1;
+		this.p.cardsPlayedThisTurn++;
 		this.c.isInAutoplay = true;
-		if (c.cost == -1) {
-			this.c.energyOnUse = EnergyPanel.getCurrentEnergy();
-		} else {
-			this.c.energyOnUse = this.c.costForTurn;
-		}
+		this.c.energyOnUse = c.cost == -1 ? EnergyPanel.getCurrentEnergy() : this.c.costForTurn;
 		if (!this.c.dontTriggerOnUseCard) {
-			for (AbstractPower p : this.p.powers) {
-				p.onPlayCard(this.c, this.m);
-			}
-			for (AbstractRelic r : this.p.relics) {
-				r.onPlayCard(this.c, this.m);
-			}
-			for (AbstractBlight b : this.p.blights) {
-				b.onPlayCard(this.c, this.m);
-			}
-			for (AbstractCard card : this.p.hand.group) {
-				card.onPlayCard(this.c, this.m);
-			}
-			for (AbstractCard card : this.p.discardPile.group) {
-				card.onPlayCard(this.c, this.m);
-			}
-			for (Iterator<AbstractCard> top = this.p.drawPile.group.iterator(); top.hasNext();) {
-				((AbstractCard) top.next()).onPlayCard(this.c, this.m);
-			}
-			gam.cardsPlayedThisTurn.add(this.c);
+			p.powers.forEach(a -> { a.onPlayCard(c, this.m); });
+			p.relics.forEach(a -> { a.onPlayCard(c, this.m); });
+			p.blights.forEach(a -> { a.onPlayCard(c, this.m); });
+			p.hand.group.forEach(a -> { a.onPlayCard(c, this.m); });
+			p.discardPile.group.forEach(a -> { a.onPlayCard(c, this.m); });
+			p.drawPile.group.forEach(a -> { a.onPlayCard(c, this.m); });
+			gam.cardsPlayedThisTurn.add(c);
 		}
 		if (gam.cardsPlayedThisTurn.size() == 25) {
 			UnlockTracker.unlockAchievement("INFINITY");
 		}
-		if ((gam.cardsPlayedThisTurn.size() >= 20) && (!CardCrawlGame.combo)) {
-			CardCrawlGame.combo = true;
-		}
-		int shivCount;
-		if ((this.c instanceof Shiv)) {
-			shivCount = 0;
-			for (AbstractCard i : gam.cardsPlayedThisTurn) {
-				if ((i instanceof Shiv)) {
-					shivCount++;
-					if (shivCount == 10) {
-						UnlockTracker.unlockAchievement("NINJA");
-						break;
-					}
-				}
-			}
+		CardCrawlGame.combo |= gam.cardsPlayedThisTurn.size() >= 20;
+		if (isShiv(c) && gam.cardsPlayedThisTurn.stream().filter(this::isShiv).count() == 10) {
+			UnlockTracker.unlockAchievement("NINJA");
 		}
 		if (this.c != null) {
-			if ((this.c.target == AbstractCard.CardTarget.ENEMY) && ((this.m == null) || (this.m.isDying))) {
+			if ((this.c.target == AbstractCard.CardTarget.ENEMY) && (this.m == null || this.m.isDying)) {
 				for (Iterator<AbstractCard> i = this.p.limbo.group.iterator(); i.hasNext();) {
 					AbstractCard e = (AbstractCard) i.next();
 					if (e == this.c) {

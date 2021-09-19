@@ -1,8 +1,6 @@
 package powers;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -10,7 +8,9 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 
-public class FightingIntentionPower extends AbstractTestPower {
+import utils.MiscMethods;
+
+public class FightingIntentionPower extends AbstractTestPower implements MiscMethods {
 	public static final String POWER_ID = "FightingIntentionPower";
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
@@ -55,8 +55,8 @@ public class FightingIntentionPower extends AbstractTestPower {
 	}
 
 	public void atStartOfTurnPostDraw() {
-		ArrayList<AbstractMonster> list = AbstractDungeon.getCurrRoom().monsters.monsters.stream()
-				.filter(this::hasAttackIntent).collect(Collectors.toCollection(ArrayList::new));
+		ArrayList<AbstractMonster> list = AbstractDungeon.getMonsters().monsters.stream().filter(this::hasAttackIntent)
+				.collect(this.collectToArrayList());
 		int count = list.size() * this.amount;
 		if (count <= 0)
 			return;

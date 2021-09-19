@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
@@ -158,33 +160,28 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
 		numRelics++;
 		String name = this.name + ": ";
 		TestMod.info(name + "获得遗物");
-		ArrayList<AbstractCard> pool = new ArrayList<AbstractCard>();
 		CardColor c = getColor(r);
 		if (c == null) {
 			TestMod.info(name + "非角色限定遗物");
 			return;
 		}
 		if (c != getColor(AbstractDungeon.player)) {
-			this.addCards(pool, c);
 			TestMod.info(name + "准备开始大图书馆");
-			action = new DaVinciLibraryAction(pool, AbstractDungeon.screen);
+			action = new DaVinciLibraryAction(this.cards(c), AbstractDungeon.screen);
 		} else {
 			TestMod.info(name + "角色本身遗物");
 		}
 	}
 	
-	private void addCards(ArrayList<AbstractCard> pool, CardColor color) {
-		AbstractCard card = null;
-		for (Map.Entry<String, AbstractCard> c : CardLibrary.cards.entrySet()) {
-			card = (AbstractCard) c.getValue();
-			if ((card.color == color) && (card.rarity != CardRarity.BASIC)
-					&& ((!UnlockTracker.isCardLocked((String) c.getKey())) || (Settings.treatEverythingAsUnlocked()))) {
-				pool.add(card);
-			}
-		}
+	private ArrayList<AbstractCard> cards(CardColor color) {
+		ArrayList<AbstractCard> pool = CardLibrary.cards.entrySet().stream()
+				.filter(c -> Settings.treatEverythingAsUnlocked() || !UnlockTracker.isCardLocked(c.getKey()))
+				.map(Map.Entry::getValue).filter(c -> c.color == color && c.rarity != CardRarity.BASIC)
+				.map(AbstractCard::makeCopy).collect(Collectors.toCollection(ArrayList::new));
 		if (pool.size() < 20) {
 			TestMod.info("WTF! This character has less than 20 cards");
 		}
+		return pool;
 	}
 	
 	private CardColor getColor(AbstractPlayer p) {

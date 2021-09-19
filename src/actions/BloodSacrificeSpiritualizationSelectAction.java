@@ -28,11 +28,8 @@ public class BloodSacrificeSpiritualizationSelectAction extends AbstractGameActi
         this.g.group.addAll(this.p.drawPile.group);
         this.g.group.addAll(this.p.hand.group);
         this.g.group.addAll(this.p.discardPile.group);
-        for (AbstractCard c : this.p.hand.group)
-        	c.beginGlowing();
-        this.amount = this.p.maxHealth / 10;
-        if (this.amount <= 0)
-        	this.amount = 1;
+        this.p.hand.group.forEach(AbstractCard::beginGlowing);
+        this.amount = Math.max(this.p.maxHealth / 10, 1);
 	}
 	
 	@Override
@@ -60,12 +57,8 @@ public class BloodSacrificeSpiritualizationSelectAction extends AbstractGameActi
 	private void upgrade(AbstractCard card) {
 		if (card.canUpgrade()) {
 			card.upgrade();
-			for (AbstractCard c : this.p.masterDeck.group) {
-				if (c.uuid.equals(card.uuid) && c.canUpgrade()) {
-					c.upgrade();
-					return;
-				}
-			}
+			this.p.masterDeck.group.stream().filter(c -> c.uuid.equals(card.uuid) && c.canUpgrade()).limit(1)
+					.forEach(AbstractCard::upgrade);
 		}
 	}
 

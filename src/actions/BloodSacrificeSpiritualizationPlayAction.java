@@ -1,6 +1,7 @@
 package actions;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DiscardSpecificCardAction;
@@ -14,7 +15,9 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class BloodSacrificeSpiritualizationPlayAction extends AbstractGameAction {
+import utils.MiscMethods;
+
+public class BloodSacrificeSpiritualizationPlayAction extends AbstractGameAction implements MiscMethods {
 	private static final float DURATION = Settings.ACTION_DUR_FAST;
 	private CardGroup g;
 	private AbstractPlayer p;
@@ -29,16 +32,13 @@ public class BloodSacrificeSpiritualizationPlayAction extends AbstractGameAction
 	}
 
 	private void init() {
-		ArrayList<AbstractMonster> list = new ArrayList<AbstractMonster>();
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (!checkMonster(m))
-				list.add(m);
-		if (!list.isEmpty())
-			this.target = list.get(AbstractDungeon.cardRandomRng.random(0, list.size() - 1));
+		ArrayList<AbstractMonster> list = AbstractDungeon.getMonsters().monsters.stream().filter(this::checkMonster)
+				.collect(Collectors.toCollection(ArrayList::new));
+		this.target = list.isEmpty() ? null : list.get(AbstractDungeon.cardRandomRng.random(0, list.size() - 1));
 	}
 	
 	private boolean checkMonster(AbstractMonster m) {
-		return m.isDead || m.halfDead || m.escaped || m.isEscaping || m.isDying;
+		return !(m.isDead || m.halfDead || m.escaped || m.isEscaping || m.isDying);
 	}
 	
 	@Override
@@ -63,14 +63,14 @@ public class BloodSacrificeSpiritualizationPlayAction extends AbstractGameAction
         this.c.drawScale = 0.12F;
         this.c.targetDrawScale = 0.75F;
 		if (!this.c.canUse(this.p, (AbstractMonster) this.target)) {
-			AbstractDungeon.actionManager.addToTop(new UnlimboAction(this.c));
-			AbstractDungeon.actionManager.addToTop(new DiscardSpecificCardAction(this.c, AbstractDungeon.player.limbo));
-			AbstractDungeon.actionManager.addToTop(new WaitAction(0.4F));
+			this.addToTop(new UnlimboAction(this.c));
+			this.addToTop(new DiscardSpecificCardAction(this.c, AbstractDungeon.player.limbo));
+			this.addToTop(new WaitAction(0.4F));
 		} else {
 			this.c.applyPowers();
-			AbstractDungeon.actionManager.addToTop(new QueueCardAction(this.c, this.target));
-			AbstractDungeon.actionManager.addToTop(new UnlimboAction(this.c));
-			AbstractDungeon.actionManager.addToTop(new WaitAction(Settings.ACTION_DUR_FASTER));
+			this.addToTop(new QueueCardAction(this.c, this.target));
+			this.addToTop(new UnlimboAction(this.c));
+			this.addToTop(new WaitAction(Settings.ACTION_DUR_FASTER));
 		}
 		this.isDone = true;
 	}

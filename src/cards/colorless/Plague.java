@@ -1,13 +1,14 @@
 
 package cards.colorless;
 
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
-
-import actions.PlagueAction;
-import cards.AbstractTestCard;
-
 import com.megacrit.cardcrawl.localization.CardStrings;
+
+import cards.AbstractTestCard;
+import powers.PlagueActPower;
+import powers.PlaguePower;
 
 public class Plague extends AbstractTestCard {
     public static final String ID = "Plague";
@@ -23,7 +24,10 @@ public class Plague extends AbstractTestCard {
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.addToBot(new PlagueAction(p, this.freeToPlayOnce, this.energyOnUse));
+    	this.addTmpXCostActionToBot(this, e -> {
+			this.addToTop(new ApplyPowerAction(p, p, new PlaguePower(p, e), e));
+    	});
+    	this.addToBot(new ApplyPowerAction(p, p, new PlagueActPower(p)));
     }
     
     public void upgrade() {

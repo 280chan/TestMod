@@ -2,14 +2,16 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
+import utils.MiscMethods;
+
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
 import actions.ComboMasterAction;
-import actions.ComboMasterUpgradeAction;
 
-public class ComboMaster extends AbstractTestCard {
+public class ComboMaster extends AbstractTestCard implements MiscMethods {
     public static final String ID = "ComboMaster";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -21,17 +23,20 @@ public class ComboMaster extends AbstractTestCard {
     public ComboMaster() {
     	super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
     	this.baseDamage = ATTACK_DMG;
-    	this.baseMagicNumber = BASE_MGC;
-    	this.magicNumber = this.baseMagicNumber;
+    	this.magicNumber = this.baseMagicNumber = BASE_MGC;
     	this.isMultiDamage = true;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
     	this.addToBot(new ComboMasterAction(p, this.multiDamage, this.magicNumber, this.damageTypeForTurn));
-    	this.addToBot(new ComboMasterUpgradeAction(this.uuid));
+    	this.addTmpActionToBot(this::changeValues);
+    }
+    
+	private void changeValues() {
+		GetAllInBattleInstances.get(this.uuid).stream().map(c -> (ComboMaster) c).forEach(ComboMaster::upgradeValues);
     }
 
-    public void upgradeValues() {
+    private void upgradeValues() {
         this.upgradeDamage(1);
         this.upgradeMagicNumber(1);
     }

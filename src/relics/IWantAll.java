@@ -1,8 +1,5 @@
 package relics;
 
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
@@ -14,8 +11,9 @@ import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import potions.EscapePotion;
+import utils.MiscMethods;
 
-public class IWantAll extends AbstractClickRelic {
+public class IWantAll extends AbstractClickRelic implements MiscMethods {
 	public static final String ID = "IWantAll";
 	public static final int COUNT = 10;
 	
@@ -56,20 +54,18 @@ public class IWantAll extends AbstractClickRelic {
 		}
     }
 	
-	private static RewardItem newItem(RewardItem r) {
+	private RewardItem newItem(RewardItem r) {
 		RewardItem item = new RewardItem(new EscapePotion());
 		item.type = RewardType.CARD;
 		item.potion = null;
 		item.text = RewardItem.TEXT[2];
-		item.cards = r.cards.stream().map(AbstractCard::makeStatEquivalentCopy)
-				.collect(Collectors.toCollection(ArrayList::new));
+		item.cards = r.cards.stream().map(AbstractCard::makeStatEquivalentCopy).collect(this.collectToArrayList());
 		return item;
 	}
 	
-	private static void addReward() {
-		AbstractDungeon.combatRewardScreen.rewards
-				.addAll(AbstractDungeon.combatRewardScreen.rewards.stream().filter(r -> r.type == RewardType.CARD)
-						.map(IWantAll::newItem).collect(Collectors.toCollection(ArrayList::new)));
+	private void addReward() {
+		AbstractDungeon.combatRewardScreen.rewards.addAll(AbstractDungeon.combatRewardScreen.rewards.stream()
+				.filter(r -> r.type == RewardType.CARD).map(this::newItem).collect(this.collectToArrayList()));
 		AbstractDungeon.combatRewardScreen.positionRewards();
 	}
 	

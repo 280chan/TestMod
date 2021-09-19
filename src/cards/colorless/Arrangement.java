@@ -2,18 +2,23 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
+import utils.MiscMethods;
+import actions.ArrangementUpgradingAction;
+
+import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-
-import actions.ArrangementAction;
-
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.badlogic.gdx.math.MathUtils;
 
-public class Arrangement extends AbstractTestCard {
+public class Arrangement extends AbstractTestCard implements MiscMethods {
 	public static final String ID = "Arrangement";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -28,15 +33,34 @@ public class Arrangement extends AbstractTestCard {
 		super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.RARE, CardTarget.SELF_AND_ENEMY);
 		this.baseBlock = BASE_BLK;
 		this.baseDamage = BASE_DMG;
-		this.baseMagicNumber = BASE_MGC;
-		this.magicNumber = this.baseMagicNumber;
-
+		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 		this.exhaust = true;
 	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
-		this.addToBot(new ArrangementAction(p, m, this.damageTypeForTurn, this.freeToPlayOnce, this.upgraded,
-				this.energyOnUse, this.damage, this.block));
+		this.addTmpXCostActionToBot(this, a -> {
+			this.addToTop(new ArrangementUpgradingAction(p, a));
+			this.addToTop(new DrawCardAction(p, a));
+			if (this.upgraded) {
+				for (int i = 0; i < a; i++) {
+					this.damage(p, m);
+				}
+				for (int i = 0; i < a; i++) {
+					this.block(p);
+				}
+			} else {
+				this.damage(p, m);
+				this.block(p);
+			}
+		});
+	}
+	
+	private void damage(AbstractPlayer p, AbstractMonster m) {
+		this.addToTop(new DamageAction(m, new DamageInfo(p, this.damage, this.damageType), AttackEffect.BLUNT_LIGHT));
+	}
+	
+	private void block(AbstractPlayer p) {
+		this.addToTop(new GainBlockAction(p, p, this.block, true));
 	}
     
 	public void calculateCardDamage(AbstractMonster m) {
@@ -49,13 +73,10 @@ public class Arrangement extends AbstractTestCard {
 		float tmp = this.baseDamage;
 
 		if (!this.upgraded) {
-			int x = EnergyPanel.totalCount;
-			if (this.energyOnUse != -1)
-				x = this.energyOnUse;
+			int x = this.energyOnUse == -1 ? EnergyPanel.totalCount : this.energyOnUse;
 			if (player.hasRelic("Chemical X"))
 				x += 2;
-			blc = x;
-			tmp = x;
+			blc = tmp = x;
 		}
 
 		// 防御
@@ -71,7 +92,7 @@ public class Arrangement extends AbstractTestCard {
 		this.block = MathUtils.floor(blc);
 
 		// 攻击
-		if ((AbstractDungeon.player.hasRelic("WristBlade")) && ((this.costForTurn == 0) || (this.freeToPlayOnce))) {
+		if (AbstractDungeon.player.hasRelic("WristBlade") && (this.costForTurn == 0 || this.freeToPlayOnce)) {
 			tmp += 3.0F;
 			if (this.baseDamage != (int) tmp) {
 				this.isDamageModified = true;

@@ -8,17 +8,15 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.combat.CleaveEffect;
 
 public class ComboMasterAction extends AbstractGameAction {
 	private int[] multiDamage;
 	private AbstractPlayer p;
-	private int damage;
 
-	public ComboMasterAction(AbstractPlayer p, int[] multiDamage, int damage, DamageType damageType) {
+	public ComboMasterAction(AbstractPlayer p, int[] multiDamage, int amount, DamageType damageType) {
 		this.multiDamage = multiDamage;
-		this.damage = damage;
+		this.amount = amount;
 	    this.damageType = damageType;
 	    this.p = p;
 	    this.duration = Settings.ACTION_DUR_XFAST;
@@ -27,7 +25,7 @@ public class ComboMasterAction extends AbstractGameAction {
 	}
 	
 	public void update() {
-		if (0 < damage && checkContinue()) {
+		if (0 < amount && checkContinue()) {
 			this.addToTop(this.next());
 			this.addToTop(new DamageAllEnemiesAction(this.p, this.multiDamage, this.damageType, AttackEffect.NONE, true));
 			this.addToTop(new SFXAction("ATTACK_HEAVY"));
@@ -37,14 +35,12 @@ public class ComboMasterAction extends AbstractGameAction {
 	}
 	
 	private ComboMasterAction next() {
-		return new ComboMasterAction(p, multiDamage, damage - 1, damageType);
+		return new ComboMasterAction(p, multiDamage, amount - 1, damageType);
 	}
 
 	private static boolean checkContinue() {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-			if (!(m == null || m.isDead || m.halfDead || m.isDying || m.isEscaping))
-				return true;
-		return false;
+		return !AbstractDungeon.getMonsters().monsters.stream()
+				.allMatch(m -> m == null || m.isDead || m.halfDead || m.isDying || m.isEscaping);
 	}
 	
 }

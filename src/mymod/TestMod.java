@@ -42,7 +42,6 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
-import actions.PerfectComboAction;
 import basemod.BaseMod;
 import basemod.ModPanel;
 import basemod.ReflectionHacks;
@@ -74,7 +73,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 9/14/2021
+ * @version 9/18/2021
  * @since 6/17/2018
  */
 
@@ -287,10 +286,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		ChristmasMod.initialize();
 	}
 	
-	private static void initLatest() {
+	private void initLatest() {
 		addLatest(new TraineeEconomist(), new RandomTest(), new GoldenSoul(), new GremlinBalance(), new IWantAll(),
 				new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue(), new VentureCapital());
-		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(Collectors.toCollection(ArrayList::new));
+		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.collectToArrayList());
 		addLatestCard(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
 	}
@@ -319,12 +318,12 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new GremlinBalance(), new RetroFilter(), new DominatorOfWeakness(), new ShadowAmulet(),
 				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital(), new VoidShard() };
 		// 添加遗物进游戏 TODO
-		RELICS = Stream.of(relic).collect(Collectors.toCollection(ArrayList::new));
+		RELICS = Stream.of(relic).collect(this.collectToArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);
 		MY_RELICS = RELICS.stream().filter(r -> r instanceof AbstractTestRelic).map(r -> (AbstractTestRelic) r)
-				.collect(Collectors.toCollection(ArrayList::new));
+				.collect(this.collectToArrayList());
 		
 		MY_RELICS.forEach(AbstractTestRelic::addToMap);
 		
@@ -364,7 +363,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new Automaton(), new PowerStrike(), new WeaknessCounterattack(), new Reproduce(), new SunMoon(),
 				new VirtualReality(), new Plague() };
 		// TODO
-		CARDS = Stream.of(card).collect(Collectors.toCollection(ArrayList::new));
+		CARDS = Stream.of(card).collect(this.collectToArrayList());
 		
 		CARDS.forEach(BaseMod::addCard);
 		
@@ -853,7 +852,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	@Override
 	public void receiveOnBattleStart(AbstractRoom r) {
 		SUB_MOD.forEach(new RoomTrigger(r)::preTrigger);
-		PerfectComboAction.setRng();
+		PerfectCombo.setRng();
 		AbstractMahjongCard.setRng();
 		Mahjong.setRng();
 		VirtualReality.reset();

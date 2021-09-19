@@ -1,10 +1,13 @@
 package relics;
 
+import java.util.List;
+
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import mymod.TestMod;
+import utils.MiscMethods;
 
-import actions.MagicalMalletAction;
-
-public class MagicalMallet extends AbstractTestRelic{
+public class MagicalMallet extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "MagicalMallet";
 	
 	public MagicalMallet() {
@@ -17,8 +20,23 @@ public class MagicalMallet extends AbstractTestRelic{
 	}
 	
 	public void atTurnStartPostDraw() {
-		if (this.isActive)
-			this.addToBot(new MagicalMalletAction(this, AbstractDungeon.player.hand.group));
+		this.addTmpActionToBot(() -> {
+			List<AbstractCard> hand = AbstractDungeon.player.hand.group;
+			if (hand.isEmpty())
+				return;
+			int min = hand.stream().filter(c -> c.cost >= 0).map(c -> c.costForTurn).reduce(Integer.MAX_VALUE,
+					Integer::min);
+			int max = hand.stream().filter(c -> c.cost >= 0).map(c -> c.costForTurn).reduce(Integer.MIN_VALUE,
+					Integer::max);
+			TestMod.info("最大: " + max + ",最小: " + min);
+			if (min == max)
+				return;
+			hand.stream().filter(c -> c.costForTurn == min || c.costForTurn == max).forEach(c -> {
+				c.modifyCostForCombat(max + min - c.costForTurn);
+				c.costForTurn = c.cost;
+			});
+			this.show();
+		});
     }
 	
 }

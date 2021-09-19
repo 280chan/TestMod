@@ -5,8 +5,9 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 
 import basemod.abstracts.CustomCard;
 import mymod.TestMod;
+import utils.MiscMethods;
 
-public abstract class AbstractTestCard extends CustomCard {
+public abstract class AbstractTestCard extends CustomCard implements MiscMethods {
 	
 	/**
 	 * 无色牌用

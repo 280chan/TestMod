@@ -7,8 +7,9 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-public class HopeAction extends AbstractGameAction {
+import utils.MiscMethods;
 
+public class HopeAction extends AbstractGameAction implements MiscMethods {
 	private float startingDuration;
 	public static final int MAX_NUM = 10;
 
@@ -21,22 +22,17 @@ public class HopeAction extends AbstractGameAction {
 
 	@Override
 	public void update() {
-		CardGroup tmpGroup;
 		if (this.duration == this.startingDuration) {
 			if (AbstractDungeon.player.masterDeck.isEmpty()) {
 				this.isDone = true;
 				return;
 			}
-			tmpGroup = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-			for (int i = 0; i < AbstractDungeon.player.masterDeck.size(); i++) {
-				tmpGroup.addToTop((AbstractCard) AbstractDungeon.player.masterDeck.group
-						.get(AbstractDungeon.player.masterDeck.size() - i - 1));
-			}
+			CardGroup tmpGroup = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
+			tmpGroup.group = AbstractDungeon.player.masterDeck.group.stream().collect(this.collectToArrayList());
 			AbstractDungeon.gridSelectScreen.open(tmpGroup, this.amount, true, "选择最多10张牌加入手牌");
 		} else if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
-			for (AbstractCard c : AbstractDungeon.gridSelectScreen.selectedCards) {
-				AbstractDungeon.actionManager.addToTop(new MakeTempCardInHandAction(c.makeStatEquivalentCopy()));
-			}
+			AbstractDungeon.gridSelectScreen.selectedCards.stream().map(AbstractCard::makeStatEquivalentCopy)
+					.map(MakeTempCardInHandAction::new).forEach(this::addToTop);
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
 		}
 		tickDuration();

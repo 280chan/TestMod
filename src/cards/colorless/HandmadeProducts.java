@@ -2,17 +2,19 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
+import utils.MiscMethods;
+
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-
-import actions.HandmadeProductsAttackAction;
-
+import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-public class HandmadeProducts extends AbstractTestCard {
+public class HandmadeProducts extends AbstractTestCard implements MiscMethods {
     public static final String ID = "HandmadeProducts";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -28,8 +30,27 @@ public class HandmadeProducts extends AbstractTestCard {
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.addToBot(new HandmadeProductsAttackAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), this.magicNumber, uuid));
+    	this.addTmpActionToBot(() -> {
+			AbstractDungeon.effectList
+					.add(new FlashAtkImgEffect(m.hb.cX, m.hb.cY, AbstractGameAction.AttackEffect.SLASH_DIAGONAL));
+			m.damage(new DamageInfo(p, this.damage, this.damageTypeForTurn));
+			if ((m.isDying || m.currentHealth <= 0) && !m.halfDead) {
+				AbstractDungeon.player.masterDeck.group.stream().filter(c -> c.uuid.equals(this.uuid))
+						.forEach(this::modify);
+				GetAllInBattleInstances.get(this.uuid).forEach(this::modify);
+			}
+			if (AbstractDungeon.getMonsters().areMonstersBasicallyDead()) {
+				AbstractDungeon.actionManager.clearPostCombatActions();
+			}
+		});
     }
+    
+	private void modify(AbstractCard c) {
+		if (c.cost > -1)
+			c.updateCost(this.magicNumber);
+		c.applyPowers();
+		c.baseDamage = 0;
+	}
 	
     public void calculateCardDamage(AbstractMonster m) {
 		this.baseDamage = this.product();

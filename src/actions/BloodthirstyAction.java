@@ -1,7 +1,6 @@
 package actions;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -22,9 +21,8 @@ public class BloodthirstyAction extends AbstractGameAction implements MiscMethod
 		Long rate = (long) magic;
 		Long amount = max * rate / 100L;
 		if (amount > 2147483647L)
-			amount = 100000000L;
-		this.info = new DamageInfo(source, amount.intValue(), DamageType.HP_LOSS);
-		setValues(target, info);
+			amount = 2000000000L;
+		setValues(target, new DamageInfo(source, amount.intValue(), DamageType.HP_LOSS));
 		this.actionType = ActionType.SPECIAL;
 		this.duration = DURATION;
 	}
@@ -35,15 +33,13 @@ public class BloodthirstyAction extends AbstractGameAction implements MiscMethod
 			AbstractDungeon.effectList.add(new FlashAtkImgEffect(this.target.hb.cX, this.target.hb.cY,
 					AbstractGameAction.AttackEffect.SLASH_DIAGONAL));
 			if (!(this.target.isDead || this.target.isDying || this.target.isEscaping)) {
-				int pre = this.target.currentHealth;
+				int hp = this.target.currentHealth;
 				this.target.damage(this.info);
-				int heal = pre - this.target.currentHealth;
-				if (heal > 0) {
-					this.info.owner.heal(heal);
-					for (AbstractCard c : this.getAllInBattleInstance(TestMod.makeID(Bloodthirsty.ID))) {
-						((Bloodthirsty)c).doublesMagicNumber();
-					}
-				}
+				hp -= this.target.currentHealth;
+				this.getAllInBattleInstance(TestMod.makeID(Bloodthirsty.ID)).stream().map(c -> (Bloodthirsty) c)
+						.forEach(Bloodthirsty::doublesMagicNumber);
+				if (hp > 0)
+					this.info.owner.heal(hp);
 			}
 		} else {
 			TestMod.info("目标为null???");

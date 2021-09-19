@@ -21,9 +21,11 @@ public class AssimilatedRuneApplicationAction extends AbstractGameAction {
 
 	@Override
 	public void update() {
-		if (this.target.hasPower(p.ID)) {
-			this.target.getPower(p.ID).stackPower(this.amount);
-			this.target.getPower(p.ID).updateDescription();
+		if (this.target.powers.stream().anyMatch(p -> p instanceof AssimilatedRunePower)) {
+			this.p = (AssimilatedRunePower) this.target.powers.stream().filter(p -> p instanceof AssimilatedRunePower)
+					.findFirst().get();
+			this.p.stackPower(this.amount);
+			this.p.updateDescription();
 		} else {
 			this.target.powers.add(0, p);
 		}

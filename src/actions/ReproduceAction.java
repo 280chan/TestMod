@@ -35,8 +35,7 @@ public class ReproduceAction extends AbstractGameAction {
 		tmp.group.addAll(p.hand.group);
 		tmp.group.addAll(p.discardPile.group);
 		tmp.removeCard(c);
-		for (AbstractCard t : p.hand.group)
-        	t.beginGlowing();
+		p.hand.group.forEach(AbstractCard::beginGlowing);
 		return tmp;
 	}
 	

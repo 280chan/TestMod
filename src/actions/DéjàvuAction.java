@@ -8,12 +8,14 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
+import basemod.BaseMod;
 import relics.Déjàvu;
 
 public class DéjàvuAction extends AbstractGameAction {
 	public static final float DURATION = Settings.ACTION_DUR_MED;
 	private Déjàvu d;
 	private ArrayList<AbstractCard> list;
+	private static boolean flag = false;
 	
 	public DéjàvuAction(Déjàvu d, ArrayList<AbstractCard> list) {
 		this.actionType = ActionType.CARD_MANIPULATION;
@@ -25,18 +27,14 @@ public class DéjàvuAction extends AbstractGameAction {
 	@Override
 	public void update() {
 		this.isDone = true;
-		boolean isFull = false;
-		for (AbstractCard c : this.list) {
-			isFull |= this.addCard(c.makeStatEquivalentCopy());
-		}
-		if (isFull)
-			AbstractDungeon.player.createHandIsFullDialog();
+		this.list.stream().sequential().map(AbstractCard::makeStatEquivalentCopy).forEach(this::addCard);
 		this.d.setState(false);
 		this.list.clear();
 		this.d.show();
+		flag = false;
 	}
 	
-	private boolean addCard(AbstractCard c) {
+	private void addCard(AbstractCard c) {
 		AbstractPlayer p = AbstractDungeon.player;
 		if (c.costForTurn > 0) {
 			c.costForTurn = 0;
@@ -51,14 +49,15 @@ public class DéjàvuAction extends AbstractGameAction {
 		c.current_x = Settings.WIDTH / 2.0F;
 		c.current_y = Settings.HEIGHT / 2.0F;
 		
-		if (p.hand.size() != 10) {
+		if (p.hand.size() < BaseMod.MAX_HAND_SIZE) {
 			p.hand.addToTop(c);
 			p.hand.refreshHandLayout();
 			p.hand.applyPowers();
-			return false;
 		} else {
 		    p.discardPile.addToTop(c);
-		    return true;
+		    if (!flag)
+				AbstractDungeon.player.createHandIsFullDialog();
+		    flag = true;
 		}
 	}
 	

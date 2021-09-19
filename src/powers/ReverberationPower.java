@@ -1,8 +1,6 @@
 package powers;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -44,14 +42,13 @@ public class ReverberationPower extends AbstractTestPower implements MiscMethods
 	
 	private void next(AbstractCard c, int size) {
 		this.addTmpActionToBot(() -> {
-			ArrayList<AbstractMonster> list = AbstractDungeon.getCurrRoom().monsters.monsters.stream()
-					.filter(this::checkMonster).collect(Collectors.toCollection(ArrayList::new));
+			ArrayList<AbstractMonster> list = AbstractDungeon.getMonsters().monsters.stream().filter(this::checkMonster)
+					.collect(this.collectToArrayList());
 			if (list.isEmpty())
 				return;
 			AbstractMonster m = list.get(AbstractDungeon.cardRandomRng.random(0, list.size() - 1));
 			c.calculateCardDamage(m);
-			if (c.cost == -1 && !c.freeToPlayOnce)
-				c.freeToPlayOnce = true;
+			c.freeToPlayOnce = c.cost == -1 && !c.freeToPlayOnce;
 			c.use(AbstractDungeon.player, m);
 			if (size > 1)
 				next(c, size - 1);

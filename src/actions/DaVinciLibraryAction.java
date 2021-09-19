@@ -1,7 +1,6 @@
 package actions;
 
 import java.util.ArrayList;
-
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
@@ -19,6 +18,7 @@ import mymod.TestMod;
 import utils.MiscMethods;
 
 public class DaVinciLibraryAction extends AbstractGameAction implements MiscMethods {
+	private static final int AMOUNT = 20;
 	private float startingDuration;
 	private CardGroup group;
 	private boolean pickCard = false;
@@ -30,38 +30,27 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 		this.duration = this.startingDuration;
 		this.group = new CardGroup(CardGroupType.UNSPECIFIED);
 		this.pre = pre;
-		for (AbstractCard c : group) {
-			this.group.addToBottom(c);
-		}
+		this.group.group.addAll(group);
 	}
 
 	private void openScreen() {
 		this.pickCard = true;
 		CardGroup group = new CardGroup(CardGroupType.UNSPECIFIED);
-		AbstractCard card = null;
-		if (this.group.size() > 20) {
-			for (int i = 0; i < 20; i++) {
-				card = this.group.getRandomCard(true);
-				if (!group.contains(card)) {
-					this.checkEggs(card);
-					group.addToBottom(card);
-				} else {
-					i--;
-				}
-			}
+		if (this.group.size() > AMOUNT) {
+			ArrayList<AbstractCard> tmp = this.group.group.stream().collect(this.collectToArrayList());
+			group.group = tmp;
+			group.shuffle(AbstractDungeon.cardRng);
+			group.group = group.group.stream().limit(AMOUNT).collect(this.collectToArrayList());
 		} else {
-			for (AbstractCard c : this.group.group)
-				group.addToBottom(c);
-			while (group.size() < 20) {
-				card =  AbstractDungeon.returnTrulyRandomColorlessCardInCombat();
-				if (!group.contains(card)) {
+			group.group.addAll(this.group.group);
+			while (group.size() < AMOUNT) {
+				AbstractCard card = AbstractDungeon.returnTrulyRandomColorlessCardInCombat();
+				if (group.group.stream().map(c -> c.cardID).noneMatch(card.cardID::equals)) {
 					group.addToBottom(card);
 				}
 			}
 		}
-		for (AbstractCard c : group.group) {
-			UnlockTracker.markCardAsSeen(c.cardID);
-		}
+		group.group.stream().peek(this::checkEggs).map(c -> c.cardID).forEach(UnlockTracker::markCardAsSeen);
 		AbstractDungeon.gridSelectScreen.open(group, 1, "达芬奇之心：选择获得1张牌。", false, false, true, false);
 		AbstractDungeon.overlayMenu.cancelButton.show(GridCardSelectScreen.TEXT[1]);
 	}
@@ -76,17 +65,13 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 		} else if (c.type == CardType.SKILL && p.hasRelic("Toxic Egg 2")) {
 			hasEgg = true;
 		}
-		if (hasEgg) {
+		if (hasEgg && c.canUpgrade()) {
 			c.upgrade();
 		}
 	}
 	
 	private boolean checkScreen(CurrentScreen s) {
-		if (before == s)
-			return true;
-		if (AbstractDungeon.screen == s)
-			return true;
-		return false;
+		return before == s || AbstractDungeon.screen == s;
 	}
 	
 	@Override
@@ -95,19 +80,16 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 			TestMod.info("准备打开图书馆界面");
 			openScreen();
 			tickDuration();
-		} else if ((this.pickCard) && (this.checkScreen(CurrentScreen.GRID)) && (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty())) {
-			AbstractCard c = AbstractDungeon.gridSelectScreen.selectedCards.get(0).makeCopy();
+		} else if (this.pickCard && this.checkScreen(CurrentScreen.GRID)
+				&& !AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
+			AbstractCard c = AbstractDungeon.gridSelectScreen.selectedCards.get(0);
 			TestMod.info("选择了" + c.name);
-			for (AbstractRelic r : AbstractDungeon.player.relics) {
-				r.onObtainCard(c);
-			}
+			AbstractDungeon.player.relics.forEach(r -> { r.onObtainCard(c); });
 			c.shrink();
 			CardGroup group = AbstractDungeon.player.masterDeck;
 			group.addToTop(c);
 			this.addHoarderCard(group, c);
-			for (AbstractRelic r : AbstractDungeon.player.relics) {
-				r.onMasterDeckChange();
-			}
+			AbstractDungeon.player.relics.forEach(AbstractRelic::onMasterDeckChange);
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
 			this.isDone = true;
 			TestMod.info("已获得" + c.name);

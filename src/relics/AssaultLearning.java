@@ -1,8 +1,6 @@
 package relics;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import utils.MiscMethods;
@@ -21,7 +19,7 @@ public class AssaultLearning extends AbstractTestRelic implements MiscMethods {
 	public void atTurnStartPostDraw() {
 		this.addTmpActionToBot(() -> {
 			ArrayList<AbstractCard> list = AbstractDungeon.player.drawPile.group.stream()
-					.filter(AbstractCard::canUpgrade).collect(Collectors.toCollection(ArrayList::new));
+					.filter(AbstractCard::canUpgrade).collect(this.collectToArrayList());
 			if (!list.isEmpty()) {
 				list.get(list.size() - 1).upgrade();
 				this.show();

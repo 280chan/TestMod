@@ -2,17 +2,17 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
+import utils.MiscMethods;
+
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
 import com.megacrit.cardcrawl.monsters.*;
-
-import actions.ModifyCostForCombatAction;
-
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.*;
 
-public class PocketStoneCalender extends AbstractTestCard {
+public class PocketStoneCalender extends AbstractTestCard implements MiscMethods {
     public static final String ID = "PocketStoneCalender";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -35,7 +35,13 @@ public class PocketStoneCalender extends AbstractTestCard {
     
     public void use(final AbstractPlayer p, final AbstractMonster m) {
     	this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_DIAGONAL));
-    	this.addToBot(new ModifyCostForCombatAction(this.uuid, this.magicNumber));
+    	this.addTmpActionToBot(() -> {
+    		GetAllInBattleInstances.get(this.uuid).forEach(this::modifyCostForCombat);
+    	});
+    }
+    
+    public void modifyCostForCombat(AbstractCard c) {
+    	c.modifyCostForCombat(this.magicNumber);
     }
     
     public void calculateCardDamage(AbstractMonster m) {

@@ -9,31 +9,33 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
+import powers.DisillusionmentEchoPower;
+import utils.MiscMethods;
+
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
-import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-import actions.DisillusionmentEchoAction;
-
-public class DisillusionmentEcho extends AbstractTestCard {
+public class DisillusionmentEcho extends AbstractTestCard implements MiscMethods {
 	public static final String ID = "DisillusionmentEcho";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final int COST = -1;
+	private static final int BASE_MGC = 3;
 
 	public DisillusionmentEcho() {
 		super(ID, NAME, COST, DESCRIPTION, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
-		this.baseMagicNumber = 3;
-		this.magicNumber = this.baseMagicNumber;
+		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
-		if (this.energyOnUse < EnergyPanel.totalCount) {
-			this.energyOnUse = EnergyPanel.totalCount;
-		}
-		this.addToBot(new DisillusionmentEchoAction(p, freeToPlayOnce, energyOnUse, magicNumber, timesUpgraded));
+		this.addTmpXCostActionToBot(this, a -> {
+			int amount = a / (this.magicNumber == 0 ? 3 - this.timesUpgraded : this.magicNumber);
+			if (amount > 0)
+				this.addToTop(new ApplyPowerAction(p, p, new DisillusionmentEchoPower(p, amount), amount));
+		});
 	}
 
 	public void upgrade() {

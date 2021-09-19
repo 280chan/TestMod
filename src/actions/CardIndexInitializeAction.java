@@ -32,36 +32,31 @@ public class CardIndexInitializeAction extends AbstractGameAction {
 		tmp.group.addAll(p.hand.group);
 		tmp.group.addAll(p.discardPile.group);
 		tmp.removeCard(c);
-		for (AbstractCard t : p.hand.group)
-        	t.beginGlowing();
+		p.hand.group.forEach(AbstractCard::beginGlowing);
 		return tmp;
 	}
 	
 	@Override
 	public void update() {
+		this.isDone = true;
 		if (this.duration == DURATION) {
 			if (g.isEmpty()) {
 				this.list.add(null);
-				this.isDone = true;
 				return;
 			}
+			this.isDone = false;
 			int size = Math.min(this.amount, g.size());
 			String info = "选择" + size + "张牌卡牌索引";
 			AbstractDungeon.gridSelectScreen.open(g, size, true, info);
 			//AbstractDungeon.gridSelectScreen.open(g, this.amount, info, false, false, false, false);
 		} else if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
-			String tmp = "选择了";
-			for (AbstractCard c : AbstractDungeon.gridSelectScreen.selectedCards) {
-				tmp += c.name + " ";
-				this.removeCard(c);
-			}
+			String tmp = "选择了" + AbstractDungeon.gridSelectScreen.selectedCards.stream().sequential()
+					.peek(this::removeCard).map(c -> c.name + " ").reduce("", (a, b) -> a + b);
 			TestMod.info(tmp);
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
-			this.isDone = true;
 		} else {
 			TestMod.info("取消了选择，之后打出不会生效。");
 			this.list.add(null);
-			this.isDone = true;
 		}
 		tickDuration();
 	}
