@@ -1,10 +1,7 @@
-
 package cards.colorless;
 
 import cards.AbstractTestCard;
 import powers.LibrarianPower;
-import utils.MiscMethods;
-
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -17,9 +14,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDiscardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 
-import basemod.BaseMod;
-
-public class Librarian extends AbstractTestCard implements MiscMethods {
+public class Librarian extends AbstractTestCard {
 	public static final String ID = "Librarian";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -74,7 +69,7 @@ public class Librarian extends AbstractTestCard implements MiscMethods {
 		public void add(AbstractCard c) {
 			c.unhover();
 			c.modifyCostForCombat(-c.cost);
-			if (this.p.hand.size() >= BaseMod.MAX_HAND_SIZE) {
+			if (Librarian.this.handFull()) {
 				AbstractDungeon.effectList.add(new ShowCardAndAddToDiscardEffect(c));
 				this.p.createHandIsFullDialog();
 			} else {

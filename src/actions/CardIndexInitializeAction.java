@@ -1,6 +1,7 @@
 package actions;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -28,9 +29,7 @@ public class CardIndexInitializeAction extends AbstractGameAction {
 	private static CardGroup createGroup(AbstractCard c) {
 		CardGroup tmp = new CardGroup(CardGroupType.UNSPECIFIED);
 		AbstractPlayer p = AbstractDungeon.player;
-		tmp.group.addAll(p.drawPile.group);
-		tmp.group.addAll(p.hand.group);
-		tmp.group.addAll(p.discardPile.group);
+		Stream.of(p.discardPile, p.hand, p.drawPile).flatMap(g -> g.group.stream()).forEach(tmp.group::add);
 		tmp.removeCard(c);
 		p.hand.group.forEach(AbstractCard::beginGlowing);
 		return tmp;
@@ -60,17 +59,10 @@ public class CardIndexInitializeAction extends AbstractGameAction {
 		}
 		tickDuration();
 	}
-
+	
 	private static CardGroup getSource(AbstractCard c) {
 		AbstractPlayer p = AbstractDungeon.player;
-		CardGroup[] groups = {p.discardPile, p.drawPile, p.hand};
-		for (CardGroup g : groups)
-			if (g.contains(c)) {
-				TestMod.info("来自于" + g.type);
-				return g;
-			}
-		TestMod.info("为什么找不到" + c.name + "？？？");
-		return null;
+		return Stream.of(p.discardPile, p.hand, p.drawPile).filter(g -> g.contains(c)).findAny().orElse(null);
 	}
 	
 	private void removeCard(AbstractCard c) {

@@ -34,9 +34,8 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import actions.HopeAction;
 import mymod.TestMod;
-import utils.MiscMethods;
 
-public class Hope extends AbstractTestRelic implements MiscMethods {
+public class Hope extends AbstractTestRelic {
 	public static final String ID = "Hope";
 
 	public static Random HPRng = new Random();

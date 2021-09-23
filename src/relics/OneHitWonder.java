@@ -1,6 +1,5 @@
 package relics;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.InstantKillAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
@@ -12,9 +11,8 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import mymod.TestMod;
 import powers.OneHitWonderDebuffPower;
-import utils.MiscMethods;
 
-public class OneHitWonder extends AbstractTestRelic implements MiscMethods {
+public class OneHitWonder extends AbstractTestRelic {
 	public static final String ID = "OneHitWonder";
 	
 	private boolean getRoll() {
@@ -45,16 +43,11 @@ public class OneHitWonder extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	private void tryApplyDebuff() {
-		boolean applied = false;
 		if (!this.hasEnemies())
 			return;
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (m.type == EnemyType.BOSS && !OneHitWonderDebuffPower.hasThis(m)) {
-				m.powers.add(new OneHitWonderDebuffPower(m));
-				applied = true;
-			}
-		}
-		if (applied && this.isActive())
+		if (AbstractDungeon.getMonsters().monsters.stream()
+				.filter(m -> m.type == EnemyType.BOSS && !OneHitWonderDebuffPower.hasThis(m))
+				.peek(m -> m.powers.add(new OneHitWonderDebuffPower(m))).findAny().isPresent() && this.isActive())
 			this.show();
 	}
 	
@@ -74,26 +67,21 @@ public class OneHitWonder extends AbstractTestRelic implements MiscMethods {
 			AbstractMonster m = (AbstractMonster)target;
 			if (m.type != EnemyType.BOSS && getRoll()) {
 				TestMod.info("一血传奇：条件满足，准备秒杀" + m.name);
-				this.addToTop(new AbstractGameAction() {
-					@Override
-					public void update() {
-						this.isDone = true;
-						if (m.isDeadOrEscaped() || m.escaped) {
-							TestMod.info("一血传奇：秒杀失败，" + m.name + "已死亡或逃跑");
-							return;
-						}
-						OneHitWonder.this.show();
-						this.addToTop(new InstantKillAction(m));
+				this.addTmpActionToTop(() -> {
+					if (m.isDeadOrEscaped() || m.escaped) {
+						TestMod.info("一血传奇：秒杀失败，" + m.name + "已死亡或逃跑");
+						return;
 					}
+					this.show();
+					this.addToTop(new InstantKillAction(m));
 				});
 			}
 		}
 	}
 	
 	public void onLoseHp(int damageAmount) {
-		if (!isActive)
-			return;
-		controlPulse();
+		if (isActive)
+			controlPulse();
 	}
 
 	private void controlPulse() {

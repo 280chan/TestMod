@@ -2,8 +2,6 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import utils.MiscMethods;
-
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -11,7 +9,7 @@ import com.megacrit.cardcrawl.monsters.*;
 
 import actions.ComboMasterAction;
 
-public class ComboMaster extends AbstractTestCard implements MiscMethods {
+public class ComboMaster extends AbstractTestCard {
     public static final String ID = "ComboMaster";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;

@@ -14,9 +14,8 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import mymod.TestMod;
-import utils.MiscMethods;
 
-public class RandomTest extends AbstractTestRelic implements MiscMethods {
+public class RandomTest extends AbstractTestRelic {
 	public static final String ID = "RandomTest";
 	private static Color color = null;
 	

@@ -3,13 +3,11 @@ package relics;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import powers.IntensifyImprintPower;
-import utils.MiscMethods;
 
-public class IntensifyImprint extends AbstractTestRelic implements MiscMethods {
+public class IntensifyImprint extends AbstractTestRelic {
 	public static final String ID = "IntensifyImprint";
 	
 	public IntensifyImprint() {
@@ -63,9 +61,8 @@ public class IntensifyImprint extends AbstractTestRelic implements MiscMethods {
 		if (this.counter < 0 || !this.hasEnemies())
 			return;
 		if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT)
-			for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters)
-				if (!IntensifyImprintPower.hasThis(m))
-					m.powers.add(new IntensifyImprintPower(m, this));
+			AbstractDungeon.getMonsters().monsters.stream().filter(not(IntensifyImprintPower::hasThis))
+					.forEach(m -> m.powers.add(new IntensifyImprintPower(m, this)));
 	}
 	
 }

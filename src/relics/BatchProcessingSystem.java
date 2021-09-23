@@ -8,9 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import utils.MiscMethods;
-
-public class BatchProcessingSystem extends AbstractTestRelic implements MiscMethods {
+public class BatchProcessingSystem extends AbstractTestRelic {
 	public static final String ID = "BatchProcessingSystem";
 	private static Color color = null;
 	

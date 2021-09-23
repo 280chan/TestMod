@@ -1,5 +1,7 @@
 package actions;
 
+import java.util.stream.Stream;
+
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -31,9 +33,7 @@ public class ReproduceAction extends AbstractGameAction {
 	private static CardGroup createGroup(AbstractCard c) {
 		CardGroup tmp = new CardGroup(CardGroupType.UNSPECIFIED);
 		AbstractPlayer p = AbstractDungeon.player;
-		tmp.group.addAll(p.drawPile.group);
-		tmp.group.addAll(p.hand.group);
-		tmp.group.addAll(p.discardPile.group);
+		Stream.of(p.discardPile, p.hand, p.drawPile).flatMap(g -> g.group.stream()).forEach(tmp.group::add);
 		tmp.removeCard(c);
 		p.hand.group.forEach(AbstractCard::beginGlowing);
 		return tmp;

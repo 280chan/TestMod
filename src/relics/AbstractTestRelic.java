@@ -1,6 +1,7 @@
 package relics;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,8 +11,9 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import basemod.abstracts.CustomRelic;
 import mymod.TestMod;
+import utils.MiscMethods;
 
-public abstract class AbstractTestRelic extends CustomRelic {
+public abstract class AbstractTestRelic extends CustomRelic implements MiscMethods {
 	public boolean isActive = false;
 	public boolean show = true;
 	
@@ -120,6 +122,10 @@ public abstract class AbstractTestRelic extends CustomRelic {
 	
 	public float preChangeMaxHP(float amount) {
 		return amount;
+	}
+	
+	public Function<Float, Float> maxHPChanger() {
+		return this::preChangeMaxHP;
 	}
 	
 }

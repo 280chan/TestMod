@@ -2,8 +2,6 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import utils.MiscMethods;
-
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
@@ -14,7 +12,7 @@ import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-public class HandmadeProducts extends AbstractTestCard implements MiscMethods {
+public class HandmadeProducts extends AbstractTestCard {
     public static final String ID = "HandmadeProducts";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;

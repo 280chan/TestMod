@@ -7,9 +7,8 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import utils.MiscMethods;
 
-public class ObsoleteBoomerang extends AbstractTestRelic implements MiscMethods {
+public class ObsoleteBoomerang extends AbstractTestRelic {
 	public static final String ID = "ObsoleteBoomerang";
 	
 	public ObsoleteBoomerang() {

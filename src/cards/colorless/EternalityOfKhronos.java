@@ -2,13 +2,11 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import utils.MiscMethods;
-
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
-public class EternalityOfKhronos extends AbstractTestCard implements MiscMethods {
+public class EternalityOfKhronos extends AbstractTestCard {
     public static final String ID = "EternalityOfKhronos";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -18,8 +16,7 @@ public class EternalityOfKhronos extends AbstractTestCard implements MiscMethods
 
     public EternalityOfKhronos() {
         super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
-        this.isEthereal = true;
-        this.exhaust = true;
+        this.isEthereal = this.exhaust = true;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {

@@ -10,9 +10,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
-import utils.MiscMethods;
-
-public class CyclicPeriapt extends AbstractTestRelic implements MiscMethods {
+public class CyclicPeriapt extends AbstractTestRelic {
 	public static final String ID = "CyclicPeriapt";
 	
 	private static Color color = null;

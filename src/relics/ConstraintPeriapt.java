@@ -13,9 +13,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-import utils.MiscMethods;
-
-public class ConstraintPeriapt extends AbstractTestRelic implements MiscMethods {
+public class ConstraintPeriapt extends AbstractTestRelic {
 	public static final String ID = "ConstraintPeriapt";
 
 	public ConstraintPeriapt() {

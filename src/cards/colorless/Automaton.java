@@ -1,15 +1,12 @@
 package cards.colorless;
 
+import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
-
-import cards.AbstractTestCard;
-
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
 import com.megacrit.cardcrawl.localization.CardStrings;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
 
 public class Automaton extends AbstractTestCard {
@@ -22,82 +19,68 @@ public class Automaton extends AbstractTestCard {
     private static final int BASE_MGC = 1;
     private static final int DELTA_MGC = 1;
 
+    private static void load(AbstractCard c) {
+		if (c.misc > c.baseMagicNumber) {
+			c.magicNumber = c.baseMagicNumber = c.misc;
+		} else if (c.misc < c.baseMagicNumber) {
+			c.misc = c.magicNumber;
+		}
+    }
+    
     public static void loadMagicNumber() {
     	if (AbstractDungeon.player == null || AbstractDungeon.player.masterDeck == null)
     		return;
-    	for (AbstractCard c : AbstractDungeon.player.masterDeck.group)
-    		if (c instanceof Automaton) {
-    			if (c.misc > c.baseMagicNumber) {
-        			c.baseMagicNumber = c.misc;
-        			c.magicNumber = c.misc;
-    			} else if (c.misc < c.baseMagicNumber) {
-    				c.misc = c.magicNumber;
-    			}
-    		}
+    	AbstractDungeon.player.masterDeck.group.stream().filter(c -> c instanceof Automaton).forEach(Automaton::load);
     }
     
     public Automaton() {
         super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
         this.baseDamage = ATTACK_DMG;
-        this.baseMagicNumber = BASE_MGC;
-        this.magicNumber = this.baseMagicNumber;
-        this.misc = this.baseMagicNumber;
+        this.misc = this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
     
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	if (this.isInAutoplay) {
-			this.addToBot(new AbstractGameAction() {
-				@Override
-				public void update() {
-					this.isDone = true;
-					for (AbstractCard c : AbstractDungeon.player.masterDeck.group)
-						if (c.uuid.equals(Automaton.this.uuid))
-							Automaton.modify(c);
-					for (AbstractCard c : GetAllInBattleInstances.get(Automaton.this.uuid))
-						Automaton.modify(c);
-				}
+		if (this.isInAutoplay) {
+			this.addTmpActionToBot(() -> {
+				AbstractDungeon.player.masterDeck.group.stream().filter(c -> c.uuid.equals(this.uuid))
+						.forEach(this::modify);
+				GetAllInBattleInstances.get(this.uuid).forEach(this::modify);
 			});
     	}
-    	if (this.magicNumber > 0)
-    		this.addToBot(new SwordBoomerangAction(
-    		      AbstractDungeon.getMonsters().getRandomMonster(true), new DamageInfo(p, this.baseDamage), this.magicNumber));
-    	this.addToBot(new AbstractGameAction() {
-			@Override
-			public void update() {
-				this.isDone = true;
-		    	Automaton.this.magicNumber--;
-		    	Automaton.this.baseMagicNumber--;
-		    	Automaton.this.misc--;
-		    	Automaton.this.initializeDescription();
-			}
-		});
+		if (this.magicNumber > 0)
+			this.addToBot(new SwordBoomerangAction(AbstractDungeon.getMonsters().getRandomMonster(true),
+					new DamageInfo(p, this.baseDamage), this.magicNumber));
+		this.addTmpActionToBot(() -> {
+	    	this.magicNumber--;
+	    	this.baseMagicNumber--;
+	    	this.misc--;
+	    	this.initializeDescription();
+    	});
     }
     
-	public static void modify(AbstractCard c) {
+	public void modify(AbstractCard c) {
 		c.misc += DELTA_MGC;
 		c.baseMagicNumber += DELTA_MGC;
 		c.magicNumber += DELTA_MGC;
     }
 	
-	public void applyPowers() {
+	private void updateValue() {
 		if (this.magicNumber > this.misc) {
 			this.misc = this.magicNumber;
 		} else if (this.magicNumber < this.misc) {
-			this.baseMagicNumber = this.misc;
-			this.magicNumber = this.misc;
+			this.magicNumber = this.baseMagicNumber = this.misc;
 		}
+	}
+	
+	public void applyPowers() {
+		this.updateValue();
 		super.applyPowers();
 		this.initializeDescription();
 	}
 	
 	public AbstractCard makeStatEquivalentCopy() {
 		AbstractCard c = super.makeStatEquivalentCopy();
-		if (this.magicNumber > this.misc) {
-			this.misc = this.magicNumber;
-		} else if (this.magicNumber < this.misc) {
-			this.baseMagicNumber = this.misc;
-			this.magicNumber = this.misc;
-		}
+		this.updateValue();
 		c.magicNumber = this.magicNumber;
 		return c;
 	}

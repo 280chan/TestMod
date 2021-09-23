@@ -1,10 +1,12 @@
 package relics;
 
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
@@ -34,12 +36,9 @@ public class StringDisintegrator extends AbstractTestRelic {
 	}
 	
 	private static void hideAllText() {
-		hideText(AbstractDungeon.player.discardPile);
-		hideText(AbstractDungeon.player.drawPile);
-		hideText(AbstractDungeon.player.exhaustPile);
-		hideText(AbstractDungeon.player.hand);
-		hideText(AbstractDungeon.player.limbo);
-		hideText(AbstractDungeon.player.masterDeck);
+		AbstractPlayer p = AbstractDungeon.player;
+		Stream.of(p.discardPile, p.drawPile, p.exhaustPile, p.hand, p.limbo, p.masterDeck)
+				.forEach(StringDisintegrator::hideText);
 	}
 	
 	private static void hideText(CardGroup g) {

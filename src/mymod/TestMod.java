@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -73,7 +74,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 9/18/2021
+ * @version 9/22/2021
  * @since 6/17/2018
  */
 
@@ -95,8 +96,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	public static void addRelicsToPool(AbstractRelic... relics) {
-		for (AbstractRelic r : relics)
-			RELICS.add(r);
+		Stream.of(relics).forEach(RELICS::add);
 	}
 	
 	private static void editSubModRelics(ISubscriber sub) {
@@ -290,7 +290,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		addLatest(new TraineeEconomist(), new RandomTest(), new GoldenSoul(), new GremlinBalance(), new IWantAll(),
 				new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue(), new VentureCapital());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.collectToArrayList());
-		addLatestCard(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
+		addLatest(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
 	}
 
@@ -300,8 +300,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	@Override
 	public void receiveEditRelics() {
-		AbstractRelic[] relic = { new ObsoleteBoomerang(), new D_4(), new BlackFramedGlasses(), new BouquetWithThorns(),
-				new PortableAltar(), new Sins(), new Register(), new EnergyCheck(), new InfectionSource(),
+		// 添加遗物进游戏
+		RELICS = Stream.of(new ObsoleteBoomerang(), new D_4(), new BlackFramedGlasses(), new BouquetWithThorns(),
+				new PortableAltar(), new Sins(), new Register(), new EnergyCheck(), new Mahjong(), new CasingShield(),
 				new OneHitWonder(), new Iteration(), new Temperance(), new Justice(), new Fortitude(), new Charity(),
 				new Hope(), new AssaultLearning(), new Muramasa(), new HeartOfDaVinci(), new IncinerationGenerator(),
 				new IndustrialRevolution(), new AscensionHeart(), new RealStoneCalender(), new Nyarlathotep(),
@@ -311,14 +312,13 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new BatchProcessingSystem(), new CardMagician(), new NegativeEmotionEnhancer(), new Brilliant(),
 				new IWantAll(), new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(),
 				new Faith(), new FatalChain(), new CyclicPeriapt(), new EqualTreatment(), new ConstraintPeriapt(),
-				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new CasingShield(), new TestBox(),
-				new BloodSacrificeSpiritualization(), new Acrobat(), new Mahjong(), new ArcanaOfDestiny(),
+				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new TestBox(), new VoidShard(),
+				new BloodSacrificeSpiritualization(), new Acrobat(), new ArcanaOfDestiny(), new InfectionSource(),
 				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
 				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest(), new TemporaryBarricade(),
 				new GremlinBalance(), new RetroFilter(), new DominatorOfWeakness(), new ShadowAmulet(),
-				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital(), new VoidShard() };
-		// 添加遗物进游戏 TODO
-		RELICS = Stream.of(relic).collect(this.collectToArrayList());
+				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital(), new Restrained())
+				.collect(this.collectToArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);
@@ -336,35 +336,35 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private static ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
 	//private static ArrayList<AbstractBottleRelic> BOTTLES = new ArrayList<AbstractBottleRelic>();
 	
+	private void loadStrings(Class<?> c) {
+		String s = c.getSimpleName().toLowerCase();
+		BaseMod.loadCustomStrings(c, readString(s.substring(0, s.length() - 7) + "s"));
+	}
+	
 	@Override
 	public void receiveEditStrings() {
-		BaseMod.loadCustomStrings(RelicStrings.class, readString("relics"));
-		BaseMod.loadCustomStrings(CardStrings.class, readString("cards"));
-		BaseMod.loadCustomStrings(PowerStrings.class, readString("powers"));
-		BaseMod.loadCustomStrings(PotionStrings.class, readString("potions"));
-		BaseMod.loadCustomStrings(EventStrings.class, readString("events"));
+		Stream.of(RelicStrings.class, CardStrings.class, PowerStrings.class, PotionStrings.class, EventStrings.class)
+				.forEach(this::loadStrings);
 		SUB_MOD.forEach(TestMod::editSubModStrings);
 	}
 
 	@Override
 	public void receiveEditCards() {
 		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(BaseMod::addCard);
-		
-		AbstractCard[] card = { new DisillusionmentEcho(), new TreasureHunter(), new SubstituteBySubterfuge(),
-				new PerfectCombo(), new PulseDistributor(), new LifeRuler(), new EternalityOfKhronos(), new Wormhole(),
-				new AutoReboundSystem(), new ComboMaster(), new Collector(), new RepeatForm(), new BloodBlade(),
-				new ShutDown(), new Provocation(), new PocketStoneCalender(), new Mystery(), new Bloodthirsty(),
-				new BloodShelter(), new Reflect(), new Dream(), new ChaoticCore(), new LimitFlipper(),
-				new ConditionedReflex(), new RabbitOfFibonacci(), new CardIndex(), new DeathImprint(),
-				new Arrangement(), new AssimilatedRune(), new AdversityCounterattack(), new Recap(), new HeadAttack(),
-				new TemporaryDeletion(), new EnhanceArmerment(), new TradeIn(), new TaurusBlackCat(),
-				new PainDetonator(), new FightingIntention(), new Reverberation(), new SelfRegulatingSystem(),
-				new Superconductor(), new BackupPower(), new Illusory(), new Librarian(), new HandmadeProducts(),
-				new Automaton(), new PowerStrike(), new WeaknessCounterattack(), new Reproduce(), new SunMoon(),
-				new VirtualReality(), new Plague() };
-		// TODO
-		CARDS = Stream.of(card).collect(this.collectToArrayList());
-		
+		// 添加卡牌进游戏
+		CARDS = Stream.of(new DisillusionmentEcho(), new LifeRuler(), new ComboMaster(), new AdversityCounterattack(),
+				new SubstituteBySubterfuge(), new Superconductor(), new PulseDistributor(), new EternalityOfKhronos(),
+				new AutoReboundSystem(), new Wormhole(), new RepeatForm(), new Plague(), new SunMoon(), new Mystery(),
+				new ShutDown(), new Reflect(), new Provocation(), new PocketStoneCalender(), new Recap(), new Dream(),
+				new Bloodthirsty(), new Arrangement(), new Collector(), new ChaoticCore(), new SelfRegulatingSystem(),
+				new LimitFlipper(), new ConditionedReflex(), new RabbitOfFibonacci(), new BloodBlade(), new TradeIn(),
+				new DeathImprint(), new BloodShelter(), new AssimilatedRune(), new TreasureHunter(), new HeadAttack(),
+				new PainDetonator(), new FightingIntention(), new Reverberation(), new CardIndex(), new BackupPower(),
+				new PerfectCombo(), new Lexicography(), new Librarian(), new VirtualReality(), new HandmadeProducts(),
+				new WeaknessCounterattack(), new TemporaryDeletion(), new EnhanceArmerment(), new TaurusBlackCat(),
+				new Automaton(), new Illusory(), new Reproduce(), new PowerStrike())
+				.collect(this.collectToArrayList());
+
 		CARDS.forEach(BaseMod::addCard);
 		
 		for (int i = 0; i < 37; i++)
@@ -384,12 +384,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public static ArrayList<AbstractCard> CARDS = new ArrayList<AbstractCard>();
 	
 	public static void removeFromPool(AbstractRelic r) {
-		String id = r.relicId;
-		AbstractDungeon.commonRelicPool.remove(id);
-		AbstractDungeon.uncommonRelicPool.remove(id);
-		AbstractDungeon.rareRelicPool.remove(id);
-		AbstractDungeon.bossRelicPool.remove(id);
-		AbstractDungeon.shopRelicPool.remove(id);
+		Stream.of(AbstractDungeon.commonRelicPool, AbstractDungeon.uncommonRelicPool, AbstractDungeon.rareRelicPool,
+				AbstractDungeon.bossRelicPool, AbstractDungeon.shopRelicPool).forEach(l -> l.remove(r.relicId));
 	}
 	
 	private static void avoidFirstTime() {
@@ -397,33 +393,21 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			TipTracker.neverShowAgain("RELIC_TIP");
 	}
 	
-	private static final ArrayList<Object> LATEST = new ArrayList<Object>();
+	private static ArrayList<AbstractRelic> LATEST = new ArrayList<AbstractRelic>();
 	public static ArrayList<AbstractRelic> BAD_RELICS = new ArrayList<AbstractRelic>();
-	private static final ArrayList<Object> LATEST_CARD = new ArrayList<Object>();
-	
-	private static int latestIndex = 0, latestCard;
+	private static ArrayList<AbstractCard> LATEST_CARD = new ArrayList<AbstractCard>();
 	
 	public static Object checkLatest(boolean relic) {
-		if (relic) {
-			if (latestIndex < LATEST.size()) {
-				return LATEST.get(latestIndex++);
-			}
-		} else {
-			if (latestCard < LATEST_CARD.size()) {
-				return LATEST_CARD.get(latestCard++);
-			}
-		}
-		return null;
+		Function<ArrayList<? extends Object>, Object> f = l -> l.isEmpty() ? null : l.remove(0);
+		return f.apply(relic ? LATEST : LATEST_CARD);
 	}
 	
-	private static void addLatest(Object... list) {
-		for (Object o : list)
-			LATEST.add(o);
+	private void addLatest(AbstractRelic... list) {
+		LATEST = Stream.of(list).collect(this.collectToArrayList());
 	}
 	
-	private static void addLatestCard(Object... list) {
-		for (Object o : list)
-			LATEST_CARD.add(o);
+	private void addLatest(AbstractCard... list) {
+		LATEST_CARD = Stream.of(list).collect(this.collectToArrayList());
 	}
 	
 	@Override
@@ -446,29 +430,13 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		// 初始遗物
 		obtain(AbstractDungeon.player, new TestBox());
 	}
-
-	public static void unlock(Object o) {
-		if (o instanceof AbstractRelic) {
-			AbstractRelic r = (AbstractRelic) o;
-			if (!UnlockTracker.isRelicSeen(r.relicId)) {
-				UnlockTracker.markRelicAsSeen(r.relicId);
-				info("成功解锁了未见过的 " + r.name);
-			}
-		} else if (o instanceof AbstractCard) {
-			AbstractCard c = (AbstractCard) o;
-			if (!UnlockTracker.isCardSeen(c.cardID)) {
-				UnlockTracker.markCardAsSeen(c.cardID);
-				info("成功解锁了未见过的 " + c.name);
-			}
-		}
-	}
 	
-	public static void unlockAll() {
+	public void unlockAll() {
 		info("开始解锁");
-		CARDS.forEach(TestMod::unlock);
-		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(TestMod::unlock);
-		MAHJONGS.forEach(TestMod::unlock);
-		RELICS.forEach(TestMod::unlock);
+		CARDS.forEach(this::markAsSeen);
+		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(this::markAsSeen);
+		MAHJONGS.forEach(this::markAsSeen);
+		RELICS.forEach(this::markAsSeen);
 	}
 	
 	private static final ArrayList<AbstractRelic> TO_OBTAIN = new ArrayList<AbstractRelic>();
@@ -477,12 +445,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		TO_OBTAIN.add(r);
 	}
 	
-	public static AbstractRelic randomBonusRelic() {
-		ArrayList<AbstractRelic> unSeen = new ArrayList<AbstractRelic>();
-		RELICS.stream().filter(r -> !r.isSeen).forEach(unSeen::add);
-		if (!unSeen.isEmpty())
-			return unSeen.get((int) (Math.random() * unSeen.size()));
-		return RELICS.get((int) (Math.random() * (RELICS.size())));
+	public AbstractRelic randomBonusRelic() {
+		ArrayList<AbstractRelic> unSeen = RELICS.stream().filter(r -> !r.isSeen).collect(this.collectToArrayList());
+		Function<ArrayList<AbstractRelic>, AbstractRelic> f = l -> l.get((int) (Math.random() * l.size()));
+		return f.apply(unSeen.isEmpty() ? RELICS : unSeen);
 	}
 	
 	public static boolean obtain(AbstractPlayer p, AbstractRelic r, boolean canDuplicate) {
@@ -497,14 +463,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		return false;
 	}
 	
-	public static AbstractCard randomBonusCard() {
-		/*if (MODE.cheat()) {
-		}*/
-		ArrayList<AbstractCard> unSeen = new ArrayList<AbstractCard>();
-		CARDS.stream().filter(c -> {return !c.isSeen;}).forEach(unSeen::add);
-		if (!unSeen.isEmpty())
-			return unSeen.get((int) (Math.random() * unSeen.size()));
-		return CARDS.get((int) (Math.random() * (CARDS.size())));
+	public AbstractCard randomBonusCard() {
+		ArrayList<AbstractCard> unSeen = CARDS.stream().filter(c -> !c.isSeen).collect(this.collectToArrayList());
+		Function<ArrayList<AbstractCard>, AbstractCard> f = l -> l.get((int) (Math.random() * l.size()));
+		return f.apply(unSeen.isEmpty() ? CARDS : unSeen);
 	}
 	
 	public static boolean obtain(AbstractPlayer p, AbstractCard c, int timesUpgrade) {
@@ -533,11 +495,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receivePreUpdate() {
 		AbstractPlayer p = AbstractDungeon.player;
 		if (p != null) {
-			p.relics.stream().filter(r -> {
-				return r instanceof AbstractTestRelic;
-			}).forEach(r -> {
-				((AbstractTestRelic) r).preUpdate();
-			});
+			p.relics.stream().filter(r -> r instanceof AbstractTestRelic)
+					.forEach(r -> ((AbstractTestRelic) r).preUpdate());
 			this.updateGlow();
 		}
 	}
@@ -768,30 +727,14 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private static void addEvents() {
-		Object[] events = { BoxForYourself.class, PlateOfNloth.class };
-		for (Object o : events) {
-			Class<? extends AbstractEvent> c = (Class<? extends AbstractEvent>) o;
-			try {
-				BaseMod.addEvent((String) c.getField("ID").get(null), c);
-			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-				e.printStackTrace();
-			}
-		}
+		Stream.of(BoxForYourself.class, PlateOfNloth.class)
+				.forEach(c -> BaseMod.addEvent(ReflectionHacks.getPrivateStatic(c, "ID"), c));
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	private static void addPotions() {
-		Object[] potions = { EscapePotion.class, TimePotion.class, SpacePotion.class, TestPotion.class };
-		for (Object o : potions) {
-			Class<? extends AbstractPotion> c = (Class<? extends AbstractPotion>) o;
-			try {
-				BaseMod.addPotion(c, null, null, null, (String) c.getField("POTION_ID").get(null));
-			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-				e.printStackTrace();
-			}
-		}
+		Stream.of(EscapePotion.class, TimePotion.class, SpacePotion.class, TestPotion.class)
+				.forEach(c -> BaseMod.addPotion(c, null, null, null, ReflectionHacks.getPrivateStatic(c, "POTION_ID")));
 	}
 	
 	@Override
@@ -860,11 +803,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 	@Override
 	public int receiveMapHPChange(int amount) {
-		float tmp = amount * 1f;
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (r instanceof AbstractTestRelic)
-				tmp = ((AbstractTestRelic) r).preChangeMaxHP(tmp);
-		return (int) tmp;
+		return AbstractDungeon.player.relics.stream().filter(r -> r instanceof AbstractTestRelic)
+				.map(r -> ((AbstractTestRelic) r).maxHPChanger()).reduce(a -> a, Function::andThen).apply(amount * 1f)
+				.intValue();
 	}
 	
 	public static String eventIMGPath(String ID) {
@@ -942,11 +883,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	public static boolean addPotionSlotMultiplayer() {
 		if (AbstractDungeon.player.hasBlight("VaporFunnel")) {
-			TestMod.info("拥有共享药水栏位荒疫，开始增加团队药水栏位");
+			info("拥有共享药水栏位荒疫，开始增加团队药水栏位");
 			callPotionBeltPatch();
 			return true;
 		} else if (Loader.isModLoaded("chronoMods")) {
-			TestMod.info("未拥有共享药水栏位荒疫，跳过");
+			info("未拥有共享药水栏位荒疫，跳过");
 		}
 		return false;
 	}

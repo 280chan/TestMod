@@ -21,10 +21,8 @@ public class Collector extends AbstractTestCard {
     
     public Collector() {
     	super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
-    	this.baseDamage = ATTACK_DMG;
-    	this.misc = this.baseDamage;
-    	this.baseMagicNumber = BASE_MGC;
-    	this.magicNumber = this.baseMagicNumber;
+    	this.misc = this.baseDamage = ATTACK_DMG;
+    	this.magicNumber = this.baseMagicNumber = BASE_MGC;
     	this.isMultiDamage = true;
     }
 

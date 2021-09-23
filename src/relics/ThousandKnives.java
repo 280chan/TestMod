@@ -10,9 +10,8 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import utils.MiscMethods;
 
-public class ThousandKnives extends AbstractTestRelic implements MiscMethods {
+public class ThousandKnives extends AbstractTestRelic {
 	public static final String ID = "ThousandKnives";
 	
 	private static Color color = null;

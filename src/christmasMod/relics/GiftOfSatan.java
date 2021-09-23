@@ -93,7 +93,7 @@ public class GiftOfSatan extends AbstractClickRelic implements ChristmasMiscMeth
 	    	retVal2.add(retVal.remove((int) (this.cardRng() * retVal.size())).makeCopy());
 	    }
 		for (AbstractCard c : retVal2) {
-			if ((RNGTools.cardRNG.randomBoolean(cardUpgradedChance))) {
+			if ((ChristmasMiscMethods.RNGTools.cardRNG.randomBoolean(cardUpgradedChance))) {
 				c.upgrade();
 			} else if ((c.type == AbstractCard.CardType.ATTACK) && (player.hasRelic("Molten Egg 2"))) {
 				c.upgrade();

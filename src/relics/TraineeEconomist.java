@@ -8,9 +8,8 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.ShopRoom;
-import utils.MiscMethods;
 
-public class TraineeEconomist extends AbstractTestRelic implements MiscMethods {
+public class TraineeEconomist extends AbstractTestRelic {
 	public static final String ID = "TraineeEconomist";
 	private static final int DELTA_BONUS = 5;
 	private static final int DELTA_PRICE = 5;

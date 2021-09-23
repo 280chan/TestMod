@@ -15,9 +15,8 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import mymod.TestMod;
 import powers.D_4Power;
-import utils.MiscMethods;
 
-public class D_4 extends AbstractTestRelic implements MiscMethods {
+public class D_4 extends AbstractTestRelic {
 	public static final String ID = "D_4";
 	private static Situation nextSituation = null;
 	private static final Situation[] SITUATIONS = Situation.values();

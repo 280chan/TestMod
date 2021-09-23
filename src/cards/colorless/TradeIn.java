@@ -2,11 +2,16 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
+
+import java.util.ArrayList;
+
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.*;
-
-import actions.TradeInAction;
-
 import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class TradeIn extends AbstractTestCard {
@@ -20,13 +25,63 @@ public class TradeIn extends AbstractTestCard {
     public TradeIn() {
         super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
-        this.exhaust = true;
-        this.isEthereal = true;
+        this.exhaust = this.isEthereal = true;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-        this.addToBot(new TradeInAction(p, this.magicNumber));
-    }
+		this.addTmpActionToBot(() -> {
+			if (!p.hand.isEmpty()) {
+				AbstractDungeon.handCardSelectScreen.open("消耗", p.hand.size(), true, true, false, false);
+				this.addTmpActionToTop(() -> {
+					if (!AbstractDungeon.handCardSelectScreen.wereCardsRetrieved) {
+						int size = AbstractDungeon.handCardSelectScreen.selectedCards.size();
+						exhaustsCards(p, AbstractDungeon.handCardSelectScreen.selectedCards.group);
+						AbstractDungeon.handCardSelectScreen.wereCardsRetrieved = true;
+						AbstractDungeon.handCardSelectScreen.selectedCards.group.clear();
+						if (size > 0 && !p.drawPile.isEmpty()) {
+							this.addTmpActionToTop(() -> {
+								CardGroup tmp = new CardGroup(CardGroupType.UNSPECIFIED);
+								tmp.group = p.drawPile.group.stream().collect(this.collectToArrayList());
+								if (tmp.size() <= size) {
+									tmp.group.stream().forEach(this::moveCard);
+									return;
+								}
+								AbstractDungeon.gridSelectScreen.open(tmp, size,
+										"选择" + size + "张牌加入手牌并降低" + this.magicNumber + "耗能", false);
+								this.addTmpActionToTop(() -> {
+									if (AbstractDungeon.gridSelectScreen.selectedCards.size() != 0) {
+										AbstractDungeon.gridSelectScreen.selectedCards.stream().forEach(this::moveCard);
+										p.hand.refreshHandLayout();
+										AbstractDungeon.gridSelectScreen.selectedCards.clear();
+									}
+								});
+							});
+						}
+					}
+				});
+			}
+		});
+	}
+
+	@SuppressWarnings("unchecked")
+	private void moveCard(AbstractCard card) {
+		AbstractPlayer p = AbstractDungeon.player;
+		combine(AbstractCard::unhover, this::setCard, ifElse(c -> handFull(),
+				combine(p.drawPile::moveToDiscardPile, c -> p.createHandIsFullDialog()), p.drawPile::moveToHand))
+						.accept(card);
+	}
+
+	private void setCard(AbstractCard c) {
+		c.exhaustOnUseOnce = true;
+		c.setCostForTurn(c.costForTurn - this.magicNumber);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void exhaustsCards(AbstractPlayer p, ArrayList<AbstractCard> list) {
+		list.forEach(combine(p.hand::moveToExhaustPile, c -> c.exhaustOnUseOnce = c.freeToPlayOnce = false));
+		CardCrawlGame.dungeon.checkForPactAchievement();
+		p.hand.refreshHandLayout();
+	}
 
     public void upgrade() {
         if (!this.upgraded) {

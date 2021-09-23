@@ -35,7 +35,7 @@ public class PowerStrikeAction extends AbstractGameAction {
 			return;
 		ArrayList<AbstractMonster> list = new ArrayList<AbstractMonster>();
 		ArrayList<AbstractMonster> kill = new ArrayList<AbstractMonster>();
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+		for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
 			if (m.isDead || m.isDying || m.isEscaping || m.escaped)
 				continue;
 			this.modify(m);

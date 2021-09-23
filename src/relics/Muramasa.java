@@ -6,9 +6,8 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import utils.MiscMethods;
 
-public class Muramasa extends AbstractTestRelic implements MiscMethods {
+public class Muramasa extends AbstractTestRelic {
 	public static final String ID = "Muramasa";
 	
 	private static Color color = null;

@@ -9,9 +9,8 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 import cards.AbstractTestCard;
-import utils.MiscMethods;
 
-public class LifeRuler extends AbstractTestCard implements MiscMethods {
+public class LifeRuler extends AbstractTestCard {
 	public static final String ID = "LifeRuler";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -27,10 +26,9 @@ public class LifeRuler extends AbstractTestCard implements MiscMethods {
 	public void use(final AbstractPlayer p, final AbstractMonster t) {
 		this.branch(
 				AbstractDungeon.getMonsters().monsters.stream().filter(not(m -> m.isDead || m.isDying || m.halfDead)),
-				m -> new ConstrictedPower(m, p, this.misc), (m, cp) -> {
-					this.addToBot(new ApplyPowerAction(m, p, cp, this.misc));
-				});
-    }
+				m -> new ConstrictedPower(m, p, this.misc),
+				(m, cp) -> this.addToBot(new ApplyPowerAction(m, p, cp, this.misc)));
+	}
 
 	@Override
 	public void calculateCardDamage(AbstractMonster m) {

@@ -17,9 +17,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-import utils.MiscMethods;
-
-public class DeterminationOfClimber extends AbstractTestRelic implements MiscMethods {
+public class DeterminationOfClimber extends AbstractTestRelic {
 	public static final String ID = "DeterminationOfClimber";
 	
 	private static Color color = null;

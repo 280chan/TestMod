@@ -504,5 +504,11 @@
 		"NAME": "Void Shard",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] . You receive #r300% damage outside combats."]
+	},
+	
+	"testmod-Restrained":{
+		"NAME": "Restrained",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . You cannot play #yPower #yCard at first turn of each combat."]
 	}
 }

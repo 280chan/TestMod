@@ -18,9 +18,8 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import actions.PlaySpecificCardAction;
 import mymod.TestMod;
-import utils.MiscMethods;
 
-public class Prudence extends AbstractTestRelic implements MiscMethods {
+public class Prudence extends AbstractTestRelic {
 	public static final String ID = "Prudence";
 	
 	public static AbstractPlayer p;
@@ -69,12 +68,7 @@ public class Prudence extends AbstractTestRelic implements MiscMethods {
 	private boolean calCanPlay(AbstractCard c) {
 		AbstractMonster m = hoveredMonster();
 		if (m == null) {
-			for (AbstractMonster temp : AbstractDungeon.getCurrRoom().monsters.monsters) {
-				if (c.cardPlayable(temp)) {
-					m = temp;
-					break;
-				}
-			}
+			m = AbstractDungeon.getMonsters().monsters.stream().filter(c::cardPlayable).findAny().orElse(null);
 		}
 		return c.cardPlayable(m) && !canPlay(c, m);
 	}

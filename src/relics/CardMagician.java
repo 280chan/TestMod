@@ -6,9 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
-import utils.MiscMethods;
-
-public class CardMagician extends AbstractTestRelic implements MiscMethods {
+public class CardMagician extends AbstractTestRelic {
 	public static final String ID = "CardMagician";
 	
 	public CardMagician() {

@@ -3,9 +3,7 @@ package relics;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-import utils.MiscMethods;
-
-public class Charity extends AbstractTestRelic implements MiscMethods {
+public class Charity extends AbstractTestRelic {
 	public static final String ID = "Charity";
 	
 	public Charity() {

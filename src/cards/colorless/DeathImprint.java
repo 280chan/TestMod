@@ -1,22 +1,19 @@
 
 package cards.colorless;
 
+import actions.DeathImprintAction;
+import cards.AbstractTestCard;
 import powers.DeathImprintPower;
-import utils.MiscMethods;
-
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-
-import actions.DeathImprintAction;
-import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-public class DeathImprint extends AbstractTestCard implements MiscMethods {
+public class DeathImprint extends AbstractTestCard {
     public static final String ID = "DeathImprint";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -36,6 +33,7 @@ public class DeathImprint extends AbstractTestCard implements MiscMethods {
     	this.addToBot(new DeathImprintAction(p, m, this.damage, this.damageTypeForTurn));
     }
     
+	@SuppressWarnings("unchecked")
 	public void triggerOnGlowCheck() {
 		this.glowColor = (AbstractDungeon.getMonsters().monsters.stream()
 				.anyMatch(and(not(AbstractMonster::isDeadOrEscaped), DeathImprintPower::hasThis)))

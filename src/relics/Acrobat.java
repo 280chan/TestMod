@@ -8,9 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import utils.MiscMethods;
-
-public class Acrobat extends AbstractTestRelic implements MiscMethods {
+public class Acrobat extends AbstractTestRelic {
 	public static final String ID = "Acrobat";
 	private static Color color = null;
 	public int state = 0;

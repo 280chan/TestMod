@@ -1,7 +1,5 @@
 package relics;
 
-import java.util.function.Predicate;
-
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -11,9 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import utils.MiscMethods;
-
-public class EqualTreatment extends AbstractTestRelic implements MiscMethods {
+public class EqualTreatment extends AbstractTestRelic {
 	public static final String ID = "EqualTreatment";
 	
 	private static Color color = null;
@@ -50,13 +46,11 @@ public class EqualTreatment extends AbstractTestRelic implements MiscMethods {
 		return !(m.isDead || m.isDying || m.halfDead || m.isEscaping);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
 		if (c.target == CardTarget.ENEMY && this.counter == -2) {
-			AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(this::alive)
-					.filter(((Predicate<AbstractMonster>) action.target::equals).negate()).forEach(m -> {
-						c.calculateCardDamage(m);
-						c.use(AbstractDungeon.player, m);
-					});
+			AbstractDungeon.getMonsters().monsters.stream().filter(this::alive).filter(not(action.target::equals))
+					.forEach(combine(c::calculateCardDamage, m -> c.use(AbstractDungeon.player, m)));
 			this.changeState(false);
 			this.show();
 		}

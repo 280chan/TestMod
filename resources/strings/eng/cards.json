@@ -154,6 +154,11 @@
 		"NAME": "Illusory",
 		"DESCRIPTION": "Draw !M! cards, all cards in draw pile become Ethereal. For each card was Ethereal, Gain [E]. Exhaust. Ethereal."
 	},
+	"testmod-Lexicography": {
+		"NAME": "Lexicography",
+		"DESCRIPTION": "Deal ( !D! ) damage same as average length of buffs target has.",
+		"UPGRADE_DESCRIPTION": "Deal ( !D! ) damage to All enemies same as average length of buffs target has."
+	},
 	"testmod-Librarian": {
 		"NAME": "Librarian",
 		"DESCRIPTION": "Choose !M! cards from X random Colorless to add in your hand. Reduce these cards'cost to 0 this combat. Exhaust.",

@@ -2,7 +2,6 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import utils.MiscMethods;
 import actions.ArrangementUpgradingAction;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -18,7 +17,7 @@ import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.badlogic.gdx.math.MathUtils;
 
-public class Arrangement extends AbstractTestCard implements MiscMethods {
+public class Arrangement extends AbstractTestCard {
 	public static final String ID = "Arrangement";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;

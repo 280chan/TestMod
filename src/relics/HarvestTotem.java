@@ -10,9 +10,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.TextAboveCreatureEffect;
 
-import utils.MiscMethods;
-
-public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
+public class HarvestTotem extends AbstractTestRelic {
 	public static final String ID = "HarvestTotem";
 	
 	private static final ArrayList<AbstractCreature> DONE = new ArrayList<AbstractCreature>();
@@ -46,6 +44,10 @@ public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
 		}
 	}
 	
+	private void increaseaMonsterMaxHp(AbstractMonster m) {
+		increaseMaxHp(m, m.maxHealth / (m.type == EnemyType.BOSS ? 2 : (m.type == EnemyType.ELITE ? 5 : 10)));
+	}
+	
 	public void atPreBattle() {
 		if (!this.isActive)
 			return;
@@ -53,15 +55,7 @@ public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
 		DONE.clear();
 		if (!this.hasEnemies())
 			return;
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (m.type == EnemyType.BOSS)
-				increaseMaxHp(m, m.maxHealth / 2);
-			else if (m.type == EnemyType.ELITE)
-				increaseMaxHp(m, m.maxHealth / 5);
-			else if (m.type == EnemyType.NORMAL)
-				increaseMaxHp(m, m.maxHealth / 10);
-			DONE.add(m);
-		}
+		AbstractDungeon.getMonsters().monsters.stream().peek(this::increaseaMonsterMaxHp).forEach(DONE::add);
     }
 	
 	public void update() {
@@ -71,16 +65,11 @@ public class HarvestTotem extends AbstractTestRelic implements MiscMethods {
 			return;
 		if (!this.hasEnemies())
 			return;
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+		for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
 			if (!DONE.contains(m)) {
 				if (m.halfDead || !m.hasPower("Minion"))
 					continue;
-				if (m.type == EnemyType.BOSS)
-					increaseMaxHp(m, m.maxHealth / 2);
-				else if (m.type == EnemyType.ELITE)
-					increaseMaxHp(m, m.maxHealth / 5);
-				else if (m.type == EnemyType.NORMAL)
-					increaseMaxHp(m, m.maxHealth / 10);
+				this.increaseaMonsterMaxHp(m);
 				DONE.add(m);
 			} else if (m.id.equals("AwakenedOne") && m.halfDead) {
 				DONE.remove(m);

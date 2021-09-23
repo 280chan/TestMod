@@ -1,9 +1,6 @@
-
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import utils.MiscMethods;
-
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AngryPower;
@@ -11,7 +8,7 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
-public class Provocation extends AbstractTestCard implements MiscMethods {
+public class Provocation extends AbstractTestCard {
     public static final String ID = "Provocation";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;

@@ -1,9 +1,10 @@
 package powers;
 
-import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -46,18 +47,16 @@ public class AssimilatedRunePower extends AbstractTestPower {
 		return atk ? c.baseDamage : c.baseBlock;
 	}
 	
-	private int maxIn(ArrayList<AbstractCard> list, boolean atk) {
-		return list.stream().map(c -> {return this.getValue(c, atk);}).max(Integer::max).orElse(-999);
+	private int maxIn(Stream<AbstractCard> s, boolean atk) {
+		return s.map(c -> this.getValue(c, atk)).max(Integer::max).orElse(-999);
 	}
 	
-	private ArrayList<AbstractCard> getList() {
-		ArrayList<AbstractCard> tmp = new ArrayList<AbstractCard>();
-		tmp.addAll(AbstractDungeon.player.hand.group);
+	private Stream<AbstractCard> getList() {
+		Stream<CardGroup> s = Stream.of(AbstractDungeon.player.hand);
 		if (this.upgraded) {
-			tmp.addAll(AbstractDungeon.player.drawPile.group);
-			tmp.addAll(AbstractDungeon.player.discardPile.group);
+			s = Stream.concat(s, Stream.of(AbstractDungeon.player.drawPile, AbstractDungeon.player.discardPile));
 		}
-		return tmp;
+		return s.flatMap(g -> g.group.stream());
 	}
 	
     public float atDamageGive(final float damage, final DamageType type) {

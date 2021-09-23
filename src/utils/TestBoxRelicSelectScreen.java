@@ -5,8 +5,6 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.megacrit.cardcrawl.unlock.UnlockTracker;
-
 import christmasMod.mymod.ChristmasMod;
 import halloweenMod.relics.EventCelebration_Halloween;
 import mymod.TestMod;
@@ -67,7 +65,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	
 	private void addAndMarkAsSeen(AbstractRelic r) {
 		this.relics.add(r);
-		UnlockTracker.markRelicAsSeen(r.relicId);
+		this.markAsSeen(r);
 	}
 	
 	@Override

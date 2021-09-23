@@ -8,13 +8,10 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
-
 import cards.mahjong.AbstractMahjongCard;
 import mymod.TestMod;
-import utils.MiscMethods;
 
-public class Mahjong extends AbstractTestRelic implements MiscMethods {
+public class Mahjong extends AbstractTestRelic {
 	public static final String ID = "Mahjong";
 	
 	public static final String[] YAMA_NAME = { "w0", "w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8", "w9", "p0", "p1",

@@ -1,15 +1,11 @@
 package relics;
 
-import java.util.function.Predicate;
-
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import powers.TheFatherPower;
-import utils.MiscMethods;
 
-public class TheFather extends AbstractTestRelic implements MiscMethods {
+public class TheFather extends AbstractTestRelic {
 	public static final String ID = "TheFather";
 	private static boolean canUpdate = false;
 	private static int numberOfMonsters = 0;
@@ -46,10 +42,8 @@ public class TheFather extends AbstractTestRelic implements MiscMethods {
 	}
 
 	private void tryAdd() {
-		AbstractDungeon.getMonsters().monsters.stream()
-				.filter(((Predicate<AbstractMonster>) TheFatherPower::hasThis).negate()).forEach(m -> {
-					m.powers.add(new TheFatherPower(m, this));
-				});
+		AbstractDungeon.getMonsters().monsters.stream().filter(not(TheFatherPower::hasThis))
+				.forEach(m -> m.powers.add(new TheFatherPower(m, this)));
 	}
 	
 	public void update() {
@@ -57,7 +51,7 @@ public class TheFather extends AbstractTestRelic implements MiscMethods {
 		if (canUpdate && this.canUpdateHandGlow()) {
 			if (AbstractDungeon.getCurrRoom().monsters.monsters.size() > numberOfMonsters) {
 				tryAdd();
-				numberOfMonsters = AbstractDungeon.getCurrRoom().monsters.monsters.size();
+				numberOfMonsters = AbstractDungeon.getMonsters().monsters.size();
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package relics;
 
+import java.util.Collections;
 import java.util.Random;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -12,14 +13,12 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
-import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import mymod.TestMod;
-import utils.MiscMethods;
 import utils.TestBoxRelicSelectScreen;
 
-public class TestBox extends AbstractDoubleClickableRelic implements MiscMethods {
+public class TestBox extends AbstractDoubleClickableRelic {
 	public static final String ID = "TestBox";
 	
 	public boolean relicSelected = true;
@@ -121,23 +120,13 @@ public class TestBox extends AbstractDoubleClickableRelic implements MiscMethods
 		AbstractDungeon.getCurrRoom().phase = RoomPhase.INCOMPLETE;
 		this.cardSelected = false;
 		CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
+		g.group = TestMod.CARDS.stream().collect(this.collectToArrayList());
+		Collections.shuffle(g.group, this.rng);
 		AbstractCard c = this.priority();
 		if (c != null)
-			g.group.add(c);
-		while(g.group.size() < 3) {
-			boolean repeat = false;
-			c = TestMod.randomItem(TestMod.CARDS, this.rng);
-			for (AbstractCard ca : g.group)
-				if (ca.cardID.equals(c.cardID))
-					repeat = true;
-			if (repeat)
-				continue;
-			g.group.add(c);
-			UnlockTracker.markCardAsSeen(c.cardID);
-		}
-		String desc = "选择一张牌";
-		if (this.checkFoolsDay())
-			desc = FOOLS_DAY;
+			g.group.add(0, c);
+		g.group = g.group.stream().limit(3).peek(this::markAsSeen).collect(this.collectToArrayList());
+		String desc = this.checkFoolsDay() ? FOOLS_DAY : "选择一张牌";
 		AbstractDungeon.gridSelectScreen.open(g, 1, desc, false, false, true, false);
 		AbstractDungeon.overlayMenu.cancelButton.show("跳过");
 		this.counter = -2;

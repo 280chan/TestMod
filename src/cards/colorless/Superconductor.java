@@ -2,11 +2,14 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
+import powers.SuperconductorNoEnergyPower;
+import powers.SuperconductorPower;
+
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.unique.ApplyBulletTimeAction;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
-
-import actions.SuperconductorAction;
-
+import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class Superconductor extends AbstractTestCard {
@@ -23,7 +26,10 @@ public class Superconductor extends AbstractTestCard {
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-        this.addToBot(new SuperconductorAction(p, this.freeToPlayOnce, this.energyOnUse));
+        this.addToBot(new ApplyBulletTimeAction());
+		this.addTmpXCostActionToBot(this,
+				f(this::addToTop, e -> new ApplyPowerAction(p, p, new SuperconductorPower(p, e), e)));
+		this.addToBot(new ApplyPowerAction(p, p, new SuperconductorNoEnergyPower(p, EnergyPanel.totalCount)));
     }
 
     public void upgrade() {

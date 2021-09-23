@@ -8,9 +8,8 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import powers.IndustrialRevolutionPower;
 import powers.InorganicPower;
-import utils.MiscMethods;
 
-public class IndustrialRevolution extends AbstractTestRelic implements MiscMethods {
+public class IndustrialRevolution extends AbstractTestRelic {
 	public static final String ID = "IndustrialRevolution";
 	
 	public static final ArrayList<AbstractMonster> LIST = new ArrayList<AbstractMonster>();
@@ -31,12 +30,9 @@ public class IndustrialRevolution extends AbstractTestRelic implements MiscMetho
 		AbstractDungeon.player.powers.add(new IndustrialRevolutionPower(AbstractDungeon.player));
 		if (!this.hasEnemies())
 			return;
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!m.isDead && !m.isDying && !m.halfDead && m.hasPower("Artifact")) {
-				m.powers.add(new InorganicPower(m));
-				LIST.add(m);
-			}
-		}
+		AbstractDungeon.getMonsters().monsters.stream()
+				.filter(not(m -> m.isDead || m.isDying || m.halfDead || !m.hasPower("Artifact"))).peek(LIST::add)
+				.forEach(m -> m.powers.add(new InorganicPower(m)));
     }
 	
 

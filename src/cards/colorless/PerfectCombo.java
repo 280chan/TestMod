@@ -1,9 +1,6 @@
-
 package cards.colorless;
 
 import cards.AbstractEquivalentableCard;
-import utils.MiscMethods;
-
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
@@ -13,8 +10,9 @@ import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
-public class PerfectCombo extends AbstractEquivalentableCard implements MiscMethods {
+public class PerfectCombo extends AbstractEquivalentableCard {
     public static final String ID = "PerfectCombo";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -88,16 +86,12 @@ public class PerfectCombo extends AbstractEquivalentableCard implements MiscMeth
 	}
 	
 	
-    public int countUpgrades() {
-        ArrayList<AbstractCard> group = new ArrayList<AbstractCard>();
-        group.addAll(AbstractDungeon.player.drawPile.group);
-        group.addAll(AbstractDungeon.player.discardPile.group);
-        group.addAll(AbstractDungeon.player.hand.group);
-        if (!group.contains(this)) {
-        	group.add(this);
-        }
-        return group.stream().mapToInt(c -> c.timesUpgraded).sum();
-    }
+	public int countUpgrades() {
+		AbstractPlayer p = AbstractDungeon.player;
+		return Stream
+				.concat(Stream.of(p.drawPile, p.discardPile, p.hand).flatMap(g -> g.group.stream()), Stream.of(this))
+				.distinct().mapToInt(c -> c.timesUpgraded).sum();
+	}
 
     public void calculateCardDamage(AbstractMonster m) {
     	super.calculateCardDamage(m);

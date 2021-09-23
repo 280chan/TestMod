@@ -11,9 +11,8 @@ import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import potions.EscapePotion;
-import utils.MiscMethods;
 
-public class IWantAll extends AbstractClickRelic implements MiscMethods {
+public class IWantAll extends AbstractClickRelic {
 	public static final String ID = "IWantAll";
 	public static final int COUNT = 10;
 	
@@ -35,12 +34,8 @@ public class IWantAll extends AbstractClickRelic implements MiscMethods {
 	}
 	
 	private void toggleState(boolean victory) {
-		this.victory = victory;
-		if (victory) {
-			this.beginLongPulse();
-		} else {
-			this.stopPulse();
-		}
+		Lambda a = ((this.victory = victory) ? this::beginLongPulse : this::stopPulse);
+		a.act();
 	}
 	
 	public void onVictory() {

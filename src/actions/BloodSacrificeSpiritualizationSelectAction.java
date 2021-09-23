@@ -1,5 +1,7 @@
 package actions;
 
+import java.util.stream.Stream;
+
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -9,8 +11,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-
-import mymod.TestMod;
 
 public class BloodSacrificeSpiritualizationSelectAction extends AbstractGameAction {
 	private static final float DURATION = Settings.ACTION_DUR_FAST;
@@ -25,9 +25,7 @@ public class BloodSacrificeSpiritualizationSelectAction extends AbstractGameActi
 
 	private void init() {
 		this.g = new CardGroup(CardGroupType.UNSPECIFIED);
-        this.g.group.addAll(this.p.drawPile.group);
-        this.g.group.addAll(this.p.hand.group);
-        this.g.group.addAll(this.p.discardPile.group);
+		Stream.of(p.discardPile, p.hand, p.drawPile).flatMap(c -> c.group.stream()).forEach(this.g.group::add);
         this.p.hand.group.forEach(AbstractCard::beginGlowing);
         this.amount = Math.max(this.p.maxHealth / 10, 1);
 	}
@@ -64,14 +62,7 @@ public class BloodSacrificeSpiritualizationSelectAction extends AbstractGameActi
 
 	private static CardGroup getSource(AbstractCard c) {
 		AbstractPlayer p = AbstractDungeon.player;
-		CardGroup[] groups = {p.discardPile, p.hand, p.drawPile};
-		for (CardGroup g : groups)
-			if (g.contains(c)) {
-				TestMod.info("来自于" + g.type);
-				return g;
-			}
-		TestMod.info("为什么找不到" + c.name + "？？？");
-		return null;
+		return Stream.of(p.discardPile, p.hand, p.drawPile).filter(g -> g.contains(c)).findAny().orElse(null);
 	}
 	
 }

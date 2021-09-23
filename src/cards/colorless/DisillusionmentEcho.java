@@ -10,14 +10,12 @@ package cards.colorless;
 
 import cards.AbstractTestCard;
 import powers.DisillusionmentEchoPower;
-import utils.MiscMethods;
-
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
-public class DisillusionmentEcho extends AbstractTestCard implements MiscMethods {
+public class DisillusionmentEcho extends AbstractTestCard {
 	public static final String ID = "DisillusionmentEcho";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;

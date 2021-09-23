@@ -4,9 +4,8 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import utils.MiscMethods;
 
-public class VentureCapital extends AbstractTestRelic implements MiscMethods {
+public class VentureCapital extends AbstractTestRelic {
 	public static final String ID = "VentureCapital";
 	private static final int LOSE_GOLD_AMOUNT = 1;
 	private static final double PERCENTAGE = 100.0;

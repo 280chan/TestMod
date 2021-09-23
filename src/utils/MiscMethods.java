@@ -45,11 +45,13 @@ import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
+import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 
 import actions.AbstractXCostAction;
+import basemod.BaseMod;
 import mymod.TestMod;
 import potions.EscapePotion;
 import relics.AbstractTestRelic;
@@ -58,12 +60,30 @@ import relics.StringDisintegrator;
 
 public interface MiscMethods {
 	
-	public default int getMonth() {
+	default int getMonth() {
 		return Calendar.getInstance().get(Calendar.MONTH) + 1;
 	}
 	
 	public default int getDate() {
 		return Calendar.getInstance().get(Calendar.DATE);
+	}
+	
+	public default void markAsSeen(AbstractRelic r) {
+		if (!UnlockTracker.isRelicSeen(r.relicId)) {
+			UnlockTracker.markRelicAsSeen(r.relicId);
+			TestMod.info("成功解锁了未见过的 " + r.name);
+		}
+	}
+	
+	public default void markAsSeen(AbstractCard c) {
+		if (!UnlockTracker.isCardSeen(c.cardID)) {
+			UnlockTracker.markCardAsSeen(c.cardID);
+			TestMod.info("成功解锁了未见过的 " + c.name);
+		}
+	}
+	
+	public default boolean handFull() {
+		return AbstractDungeon.player.hand.size() >= BaseMod.MAX_HAND_SIZE;
 	}
 	
 	public default boolean isLocalTesting() {
@@ -572,22 +592,32 @@ public interface MiscMethods {
 	}
 	
 	public default <T> void streamIfElse(Stream<T> s, Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
-		for (T t : s.collect(Collectors.toList())) {
-			if (p.test(t))
-				c1.accept(t);
-			else
-				c2.accept(t);
-		}
+		s.forEach(ifElse(p, c1, c2));
 	}
 	
-	static <U, T, V> Function andThen(Function f, Function g) {
-		Function r = f.andThen(g);
-		return r;
+	@SuppressWarnings("unchecked")
+	public default <T> Consumer<T> ifElse(Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
+		return t -> ((Consumer<T>) (p.test(t) ? c1 : c2)).accept(t);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	static Function andThen(Function f, Function g) {
+		return f.andThen(g);
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public default <T, R> void streamMaps(Stream<T> s, Consumer<R> action, Function... functions) {
+		s.forEach(functionsConsumer(action, functions));
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public default <T, R> Consumer<T> functionsConsumer(Consumer<R> action, Function... functions) {
 		Function<T, R> f = (Function<T, R>) Stream.of(functions).reduce(t -> t, (u, v) -> andThen(u, v));
-		s.map(f).forEach(action);
+		return t -> action.accept(f.apply(t));
+	}
+	
+	public default <T, R> Consumer<T> f(Consumer<R> action, Function<T, R> f) {
+		return t -> action.accept(f.apply(t));
 	}
 	
 	public static interface CoConsumer<T, R> {
@@ -595,9 +625,11 @@ public interface MiscMethods {
 	}
 	
 	public default <T, R> void branch(Stream<T> s, Function<T, R> f, CoConsumer<T, R> action) {
-		for (T t : s.collect(Collectors.toList())) {
-			action.accept(t, f.apply(t));
-		}
+		s.forEach(branch(f, action));
+	}
+	
+	public default <T, R> Consumer<T> branch(Function<T, R> f, CoConsumer<T, R> action) {
+		return t -> action.accept(t, f.apply(t));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -658,4 +690,5 @@ public interface MiscMethods {
 	public default <T> Collector<T, ?, ArrayList<T>> collectToArrayList() {
 		return Collectors.toCollection(ArrayList::new);
 	}
+	
 }

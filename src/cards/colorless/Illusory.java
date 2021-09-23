@@ -2,8 +2,6 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import utils.MiscMethods;
-
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
@@ -11,7 +9,7 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
-public class Illusory extends AbstractTestCard implements MiscMethods {
+public class Illusory extends AbstractTestCard {
     public static final String ID = "Illusory";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;

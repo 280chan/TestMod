@@ -3,9 +3,8 @@ package relics;
 import java.util.ArrayList;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import utils.MiscMethods;
 
-public class AssaultLearning extends AbstractTestRelic implements MiscMethods {
+public class AssaultLearning extends AbstractTestRelic {
 	public static final String ID = "AssaultLearning";
 
 	public AssaultLearning() {

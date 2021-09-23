@@ -5,9 +5,8 @@ import java.util.List;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import mymod.TestMod;
-import utils.MiscMethods;
 
-public class MagicalMallet extends AbstractTestRelic implements MiscMethods {
+public class MagicalMallet extends AbstractTestRelic {
 	public static final String ID = "MagicalMallet";
 	
 	public MagicalMallet() {
