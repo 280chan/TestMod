@@ -12,8 +12,9 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import powers.RepeatFormPower;
+import utils.MiscMethods;
 
-public class RepeatFormAction extends AbstractGameAction {
+public class RepeatFormAction extends AbstractGameAction implements MiscMethods {
 	private static final float DURATION = Settings.ACTION_DUR_FAST;
 	private CardGroup g;
 	private AbstractPlayer p;
@@ -62,18 +63,13 @@ public class RepeatFormAction extends AbstractGameAction {
 		}
 		tickDuration();
 	}
-
-	private static CardGroup getSource(AbstractCard c) {
-		AbstractPlayer p = AbstractDungeon.player;
-		return Stream.of(p.discardPile, p.hand, p.drawPile).filter(g -> g.contains(c)).findAny().orElse(null);
-	}
 	
 	private RepeatFormPower createPower(AbstractCard c) {
 		return new RepeatFormPower(p, this.amount, c);
 	}
 	
 	private void addPowerToPlayer(AbstractCard c) {
-		getSource(c).removeCard(c);
+		this.getSource(c).removeCard(c);
 		this.addToTop(new ApplyPowerAction(p, p, createPower(c), this.amount));
 	}
 	

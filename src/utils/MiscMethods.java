@@ -82,6 +82,11 @@ public interface MiscMethods {
 		}
 	}
 	
+	public default CardGroup getSource(AbstractCard c) {
+		AbstractPlayer p = AbstractDungeon.player;
+		return Stream.of(p.discardPile, p.hand, p.drawPile).filter(g -> g.contains(c)).findAny().orElse(null);
+	}
+	
 	public default boolean handFull() {
 		return AbstractDungeon.player.hand.size() >= BaseMod.MAX_HAND_SIZE;
 	}

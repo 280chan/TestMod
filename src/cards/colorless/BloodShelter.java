@@ -4,12 +4,13 @@ package cards.colorless;
 import cards.AbstractUpdatableCard;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.monsters.*;
-
-import actions.ChangeBloodAction;
-
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
+
+import java.util.stream.Stream;
+
 
 public class BloodShelter extends AbstractUpdatableCard {
     public static final String ID = "BloodShelter";
@@ -36,10 +37,17 @@ public class BloodShelter extends AbstractUpdatableCard {
     public void use(final AbstractPlayer p, final AbstractMonster m) {
     	this.preApplyPowers(p, m);
     	super.applyPowers();
-        this.addToBot(new GainBlockAction(p, p, this.block));
-        this.addToBot(new GainBlockAction(m, p, this.block));
-        this.addToBot(new ChangeBloodAction(p, m));
+    	Stream.of(p, m).forEach(c -> this.addToBot(new GainBlockAction(c, p, this.block)));
+        this.addTmpActionToBot(() -> {
+        	double rate = Stream.of(p, m).mapToDouble(c -> c.currentHealth * 1.0 / c.maxHealth).sum();
+        	Stream.of(p, m).forEach(c -> f(c, rate));
+        });
     }
+    
+    private static void f(AbstractCreature c, double rate) {
+		c.currentHealth = Math.max(1, (int) (rate / 2 * c.maxHealth));
+    	c.healthBarUpdatedEvent();
+	}
     
 	@Override
 	public void preApplyPowers(AbstractPlayer p, AbstractMonster m) {

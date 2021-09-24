@@ -1,18 +1,18 @@
-
 package cards.colorless;
 
 import cards.AbstractUpdatableCard;
+import mymod.TestMod;
+
 import com.megacrit.cardcrawl.cards.*;
+import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
-
-import actions.CardIndexAction;
-
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class CardIndex extends AbstractUpdatableCard {
     public static final String ID = "CardIndex";
@@ -31,9 +31,47 @@ public class CardIndex extends AbstractUpdatableCard {
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.addToBot(new CardIndexAction(this, m, this.cards));
+    	this.addTmpActionToBot(() -> {
+    		if (this.cards.isEmpty()) {
+        		this.addTmpActionToTop(() -> {
+					CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
+					g.group = Stream.of(p.discardPile, p.hand, p.drawPile).flatMap(a -> a.group.stream())
+							.collect(this.collectToArrayList());
+					g.removeCard(this);
+					p.hand.group.forEach(AbstractCard::beginGlowing);
+					if (g.isEmpty()) {
+						this.removeCard(null);
+						return;
+					}
+					int size = Math.min(this.magicNumber, g.size());
+					String info = "选择" + size + "张牌卡牌索引";
+					AbstractDungeon.gridSelectScreen.open(g, size, true, info);
+					this.addTmpActionToTop(() -> {
+						if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
+							String tmp = "选择了" + AbstractDungeon.gridSelectScreen.selectedCards.stream().sequential()
+									.peek(this::removeCard).map(c -> c.name + " ").reduce("", (a, b) -> a + b);
+							TestMod.info(tmp);
+							AbstractDungeon.gridSelectScreen.selectedCards.clear();
+						} else {
+							TestMod.info("取消了选择，之后打出不会生效。");
+							this.removeCard(null);
+						}
+					});
+        		});
+        	} else if (this.cards.size() == 1 && this.cards.get(0) == null) {
+    		} else {
+    			this.cards.stream().forEach(this::setXCostEnergy);
+    			this.autoplayInOrder(this, this.cards, m);
+        	}
+    	});
     }
-
+    
+    private void removeCard(AbstractCard c) {
+    	if (c != null)
+    		this.getSource(c).removeCard(c);
+		this.cards.add(c);
+	}
+    
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
@@ -52,13 +90,9 @@ public class CardIndex extends AbstractUpdatableCard {
     
 	@Override
 	public void preApplyPowers(AbstractPlayer p, AbstractMonster m) {
-		if (this.cards.isEmpty() || this.cards.get(0) == null)
-			return;
-		for (AbstractCard c : this.cards) {
-			if (c instanceof AbstractUpdatableCard) {
-				((AbstractUpdatableCard)c).preApplyPowers(p, m);
-			}
-		}
+		if (this.active())
+			this.cards.stream().filter(c -> c instanceof AbstractUpdatableCard)
+					.forEach(c -> ((AbstractUpdatableCard) c).preApplyPowers(p, m));
 	}
 	
 	public void applyPowers() {
@@ -69,16 +103,13 @@ public class CardIndex extends AbstractUpdatableCard {
 			this.changeDescription(EXTENDED_DESCRIPTION[1], true);
 			return;
 		}
-		String tmp = EXTENDED_DESCRIPTION[0];
-		for (AbstractCard c : this.cards) {
-			c.applyPowers();
-			tmp += c.name + EXTENDED_DESCRIPTION[2];
-		}
+		String tmp = EXTENDED_DESCRIPTION[0] + this.cards.stream().peek(AbstractCard::applyPowers)
+				.map(c -> c.name + EXTENDED_DESCRIPTION[2]).reduce("", (a, b) -> a + b);
 		this.changeDescription(tmp.substring(0, tmp.length() - 1) + EXTENDED_DESCRIPTION[3], true);
 	}
 	
 	public void calculateCardDamage(AbstractMonster m) {
-		this.checkActiveActOnCard(c -> { c.calculateCardDamage(m); });
+		this.checkActiveActOnCard(c -> c.calculateCardDamage(m));
 	}
 	
 	public void tookDamage() {
@@ -118,17 +149,17 @@ public class CardIndex extends AbstractUpdatableCard {
 		if (AbstractDungeon.player == null || AbstractDungeon.player.masterDeck == null
 				|| AbstractDungeon.player.masterDeck.group == null)
 			return tmp;
-		if (AbstractDungeon.player.masterDeck.group.stream().noneMatch(c -> {return c == this;}))
+		if (AbstractDungeon.player.masterDeck.group.stream().noneMatch(c -> c == this))
 			((CardIndex) tmp).cards = this.cards;
 		return tmp;
 	}
 	
 	public void triggerOnOtherCardPlayed(AbstractCard card) {
-		this.checkActiveActOnCard(c -> { c.triggerOnOtherCardPlayed(card); });
+		this.checkActiveActOnCard(c -> c.triggerOnOtherCardPlayed(card));
 	}
 	
 	public void triggerOnCardPlayed(AbstractCard card) {
-		this.checkActiveActOnCard(c -> { c.triggerOnCardPlayed(card); });
+		this.checkActiveActOnCard(c -> c.triggerOnCardPlayed(card));
     }
 	
 	public void triggerOnScry() {
@@ -136,7 +167,7 @@ public class CardIndex extends AbstractUpdatableCard {
 	}
 	
 	public void onPlayCard(AbstractCard card, AbstractMonster m) {
-		this.checkActiveActOnCard(c -> { c.onPlayCard(card, m); });
+		this.checkActiveActOnCard(c -> c.onPlayCard(card, m));
 	}
 	
 	public void onRetained() {
@@ -155,11 +186,7 @@ public class CardIndex extends AbstractUpdatableCard {
 	public String toString() {
 		if (!this.active())
 			return this.name;
-		String tmp = this.name + ":[" + this.cards.stream().map(c -> {
-			return c.name + ",";
-		}).reduce("", (u, v) -> {
-			return u + v;
-		});
+		String tmp = this.name + ":[" + this.cards.stream().map(c -> c.name + ",").reduce("", (u, v) -> u + v);
     	return tmp.substring(0, tmp.length() - 1) + "]";
 	}
 	

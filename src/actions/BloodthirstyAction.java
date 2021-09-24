@@ -36,8 +36,8 @@ public class BloodthirstyAction extends AbstractGameAction implements MiscMethod
 				int hp = this.target.currentHealth;
 				this.target.damage(this.info);
 				hp -= this.target.currentHealth;
-				this.getAllInBattleInstance(TestMod.makeID(Bloodthirsty.ID)).stream().map(c -> (Bloodthirsty) c)
-						.forEach(Bloodthirsty::doublesMagicNumber);
+				this.getAllInBattleInstance(TestMod.makeID(Bloodthirsty.ID)).stream()
+						.forEach(c -> ((Bloodthirsty) c).doublesMagicNumber());
 				if (hp > 0)
 					this.info.owner.heal(hp);
 			}

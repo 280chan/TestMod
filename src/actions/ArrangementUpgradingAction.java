@@ -24,6 +24,7 @@ public class ArrangementUpgradingAction extends AbstractGameAction implements Mi
 		this.p = p;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update() {
 		if (this.duration == DURATION) {

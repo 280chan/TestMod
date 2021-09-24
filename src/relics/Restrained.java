@@ -11,6 +11,7 @@ public class Restrained extends AbstractTestRelic {
 	
 	public Restrained() {
 		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
+		this.testTier = BAD;
 	}
 	
 	public String getUpdatedDescription() {

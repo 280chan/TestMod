@@ -74,7 +74,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 9/22/2021
+ * @version 9/24/2021
  * @since 6/17/2018
  */
 
@@ -287,10 +287,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new TraineeEconomist(), new RandomTest(), new GoldenSoul(), new GremlinBalance(), new IWantAll(),
-				new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue(), new VentureCapital());
+		addLatest(new Dye(), new Restrained(), new RandomTest(), new GoldenSoul(), new GremlinBalance(),
+				new IWantAll(), new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue(),
+				new VentureCapital());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.collectToArrayList());
-		addLatest(new VirtualReality(), new SunMoon(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
+		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
 	}
 
@@ -317,7 +318,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
 				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest(), new TemporaryBarricade(),
 				new GremlinBalance(), new RetroFilter(), new DominatorOfWeakness(), new ShadowAmulet(),
-				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital(), new Restrained())
+				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital(), new Dye(), new Restrained())
 				.collect(this.collectToArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
