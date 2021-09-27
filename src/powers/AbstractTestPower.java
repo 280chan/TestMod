@@ -1,4 +1,3 @@
-
 package powers;
 
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -9,7 +8,6 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import mymod.TestMod;
 
 public abstract class AbstractTestPower extends AbstractPower {
-	
 	protected static PowerStrings Strings(String shortID) {
 		return CardCrawlGame.languagePack.getPowerStrings(TestMod.makeID(shortID));
 	}
@@ -32,5 +30,4 @@ public abstract class AbstractTestPower extends AbstractPower {
 		this.fontScale = 8.0f;
         this.amount += stackAmount;
 	}
-    
 }

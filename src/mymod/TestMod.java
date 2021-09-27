@@ -302,24 +302,23 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	@Override
 	public void receiveEditRelics() {
 		// 添加遗物进游戏
-		RELICS = Stream.of(new ObsoleteBoomerang(), new D_4(), new BlackFramedGlasses(), new BouquetWithThorns(),
+		RELICS = Stream.of(new ObsoleteBoomerang(), new BlackFramedGlasses(), new BouquetWithThorns(), new IWantAll(),
 				new PortableAltar(), new Sins(), new Register(), new EnergyCheck(), new Mahjong(), new CasingShield(),
-				new OneHitWonder(), new Iteration(), new Temperance(), new Justice(), new Fortitude(), new Charity(),
-				new Hope(), new AssaultLearning(), new Muramasa(), new HeartOfDaVinci(), new IncinerationGenerator(),
-				new IndustrialRevolution(), new AscensionHeart(), new RealStoneCalender(), new Nyarlathotep(),
-				new BalancedPeriapt(), new MagicalMallet(), new Laevatain(), new TimeTraveler(), new Prudence(),
-				new Maize(), new DragonStarHat(), new Nine(), new SaigiyounoYou(), new Motorcycle(), new DreamHouse(),
+				new OneHitWonder(), new RandomTest(), new Temperance(), new Justice(), new Fortitude(), new Charity(),
+				new GoldenSoul(), new Dye(), new AssaultLearning(), new HeartOfDaVinci(), new IncinerationGenerator(),
+				new IndustrialRevolution(), new AscensionHeart(), new RealStoneCalender(), new Prudence(), new Hope(),
+				new Maize(), new DragonStarHat(), new SaigiyounoYou(), new Motorcycle(), new DreamHouse(), new Nine(),
+				new BatchProcessingSystem(), new CardMagician(), new NegativeEmotionEnhancer(), new InfectionSource(),
+				new FatalChain(), new VoidShard(), new CyclicPeriapt(), new EqualTreatment(), new ConstraintPeriapt(),
+				new BloodSacrificeSpiritualization(), new Acrobat(), new ArcanaOfDestiny(), new TurbochargingSystem(),
+				new GremlinBalance(), new Restrained(), new Faith(), new HyperplasticTissue(), new TraineeEconomist(),
+				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new Muramasa(), new GreedyDevil(),
 				new CrystalShield(), new Alchemist(), new StringDisintegrator(), new HarvestTotem(), new LifeArmor(),
-				new BatchProcessingSystem(), new CardMagician(), new NegativeEmotionEnhancer(), new Brilliant(),
-				new IWantAll(), new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(),
-				new Faith(), new FatalChain(), new CyclicPeriapt(), new EqualTreatment(), new ConstraintPeriapt(),
-				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new TestBox(), new VoidShard(),
-				new BloodSacrificeSpiritualization(), new Acrobat(), new ArcanaOfDestiny(), new InfectionSource(),
-				new TheFather(), new Fanaticism(), new TurbochargingSystem(), new HeartOfStrike(),
-				new RainbowHikingShoes(), new GoldenSoul(), new RandomTest(), new TemporaryBarricade(),
-				new GremlinBalance(), new RetroFilter(), new DominatorOfWeakness(), new ShadowAmulet(),
-				new HyperplasticTissue(), new TraineeEconomist(), new VentureCapital(), new Dye(), new Restrained())
-				.collect(this.collectToArrayList());
+				new BalancedPeriapt(), new MagicalMallet(), new Laevatain(), new TimeTraveler(), new Nyarlathotep(),
+				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
+				new RainbowHikingShoes(), new DominatorOfWeakness(), new D_4(), new TestBox(), new ShadowAmulet(),
+				new TheFather(), new Fanaticism(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
+				new VentureCapital(), new RetroFilter()).collect(this.collectToArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);

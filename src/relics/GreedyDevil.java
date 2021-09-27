@@ -6,17 +6,18 @@ import java.util.HashMap;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.powers.AbstractPower;
+import powers.AbstractTestPower;
 
-import powers.FatalChainCheckDamagePower;
-
-public class FatalChain extends AbstractTestRelic {
-	public static final String ID = "FatalChain";
+public class GreedyDevil extends AbstractTestRelic {
+	public static final String ID = "GreedyDevil";
 	private final HashMap<DamageInfo, AbstractCreature> MAP = new HashMap<DamageInfo, AbstractCreature>();
-	public final ArrayList<FatalChainCheckDamagePower> TO_REMOVE = new ArrayList<FatalChainCheckDamagePower>();
+	private final ArrayList<AbstractPower> TO_REMOVE = new ArrayList<AbstractPower>();
 	
-	public FatalChain() {
-		super(ID, RelicTier.RARE, LandingSound.HEAVY);
+	public GreedyDevil() {
+		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
@@ -28,14 +29,28 @@ public class FatalChain extends AbstractTestRelic {
 	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
 	    initializeTips();
 	}
-
-	public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
+	
+	public void onAttack(final DamageInfo info, final int damageAmount, final AbstractCreature target) {
 		if (damageAmount > 0 && !target.isPlayer) {
 			this.MAP.put(info, target);
-			FatalChainCheckDamagePower p = new FatalChainCheckDamagePower(target, this.MAP, this);
+			AbstractTestPower p = new AbstractTestPower(this.relicId) {
+			    public int onAttacked(final DamageInfo info, final int damage) {
+			    	if (MAP.containsKey(info)) {
+						int dmg = damage - target.currentHealth;
+						if (dmg > 0) {
+							AbstractDungeon.player.gainGold(Math.min(dmg, 100));
+							GreedyDevil.this.flash();
+						}
+						MAP.remove(info);
+						TO_REMOVE.add(this);
+					}
+					return damage;
+			    }
+			};
+			p.owner = target;
 			target.powers.add(p);
 		}
-	}
+    }
 	
 	public void onVictory() {
 		this.MAP.clear();
