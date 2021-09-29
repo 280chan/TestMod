@@ -25,7 +25,6 @@ import basemod.interfaces.RenderSubscriber;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @author 彼君不触
@@ -51,7 +50,6 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	private float grabStartY = 0.0F;
 	private ScrollBar scrollBar;
 	private int row = 0;
-	private int col = 0;
 	private ConfirmButton button;
 	private static final Color RED_OUTLINE_COLOR = Settings.RED_RELIC_COLOR.cpy();
 	private static final Color GREEN_OUTLINE_COLOR = Settings.GREEN_RELIC_COLOR.cpy();
@@ -420,40 +418,35 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	}
 	
 	private void resetScrolling() {
-		if (this.targetY < this.scrollLowerBound) {
-			this.targetY = MathHelper.scrollSnapLerpSpeed(this.targetY, this.scrollLowerBound);
-		} else if (this.targetY > this.scrollUpperBound) {
-			this.targetY = MathHelper.scrollSnapLerpSpeed(this.targetY, this.scrollUpperBound);
-		}
+		resetScrolling(true, this.scrollLowerBound);
+		resetScrolling(false, this.scrollUpperBound);
+	}
+	
+	private void resetScrolling(boolean lower, float bound) {
+		if ((lower && this.targetY < bound) || (!lower && this.targetY > bound))
+			this.targetY = MathHelper.scrollSnapLerpSpeed(this.targetY, bound);
+	}
+	
+	private void moveHitBox(AbstractRelic r) {
+		r.hb.move(r.currentX, r.currentY);
 	}
 	
 	private void updateList(ArrayList<AbstractRelic> list) {
-		Iterator<AbstractRelic> var2 = list.iterator();
-		while (var2.hasNext()) {
-			AbstractRelic r = (AbstractRelic) var2.next();
-			r.hb.move(r.currentX, r.currentY);
-			r.update();
-			if (r.hb.hovered) {
-				this.hoveredRelic = r;
-			}
-		}
+		list.stream().peek(this::moveHitBox).peek(r -> r.update()).filter(r -> r.hb.hovered)
+				.forEach(r -> this.hoveredRelic = r);
 	}
 	
 	private void updateLists() {
-		for (ArrayList<AbstractRelic> list : this.sortedRelics) {
-			this.updateList(list);
-		}
+		this.sortedRelics.forEach(this::updateList);
 	}
 	
 	private void renderLists(SpriteBatch sb) {
-		for (int i = 0; i < this.category.size(); i++) {
-			this.renderList(sb, this.category.get(i), this.descriptionOfCategory(this.category.get(i)), this.sortedRelics.get(i));
-		}
+		this.category.forEach(msg -> renderList(sb, msg, this.descriptionOfCategory(msg),
+				this.sortedRelics.get(this.category.indexOf(msg))));
 	}
 
 	private void render(SpriteBatch sb) {
 		this.row = -1;
-		this.col = 0;
 		if (this.autoSort)
 			this.renderLists(sb);
 		else
@@ -461,7 +454,31 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 		this.button.render(sb);
 		this.scrollBar.render(sb);
 	}
+	
+	private void setPosition(AbstractRelic r, ArrayList<AbstractRelic> list) {
+		int i = list.indexOf(r);
+		r.currentX = START_X + SPACE * (i % 10);
+		r.currentY = (this.scrollY - SPACE * (i / 10 + this.row));
+	}
+	
+	private Color getColor(AbstractRelic r) {
+		if (RelicLibrary.redList.contains(r)) {
+			return RED_OUTLINE_COLOR;
+		} else if (RelicLibrary.greenList.contains(r)) {
+			return GREEN_OUTLINE_COLOR;
+		} else if (RelicLibrary.blueList.contains(r)) {
+			return BLUE_OUTLINE_COLOR;
+		} else if (RelicLibrary.whiteList.contains(r)) {
+			return PURPLE_RELIC_COLOR;
+		} else {
+			return BLACK_OUTLINE_COLOR;
+		}
+	}
 
+	private void render(SpriteBatch sb, AbstractRelic r) {
+		r.render(sb, false, getColor(r));
+	}
+	
 	private void renderList(SpriteBatch sb, String msg, String desc, ArrayList<AbstractRelic> list) {
 		this.row += 2;
 		FontHelper.renderSmartText(sb, FontHelper.buttonLabelFont, msg, START_X - 50.0F * Settings.scale,
@@ -471,28 +488,8 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 						+ FontHelper.getSmartWidth(FontHelper.buttonLabelFont, msg, 99999.0F, 0.0F),
 				this.scrollY - 0.0F * Settings.scale - SPACE * this.row, 99999.0F, 0.0F, Settings.CREAM_COLOR);
 		this.row += 1;
-		this.col = 0;
-		for (Iterator<AbstractRelic> var5 = list.iterator(); var5.hasNext(); this.col += 1) {
-			AbstractRelic r = (AbstractRelic) var5.next();
-			r.isSeen = true;
-			if (this.col == 10) {
-				this.col = 0;
-				this.row += 1;
-			}
-			r.currentX = (START_X + SPACE * this.col);
-			r.currentY = (this.scrollY - SPACE * this.row);
-			if (RelicLibrary.redList.contains(r)) {
-				r.render(sb, false, RED_OUTLINE_COLOR);
-			} else if (RelicLibrary.greenList.contains(r)) {
-				r.render(sb, false, GREEN_OUTLINE_COLOR);
-			} else if (RelicLibrary.blueList.contains(r)) {
-				r.render(sb, false, BLUE_OUTLINE_COLOR);
-			} else if (RelicLibrary.whiteList.contains(r)) {
-				r.render(sb, false, PURPLE_RELIC_COLOR);
-			} else {
-				r.render(sb, false, BLACK_OUTLINE_COLOR);
-			}
-		}
+		list.stream().peek(r -> r.isSeen = true).peek(r -> setPosition(r, list)).forEach(r -> render(sb, r));
+		this.row += list.size() / 10;
 	}
 	
 	public void scrolledUsingBar(float newPercent) {

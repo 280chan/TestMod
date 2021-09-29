@@ -1,10 +1,8 @@
-
 package cards.curse;
 
 import cards.AbstractTestCurseCard;
 import relics.Sins;
 import com.megacrit.cardcrawl.cards.*;
-import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -37,10 +35,9 @@ public class Wrath extends AbstractTestCurseCard {
 	}
 
 	public void triggerWhenDrawn() {
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!m.isDead && !m.isDying && !m.isEscaping && !m.escaped) {
-				this.addToBot(new ApplyPowerAction(m, AbstractDungeon.player, new AngryPower(m, this.magicNumber), this.magicNumber));
-			}
-		}
+		AbstractDungeon.getMonsters().monsters.stream()
+				.filter(m -> !(m.isDead || m.isDying || m.isEscaping || m.escaped))
+				.forEach(m -> this.addToBot(new ApplyPowerAction(m, AbstractDungeon.player,
+						new AngryPower(m, this.magicNumber), this.magicNumber)));
 	}
 }

@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,15 +24,12 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.core.Settings.GameLanguage;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.helpers.TipTracker;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.PotionBelt;
@@ -74,7 +69,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 9/24/2021
+ * @version 9/29/2021
  * @since 6/17/2018
  */
 
@@ -102,72 +97,54 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private static void editSubModRelics(ISubscriber sub) {
 		if (sub instanceof EditRelicsSubscriber) {
 			((EditRelicsSubscriber)sub).receiveEditRelics();
-		} else {
-			info(sub.getClass().getCanonicalName() + " is not EditRelicsSubscriber! skipped.");
 		}
 	}
 	
 	private static void editSubModCards(ISubscriber sub) {
 		if (sub instanceof EditCardsSubscriber) {
 			((EditCardsSubscriber)sub).receiveEditCards();
-		} else {
-			info(sub.getClass().getCanonicalName() + " is not EditCardsSubscriber! skipped.");
 		}
 	}
 	
 	private static void editSubModKeywords(ISubscriber sub) {
 		if (sub instanceof EditKeywordsSubscriber) {
 			((EditKeywordsSubscriber)sub).receiveEditKeywords();
-		} else {
-			info(sub.getClass().getCanonicalName() + " is not EditKeywordsSubscriber! skipped.");
 		}
 	}
 	
 	private static void editSubModStrings(ISubscriber sub) {
 		if (sub instanceof EditStringsSubscriber) {
 			((EditStringsSubscriber)sub).receiveEditStrings();
-		} else {
-			info(sub.getClass().getCanonicalName() + " is not EditStringsSubscriber! skipped.");
 		}
 	}
 	
 	private static void editSubModPostDungeonInit(ISubscriber sub) {
 		if (sub instanceof PostDungeonInitializeSubscriber) {
 			((PostDungeonInitializeSubscriber)sub).receivePostDungeonInitialize();
-		} else {
-			info(sub.getClass().getCanonicalName() + " is not PostDungeonInitializeSubscriber! skipped.");
 		}
 	}
 	
 	private static void editSubModPostUpdate(ISubscriber sub) {
 		if (sub instanceof PostUpdateSubscriber) {
 			((PostUpdateSubscriber)sub).receivePostUpdate();
-		} else {
-			//info(sub.getClass().getCanonicalName() + " is not PostUpdateSubscriber! skipped.");
 		}
 	}
 	
 	private static void editSubModStartGame(ISubscriber sub) {
 		if (sub instanceof StartGameSubscriber) {
 			((StartGameSubscriber)sub).receiveStartGame();
-		} else {
-			info(sub.getClass().getCanonicalName() + " is not StartGameSubscriber! skipped.");
 		}
 	}
 	
 	private static void editSubModStartBattle(ISubscriber sub, AbstractRoom r) {
 		if (sub instanceof OnStartBattleSubscriber) {
 			((OnStartBattleSubscriber)sub).receiveOnBattleStart(r);
-		} else {
-			info(sub.getClass().getCanonicalName() + " is not OnStartBattleSubscriber! skipped.");
 		}
 	}
 	
 	private static void editSubModPostBattle(ISubscriber sub, AbstractRoom r) {
 		if (sub instanceof PostBattleSubscriber) {
 			((PostBattleSubscriber)sub).receivePostBattle(r);
-		} else {
-			info(sub.getClass().getCanonicalName() + " is not PostBattleSubscriber! skipped.");
 		}
 	}
 
@@ -235,7 +212,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			UnlockTracker.markCardAsSeen(makeID("TaurusBlackCat"));
 		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).map(c -> c.cardID)
 				.forEach(TestMod::checkOldCardID);
-		MAHJONGS.stream().map(c -> c.cardID).forEach(TestMod::checkOldCardID);
+		// MAHJONGS.stream().map(c -> c.cardID).forEach(TestMod::checkOldCardID);
 	}
 	
 	private static void checkOldRelicID(String id) {
@@ -289,7 +266,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private void initLatest() {
 		addLatest(new Dye(), new Restrained(), new RandomTest(), new GoldenSoul(), new GremlinBalance(),
 				new IWantAll(), new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue(),
-				new VentureCapital());
+				new VentureCapital(), new GreedyDevil());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.collectToArrayList());
 		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
@@ -302,8 +279,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	@Override
 	public void receiveEditRelics() {
 		// 添加遗物进游戏
+		// new Mahjong();
 		RELICS = Stream.of(new ObsoleteBoomerang(), new BlackFramedGlasses(), new BouquetWithThorns(), new IWantAll(),
-				new PortableAltar(), new Sins(), new Register(), new EnergyCheck(), new Mahjong(), new CasingShield(),
+				new PortableAltar(), new Sins(), new Register(), new EnergyCheck(), new TestBox(), new CasingShield(),
 				new OneHitWonder(), new RandomTest(), new Temperance(), new Justice(), new Fortitude(), new Charity(),
 				new GoldenSoul(), new Dye(), new AssaultLearning(), new HeartOfDaVinci(), new IncinerationGenerator(),
 				new IndustrialRevolution(), new AscensionHeart(), new RealStoneCalender(), new Prudence(), new Hope(),
@@ -313,12 +291,12 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new BloodSacrificeSpiritualization(), new Acrobat(), new ArcanaOfDestiny(), new TurbochargingSystem(),
 				new GremlinBalance(), new Restrained(), new Faith(), new HyperplasticTissue(), new TraineeEconomist(),
 				new InjuryResistance(), new DeterminationOfClimber(), new Déjàvu(), new Muramasa(), new GreedyDevil(),
-				new CrystalShield(), new Alchemist(), new StringDisintegrator(), new HarvestTotem(), new LifeArmor(),
+				new RainbowHikingShoes(), new DominatorOfWeakness(), new D_4(), new ShadowAmulet(), new RetroFilter(),
+				new CrystalShield(), new Alchemist(), new StringDisintegrator(), new HarvestTotem(), new Fanaticism(),
 				new BalancedPeriapt(), new MagicalMallet(), new Laevatain(), new TimeTraveler(), new Nyarlathotep(),
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
-				new RainbowHikingShoes(), new DominatorOfWeakness(), new D_4(), new TestBox(), new ShadowAmulet(),
-				new TheFather(), new Fanaticism(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
-				new VentureCapital(), new RetroFilter()).collect(this.collectToArrayList());
+				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
+				new VentureCapital()).collect(this.collectToArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);
@@ -326,15 +304,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				.collect(this.collectToArrayList());
 		
 		MY_RELICS.forEach(AbstractTestRelic::addToMap);
-		
-		/*for (int i = 0; i < BOTTLES.size(); i++) {
-			BaseMod.registerBottleRelic(BOTTLES.get(i), BOTTLES.get(i));
-		}*/
 	}
 
 	public static ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
 	private static ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
-	//private static ArrayList<AbstractBottleRelic> BOTTLES = new ArrayList<AbstractBottleRelic>();
 	
 	private void loadStrings(Class<?> c) {
 		String s = c.getSimpleName().toLowerCase();
@@ -366,11 +339,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				.collect(this.collectToArrayList());
 
 		CARDS.forEach(BaseMod::addCard);
-		
-		for (int i = 0; i < 37; i++)
-			this.addMahjongToList(AbstractMahjongCard.mahjong(i));
-		
 		SUB_MOD.forEach(TestMod::editSubModCards);
+		
+		// this.getNaturalNumberList(37).stream().map(AbstractMahjongCard::mahjong).forEach(this::addMahjongToList);
+		
 		
 		//BaseMod.addCard(new Test());
 	}
@@ -425,8 +397,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DragonStarHat.resetValue();
 		Faith.reset();
 		AscensionHeart.reset();
-		Mahjong.saveDefaultYama();
-		// NoteOfAlchemist.setState(false);
+		// Mahjong.saveDefaultYama();
+		
 		// 初始遗物
 		obtain(AbstractDungeon.player, new TestBox());
 	}
@@ -435,7 +407,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		info("开始解锁");
 		CARDS.forEach(this::markAsSeen);
 		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(this::markAsSeen);
-		MAHJONGS.forEach(this::markAsSeen);
+		// MAHJONGS.forEach(this::markAsSeen);
 		RELICS.forEach(this::markAsSeen);
 	}
 	
@@ -548,7 +520,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			MY_RELICS.stream().filter(AbstractTestRelic::tryEquip).forEach(this::invokeEquip);
 			MY_RELICS.stream().filter(AbstractTestRelic::tryUnequip).forEach(this::invokeUnequip);
 			
-			
 			p.relics.stream().filter(r -> r instanceof AbstractTestRelic).map(r -> (AbstractTestRelic) r)
 					.forEach(AbstractTestRelic::postUpdate);
 
@@ -559,46 +530,28 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				}
 			}*/
 			
-			for (Iterator<PerfectCombo> i = PerfectCombo.TO_UPDATE.iterator(); i.hasNext();) {
-				if (AbstractDungeon.currMapNode == null)
-					break;
-				PerfectCombo c = i.next();
-	    		if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
-					if (p.hand.contains(c)) {
-		        		if (c.magicNumber < c.countUpgrades() + c.misc) {
-		        			c.applyPowers();
-		        		}
-		    		}
-	    		} else {
-	    			i.remove();
-	    		}
-			}
-			
-			for (Iterator<AbstractUpdatableCard> i = AbstractUpdatableCard.TO_UPDATE.iterator(); i.hasNext();) {
-				if (AbstractDungeon.currMapNode == null)
-					break;
-				AbstractUpdatableCard c = i.next();
-	    		if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
-					if (p.hand.contains(c)) {
-						AbstractMonster m = AbstractDungeon.getMonsters().hoveredMonster;
-	        			c.preApplyPowers(p, m);
-	    				if (this.hasStringDisintegrator())
-	    					continue;
-	        			c.applyPowers();
-		    		} else {
-		    			c.resetDescription();
-		    		}
-	    		} else {
-	    			i.remove();
-	    		}
+			if (AbstractDungeon.currMapNode != null) {
+				if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
+					PerfectCombo.TO_UPDATE.stream().filter(p.hand::contains)
+							.filter(c -> c.magicNumber < c.countUpgrades() + c.misc).forEach(c -> c.applyPowers());
+					Stream<AbstractUpdatableCard> s = AbstractUpdatableCard.TO_UPDATE.stream().filter(p.hand::contains)
+							.peek(c -> c.preApplyPowers(p, AbstractDungeon.getMonsters().hoveredMonster));
+					if (!this.hasStringDisintegrator())
+						s.forEach(c -> c.applyPowers());
+					else
+						s.close();
+					AbstractUpdatableCard.TO_UPDATE.stream().filter(not(p.hand::contains))
+							.forEach(c -> c.resetDescription());
+				} else {
+					PerfectCombo.TO_UPDATE.clear();
+					AbstractUpdatableCard.TO_UPDATE.clear();
+				}
 			}
 
 			this.turnSkipperUpdate();
 			
 			BoxForYourself.updateThis();
-			
 			HeartOfDaVinci.updateThis();
-			
 			SuperconductorNoEnergyPower.UpdateCurrentInstance();
 		}
 	}
@@ -626,10 +579,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(DragonStarHat.SAVE_NAME, "0");
 		DEFAULT.setProperty(Faith.SAVE_NAME, "false");
 		DEFAULT.setProperty(Faith.SAVE_NAME1, "0");
-		DEFAULT.setProperty(Mahjong.SAVE_KANG, "0");
+		DEFAULT.setProperty(AscensionHeart.SAVE_NAME, "false");
+		/*DEFAULT.setProperty(Mahjong.SAVE_KANG, "0");
 		DEFAULT.setProperty(Mahjong.SAVE_TURN, "0");
 		DEFAULT.setProperty(Mahjong.SAVE_REACH, "false");
-		DEFAULT.setProperty(AscensionHeart.SAVE_NAME, "false");
 		for (int i = 0; i < Mahjong.YAMA_NAME.length; i++)
 			DEFAULT.setProperty(Mahjong.YAMA_NAME[i], "" + Mahjong.YAMA_DEFAULT[i]);
 		for (String s : Mahjong.KANG_NAME)
@@ -637,7 +590,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		for (String s : Mahjong.DORA_NAME)
 			DEFAULT.setProperty(s, "0");
 		for (int i = 0; i < 13; i++)
-			DEFAULT.setProperty(Mahjong.HAND_NAME + i, "0");
+			DEFAULT.setProperty(Mahjong.HAND_NAME + i, "0");*/
 		try {
 			config = new SpireConfig(SAVE_NAME, SAVE_FILE_NAME, DEFAULT);
 		} catch (IOException e) {
@@ -666,15 +619,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		HeartOfDaVinci.init(AbstractDungeon.player.relics.size());
 		
 		TimeTraveler.load(getInt(TimeTraveler.SAVE_NAME));
-		
 		Motorcycle.loadGame();
-		// NoteOfAlchemist.setState(config.getBool("recorded"));
-		
 		DragonStarHat.loadValue(getInt(DragonStarHat.SAVE_NAME));
-		
 		Faith.load(getBool(Faith.SAVE_NAME), getInt(Faith.SAVE_NAME1));
 
-		if (AbstractDungeon.player.hasRelic(makeID(Mahjong.ID))) {
+		/*if (AbstractDungeon.player.hasRelic(makeID(Mahjong.ID))) {
 			int[] yama = new int[37], kang = new int[getInt(Mahjong.SAVE_KANG)], hint = new int[kang.length + 1],
 					hand = new int[13 - 3 * kang.length];
 			for (int i = 0; i < 37; i++)
@@ -686,14 +635,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			for (int i = 0; i < hand.length; i++)
 				hand[i] = getInt(Mahjong.HAND_NAME + i);
 			Mahjong.load(getInt(Mahjong.SAVE_TURN), getBool(Mahjong.SAVE_REACH), yama, kang, hint, hand);
-		}
+		}*/
 
 		Automaton.loadMagicNumber();
-		
 		AscensionHeart.load(getBool(AscensionHeart.SAVE_NAME));
-		
 		TemporaryBarricade.pulseLoader();
-		
 		IWantAll.loadVictory();
 	}
 	
@@ -744,7 +690,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		//needFix = !BaseMod.hasModID("ZeroMaxHealthFix:");
 		
 		/**
-		 * TODO since version 3.3.9
+		 * since version 3.3.9
 		checkOldID();
 		 * end version 4.2.0
 		 */
@@ -755,14 +701,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		if ("280 chan".equals(CardCrawlGame.playerName))
 			unlockAll();
 		
-		/*
-		initCheat();
-		*/
 		initLatest();
+		
 		// TODO
 		initializeModPanel();
-		
-		//enableConsoleMultiplayer();
 	}
 	
 	private void initializeModPanel() {
@@ -797,7 +739,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		SUB_MOD.forEach(new RoomTrigger(r)::preTrigger);
 		PerfectCombo.setRng();
 		AbstractMahjongCard.setRng();
-		Mahjong.setRng();
+		// Mahjong.setRng();
 		VirtualReality.reset();
 	}
 

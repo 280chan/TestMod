@@ -1,33 +1,15 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.RandomXS128;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.ClearCardQueueAction;
-import com.megacrit.cardcrawl.actions.GameActionManager;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.DiscardAtEndOfTurnAction;
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.actions.common.EnableEndTurnButtonAction;
-import com.megacrit.cardcrawl.actions.common.EndTurnAction;
-import com.megacrit.cardcrawl.actions.common.RollMoveAction;
-import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
-import com.megacrit.cardcrawl.actions.utility.UseCardAction;
-import com.megacrit.cardcrawl.actions.utility.WaitAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.CardQueueItem;
+import com.megacrit.cardcrawl.actions.*;
+import com.megacrit.cardcrawl.actions.common.*;
+import com.megacrit.cardcrawl.actions.utility.*;
+import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -36,7 +18,6 @@ import com.megacrit.cardcrawl.daily.mods.ControlledChaos;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ModHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.random.Random;
@@ -53,8 +34,6 @@ import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 import actions.AbstractXCostAction;
 import basemod.BaseMod;
 import mymod.TestMod;
-import potions.EscapePotion;
-import relics.AbstractTestRelic;
 import relics.Prudence;
 import relics.StringDisintegrator;
 
@@ -66,6 +45,25 @@ public interface MiscMethods {
 	
 	public default int getDate() {
 		return Calendar.getInstance().get(Calendar.DATE);
+	}
+	
+	public default ArrayList<Integer> getIdenticalList(int value, int size) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		while (list.size() < size)
+			list.add(value);
+		return list;
+	}
+	
+	public default ArrayList<Integer> getNaturalNumberList(int n) {
+		return getNumberList(0, n);
+	}
+	
+	public default ArrayList<Integer> getNumberList(int start, int end) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		int s = end > start ? 1 : -1;
+		for (int i = start; (end - i) * s > 0; i += s)
+			list.add(i);
+		return list;
 	}
 	
 	public default void markAsSeen(AbstractRelic r) {
@@ -115,8 +113,7 @@ public interface MiscMethods {
 	}
 	
 	public default void addExtraCard(CardGroup g, AbstractCard c, int num) {
-		for (int i = 0; i < num; i++)
-			g.addToTop(c.makeStatEquivalentCopy());
+		this.getIdenticalList(0, num).forEach(i -> g.addToTop(c.makeStatEquivalentCopy()));
 	}
 	
 	static class IdChecker {
@@ -127,21 +124,18 @@ public interface MiscMethods {
 		public boolean check(AbstractCard c) {
 			return this.id.equals(c.cardID);
 		}
+		public boolean check(AbstractRelic r) {
+			return this.id.equals(r.relicId);
+		}
 	}
 	
 	public default ArrayList<AbstractCard> getAllInBattleInstance(String cardID) {
 		IdChecker checker = new IdChecker(cardID);
-		ArrayList<AbstractCard> cards = new ArrayList<AbstractCard>();
 		AbstractPlayer p = AbstractDungeon.player;
-		if (p.cardInUse.cardID.equals(cardID))
-			cards.add(p.cardInUse);
-		p.drawPile.group.stream().filter(checker::check).forEach(cards::add);
-		p.discardPile.group.stream().filter(checker::check).forEach(cards::add);
-		p.exhaustPile.group.stream().filter(checker::check).forEach(cards::add);
-		p.limbo.group.stream().filter(checker::check).forEach(cards::add);
-		p.hand.group.stream().filter(checker::check).forEach(cards::add);
-		TestMod.info("Count: " + cards.size());
-		return cards;
+		return Stream
+				.concat(Stream.of(p.drawPile, p.discardPile, p.exhaustPile, p.limbo, p.hand)
+						.flatMap(g -> g.group.stream()), Stream.of(p.cardInUse))
+				.filter(checker::check).collect(this.collectToArrayList());
 	}
 	
 	public default void turnSkipperStart() {
@@ -210,24 +204,21 @@ public interface MiscMethods {
 			CardCrawlGame.sound.play("POWER_TIME_WARP", 0.05F);
 			AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
 			AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
-			for (AbstractMonster m : AbstractDungeon.getMonsters().monsters)
-				addToBot(new ApplyPowerAction(m, m, new StrengthPower(m, 2), 2));
+			AbstractDungeon.getMonsters().monsters
+					.forEach(m -> addToBot(new ApplyPowerAction(m, m, new StrengthPower(m, 2), 2)));
 	    }
 	    
 	    private static void updateStartEndingTurn() {
 	    	if (!startEndingTurn)
 	    		return;
 	    	startEndingTurn = false;
-			AbstractDungeon.actionManager.cardQueue.stream().filter(i -> {
-				return i.autoplayCard;
-			}).forEach(i -> {
+			AbstractDungeon.actionManager.cardQueue.stream().filter(i -> i.autoplayCard).forEach(i -> {
 				i.card.dontTriggerOnUseCard = true;
 				addToBot(new UseCardAction(i.card));
 			});
 	    	AbstractDungeon.actionManager.cardQueue.clear();
 	    	
-	    	for (AbstractCard c : AbstractDungeon.player.limbo.group)
-	            AbstractDungeon.effectList.add(new ExhaustCardEffect(c));
+	    	AbstractDungeon.player.limbo.group.forEach(c -> AbstractDungeon.effectList.add(new ExhaustCardEffect(c)));
 	    	
 	    	TestMod.info("limbo数量 = " + AbstractDungeon.player.limbo.size());
 	    	AbstractDungeon.player.limbo.group.clear();
@@ -263,19 +254,15 @@ public interface MiscMethods {
 			}
 	    }
 	    
-	    private static void resetAttributes(ArrayList<AbstractCard> list) {
-	    	list.forEach(AbstractCard::resetAttributes);
-	    }
-	    
 		private static void endTurn() {
-			AbstractDungeon.player.applyEndOfTurnTriggers();
+			AbstractPlayer p = AbstractDungeon.player;
+			p.applyEndOfTurnTriggers();
 
 			addToBot(new ClearCardQueueAction());
 			addToBot(new DiscardAtEndOfTurnAction());
 			
-			resetAttributes(AbstractDungeon.player.drawPile.group);
-			resetAttributes(AbstractDungeon.player.discardPile.group);
-			resetAttributes(AbstractDungeon.player.hand.group);
+			Stream.of(p.drawPile, p.discardPile, p.hand).flatMap(g -> g.group.stream())
+					.forEach(c -> c.resetAttributes());
 			if (AbstractDungeon.player.hoveredCard != null)
 				AbstractDungeon.player.hoveredCard.resetAttributes();
 
@@ -292,7 +279,7 @@ public interface MiscMethods {
 	    	if (!startMonsterTurn)
 	    		return;
 	    	startMonsterTurn = false;
-			for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+			for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
 				if ((!m.isDying) && (!m.isEscaping)) {
 					if (!m.hasPower("Barricade"))
 						m.loseBlock();
@@ -302,7 +289,8 @@ public interface MiscMethods {
 			startNextTurn = true;
 	    }
 	    
-	    private static void updateStartNextTurn() {
+	    @SuppressWarnings("deprecation")
+		private static void updateStartNextTurn() {
 	    	GameActionManager gam = AbstractDungeon.actionManager;
 	    	if (!gam.actions.isEmpty())
 	        	return;
@@ -324,7 +312,7 @@ public interface MiscMethods {
 				AbstractDungeon.player.applyStartOfTurnCards();
 				AbstractDungeon.player.applyStartOfTurnPowers();
 				AbstractDungeon.player.applyStartOfTurnOrbs();
-				GameActionManager.turn += 1;
+				GameActionManager.turn++;
 				gam.turnHasEnded = false;
 				GameActionManager.totalDiscardedThisTurn = 0;
 				gam.cardsPlayedThisTurn.clear();
@@ -520,9 +508,7 @@ public interface MiscMethods {
 					}
 				}
 			}
-			for (AbstractCard c : HARD_GLOW_LOCK) {
-				c.beginGlowing();
-			}
+			HARD_GLOW_LOCK.forEach(c -> c.beginGlowing());
 		}
 		
 		private static Color unusedGlowColor() {
@@ -565,11 +551,8 @@ public interface MiscMethods {
 	}
 
 	public default boolean hasEnemies() {
-		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom() == null
-				|| AbstractDungeon.getCurrRoom().monsters == null
-				|| AbstractDungeon.getCurrRoom().monsters.monsters == null)
-			return false;
-		return true;
+		return !(AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom() == null
+				|| AbstractDungeon.getMonsters() == null || AbstractDungeon.getMonsters().monsters == null);
 	}
 	
 	public default double gainGold(double amount) {

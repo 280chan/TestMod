@@ -22,7 +22,7 @@ public class BloodthirstyAction extends AbstractGameAction implements MiscMethod
 		Long amount = max * rate / 100L;
 		if (amount > 2147483647L)
 			amount = 2000000000L;
-		setValues(target, new DamageInfo(source, amount.intValue(), DamageType.HP_LOSS));
+		setValues(target, this.info = new DamageInfo(source, amount.intValue(), DamageType.HP_LOSS));
 		this.actionType = ActionType.SPECIAL;
 		this.duration = DURATION;
 	}

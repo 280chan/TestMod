@@ -66,7 +66,10 @@ public class Bloodthirsty extends AbstractUpdatableCard {
 	}
 	
 	public void doublesMagicNumber() {
+		int tmp = this.magicNumber;
 		this.upgradeMagicNumber(this.magicNumber);
+		if (this.magicNumber < 0 && tmp > 0)
+			this.upgradeMagicNumber(2000000000 - this.magicNumber);
 	}
 	
     public void triggerOnCardPlayed(AbstractCard c) {
