@@ -23,10 +23,8 @@ public class MagicalMallet extends AbstractTestRelic {
 			List<AbstractCard> hand = AbstractDungeon.player.hand.group;
 			if (hand.isEmpty())
 				return;
-			int min = hand.stream().filter(c -> c.cost >= 0).map(c -> c.costForTurn).reduce(Integer.MAX_VALUE,
-					Integer::min);
-			int max = hand.stream().filter(c -> c.cost >= 0).map(c -> c.costForTurn).reduce(Integer.MIN_VALUE,
-					Integer::max);
+			int min = hand.stream().filter(c -> c.cost >= 0).mapToInt(c -> c.costForTurn).min().orElse(999);
+			int max = hand.stream().filter(c -> c.cost >= 0).mapToInt(c -> c.costForTurn).max().orElse(-999);
 			TestMod.info("最大: " + max + ",最小: " + min);
 			if (min == max)
 				return;

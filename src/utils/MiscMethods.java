@@ -608,15 +608,11 @@ public interface MiscMethods {
 		return t -> action.accept(f.apply(t));
 	}
 	
-	public static interface CoConsumer<T, R> {
-		void accept(T t, R r);
-	}
-	
-	public default <T, R> void branch(Stream<T> s, Function<T, R> f, CoConsumer<T, R> action) {
+	public default <T, R> void branch(Stream<T> s, Function<T, R> f, BiConsumer<T, R> action) {
 		s.forEach(branch(f, action));
 	}
 	
-	public default <T, R> Consumer<T> branch(Function<T, R> f, CoConsumer<T, R> action) {
+	public default <T, R> Consumer<T> branch(Function<T, R> f, BiConsumer<T, R> action) {
 		return t -> action.accept(t, f.apply(t));
 	}
 	
@@ -659,6 +655,14 @@ public interface MiscMethods {
 	
 	public static void addToBot(AbstractGameAction a) {
 		AbstractDungeon.actionManager.addToBottom(a);
+	}
+	
+	public default void att(AbstractGameAction a) {
+		addToTop(a);
+	}
+	
+	public default void atb(AbstractGameAction a) {
+		addToBot(a);
 	}
 	
     public default <T> Predicate<T> not(Predicate<T> a) {

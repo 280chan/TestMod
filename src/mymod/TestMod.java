@@ -18,7 +18,12 @@ import com.codedisaster.steamworks.SteamAPI;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
+import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -30,6 +35,9 @@ import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
+import com.megacrit.cardcrawl.powers.ArtifactPower;
+import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
+import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.PotionBelt;
@@ -38,6 +46,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
+import actions.AdversityCounterattackAction;
 import basemod.BaseMod;
 import basemod.ModPanel;
 import basemod.ReflectionHacks;
@@ -63,6 +72,7 @@ import events.*;
 import halloweenMod.mymod.HalloweenMod;
 import potions.*;
 import powers.TheFatherPower;
+import powers.AssimilatedRunePower;
 import powers.SuperconductorNoEnergyPower;
 import relics.*;
 import utils.*;
@@ -321,23 +331,45 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		SUB_MOD.forEach(TestMod::editSubModStrings);
 	}
 
+	private static void add(AbstractCard c) {
+		CARDS.add(c);
+	}
+	
 	@Override
 	public void receiveEditCards() {
 		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(BaseMod::addCard);
 		// 添加卡牌进游戏
-		CARDS = Stream.of(new DisillusionmentEcho(), new LifeRuler(), new ComboMaster(), new AdversityCounterattack(),
+		CARDS = Stream.of(new DisillusionmentEcho(), new LifeRuler(), new ComboMaster(), new WeaknessCounterattack(),
 				new SubstituteBySubterfuge(), new Superconductor(), new PulseDistributor(), new EternalityOfKhronos(),
 				new AutoReboundSystem(), new Wormhole(), new RepeatForm(), new Plague(), new SunMoon(), new Mystery(),
 				new ShutDown(), new Reflect(), new Provocation(), new PocketStoneCalender(), new Recap(), new Dream(),
 				new Bloodthirsty(), new Arrangement(), new Collector(), new ChaoticCore(), new SelfRegulatingSystem(),
 				new LimitFlipper(), new ConditionedReflex(), new RabbitOfFibonacci(), new BloodBlade(), new TradeIn(),
-				new DeathImprint(), new BloodShelter(), new AssimilatedRune(), new TreasureHunter(), new HeadAttack(),
 				new PainDetonator(), new FightingIntention(), new Reverberation(), new CardIndex(), new BackupPower(),
 				new PerfectCombo(), new Lexicography(), new Librarian(), new VirtualReality(), new HandmadeProducts(),
-				new WeaknessCounterattack(), new TemporaryDeletion(), new EnhanceArmerment(), new TaurusBlackCat(),
-				new Automaton(), new Illusory(), new Reproduce(), new PowerStrike())
+				new DeathImprint(), new BloodShelter(), new TreasureHunter(), new HeadAttack(), new TaurusBlackCat(),
+				new TemporaryDeletion(), new EnhanceArmerment(), new Automaton(),
+				new Illusory(), new Reproduce(), /*new AssimilatedRune(),*/ new PowerStrike())
 				.collect(this.collectToArrayList());
-
+		add(new AbstractAnonymousCard("AdversityCounterattack", 1, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY,
+				0, 0, 1, (c, p, m) -> {
+					att(new AdversityCounterattackAction(p, m, AttackEffect.SLASH_HORIZONTAL));
+					att(new ApplyPowerAction(p, p, new IntangiblePlayerPower(p, 1), 1));
+					att(new ApplyPowerAction(p, p, new VulnerablePower(p, c.magicNumber, false), c.magicNumber));
+					att(new ApplyPowerAction(m, p, new ArtifactPower(m, c.magicNumber), c.magicNumber));
+				}, c -> c.upgradeMGC(1)));
+		add(new AbstractAnonymousCard("AssimilatedRune", 1, CardType.SKILL, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
+				(c, player, m) -> {
+					AssimilatedRunePower p = new AssimilatedRunePower(player, c.magicNumber, c.upgraded);
+					if (player.hasPower(p.ID)) {
+						p = (AssimilatedRunePower) player.getPower(p.ID);
+						p.stackPower(c.magicNumber);
+						p.updateDescription();
+					} else {
+						player.powers.add(0, p);
+					}
+				}, c -> c.upgradeDesc()));
+		
 		CARDS.forEach(BaseMod::addCard);
 		SUB_MOD.forEach(TestMod::editSubModCards);
 		
