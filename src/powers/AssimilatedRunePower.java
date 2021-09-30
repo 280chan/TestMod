@@ -22,8 +22,7 @@ public class AssimilatedRunePower extends AbstractTestPower {
 	public AssimilatedRunePower(AbstractCreature owner, int amount, boolean upgraded) {
 		super(POWER_ID);
 		this.name = NAME;
-		this.ID += upgraded;
-		this.upgraded = upgraded;
+		this.ID += (this.upgraded = upgraded);
 		if (this.upgraded) {
 			this.name += "+";
 		}
@@ -48,7 +47,7 @@ public class AssimilatedRunePower extends AbstractTestPower {
 	}
 	
 	private int maxIn(Stream<AbstractCard> s, boolean atk) {
-		return s.map(c -> this.getValue(c, atk)).max(Integer::max).orElse(-999);
+		return s.mapToInt(c -> this.getValue(c, atk)).max().orElse(-999);
 	}
 	
 	private Stream<AbstractCard> getList() {
