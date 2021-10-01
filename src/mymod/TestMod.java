@@ -20,6 +20,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget;
@@ -36,6 +37,7 @@ import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.powers.ArtifactPower;
+import com.megacrit.cardcrawl.powers.EnergizedPower;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.random.Random;
@@ -345,20 +347,20 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new ShutDown(), new Reflect(), new Provocation(), new PocketStoneCalender(), new Recap(), new Dream(),
 				new Bloodthirsty(), new Arrangement(), new Collector(), new ChaoticCore(), new SelfRegulatingSystem(),
 				new LimitFlipper(), new ConditionedReflex(), new RabbitOfFibonacci(), new BloodBlade(), new TradeIn(),
-				new PainDetonator(), new FightingIntention(), new Reverberation(), new CardIndex(), new BackupPower(),
+				new PainDetonator(), new FightingIntention(), new Reverberation(), new CardIndex(), new PowerStrike(),
 				new PerfectCombo(), new Lexicography(), new Librarian(), new VirtualReality(), new HandmadeProducts(),
 				new DeathImprint(), new BloodShelter(), new TreasureHunter(), new HeadAttack(), new TaurusBlackCat(),
 				new TemporaryDeletion(), new EnhanceArmerment(), new Automaton(),
-				new Illusory(), new Reproduce(), /*new AssimilatedRune(),*/ new PowerStrike())
+				new Illusory(), new Reproduce())
 				.collect(this.collectToArrayList());
-		add(new AbstractAnonymousCard("AdversityCounterattack", 1, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY,
+		add(new AnonymousCard("AdversityCounterattack", 1, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY,
 				0, 0, 1, (c, p, m) -> {
 					att(new AdversityCounterattackAction(p, m, AttackEffect.SLASH_HORIZONTAL));
 					att(new ApplyPowerAction(p, p, new IntangiblePlayerPower(p, 1), 1));
 					att(new ApplyPowerAction(p, p, new VulnerablePower(p, c.magicNumber, false), c.magicNumber));
 					att(new ApplyPowerAction(m, p, new ArtifactPower(m, c.magicNumber), c.magicNumber));
-				}, c -> c.upgradeMGC(1)));
-		add(new AbstractAnonymousCard("AssimilatedRune", 1, CardType.SKILL, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
+				}, c -> c.upMGC(1)));
+		add(new AnonymousCard("AssimilatedRune", 1, CardType.SKILL, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
 				(c, player, m) -> {
 					AssimilatedRunePower p = new AssimilatedRunePower(player, c.magicNumber, c.upgraded);
 					if (player.hasPower(p.ID)) {
@@ -368,7 +370,25 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					} else {
 						player.powers.add(0, p);
 					}
-				}, c -> c.upgradeDesc()));
+				}, c -> c.upDesc()));
+		add(new AnonymousCard("BackupPower", 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.NONE, 0, 0, 2,
+				(c, p, m) -> att(new GainEnergyAction(c.magicNumber)), c -> c.upMGC(1),
+				c -> c.upDesc(c.exDesc()[0] + INSTANCE.energyString(c.magicNumber) + c.exDesc()[1])) {
+		}.override("upgradeMagicNumber", l -> {
+			AnonymousCard c = (AnonymousCard) l.get(0);
+			int n = (int) l.get(1);
+			c.superMGC(n);
+			c.init();
+			return null;
+		}).override("triggerOnEndOfPlayerTurn", l -> {
+			AnonymousCard c = (AnonymousCard) l.get(0);
+			AbstractPlayer p = AbstractDungeon.player;
+			atb(new ApplyPowerAction(p, p, new EnergizedPower(p, 1), 1));
+			c.absoluteSkip = true;
+			c.triggerOnEndOfPlayerTurn();
+			c.absoluteSkip = false;
+			return null;
+		}));
 		
 		CARDS.forEach(BaseMod::addCard);
 		SUB_MOD.forEach(TestMod::editSubModCards);

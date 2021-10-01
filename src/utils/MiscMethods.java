@@ -38,6 +38,7 @@ import relics.Prudence;
 import relics.StringDisintegrator;
 
 public interface MiscMethods {
+	public static final MiscMethods INSTANCE = new MiscMethods() {};
 	
 	default int getMonth() {
 		return Calendar.getInstance().get(Calendar.MONTH) + 1;
@@ -47,8 +48,8 @@ public interface MiscMethods {
 		return Calendar.getInstance().get(Calendar.DATE);
 	}
 	
-	public default ArrayList<Integer> getIdenticalList(int value, int size) {
-		ArrayList<Integer> list = new ArrayList<Integer>();
+	public default <T> ArrayList<T> getIdenticalList(T value, int size) {
+		ArrayList<T> list = new ArrayList<T>();
 		while (list.size() < size)
 			list.add(value);
 		return list;
@@ -579,6 +580,18 @@ public interface MiscMethods {
 		}
 	}
 	
+	public static String energy(int amount) {
+		return INSTANCE.energyString(amount);
+	}
+	
+	public default String energyString(int amount) {
+		if (amount < 4 && amount > 0) {
+			return this.getIdenticalList("[E] ", amount).stream().reduce(" ", (a, b) -> a + b);
+		} else {
+			return amount + " [E] ";
+		}
+	}
+	
 	public default <T> void streamIfElse(Stream<T> s, Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
 		s.forEach(ifElse(p, c1, c2));
 	}
@@ -681,6 +694,10 @@ public interface MiscMethods {
 	
 	public default <T> Collector<T, ?, ArrayList<T>> collectToArrayList() {
 		return Collectors.toCollection(ArrayList::new);
+	}
+	
+	public default ArrayList<Object> createList(Object... elements) {
+		return Stream.of(elements).collect(this.collectToArrayList());
 	}
 	
 }

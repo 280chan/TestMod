@@ -61,8 +61,7 @@
 		"DESCRIPTION": "",
 		"EXTENDED_DESCRIPTION": [
 			"获得",
-			" 。如果回合结束时留在手中，下回合开始获得",
-			" 。" 
+			"。如果回合结束时留在手中，下回合开始获得 [E] 。"
 		]
 	},
 	"testmod-BloodBlade": {

@@ -61,8 +61,7 @@
 		"DESCRIPTION": "",
 		"EXTENDED_DESCRIPTION": [
 			"Gain",
-			". If still in your hand at the end of the turn, Gain",
-			" next turn." 
+			". If still in your hand at the end of the turn, Gain [E] next turn." 
 		]
 	},
 	"testmod-BloodBlade": {
