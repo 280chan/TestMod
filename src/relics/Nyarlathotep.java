@@ -1,6 +1,7 @@
 package relics;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
@@ -8,7 +9,6 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import mymod.TestMod;
@@ -69,11 +69,8 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	private void triggerExhaustFor(AbstractCard c) {
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (!isThis(r))
-				r.onExhaust(c);
-		for (AbstractPower p : AbstractDungeon.player.powers)
-			p.onExhaust(c);
+		AbstractDungeon.player.relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onExhaust(c));
+		AbstractDungeon.player.powers.forEach(p -> p.onExhaust(c));
 		c.triggerOnExhaust();
 	}
 	
@@ -83,22 +80,17 @@ public class Nyarlathotep extends AbstractTestRelic {
 		if (AbstractDungeon.actionManager.turnHasEnded)
 			return;
 		AbstractDungeon.player.updateCardsOnDiscard();
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (!isThis(r))
-				r.onManualDiscard();
+		AbstractDungeon.player.relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onManualDiscard());
 	}
 	
 	private void triggerUsePowerCard(AbstractCard c, UseCardAction a) {
 		AbstractPlayer p = AbstractDungeon.player;
 		AbstractCard tmp = c.makeSameInstanceOf();
 		tmp.type = CardType.POWER;
-		
-		for (String id : POWER_IDs)
-			if (p.hasPower(id))
-				p.getPower(id).onUseCard(tmp, a);
-		for (String id : RELIC_IDs)
-			if (p.hasRelic(id))
-				p.getRelic(id).onUseCard(tmp, a);
+		Stream.concat(Stream.of(POWER_IDs), POWER_LIST.stream()).distinct().filter(p::hasPower)
+				.forEach(id -> p.getPower(id).onUseCard(tmp, a));
+		Stream.concat(Stream.of(RELIC_IDs), RELIC_LIST.stream()).distinct().filter(p::hasRelic)
+				.forEach(id -> p.getRelic(id).onUseCard(tmp, a));
 	}
 	
 	public void onExhaust(final AbstractCard c) {

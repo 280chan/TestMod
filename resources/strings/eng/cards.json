@@ -109,7 +109,8 @@
 	},
 	"testmod-ComboMaster": {
 		"NAME": "Combo Master",
-		"DESCRIPTION": "Deal !D! damage to all enemies !M! times. Increase the damage and times of this card by 1 this combat."
+		"DESCRIPTION": "Deal !D! damage to all enemies !M! times. Increase the damage and times of this card by 1 this combat.",
+		"UPGRADE_DESCRIPTION": "Deal !D! damage to all enemies !M! times. Increase the damage and times of this card by 2 this combat."
 	},
 	"testmod-ConditionedReflex": {
 		"NAME": "Conditioned Reflex",

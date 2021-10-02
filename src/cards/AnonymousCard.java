@@ -115,6 +115,10 @@ public class AnonymousCard extends AbstractTestCard {
 			init.accept(this);
 	}
 	
+	public void setAOE() {
+		this.isMultiDamage = true;
+	}
+	
 	public void upMGC(int amount) {
 		this.upgradeMagicNumber(amount);
 	}
@@ -242,6 +246,18 @@ public class AnonymousCard extends AbstractTestCard {
 			super.triggerOnEndOfPlayerTurn();
 		}
 	}
+	
+	public void calculateCardDamage(AbstractMonster m) {
+		if (override.containsKey("calculateCardDamage") && !absoluteSkip) {
+			if (lock.get("calculateCardDamage")) {
+				lock("calculateCardDamage");
+				override.get("calculateCardDamage").apply(this.createList(this, m));
+				lock("calculateCardDamage");
+			}
+		} else {
+	    	super.calculateCardDamage(m);
+		}
+    }
 	
 	// TODO 重写
 	

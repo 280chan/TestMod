@@ -20,7 +20,9 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
+import com.megacrit.cardcrawl.actions.defect.IncreaseMaxOrbAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget;
@@ -30,12 +32,14 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.core.Settings.GameLanguage;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
 import com.megacrit.cardcrawl.helpers.TipTracker;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.ArtifactPower;
 import com.megacrit.cardcrawl.powers.EnergizedPower;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
@@ -49,6 +53,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import actions.AdversityCounterattackAction;
+import actions.ComboMasterAction;
 import basemod.BaseMod;
 import basemod.ModPanel;
 import basemod.ReflectionHacks;
@@ -75,13 +80,15 @@ import halloweenMod.mymod.HalloweenMod;
 import potions.*;
 import powers.TheFatherPower;
 import powers.AssimilatedRunePower;
+import powers.BloodBladePower;
+import powers.ChaoticCorePower;
 import powers.SuperconductorNoEnergyPower;
 import relics.*;
 import utils.*;
 
 /**
  * @author 彼君不触
- * @version 9/29/2021
+ * @version 10/2/2021
  * @since 6/17/2018
  */
 
@@ -341,17 +348,16 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receiveEditCards() {
 		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(BaseMod::addCard);
 		// 添加卡牌进游戏
-		CARDS = Stream.of(new DisillusionmentEcho(), new LifeRuler(), new ComboMaster(), new WeaknessCounterattack(),
+		CARDS = Stream.of(new DisillusionmentEcho(), new LifeRuler(), new WeaknessCounterattack(),
 				new SubstituteBySubterfuge(), new Superconductor(), new PulseDistributor(), new EternalityOfKhronos(),
 				new AutoReboundSystem(), new Wormhole(), new RepeatForm(), new Plague(), new SunMoon(), new Mystery(),
 				new ShutDown(), new Reflect(), new Provocation(), new PocketStoneCalender(), new Recap(), new Dream(),
-				new Bloodthirsty(), new Arrangement(), new Collector(), new ChaoticCore(), new SelfRegulatingSystem(),
-				new LimitFlipper(), new ConditionedReflex(), new RabbitOfFibonacci(), new BloodBlade(), new TradeIn(),
+				new Bloodthirsty(), new Arrangement(), new SelfRegulatingSystem(), new Automaton(), new Illusory(),
+				new LimitFlipper(), new ConditionedReflex(), new RabbitOfFibonacci(), new TradeIn(), new Reproduce(),
 				new PainDetonator(), new FightingIntention(), new Reverberation(), new CardIndex(), new PowerStrike(),
 				new PerfectCombo(), new Lexicography(), new Librarian(), new VirtualReality(), new HandmadeProducts(),
 				new DeathImprint(), new BloodShelter(), new TreasureHunter(), new HeadAttack(), new TaurusBlackCat(),
-				new TemporaryDeletion(), new EnhanceArmerment(), new Automaton(),
-				new Illusory(), new Reproduce())
+				new TemporaryDeletion(), new EnhanceArmerment()/*, new ComboMaster()*/)
 				.collect(this.collectToArrayList());
 		add(new AnonymousCard("AdversityCounterattack", 1, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY,
 				0, 0, 1, (c, p, m) -> {
@@ -389,6 +395,63 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			c.absoluteSkip = false;
 			return null;
 		}));
+		add(new AnonymousCard("BloodBlade", 1, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 0,
+				(c, p, m) -> {
+					if (BloodBladePower.hasThis(c.upgraded)) {
+						BloodBladePower.getThis(c.upgraded).onFirstGain();
+					} else {
+						att(new ApplyPowerAction(p, p, new BloodBladePower(p, c.upgraded)));
+					}
+				}, c -> c.upDesc()));
+		add(new AnonymousCard("ChaoticCore", 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
+				(c, p, m) -> {
+					att(new ApplyPowerAction(p, p, new ChaoticCorePower(p, c.magicNumber), c.magicNumber));
+					att(new IncreaseMaxOrbAction(1));
+				}, c -> c.upMGC(1)));
+		add(new AnonymousCard("Collector", 2, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY, 8, 0, 1,
+				(c, p, m) -> {
+					AttackEffect e = AttackEffect.SLASH_DIAGONAL;
+			    	if (c.damage > 40)
+				        e = AttackEffect.SLASH_HEAVY;
+				    else if (c.damage > 20)
+				        e = AttackEffect.SLASH_HORIZONTAL;
+			    	if (c.multiDamage == null)
+			    		c.applyPowers();
+			    	att(new DamageAllEnemiesAction(p, c.multiDamage, c.damageTypeForTurn, e));
+				}, c -> c.upMGC(1), c -> {
+					c.setAOE();
+					c.misc = c.baseDamage;
+				}).override("calculateCardDamage", l -> {
+					AnonymousCard c = (AnonymousCard) l.get(0);
+					AbstractMonster m = (AbstractMonster) l.get(1);
+			    	c.baseDamage = c.misc + c.magicNumber * AbstractDungeon.player.relics.size();
+					c.absoluteSkip = true;
+					c.calculateCardDamage(m);
+					c.absoluteSkip = false;
+					return null;
+				}));
+		add(new AnonymousCard("ComboMaster", 1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY, 1, 0, 1,
+				(c, p, m) -> {
+					addTmpActionToTop(() -> GetAllInBattleInstances.get(c.uuid).stream().map(a -> (AnonymousCard) a)
+							.forEach(a -> a.init()));
+					att(new ComboMasterAction(p, c.multiDamage, c.magicNumber, c.damageTypeForTurn));
+				}, c -> {
+					c.init();
+					c.upDesc();
+				}, c -> {
+					if (c.misc == 0) {
+						c.misc = 1;
+						c.setAOE();
+					} else if (!c.upgraded) {
+						c.upDMG(c.misc);
+						c.upMGC(c.misc);
+					} else {
+						c.upDMG(c.misc);
+						c.upMGC(c.misc);
+						c.misc = 2;
+					}
+				}));
+		
 		
 		CARDS.forEach(BaseMod::addCard);
 		SUB_MOD.forEach(TestMod::editSubModCards);

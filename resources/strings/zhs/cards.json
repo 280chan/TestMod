@@ -109,7 +109,8 @@
 	},
 	"testmod-ComboMaster": {
 		"NAME": "连击专家",
-		"DESCRIPTION": "对所有敌人造成 !D! 点伤害 !M! 次。每打出一次，本场战斗中基础伤害和攻击次数都增加1。"
+		"DESCRIPTION": "对所有敌人造成 !D! 点伤害 !M! 次。每打出一次，本场战斗中基础伤害和攻击次数都增加1。",
+		"UPGRADE_DESCRIPTION": "对所有敌人造成 !D! 点伤害 !M! 次。每打出一次，本场战斗中基础伤害和攻击次数都增加2。"
 	},
 	"testmod-ConditionedReflex": {
 		"NAME": "条件反射",
