@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.apache.logging.log4j.util.TriConsumer;
 
@@ -25,6 +26,7 @@ public class AnonymousCard extends AbstractTestCard {
 	private HashMap<String, Function<ArrayList<Object>, Object>> override = new HashMap<String, Function<ArrayList<Object>, Object>>();
 	private HashMap<String, Boolean> lock = new HashMap<String, Boolean>();
 	public boolean absoluteSkip = false;
+	private Predicate<AnonymousCard> glow;
 	
 	public AnonymousCard override(String name, Function<ArrayList<Object>, Object> method) {
 		override.put(name, method);
@@ -34,6 +36,15 @@ public class AnonymousCard extends AbstractTestCard {
 	
 	private void lock(String name) {
 		lock.replace(name, !lock.get(name));
+	}
+	
+	public AnonymousCard glow(Predicate<AnonymousCard> p) {
+		this.glow = p;
+		return this;
+	}
+	
+	public void triggerOnGlowCheck() {
+		this.glowColor = glow != null && glow.test(this) ? GOLD_BORDER_GLOW_COLOR.cpy() : BLUE_BORDER_GLOW_COLOR.cpy();
 	}
 	
 	private static CardStrings getStrings(String id) {
@@ -107,6 +118,7 @@ public class AnonymousCard extends AbstractTestCard {
 				mcblk, mcmgc, use, upgrade, init);
 		t.override = this.override;
 		t.lock = this.lock;
+		t.glow = this.glow;
 		return t;
 	}
 

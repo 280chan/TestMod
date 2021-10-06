@@ -21,12 +21,18 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.actions.defect.IncreaseMaxOrbAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
+import com.megacrit.cardcrawl.cards.blue.WhiteNoise;
+import com.megacrit.cardcrawl.cards.colorless.Discovery;
+import com.megacrit.cardcrawl.cards.green.Distraction;
+import com.megacrit.cardcrawl.cards.red.InfernalBlade;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -82,13 +88,17 @@ import powers.TheFatherPower;
 import powers.AssimilatedRunePower;
 import powers.BloodBladePower;
 import powers.ChaoticCorePower;
+import powers.ConditionedReflexPower;
+import powers.DisillusionmentEchoPower;
+import powers.EnhanceArmermentPower;
+import powers.FightingIntentionPower;
 import powers.SuperconductorNoEnergyPower;
 import relics.*;
 import utils.*;
 
 /**
  * @author 彼君不触
- * @version 10/2/2021
+ * @version 10/6/2021
  * @since 6/17/2018
  */
 
@@ -348,17 +358,29 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receiveEditCards() {
 		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(BaseMod::addCard);
 		// 添加卡牌进游戏
-		CARDS = Stream.of(new DisillusionmentEcho(), new LifeRuler(), new WeaknessCounterattack(),
+		CARDS = Stream.of(new LifeRuler(), new WeaknessCounterattack(),
 				new SubstituteBySubterfuge(), new Superconductor(), new PulseDistributor(), new EternalityOfKhronos(),
 				new AutoReboundSystem(), new Wormhole(), new RepeatForm(), new Plague(), new SunMoon(), new Mystery(),
-				new ShutDown(), new Reflect(), new Provocation(), new PocketStoneCalender(), new Recap(), new Dream(),
-				new Bloodthirsty(), new Arrangement(), new SelfRegulatingSystem(), new Automaton(), new Illusory(),
-				new LimitFlipper(), new ConditionedReflex(), new RabbitOfFibonacci(), new TradeIn(), new Reproduce(),
-				new PainDetonator(), new FightingIntention(), new Reverberation(), new CardIndex(), new PowerStrike(),
+				new ShutDown(), new Reflect(), new Provocation(), new PocketStoneCalender(), new Recap(),
+				new Bloodthirsty(), new Arrangement(), new SelfRegulatingSystem(), new Automaton(),
+				new LimitFlipper(), new TemporaryDeletion(), new RabbitOfFibonacci(), new TradeIn(), new Reproduce(),
+				new PainDetonator(), new Reverberation(), new CardIndex(), new PowerStrike(), new TaurusBlackCat(),
 				new PerfectCombo(), new Lexicography(), new Librarian(), new VirtualReality(), new HandmadeProducts(),
-				new DeathImprint(), new BloodShelter(), new TreasureHunter(), new HeadAttack(), new TaurusBlackCat(),
-				new TemporaryDeletion(), new EnhanceArmerment()/*, new ComboMaster()*/)
+				new DeathImprint(), new BloodShelter(), new TreasureHunter())
 				.collect(this.collectToArrayList());
+		addAnonymousCards();
+		
+		
+		CARDS.forEach(BaseMod::addCard);
+		SUB_MOD.forEach(TestMod::editSubModCards);
+		
+		// this.getNaturalNumberList(37).stream().map(AbstractMahjongCard::mahjong).forEach(this::addMahjongToList);
+		
+		
+		//BaseMod.addCard(new Test());
+	}
+	
+	private void addAnonymousCards() {
 		add(new AnonymousCard("AdversityCounterattack", 1, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY,
 				0, 0, 1, (c, p, m) -> {
 					att(new AdversityCounterattackAction(p, m, AttackEffect.SLASH_HORIZONTAL));
@@ -451,15 +473,51 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 						c.misc = 2;
 					}
 				}));
+		add(new AnonymousCard("ConditionedReflex", 1, CardType.POWER, CardRarity.UNCOMMON, CardTarget.SELF, 0, 0, 1,
+				(c, p, m) -> att(
+						new ApplyPowerAction(p, p, new ConditionedReflexPower(p, c.magicNumber), c.magicNumber)),
+				c -> c.upMGC(1)));
+		add(new AnonymousCard("DisillusionmentEcho", -1, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 3,
+				(c, p, m) -> this.addTmpXCostActionToTop(c, a -> {
+					int amount = a / (c.magicNumber == 0 ? 3 - c.timesUpgraded : c.magicNumber);
+					if (amount > 0)
+						att(new ApplyPowerAction(p, p, new DisillusionmentEchoPower(p, amount), amount));
+				}), c -> c.upMGC(-1)));
+		add(new AnonymousCard("Dream", 3, CardType.SKILL, CardRarity.RARE, CardTarget.NONE, true, true, false, 0, 0,
+				0, (c, p, m) -> Stream.of(new Discovery(), new WhiteNoise(), new Distraction(), new InfernalBlade())
+						.peek(a -> a.costForTurn = 0).map(MakeTempCardInHandAction::new).forEach(this::att),
+				c -> {
+					c.upDesc();
+					c.exhaust = false;
+				}));
+		add(new AnonymousCard("EnhanceArmerment", 1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE, 0, 0, 1,
+				(c, p, m) -> att(new ApplyPowerAction(p, p, new EnhanceArmermentPower(p, c.magicNumber))),
+				c -> c.upCost(0)));
+		add(new AnonymousCard("FightingIntention", 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
+				(c, p, m) -> att(
+						new ApplyPowerAction(p, p, new FightingIntentionPower(p, c.magicNumber), c.magicNumber)),
+				c -> c.upCost(2)));
+		add(new AnonymousCard("HeadAttack", 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY, false, true,
+				false, 0, 0, 1, (c, p, m) -> {
+					att(new DrawCardAction(p, c.magicNumber));
+					this.rollIntentAction(m);
+				}, c -> c.upMGC(1)));
+		add(new AnonymousCard("Illusory", 1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE, true, true, false,
+				0, 0, 1, (a, p, m) -> {
+					addTmpActionToTop(() -> p.drawPile.group.stream().filter(c -> !c.isEthereal).forEach(c -> {
+						c.isEthereal = true;
+						c.name += a.exDesc()[0];
+					}));
+					addTmpActionToTop(() -> {
+						int e = (int) p.drawPile.group.stream().filter(c -> c.isEthereal).count();
+						if (e > 0)
+							att(new GainEnergyAction(e));
+					});
+					att(new DrawCardAction(p, a.magicNumber));
+				}, c -> c.upMGC(1))
+						.glow(a -> AbstractDungeon.player.drawPile.group.stream().anyMatch(c -> c.isEthereal)));	
 		
 		
-		CARDS.forEach(BaseMod::addCard);
-		SUB_MOD.forEach(TestMod::editSubModCards);
-		
-		// this.getNaturalNumberList(37).stream().map(AbstractMahjongCard::mahjong).forEach(this::addMahjongToList);
-		
-		
-		//BaseMod.addCard(new Test());
 	}
 	
 	private void addMahjongToList(AbstractMahjongCard c) {
@@ -580,10 +638,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 	@Override
 	public void receivePreUpdate() {
-		AbstractPlayer p = AbstractDungeon.player;
-		if (p != null) {
-			p.relics.stream().filter(r -> r instanceof AbstractTestRelic)
-					.forEach(r -> ((AbstractTestRelic) r).preUpdate());
+		if (AbstractDungeon.player != null) {
+			this.relicStream().forEach(AbstractTestRelic::preUpdate);
 			this.updateGlow();
 		}
 	}
@@ -616,34 +672,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				obtain(p, TO_OBTAIN.remove(0), true);
 			}
 
-			MY_RELICS.stream().map(r -> r.relicId).filter(p::hasRelic).map(p::getRelic).map(r -> (AbstractTestRelic) r)
-					.peek(TestMod::setActivity).forEach(TestMod::setShow);
-
-			/*if (p.hasRelic("NoteOfAlchemist") && p.relics.get(0).relicId != "NoteOfAlchemist") {
-				if (!NoteOfAlchemist.recorded()) {
-					if ((AbstractDungeon.floorNum < 1) || (AbstractDungeon.currMapNode != null
-							&& AbstractDungeon.getCurrRoom() instanceof TreasureRoomBoss)) {
-						NoteOfAlchemist.equipAction();
-					} else if (AbstractDungeon.currMapNode != null) {
-						NoteOfAlchemist.setState(true);
-					}
-				}
-			} else if (CardCrawlGame.mode == GameMode.GAMEPLAY || CardCrawlGame.mode == GameMode.DUNGEON_TRANSITION) {
-				NoteOfAlchemist.setState(false);
-			}*/
-
+			this.relicStream().peek(TestMod::setActivity).forEach(TestMod::setShow);
 			MY_RELICS.stream().filter(AbstractTestRelic::tryEquip).forEach(this::invokeEquip);
 			MY_RELICS.stream().filter(AbstractTestRelic::tryUnequip).forEach(this::invokeUnequip);
-			
-			p.relics.stream().filter(r -> r instanceof AbstractTestRelic).map(r -> (AbstractTestRelic) r)
-					.forEach(AbstractTestRelic::postUpdate);
-
-			/*if (needFix){
-				if (p.maxHealth <= 0 && !p.isDead && !p.isDying && !p.halfDead) {
-					p.maxHealth = 1;
-					p.currentHealth = 1;
-				}
-			}*/
+			this.relicStream().forEach(AbstractTestRelic::postUpdate);
 			
 			if (AbstractDungeon.currMapNode != null) {
 				if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
@@ -860,8 +892,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 	@Override
 	public int receiveMapHPChange(int amount) {
-		return AbstractDungeon.player.relics.stream().filter(r -> r instanceof AbstractTestRelic)
-				.map(r -> ((AbstractTestRelic) r).maxHPChanger()).reduce(a -> a, Function::andThen).apply(amount * 1f)
+		return this.relicStream().map(r -> r.maxHPChanger()).reduce(a -> a, Function::andThen).apply(amount * 1f)
 				.intValue();
 	}
 	

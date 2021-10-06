@@ -33,7 +33,9 @@ import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 
 import actions.AbstractXCostAction;
 import basemod.BaseMod;
+import basemod.Pair;
 import mymod.TestMod;
+import relics.AbstractTestRelic;
 import relics.Prudence;
 import relics.StringDisintegrator;
 
@@ -164,7 +166,7 @@ public interface MiscMethods {
 	    public static void start() {
 	    	if (inProgress())
 				return;
-			new MiscMethods() {}.addTmpActionToBot(() -> {
+	    	INSTANCE.addTmpActionToBot(() -> {
 				AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
 				AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
 				startEndingTurn = true;
@@ -175,9 +177,9 @@ public interface MiscMethods {
 	    	if (inProgress())
 	    		return;
 			start();
-			new MiscMethods() {}.addTmpActionToBot(() -> {
+			INSTANCE.addTmpActionToBot(() -> {
 				if (!c.dontTriggerOnUseCard)
-					for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+					for (AbstractMonster monster : AbstractDungeon.getMonsters().monsters) {
 						boolean timecollector = false;
 						int tcIndex = -1;
 						for (AbstractPower p : monster.powers) {
@@ -267,7 +269,7 @@ public interface MiscMethods {
 			if (AbstractDungeon.player.hoveredCard != null)
 				AbstractDungeon.player.hoveredCard.resetAttributes();
 
-			new MiscMethods() {}.addTmpActionToBot(() -> {
+			INSTANCE.addTmpActionToBot(() -> {
 				addToBot(new EndTurnAction());
 				addToBot(new WaitAction(Settings.FAST_MODE ? 0.1F : 1.2F));
 				startMonsterTurn = true;
@@ -405,14 +407,14 @@ public interface MiscMethods {
 		}
 	}
 	
-	public default void rollIntent(AbstractMonster m) {
+	public default void rollIntentAction(AbstractMonster m) {
 		ArrayList<AbstractGameAction> actions = new ArrayList<AbstractGameAction>();
 		actions.addAll(AbstractDungeon.actionManager.actions);
 		m.takeTurn();
     	AbstractDungeon.actionManager.actions.clear();
     	AbstractDungeon.actionManager.actions.addAll(actions);
-    	addToBot(new RollMoveAction(m));
-    	this.addTmpActionToBot(AbstractDungeon.getMonsters()::showIntent);
+    	this.addTmpActionToTop(AbstractDungeon.getMonsters()::showIntent);
+    	addToTop(new RollMoveAction(m));
 	}
 	
 	public static class ColorRegister {
@@ -622,11 +624,23 @@ public interface MiscMethods {
 	}
 	
 	public default <T, R> void branch(Stream<T> s, Function<T, R> f, BiConsumer<T, R> action) {
-		s.forEach(branch(f, action));
+		s.forEach(t -> action.accept(t, f.apply(t)));
 	}
 	
 	public default <T, R> Consumer<T> branch(Function<T, R> f, BiConsumer<T, R> action) {
 		return t -> action.accept(t, f.apply(t));
+	}
+
+	public default <T, R, V> Function<T, Pair<R, V>> split(Function<T, R> f, Function<T, V> g) {
+		return t -> split(t, f, g);
+	}
+	
+	public default <T, R> Consumer<Pair<T, R>> consumer(BiConsumer<T, R> action) {
+		return p -> action.accept(p.getKey(), p.getValue());
+	}
+	
+	public default <T, R, V> Pair<R, V> split(T t, Function<T, R> f, Function<T, V> g) {
+		return new Pair<R, V>(f.apply(t), g.apply(t));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -656,6 +670,10 @@ public interface MiscMethods {
 				Stream.of(lambda).forEach(Lambda::act);
 			}
 		});
+	}
+
+	public default void addTmpXCostActionToTop(AbstractCard c, Consumer<Integer> action) {
+		addToTop(new AbstractXCostAction(c, action) {});
 	}
 	
 	public default void addTmpXCostActionToBot(AbstractCard c, Consumer<Integer> action) {
@@ -698,6 +716,12 @@ public interface MiscMethods {
 	
 	public default ArrayList<Object> createList(Object... elements) {
 		return Stream.of(elements).collect(this.collectToArrayList());
+	}
+	
+	public default Stream<AbstractTestRelic> relicStream() {
+		AbstractPlayer p = AbstractDungeon.player;
+		return TestMod.RELICS.stream().map(r -> r.relicId).filter(p::hasRelic).map(p::getRelic)
+				.map(r -> (AbstractTestRelic) r);
 	}
 	
 }

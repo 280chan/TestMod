@@ -1,5 +1,7 @@
 package powers;
 
+import java.util.function.Consumer;
+
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -30,11 +32,8 @@ public class ConditionedReflexPower extends AbstractTestPower {
 	}
 	
 	private void activate(AbstractPower p) {
-		if (p.owner.isPlayer) {
-			this.addToTop(new GainBlockAction(p.owner, p.owner, p.amount));
-		} else {
-			this.addToBot(new GainBlockAction(p.owner, p.owner, p.amount));
-		}
+		Consumer<GainBlockAction> a = p.owner.isPlayer ? this::addToTop : this::addToBot;
+		a.accept(new GainBlockAction(p.owner, p.owner, p.amount));
 		p.amount++;
 		p.updateDescription();
 	}
@@ -45,8 +44,7 @@ public class ConditionedReflexPower extends AbstractTestPower {
 			if (mp == null)
 				return;
 			mp.flash();
-			for (int i = 0; i < this.activeAmount; i++)
-				this.activate(mp);
+			this.getNaturalNumberList(this.activeAmount).forEach(a -> this.activate(mp));
 			this.activeAmount = 0;
     		this.updateDescription();
 		}

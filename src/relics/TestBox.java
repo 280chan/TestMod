@@ -23,9 +23,9 @@ public class TestBox extends AbstractDoubleClickableRelic {
 	
 	public boolean relicSelected = true;
 	private boolean cardSelected = true;
+	private boolean remove = false;
 	public static RoomPhase phase;
 	private static CurrentScreen pre;
-
 	public Random rng;
 	
 	private boolean invalidFloor() {
@@ -68,9 +68,16 @@ public class TestBox extends AbstractDoubleClickableRelic {
 			} else if (AbstractDungeon.screen != pre) {
 				return;
 			}
-			cardSelected = true;
+			remove = cardSelected = true;
 			AbstractDungeon.getCurrRoom().phase = phase;
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
+		}
+	}
+	
+	public void postUpdate() {
+		if (remove) {
+			AbstractDungeon.player.relics.remove(this);
+			AbstractDungeon.player.reorganizeRelics();
 		}
 	}
 	

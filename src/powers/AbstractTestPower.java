@@ -6,8 +6,9 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import mymod.TestMod;
+import utils.MiscMethods;
 
-public abstract class AbstractTestPower extends AbstractPower {
+public abstract class AbstractTestPower extends AbstractPower implements MiscMethods {
 	protected static PowerStrings Strings(String shortID) {
 		return CardCrawlGame.languagePack.getPowerStrings(TestMod.makeID(shortID));
 	}
