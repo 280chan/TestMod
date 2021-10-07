@@ -24,10 +24,9 @@ public class LifeRuler extends AbstractTestCard {
     }
 
 	public void use(final AbstractPlayer p, final AbstractMonster t) {
-		this.branch(
-				AbstractDungeon.getMonsters().monsters.stream().filter(not(m -> m.isDead || m.isDying || m.halfDead)),
-				m -> new ConstrictedPower(m, p, this.misc),
-				(m, cp) -> this.addToBot(new ApplyPowerAction(m, p, cp, this.misc)));
+		AbstractDungeon.getMonsters().monsters.stream().filter(not(m -> m.isDead || m.isDying || m.halfDead))
+				.map(split(t(), m -> new ConstrictedPower(m, p, this.misc)))
+				.forEach(consumer((m, cp) -> this.addToBot(new ApplyPowerAction(m, p, cp, this.misc))));
 	}
 
 	@Override

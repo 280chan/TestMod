@@ -623,20 +623,16 @@ public interface MiscMethods {
 		return t -> action.accept(f.apply(t));
 	}
 	
-	public default <T, R> void branch(Stream<T> s, Function<T, R> f, BiConsumer<T, R> action) {
-		s.forEach(t -> action.accept(t, f.apply(t)));
-	}
-	
-	public default <T, R> Consumer<T> branch(Function<T, R> f, BiConsumer<T, R> action) {
-		return t -> action.accept(t, f.apply(t));
-	}
-
-	public default <T, R, V> Function<T, Pair<R, V>> split(Function<T, R> f, Function<T, V> g) {
-		return t -> split(t, f, g);
+	public default <T, R, V> Function<Pair<T, R>, V> merge(BiFunction<T, R, V> f) {
+		return p -> f.apply(p.getKey(), p.getValue());
 	}
 	
 	public default <T, R> Consumer<Pair<T, R>> consumer(BiConsumer<T, R> action) {
 		return p -> action.accept(p.getKey(), p.getValue());
+	}
+
+	public default <T, R, V> Function<T, Pair<R, V>> split(Function<T, R> f, Function<T, V> g) {
+		return t -> split(t, f, g);
 	}
 	
 	public default <T, R, V> Pair<R, V> split(T t, Function<T, R> f, Function<T, V> g) {
@@ -709,6 +705,10 @@ public interface MiscMethods {
     public default <T> Predicate<T> or(Predicate<T>... list) {
     	return Stream.of(list).reduce(a -> false, Predicate::or);
     }
+	
+	public default <T> Function<T, T> t() {
+		return t -> t;
+	}
 	
 	public default <T> Collector<T, ?, ArrayList<T>> collectToArrayList() {
 		return Collectors.toCollection(ArrayList::new);

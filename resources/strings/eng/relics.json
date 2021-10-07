@@ -522,5 +522,11 @@
 		"NAME": "Greedy Devil",
 		"FLAVOR": "它在你的肩头飞行着，渴求着过量的献血。",
 		"DESCRIPTIONS":["Whenever you kill an enemy, gain same amount of #yGold as the overkill of the fatal damage. At most #b100 #yGold at a time."]
+	},
+	
+	"testmod-ResonanceStone":{
+		"NAME": "Resonance Stone",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Whenever you #yUpgrade a card in your deck, #yUpgrade all cards with same name in your deck which are #yUpgradable. Whenever a card is #Upgraded by this relic, gain #b1 #yGold and max health, each active increase future effect by #b1."]
 	}
 }

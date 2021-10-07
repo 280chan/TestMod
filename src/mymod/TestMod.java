@@ -293,9 +293,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new Dye(), new Restrained(), new RandomTest(), new GoldenSoul(), new GremlinBalance(),
-				new IWantAll(), new TemporaryBarricade(), new ShadowAmulet(), new HyperplasticTissue(),
-				new VentureCapital(), new GreedyDevil());
+		addLatest(new ResonanceStone(), new Dye(), new Restrained(), new RandomTest(), new GoldenSoul(),
+				new GremlinBalance(), new IWantAll(), new TemporaryBarricade(), new ShadowAmulet(),
+				new HyperplasticTissue(), new VentureCapital(), new GreedyDevil());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.collectToArrayList());
 		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
 				new HandmadeProducts(), new Automaton(), new PowerStrike());
@@ -325,7 +325,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new BalancedPeriapt(), new MagicalMallet(), new Laevatain(), new TimeTraveler(), new Nyarlathotep(),
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
-				new VentureCapital()).collect(this.collectToArrayList());
+				new VentureCapital(), new ResonanceStone()).collect(this.collectToArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);
@@ -516,6 +516,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					att(new DrawCardAction(p, a.magicNumber));
 				}, c -> c.upMGC(1))
 						.glow(a -> AbstractDungeon.player.drawPile.group.stream().anyMatch(c -> c.isEthereal)));	
+		
 		
 		
 	}
