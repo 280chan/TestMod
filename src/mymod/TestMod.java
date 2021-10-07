@@ -92,6 +92,8 @@ import powers.ConditionedReflexPower;
 import powers.DisillusionmentEchoPower;
 import powers.EnhanceArmermentPower;
 import powers.FightingIntentionPower;
+import powers.PlagueActPower;
+import powers.PlaguePower;
 import powers.SuperconductorNoEnergyPower;
 import relics.*;
 import utils.*;
@@ -297,8 +299,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new GremlinBalance(), new IWantAll(), new TemporaryBarricade(), new ShadowAmulet(),
 				new HyperplasticTissue(), new VentureCapital(), new GreedyDevil());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.collectToArrayList());
-		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Plague(), new Reproduce(),
-				new HandmadeProducts(), new Automaton(), new PowerStrike());
+		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Reproduce(), new HandmadeProducts(),
+				new Automaton(), new PowerStrike());
 	}
 
 	private static void addRelic(AbstractRelic r) {
@@ -360,7 +362,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		// 添加卡牌进游戏
 		CARDS = Stream.of(new LifeRuler(), new WeaknessCounterattack(),
 				new SubstituteBySubterfuge(), new Superconductor(), new PulseDistributor(), new EternalityOfKhronos(),
-				new AutoReboundSystem(), new Wormhole(), new RepeatForm(), new Plague(), new SunMoon(), new Mystery(),
+				new AutoReboundSystem(), new Wormhole(), new RepeatForm(), new SunMoon(), new Mystery(),
 				new ShutDown(), new Reflect(), new Provocation(), new PocketStoneCalender(), new Recap(),
 				new Bloodthirsty(), new Arrangement(), new SelfRegulatingSystem(), new Automaton(),
 				new LimitFlipper(), new TemporaryDeletion(), new RabbitOfFibonacci(), new TradeIn(), new Reproduce(),
@@ -516,8 +518,16 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					att(new DrawCardAction(p, a.magicNumber));
 				}, c -> c.upMGC(1))
 						.glow(a -> AbstractDungeon.player.drawPile.group.stream().anyMatch(c -> c.isEthereal)));	
-		
-		
+		add(new AnonymousCard("Plague", -1, CardType.POWER, CardRarity.RARE, CardTarget.SELF, false, true, false,
+				0, 0, 0, (c, p, m) -> {
+					att(new ApplyPowerAction(p, p, new PlagueActPower(p)));
+					this.addTmpXCostActionToTop(c, e -> {
+						att(new ApplyPowerAction(p, p, new PlaguePower(p, e), e));
+					});
+				}, c -> {
+					c.upDesc();
+					c.isEthereal = false;
+				}));
 		
 	}
 	

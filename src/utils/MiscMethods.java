@@ -724,4 +724,10 @@ public interface MiscMethods {
 				.map(r -> (AbstractTestRelic) r);
 	}
 	
+	public default <T> T last(ArrayList<T> list) {
+		if (list == null || list.isEmpty())
+			return null;
+		return list.get(list.size() - 1);
+	}
+	
 }

@@ -41,8 +41,8 @@ public class LimitFlipper extends AbstractTestCard {
     }
     
     private AbstractCard lastCard() {
-    	return AbstractDungeon.actionManager == null || AbstractDungeon.actionManager.cardsPlayedThisCombat == null
-				? null : AbstractDungeon.actionManager.cardsPlayedThisCombat.stream().findFirst().orElse(null);
+		return AbstractDungeon.actionManager == null || AbstractDungeon.actionManager.cardsPlayedThisCombat == null
+				? null : last(AbstractDungeon.actionManager.cardsPlayedThisCombat);
 	}
     
     private void updateActive(AbstractCard c) {
