@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.utility.*;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.daily.mods.Careless;
@@ -728,6 +729,11 @@ public interface MiscMethods {
 		if (list == null || list.isEmpty())
 			return null;
 		return list.get(list.size() - 1);
+	}
+	
+	public default ApplyPowerAction apply(AbstractCreature source, AbstractPower p) {
+		return p.amount == 0 || (p.amount == -1 && !p.canGoNegative) ? new ApplyPowerAction(p.owner, source, p)
+				: new ApplyPowerAction(p.owner, source, p, p.amount);
 	}
 	
 }

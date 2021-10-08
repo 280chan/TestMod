@@ -24,6 +24,7 @@ import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.actions.defect.IncreaseMaxOrbAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
@@ -46,9 +47,11 @@ import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.powers.ArtifactPower;
 import com.megacrit.cardcrawl.powers.EnergizedPower;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
+import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
@@ -94,6 +97,7 @@ import powers.EnhanceArmermentPower;
 import powers.FightingIntentionPower;
 import powers.PlagueActPower;
 import powers.PlaguePower;
+import powers.PulseDistributorPower;
 import powers.SuperconductorNoEnergyPower;
 import relics.*;
 import utils.*;
@@ -360,15 +364,15 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receiveEditCards() {
 		Stream.of(Sins.SINS).filter(c -> c instanceof AbstractTestCard).forEach(BaseMod::addCard);
 		// 添加卡牌进游戏
-		CARDS = Stream.of(new LifeRuler(), new WeaknessCounterattack(),
-				new SubstituteBySubterfuge(), new Superconductor(), new PulseDistributor(), new EternalityOfKhronos(),
-				new AutoReboundSystem(), new Wormhole(), new RepeatForm(), new SunMoon(), new Mystery(),
-				new ShutDown(), new Reflect(), new Provocation(), new PocketStoneCalender(), new Recap(),
-				new Bloodthirsty(), new Arrangement(), new SelfRegulatingSystem(), new Automaton(),
-				new LimitFlipper(), new TemporaryDeletion(), new RabbitOfFibonacci(), new TradeIn(), new Reproduce(),
-				new PainDetonator(), new Reverberation(), new CardIndex(), new PowerStrike(), new TaurusBlackCat(),
-				new PerfectCombo(), new Lexicography(), new Librarian(), new VirtualReality(), new HandmadeProducts(),
-				new DeathImprint(), new BloodShelter(), new TreasureHunter())
+		CARDS = Stream.of(new LifeRuler(), new WeaknessCounterattack(), new SubstituteBySubterfuge(),
+				new Superconductor(), new EternalityOfKhronos(), new AutoReboundSystem(), new Wormhole(),
+				new RepeatForm(), new SunMoon(), new Mystery(), new ShutDown(), new Reflect(),
+				new PocketStoneCalender(), new Recap(), new Bloodthirsty(), new Arrangement(), new BloodShelter(),
+				new SelfRegulatingSystem(), new Automaton(), new LimitFlipper(), new TemporaryDeletion(),
+				new RabbitOfFibonacci(), new TradeIn(), new Reproduce(), new PainDetonator(), new Reverberation(),
+				new CardIndex(), new PowerStrike(), new TaurusBlackCat(), new PerfectCombo(), new Lexicography(),
+				new Librarian(), new VirtualReality(), new HandmadeProducts(), new DeathImprint(),
+				new TreasureHunter())
 				.collect(this.collectToArrayList());
 		addAnonymousCards();
 		
@@ -386,9 +390,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		add(new AnonymousCard("AdversityCounterattack", 1, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY,
 				0, 0, 1, (c, p, m) -> {
 					att(new AdversityCounterattackAction(p, m, AttackEffect.SLASH_HORIZONTAL));
-					att(new ApplyPowerAction(p, p, new IntangiblePlayerPower(p, 1), 1));
-					att(new ApplyPowerAction(p, p, new VulnerablePower(p, c.magicNumber, false), c.magicNumber));
-					att(new ApplyPowerAction(m, p, new ArtifactPower(m, c.magicNumber), c.magicNumber));
+					att(apply(p, new IntangiblePlayerPower(p, 1)));
+					att(apply(p, new VulnerablePower(p, c.magicNumber, false)));
+					att(apply(p, new ArtifactPower(m, c.magicNumber)));
 				}, c -> c.upMGC(1)));
 		add(new AnonymousCard("AssimilatedRune", 1, CardType.SKILL, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
 				(c, player, m) -> {
@@ -413,7 +417,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}).override("triggerOnEndOfPlayerTurn", l -> {
 			AnonymousCard c = (AnonymousCard) l.get(0);
 			AbstractPlayer p = AbstractDungeon.player;
-			atb(new ApplyPowerAction(p, p, new EnergizedPower(p, 1), 1));
+			atb(apply(p, new EnergizedPower(p, 1)));
 			c.absoluteSkip = true;
 			c.triggerOnEndOfPlayerTurn();
 			c.absoluteSkip = false;
@@ -424,12 +428,12 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					if (BloodBladePower.hasThis(c.upgraded)) {
 						BloodBladePower.getThis(c.upgraded).onFirstGain();
 					} else {
-						att(new ApplyPowerAction(p, p, new BloodBladePower(p, c.upgraded)));
+						att(apply(p, new BloodBladePower(p, c.upgraded)));
 					}
 				}, c -> c.upDesc()));
 		add(new AnonymousCard("ChaoticCore", 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
 				(c, p, m) -> {
-					att(new ApplyPowerAction(p, p, new ChaoticCorePower(p, c.magicNumber), c.magicNumber));
+					att(apply(p, new ChaoticCorePower(p, c.magicNumber)));
 					att(new IncreaseMaxOrbAction(1));
 				}, c -> c.upMGC(1)));
 		add(new AnonymousCard("Collector", 2, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY, 8, 0, 1,
@@ -476,14 +480,12 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					}
 				}));
 		add(new AnonymousCard("ConditionedReflex", 1, CardType.POWER, CardRarity.UNCOMMON, CardTarget.SELF, 0, 0, 1,
-				(c, p, m) -> att(
-						new ApplyPowerAction(p, p, new ConditionedReflexPower(p, c.magicNumber), c.magicNumber)),
-				c -> c.upMGC(1)));
+				(c, p, m) -> att(apply(p, new ConditionedReflexPower(p, c.magicNumber))), c -> c.upMGC(1)));
 		add(new AnonymousCard("DisillusionmentEcho", -1, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 3,
 				(c, p, m) -> this.addTmpXCostActionToTop(c, a -> {
 					int amount = a / (c.magicNumber == 0 ? 3 - c.timesUpgraded : c.magicNumber);
 					if (amount > 0)
-						att(new ApplyPowerAction(p, p, new DisillusionmentEchoPower(p, amount), amount));
+						att(apply(p, new DisillusionmentEchoPower(p, amount)));
 				}), c -> c.upMGC(-1)));
 		add(new AnonymousCard("Dream", 3, CardType.SKILL, CardRarity.RARE, CardTarget.NONE, true, true, false, 0, 0,
 				0, (c, p, m) -> Stream.of(new Discovery(), new WhiteNoise(), new Distraction(), new InfernalBlade())
@@ -493,12 +495,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					c.exhaust = false;
 				}));
 		add(new AnonymousCard("EnhanceArmerment", 1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE, 0, 0, 1,
-				(c, p, m) -> att(new ApplyPowerAction(p, p, new EnhanceArmermentPower(p, c.magicNumber))),
-				c -> c.upCost(0)));
+				(c, p, m) -> att(apply(p, new EnhanceArmermentPower(p, c.magicNumber))), c -> c.upCost(0)));
 		add(new AnonymousCard("FightingIntention", 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
-				(c, p, m) -> att(
-						new ApplyPowerAction(p, p, new FightingIntentionPower(p, c.magicNumber), c.magicNumber)),
-				c -> c.upCost(2)));
+				(c, p, m) -> att(apply(p, new FightingIntentionPower(p, c.magicNumber))), c -> c.upCost(2)));
 		add(new AnonymousCard("HeadAttack", 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY, false, true,
 				false, 0, 0, 1, (c, p, m) -> {
 					att(new DrawCardAction(p, c.magicNumber));
@@ -520,15 +519,42 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 						.glow(a -> AbstractDungeon.player.drawPile.group.stream().anyMatch(c -> c.isEthereal)));	
 		add(new AnonymousCard("Plague", -1, CardType.POWER, CardRarity.RARE, CardTarget.SELF, false, true, false,
 				0, 0, 0, (c, p, m) -> {
-					att(new ApplyPowerAction(p, p, new PlagueActPower(p)));
-					this.addTmpXCostActionToTop(c, e -> {
-						att(new ApplyPowerAction(p, p, new PlaguePower(p, e), e));
-					});
+					att(apply(p, new PlagueActPower(p)));
+					this.addTmpXCostActionToTop(c, e -> att(apply(p, new PlaguePower(p, e))));
 				}, c -> {
 					c.upDesc();
 					c.isEthereal = false;
 				}));
+		add(new AnonymousCard("Provocation", 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY, 0, 0, 6,
+				(c, p, m) -> {
+					if (!m.hasPower(AngryPower.POWER_ID))
+						att(apply(p, new AngryPower(m, 1)));
+					att(apply(p, new StrengthPower(p, c.magicNumber)));
+				}, c -> c.upMGC(3)));
+		add(new AnonymousCard("PulseDistributor", 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 0,
+				(c, p, m) -> {
+					if (PulseDistributorPower.hasThis(p)) {
+						PulseDistributorPower po = PulseDistributorPower.getThis(p);
+						if (po.magic > c.magicNumber) {
+							att(apply(p, new PulseDistributorPower(p, c.magicNumber, po.DAMAGES)));
+							att(new RemoveSpecificPowerAction(p, p, po));
+						}
+					} else {
+						att(apply(p, new PulseDistributorPower(p, c.magicNumber)));
+					}
+				}, c -> c.upMGC(-1),
+				c -> c.upDesc(c.exDesc()[0] + (c.magicNumber == 0 ? "" : ((c.magicNumber > 0 ? "+" : "")
+						+ c.magicNumber)) + c.exDesc()[1]))
+				.override("upgradeMagicNumber", l -> {
+					AnonymousCard c = (AnonymousCard) l.get(0);
+					int n = (int) l.get(1);
+					c.superMGC(n);
+					c.init();
+					return null;
+				}));
 		
+		
+		// TODO
 	}
 	
 	private void addMahjongToList(AbstractMahjongCard c) {

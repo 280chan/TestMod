@@ -225,7 +225,7 @@
 	},
 	"testmod-PulseDistributor": {
 		"NAME": "Pulse Distributor",
-		"DESCRIPTION": "When you would receive n damage which is not type Lose HP, don't lose HP. Instead, in the next n+1 times of enemies turn end, lose 1 HP.",
+		"DESCRIPTION": "When you would receive n damage which is not type Lose HP, don't lose HP. Instead, in the next n times of enemies turn end, lose 1 HP.",
 		"EXTENDED_DESCRIPTION": [
 			"When you would receive n damage which is not type Lose HP, don't lose HP. Instead, in the next n",
 			" times of enemies turn end, lose 1 HP."

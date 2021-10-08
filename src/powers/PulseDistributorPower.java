@@ -35,9 +35,11 @@ public class PulseDistributorPower extends AbstractTestPower {
 	public PulseDistributorPower(AbstractPlayer owner, int magic) {
 		super(POWER_ID);
 		this.name = NAME;
+		if ((this.magic = magic) != 0) {
+			this.name += magic > 0 ? " + " + magic : magic;
+		}
 		this.owner = owner;
 		this.amount = -1;
-		this.magic = magic;
 		this.updateDescription();
 		this.type = PowerType.BUFF;
 	}
