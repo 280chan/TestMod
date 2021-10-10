@@ -1,9 +1,6 @@
 package relics;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
@@ -14,9 +11,9 @@ public class ShadowAmulet extends AbstractTestRelic {
 	public static final String ID = "ShadowAmulet";
 	private final ArrayList<Integer> BLOCK_TO_GAIN = new ArrayList<Integer>();
 	
-	public static List<ShadowAmulet> getThis() {
-		return AbstractDungeon.player.relics.stream().filter(r -> r instanceof ShadowAmulet).map(r -> (ShadowAmulet) r)
-				.collect(Collectors.toList());
+	public static void onLoseBlock(int amount) {
+		AbstractDungeon.player.relics.stream().filter(r -> r instanceof ShadowAmulet).map(r -> (ShadowAmulet) r)
+				.forEach(r -> r.loseblock(amount));
 	}
 	
 	public ShadowAmulet() {
@@ -26,9 +23,8 @@ public class ShadowAmulet extends AbstractTestRelic {
 	public String getUpdatedDescription() {
 		String temp = DESCRIPTIONS[0];
 		if (this.BLOCK_TO_GAIN != null && this.BLOCK_TO_GAIN.size() > 0) {
-			temp += DESCRIPTIONS[1]
-					+ BLOCK_TO_GAIN.stream().map(i -> i + ", ").sequential().reduce("", (a, b) -> a + b);
-			temp = temp.substring(0, temp.length() - 1);
+			temp += DESCRIPTIONS[1] + BLOCK_TO_GAIN.stream().map(i -> i + ", ").reduce("", (a, b) -> a + b);
+			temp = temp.substring(0, temp.length() - 2);
 		}
 		return temp;
 	}
@@ -44,10 +40,7 @@ public class ShadowAmulet extends AbstractTestRelic {
 		if (this.BLOCK_TO_GAIN.size() > 0) {
 			this.addToBot(new GainBlockAction(p, p, this.BLOCK_TO_GAIN.remove(0)));
 			this.flash();
-			if (this.BLOCK_TO_GAIN.size() > 0)
-				this.counter = this.BLOCK_TO_GAIN.get(0);
-			else
-				this.counter = 0;
+			this.counter = this.BLOCK_TO_GAIN.isEmpty() ? 0 : this.BLOCK_TO_GAIN.get(0);
 		}
 		this.updateDescription(p.chosenClass);
 	}

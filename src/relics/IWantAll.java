@@ -35,7 +35,7 @@ public class IWantAll extends AbstractClickRelic {
 	
 	private void toggleState(boolean victory) {
 		Lambda a = ((this.victory = victory) ? this::beginLongPulse : this::stopPulse);
-		a.act();
+		a.run();
 	}
 	
 	public void onVictory() {

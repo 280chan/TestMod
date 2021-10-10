@@ -51,6 +51,10 @@ public interface MiscMethods {
 		return Calendar.getInstance().get(Calendar.DATE);
 	}
 	
+	public default AbstractPlayer p() {
+		return AbstractDungeon.player;
+	}
+	
 	public default <T> ArrayList<T> getIdenticalList(T value, int size) {
 		ArrayList<T> list = new ArrayList<T>();
 		while (list.size() < size)
@@ -70,6 +74,11 @@ public interface MiscMethods {
 		return list;
 	}
 	
+	public default void togglePulse(AbstractRelic r, boolean pulse) {
+		Lambda f = pulse ? r::beginLongPulse : r::stopPulse;
+		f.run();
+	}
+	
 	public default void markAsSeen(AbstractRelic r) {
 		if (!UnlockTracker.isRelicSeen(r.relicId)) {
 			UnlockTracker.markRelicAsSeen(r.relicId);
@@ -85,12 +94,11 @@ public interface MiscMethods {
 	}
 	
 	public default CardGroup getSource(AbstractCard c) {
-		AbstractPlayer p = AbstractDungeon.player;
-		return Stream.of(p.discardPile, p.hand, p.drawPile).filter(g -> g.contains(c)).findAny().orElse(null);
+		return Stream.of(p().discardPile, p().hand, p().drawPile).filter(g -> g.contains(c)).findAny().orElse(null);
 	}
 	
 	public default boolean handFull() {
-		return AbstractDungeon.player.hand.size() >= BaseMod.MAX_HAND_SIZE;
+		return p().hand.size() >= BaseMod.MAX_HAND_SIZE;
 	}
 	
 	public default boolean isLocalTesting() {
@@ -103,11 +111,11 @@ public interface MiscMethods {
 	}
 	
 	public default boolean hasPrudence() {
-		return AbstractDungeon.player.hasRelic(TestMod.makeID(Prudence.ID));
+		return p().hasRelic(TestMod.makeID(Prudence.ID));
 	}
 	
 	public default boolean hasStringDisintegrator() {
-		return AbstractDungeon.player.hasRelic(TestMod.makeID(StringDisintegrator.ID));
+		return p().hasRelic(TestMod.makeID(StringDisintegrator.ID));
 	}
 	
 	public default void addHoarderCard(CardGroup g, AbstractCard c) {
@@ -135,7 +143,7 @@ public interface MiscMethods {
 	
 	public default ArrayList<AbstractCard> getAllInBattleInstance(String cardID) {
 		IdChecker checker = new IdChecker(cardID);
-		AbstractPlayer p = AbstractDungeon.player;
+		AbstractPlayer p = p();
 		return Stream
 				.concat(Stream.of(p.drawPile, p.discardPile, p.exhaustPile, p.limbo, p.hand)
 						.flatMap(g -> g.group.stream()), Stream.of(p.cardInUse))
@@ -222,11 +230,11 @@ public interface MiscMethods {
 			});
 	    	AbstractDungeon.actionManager.cardQueue.clear();
 	    	
-	    	AbstractDungeon.player.limbo.group.forEach(c -> AbstractDungeon.effectList.add(new ExhaustCardEffect(c)));
+	    	INSTANCE.p().limbo.group.forEach(c -> AbstractDungeon.effectList.add(new ExhaustCardEffect(c)));
 	    	
-	    	TestMod.info("limbo数量 = " + AbstractDungeon.player.limbo.size());
-	    	AbstractDungeon.player.limbo.group.clear();
-	        AbstractDungeon.player.releaseCard();
+	    	TestMod.info("limbo数量 = " + INSTANCE.p().limbo.size());
+	    	INSTANCE.p().limbo.group.clear();
+	    	INSTANCE.p().releaseCard();
 	        // Start Ending Turn
 	        
 	        addToBot(new NewQueueCardAction());
@@ -235,7 +243,7 @@ public interface MiscMethods {
 	        etb.isGlowing = false;
 	        etb.updateText(EndTurnButton.ENEMY_TURN_MSG);
 	        CardCrawlGame.sound.play("END_TURN");
-	        AbstractDungeon.player.releaseCard();
+	        INSTANCE.p().releaseCard();
 	        // EndTurnButton Effect
 	        
 	        endTurnQueued = true;
@@ -259,7 +267,7 @@ public interface MiscMethods {
 	    }
 	    
 		private static void endTurn() {
-			AbstractPlayer p = AbstractDungeon.player;
+			AbstractPlayer p = INSTANCE.p();
 			p.applyEndOfTurnTriggers();
 
 			addToBot(new ClearCardQueueAction());
@@ -267,8 +275,8 @@ public interface MiscMethods {
 			
 			Stream.of(p.drawPile, p.discardPile, p.hand).flatMap(g -> g.group.stream())
 					.forEach(c -> c.resetAttributes());
-			if (AbstractDungeon.player.hoveredCard != null)
-				AbstractDungeon.player.hoveredCard.resetAttributes();
+			if (p.hoveredCard != null)
+				p.hoveredCard.resetAttributes();
 
 			INSTANCE.addTmpActionToBot(() -> {
 				addToBot(new EndTurnAction());
@@ -303,35 +311,35 @@ public interface MiscMethods {
 			if ((gam.turnHasEnded) && (!AbstractDungeon.getMonsters().areMonstersBasicallyDead())) {
 				startNextTurn = false;
 				AbstractDungeon.getCurrRoom().monsters.applyEndOfTurnPowers();
-				AbstractDungeon.player.cardsPlayedThisTurn = 0;
+				INSTANCE.p().cardsPlayedThisTurn = 0;
 				gam.orbsChanneledThisTurn.clear();
 				if (ModHelper.isModEnabled("Careless"))
 					Careless.modAction();
 				if (ModHelper.isModEnabled("ControlledChaos")) {
 					ControlledChaos.modAction();
-					AbstractDungeon.player.hand.applyPowers();
+					INSTANCE.p().hand.applyPowers();
 				}
-				AbstractDungeon.player.applyStartOfTurnRelics();
-			    AbstractDungeon.player.applyStartOfTurnPreDrawCards();
-				AbstractDungeon.player.applyStartOfTurnCards();
-				AbstractDungeon.player.applyStartOfTurnPowers();
-				AbstractDungeon.player.applyStartOfTurnOrbs();
+				INSTANCE.p().applyStartOfTurnRelics();
+				INSTANCE.p().applyStartOfTurnPreDrawCards();
+				INSTANCE.p().applyStartOfTurnCards();
+				INSTANCE.p().applyStartOfTurnPowers();
+				INSTANCE.p().applyStartOfTurnOrbs();
 				GameActionManager.turn++;
 				gam.turnHasEnded = false;
 				GameActionManager.totalDiscardedThisTurn = 0;
 				gam.cardsPlayedThisTurn.clear();
 				GameActionManager.damageReceivedThisTurn = 0;
-				if ((!AbstractDungeon.player.hasPower("Barricade")) && (!AbstractDungeon.player.hasPower("Blur"))) {
-					if (!AbstractDungeon.player.hasRelic("Calipers")) {
-						AbstractDungeon.player.loseBlock();
+				if ((!INSTANCE.p().hasPower("Barricade")) && (!INSTANCE.p().hasPower("Blur"))) {
+					if (!INSTANCE.p().hasRelic("Calipers")) {
+						INSTANCE.p().loseBlock();
 					} else {
-						AbstractDungeon.player.loseBlock(15);
+						INSTANCE.p().loseBlock(15);
 					}
 				}
 				if (!AbstractDungeon.getCurrRoom().isBattleOver) {
-					addToBot(new DrawCardAction(null, AbstractDungeon.player.gameHandSize, true));
-					AbstractDungeon.player.applyStartOfTurnPostDrawRelics();
-					AbstractDungeon.player.applyStartOfTurnPostDrawPowers();
+					addToBot(new DrawCardAction(null, INSTANCE.p().gameHandSize, true));
+					INSTANCE.p().applyStartOfTurnPostDrawRelics();
+					INSTANCE.p().applyStartOfTurnPostDrawPowers();
 					addToBot(new EnableEndTurnButtonAction());
 				}
 			}
@@ -353,7 +361,7 @@ public interface MiscMethods {
 	
 	public default void playAgain(AbstractCard card, AbstractMonster m) {
 		AbstractCard tmp = card.makeSameInstanceOf();
-		AbstractDungeon.player.limbo.addToBottom(tmp);
+		p().limbo.addToBottom(tmp);
 		tmp.current_x = card.current_x;
 		tmp.current_y = card.current_y;
 		tmp.target_x = (Settings.WIDTH / 2.0F - 300.0F * Settings.scale);
@@ -374,7 +382,7 @@ public interface MiscMethods {
 		
 		for (AbstractCard card : list) {
 			AbstractCard tmp = card.makeSameInstanceOf();
-			AbstractDungeon.player.limbo.addToBottom(tmp);
+			p().limbo.addToBottom(tmp);
 			tmp.current_x = card.current_x;
 			tmp.current_y = card.current_y;
 			tmp.target_x = (Settings.WIDTH / 2.0F - 300.0F * Settings.scale);
@@ -645,16 +653,14 @@ public interface MiscMethods {
 		return Stream.of(actions).reduce(t -> {}, Consumer::andThen);
 	}
 	
-	public static interface Lambda {
-		public abstract void act();
-	}
+	public static interface Lambda extends Runnable {}
 	
 	public default void addTmpActionToTop(Lambda... lambda) {
 		addToTop(new AbstractGameAction() {
 			@Override
 			public void update() {
 				this.isDone = true;
-				Stream.of(lambda).forEach(Lambda::act);
+				Stream.of(lambda).forEach(Lambda::run);
 			}
 		});
 	}
@@ -664,7 +670,31 @@ public interface MiscMethods {
 			@Override
 			public void update() {
 				this.isDone = true;
-				Stream.of(lambda).forEach(Lambda::act);
+				Stream.of(lambda).forEach(Lambda::run);
+			}
+		});
+	}
+	
+	public default void addTmpActionToTop(AbstractGameAction... actions) {
+		addToTop(new AbstractGameAction() {
+			@Override
+			public void update() {
+				this.isDone = true;
+				ArrayList<AbstractGameAction> list = new ArrayList<AbstractGameAction>();
+				Stream.of(actions).forEach(a -> list.add(0, a));
+				list.forEach(INSTANCE::att);
+			}
+		});
+	}
+	
+	public default void addTmpActionToBot(AbstractGameAction... actions) {
+		addToBot(new AbstractGameAction() {
+			@Override
+			public void update() {
+				this.isDone = true;
+				ArrayList<AbstractGameAction> list = new ArrayList<AbstractGameAction>();
+				Stream.of(actions).forEach(a -> list.add(0, a));
+				list.forEach(INSTANCE::att);
 			}
 		});
 	}
@@ -720,8 +750,7 @@ public interface MiscMethods {
 	}
 	
 	public default Stream<AbstractTestRelic> relicStream() {
-		AbstractPlayer p = AbstractDungeon.player;
-		return TestMod.RELICS.stream().map(r -> r.relicId).filter(p::hasRelic).map(p::getRelic)
+		return TestMod.RELICS.stream().map(r -> r.relicId).filter(p()::hasRelic).map(p()::getRelic)
 				.map(r -> (AbstractTestRelic) r);
 	}
 	

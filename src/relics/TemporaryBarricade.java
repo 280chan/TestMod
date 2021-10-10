@@ -1,8 +1,6 @@
 package relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
@@ -31,8 +29,7 @@ public class TemporaryBarricade extends AbstractClickRelic {
 		if (this.active()) {
 			this.flash();
 			this.stopPulse();
-			AbstractPlayer p = AbstractDungeon.player;
-			this.addToBot(new ApplyPowerAction(p, p, new BarricadePower(p)));
+			this.addToBot(apply(p(), new BarricadePower(p())));
 		}
     }
 	
@@ -41,16 +38,17 @@ public class TemporaryBarricade extends AbstractClickRelic {
 	}
 	
 	public void atTurnStart() {
-		AbstractPlayer p = AbstractDungeon.player;
-		int x = p.currentBlock;
-		if (x > 0)
-			this.addToBot(new GainEnergyAction(1));
-		if (this.active()) {
-			int newx = f(x);
-			if (newx < x) {
-				p.loseBlock(x - newx);
+		this.addTmpActionToBot(() -> {
+			int x = p().currentBlock;
+			if (x > 0)
+				this.addToTop(new GainEnergyAction(1));
+			if (this.active()) {
+				int newx = f(x);
+				if (newx < x) {
+					p().loseBlock(x - newx);
+				}
 			}
-		}
+		});
     }
 
 	public void onVictory() {
@@ -64,19 +62,14 @@ public class TemporaryBarricade extends AbstractClickRelic {
 	}
 	
 	public static void pulseLoader() {
-		AbstractDungeon.player.relics.stream().filter(r -> r instanceof TemporaryBarricade)
-				.forEach(AbstractRelic::onVictory);
+		INSTANCE.p().relics.stream().filter(r -> r instanceof TemporaryBarricade).forEach(AbstractRelic::onVictory);
 	}
 	
 	@Override
 	protected void onRightClick() {
 		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT) {
 			this.counter = -3 - this.counter;
-			if (this.active()) {
-				this.beginLongPulse();
-			} else {
-				this.stopPulse();
-			}
+			this.togglePulse(this, this.active());
 		}
 	}
 

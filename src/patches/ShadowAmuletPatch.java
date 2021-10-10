@@ -11,7 +11,7 @@ public class ShadowAmuletPatch {
 		@SpireInsertPatch(rloc = 3)
 		public static void Insert(AbstractCreature c, int amount, boolean noAnimation) {
 			if (c.isPlayer)
-				ShadowAmulet.getThis().forEach(r -> {r.loseblock(Math.min(amount, c.currentBlock));});
+				ShadowAmulet.onLoseBlock(Math.min(amount, c.currentBlock));
 		}
 	}
 }

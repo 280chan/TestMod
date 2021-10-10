@@ -19,7 +19,6 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
@@ -387,13 +386,12 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void addAnonymousCards() {
-		add(new AnonymousCard("AdversityCounterattack", 1, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY,
-				0, 0, 1, (c, p, m) -> {
-					att(new AdversityCounterattackAction(p, m, AttackEffect.SLASH_HORIZONTAL));
-					att(apply(p, new IntangiblePlayerPower(p, 1)));
-					att(apply(p, new VulnerablePower(p, c.magicNumber, false)));
-					att(apply(p, new ArtifactPower(m, c.magicNumber)));
-				}, c -> c.upMGC(1)));
+		add(new AnonymousCard("AdversityCounterattack", 1, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY, 0, 0, 1,
+				(c, p, m) -> addTmpActionToTop(apply(p, new ArtifactPower(m, c.magicNumber)),
+						apply(p, new VulnerablePower(p, c.magicNumber, false)),
+						apply(p, new IntangiblePlayerPower(p, 1)),
+						new AdversityCounterattackAction(p, m, AttackEffect.SLASH_HORIZONTAL)),
+				c -> c.upMGC(1)));
 		add(new AnonymousCard("AssimilatedRune", 1, CardType.SKILL, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
 				(c, player, m) -> {
 					AssimilatedRunePower p = new AssimilatedRunePower(player, c.magicNumber, c.upgraded);
@@ -432,10 +430,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					}
 				}, c -> c.upDesc()));
 		add(new AnonymousCard("ChaoticCore", 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
-				(c, p, m) -> {
-					att(apply(p, new ChaoticCorePower(p, c.magicNumber)));
-					att(new IncreaseMaxOrbAction(1));
-				}, c -> c.upMGC(1)));
+				(c, p, m) -> this.addTmpActionToTop(new IncreaseMaxOrbAction(1),
+						apply(p, new ChaoticCorePower(p, c.magicNumber))),
+				c -> c.upMGC(1)));
 		add(new AnonymousCard("Collector", 2, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY, 8, 0, 1,
 				(c, p, m) -> {
 					AttackEffect e = AttackEffect.SLASH_DIAGONAL;
@@ -536,8 +533,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					if (PulseDistributorPower.hasThis(p)) {
 						PulseDistributorPower po = PulseDistributorPower.getThis(p);
 						if (po.magic > c.magicNumber) {
-							att(apply(p, new PulseDistributorPower(p, c.magicNumber, po.DAMAGES)));
-							att(new RemoveSpecificPowerAction(p, p, po));
+							this.addTmpActionToTop(new RemoveSpecificPowerAction(p, p, po),
+									apply(p, new PulseDistributorPower(p, c.magicNumber, po.DAMAGES)));
 						}
 					} else {
 						att(apply(p, new PulseDistributorPower(p, c.magicNumber)));
@@ -1015,6 +1012,14 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			info("未拥有共享药水栏位荒疫，跳过");
 		}
 		return false;
+	}
+	
+	public static void addNyarlathotepCard(ArrayList<String> list) {
+		Nyarlathotep.addCardList(list);
+	}
+
+	public static void addNyarlathotepCard(String... list) {
+		Nyarlathotep.addCardList(list);
 	}
 	
 	public static void addNyarlathotepPower(ArrayList<String> list) {

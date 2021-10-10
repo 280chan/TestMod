@@ -7,7 +7,6 @@ import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
@@ -16,6 +15,7 @@ import mymod.TestMod;
 public class Nyarlathotep extends AbstractTestRelic {
 	public static final String ID = "Nyarlathotep";
 
+	private static final String[] CARD_IDs = { "Force Field" };
 	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm", "Curiosity",
 			TestMod.makeID("PlagueActPower") };
 	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets",
@@ -23,6 +23,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",
 			"DemoExt:GalacticMedalOfValor", "SynthV:C4", "Clover", "SynthV:MejaisSoulstealer",
 			"youkari:Boundary_crack", "BirthdayGift-Icosahedron" };
+	private static final ArrayList<String> CARD_LIST = new ArrayList<String>();
 	private static final ArrayList<String> POWER_LIST = new ArrayList<String>();
 	private static final ArrayList<String> RELIC_LIST = new ArrayList<String>();
 	
@@ -31,13 +32,20 @@ public class Nyarlathotep extends AbstractTestRelic {
 			target.add(id);
 	}
 	
+	public static void addCardList(ArrayList<String> list) {
+		CARD_LIST.addAll(list);
+	}
+	
+	public static void addCardList(String... list) {
+		Stream.of(list).forEach(s -> addToList(CARD_LIST, s));
+	}
+	
 	public static void addPowerList(ArrayList<String> list) {
 		POWER_LIST.addAll(list);
 	}
 	
 	public static void addPowerList(String... list) {
-		for (String id : list)
-			addToList(POWER_LIST, id);
+		Stream.of(list).forEach(s -> addToList(POWER_LIST, s));
 	}
 	
 	public static void addRelicList(ArrayList<String> list) {
@@ -45,12 +53,19 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	public static void addRelicList(String... list) {
-		for (String id : list)
-			addToList(RELIC_LIST, id);
+		Stream.of(list).forEach(s -> addToList(RELIC_LIST, s));
+	}
+	
+	private boolean valid(AbstractCard c) {
+		return Stream.of(CARD_IDs).anyMatch(c.cardID::equals) || CARD_LIST.stream().anyMatch(c.cardID::equals);
 	}
 	
 	public Nyarlathotep() {
 		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+	}
+	
+	public static boolean hasThis() {
+		return INSTANCE.p().relics.stream().anyMatch(r -> r instanceof Nyarlathotep);
 	}
 	
 	private static boolean isThis(AbstractRelic r) {
@@ -69,8 +84,8 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	private void triggerExhaustFor(AbstractCard c) {
-		AbstractDungeon.player.relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onExhaust(c));
-		AbstractDungeon.player.powers.forEach(p -> p.onExhaust(c));
+		p().relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onExhaust(c));
+		p().powers.forEach(p -> p.onExhaust(c));
 		c.triggerOnExhaust();
 	}
 	
@@ -79,18 +94,19 @@ public class Nyarlathotep extends AbstractTestRelic {
         ++GameActionManager.totalDiscardedThisTurn;
 		if (AbstractDungeon.actionManager.turnHasEnded)
 			return;
-		AbstractDungeon.player.updateCardsOnDiscard();
-		AbstractDungeon.player.relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onManualDiscard());
+		p().updateCardsOnDiscard();
+		p().relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onManualDiscard());
 	}
 	
 	private void triggerUsePowerCard(AbstractCard c, UseCardAction a) {
-		AbstractPlayer p = AbstractDungeon.player;
 		AbstractCard tmp = c.makeSameInstanceOf();
 		tmp.type = CardType.POWER;
-		Stream.concat(Stream.of(POWER_IDs), POWER_LIST.stream()).distinct().filter(p::hasPower)
-				.forEach(id -> p.getPower(id).onUseCard(tmp, a));
-		Stream.concat(Stream.of(RELIC_IDs), RELIC_LIST.stream()).distinct().filter(p::hasRelic)
-				.forEach(id -> p.getRelic(id).onUseCard(tmp, a));
+		Stream.concat(Stream.of(POWER_IDs), POWER_LIST.stream()).distinct().filter(p()::hasPower)
+				.forEach(id -> p().getPower(id).onUseCard(tmp, a));
+		Stream.concat(Stream.of(RELIC_IDs), RELIC_LIST.stream()).distinct().filter(p()::hasRelic)
+				.forEach(id -> p().getRelic(id).onUseCard(tmp, a));
+		Stream.of(p().hand, p().discardPile, p().drawPile).flatMap(g -> g.group.stream()).filter(this::valid)
+				.forEach(b -> b.triggerOnCardPlayed(tmp));
 	}
 	
 	public void onExhaust(final AbstractCard c) {
@@ -99,7 +115,7 @@ public class Nyarlathotep extends AbstractTestRelic {
     }
 	
 	public void onManualDiscard() {
-		this.triggerExhaustFor(AbstractDungeon.player.discardPile.getTopCard());
+		this.triggerExhaustFor(p().discardPile.getTopCard());
 		this.show();
     }
 	
