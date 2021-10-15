@@ -197,7 +197,7 @@
 	"testmod-MagicalMallet":{
 		"NAME": "Magical Mallet",
 		"FLAVOR": "上面的文字被人抹去了",
-		"DESCRIPTIONS":["At the start of each turn, record the maximum and minimum cost of your hand, make all cards with these two costs in your hand switch to the other cost for rest of combat."]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . At the start of each turn, record the maximum and minimum cost of your hand, make all cards with these two costs in your hand switch to the other cost for rest of combat. Once each combat, you can right click this relic to active the effect."]
 	},
 	
 	"testmod-Laevatain":{

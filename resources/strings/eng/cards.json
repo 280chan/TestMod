@@ -181,6 +181,11 @@
 		"DESCRIPTION": "If last card you play is 'Limit Flipper', double your Strength. Otherwise Gain !M! Strength.",
 		"UPGRADE_DESCRIPTION": "If last card you play is Colorless, double your Strength. Otherwise Gain !M! Strength."
 	},
+	"testmod-MoneyShot": {
+		"NAME": "Money Shot",
+		"DESCRIPTION": "Attack enemy with damages of each digit of your gold. Whenever Fatal an enemy, gain gold equals to the fatal damage amount.",
+		"UPGRADE_DESCRIPTION": "Attack ALL enemies with damages of each digits of your gold. Whenever Fatal an enemy, gain gold equals to the fatal damage amount."
+	},
 	"testmod-Mystery": {
 		"NAME": "Mystery",
 		"DESCRIPTION": "Deal !D! damage to a random enemy !M! times. For each ? room you entered this run, deal an extra damage. Exhaust."

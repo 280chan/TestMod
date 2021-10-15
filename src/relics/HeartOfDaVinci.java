@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
@@ -39,8 +37,8 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	public static HeartOfDaVinci getThis() {
-		return (HeartOfDaVinci) AbstractDungeon.player.relics.stream().filter(r -> r instanceof HeartOfDaVinci)
-				.findFirst().orElse(null);
+		return (HeartOfDaVinci) INSTANCE.relicStream().filter(r -> r instanceof HeartOfDaVinci).findFirst()
+				.orElse(null);
 	}
 	
 	public HeartOfDaVinci() {
@@ -82,9 +80,8 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
 		ADDED.addAll(RelicLibrary.redList);
 		ADDED.addAll(RelicLibrary.greenList);
 		ADDED.addAll(RelicLibrary.blueList);
-		
-		(map = BaseMod.getAllCustomRelics()).values().stream().map(HashMap<String, AbstractRelic>::values)
-				.forEach(ADDED::addAll);
+
+		(map = BaseMod.getAllCustomRelics()).values().stream().map(HashMap::values).forEach(ADDED::addAll);
 		ADDED.forEach(this::addToRelicPool);
 	}
 	
@@ -177,11 +174,12 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
 		ArrayList<AbstractCard> pool = CardLibrary.cards.entrySet().stream()
 				.filter(c -> Settings.treatEverythingAsUnlocked() || !UnlockTracker.isCardLocked(c.getKey()))
 				.map(Map.Entry::getValue).filter(c -> c.color == color && c.rarity != CardRarity.BASIC)
-				.map(AbstractCard::makeCopy).collect(Collectors.toCollection(ArrayList::new));
+				.collect(this.collectToArrayList());
+		Collections.shuffle(pool, new Random(AbstractDungeon.cardRng.randomLong()));
 		if (pool.size() < 20) {
 			TestMod.info("WTF! This character has less than 20 cards");
 		}
-		return pool;
+		return pool.stream().limit(20).map(AbstractCard::makeCopy).collect(this.collectToArrayList());
 	}
 	
 	private CardColor getColor(AbstractPlayer p) {

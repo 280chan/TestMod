@@ -1,8 +1,12 @@
 package actions;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardTags;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
@@ -36,20 +40,11 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 	private void openScreen() {
 		this.pickCard = true;
 		CardGroup group = new CardGroup(CardGroupType.UNSPECIFIED);
-		if (this.group.size() > AMOUNT) {
-			ArrayList<AbstractCard> tmp = this.group.group.stream().collect(this.collectToArrayList());
-			group.group = tmp;
-			group.shuffle(AbstractDungeon.cardRng);
-			group.group = group.group.stream().limit(AMOUNT).collect(this.collectToArrayList());
-		} else {
-			group.group.addAll(this.group.group);
-			while (group.size() < AMOUNT) {
-				AbstractCard card = AbstractDungeon.returnTrulyRandomColorlessCardInCombat();
-				if (group.group.stream().map(c -> c.cardID).noneMatch(card.cardID::equals)) {
-					group.addToBottom(card);
-				}
-			}
-		}
+		group.group.addAll(this.group.group);
+		ArrayList<AbstractCard> tmp = AbstractDungeon.srcColorlessCardPool.group.stream()
+				.filter(c -> !c.hasTag(CardTags.HEALING)).collect(this.collectToArrayList());
+		Collections.shuffle(tmp, new Random(AbstractDungeon.cardRng.randomLong()));
+		tmp.stream().limit(AMOUNT - group.size()).forEach(group::addToBottom);
 		group.group.stream().peek(this::checkEggs).map(c -> c.cardID).forEach(UnlockTracker::markCardAsSeen);
 		AbstractDungeon.gridSelectScreen.open(group, 1, "达芬奇之心：选择获得1张牌。", false, false, true, false);
 		AbstractDungeon.overlayMenu.cancelButton.show(GridCardSelectScreen.TEXT[1]);
@@ -84,7 +79,7 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 				&& !AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
 			AbstractCard c = AbstractDungeon.gridSelectScreen.selectedCards.get(0);
 			TestMod.info("选择了" + c.name);
-			AbstractDungeon.player.relics.forEach(r -> { r.onObtainCard(c); });
+			AbstractDungeon.player.relics.forEach(r -> r.onObtainCard(c));
 			c.shrink();
 			CardGroup group = AbstractDungeon.player.masterDeck;
 			group.addToTop(c);

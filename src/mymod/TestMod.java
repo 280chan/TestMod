@@ -103,7 +103,7 @@ import utils.*;
 
 /**
  * @author 彼君不触
- * @version 10/6/2021
+ * @version 10/12/2021
  * @since 6/17/2018
  */
 
@@ -371,7 +371,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new RabbitOfFibonacci(), new TradeIn(), new Reproduce(), new PainDetonator(), new Reverberation(),
 				new CardIndex(), new PowerStrike(), new TaurusBlackCat(), new PerfectCombo(), new Lexicography(),
 				new Librarian(), new VirtualReality(), new HandmadeProducts(), new DeathImprint(),
-				new TreasureHunter())
+				new TreasureHunter(), new MoneyShot())
 				.collect(this.collectToArrayList());
 		addAnonymousCards();
 		

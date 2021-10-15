@@ -2,6 +2,7 @@ package relics;
 
 import java.util.Collections;
 import java.util.Random;
+import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -12,13 +13,14 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import mymod.TestMod;
 import utils.TestBoxRelicSelectScreen;
 
-public class TestBox extends AbstractDoubleClickableRelic {
+public class TestBox extends AbstractTestRelic implements BetterClickableRelic<TestBox> {
 	public static final String ID = "TestBox";
 	
 	public boolean relicSelected = true;
@@ -41,6 +43,13 @@ public class TestBox extends AbstractDoubleClickableRelic {
 	
 	public TestBox() {
 		super(ID, RelicTier.SPECIAL, LandingSound.MAGICAL);
+		this.setDuration(300).addRightClickActions(null, () -> {
+			if (this.checkFoolsDay()) {
+				this.relic();
+			} else {
+				this.card();
+			}
+		});
 	}
 	
 	public String getUpdatedDescription() {
@@ -74,6 +83,11 @@ public class TestBox extends AbstractDoubleClickableRelic {
 		}
 	}
 	
+	public void onEnterRoom(AbstractRoom r) {
+		if (AbstractDungeon.floorNum > 0)
+			remove = true;
+	}
+	
 	public void postUpdate() {
 		if (remove) {
 			AbstractDungeon.player.relics.remove(this);
@@ -86,24 +100,6 @@ public class TestBox extends AbstractDoubleClickableRelic {
 	}
 	
 	private static final String FOOLS_DAY = "愚人节快乐";
-	
-	@Override
-	protected void onRightClick() {
-		if (this.checkFoolsDay()) {
-			this.card();
-		} else {
-			this.relic();
-		}
-	}
-	
-	@Override
-	protected void onDoubleRightClick() {
-		if (this.checkFoolsDay()) {
-			this.relic();
-		} else {
-			this.card();
-		}
-	}
 	
 	private void relic() {
 		if (this.counter == -2 || this.invalidFloor())
@@ -150,6 +146,7 @@ public class TestBox extends AbstractDoubleClickableRelic {
 	
 	private AbstractCard priority() {
 		if (!Settings.seedSet) {
+			Stream.of("BrkStarshine", "280 chan");
 			if ("BrkStarshine".equals(CardCrawlGame.playerName) || "280 chan".equals(CardCrawlGame.playerName)) {
 				Object o = TestMod.checkLatest(false);
 				if (o != null)
@@ -157,6 +154,23 @@ public class TestBox extends AbstractDoubleClickableRelic {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void onSingleRightClick() {
+		if (this.checkFoolsDay()) {
+			this.card();
+		} else {
+			this.relic();
+		}
+	}
+
+	@Override
+	public void onEachRightClick() {
+	}
+
+	@Override
+	public void onDurationEnd() {
 	}
 
 }

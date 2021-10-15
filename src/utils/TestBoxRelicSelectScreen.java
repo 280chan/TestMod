@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.stream.Stream;
+
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -26,10 +28,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	}
 	
 	private boolean checkIllegal(String id) {
-		for (String s : ILLEGAL)
-			if (id.equals(s))
-				return true;
-		return false;
+		return Stream.of(ILLEGAL).anyMatch(id::equals);
 	}
 	
 	private AbstractTestRelic priority() {
