@@ -72,7 +72,7 @@ public class DeterminationOfClimber extends AbstractTestRelic {
 	}
 	
 	private void updateHandGlow() {
-		if (!this.canUpdateHandGlow())
+		if (!this.inCombat())
 			return;
 		this.stopPulse();
 		ColorRegister cr = new ColorRegister(color, this);

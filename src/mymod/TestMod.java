@@ -75,6 +75,7 @@ import basemod.interfaces.PostDungeonInitializeSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import basemod.interfaces.PostUpdateSubscriber;
 import basemod.interfaces.PreUpdateSubscriber;
+import basemod.interfaces.RelicGetSubscriber;
 import basemod.interfaces.StartGameSubscriber;
 import basemod.interfaces.OnStartBattleSubscriber;
 import basemod.interfaces.PostBattleSubscriber;
@@ -100,6 +101,7 @@ import powers.PulseDistributorPower;
 import powers.SuperconductorNoEnergyPower;
 import relics.*;
 import utils.*;
+import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
@@ -110,7 +112,8 @@ import utils.*;
 @SpireInitializer
 public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber, StartGameSubscriber,
 		PreUpdateSubscriber, PostUpdateSubscriber, PostInitializeSubscriber, PostDungeonInitializeSubscriber,
-		OnStartBattleSubscriber, MaxHPChangeSubscriber, EditKeywordsSubscriber, PostBattleSubscriber, MiscMethods {
+		OnStartBattleSubscriber, MaxHPChangeSubscriber, EditKeywordsSubscriber, PostBattleSubscriber, MiscMethods,
+		RelicGetSubscriber {
 	public static final String MOD_ID = "testmod";
 	public static final String MOD_NAME = "TestMod";
 	public static final String SAVE_NAME = "TestMod";
@@ -298,8 +301,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new ResonanceStone(), new Dye(), new Restrained(), new RandomTest(), new GoldenSoul(),
-				new GremlinBalance(), new IWantAll(), new TemporaryBarricade(), new ShadowAmulet(),
+		addLatest(new GlassSoul(), new ResonanceStone(), new Dye(), new Restrained(), new RandomTest(),
+				new GoldenSoul(), new GremlinBalance(), new IWantAll(), new TemporaryBarricade(), new ShadowAmulet(),
 				new HyperplasticTissue(), new VentureCapital(), new GreedyDevil());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.collectToArrayList());
 		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Reproduce(), new HandmadeProducts(),
@@ -330,7 +333,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new BalancedPeriapt(), new MagicalMallet(), new Laevatain(), new TimeTraveler(), new Nyarlathotep(),
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
-				new VentureCapital(), new ResonanceStone()).collect(this.collectToArrayList());
+				new VentureCapital(), new ResonanceStone(), new GlassSoul()).collect(this.collectToArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);
@@ -732,7 +735,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			this.turnSkipperUpdate();
 			
 			BoxForYourself.updateThis();
-			HeartOfDaVinci.updateThis();
 			SuperconductorNoEnergyPower.UpdateCurrentInstance();
 		}
 	}
@@ -761,6 +763,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(Faith.SAVE_NAME, "false");
 		DEFAULT.setProperty(Faith.SAVE_NAME1, "0");
 		DEFAULT.setProperty(AscensionHeart.SAVE_NAME, "false");
+		DEFAULT.setProperty(GlassSoul.ID, "0");
+		
 		/*DEFAULT.setProperty(Mahjong.SAVE_KANG, "0");
 		DEFAULT.setProperty(Mahjong.SAVE_TURN, "0");
 		DEFAULT.setProperty(Mahjong.SAVE_REACH, "false");
@@ -783,7 +787,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receiveStartGame() {
 		if (config == null)
 			this.initSavingConfig();
-
 		SUB_MOD.forEach(TestMod::editSubModStartGame);
 		
 		if (AbstractDungeon.player.relics.stream().anyMatch(r -> r instanceof PortableAltar))
@@ -797,7 +800,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		Sins.isSelect = false;
 		
 		HeartOfDaVinci.clear();
-		HeartOfDaVinci.init(AbstractDungeon.player.relics.size());
 		
 		TimeTraveler.load(getInt(TimeTraveler.SAVE_NAME));
 		Motorcycle.loadGame();
@@ -822,6 +824,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		AscensionHeart.load(getBool(AscensionHeart.SAVE_NAME));
 		TemporaryBarricade.pulseLoader();
 		IWantAll.loadVictory();
+		GlassSoul.load(getStringList(GlassSoul.ID));
 	}
 	
 	public static boolean hasSaveData(String key) {
@@ -836,8 +839,31 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		return config.getBool(key);
 	}
 	
-	public static void save(String key, int value) {
-		config.setInt(key, value);
+	public static ArrayList<Integer> getIntList(String key) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		int size = config.getInt(key);
+		for (int i = 0; i < size; i++)
+			list.add(config.getInt(key + i));
+		return list;
+	}
+	
+	public static ArrayList<Boolean> getBooleanList(String key) {
+		ArrayList<Boolean> list = new ArrayList<Boolean>();
+		int size = config.getInt(key);
+		for (int i = 0; i < size; i++)
+			list.add(config.getBool(key + i));
+		return list;
+	}
+	
+	public static ArrayList<String> getStringList(String key) {
+		ArrayList<String> list = new ArrayList<String>();
+		int size = config.getInt(key);
+		for (int i = 0; i < size; i++)
+			list.add(config.getString(key + i));
+		return list;
+	}
+	
+	public static void save() {
 		try {
 			config.save();
 		} catch (IOException e) {
@@ -845,13 +871,40 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}
 	}
 	
+	public static void saveInt(String key, ArrayList<Integer> list) {
+		config.setInt(key, list.size());
+		for (int i = 0; i < list.size(); i++)
+			config.setInt(key + i, list.get(i));
+		save();
+	}
+	
+	public static void saveBoolean(String key, ArrayList<Boolean> list) {
+		config.setInt(key, list.size());
+		for (int i = 0; i < list.size(); i++)
+			config.setBool(key + i, list.get(i));
+		save();
+	}
+	
+	public static void saveString(String key, ArrayList<String> list) {
+		config.setInt(key, list.size());
+		for (int i = 0; i < list.size(); i++)
+			config.setString(key + i, list.get(i));
+		save();
+	}
+	
+	public static void save(String key, int value) {
+		config.setInt(key, value);
+		save();
+	}
+	
 	public static void save(String key, boolean value) {
 		config.setBool(key, value);
-		try {
-			config.save();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		save();
+	}
+	
+	public static void save(String key, String value) {
+		config.setString(key, value);
+		save();
 	}
 
 	private static void addEvents() {
@@ -928,6 +981,13 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public int receiveMapHPChange(int amount) {
 		return this.relicStream().map(r -> r.maxHPChanger()).reduce(a -> a, Function::andThen).apply(amount * 1f)
 				.intValue();
+	}
+
+	@Override
+	public void receiveRelicGet(AbstractRelic r) {
+		if (!RelicGetManager.loading)
+			this.relicStream().filter(a -> a instanceof GetRelicTrigger)
+					.forEach(a -> ((GetRelicTrigger) a).receiveRelicGet(r));
 	}
 	
 	public static String eventIMGPath(String ID) {

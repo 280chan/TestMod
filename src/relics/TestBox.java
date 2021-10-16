@@ -18,9 +18,10 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import mymod.TestMod;
+import utils.AdvanceClickableRelic;
 import utils.TestBoxRelicSelectScreen;
 
-public class TestBox extends AbstractTestRelic implements BetterClickableRelic<TestBox> {
+public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<TestBox> {
 	public static final String ID = "TestBox";
 	
 	public boolean relicSelected = true;

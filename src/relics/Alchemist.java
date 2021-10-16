@@ -1,5 +1,6 @@
 package relics;
 
+import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -9,7 +10,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import mymod.TestMod;
 
-public class Alchemist extends AbstractClickRelic {
+public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	public static final String ID = "Alchemist";
 	private boolean used = false;
 	
@@ -66,36 +67,29 @@ public class Alchemist extends AbstractClickRelic {
     }
 	
 	@Override
-	protected void onRightClick() {
+	public void onRightClick() {
 		if (this.canUse()) {
 			this.toggleState(false);
-			this.used = true;
 			AbstractPlayer p = AbstractDungeon.player;
-			int index = 0;
-			for (AbstractPotion po : p.potions) {
-				if (!(po instanceof PotionSlot) && po.canUse()) {
-					break;
-				}
-				index++;
-			}
-			if (index < p.potionSlots) {
-				AbstractPotion po = p.potions.get(index);
-				if (po.targetRequired) {
-					po.use(AbstractDungeon.getCurrRoom().monsters.getRandomMonster(true));
+			AbstractPotion p1 = p.potions.stream().filter(po -> !(po instanceof PotionSlot) && po.canUse()).findFirst()
+					.orElse(null);
+			if (p1 != null) {
+				this.used = true;
+				if (p1.targetRequired) {
+					p1.use(AbstractDungeon.getRandomMonster());
 				} else {
-					po.use(null);
+					p1.use(null);
 				}
-				TestMod.info("炼金术士: 使用了" + po.name);
+				TestMod.info("炼金术士: 使用了" + p1.name);
 			} else {
 				TestMod.info("炼金术士: 没有可使用药水");
-				this.used = false;
 				this.toggleState(true);
 			}
 		}
 	}
 
 	public boolean canSpawn() {
-		return (Settings.isEndless) || (AbstractDungeon.floorNum <= 48);
+		return Settings.isEndless || AbstractDungeon.floorNum <= 48;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package relics;
 
+import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -8,7 +9,7 @@ import com.megacrit.cardcrawl.powers.BarricadePower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
-public class TemporaryBarricade extends AbstractClickRelic {
+public class TemporaryBarricade extends AbstractTestRelic implements ClickableRelic {
 	public static final String ID = "TemporaryBarricade";
 	
 	public TemporaryBarricade() {
@@ -66,7 +67,7 @@ public class TemporaryBarricade extends AbstractClickRelic {
 	}
 	
 	@Override
-	protected void onRightClick() {
+	public void onRightClick() {
 		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT) {
 			this.counter = -3 - this.counter;
 			this.togglePulse(this, this.active());

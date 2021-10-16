@@ -43,6 +43,10 @@ import relics.StringDisintegrator;
 public interface MiscMethods {
 	public static final MiscMethods INSTANCE = new MiscMethods() {};
 	
+	default void print(String s) {
+		TestMod.info(s);
+	}
+	
 	default int getMonth() {
 		return Calendar.getInstance().get(Calendar.MONTH) + 1;
 	}
@@ -538,7 +542,7 @@ public interface MiscMethods {
 		}
 	}
 	
-	public default boolean canUpdateHandGlow() {
+	public default boolean inCombat() {
 		return AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT;
 	}
 	

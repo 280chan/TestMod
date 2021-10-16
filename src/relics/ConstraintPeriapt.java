@@ -35,7 +35,7 @@ public class ConstraintPeriapt extends AbstractTestRelic {
 	}
 	
 	public void onRefreshHand() {
-		if (this.canUpdateHandGlow())
+		if (this.inCombat())
 			this.updateHandGlow();
 	}
 	

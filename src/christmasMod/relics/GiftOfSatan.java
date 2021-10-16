@@ -2,6 +2,7 @@ package christmasMod.relics;
 
 import java.util.ArrayList;
 
+import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -18,8 +19,9 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import christmasMod.mymod.ChristmasMod;
 import christmasMod.utils.ChristmasMiscMethods;
+import relics.AbstractTestRelic;
 
-public class GiftOfSatan extends AbstractClickRelic implements ChristmasMiscMethods {
+public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMethods, ClickableRelic {
 	public static final String ID = "GiftOfSatan";
 	public static final String DESCRIPTION = "每回合开始将 #b1 张随机的灾厄加入手牌。每有一个单位的当前生命以若干个 #b6 结尾，额外加入 #b6 的个数张。当有单位受到单次伤害以若干个 #b6 结尾，也将其个数张随机的灾厄加入手牌。第 #b6 回合开始，你将获得升级后的灾厄，打出灾厄时将其 #y消耗 。战斗结束时右击此遗物，有 #b25% 几率有机会获得一次额外的灾厄选牌。";
 	
@@ -117,7 +119,7 @@ public class GiftOfSatan extends AbstractClickRelic implements ChristmasMiscMeth
 	}
 	
 	@Override
-	protected void onRightClick() {
+	public void onRightClick() {
 		if (this.victory) {
 			this.toggleState(false);
 			if (this.cardRng() < 0.25f) {

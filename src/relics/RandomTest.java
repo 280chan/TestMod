@@ -72,7 +72,7 @@ public class RandomTest extends AbstractTestRelic {
 	
 	private void updateHandGlow() {
 		boolean active = false;
-		if (!this.canUpdateHandGlow())
+		if (!this.inCombat())
 			return;
 		for (AbstractCard c : AbstractDungeon.player.hand.group) {
 			if (c.color == CardColor.COLORLESS && c.hasEnoughEnergy()

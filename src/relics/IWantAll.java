@@ -1,5 +1,6 @@
 package relics;
 
+import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
@@ -12,7 +13,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import potions.EscapePotion;
 
-public class IWantAll extends AbstractClickRelic {
+public class IWantAll extends AbstractTestRelic implements ClickableRelic {
 	public static final String ID = "IWantAll";
 	public static final int COUNT = 10;
 	
@@ -33,19 +34,14 @@ public class IWantAll extends AbstractClickRelic {
 	    initializeTips();
 	}
 	
-	private void toggleState(boolean victory) {
-		Lambda a = ((this.victory = victory) ? this::beginLongPulse : this::stopPulse);
-		a.run();
-	}
-	
 	public void onVictory() {
 		if (this.counter > 0)
-			this.toggleState(true);
+			this.togglePulse(this, victory = true);
     }
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (this.victory) {
-			this.toggleState(false);
+			this.togglePulse(this, victory = false);
 		}
     }
 	
@@ -69,16 +65,16 @@ public class IWantAll extends AbstractClickRelic {
 	}
 	
 	@Override
-	protected void onRightClick() {
+	public void onRightClick() {
 		if (this.victory) {
 			if (!checkReward()) {
-				this.toggleState(false);
+				this.togglePulse(this, victory = false);
 				return;
 			}
 			addReward();
 			this.counter--;
 			if (this.counter == 0) {
-				this.toggleState(false);
+				this.togglePulse(this, victory = false);
 				this.counter = -2;
 				this.description = this.DESCRIPTIONS[1];
 				this.tips.clear();
@@ -89,7 +85,7 @@ public class IWantAll extends AbstractClickRelic {
 	}
 	
 	public static void loadVictory() {
-		AbstractDungeon.player.relics.stream().filter(r -> r instanceof IWantAll).forEach(AbstractRelic::onVictory);
+		INSTANCE.relicStream().filter(r -> r instanceof IWantAll).forEach(AbstractRelic::onVictory);
 	}
 	
 	public boolean canSpawn() {

@@ -47,7 +47,7 @@ public class Muramasa extends AbstractTestRelic {
 	
 	private void updateHandGlow() {
 		boolean active = false;
-		if (!this.canUpdateHandGlow())
+		if (!this.inCombat())
 			return;
 		for (AbstractCard c : AbstractDungeon.player.hand.group) {
 			if (c.type == CardType.ATTACK && (c.costForTurn == 0 || c.freeToPlayOnce) && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {

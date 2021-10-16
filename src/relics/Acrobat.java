@@ -52,7 +52,7 @@ public class Acrobat extends AbstractTestRelic {
 	
 	private void updateHandGlow() {
 		boolean active = false;
-		if (!this.canUpdateHandGlow())
+		if (!this.inCombat())
 			return;
 		for (AbstractCard c : AbstractDungeon.player.hand.group) {
 			int index = 1 + AbstractDungeon.player.hand.group.indexOf(c);

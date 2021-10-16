@@ -14,8 +14,7 @@ public class PlateOfNlothSelectScreen extends RelicSelectScreen {
 
 	@Override
 	protected void addRelics() {
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			this.relics.add(r.makeCopy());
+		AbstractDungeon.player.relics.stream().map(r -> r.makeCopy()).forEach(this.relics::add);
 	}
 
 	private void sendIndexSelected(int index) {

@@ -48,7 +48,7 @@ public class TheFather extends AbstractTestRelic {
 	
 	public void update() {
 		super.update();
-		if (canUpdate && this.canUpdateHandGlow()) {
+		if (canUpdate && this.inCombat()) {
 			if (AbstractDungeon.getCurrRoom().monsters.monsters.size() > numberOfMonsters) {
 				tryAdd();
 				numberOfMonsters = AbstractDungeon.getMonsters().monsters.size();

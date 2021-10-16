@@ -1,4 +1,4 @@
-package relics;
+package utils;
 
 import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
 import com.evacipated.cardcrawl.modthespire.lib.Matcher;
@@ -13,13 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Stream;
 import javassist.CtBehavior;
+import org.apache.commons.lang3.NotImplementedException;
 import utils.MiscMethods.Lambda;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public interface BetterClickableRelic<T extends BetterClickableRelic<T>> {
-	static HashMap<BetterClickableRelic, ClickManager> MAP = new HashMap<BetterClickableRelic, ClickManager>();
+public interface AdvanceClickableRelic<T extends AdvanceClickableRelic<T>> {
+	static HashMap<AdvanceClickableRelic, ClickManager> MAP = new HashMap<AdvanceClickableRelic, ClickManager>();
 	
 	/**
 	 * @param duration	Duration to set
@@ -86,13 +85,13 @@ public interface BetterClickableRelic<T extends BetterClickableRelic<T>> {
 	 */
 	void onDurationEnd();
 	
-	class ClickManager<R extends BetterClickableRelic<R>> {
+	class ClickManager<R extends AdvanceClickableRelic<R>> {
 		private boolean RclickStart, Rclick, dCheck, reseted;
 		private long lastClick;
 		private int clickTimes, DURATION = 300;
 		private ArrayList<Lambda> actions, selections;
-		private BetterClickableRelic<R> r;
-		ClickManager(BetterClickableRelic<R> r) {
+		private AdvanceClickableRelic<R> r;
+		ClickManager(AdvanceClickableRelic<R> r) {
 			this.r = r;
 		}
 		private boolean checkSingleClick() {
@@ -173,7 +172,7 @@ public interface BetterClickableRelic<T extends BetterClickableRelic<T>> {
 		}
 	}
 	
-	static <R extends BetterClickableRelic<R>> ClickManager<R> manager(BetterClickableRelic<R> r) {
+	static <R extends AdvanceClickableRelic<R>> ClickManager<R> manager(AdvanceClickableRelic<R> r) {
 		if (!MAP.containsKey(r)) {
 			MAP.put(r, new ClickManager<R>(r));
 		}
@@ -193,8 +192,8 @@ public interface BetterClickableRelic<T extends BetterClickableRelic<T>> {
 	public static class ClickableRelicUpdatePatch {
 		@SpireInsertPatch(locator = Locator.class, localvars = { "r" })
 		public static void Insert(OverlayMenu __instance, AbstractRelic r) {
-			if (r instanceof BetterClickableRelic) {
-				manager((BetterClickableRelic) r).clickUpdate();
+			if (r instanceof AdvanceClickableRelic) {
+				manager((AdvanceClickableRelic) r).clickUpdate();
 			}
 		}
 

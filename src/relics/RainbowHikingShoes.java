@@ -45,7 +45,7 @@ public class RainbowHikingShoes extends AbstractTestRelic {
 	
 	private void updateHandGlow() {
 		boolean active = false;
-		if (!this.canUpdateHandGlow() || this.lastRarity == null)
+		if (!this.inCombat() || this.lastRarity == null)
 			return;
 		for (AbstractCard c : AbstractDungeon.player.hand.group) {
 			if (c.rarity != this.lastRarity && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {

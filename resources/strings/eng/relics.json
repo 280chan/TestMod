@@ -528,5 +528,11 @@
 		"NAME": "Resonance Stone",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you #yUpgrade a card in your deck, #yUpgrade all cards with same name in your deck which are #yUpgradable. Whenever a card is #Upgraded by this relic, gain #b1 #yGold and max health, each active increase future effect by #b1."]
+	},
+	
+	"testmod-GlassSoul":{
+		"NAME": "Glass Soul",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Whenever you get a relic, record it into list. Whenever you win a combat without losing hp, gain #b1 count. Outside combat you can right click this relic to choose a relic from list, use #b1 count or #b10% its price to get it again. Whenever you get a relic through this relic, same relic will increase cost by #b10%."]
 	}
 }

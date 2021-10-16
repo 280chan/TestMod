@@ -69,6 +69,8 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	private ArrayList<String> category = new ArrayList<String>();
 	private ArrayList<ArrayList<AbstractRelic>> sortedRelics = new ArrayList<ArrayList<AbstractRelic>>();
 	
+	protected boolean rejectSelection = false;
+	
 	/**
 	 * 被选中的遗物 The relics selected
 	 */
@@ -176,7 +178,8 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 		this(c, autoSort, amountToSelect, false);
 	}
 	
-	public RelicSelectScreen(Collection<? extends AbstractRelic> c, boolean autoSort, int amountToSelect, boolean anyNum) {
+	public RelicSelectScreen(Collection<? extends AbstractRelic> c, boolean autoSort, int amountToSelect,
+			boolean anyNum) {
 		this(c, false, null, null, null, autoSort, amountToSelect, anyNum);
 	}
 	
@@ -191,7 +194,8 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	 * @param amountToSelect 选择遗物数量
 	 * @param anyNum 是否可以在选择一个遗物之后跳过剩下未选次数
 	 */
-	public RelicSelectScreen(Collection<? extends AbstractRelic> c, boolean canSkip, String bDesc, String title, String desc, boolean autoSort, int amountToSelect, boolean anyNum) {
+	public RelicSelectScreen(Collection<? extends AbstractRelic> c, boolean canSkip, String bDesc, String title,
+			String desc, boolean autoSort, int amountToSelect, boolean anyNum) {
 		this.scrollBar = new ScrollBar(this);
 		this.button = new ConfirmButton("跳过");
 		this.button.isDisabled = !canSkip;
@@ -319,8 +323,11 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 						screen = null;
 					} else if (this.anyNum && this.button.isDisabled)
 						this.button.isDisabled = false;
-				} else
+				} else if (!rejectSelection) {
 					screen = null;
+				} else {
+					rejectSelection = false;
+				}
 			}
 		} else {
 			this.clickStartedRelic = null;

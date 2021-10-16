@@ -22,19 +22,13 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import actions.DaVinciLibraryAction;
 import basemod.BaseMod;
 import mymod.TestMod;
+import utils.GetRelicTrigger;
 import utils.MiscMethods;
 
-public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
+public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, GetRelicTrigger {
 	public static final String ID = "HeartOfDaVinci";
 	private static final ArrayList<AbstractRelic> ADDED = new ArrayList<AbstractRelic>();
 	private static DaVinciLibraryAction action;
-	private static int numRelics = 0;
-	public static boolean updated = false;
-	
-	public static void updateThis() {
-		if (AbstractDungeon.player.relics.stream().anyMatch(r -> r instanceof HeartOfDaVinci) && checkGetRelic())
-			getThis().onGetRelic(AbstractDungeon.player.relics.get(size()));
-	}
 	
 	public static HeartOfDaVinci getThis() {
 		return (HeartOfDaVinci) INSTANCE.relicStream().filter(r -> r instanceof HeartOfDaVinci).findFirst()
@@ -151,25 +145,6 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
 		}
 	}
 	
-	public void onGetRelic(AbstractRelic r) {
-		if (!updated)
-			return;
-		numRelics++;
-		String name = this.name + ": ";
-		TestMod.info(name + "获得遗物");
-		CardColor c = getColor(r);
-		if (c == null) {
-			TestMod.info(name + "非角色限定遗物");
-			return;
-		}
-		if (c != getColor(AbstractDungeon.player)) {
-			TestMod.info(name + "准备开始大图书馆");
-			action = new DaVinciLibraryAction(this.cards(c), AbstractDungeon.screen);
-		} else {
-			TestMod.info(name + "角色本身遗物");
-		}
-	}
-	
 	private ArrayList<AbstractCard> cards(CardColor color) {
 		ArrayList<AbstractCard> pool = CardLibrary.cards.entrySet().stream()
 				.filter(c -> Settings.treatEverythingAsUnlocked() || !UnlockTracker.isCardLocked(c.getKey()))
@@ -216,26 +191,12 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
 		return list.stream().map(r -> r.relicId).anyMatch(relic.relicId::equals);
 	}
 	
-	public static boolean checkGetRelic() {
-		return numRelics < AbstractDungeon.player.relics.size();
-	}
-	
-	public static int size() {
-		return numRelics;
-	}
-	
-	public static void init(int size) {
-		if (numRelics != size || !updated) {
-			numRelics = size;
-			map = BaseMod.getAllCustomRelics();
-			updated = true;
-		}
-	}
-	
 	public void onEquip() {
-		numRelics = AbstractDungeon.player.relics.size();
-		this.addAllCharacterRelics();
-		this.tryAddOrbSlot();
+		TestMod.setActivity(this);
+		if (this.isActive) {
+			this.addAllCharacterRelics();
+			this.tryAddOrbSlot();
+		}
     }
 	
 	public void onUnequip() {
@@ -244,6 +205,27 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods {
 	
 	public boolean canSpawn() {
 		return Settings.isEndless || AbstractDungeon.actNum < 2;
+	}
+
+	@Override
+	public void receiveRelicGet(AbstractRelic r) {
+		if (!this.isActive)
+			return;
+		if (map == null)
+			map = BaseMod.getAllCustomRelics();
+		String name = this.name + ": ";
+		TestMod.info(name + "获得遗物");
+		CardColor c = getColor(r);
+		if (c == null) {
+			TestMod.info(name + "非角色限定遗物");
+			return;
+		}
+		if (c != getColor(AbstractDungeon.player)) {
+			TestMod.info(name + "准备开始大图书馆");
+			action = new DaVinciLibraryAction(this.cards(c), AbstractDungeon.screen);
+		} else {
+			TestMod.info(name + "角色本身遗物");
+		}
 	}
 	
 }

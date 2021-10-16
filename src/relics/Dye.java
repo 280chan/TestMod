@@ -2,13 +2,14 @@ package relics;
 
 import java.util.stream.Stream;
 
+import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
-public class Dye extends AbstractClickRelic {
+public class Dye extends AbstractTestRelic implements ClickableRelic {
 	public static final String ID = "Dye";
 	private boolean used = false;
 	
@@ -49,7 +50,7 @@ public class Dye extends AbstractClickRelic {
 	}
 	
 	@Override
-	protected void onRightClick() {
+	public void onRightClick() {
 		AbstractPlayer p = AbstractDungeon.player;
 		if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT && !this.used
 				&& !(p.hand.isEmpty() || (p.drawPile.isEmpty() && p.discardPile.isEmpty()))) {

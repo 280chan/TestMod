@@ -33,7 +33,7 @@ public class ThousandKnives extends AbstractTestRelic {
 	public void onRefreshHand() {
 		if (color == null)
 			color = this.initGlowColor();
-		if (this.canUpdateHandGlow())
+		if (this.inCombat())
 			this.updateHandGlow();
 	}
 	
