@@ -1,28 +1,18 @@
-
 package cards.colorless;
 
 import cards.AbstractTestCard;
 import powers.TemporaryDeletionPower;
-
 import java.util.stream.Stream;
-
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.*;
-import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class TemporaryDeletion extends AbstractTestCard {
-    public static final String ID = "TemporaryDeletion";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int COST = 2;
 
     public TemporaryDeletion() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
+        super(TemporaryDeletion.class, 2, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
         this.isEthereal = true;
     }
 
@@ -49,7 +39,7 @@ public class TemporaryDeletion extends AbstractTestCard {
     }
 	
 	private void deleteCard(AbstractPlayer p, AbstractCard c) {
-		this.addToTop(new ApplyPowerAction(p, p, new TemporaryDeletionPower(p, 1, c), 1));
+		this.addToTop(apply(p, new TemporaryDeletionPower(p, 1, c)));
 		Stream.of(p.drawPile, p.hand, p.discardPile).forEach(g -> deleteCards(g, c.rarity));
 	}
 	

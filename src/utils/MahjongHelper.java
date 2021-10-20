@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.ArrayList;
+
 import cards.mahjong.AbstractMahjongCard;
 
 public interface MahjongHelper {
@@ -9,13 +11,22 @@ public interface MahjongHelper {
 	}
 	
 	static class Helper {
-		public static void sort(MahjongComparable[] cards) {
+		public static <T extends MahjongComparable> void sort(T[] cards) {
 			for (int i = 0; i < cards.length - 1; i++)
 				for (int j = 0; j < cards.length - 1 - i; j++)
 					if (cards[j].compareTo(cards[j + 1]) > 0) {
-						MahjongComparable temp = cards[j];
+						T temp = cards[j];
 						cards[j] = cards[j + 1];
 						cards[j + 1] = temp;
+					}
+		}
+		public static <T extends MahjongComparable> void sort(ArrayList<T> cards) {
+			for (int i = 0; i < cards.size() - 1; i++)
+				for (int j = 0; j < cards.size() - 1 - i; j++)
+					if (cards.get(j).compareTo(cards.get(j + 1)) > 0) {
+						T temp = cards.get(j);
+						cards.set(j, cards.get(j + 1));
+						cards.set(j + 1, temp);
 					}
 		}
 	}
@@ -48,5 +59,17 @@ public interface MahjongHelper {
 		
 	}
 	
+	
+	public static class ShantenCalculator {
+		public static int shanten(ArrayList<AbstractMahjongCard> hand) {
+			if (hand.size() > 0 && hand.size() < 15 && hand.size() % 3 != 0) {
+				Helper.sort(hand);
+				
+			}
+			
+			
+			return -2;
+		}
+	}
 	
 }

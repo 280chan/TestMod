@@ -8,23 +8,16 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDiscardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 
 public class Librarian extends AbstractTestCard {
-	public static final String ID = "Librarian";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-	public static final String UPGRADE_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
-	private static final int COST = -1;
 	private static final int BASE_MGC = 1;
 
 	public Librarian() {
-		super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
+		super(Librarian.class, -1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
 		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 		this.exhaust = true;
 	}
@@ -83,8 +76,7 @@ public class Librarian extends AbstractTestCard {
 	public void upgrade() {
 		if (!this.upgraded) {
 			this.upgradeName();
-			this.rawDescription = UPGRADE_DESCRIPTION;
-			this.initializeDescription();
+			this.upDesc();
 		}
 	}
 }

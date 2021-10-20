@@ -17,13 +17,13 @@ public class BloodShelter extends AbstractUpdatableCard {
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-    private static final int COST = 3;
+    public static final int COST = 3;
     private static final int BLOCK = -1;
-    private static final String DESCRIPTION = getDescription(BLOCK, false, false);
+    private static final String DESCRIPTION = getDescription(BLOCK, false);
 
-    private static String getDescription(int value, boolean onMonster, boolean hovered) {
+    private static String getDescription(int value, boolean show) {
 		String tmp = EXTENDED_DESCRIPTION[0];
-    	if (value > -1 && onMonster && hovered)
+    	if (value > -1 && show)
     		tmp += "(" + value + ")";
     	return tmp + EXTENDED_DESCRIPTION[1];
     }
@@ -71,7 +71,7 @@ public class BloodShelter extends AbstractUpdatableCard {
 	}
 	
 	public void applyPowers() {
-		this.changeDescription(getDescription(this.baseBlock, this.onMonster, this.isHovered()), false);
+		this.changeDescription(getDescription(this.baseBlock, this.onMonster && this.isHovered()), false);
     	super.applyPowers();
     }
 	

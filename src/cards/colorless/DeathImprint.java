@@ -4,27 +4,26 @@ package cards.colorless;
 import actions.DeathImprintAction;
 import cards.AbstractTestCard;
 import powers.DeathImprintPower;
+
+import java.util.function.Supplier;
+
 import com.badlogic.gdx.math.MathUtils;
-import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.dungeons.*;
-import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class DeathImprint extends AbstractTestCard {
-    public static final String ID = "DeathImprint";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int COST = 1;
     private static final int BASE_DMG = 8;
     private static final int BASE_MGC = 80;
     public boolean same = false;
+	@SuppressWarnings("unchecked")
+	private static final Supplier<Boolean> G = () -> AbstractDungeon.getMonsters().monsters.stream()
+			.anyMatch(INSTANCE.and(INSTANCE.not(AbstractMonster::isDeadOrEscaped), DeathImprintPower::hasThis));
 
     public DeathImprint() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(DeathImprint.class, 1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
@@ -33,11 +32,8 @@ public class DeathImprint extends AbstractTestCard {
     	this.addToBot(new DeathImprintAction(p, m, this.damage, this.damageTypeForTurn));
     }
     
-	@SuppressWarnings("unchecked")
 	public void triggerOnGlowCheck() {
-		this.glowColor = (AbstractDungeon.getMonsters().monsters.stream()
-				.anyMatch(and(not(AbstractMonster::isDeadOrEscaped), DeathImprintPower::hasThis)))
-						? AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy() : AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
+		this.glowColor = G.get() ? GOLD_BORDER_GLOW_COLOR.cpy() : BLUE_BORDER_GLOW_COLOR.cpy();
 	}
     
 	private int fakeCardDamage(AbstractMonster m) {

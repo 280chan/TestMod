@@ -169,7 +169,7 @@
 	},
 	"testmod-LifeRuler": {
 		"NAME": "Life Ruler",
-		"DESCRIPTION": "",
+		"DESCRIPTION": "Apply the maximum of the greatest common divisor of enemy's max-HP or HP Constricted. Exhaust.",
 		"EXTENDED_DESCRIPTION": [
 			"Apply the maximum of the greatest common divisor of enemy's max-HP or HP",
 			" Constricted.",
@@ -209,16 +209,12 @@
 	},
 	"testmod-PocketStoneCalender": {
 		"NAME": "Pocket Stone Calender",
-		"DESCRIPTION": "",
-		"EXTENDED_DESCRIPTION": [
-			"Deal damage of square of turn number",
-			"( !D! )",
-			". Increase this cards cost by !M! this combat. Whenever you draw this card, reduce its cost by 1 this combat."
-		]
+		"DESCRIPTION": "Deal damage of square of turn number. Increase this cards cost by !M! this combat. Whenever you draw this card, reduce its cost by 1 this combat.",
+		"UPGRADE_DESCRIPTION": "Deal damage of square of turn number( !D! ). Increase this cards cost by !M! this combat. Whenever you draw this card, reduce its cost by 1 this combat."
 	},
 	"testmod-PowerStrike": {
 		"NAME": "Power Strike",
-		"DESCRIPTION": "",
+		"DESCRIPTION": "Ethereal. Reduce all enemies' HP to its logarithm, the base number is 1.5. Apply the number of enemies Intangible to all enemies. Can be Upgraded any number of time. Exhaust.",
 		"EXTENDED_DESCRIPTION": [
 			"Ethereal. Reduce all enemies' HP to its logarithm, the base number is ",
 			". Apply the number of enemies Intangible to all enemies. Can be Upgraded any number of time. Exhaust."
@@ -274,12 +270,8 @@
 	},
 	"testmod-SubstituteBySubterfuge": {
 		"NAME": "Substitute by Subterfuge",
-		"DESCRIPTION": "",
-		"EXTENDED_DESCRIPTION": [
-			"Gain",
-			". Choose any cards from draw pile and discard them, at the same time, shuffle discard pile into draw pile.",
-			" Exhaust."
-		]
+		"DESCRIPTION": "Gain [E] . Choose any cards from draw pile and discard them, at the same time, shuffle discard pile into draw pile. Exhaust.",
+		"UPGRADE_DESCRIPTION": "Gain [E] . Choose any cards from draw pile and discard them, at the same time, shuffle discard pile into draw pile."
 	},
 	"testmod-SunMoon": {
 		"NAME": "Sun Moon",

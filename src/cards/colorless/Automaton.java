@@ -6,15 +6,9 @@ import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
 
 public class Automaton extends AbstractTestCard {
-    public static final String ID = "Automaton";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int COST = 1;
     private static final int ATTACK_DMG = 8;
     private static final int BASE_MGC = 1;
     private static final int DELTA_MGC = 1;
@@ -34,7 +28,7 @@ public class Automaton extends AbstractTestCard {
     }
     
     public Automaton() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
+        super(Automaton.class, 1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
         this.baseDamage = ATTACK_DMG;
         this.misc = this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }

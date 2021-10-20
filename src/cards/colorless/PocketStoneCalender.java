@@ -5,23 +5,16 @@ import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
 import com.megacrit.cardcrawl.monsters.*;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.*;
 
 public class PocketStoneCalender extends AbstractTestCard {
-    public static final String ID = "PocketStoneCalender";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-    private static final String DESCRIPTION = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[2];
-    private static final int COST = 0;
-    private static final int ATTACK_DMG = 0;
+    private static final int BASE_DMG = 0;
     private static final int BASE_MGC = 2;
 
     public PocketStoneCalender() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
-        this.baseDamage = ATTACK_DMG;
+        super(PocketStoneCalender.class, 0, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        this.baseDamage = BASE_DMG;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
@@ -30,29 +23,30 @@ public class PocketStoneCalender extends AbstractTestCard {
     	this.costForTurn = this.cost;
     }
     
-    public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_DIAGONAL));
-    	this.addTmpActionToBot(() -> GetAllInBattleInstances.get(this.uuid).forEach(this::modifyCostForCombat));
-    }
+	public void use(final AbstractPlayer p, final AbstractMonster m) {
+		this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn),
+				AbstractGameAction.AttackEffect.SLASH_DIAGONAL));
+		this.addTmpActionToBot(() -> GetAllInBattleInstances.get(this.uuid).forEach(this::modifyCostForCombat));
+	}
     
     public void modifyCostForCombat(AbstractCard c) {
     	c.modifyCostForCombat(this.magicNumber);
     }
     
-    public void calculateCardDamage(AbstractMonster m) {
-    	int turn = GameActionManager.turn;
+    private void putDamage(int turn) {
     	this.baseDamage = turn * turn;
+    }
+    
+    public void calculateCardDamage(AbstractMonster m) {
+    	this.putDamage(GameActionManager.turn);
     	super.calculateCardDamage(m);
-    	this.rawDescription = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1] + EXTENDED_DESCRIPTION[2];
-    	this.initializeDescription();
+    	this.upDesc();
     }
 
     public void applyPowers() {
-    	int turn = GameActionManager.turn;
-    	this.baseDamage = turn * turn;
+    	this.putDamage(GameActionManager.turn);
     	super.applyPowers();
-    	this.rawDescription = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1] + EXTENDED_DESCRIPTION[2];
-    	this.initializeDescription();
+    	this.upDesc();
     }
 
     public void upgrade() {

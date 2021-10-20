@@ -58,7 +58,6 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 		} else {
 			AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2,
 					this.selectedRelic);
-			this.selectedRelic.onEquip();
 		}
 	}
 
@@ -78,9 +77,6 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 
 	@Override
 	protected String descriptionOfCategory(String category) {
-		if ("10".equals(category)) {
-			return "费用过低的遗物，需要10金币兑换";
-		}
-		return category + "金币可兑换的遗物";
+		return "10".equals(category) ? "费用过低的遗物，需要10金币兑换" : (category + "金币可兑换的遗物");
 	}
 }

@@ -26,18 +26,6 @@ public abstract class AbstractMahjongCard extends AbstractTestCard implements Mi
 	private static final String[] COLOR_NAME = getNames(0);
 	private static final String[] NUM_NAME = getNames(1);
 	private static final String[] ZI_NAME = getNames(2);
-	private static final AbstractMahjongCard INSTANCE = new AbstractMahjongCard(0, 0, "", CardType.STATUS, CardTarget.NONE) {
-		@Override
-		public void upgrade() {
-		}
-		@Override
-		public void use(AbstractPlayer p, AbstractMonster m) {
-		}
-		@Override
-		public int compareTo(MahjongComparable c) {
-			return 0;
-		}
-	};
 	public static final int COLOR_W = 0, COLOR_P = 1, COLOR_S = 2, COLOR_Z = 3;
 	private static Random rng;
 	private int color;

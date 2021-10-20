@@ -10,19 +10,13 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
-import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class HandmadeProducts extends AbstractTestCard {
-    public static final String ID = "HandmadeProducts";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int COST = 0;
     private static final int BASE_DMG = 0;
     private static final int BASE_MGC = 1;
 
     public HandmadeProducts() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(HandmadeProducts.class, 0, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
@@ -61,10 +55,9 @@ public class HandmadeProducts extends AbstractTestCard {
 	}
 	
 	public int product() {
-		return AbstractDungeon.player.hand.group.stream().filter(c -> c.cost > -1).map(c -> c.costForTurn + 1).reduce(1,
-				(a, b) -> a * b)
-				* AbstractDungeon.player.hand.group.stream().filter(c -> c.cost == -1)
-						.map(c -> EnergyPanel.totalCount + 1).reduce(1, (a, b) -> a * b);
+		return AbstractDungeon.player.hand.group.stream().filter(c -> c.cost > -2)
+				.map(c -> c.cost == -1 ? EnergyPanel.totalCount : c.costForTurn).map(a -> a + 1)
+				.reduce(1, (a, b) -> a * b);
 	}
     
     public boolean canUpgrade() {
@@ -72,7 +65,8 @@ public class HandmadeProducts extends AbstractTestCard {
     }
     
     public void upgrade() {
-    	this.name = NAME + "+" + ++this.timesUpgraded;
+    	this.upgraded = true;
+    	this.name = this.name() + "+" + ++this.timesUpgraded;
         this.upgradeBaseCost(1);
     	this.initializeTitle();
     }

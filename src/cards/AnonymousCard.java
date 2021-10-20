@@ -5,16 +5,12 @@ import java.util.HashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
 import org.apache.logging.log4j.util.TriConsumer;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class AnonymousCard extends AbstractTestCard {
-	private static final HashMap<String, CardStrings> CS = new HashMap<String, CardStrings>();
 	private TriConsumer<AnonymousCard, AbstractPlayer, AbstractMonster> use;
 	private Consumer<AnonymousCard> upgrade, init;
 	private String mcid;
@@ -23,7 +19,8 @@ public class AnonymousCard extends AbstractTestCard {
 	private CardType mctype;
 	private CardRarity mcrarity;
 	private CardTarget mctarget;
-	private HashMap<String, Function<ArrayList<Object>, Object>> override = new HashMap<String, Function<ArrayList<Object>, Object>>();
+	private HashMap<String, Function<ArrayList<Object>, Object>> override =
+			new HashMap<String, Function<ArrayList<Object>, Object>>();
 	private HashMap<String, Boolean> lock = new HashMap<String, Boolean>();
 	public boolean absoluteSkip = false;
 	private Predicate<AnonymousCard> glow;
@@ -47,30 +44,7 @@ public class AnonymousCard extends AbstractTestCard {
 		this.glowColor = glow != null && glow.test(this) ? GOLD_BORDER_GLOW_COLOR.cpy() : BLUE_BORDER_GLOW_COLOR.cpy();
 	}
 	
-	private static CardStrings getStrings(String id) {
-		if (!CS.containsKey(id))
-			CS.put(id, Strings(id));
-		return CS.get(id);
-	}
-	
-	protected static String name(String id) {
-		return getStrings(id).NAME;
-	}
-	
-	protected static String desc(String id) {
-		String tmp = getStrings(id).DESCRIPTION;
-		return tmp == null ? "" : tmp;
-	}
-	
-	protected static String desc1(String id) {
-		return getStrings(id).UPGRADE_DESCRIPTION;
-	}
-	
-	protected static String[] extendDesc(String id) {
-		return getStrings(id).EXTENDED_DESCRIPTION;
-	}
-	
-	public String[] exDesc() {
+	public String[] exD() {
 		return extendDesc(this.mcid);
 	}
 	

@@ -1,16 +1,13 @@
-
 package cards.colorless;
 
 import cards.AbstractTestCard;
 import java.util.ArrayList;
-
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
@@ -20,16 +17,10 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
 
 public class TreasureHunter extends AbstractTestCard {
-	public static final String ID = "TreasureHunter";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final String UPGRADED_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
-	private static final int COST = 2;
 	private static final int BASE_DMG = 15;
 
 	public TreasureHunter() {
-		super(ID, NAME, COST, DESCRIPTION, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
+		super(TreasureHunter.class, 2, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
 		this.baseDamage = BASE_DMG;
 		this.exhaust = true;
 	}
@@ -77,8 +68,7 @@ public class TreasureHunter extends AbstractTestCard {
 		if (!this.upgraded) {
 			this.upgradeName();
 			this.upgradeDamage(5);
-			this.rawDescription = UPGRADED_DESCRIPTION;
-			initializeDescription();
+			this.upDesc();
 		}
 	}
 }

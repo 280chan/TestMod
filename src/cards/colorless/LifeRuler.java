@@ -1,25 +1,16 @@
-
 package cards.colorless;
 
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.ConstrictedPower;
 import com.megacrit.cardcrawl.dungeons.*;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
-
 import cards.AbstractTestCard;
 
 public class LifeRuler extends AbstractTestCard {
-	public static final String ID = "LifeRuler";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-	private static final int COST = 1;
-	private static final String DESCRIPTION = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1] + EXTENDED_DESCRIPTION[2];
 	
 	public LifeRuler() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(LifeRuler.class, 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.exhaust = true;
     }
 
@@ -43,23 +34,22 @@ public class LifeRuler extends AbstractTestCard {
     }
     
     private String getDesc() {
-		String tmp = EXTENDED_DESCRIPTION[0];
+		String tmp = this.exDesc()[0];
     	if (this.misc > 0) {
     		tmp += "(" + this.misc + ")";
     	}
-    	tmp += EXTENDED_DESCRIPTION[1];
+    	tmp += this.exDesc()[1];
     	if (!this.upgraded) {
-    		tmp += EXTENDED_DESCRIPTION[2];
+    		tmp += this.exDesc()[2];
     	}
     	return tmp;
 	}
     
     public void resetAttributes() {
-    	this.rawDescription = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1];
-    	if (!this.upgraded) {
-    		this.rawDescription += EXTENDED_DESCRIPTION[2];
-    	}
-		this.initializeDescription();
+    	if (!this.upgraded)
+    		this.upDesc(this.exDesc()[0] + this.exDesc()[1] + this.exDesc()[2]);
+    	else
+    		this.upDesc(this.exDesc()[0] + this.exDesc()[1]);
 		super.resetAttributes();
     }
     
@@ -67,8 +57,7 @@ public class LifeRuler extends AbstractTestCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.exhaust = false;
-            this.rawDescription = EXTENDED_DESCRIPTION[0] + EXTENDED_DESCRIPTION[1];
-    		this.initializeDescription();
+            this.upDesc(this.exDesc()[0] + this.exDesc()[1]);
         }
     }
 

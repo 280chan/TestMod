@@ -408,7 +408,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				}, c -> c.upDesc()));
 		add(new AnonymousCard("BackupPower", 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.NONE, 0, 0, 2,
 				(c, p, m) -> att(new GainEnergyAction(c.magicNumber)), c -> c.upMGC(1),
-				c -> c.upDesc(c.exDesc()[0] + INSTANCE.energyString(c.magicNumber) + c.exDesc()[1])) {
+				c -> c.upDesc(c.exD()[0] + INSTANCE.energyString(c.magicNumber) + c.exD()[1])) {
 		}.override("upgradeMagicNumber", l -> {
 			AnonymousCard c = (AnonymousCard) l.get(0);
 			int n = (int) l.get(1);
@@ -507,7 +507,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				0, 0, 1, (a, p, m) -> {
 					addTmpActionToTop(() -> p.drawPile.group.stream().filter(c -> !c.isEthereal).forEach(c -> {
 						c.isEthereal = true;
-						c.name += a.exDesc()[0];
+						c.name += a.exD()[0];
 					}));
 					addTmpActionToTop(() -> {
 						int e = (int) p.drawPile.group.stream().filter(c -> c.isEthereal).count();
@@ -543,8 +543,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 						att(apply(p, new PulseDistributorPower(p, c.magicNumber)));
 					}
 				}, c -> c.upMGC(-1),
-				c -> c.upDesc(c.exDesc()[0] + (c.magicNumber == 0 ? "" : ((c.magicNumber > 0 ? "+" : "")
-						+ c.magicNumber)) + c.exDesc()[1]))
+				c -> c.upDesc(c.exD()[0] + (c.magicNumber == 0 ? "" : ((c.magicNumber > 0 ? "+" : "")
+						+ c.magicNumber)) + c.exD()[1]))
 				.override("upgradeMagicNumber", l -> {
 					AnonymousCard c = (AnonymousCard) l.get(0);
 					int n = (int) l.get(1);
