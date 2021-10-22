@@ -3,26 +3,21 @@ package relics;
 import java.util.Collections;
 import java.util.Random;
 import java.util.stream.Stream;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
-
 import mymod.TestMod;
 import utils.AdvanceClickableRelic;
 import utils.TestBoxRelicSelectScreen;
 
 public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<TestBox> {
-	public static final String ID = "TestBox";
 	
 	public boolean relicSelected = true;
 	private boolean cardSelected = true;
@@ -43,7 +38,7 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 	}
 	
 	public TestBox() {
-		super(ID, RelicTier.SPECIAL, LandingSound.MAGICAL);
+		super(RelicTier.SPECIAL, LandingSound.MAGICAL);
 		this.setDuration(300).addRightClickActions(null, () -> {
 			if (this.checkFoolsDay()) {
 				this.relic();
@@ -51,16 +46,6 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 				this.card();
 			}
 		});
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
 	}
 
 	public void onEquip() {

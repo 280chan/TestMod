@@ -1,7 +1,7 @@
 package cards;
 
 import java.util.HashMap;
-
+import java.util.stream.Stream;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import basemod.ReflectionHacks;
@@ -45,11 +45,10 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 		this(shortID, Strings(shortID).NAME, COST, Strings(shortID).DESCRIPTION, type, rarity, target);
 	}
 	
-	public <T extends AbstractTestCard> AbstractTestCard(Class<T> c, int cost, CardType type, CardRarity rarity,
-			CardTarget target) {
-		this(shortID(c), cost, type, rarity, target);
+	public AbstractTestCard(int cost, CardType type, CardRarity rarity, CardTarget target) {
+		this(shortID(getCardClass()), cost, type, rarity, target);
 	}
-	
+
 	protected static CardStrings Strings(String ID) {
 		if (!CS.containsKey(ID))
 			CS.put(ID, CardCrawlGame.languagePack.getCardStrings(TestMod.makeID(ID)));
@@ -99,6 +98,8 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 		return name(shortID());
 	}
 	
+	public static boolean print = true;
+	
 	protected String shortID() {
 		return shortID(this.getClass());
 	}
@@ -110,9 +111,20 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 		}
 		return IDS.get(c);
 	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T extends AbstractTestCard> Class<T> getCardClass() {
+		try {
+			return (Class<T>) Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
+					.filter(s -> !"cards.AbstractTestCard".equals(s)).findFirst().get());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	private static final HashMap<String, CardStrings> CS = new HashMap<String, CardStrings>();
-	public static final HashMap<Class<? extends AbstractTestCard>, String> IDS = 
+	private static final HashMap<Class<? extends AbstractTestCard>, String> IDS = 
 			new HashMap<Class<? extends AbstractTestCard>, String>();
-
+	
 }

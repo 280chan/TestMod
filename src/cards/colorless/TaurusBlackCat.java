@@ -9,7 +9,7 @@ public class TaurusBlackCat extends AbstractTestCard {
     private static final int BASE_MGC = 80;
 
     public TaurusBlackCat() {
-        super(TaurusBlackCat.class, 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
+        super(3, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
     

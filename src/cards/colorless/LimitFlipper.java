@@ -14,7 +14,7 @@ public class LimitFlipper extends AbstractTestCard {
     private boolean active = false;
 
     public LimitFlipper() {
-        super(LimitFlipper.class, 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.SELF);
+        super(1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.SELF);
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 

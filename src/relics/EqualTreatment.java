@@ -4,28 +4,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class EqualTreatment extends AbstractTestRelic {
-	public static final String ID = "EqualTreatment";
-	
 	private static Color color = null;
 	
 	public EqualTreatment() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public void atTurnStart() {

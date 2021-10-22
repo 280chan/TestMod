@@ -9,7 +9,7 @@ public class Reproduce extends AbstractTestCard {
     private static final int BASE_MGC = 1;
 
     public Reproduce() {
-        super(Reproduce.class, 1, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
+        super(1, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
         this.isInnate = true;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }

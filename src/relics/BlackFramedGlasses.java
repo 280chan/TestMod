@@ -13,10 +13,6 @@ public class BlackFramedGlasses extends AbstractRevivalRelicToModifyDamage {
 		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-	
 	public void atTurnStart() {
 		show();
 		AbstractDungeon.player.heal(1);

@@ -8,14 +8,9 @@ import com.megacrit.cardcrawl.powers.ThornsPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 public class BouquetWithThorns extends AbstractTestRelic {
-	public static final String ID = "BouquetWithThorns";
 	
 	public BouquetWithThorns() {
-		super(ID, RelicTier.RARE, LandingSound.CLINK);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.RARE, LandingSound.CLINK);
 	}
 	
 	private void increaseThorns(int amount) {

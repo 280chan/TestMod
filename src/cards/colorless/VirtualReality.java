@@ -8,7 +8,6 @@ import cards.AbstractTestCard;
 
 public class VirtualReality extends AbstractTestCard {
     private static final int BASE_BLK = 40;
-
     private static int blockGainLastTurn = 0, blockGainThisTurn = 0;
     
     public static void reset() {
@@ -25,7 +24,7 @@ public class VirtualReality extends AbstractTestCard {
     }
     
     public VirtualReality() {
-        super(VirtualReality.class, 0, CardType.SKILL, CardRarity.RARE, CardTarget.SELF);
+        super(0, CardType.SKILL, CardRarity.RARE, CardTarget.SELF);
         this.baseBlock = BASE_BLK;
     }
 

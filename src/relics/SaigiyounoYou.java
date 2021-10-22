@@ -5,14 +5,9 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class SaigiyounoYou extends AbstractTestRelic {
-	public static final String ID = "SaigiyounoYou";
 	
 	public SaigiyounoYou() {
-		super(ID, RelicTier.BOSS, LandingSound.CLINK);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.BOSS, LandingSound.CLINK);
 	}
 	
 	public void onAttack(final DamageInfo info, final int damage, final AbstractCreature target) {

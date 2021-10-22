@@ -28,7 +28,7 @@ public class Automaton extends AbstractTestCard {
     }
     
     public Automaton() {
-        super(Automaton.class, 1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
+        super(1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
         this.baseDamage = ATTACK_DMG;
         this.misc = this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }

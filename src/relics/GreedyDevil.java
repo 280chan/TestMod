@@ -2,32 +2,18 @@ package relics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import powers.AbstractTestPower;
 
 public class GreedyDevil extends AbstractTestRelic {
-	public static final String ID = "GreedyDevil";
 	private final HashMap<DamageInfo, AbstractCreature> MAP = new HashMap<DamageInfo, AbstractCreature>();
 	private final ArrayList<AbstractPower> TO_REMOVE = new ArrayList<AbstractPower>();
 	
 	public GreedyDevil() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public void onAttack(final DamageInfo info, final int damageAmount, final AbstractCreature target) {

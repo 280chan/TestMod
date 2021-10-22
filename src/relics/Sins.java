@@ -33,7 +33,8 @@ import utils.MiscMethods;
 public class Sins extends AbstractTestRelic implements MiscMethods {
 	public static final String ID = "SevenDeadlySins";
 	
-	public static final AbstractCard[] SINS = {new Pride(), new Lust(), new Wrath(), new Sloth(), new Envy(), new Greed(), new Gluttony()};
+	public static final AbstractCard[] SINS = { new Pride(), new Lust(), new Wrath(), new Sloth(), new Envy(),
+			new Greed(), new Gluttony() };
 	public static final AbstractRelic[] RELICS = {new DuVuDoll(), new DarkstonePeriapt(), new BlueCandle()};
 	
 	public static final String SAVE_NAME = "preMaxHP";
@@ -60,8 +61,7 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
     }
     
 	public Sins() {
-		super(ID, RelicTier.SPECIAL, LandingSound.HEAVY);
-		this.setTestTier(BAD);
+		super(RelicTier.SPECIAL, LandingSound.HEAVY, BAD);
 	}
 	
 	public String getUpdatedDescription() {

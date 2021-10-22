@@ -6,23 +6,14 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
 public class HeartOfStrike extends AbstractTestRelic {
-	public static final String ID = "HeartOfStrike";
 	
 	public HeartOfStrike() {
-		super(ID, RelicTier.RARE, LandingSound.HEAVY);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	private String updateDesc() {
-		return DESCRIPTIONS[0] + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2];
+		super(RelicTier.RARE, LandingSound.HEAVY);
 	}
 	
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.updateDesc()));
+	    this.tips.add(new PowerTip(this.name, DESCRIPTIONS[0] + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2]));
 	    initializeTips();
 	}
 	

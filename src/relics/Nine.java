@@ -5,15 +5,11 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class Nine extends AbstractRevivalRelicToModifyDamage {
-	public static final String ID = "Nine";
+	public static String ID = "Nine";
 	
 	public Nine() {
 		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
 		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
 	}
 	
 	public int onAttacked(final DamageInfo info, final int damage) {

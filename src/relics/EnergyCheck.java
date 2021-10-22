@@ -11,9 +11,6 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import mymod.TestMod;
 
 public class EnergyCheck extends AbstractTestRelic {
-	
-	public static final String ID = "EnergyCheck";
-	
 	private static int preUsedEnergy = 0;
 	private static int maxEnergy;
 	private static boolean isDone = true;
@@ -29,11 +26,7 @@ public class EnergyCheck extends AbstractTestRelic {
 	}
 	
 	public EnergyCheck() {
-		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	private void gainEnergyFor(AbstractCard card) {

@@ -11,17 +11,14 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
-
 import basemod.ReflectionHacks;
 import mymod.TestMod;
-import relics.StringDisintegrator;
-import relics.TestBox;
 
 @SuppressWarnings("rawtypes")
 public class StringDisintegratorPatch {
 
 	private static boolean check() {
-		String id = TestMod.isLocalTest() ? TestMod.makeID(TestBox.ID) : TestMod.makeID(StringDisintegrator.ID);
+		String id = TestMod.isLocalTest() ? TestMod.makeID("TestBox") : TestMod.makeID("StringDisintegrator");
 		return AbstractDungeon.floorNum > 0 && AbstractDungeon.currMapNode != null
 				&& AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT && AbstractDungeon.player.hasRelic(id);
 	}

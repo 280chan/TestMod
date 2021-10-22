@@ -9,24 +9,18 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import mymod.TestMod;
 
 public class MagicalMallet extends AbstractTestRelic implements ClickableRelic {
-	public static final String ID = "MagicalMallet";
 	private boolean playerTurn = false, used = false;
 	
 	public MagicalMallet() {
-		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
-		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.BOSS, LandingSound.MAGICAL, BAD);
 	}
 	
 	public void onEquip() {
-		AbstractDungeon.player.energy.energyMaster++;
+		this.addEnergy();
     }
 	
 	public void onUnequip() {
-		AbstractDungeon.player.energy.energyMaster--;
+		this.reduceEnergy();
     }
 	
 	public void atPreBattle() {

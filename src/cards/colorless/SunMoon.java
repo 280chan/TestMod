@@ -9,7 +9,7 @@ import cards.AbstractTestCard;
 public class SunMoon extends AbstractTestCard {
 
 	public SunMoon() {
-		super(SunMoon.class, 2, CardType.ATTACK, CardRarity.RARE, CardTarget.ALL_ENEMY);
+		super(2, CardType.ATTACK, CardRarity.RARE, CardTarget.ALL_ENEMY);
 	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {

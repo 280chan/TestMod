@@ -13,7 +13,7 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 	public static final String POWER_ID = "ArcanaOfDestinyPower";
 	
 	public static boolean hasThis(AbstractCreature m) {
-		return m.powers.stream().anyMatch(p -> {return p instanceof ArcanaOfDestinyPower;});
+		return m.powers.stream().anyMatch(p -> p instanceof ArcanaOfDestinyPower);
 	}
 	
 	public static void addThis(AbstractCreature m) {

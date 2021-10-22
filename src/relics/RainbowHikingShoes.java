@@ -5,9 +5,7 @@ import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 
 public class RainbowHikingShoes extends AbstractTestRelic {
 	public static final String ID = "RainbowHikingShoes";
@@ -15,17 +13,7 @@ public class RainbowHikingShoes extends AbstractTestRelic {
 	private static Color color = null;
 	
 	public RainbowHikingShoes() {
-		super(ID, RelicTier.RARE, LandingSound.CLINK);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.RARE, LandingSound.CLINK);
 	}
 	
 	public void onUseCard(AbstractCard c, UseCardAction action) {
@@ -47,8 +35,9 @@ public class RainbowHikingShoes extends AbstractTestRelic {
 		boolean active = false;
 		if (!this.inCombat() || this.lastRarity == null)
 			return;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
-			if (c.rarity != this.lastRarity && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
+		for (AbstractCard c : p().hand.group) {
+			if (c.rarity != this.lastRarity && c.hasEnoughEnergy()
+					&& c.cardPlayable(AbstractDungeon.getRandomMonster())) {
 				this.addToGlowChangerList(c, color);
 				active = true;
 			} else

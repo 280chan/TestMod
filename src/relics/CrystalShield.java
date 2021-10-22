@@ -7,14 +7,9 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.BlurPower;
 
 public class CrystalShield extends AbstractTestRelic {
-	public static final String ID = "CrystalShield";
 	
 	public CrystalShield() {
-		super(ID, RelicTier.RARE, LandingSound.CLINK);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.RARE, LandingSound.CLINK);
 	}
 
 	public void atTurnStart() {

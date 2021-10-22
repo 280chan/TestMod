@@ -6,28 +6,15 @@ import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class ThousandKnives extends AbstractTestRelic {
-	public static final String ID = "ThousandKnives";
 	
 	private static Color color = null;
 	
 	public ThousandKnives() {
-		super(ID, RelicTier.RARE, LandingSound.SOLID);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.RARE, LandingSound.SOLID);
 	}
 	
 	public void onRefreshHand() {

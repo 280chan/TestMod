@@ -1,7 +1,6 @@
 package relics;
 
 import java.lang.reflect.InvocationTargetException;
-
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -15,7 +14,6 @@ import com.megacrit.cardcrawl.dungeons.TheBeyond;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.dungeons.TheEnding;
 import com.megacrit.cardcrawl.helpers.ModHelper;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.beyond.AwakenedOne;
 import com.megacrit.cardcrawl.monsters.beyond.Darkling;
@@ -31,12 +29,10 @@ import com.megacrit.cardcrawl.saveAndContinue.SaveFile;
 import com.megacrit.cardcrawl.saveAndContinue.SaveFile.SaveType;
 import com.megacrit.cardcrawl.vfx.GameSavedEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
-
 import actions.HopeAction;
 import mymod.TestMod;
 
 public class Hope extends AbstractTestRelic {
-	public static final String ID = "Hope";
 
 	public static Random HPRng = new Random();
 	public static Random cardRng = new Random();
@@ -49,7 +45,7 @@ public class Hope extends AbstractTestRelic {
 	private boolean disabledUntilEndOfTurn;
 	
 	public Hope() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 		this.counter = 0;
 	}
 	
@@ -60,12 +56,6 @@ public class Hope extends AbstractTestRelic {
 			return DESCRIPTIONS[2];
 		float rateHP = (RATE + this.counter * DELTA) / 1000f;
 		return DESCRIPTIONS[0] + rateHP + DESCRIPTIONS[1];
-	}
-	
-	public void updateDescription(AbstractPlayer.PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, getUpdatedDescription()));
-	    initializeTips();
 	}
 	
 	public int onAttacked(final DamageInfo info, final int damage) {

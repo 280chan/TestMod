@@ -29,7 +29,6 @@ import powers.DefenceDownPower;
 import powers.EventHalfDamagePower;
 
 public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRelic {
-	public static final String ID = "AscensionHeart";
 	public static final String SAVE_NAME = "AHRevived";
 	private static boolean revived = false;
 	private static boolean looping = false;
@@ -49,7 +48,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	}
 	
 	public AscensionHeart() {
-		super(ID, RelicTier.SPECIAL, LandingSound.HEAVY);
+		super(RelicTier.SPECIAL, LandingSound.HEAVY);
 		if (DESCRIPTIONS.length == 28)
 			desc27 = DESCRIPTIONS[27];
 	}

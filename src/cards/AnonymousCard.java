@@ -88,8 +88,8 @@ public class AnonymousCard extends AbstractTestCard {
 	}
 	
 	public AbstractCard makeCopy() {
-		AnonymousCard t = new AnonymousCard(mcid, mccost, mctype, mcrarity, mctarget, mcexhaust, mcethereal, mcinnate, mcdmg,
-				mcblk, mcmgc, use, upgrade, init);
+		AnonymousCard t = new AnonymousCard(mcid, mccost, mctype, mcrarity, mctarget, mcexhaust, mcethereal, mcinnate,
+				mcdmg, mcblk, mcmgc, use, upgrade, init);
 		t.override = this.override;
 		t.lock = this.lock;
 		t.glow = this.glow;

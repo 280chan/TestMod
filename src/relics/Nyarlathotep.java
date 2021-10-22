@@ -61,7 +61,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	public Nyarlathotep() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public static boolean hasThis() {
@@ -70,10 +70,6 @@ public class Nyarlathotep extends AbstractTestRelic {
 	
 	private static boolean isThis(AbstractRelic r) {
 		return r instanceof Nyarlathotep;
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
 	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {

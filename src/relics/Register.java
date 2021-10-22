@@ -1,7 +1,6 @@
 package relics;
 
 import java.util.ArrayList;
-
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
@@ -11,13 +10,10 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.CombustPower;
 import com.megacrit.cardcrawl.powers.EchoPower;
 import com.megacrit.cardcrawl.powers.PanachePower;
-
 import mymod.TestMod;
 import powers.RecapPower;
 
-
 public class Register extends AbstractTestRelic{
-	public static final String ID = "Register";
 	
 	private static final ArrayList<AbstractPower> POWERS = new ArrayList<AbstractPower>();
 	
@@ -26,17 +22,12 @@ public class Register extends AbstractTestRelic{
 	}
 	
 	public Register() {
-		super(ID, RelicTier.SHOP, LandingSound.CLINK);
-		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.SHOP, LandingSound.CLINK, BAD);
 	}
 	
 	private void updateInfo() {
 		clear();
-		addPowers(AbstractDungeon.player.powers);
+		addPowers(p().powers);
 	}
 	
 	private void addPowers(ArrayList<AbstractPower> powers) {

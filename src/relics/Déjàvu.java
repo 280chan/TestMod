@@ -1,34 +1,19 @@
 package relics;
 
 import java.util.ArrayList;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-
 import actions.DéjàvuAction;
 
 public class Déjàvu extends AbstractTestRelic {
-	public static final String ID = "Déjàvu";
 	
 	private ArrayList<AbstractCard> list = new ArrayList<AbstractCard>();
 	private boolean active = false;
 	private boolean endTurn = false;
 	
 	public Déjàvu() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public void setState(boolean active) {

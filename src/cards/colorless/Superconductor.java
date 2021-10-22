@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 public class Superconductor extends AbstractTestCard {
 
     public Superconductor() {
-        super(Superconductor.class, -1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
+        super(-1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
         this.exhaust = true;
     }
 

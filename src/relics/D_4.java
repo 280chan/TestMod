@@ -33,7 +33,7 @@ public class D_4 extends AbstractTestRelic {
 	}
 	
 	public D_4() {
-		super(ID, RelicTier.SPECIAL, LandingSound.MAGICAL);
+		super(RelicTier.SPECIAL, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {

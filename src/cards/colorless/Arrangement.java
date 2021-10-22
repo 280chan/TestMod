@@ -21,7 +21,7 @@ public class Arrangement extends AbstractTestCard {
 	private static final int BASE_MGC = 1;
 
 	public Arrangement() {
-		super(Arrangement.class, -1, CardType.ATTACK, CardRarity.RARE, CardTarget.SELF_AND_ENEMY);
+		super(-1, CardType.ATTACK, CardRarity.RARE, CardTarget.SELF_AND_ENEMY);
 		this.baseBlock = BASE_BLK;
 		this.baseDamage = BASE_DMG;
 		this.magicNumber = this.baseMagicNumber = BASE_MGC;
@@ -119,8 +119,7 @@ public class Arrangement extends AbstractTestCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.rawDescription = this.upgradedDesc();
-            this.initializeDescription();
+            this.upDesc();
             this.upgradeBlock(1);
             this.upgradeDamage(1);
         }

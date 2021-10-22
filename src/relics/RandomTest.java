@@ -2,17 +2,13 @@ package relics;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
-
 import mymod.TestMod;
 
 public class RandomTest extends AbstractTestRelic {
@@ -20,27 +16,17 @@ public class RandomTest extends AbstractTestRelic {
 	private static Color color = null;
 	
 	public RandomTest() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
 	public void onUseCard(AbstractCard card, UseCardAction action) {
 		if (card.color == CardColor.COLORLESS) {
 			this.addTmpActionToBot(() -> {
-				if (!AbstractDungeon.player.hand.group.isEmpty()) {
-					List<AbstractCard> list = AbstractDungeon.player.hand.group.stream()
+				if (!p().hand.group.isEmpty()) {
+					List<AbstractCard> list = p().hand.group.stream()
 							.filter(c -> c.cost > -2 && c.costForTurn != 0 && !c.freeToPlayOnce)
 							.collect(Collectors.toList());
-					reduceRandom(list.isEmpty() ? AbstractDungeon.player.hand.group : list);
+					reduceRandom(list.isEmpty() ? p().hand.group : list);
 				}
 			});
 		}

@@ -1,6 +1,5 @@
 package relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -34,19 +33,15 @@ public class DragonStarHat extends AbstractTestRelic {
 	}
 	
 	public DragonStarHat() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.FLAT);
-		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.UNCOMMON, LandingSound.FLAT, BAD);
 	}
 	
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-		String tmp = this.DESCRIPTIONS[0] + this.DESCRIPTIONS[1] + this.maxValue + this.DESCRIPTIONS[2] + this.counter + this.DESCRIPTIONS[3];
-	    this.tips.add(new PowerTip(this.name, tmp));
-	    initializeTips();
+		String tmp = this.DESCRIPTIONS[0] + this.DESCRIPTIONS[1] + this.maxValue + this.DESCRIPTIONS[2] + this.counter
+				+ this.DESCRIPTIONS[3];
+		this.tips.add(new PowerTip(this.name, tmp));
+		initializeTips();
 	}
 	
 	public void onEquip() {
@@ -56,7 +51,7 @@ public class DragonStarHat extends AbstractTestRelic {
 	public void atPreBattle() {
 		if (this.counter > 0) {
 			this.show();
-			this.addToTop(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new StrengthPower(AbstractDungeon.player, this.counter), this.counter));
+			this.addToTop(apply(p(), new StrengthPower(p(), this.counter)));
 			if (--this.counter == 0)
 				this.stopPulse();
 		}

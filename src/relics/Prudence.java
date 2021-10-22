@@ -31,11 +31,7 @@ public class Prudence extends AbstractTestRelic {
 	private static Color color = null;
 	
 	public Prudence() {
-		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public void onRefreshHand() {
@@ -161,11 +157,11 @@ public class Prudence extends AbstractTestRelic {
 	}
 	
 	private AbstractMonster hoveredMonster() {
-		return AbstractDungeon.getCurrRoom().monsters.hoveredMonster;
+		return AbstractDungeon.getMonsters().hoveredMonster;
 	}
 	
 	private void playCard(AbstractCard c, AbstractMonster hovered) {
-		this.addToBot(new PlaySpecificCardAction(hovered, c, true));
+		this.addToTop(new PlaySpecificCardAction(hovered, c, true));
 		isDone = false;
 	}
 	

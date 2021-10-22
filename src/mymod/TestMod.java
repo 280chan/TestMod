@@ -333,7 +333,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new BalancedPeriapt(), new MagicalMallet(), new Laevatain(), new TimeTraveler(), new Nyarlathotep(),
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
-				new VentureCapital(), new ResonanceStone(), new GlassSoul()).collect(this.collectToArrayList());
+				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller())
+				.collect(this.collectToArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);

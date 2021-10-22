@@ -3,7 +3,6 @@ package relics;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
@@ -11,16 +10,10 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 
 public class Motorcycle extends AbstractTestRelic implements ClickableRelic {
-	public static final String ID = "Motorcycle";
 	private static int loadedFloor = 0;
 	
 	public Motorcycle() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
-		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.UNCOMMON, LandingSound.MAGICAL, BAD);
 	}
 	
 	public static void loadGame() {
@@ -47,17 +40,16 @@ public class Motorcycle extends AbstractTestRelic implements ClickableRelic {
 	@Override
 	public void onRightClick() {
 		if (loadedFloor < AbstractDungeon.floorNum && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
-			AbstractPlayer p = AbstractDungeon.player;
-			if (GameActionManager.turn > 1 || checkBoss() || p.isEscaping
+			if (GameActionManager.turn > 1 || checkBoss() || p().isEscaping
 					|| !AbstractDungeon.overlayMenu.endTurnButton.enabled)
 				return;
 			this.stopPulse();
 			AbstractDungeon.getCurrRoom().smoked = true;
-			this.addToBot(new VFXAction(new SmokeBombEffect(p.hb.cX, p.hb.cY)));
-			p.hideHealthBar();
-			p.isEscaping = true;
+			this.addToBot(new VFXAction(new SmokeBombEffect(p().hb.cX, p().hb.cY)));
+			p().hideHealthBar();
+			p().isEscaping = true;
 			AbstractDungeon.overlayMenu.endTurnButton.disable();
-			p.escapeTimer = 2.5F;
+			p().escapeTimer = 2.5F;
 		}
 	}
 	

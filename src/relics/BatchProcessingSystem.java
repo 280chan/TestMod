@@ -3,27 +3,14 @@ package relics;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class BatchProcessingSystem extends AbstractTestRelic {
-	public static final String ID = "BatchProcessingSystem";
 	private static Color color = null;
 	
 	public BatchProcessingSystem() {
-		super(ID, RelicTier.BOSS, LandingSound.SOLID);
-	}
-	
-	public String getUpdatedDescription() {
-		return this.DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.BOSS, LandingSound.SOLID);
 	}
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
@@ -55,13 +42,13 @@ public class BatchProcessingSystem extends AbstractTestRelic {
 	}
 	
 	public void onEquip() {
-		AbstractDungeon.player.energy.energyMaster--;
+		this.reduceEnergy();
 		if (color == null)
 			color = this.initGlowColor();
     }
 	
 	public void onUnequip() {
-		AbstractDungeon.player.energy.energyMaster++;
+		this.addEnergy();
     }
 	
 	public void atTurnStart() {

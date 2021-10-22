@@ -2,24 +2,26 @@ package relics;
 
 import java.util.HashMap;
 import java.util.function.Function;
-
+import java.util.stream.Stream;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
+import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-
+import basemod.ReflectionHacks;
 import basemod.abstracts.CustomRelic;
 import mymod.TestMod;
 import utils.MiscMethods;
 
 public abstract class AbstractTestRelic extends CustomRelic implements MiscMethods {
+	private static final HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>> EQUIP =
+			new HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>>();
+	private static final HashMap<String, Texture> IMG = new HashMap<String, Texture>();
+	private static final HashMap<Class<? extends AbstractTestRelic>, String> IDS = 
+			new HashMap<Class<? extends AbstractTestRelic>, String>();
 	public boolean isActive = false;
 	public boolean show = true;
-	
-	private static final HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>> EQUIP = new HashMap<Class<? extends AbstractTestRelic>, HashMap<String, Boolean>>();
-	private static final HashMap<String, Texture> IMG = new HashMap<String, Texture>();
-
 	public TestTier testTier = TestTier.NORMAL;
 	protected static final TestTier BAD = TestTier.BAD;
 	protected static final TestTier NORMAL = TestTier.NORMAL;
@@ -86,6 +88,34 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 		modifyState(this.getClass(), "unequip", value);
 	}
 	
+	protected static <T extends AbstractTestRelic> String shortID(Class<T> c) {
+		if (!IDS.containsKey(c)) {
+			String tmp = ReflectionHacks.getPrivateStatic(c, "ID");
+			IDS.put(c, tmp == null ? c.getSimpleName() : tmp);
+		}
+		return IDS.get(c);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T extends AbstractTestRelic> Class<T> getRelicClass() {
+		try {
+			return (Class<T>) Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
+					.filter(s -> !"relics.AbstractTestRelic".equals(s)).findFirst().get());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public AbstractTestRelic(RelicTier tier, LandingSound sfx) {
+		this(shortID(getRelicClass()), tier, sfx);
+	}
+	
+	public AbstractTestRelic(RelicTier tier, LandingSound sfx, TestTier tt) {
+		this(tier, sfx);
+		this.setTestTier(tt);
+	}
+	
 	public AbstractTestRelic(String id, RelicTier tier, LandingSound sfx) {
 		this(TestMod.makeID(id), TestMod.relicIMGPath(id), tier, sfx);
 	}
@@ -105,7 +135,7 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 		if (!show)
 			return;
 		flash();
-	    this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
+	    this.addToBot(new RelicAboveCreatureAction(p(), this));
 	}
 	
 	public void postUpdate() {
@@ -126,6 +156,16 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	
 	public Function<Float, Float> maxHPChanger() {
 		return this::preChangeMaxHP;
+	}
+	
+	public String getUpdatedDescription() {
+		return DESCRIPTIONS[0];
+	}
+
+	public void updateDescription(PlayerClass c) {
+		this.tips.clear();
+	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
+	    initializeTips();
 	}
 	
 }

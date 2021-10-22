@@ -1,12 +1,8 @@
 package relics;
 
 import java.util.ArrayList;
-
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-
 import mymod.TestMod;
 import utils.GetRelicTrigger;
 import utils.GlassSoulSelectScreen;
@@ -18,18 +14,8 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 	private boolean damaged = false;
 	
 	public GlassSoul() {
-		super(ID, RelicTier.SPECIAL, LandingSound.CLINK);
+		super(RelicTier.SPECIAL, LandingSound.CLINK);
 		this.counter = 0;
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
 	}
 	
 	public static void load(ArrayList<String> list) {

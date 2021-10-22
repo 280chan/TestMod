@@ -1,25 +1,12 @@
 package relics;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 public class CasingShield extends AbstractTestRelic {
-	public static final String ID = "CasingShield";
 	
 	public CasingShield() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 
 	public void atPreBattle() {

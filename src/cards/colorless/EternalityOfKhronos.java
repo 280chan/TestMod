@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.monsters.*;
 public class EternalityOfKhronos extends AbstractTestCard {
 
     public EternalityOfKhronos() {
-        super(EternalityOfKhronos.class, 2, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
+        super(2, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
         this.isEthereal = this.exhaust = true;
     }
 
@@ -19,8 +19,7 @@ public class EternalityOfKhronos extends AbstractTestCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.exhaust = false;
-            this.rawDescription = this.upgradedDesc();
-            this.initializeDescription();
+            this.upDesc();
         }
     }
 }

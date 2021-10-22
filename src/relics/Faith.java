@@ -39,7 +39,7 @@ public class Faith extends AbstractTestRelic {
 	}
 	
 	public Faith() {
-		super(ID, RelicTier.SHOP, LandingSound.CLINK);
+		super(RelicTier.SHOP, LandingSound.CLINK);
 		this.counter = 0;
 	}
 	

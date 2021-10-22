@@ -1,16 +1,12 @@
 package relics;
 
 import com.megacrit.cardcrawl.actions.common.LoseHPAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-
 import mymod.TestMod;
 
 public class TimeTraveler extends AbstractTestRelic {
-	public static final String ID = "TimeTraveler";
 	public static final String SAVE_NAME = "san";
 	private static final int REST_SAN = 10;
 	private static final int VICTORY_SAN = 5;
@@ -38,7 +34,7 @@ public class TimeTraveler extends AbstractTestRelic {
 	}
 	
 	private static void loadGame() {
-		relic = AbstractDungeon.player.getRelic(TestMod.makeID(ID));
+		relic = AbstractDungeon.player.getRelic(TestMod.makeID("TimeTraveler"));
 		if (relic != null) {
 			relic.counter = san = san * (100 - SL_SAN_LOSS_PERCENT) / 100;
 			save(san);
@@ -50,17 +46,7 @@ public class TimeTraveler extends AbstractTestRelic {
 	}
 	
 	public TimeTraveler() {
-		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
-	public String getUpdatedDescription() {
-		return this.DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.BOSS, LandingSound.HEAVY);
 	}
 	
 	private void tryDecreaseMaxHP() {

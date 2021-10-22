@@ -14,7 +14,7 @@ public class Lexicography extends AbstractTestCard {
     private static final AttackEffect EFFECT = AttackEffect.SLASH_DIAGONAL;
 
     public Lexicography() {
-        super(Lexicography.class, 2, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
+        super(2, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;
     }
 

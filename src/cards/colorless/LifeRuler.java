@@ -10,7 +10,7 @@ import cards.AbstractTestCard;
 public class LifeRuler extends AbstractTestCard {
 	
 	public LifeRuler() {
-        super(LifeRuler.class, 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.exhaust = true;
     }
 

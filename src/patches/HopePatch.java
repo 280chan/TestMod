@@ -21,7 +21,7 @@ public class HopePatch {
 	public static class GameActionManagerPatch {
 		@SpireInsertPatch(locator = Locator.class)
 		public static void Insert(GameActionManager gam) {
-			Hope hope = (Hope) AbstractDungeon.player.getRelic(TestMod.makeID(Hope.ID));
+			Hope hope = (Hope) AbstractDungeon.player.getRelic(TestMod.makeID("Hope"));
 			if (hope != null)
 				hope.disableUntilTurnEnds();
 		}

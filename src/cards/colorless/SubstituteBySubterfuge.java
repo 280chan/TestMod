@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 public class SubstituteBySubterfuge extends AbstractTestCard {
 
 	public SubstituteBySubterfuge() {
-		super(SubstituteBySubterfuge.class, 0, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.NONE);
+		super(0, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.NONE);
 		this.exhaust = true;
 	}
 	

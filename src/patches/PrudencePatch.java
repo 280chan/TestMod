@@ -1,6 +1,5 @@
 package patches;
 
-import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.actions.GameActionManager;
@@ -11,15 +10,12 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-
 import mymod.TestMod;
 import relics.Hope;
-import relics.Prudence;
-import relics.TestBox;
 
 public class PrudencePatch {
 	public static boolean hasRelic(AbstractPlayer p) {
-		return p.hasRelic(TestMod.makeID(Prudence.ID));
+		return p.hasRelic(TestMod.makeID("Prudence"));
 	}
 
 	@SpirePatch(clz = AbstractCard.class, method = "canUse")
@@ -56,7 +52,7 @@ public class PrudencePatch {
 		//@SpireInsertPatch(rloc = 70)
 		public static void Insert(GameActionManager gam) {
 			if (gam.cardQueue.size() == 1 && ((CardQueueItem) gam.cardQueue.get(0)).isEndTurnAutoPlay) {
-				Hope hope = (Hope) AbstractDungeon.player.getRelic(Hope.ID);
+				Hope hope = (Hope) AbstractDungeon.player.getRelic(TestMod.makeID("Hope"));
 				if (hope != null)
 					hope.disableUntilTurnEnds();
 			}

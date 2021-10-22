@@ -4,18 +4,17 @@ import cards.AbstractTestCard;
 import powers.SelfRegulatingSystemPower;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
-import com.megacrit.cardcrawl.actions.common.*;
 
 public class SelfRegulatingSystem extends AbstractTestCard {
     private static final int BASE_MGC = 1;
 
     public SelfRegulatingSystem() {
-        super(SelfRegulatingSystem.class, 2, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
+        super(2, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new SelfRegulatingSystemPower(p, this.magicNumber), this.magicNumber));
+        this.addToBot(apply(p, new SelfRegulatingSystemPower(p, this.magicNumber)));
     }
     
     public void upgrade() {

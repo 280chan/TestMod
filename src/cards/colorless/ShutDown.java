@@ -10,7 +10,7 @@ public class ShutDown extends AbstractTestCard {
     private static final int BASE_MGC = 1;
 
     public ShutDown() {
-        super(ShutDown.class, 1, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
+        super(1, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
         this.cardsToPreview = new Reboot();
     }

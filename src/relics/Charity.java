@@ -4,14 +4,9 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class Charity extends AbstractTestRelic {
-	public static final String ID = "Charity";
 	
 	public Charity() {
-		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.SHOP, LandingSound.MAGICAL);
 	}
 	
 	public double gainGold(double amount) {

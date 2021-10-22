@@ -11,29 +11,16 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 public class DeterminationOfClimber extends AbstractTestRelic {
-	public static final String ID = "DeterminationOfClimber";
 	
 	private static Color color = null;
 	
 	public DeterminationOfClimber() {
-		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return this.DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public void atPreBattle() {

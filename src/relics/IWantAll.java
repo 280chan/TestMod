@@ -2,7 +2,6 @@ package relics;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
@@ -10,28 +9,16 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-
 import potions.EscapePotion;
 
 public class IWantAll extends AbstractTestRelic implements ClickableRelic {
-	public static final String ID = "IWantAll";
 	public static final int COUNT = 10;
 	
 	private boolean victory = false;
 	
 	public IWantAll() {
-		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
+		super(RelicTier.SHOP, LandingSound.MAGICAL);
 		this.counter = COUNT;
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
 	}
 	
 	public void onVictory() {

@@ -16,7 +16,7 @@ public class WeaknessCounterattack extends AbstractTestCard {
     private static final int BASE_MGC = 2;
 
     public WeaknessCounterattack() {
-        super(WeaknessCounterattack.class, 1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
+        super(1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
         this.baseDamage = BASE_DMG;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }

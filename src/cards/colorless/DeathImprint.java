@@ -23,7 +23,7 @@ public class DeathImprint extends AbstractTestCard {
 			.anyMatch(INSTANCE.and(INSTANCE.not(AbstractMonster::isDeadOrEscaped), DeathImprintPower::hasThis));
 
     public DeathImprint() {
-        super(DeathImprint.class, 1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }

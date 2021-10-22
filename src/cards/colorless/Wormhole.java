@@ -11,7 +11,7 @@ import actions.WormholeAction;
 public class Wormhole extends AbstractTestCard {
 
     public Wormhole() {
-        super(Wormhole.class, 1, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
+        super(1, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {

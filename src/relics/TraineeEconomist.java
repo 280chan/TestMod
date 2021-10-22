@@ -1,16 +1,13 @@
 package relics;
 
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.ShopRoom;
 
 public class TraineeEconomist extends AbstractTestRelic {
-	public static final String ID = "TraineeEconomist";
 	private static final int DELTA_BONUS = 5;
 	private static final int DELTA_PRICE = 5;
 	private static final double PERCENTAGE = 100.0;
@@ -18,19 +15,13 @@ public class TraineeEconomist extends AbstractTestRelic {
 	//private boolean useCourier = false;
 	
 	public TraineeEconomist() {
-		super(ID, RelicTier.RARE, LandingSound.SOLID);
+		super(RelicTier.RARE, LandingSound.SOLID);
 	}
 	
 	public String getUpdatedDescription() {
 		return (this.counter < 1) ? DESCRIPTIONS[0]
 				: DESCRIPTIONS[0] + DESCRIPTIONS[1] + goldRatePercent() + DESCRIPTIONS[2] + toPercent(this.priceRate())
 						+ DESCRIPTIONS[3];
-	}
-	
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
 	}
 
 	private static String toPercent(double input) {

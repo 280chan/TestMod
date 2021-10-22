@@ -13,19 +13,13 @@ import mymod.TestMod;
 import powers.OneHitWonderDebuffPower;
 
 public class OneHitWonder extends AbstractTestRelic {
-	public static final String ID = "OneHitWonder";
 	
 	private boolean getRoll() {
 		return AbstractDungeon.cardRng.randomBoolean();
 	}
 	
 	public OneHitWonder() {
-		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
-		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.COMMON, LandingSound.MAGICAL, BAD);
 	}
 	
 	public void atPreBattle() {
@@ -93,7 +87,7 @@ public class OneHitWonder extends AbstractTestRelic {
 	}
 	
 	private boolean isActive() {
-		return AbstractDungeon.player.currentHealth == 1;
+		return p().currentHealth == 1;
 	}
 	
 }

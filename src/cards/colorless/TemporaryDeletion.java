@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.monsters.*;
 public class TemporaryDeletion extends AbstractTestCard {
 
     public TemporaryDeletion() {
-        super(TemporaryDeletion.class, 2, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
+        super(2, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
         this.isEthereal = true;
     }
 

@@ -2,26 +2,13 @@ package relics;
 
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class GremlinBalance extends AbstractTestRelic {
-	public static final String ID = "GremlinBalance";
 	
 	public GremlinBalance() {
-		super(ID, RelicTier.BOSS, LandingSound.CLINK);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.BOSS, LandingSound.CLINK);
 	}
 	
 	public void atTurnStart() {

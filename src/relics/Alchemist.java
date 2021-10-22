@@ -11,15 +11,10 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import mymod.TestMod;
 
 public class Alchemist extends AbstractTestRelic implements ClickableRelic {
-	public static final String ID = "Alchemist";
 	private boolean used = false;
 	
 	public Alchemist() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public void onEquip() {

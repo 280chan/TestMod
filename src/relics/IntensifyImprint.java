@@ -1,29 +1,19 @@
 package relics;
 
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
-
 import powers.IntensifyImprintPower;
 
 public class IntensifyImprint extends AbstractTestRelic {
-	public static final String ID = "IntensifyImprint";
 	
 	public IntensifyImprint() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(RelicTier.RARE, LandingSound.MAGICAL);
 		this.counter = -1;
 	}
 	
 	public String getUpdatedDescription() {
 		return this.counter < 0 ? DESCRIPTIONS[0]
 				: DESCRIPTIONS[0] + " NL " + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
 	}
 	
 	private void modifyCounter(int newValue) {

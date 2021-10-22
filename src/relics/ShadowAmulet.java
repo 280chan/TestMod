@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
 public class ShadowAmulet extends AbstractTestRelic {
-	public static final String ID = "ShadowAmulet";
 	private final ArrayList<Integer> BLOCK_TO_GAIN = new ArrayList<Integer>();
 	
 	public static void onLoseBlock(int amount) {
@@ -17,7 +16,7 @@ public class ShadowAmulet extends AbstractTestRelic {
 	}
 	
 	public ShadowAmulet() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.SOLID);
+		super(RelicTier.UNCOMMON, LandingSound.SOLID);
 	}
 	
 	public String getUpdatedDescription() {

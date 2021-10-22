@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import mymod.TestMod;
 
 public class Temperance extends AbstractTestRelic {
-	public static final String ID = "Temperance";
 	
 	public static int sizeToRemove;
 	public static boolean cardSelected = true;
@@ -18,11 +17,7 @@ public class Temperance extends AbstractTestRelic {
 	private static CurrentScreen pre;
 	
 	public Temperance() {
-		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public void onObtainCard(AbstractCard card) {

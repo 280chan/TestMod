@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
 public class GoldenSoul extends AbstractRevivalRelicToModifyDamage {
-	public static final String ID = "GoldenSoul";
+	public static String ID = "GoldenSoul";
 	
 	public GoldenSoul() {
 		super(ID, RelicTier.BOSS, LandingSound.CLINK);

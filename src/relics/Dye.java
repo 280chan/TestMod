@@ -10,16 +10,10 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 public class Dye extends AbstractTestRelic implements ClickableRelic {
-	public static final String ID = "Dye";
 	private boolean used = false;
 	
 	public Dye() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
-		this.setTestTier(GOD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.RARE, LandingSound.MAGICAL, GOD);
 	}
 	
 	public void atPreBattle() {

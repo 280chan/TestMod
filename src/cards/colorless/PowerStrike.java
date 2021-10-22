@@ -9,7 +9,7 @@ public class PowerStrike extends AbstractTestCard {
     private static final int BASE_MGC = 5;
 
     public PowerStrike() {
-        super(PowerStrike.class, 3, CardType.SKILL, CardRarity.RARE, CardTarget.ALL_ENEMY);
+        super(3, CardType.SKILL, CardRarity.RARE, CardTarget.ALL_ENEMY);
         this.exhaust = this.isEthereal = true;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
         this.tags.add(CardTags.STRIKE);

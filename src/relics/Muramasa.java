@@ -13,11 +13,7 @@ public class Muramasa extends AbstractTestRelic {
 	private static Color color = null;
 	
 	public Muramasa() {
-		super(ID, RelicTier.RARE, LandingSound.CLINK);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.RARE, LandingSound.CLINK);
 	}
 	
 	private void tryDo(AbstractCard c) {
@@ -49,8 +45,9 @@ public class Muramasa extends AbstractTestRelic {
 		boolean active = false;
 		if (!this.inCombat())
 			return;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
-			if (c.type == CardType.ATTACK && (c.costForTurn == 0 || c.freeToPlayOnce) && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
+		for (AbstractCard c : p().hand.group) {
+			if (c.type == CardType.ATTACK && (c.costForTurn == 0 || c.freeToPlayOnce) && c.hasEnoughEnergy()
+					&& c.cardPlayable(AbstractDungeon.getRandomMonster())) {
 				this.addToGlowChangerList(c, color);
 				active = true;
 			} else

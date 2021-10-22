@@ -16,7 +16,7 @@ public class HandmadeProducts extends AbstractTestCard {
     private static final int BASE_MGC = 1;
 
     public HandmadeProducts() {
-        super(HandmadeProducts.class, 0, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
+        super(0, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }

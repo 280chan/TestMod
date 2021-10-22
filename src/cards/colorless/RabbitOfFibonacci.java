@@ -14,7 +14,7 @@ public class RabbitOfFibonacci extends AbstractTestCard {
     private static final double LOG_PHI = Math.log((ROOT5 + 1) / 2);
     
     public RabbitOfFibonacci() {
-        super(RabbitOfFibonacci.class, 2, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL);
+        super(2, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL);
         this.baseDamage = BASE_DMG;
         this.baseBlock = BASE_BLK;
         this.isMultiDamage = true;

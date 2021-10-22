@@ -2,18 +2,14 @@ package relics;
 
 import java.util.HashMap;
 import java.util.stream.Stream;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 public class StringDisintegrator extends AbstractTestRelic {
-	public static final String ID = "StringDisintegrator";
 	
 	private static final String EMPTY = "";
 	private static final HashMap<AbstractCard, String> DESC = new HashMap<AbstractCard, String>();
@@ -22,17 +18,7 @@ public class StringDisintegrator extends AbstractTestRelic {
 	
 
 	public StringDisintegrator() {
-		super(ID, RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
-	public String getUpdatedDescription() {
-		return this.DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.BOSS, LandingSound.HEAVY);
 	}
 	
 	private static void hideAllText() {
@@ -107,11 +93,11 @@ public class StringDisintegrator extends AbstractTestRelic {
 	}
 	
 	public void onEquip() {
-		AbstractDungeon.player.energy.energyMaster++;
+		this.addEnergy();
     }
 	
 	public void onUnequip() {
-		AbstractDungeon.player.energy.energyMaster--;
+		this.reduceEnergy();
     }
 	
 	public void onVictory() {

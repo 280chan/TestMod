@@ -5,14 +5,9 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class AssaultLearning extends AbstractTestRelic {
-	public static final String ID = "AssaultLearning";
 
 	public AssaultLearning() {
-		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.COMMON, LandingSound.MAGICAL);
 	}
 	
 	public void atTurnStartPostDraw() {

@@ -3,32 +3,18 @@ package relics;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 
 public class ResonanceStone extends AbstractTestRelic {
-	public static final String ID = "ResonanceStone";
 	
 	private HashMap<AbstractCard, Integer> previous = new HashMap<AbstractCard, Integer>();
 	boolean init = true;
 	
 	public ResonanceStone() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 		this.counter = 1;
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
 	}
 	
 	public void onMasterDeckChange() {

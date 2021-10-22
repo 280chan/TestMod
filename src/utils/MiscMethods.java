@@ -37,14 +37,28 @@ import basemod.BaseMod;
 import basemod.Pair;
 import mymod.TestMod;
 import relics.AbstractTestRelic;
-import relics.Prudence;
-import relics.StringDisintegrator;
 
 public interface MiscMethods {
 	public static final MiscMethods INSTANCE = new MiscMethods() {};
 	
 	default void print(String s) {
 		TestMod.info(s);
+	}
+	
+	default void addEnergy() {
+		p().energy.energyMaster++;
+	}
+	
+	default void reduceEnergy() {
+		p().energy.energyMaster--;
+	}
+	
+	default void addPower(AbstractPower p) {
+		p().powers.add(p);
+	}
+	
+	default void removePower(AbstractPower p) {
+		p().powers.remove(p);
 	}
 	
 	default int getMonth() {
@@ -115,11 +129,11 @@ public interface MiscMethods {
 	}
 	
 	public default boolean hasPrudence() {
-		return p().hasRelic(TestMod.makeID(Prudence.ID));
+		return p().hasRelic(TestMod.makeID("Prudence"));
 	}
 	
 	public default boolean hasStringDisintegrator() {
-		return p().hasRelic(TestMod.makeID(StringDisintegrator.ID));
+		return p().hasRelic(TestMod.makeID("StringDisintegrator"));
 	}
 	
 	public default void addHoarderCard(CardGroup g, AbstractCard c) {

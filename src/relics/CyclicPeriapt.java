@@ -2,33 +2,18 @@ package relics;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 
 public class CyclicPeriapt extends AbstractTestRelic {
-	public static final String ID = "CyclicPeriapt";
 	
 	private static Color color = null;
 	private ArrayList<UUID> used = new ArrayList<UUID>();
 	
 	public CyclicPeriapt() {
-		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
-		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.SHOP, LandingSound.MAGICAL, BAD);
 	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {

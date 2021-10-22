@@ -2,30 +2,16 @@ package relics;
 
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class Acrobat extends AbstractTestRelic {
-	public static final String ID = "Acrobat";
 	private static Color color = null;
 	public int state = 0;
 	
 	public Acrobat() {
-		super(ID, RelicTier.COMMON, LandingSound.CLINK);
-		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.COMMON, LandingSound.CLINK, BAD);
 	}
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {

@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
@@ -16,26 +14,14 @@ import com.megacrit.cardcrawl.rooms.TreasureRoom;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 
 public class KeyOfTheVoid extends AbstractTestRelic {
-	public static final String ID = "KeyOfTheVoid";
 	
 	private int victoryFloor = -1;
 	private boolean cardSelected = true;
 	private boolean finished = false;
 	
 	public KeyOfTheVoid() {
-		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
-		this.setTestTier(BAD);
+		super(RelicTier.BOSS, LandingSound.MAGICAL, BAD);
 		this.counter = -2;
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
 	}
 	
 	private int getNum() {

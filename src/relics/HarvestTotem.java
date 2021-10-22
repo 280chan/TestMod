@@ -11,30 +11,24 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.TextAboveCreatureEffect;
 
 public class HarvestTotem extends AbstractTestRelic {
-	public static final String ID = "HarvestTotem";
 	
 	private static final ArrayList<AbstractCreature> DONE = new ArrayList<AbstractCreature>();
 	private boolean init = false;
 	
 	public HarvestTotem() {
-		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
-		this.setTestTier(BAD);
+		super(RelicTier.BOSS, LandingSound.MAGICAL, BAD);
 		this.counter = -2;
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
 	}
 	
 	public void onEquip() {
 		this.init = true;
-		AbstractDungeon.player.increaseMaxHp(AbstractDungeon.player.maxHealth, false);
+		p().increaseMaxHp(p().maxHealth, false);
 		this.init = false;
     }
 	
 	private static void increaseMaxHp(AbstractCreature m, int amount) {
 		if (!Settings.isEndless) {
-			if (m.isPlayer && AbstractDungeon.player.hasBlight("FullBelly"))
+			if (m.isPlayer && INSTANCE.p().hasBlight("FullBelly"))
 				return;
 			m.maxHealth += amount;
 			AbstractDungeon.effectsQueue.add(new TextAboveCreatureEffect(m.hb.cX - m.animX, m.hb.cY,

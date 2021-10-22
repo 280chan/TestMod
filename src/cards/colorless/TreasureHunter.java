@@ -20,7 +20,7 @@ public class TreasureHunter extends AbstractTestCard {
 	private static final int BASE_DMG = 15;
 
 	public TreasureHunter() {
-		super(TreasureHunter.class, 2, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
+		super(2, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
 		this.baseDamage = BASE_DMG;
 		this.exhaust = true;
 	}

@@ -2,34 +2,19 @@ package relics;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 
 public class Restrained extends AbstractTestRelic {
-	public static final String ID = "Restrained";
 	
 	public Restrained() {
-		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
-		this.testTier = BAD;
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.SHOP, LandingSound.MAGICAL, BAD);
 	}
 
 	public void onEquip() {
-		AbstractDungeon.player.energy.energyMaster++;
+		this.addEnergy();
     }
 	
 	public void onUnequip() {
-		AbstractDungeon.player.energy.energyMaster--;
+		this.reduceEnergy();
     }
 
 	public void atTurnStart() {

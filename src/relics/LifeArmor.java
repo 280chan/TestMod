@@ -1,27 +1,13 @@
 package relics;
 
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 public class LifeArmor extends AbstractTestRelic {
-	public static final String ID = "LifeArmor";
 
 	public LifeArmor() {
-		super(ID, RelicTier.COMMON, LandingSound.MAGICAL);
-		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-
-	public void updateDescription(PlayerClass c) {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		super(RelicTier.COMMON, LandingSound.MAGICAL, BAD);
 	}
 	
 	public void atPreBattle() {

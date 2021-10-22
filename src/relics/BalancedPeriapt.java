@@ -6,15 +6,9 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class BalancedPeriapt extends AbstractTestRelic {
-	public static final String ID = "BalancedPeriapt";
 	
 	public BalancedPeriapt() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.FLAT);
-		this.setTestTier(BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
+		super(RelicTier.UNCOMMON, LandingSound.FLAT, BAD);
 	}
 	
 	public float preChangeMaxHP(float amount) {

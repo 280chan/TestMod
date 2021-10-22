@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Stream;
+
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
@@ -36,19 +38,15 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 	}
 	
 	public HeartOfDaVinci() {
-		super(ID, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
 	public static void clear() {
 		action = null;
 	}
 	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-	
 	private void addIfPossible(ArrayList<String> pool, String id) {
-		if (pool.contains(id) || AbstractDungeon.player.hasRelic(id))
+		if (pool.contains(id) || p().hasRelic(id))
 			return;
 		pool.add((int) (Math.random() * pool.size()), id);
 	}
@@ -71,9 +69,7 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 	private static HashMap<CardColor, HashMap<String, AbstractRelic>> map;
 	
 	private void addAllCharacterRelics() {
-		ADDED.addAll(RelicLibrary.redList);
-		ADDED.addAll(RelicLibrary.greenList);
-		ADDED.addAll(RelicLibrary.blueList);
+		Stream.of(RelicLibrary.redList, RelicLibrary.greenList, RelicLibrary.blueList).forEach(ADDED::addAll);
 
 		(map = BaseMod.getAllCustomRelics()).values().stream().map(HashMap::values).forEach(ADDED::addAll);
 		ADDED.forEach(this::addToRelicPool);

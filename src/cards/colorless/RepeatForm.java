@@ -9,7 +9,7 @@ public class RepeatForm extends AbstractTestCard {
 	private static final int BASE_MGC = 1;
 
 	public RepeatForm() {
-        super(RepeatForm.class, 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
+        super(3, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
         this.isEthereal = true;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
 	}
