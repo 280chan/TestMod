@@ -534,5 +534,11 @@
 		"NAME": "Glass Soul",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you get a relic, record it into list. Whenever you win a combat without losing hp, gain #b1 count. Outside combat you can right click this relic to choose a relic from list, use #b1 count or #b10% its price to get it again. Whenever you get a relic through this relic, same relic will increase cost by #b10%."]
+	},
+	
+	"testmod-GiantKiller":{
+		"NAME": "Giant Killer",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Enemies have more #yMax #yHP than you, for each #b1% higher, receive #b1% more damage."]
 	}
 }

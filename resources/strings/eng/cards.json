@@ -66,8 +66,8 @@
 	},
 	"testmod-BloodBlade": {
 		"NAME": "Blood Blade",
-		"DESCRIPTION": "Increase attack damage by current HP loss / Max HP. When lose HP, increase attack damage by HP loss / Max HP.",
-		"UPGRADE_DESCRIPTION": "Multiplicatively Increase attack damage by current HP loss / Max HP. When lose HP, multiplicatively increase attack damage by HP loss / Max HP."
+		"DESCRIPTION": "Increase attack damage by rate of missing HP / Max HP. Whenever lose HP, increase attack damage by HP loss / Max HP.",
+		"UPGRADE_DESCRIPTION": "Multiplicatively Increase attack damage by rate of missing HP / Max HP. Whenever lose HP, multiplicatively increase attack damage by HP loss / Max HP."
 	},
 	"testmod-BloodShelter": {
 		"NAME": "Blood Shelter",
