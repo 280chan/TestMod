@@ -304,7 +304,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		addLatest(new GlassSoul(), new ResonanceStone(), new Dye(), new Restrained(), new RandomTest(),
 				new GoldenSoul(), new GremlinBalance(), new IWantAll(), new TemporaryBarricade(), new ShadowAmulet(),
 				new HyperplasticTissue(), new VentureCapital(), new GreedyDevil());
-		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.collectToArrayList());
+		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
 		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Reproduce(), new HandmadeProducts(),
 				new Automaton(), new PowerStrike());
 	}
@@ -334,12 +334,12 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
 				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller())
-				.collect(this.collectToArrayList());
+				.collect(this.toArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);
 		MY_RELICS = RELICS.stream().filter(r -> r instanceof AbstractTestRelic).map(r -> (AbstractTestRelic) r)
-				.collect(this.collectToArrayList());
+				.collect(this.toArrayList());
 		
 		MY_RELICS.forEach(AbstractTestRelic::addToMap);
 	}
@@ -376,7 +376,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new CardIndex(), new PowerStrike(), new TaurusBlackCat(), new PerfectCombo(), new Lexicography(),
 				new Librarian(), new VirtualReality(), new HandmadeProducts(), new DeathImprint(),
 				new TreasureHunter(), new MoneyShot())
-				.collect(this.collectToArrayList());
+				.collect(this.toArrayList());
 		addAnonymousCards();
 		
 		
@@ -586,11 +586,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void addLatest(AbstractRelic... list) {
-		LATEST = Stream.of(list).collect(this.collectToArrayList());
+		LATEST = Stream.of(list).collect(this.toArrayList());
 	}
 	
 	private void addLatest(AbstractCard... list) {
-		LATEST_CARD = Stream.of(list).collect(this.collectToArrayList());
+		LATEST_CARD = Stream.of(list).collect(this.toArrayList());
 	}
 	
 	@Override
@@ -629,7 +629,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	public AbstractRelic randomBonusRelic() {
-		ArrayList<AbstractRelic> unSeen = RELICS.stream().filter(r -> !r.isSeen).collect(this.collectToArrayList());
+		ArrayList<AbstractRelic> unSeen = RELICS.stream().filter(r -> !r.isSeen).collect(this.toArrayList());
 		Function<ArrayList<AbstractRelic>, AbstractRelic> f = l -> l.get((int) (Math.random() * l.size()));
 		return f.apply(unSeen.isEmpty() ? RELICS : unSeen);
 	}
@@ -647,7 +647,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	public AbstractCard randomBonusCard() {
-		ArrayList<AbstractCard> unSeen = CARDS.stream().filter(c -> !c.isSeen).collect(this.collectToArrayList());
+		ArrayList<AbstractCard> unSeen = CARDS.stream().filter(c -> !c.isSeen).collect(this.toArrayList());
 		Function<ArrayList<AbstractCard>, AbstractCard> f = l -> l.get((int) (Math.random() * l.size()));
 		return f.apply(unSeen.isEmpty() ? CARDS : unSeen);
 	}

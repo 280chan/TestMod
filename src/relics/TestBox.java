@@ -109,12 +109,12 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		AbstractDungeon.getCurrRoom().phase = RoomPhase.INCOMPLETE;
 		this.cardSelected = false;
 		CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
-		g.group = TestMod.CARDS.stream().collect(this.collectToArrayList());
+		g.group = TestMod.CARDS.stream().collect(this.toArrayList());
 		Collections.shuffle(g.group, this.rng);
 		AbstractCard c = this.priority();
 		if (c != null)
 			g.group.add(0, c);
-		g.group = g.group.stream().limit(3).peek(this::markAsSeen).collect(this.collectToArrayList());
+		g.group = g.group.stream().limit(3).peek(this::markAsSeen).collect(this.toArrayList());
 		String desc = this.checkFoolsDay() ? FOOLS_DAY : "选择一张牌";
 		AbstractDungeon.gridSelectScreen.open(g, 1, desc, false, false, true, false);
 		AbstractDungeon.overlayMenu.cancelButton.show("跳过");

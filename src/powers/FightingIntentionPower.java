@@ -56,7 +56,7 @@ public class FightingIntentionPower extends AbstractTestPower implements MiscMet
 
 	public void atStartOfTurnPostDraw() {
 		ArrayList<AbstractMonster> list = AbstractDungeon.getMonsters().monsters.stream().filter(this::hasAttackIntent)
-				.collect(this.collectToArrayList());
+				.collect(this.toArrayList());
 		int count = list.size() * this.amount;
 		if (count <= 0)
 			return;

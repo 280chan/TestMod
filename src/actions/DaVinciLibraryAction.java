@@ -42,7 +42,7 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 		CardGroup group = new CardGroup(CardGroupType.UNSPECIFIED);
 		group.group.addAll(this.group.group);
 		ArrayList<AbstractCard> tmp = AbstractDungeon.srcColorlessCardPool.group.stream()
-				.filter(c -> !c.hasTag(CardTags.HEALING)).collect(this.collectToArrayList());
+				.filter(c -> !c.hasTag(CardTags.HEALING)).collect(this.toArrayList());
 		Collections.shuffle(tmp, new Random(AbstractDungeon.cardRng.randomLong()));
 		tmp.stream().limit(AMOUNT - group.size()).forEach(group::addToBottom);
 		group.group.stream().peek(this::checkEggs).map(c -> c.cardID).forEach(UnlockTracker::markCardAsSeen);

@@ -36,7 +36,7 @@ public class CardIndex extends AbstractUpdatableCard {
         		this.addTmpActionToTop(() -> {
 					CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
 					g.group = Stream.of(p.discardPile, p.hand, p.drawPile).flatMap(a -> a.group.stream())
-							.collect(this.collectToArrayList());
+							.collect(this.toArrayList());
 					g.removeCard(this);
 					p.hand.group.forEach(AbstractCard::beginGlowing);
 					if (g.isEmpty()) {

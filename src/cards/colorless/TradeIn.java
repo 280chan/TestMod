@@ -32,7 +32,7 @@ public class TradeIn extends AbstractTestCard {
 						if (size > 0 && !p.drawPile.isEmpty()) {
 							this.addTmpActionToTop(() -> {
 								CardGroup tmp = new CardGroup(CardGroupType.UNSPECIFIED);
-								tmp.group = p.drawPile.group.stream().collect(this.collectToArrayList());
+								tmp.group = p.drawPile.group.stream().collect(this.toArrayList());
 								if (tmp.size() <= size) {
 									tmp.group.stream().forEach(this::moveCard);
 									return;

@@ -52,7 +52,7 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 	private AbstractMonster randomTarget() {
 		ArrayList<AbstractMonster> avalible = AbstractDungeon.getCurrRoom().monsters.monsters.stream()
 				.filter(m -> !(m == null || m.isDead || m.halfDead || m.isDying || m.isEscaping))
-				.collect(this.collectToArrayList());
+				.collect(this.toArrayList());
 		return avalible.isEmpty() ? null : avalible.get((int) (Math.random() * avalible.size()));
 	}
 

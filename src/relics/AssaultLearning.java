@@ -13,7 +13,7 @@ public class AssaultLearning extends AbstractTestRelic {
 	public void atTurnStartPostDraw() {
 		this.addTmpActionToBot(() -> {
 			ArrayList<AbstractCard> list = AbstractDungeon.player.drawPile.group.stream()
-					.filter(AbstractCard::canUpgrade).collect(this.collectToArrayList());
+					.filter(AbstractCard::canUpgrade).collect(this.toArrayList());
 			if (!list.isEmpty()) {
 				list.get(list.size() - 1).upgrade();
 				this.show();

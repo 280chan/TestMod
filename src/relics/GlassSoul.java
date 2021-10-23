@@ -19,8 +19,8 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 	}
 	
 	public static void load(ArrayList<String> list) {
-		INSTANCE.relicStream().filter(r -> r instanceof GlassSoul).filter(r -> r.isActive).map(r -> (GlassSoul) r)
-				.peek(r -> r.setList(list)).forEach(r -> r.tryPulse(false));
+		INSTANCE.relicStream(GlassSoul.class).filter(r -> r.isActive).peek(r -> r.setList(list))
+				.forEach(r -> r.tryPulse(false));
 	}
 	
 	private void setList(ArrayList<String> list) {

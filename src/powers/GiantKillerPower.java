@@ -1,20 +1,14 @@
 package powers;
 
+import java.util.function.Function;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+import relics.GiantKiller;
 import utils.MiscMethods;
 
 public class GiantKillerPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
 	public static final String POWER_ID = "GiantKillerPower";
-	
-	public static boolean hasThis(AbstractCreature m) {
-		return m.powers.stream().anyMatch(p -> p instanceof GiantKillerPower);
-	}
-	
-	public static void addThis(AbstractCreature m) {
-		m.powers.add(new GiantKillerPower(m));
-	}
 	
 	public GiantKillerPower(AbstractCreature owner) {
 		super(POWER_ID);
@@ -23,6 +17,7 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 		this.amount = -1;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
+		this.priority = -10000;
 	}
 	
 	public void updateDescription() {
@@ -33,24 +28,27 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 		this.fontScale = 8.0f;
 	}
 	
-	public float rate(int b) {
-		return this.owner.maxHealth * 1f / b;
+	private float finalDamage(float input) {
+		return this.getIdenticalList((Function<Float, Float>) this::damage, GiantKiller.countGiantKiller()).stream()
+				.reduce(t(), Function::andThen).apply(input);
 	}
 	
-	public int onAttacked(DamageInfo info, int damage) {
+	private float damage(float input) {
+		float tmp = input / p().maxHealth * this.owner.maxHealth;
+		return tmp > Integer.MAX_VALUE || tmp < 0 ? Integer.MAX_VALUE : tmp;
+	}
+	
+	public float atDamageFinalReceive(float damage, DamageInfo.DamageType type) {
 		if (damage > 0) {
 			if (p().maxHealth < 1)
-				return 2000000000;
-			return p().maxHealth < this.owner.maxHealth ? (int) (damage * rate(p().maxHealth)) : damage;
+				return Integer.MAX_VALUE;
+			return p().maxHealth < this.owner.maxHealth ? finalDamage(damage) : damage;
 		}
 		return damage;
 	}
 	
 	public void onRemove() {
-		this.addTmpActionToTop(() -> {
-			if (!hasThis(this.owner))
-				addThis(this.owner);
-		});
+		this.addTmpActionToTop(() -> GiantKiller.addIfNotHave(this.owner));
 	}
 
 }

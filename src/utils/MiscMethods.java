@@ -165,7 +165,7 @@ public interface MiscMethods {
 		return Stream
 				.concat(Stream.of(p.drawPile, p.discardPile, p.exhaustPile, p.limbo, p.hand)
 						.flatMap(g -> g.group.stream()), Stream.of(p.cardInUse))
-				.filter(checker::check).collect(this.collectToArrayList());
+				.filter(checker::check).collect(this.toArrayList());
 	}
 	
 	public default void turnSkipperStart() {
@@ -759,17 +759,23 @@ public interface MiscMethods {
 		return t -> t;
 	}
 	
-	public default <T> Collector<T, ?, ArrayList<T>> collectToArrayList() {
+	public default <T> Collector<T, ?, ArrayList<T>> toArrayList() {
 		return Collectors.toCollection(ArrayList::new);
 	}
 	
 	public default ArrayList<Object> createList(Object... elements) {
-		return Stream.of(elements).collect(this.collectToArrayList());
+		return Stream.of(elements).collect(this.toArrayList());
 	}
 	
 	public default Stream<AbstractTestRelic> relicStream() {
 		return TestMod.RELICS.stream().map(r -> r.relicId).filter(p()::hasRelic).map(p()::getRelic)
-				.map(r -> (AbstractTestRelic) r);
+				.map(r -> (AbstractTestRelic) r).flatMap(r -> this.relicStream(r.getClass()));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public default <T extends AbstractTestRelic> Stream<T> relicStream(Class<T> sample) {
+		return p().relics.stream().filter(r -> r.getClass().isAssignableFrom(sample)).map(r -> (T) r)
+				.collect(toArrayList()).stream();
 	}
 	
 	public default <T> T last(ArrayList<T> list) {

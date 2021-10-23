@@ -53,9 +53,9 @@ public class TreasureHunter extends AbstractTestCard {
 
 	private ArrayList<AbstractCard> cards() {
 		CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
-		g.group = AbstractDungeon.rareCardPool.group.stream().collect(this.collectToArrayList());
+		g.group = AbstractDungeon.rareCardPool.group.stream().collect(this.toArrayList());
 		g.shuffle(AbstractDungeon.cardRandomRng);
-		g.group = g.group.stream().limit(3).collect(this.collectToArrayList());
+		g.group = g.group.stream().limit(3).collect(this.toArrayList());
 		g.group.stream().peek(c -> c.target_y = Settings.HEIGHT * 0.45F).map(c -> c.cardID)
 				.forEach(UnlockTracker::markCardAsSeen);
 		float deltaX = AbstractCard.IMG_WIDTH + 40.0F * Settings.scale;

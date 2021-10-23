@@ -33,8 +33,7 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 	private static DaVinciLibraryAction action;
 	
 	public static HeartOfDaVinci getThis() {
-		return (HeartOfDaVinci) INSTANCE.relicStream().filter(r -> r instanceof HeartOfDaVinci).findFirst()
-				.orElse(null);
+		return INSTANCE.relicStream(HeartOfDaVinci.class).findFirst().orElse(null);
 	}
 	
 	public HeartOfDaVinci() {
@@ -145,12 +144,12 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 		ArrayList<AbstractCard> pool = CardLibrary.cards.entrySet().stream()
 				.filter(c -> Settings.treatEverythingAsUnlocked() || !UnlockTracker.isCardLocked(c.getKey()))
 				.map(Map.Entry::getValue).filter(c -> c.color == color && c.rarity != CardRarity.BASIC)
-				.collect(this.collectToArrayList());
+				.collect(this.toArrayList());
 		Collections.shuffle(pool, new Random(AbstractDungeon.cardRng.randomLong()));
 		if (pool.size() < 20) {
 			TestMod.info("WTF! This character has less than 20 cards");
 		}
-		return pool.stream().limit(20).map(AbstractCard::makeCopy).collect(this.collectToArrayList());
+		return pool.stream().limit(20).map(AbstractCard::makeCopy).collect(this.toArrayList());
 	}
 	
 	private CardColor getColor(AbstractPlayer p) {

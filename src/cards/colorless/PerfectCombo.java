@@ -74,7 +74,7 @@ public class PerfectCombo extends AbstractEquivalentableCard {
 				&& deadLoopCounter++ < 100) {
 			ArrayList<AbstractMonster> avalible = AbstractDungeon.getMonsters().monsters.stream()
 					.filter(c -> !(c == null || c.isDead || c.halfDead || c.isDying || c.isEscaping))
-					.collect(this.collectToArrayList());
+					.collect(this.toArrayList());
 			if (avalible.isEmpty()) {
 				deadLoopCounter = 0;
 				return false;

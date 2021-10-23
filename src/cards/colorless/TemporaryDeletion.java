@@ -44,7 +44,7 @@ public class TemporaryDeletion extends AbstractTestCard {
 	}
 	
 	private void deleteCards(CardGroup g, CardRarity rarity) {
-		g.group = g.group.stream().filter(c -> c.rarity != rarity).collect(this.collectToArrayList());
+		g.group = g.group.stream().filter(c -> c.rarity != rarity).collect(this.toArrayList());
 	}
 
     public void upgrade() {

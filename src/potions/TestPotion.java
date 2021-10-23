@@ -34,9 +34,9 @@ public class TestPotion extends AbstractTestPotion implements MiscMethods {
 	}
 	
 	private ArrayList<AbstractCard> cards() {
-		ArrayList<AbstractCard> list = TestMod.CARDS.stream().collect(this.collectToArrayList());
+		ArrayList<AbstractCard> list = TestMod.CARDS.stream().collect(this.toArrayList());
 		Collections.shuffle(list, new java.util.Random(AbstractDungeon.cardRandomRng.randomLong()));
-		return list.stream().limit(3).collect(this.collectToArrayList());
+		return list.stream().limit(3).collect(this.toArrayList());
 	}
 
 	public void use(AbstractCreature target) {

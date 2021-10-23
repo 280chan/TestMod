@@ -28,7 +28,7 @@ public class HopeAction extends AbstractGameAction implements MiscMethods {
 				return;
 			}
 			CardGroup tmpGroup = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-			tmpGroup.group = AbstractDungeon.player.masterDeck.group.stream().collect(this.collectToArrayList());
+			tmpGroup.group = AbstractDungeon.player.masterDeck.group.stream().collect(this.toArrayList());
 			AbstractDungeon.gridSelectScreen.open(tmpGroup, this.amount, true, "选择最多10张牌加入手牌");
 		} else if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
 			AbstractDungeon.gridSelectScreen.selectedCards.stream().map(AbstractCard::makeStatEquivalentCopy)

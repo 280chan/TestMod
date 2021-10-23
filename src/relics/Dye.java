@@ -63,7 +63,7 @@ public class Dye extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	private void changeCards(CardGroup g, AbstractCard c) {
-		g.group = g.group.stream().map(a -> c.makeStatEquivalentCopy()).collect(this.collectToArrayList());
+		g.group = g.group.stream().map(a -> c.makeStatEquivalentCopy()).collect(this.toArrayList());
 	}
 
 }

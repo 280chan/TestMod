@@ -43,7 +43,7 @@ public class ReverberationPower extends AbstractTestPower implements MiscMethods
 	private void next(AbstractCard c, int size) {
 		this.addTmpActionToBot(() -> {
 			ArrayList<AbstractMonster> list = AbstractDungeon.getMonsters().monsters.stream().filter(this::checkMonster)
-					.collect(this.collectToArrayList());
+					.collect(this.toArrayList());
 			if (list.isEmpty())
 				return;
 			AbstractMonster m = list.get(AbstractDungeon.cardRandomRng.random(0, list.size() - 1));

@@ -43,9 +43,9 @@ public class Librarian extends AbstractTestCard {
 		CardGroup g = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
 		g.group = CardLibrary.cards.values().stream().filter(
 				c -> c.color == CardColor.COLORLESS && c.rarity != CardRarity.SPECIAL && c.type != CardType.STATUS)
-				.collect(this.collectToArrayList());
+				.collect(this.toArrayList());
 		g.shuffle(AbstractDungeon.cardRandomRng);
-		g.group = g.group.stream().limit(e).map(AbstractCard::makeCopy).collect(this.collectToArrayList());
+		g.group = g.group.stream().limit(e).map(AbstractCard::makeCopy).collect(this.toArrayList());
 		g.group.stream().map(c -> c.cardID).forEach(UnlockTracker::markCardAsSeen);
 		return g;
 	}

@@ -29,7 +29,7 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 			AbstractPlayer p = AbstractDungeon.player;
 			CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
 			g.group = Stream.of(p.discardPile, p.hand, p.drawPile).flatMap(c -> c.group.stream())
-					.collect(this.collectToArrayList());
+					.collect(this.toArrayList());
 			p.hand.group.forEach(AbstractCard::beginGlowing);
 	        int amount = Math.max(p.maxHealth / 10, 1);
 			if (g.group.isEmpty()) {
@@ -56,7 +56,7 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 	
 	private void playCard(AbstractPlayer p, AbstractCard c) {
 		ArrayList<AbstractMonster> list = AbstractDungeon.getMonsters().monsters.stream().filter(this::checkMonster)
-				.collect(this.collectToArrayList());
+				.collect(this.toArrayList());
 		AbstractMonster m = list.isEmpty() ? null : list.get(AbstractDungeon.cardRandomRng.random(0, list.size() - 1));
 		CardGroup g = getSource(p, c);
 		if (g != null)

@@ -37,13 +37,13 @@ public class IWantAll extends AbstractTestRelic implements ClickableRelic {
 		item.type = RewardType.CARD;
 		item.potion = null;
 		item.text = RewardItem.TEXT[2];
-		item.cards = r.cards.stream().map(AbstractCard::makeStatEquivalentCopy).collect(this.collectToArrayList());
+		item.cards = r.cards.stream().map(AbstractCard::makeStatEquivalentCopy).collect(this.toArrayList());
 		return item;
 	}
 	
 	private void addReward() {
 		AbstractDungeon.combatRewardScreen.rewards.addAll(AbstractDungeon.combatRewardScreen.rewards.stream()
-				.filter(r -> r.type == RewardType.CARD).map(this::newItem).collect(this.collectToArrayList()));
+				.filter(r -> r.type == RewardType.CARD).map(this::newItem).collect(this.toArrayList()));
 		AbstractDungeon.combatRewardScreen.positionRewards();
 	}
 	
@@ -72,7 +72,7 @@ public class IWantAll extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	public static void loadVictory() {
-		INSTANCE.relicStream().filter(r -> r instanceof IWantAll).forEach(AbstractRelic::onVictory);
+		INSTANCE.relicStream(IWantAll.class).forEach(AbstractRelic::onVictory);
 	}
 	
 	public boolean canSpawn() {
