@@ -540,5 +540,11 @@
 		"NAME": "Giant Killer",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Enemies have more #yMax #yHP than you, for each #b1% higher, receive #b1% more damage."]
+	},
+	
+	"testmod-TwinklingStar":{
+		"NAME": "Twinkling Star",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Whenever an relic other than Twinkling Star flashes, damages #yAll #yEnemies by #b", ". For every #b100 effects, double the damage."]
 	}
 }
