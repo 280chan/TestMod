@@ -1,7 +1,6 @@
 package cards.colorless;
 
 import cards.AbstractTestCard;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.unique.LimitBreakAction;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
@@ -19,8 +18,8 @@ public class LimitFlipper extends AbstractTestCard {
     }
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
-		this.addToBot(active ? new LimitBreakAction()
-				: new ApplyPowerAction(p, p, new StrengthPower(p, this.magicNumber), this.magicNumber));
+		addTmpActionToBot(
+				() -> addToTop(active ? new LimitBreakAction() : apply(p, new StrengthPower(p, this.magicNumber))));
 	}
 
 	public void triggerOnGlowCheck() {

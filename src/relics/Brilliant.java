@@ -18,7 +18,7 @@ public class Brilliant extends AbstractTestRelic {
 	}
 	
 	private void applyDamage() {
-		int[] dmg = DamageInfo.createDamageMatrix(damageFunction(AbstractDungeon.player.gold), true);
+		int[] dmg = DamageInfo.createDamageMatrix(damageFunction(p().gold), true);
 		this.addToBot(new DamageAllEnemiesAction(null, dmg, DamageType.THORNS, AttackEffect.BLUNT_LIGHT));
 	}
 	
@@ -28,7 +28,7 @@ public class Brilliant extends AbstractTestRelic {
     }
 	
 	public void onMonsterDeath(final AbstractMonster m) {
-		if (AbstractDungeon.getCurrRoom().monsters.areMonstersBasicallyDead() || AbstractDungeon.getCurrRoom().monsters.areMonstersDead())
+		if (AbstractDungeon.getMonsters().areMonstersBasicallyDead() || AbstractDungeon.getMonsters().areMonstersDead())
 			return;
 		applyDamage();
 		this.show();

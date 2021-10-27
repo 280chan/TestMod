@@ -36,7 +36,7 @@ public class TheFather extends AbstractTestRelic {
 	public void update() {
 		super.update();
 		if (canUpdate && this.inCombat()) {
-			if (AbstractDungeon.getCurrRoom().monsters.monsters.size() > numberOfMonsters) {
+			if (AbstractDungeon.getMonsters().monsters.size() > numberOfMonsters) {
 				tryAdd();
 				numberOfMonsters = AbstractDungeon.getMonsters().monsters.size();
 			}
@@ -50,7 +50,7 @@ public class TheFather extends AbstractTestRelic {
 	public void count() {
 		this.counter++;
 		if (TheFatherPower.isPrime(counter)) {
-			AbstractDungeon.player.gainGold(1);
+			p().gainGold(1);
 			this.stopPulse();
 			this.flash();
 		}
