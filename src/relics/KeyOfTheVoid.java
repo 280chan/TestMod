@@ -1,20 +1,17 @@
 package relics;
 
 import java.util.ArrayList;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.rooms.TreasureRoom;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 
 public class KeyOfTheVoid extends AbstractTestRelic {
-	
 	private int victoryFloor = -1;
 	private boolean cardSelected = true;
 	private boolean finished = false;
@@ -25,11 +22,7 @@ public class KeyOfTheVoid extends AbstractTestRelic {
 	}
 	
 	private int getNum() {
-		int count = 0;
-		for (AbstractRelic r : AbstractDungeon.player.relics)
-			if (!(r instanceof KeyOfTheVoid) && r.tier == RelicTier.BOSS)
-				count++;
-		return count;
+		return (int) p().relics.stream().filter(r -> !(r instanceof KeyOfTheVoid) && r.tier == RelicTier.BOSS).count();
 	}
 	
 	public void onVictory() {
@@ -61,7 +54,8 @@ public class KeyOfTheVoid extends AbstractTestRelic {
 
 		CardGroup forPurge = AbstractDungeon.player.masterDeck.getPurgeableCards();
 		if (forPurge.size() > this.getNum())
-			AbstractDungeon.gridSelectScreen.open(forPurge, this.getNum(), this.DESCRIPTIONS[1] + this.getNum() + this.DESCRIPTIONS[2], false, false, false, true);
+			AbstractDungeon.gridSelectScreen.open(forPurge, this.getNum(),
+					DESCRIPTIONS[1] + this.getNum() + DESCRIPTIONS[2], false, false, false, true);
 		else {
 			if (forPurge.size() > 0) {
 				purgeCards(forPurge.group);
@@ -92,25 +86,26 @@ public class KeyOfTheVoid extends AbstractTestRelic {
 		if (list.size() % 2 == 1) {
 			int w = list.size() / 2;
 			for (int i = -w; i < w + 1; i++) {
-				AbstractDungeon.topLevelEffects.add(new PurgeCardEffect(
-						list.get(i + w),
-						Settings.WIDTH / 2.0F + i * 60.0F * Settings.scale + (i * 2 + Integer.signum(i)) * AbstractCard.IMG_WIDTH / 2.0F,
-						Settings.HEIGHT / 2.0F));
+				AbstractDungeon.topLevelEffects
+						.add(new PurgeCardEffect(list.get(i + w),
+								Settings.WIDTH / 2.0F + i * 60.0F * Settings.scale
+										+ (i * 2 + Integer.signum(i)) * AbstractCard.IMG_WIDTH / 2.0F,
+								Settings.HEIGHT / 2.0F));
 			}
 		} else {
 			int w = list.size() / 2;
 			for (int i = 0; i < list.size(); i++) {
-				AbstractDungeon.topLevelEffects.add(new PurgeCardEffect(
-						list.get(i),
-						Settings.WIDTH / 2.0F + ((i - w) * 60.0F + 30f) * Settings.scale + ((i - w) * 2 + 1) * AbstractCard.IMG_WIDTH / 2.0F,
+				AbstractDungeon.topLevelEffects.add(new PurgeCardEffect(list.get(i), Settings.WIDTH / 2.0F
+						+ ((i - w) * 60.0F + 30f) * Settings.scale + ((i - w) * 2 + 1) * AbstractCard.IMG_WIDTH / 2.0F,
 						Settings.HEIGHT / 2.0F));
 			}
 		}
-
-		for (AbstractCard card : list) {
-			AbstractDungeon.player.masterDeck.removeCard(card);
-			AbstractDungeon.transformCard(card, true, AbstractDungeon.miscRng);
-		}
+		list.forEach(p().masterDeck::removeCard);
+	}
+	
+	public boolean canSpawn() {
+		return p() != null
+				&& p().relics.stream().anyMatch(r -> !(r instanceof KeyOfTheVoid) && r.tier == RelicTier.BOSS);
 	}
 
 }

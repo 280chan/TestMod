@@ -50,7 +50,7 @@ public class TemporaryBarricade extends AbstractTestRelic implements ClickableRe
 	}
 	
 	public static void pulseLoader() {
-		INSTANCE.p().relics.stream().filter(r -> r instanceof TemporaryBarricade).forEach(AbstractRelic::onVictory);
+		INSTANCE.relicStream(TemporaryBarricade.class).forEach(AbstractRelic::onVictory);
 	}
 	
 	@Override

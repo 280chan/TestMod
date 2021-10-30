@@ -105,7 +105,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 10/12/2021
+ * @version 10/30/2021
  * @since 6/17/2018
  */
 
@@ -333,7 +333,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new BalancedPeriapt(), new MagicalMallet(), new Laevatain(), new TimeTraveler(), new Nyarlathotep(),
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
-				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller(), new TwinklingStar())
+				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller(), new TwinklingStar(),
+				new Metronome())
 				.collect(this.toArrayList());
 
 		SUB_MOD.forEach(TestMod::editSubModRelics);
@@ -765,6 +766,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(Faith.SAVE_NAME1, "0");
 		DEFAULT.setProperty(AscensionHeart.SAVE_NAME, "false");
 		DEFAULT.setProperty(GlassSoul.ID, "0");
+		DEFAULT.setProperty(Metronome.ID, "0");
 		
 		/*DEFAULT.setProperty(Mahjong.SAVE_KANG, "0");
 		DEFAULT.setProperty(Mahjong.SAVE_TURN, "0");
@@ -826,6 +828,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		TemporaryBarricade.pulseLoader();
 		IWantAll.loadVictory();
 		GlassSoul.load(getStringList(GlassSoul.ID));
+		Metronome.load();
 	}
 	
 	public static boolean hasSaveData(String key) {

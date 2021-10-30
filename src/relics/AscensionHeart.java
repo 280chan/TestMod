@@ -12,7 +12,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.helpers.ModHelper;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -60,16 +59,6 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		for (int i = 0; i < this.counter; i++)
 			retVal += " NL " + (i + 1) + "." + DESCRIPTIONS[i == 19 && revived ? 26 : i + 1];
 		return retVal;
-	}
-	
-	public void updateDescription(AbstractPlayer.PlayerClass c) {
-		this.updateDescription();
-	}
-	
-	private void updateDescription() {
-		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, getUpdatedDescription()));
-	    initializeTips();
 	}
 	
 	public boolean checkLevel(int level) {
