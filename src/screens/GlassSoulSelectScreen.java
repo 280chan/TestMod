@@ -1,4 +1,4 @@
-package utils;
+package screens;
 
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.shop.ShopScreen;
 import com.megacrit.cardcrawl.vfx.SpeechBubble;
 import relics.GlassSoul;
+import utils.MiscMethods;
 
 public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMethods {
 	private GlassSoul gs;

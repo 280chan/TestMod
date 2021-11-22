@@ -1,4 +1,4 @@
-package utils;
+package screens;
 
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;

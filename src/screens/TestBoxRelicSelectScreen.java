@@ -1,4 +1,4 @@
-package utils;
+package screens;
 
 import java.util.stream.Stream;
 
@@ -12,6 +12,7 @@ import halloweenMod.relics.EventCelebration_Halloween;
 import mymod.TestMod;
 import relics.AbstractTestRelic;
 import relics.TestBox;
+import utils.MiscMethods;
 
 public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscMethods {
 	public static final String[] ILLEGAL = {TestMod.makeID("TestBox")};
@@ -39,14 +40,16 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 			return new EventCelebration_Halloween();
 		// TODO 圣诞
 		if (month == 12 && date > 20)
-			return (AbstractTestRelic) ChristmasMod.randomRelic().makeCopy();
+			return (AbstractTestRelic) ChristmasMod.randomRelic();
 		if (!Settings.seedSet) {
-			if ("BrkStarshine".equals(CardCrawlGame.playerName) || "280 chan".equals(CardCrawlGame.playerName)) {
+			if (Stream.of("BrkStarshine", "280 chan", "test", "test2")
+					.anyMatch(s -> s.equals(CardCrawlGame.playerName))) {
 				Object o = TestMod.checkLatest(true);
 				if (o != null)
 					return (AbstractTestRelic) o;
 			}
-		} else if (Loader.isModLoaded("chronoMods") && "BrkStarshine".equals(CardCrawlGame.playerName)) {
+		} else if (Loader.isModLoaded("chronoMods")
+				&& Stream.of("BrkStarshine", "test", "test2").anyMatch(s -> s.equals(CardCrawlGame.playerName))) {
 			Object o = TestMod.checkLatest(true);
 			if (o != null)
 				return (AbstractTestRelic) o;

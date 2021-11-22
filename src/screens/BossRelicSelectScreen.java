@@ -1,4 +1,4 @@
-package utils;
+package screens;
 
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;

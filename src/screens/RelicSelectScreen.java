@@ -1,4 +1,4 @@
-package utils;
+package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -69,6 +69,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	private ArrayList<String> category = new ArrayList<String>();
 	private ArrayList<ArrayList<AbstractRelic>> sortedRelics = new ArrayList<ArrayList<AbstractRelic>>();
 	
+	protected boolean renderAmount = false;
 	protected boolean rejectSelection = false;
 	
 	/**
@@ -483,7 +484,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	}
 
 	private void render(SpriteBatch sb, AbstractRelic r) {
-		r.render(sb, false, getColor(r));
+		r.render(sb, renderAmount, getColor(r));
 	}
 	
 	private void renderList(SpriteBatch sb, String msg, String desc, ArrayList<AbstractRelic> list) {
