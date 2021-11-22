@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import powers.AbstractTestPower;
@@ -24,7 +25,7 @@ public class GreedyDevil extends AbstractTestRelic {
 			    	if (MAP.containsKey(info)) {
 						int dmg = damage - target.currentHealth;
 						if (dmg > 0) {
-							AbstractDungeon.player.gainGold(Math.min(dmg, 100));
+							p().gainGold(Math.min(dmg, 100));
 							GreedyDevil.this.flash();
 						}
 						MAP.remove(info);
@@ -49,6 +50,10 @@ public class GreedyDevil extends AbstractTestRelic {
 			return;
 		this.TO_REMOVE.stream().forEach(p -> p.owner.powers.remove(p));
 		this.TO_REMOVE.clear();
+	}
+	
+	public boolean canSpawn() {
+		return Settings.isEndless || AbstractDungeon.actNum < 3;
 	}
 
 }

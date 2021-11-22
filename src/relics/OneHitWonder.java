@@ -26,23 +26,22 @@ public class OneHitWonder extends AbstractTestRelic {
 		if (!isActive)
 			return;
 		this.controlPulse();
-		if (AbstractDungeon.currMapNode == null) {
+		if (AbstractDungeon.currMapNode == null)
 			return;
-		}
 		this.tryApplyDebuff();
     }
-	
-	public void atTurnStart() {
-		this.tryApplyDebuff();
-	}
 	
 	private void tryApplyDebuff() {
 		if (!this.hasEnemies())
 			return;
-		if (AbstractDungeon.getMonsters().monsters.stream()
+		AbstractDungeon.getMonsters().monsters.stream()
 				.filter(m -> m.type == EnemyType.BOSS && !OneHitWonderDebuffPower.hasThis(m))
-				.peek(m -> m.powers.add(new OneHitWonderDebuffPower(m))).findAny().isPresent() && this.isActive())
-			this.show();
+				.forEach(m -> m.powers.add(new OneHitWonderDebuffPower(m)));
+	}
+	
+	public void update() {
+		super.update();
+		this.tryApplyDebuff();
 	}
 	
 	public int onPlayerHeal(final int healAmount) {
@@ -53,8 +52,6 @@ public class OneHitWonder extends AbstractTestRelic {
     }
 	
 	public void onAttack(final DamageInfo info, final int damageAmount, final AbstractCreature target) {
-		if (!isActive)
-			return;
 		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
 			return;
 		if (isActive() && info.type == DamageType.NORMAL && target != null && !target.isPlayer) {
@@ -74,8 +71,7 @@ public class OneHitWonder extends AbstractTestRelic {
 	}
 	
 	public void onLoseHp(int damageAmount) {
-		if (isActive)
-			controlPulse();
+		controlPulse();
 	}
 
 	private void controlPulse() {

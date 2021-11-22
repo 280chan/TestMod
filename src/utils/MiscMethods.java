@@ -38,6 +38,7 @@ import basemod.Pair;
 import mymod.TestMod;
 import relics.AbstractTestRelic;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public interface MiscMethods {
 	public static final MiscMethods INSTANCE = new MiscMethods() {};
 	
@@ -625,22 +626,18 @@ public interface MiscMethods {
 		s.forEach(ifElse(p, c1, c2));
 	}
 	
-	@SuppressWarnings("unchecked")
 	public default <T> Consumer<T> ifElse(Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
 		return t -> ((Consumer<T>) (p.test(t) ? c1 : c2)).accept(t);
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	static Function andThen(Function f, Function g) {
 		return f.andThen(g);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	public default <T, R> void streamMaps(Stream<T> s, Consumer<R> action, Function... functions) {
 		s.forEach(functionsConsumer(action, functions));
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public default <T, R> Consumer<T> functionsConsumer(Consumer<R> action, Function... functions) {
 		Function<T, R> f = (Function<T, R>) Stream.of(functions).reduce(t -> t, (u, v) -> andThen(u, v));
 		return t -> action.accept(f.apply(t));
@@ -666,7 +663,6 @@ public interface MiscMethods {
 		return new Pair<R, V>(f.apply(t), g.apply(t));
 	}
 	
-	@SuppressWarnings("unchecked")
 	public default <T> Consumer<T> combine(Consumer<T>... actions) {
 		return Stream.of(actions).reduce(t -> {}, Consumer::andThen);
 	}
@@ -745,13 +741,11 @@ public interface MiscMethods {
     	return a.negate();
     }
 
-	@SuppressWarnings("unchecked")
-    public default <T> Predicate<T> and(Predicate<T>... list) {
+	public default <T> Predicate<T> and(Predicate<T>... list) {
     	return Stream.of(list).reduce(a -> true, Predicate::and);
     }
 
-	@SuppressWarnings("unchecked")
-    public default <T> Predicate<T> or(Predicate<T>... list) {
+	public default <T> Predicate<T> or(Predicate<T>... list) {
     	return Stream.of(list).reduce(a -> false, Predicate::or);
     }
 	
@@ -763,16 +757,20 @@ public interface MiscMethods {
 		return Collectors.toCollection(ArrayList::new);
 	}
 	
-	public default ArrayList<Object> createList(Object... elements) {
+	public default <T> ArrayList<T> createList(T... elements) {
 		return Stream.of(elements).collect(this.toArrayList());
 	}
 	
-	public default Stream<AbstractTestRelic> relicStream() {
-		return TestMod.RELICS.stream().map(r -> r.relicId).filter(p()::hasRelic).map(p()::getRelic)
-				.map(r -> (AbstractTestRelic) r).flatMap(r -> this.relicStream(r.getClass()));
+	public default Stream<AbstractRelic> replicaRelicStream() {
+		ArrayList<AbstractRelic> list = new ArrayList<AbstractRelic>();
+		list.addAll(p().relics);
+		return list.stream();
 	}
 	
-	@SuppressWarnings("unchecked")
+	public default Stream<AbstractTestRelic> relicStream() {
+		return TestMod.MY_RELICS.stream().flatMap(r -> this.relicStream(r.getClass()));
+	}
+	
 	public default <T extends AbstractTestRelic> Stream<T> relicStream(Class<T> sample) {
 		return p().relics.stream().filter(r -> r.getClass().isAssignableFrom(sample)).map(r -> (T) r)
 				.collect(toArrayList()).stream();

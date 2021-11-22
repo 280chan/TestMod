@@ -30,7 +30,7 @@ import utils.MiscMethods;
 public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, GetRelicTrigger {
 	public static final String ID = "HeartOfDaVinci";
 	private static final ArrayList<AbstractRelic> ADDED = new ArrayList<AbstractRelic>();
-	private static DaVinciLibraryAction action;
+	public static DaVinciLibraryAction action;
 	
 	public static HeartOfDaVinci getThis() {
 		return INSTANCE.relicStream(HeartOfDaVinci.class).findFirst().orElse(null);

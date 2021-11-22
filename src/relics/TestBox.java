@@ -14,8 +14,8 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import mymod.TestMod;
+import screens.TestBoxRelicSelectScreen;
 import utils.AdvanceClickableRelic;
-import utils.TestBoxRelicSelectScreen;
 
 public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<TestBox> {
 	
@@ -132,8 +132,8 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 	
 	private AbstractCard priority() {
 		if (!Settings.seedSet) {
-			Stream.of("BrkStarshine", "280 chan");
-			if ("BrkStarshine".equals(CardCrawlGame.playerName) || "280 chan".equals(CardCrawlGame.playerName)) {
+			if (Stream.of("BrkStarshine", "280 chan", "test", "test2")
+					.anyMatch(s -> s.equals(CardCrawlGame.playerName))) {
 				Object o = TestMod.checkLatest(false);
 				if (o != null)
 					return (AbstractCard) o;

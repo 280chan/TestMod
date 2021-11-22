@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 public class LimitFlipper extends AbstractTestCard {
     private static final int BASE_MGC = 2;
     private boolean active = false;
+    private boolean delayActive = false;
 
     public LimitFlipper() {
         super(1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.SELF);
@@ -18,8 +19,10 @@ public class LimitFlipper extends AbstractTestCard {
     }
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
-		addTmpActionToBot(
-				() -> addToTop(active ? new LimitBreakAction() : apply(p, new StrengthPower(p, this.magicNumber))));
+		addTmpActionToBot(() -> {
+			addTmpActionToTop(() -> this.active |= this.delayActive);
+			addToTop(active ? new LimitBreakAction() : apply(p, new StrengthPower(p, this.magicNumber)));
+		});
 	}
 
 	public void triggerOnGlowCheck() {
@@ -27,7 +30,11 @@ public class LimitFlipper extends AbstractTestCard {
 	}
 	
     public void triggerOnCardPlayed(AbstractCard c) {
-    	this.updateActive(c);
+    	if (this.equals(c)) {
+    		delayActive = true;
+    	} else {
+        	this.updateActive(c);
+    	}
     }
     
     private AbstractCard lastCard() {

@@ -17,6 +17,9 @@ public class TwinklingStar extends AbstractTestRelic {
 	}
 	
 	private int f() {
+		if (this.counter > 3099) {
+			return 2000000000;
+		}
 		return this.getIdenticalList(2, this.counter / 100).stream().reduce(1, (a, b) -> a * b);
 	}
 	
@@ -31,7 +34,7 @@ public class TwinklingStar extends AbstractTestRelic {
 			}
 			this.flash();
 			this.atb(new DamageAllEnemiesAction(null, DamageInfo.createDamageMatrix(f(), true), DamageType.THORNS,
-					AttackEffect.LIGHTNING));
+					AttackEffect.LIGHTNING, true));
 		}
 	}
 	

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import mymod.TestMod;
+import screens.GlassSoulSelectScreen;
 import utils.GetRelicTrigger;
-import utils.GlassSoulSelectScreen;
 
 public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, ClickableRelic {
 	public static final String ID = "GlassSoul";

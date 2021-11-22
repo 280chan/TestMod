@@ -4,8 +4,7 @@ import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-
+import relics.OneHitWonder;
 import utils.MiscMethods;
 
 public class OneHitWonderDebuffPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
@@ -32,20 +31,24 @@ public class OneHitWonderDebuffPower extends AbstractTestPower implements Invisi
 		this.fontScale = 8.0f;
 	}
 	
-	private static boolean checkPlayerHealth() {
-		return AbstractDungeon.player.currentHealth == 1;
+	private boolean checkPlayerHealth() {
+		return p().currentHealth == 1;
+	}
+	
+	private float f(float multiplier, float input) {
+		return (float) (Math.pow(multiplier, this.relicStream(OneHitWonder.class).count()) * input);
 	}
 	
 	public int onAttacked(DamageInfo info, int damage) {
-		return checkPlayerHealth() && info.type != DamageType.NORMAL ? (int) (1.5f * damage) : damage;
+		return checkPlayerHealth() && info.type != DamageType.NORMAL ? (int) f(1.5f, damage) : damage;
 	}
 	
 	public float atDamageFinalGive(float damage, DamageType type) {
-		return checkPlayerHealth() ? 0.5f * damage : damage;
+		return checkPlayerHealth() ? f(0.5f, damage) : damage;
 	}
     
 	public float atDamageFinalReceive(float damage, DamageType type) {
-		return checkPlayerHealth() && type == DamageType.NORMAL ? 1.5f * damage : damage;
+		return checkPlayerHealth() && type == DamageType.NORMAL ? f(1.5f, damage) : damage;
 	}
 
 	public void onRemove() {

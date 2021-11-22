@@ -2,6 +2,7 @@ package christmasMod.mymod;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import com.badlogic.gdx.Gdx;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -29,10 +30,11 @@ import mymod.TestMod;
  * @since 12/18/2018
  */
 
-public class ChristmasMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber, OnStartBattleSubscriber, ChristmasMiscMethods {
+public class ChristmasMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber,
+		OnStartBattleSubscriber, ChristmasMiscMethods {
 	public static final String MOD_PREFIX = "ChristmasMod";
 	private static ChristmasMod currentRunningMod;
-	
+
 	public static void initialize() {
 		TestMod.subscribeSubModClass(new ChristmasMod());
 	}
@@ -43,11 +45,7 @@ public class ChristmasMod implements EditRelicsSubscriber, EditCardsSubscriber, 
 
 	@Override
 	public void receiveEditRelics() {
-		AbstractRelic[] relics = { new ChristmasGift(), new GiftOfSatan() };
-		TestMod.addRelicsToPool(relics);
-		for (AbstractRelic r : relics) {
-			RELICS.add(r);
-		}
+		Stream.of(new ChristmasGift(), new GiftOfSatan()).peek(TestMod.RELICS::add).forEach(RELICS::add);
 	}
 
 	private static String stringsPathFix(String s) {
@@ -69,6 +67,8 @@ public class ChristmasMod implements EditRelicsSubscriber, EditCardsSubscriber, 
 		case ENG:
 			langPostfix = "_" + Settings.language.name().toLowerCase();
 			break;
+		case ZHT:
+			langPostfix = "_zhs";
 		default:
 			langPostfix = "_eng";
 			break;
@@ -85,17 +85,11 @@ public class ChristmasMod implements EditRelicsSubscriber, EditCardsSubscriber, 
 
 	@Override
 	public void receiveEditCards() {
-		AbstractCard[] card = { new GiftLuck(), new GiftMagic(), new GiftExplosion(), new GiftHypnosis(), new GiftIron(),
-				new GiftVoid(), new GiftKakaa(), new GiftDisturb(), new GiftInfinite(), new GiftDamaged() };
-		for (AbstractCard c : card) {
-			BaseMod.addCard(c);
-			GIFTS.add(c);
-		}
-		card = new AbstractCard[] { new Plague(), new Famine(), new Death(), new War() };
-		for (AbstractCard c : card) {
-			BaseMod.addCard(c);
-			DISASTERS.add(c);
-		}
+		Stream.of(new GiftLuck(), new GiftMagic(), new GiftExplosion(), new GiftHypnosis(), new GiftIron(),
+				new GiftVoid(), new GiftKakaa(), new GiftDisturb(), new GiftInfinite(), new GiftDamaged())
+				.forEach(GIFTS::add);
+		Stream.of(new Plague(), new Famine(), new Death(), new War()).forEach(DISASTERS::add);
+		Stream.of(GIFTS, DISASTERS).flatMap(l -> l.stream()).forEach(BaseMod::addCard);
 	}
 	
 	public static ArrayList<AbstractCard> GIFTS = new ArrayList<AbstractCard>();
@@ -111,7 +105,7 @@ public class ChristmasMod implements EditRelicsSubscriber, EditCardsSubscriber, 
 	}
 	
 	public static AbstractRelic randomRelic() {
-		return RELICS.get((int) (Math.random() * RELICS.size()));
+		return RELICS.get((int) (Math.random() * RELICS.size())).makeCopy();
 	}
 
 	@Override

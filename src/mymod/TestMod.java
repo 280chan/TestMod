@@ -84,6 +84,8 @@ import cards.*;
 import cards.colorless.*;
 import cards.mahjong.*;
 import christmasMod.mymod.ChristmasMod;
+import commands.Test;
+import commands.TestCommand;
 import events.*;
 import halloweenMod.mymod.HalloweenMod;
 import potions.*;
@@ -100,12 +102,13 @@ import powers.PlaguePower;
 import powers.PulseDistributorPower;
 import powers.SuperconductorNoEnergyPower;
 import relics.*;
+import screens.RelicSelectScreen;
 import utils.*;
 import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 10/30/2021
+ * @version 11/18/2021
  * @since 6/17/2018
  */
 
@@ -194,7 +197,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			BaseMod.addKeyword(new String[] { "死亡刻印" }, "被标记 #y死亡刻印 的敌人在失去生命时会增加等量的层数。");
 			break;
 		default:
-			BaseMod.addKeyword(new String[] { "Imprint" }, "#yImprint will increase the amount of damage whenever the owner loses HP.");
+			BaseMod.addKeyword(new String[] { "Imprint" },
+					"#yImprint will increase the amount of damage whenever the owner loses HP.");
 			break;
 		}
 		SUB_MOD.forEach(TestMod::editSubModKeywords);
@@ -234,7 +238,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		return MOD_ID + "-" + id;
 	}
 	
-	private static String unMakeID(String newID) {
+	public static String unMakeID(String newID) {
 		return newID.substring(TestMod.MOD_ID.length() + 1);
 	}
 	
@@ -262,25 +266,13 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			UnlockTracker.markCardAsSeen(id);
 	}
 	
-	private static String langPrefix = null;
 	
 	public static String lanPrefix(String s) {
-		if (langPrefix != null)
-			return langPrefix + s;
 		// TODO
-		switch (Settings.language) {
-		case ZHS:
-		case ENG:
-			langPrefix = Settings.language.name().toLowerCase() + "/";
-			break;
-		case ZHT:
-			langPrefix = "zhs/";
-			break;
-		default:
-			langPrefix = "eng/";
-			break;
-		}
-		return langPrefix + s;
+		String tmp = Settings.language.name().toLowerCase() + "/" + s;
+		if (fileExist(stringsPathFix(tmp)))
+			return tmp;
+		return (Settings.language == GameLanguage.ZHT ? "zhs/" : "eng/") + s;
 	}
 	
 	public static String stringsPathFix(String s) {
@@ -301,9 +293,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new GlassSoul(), new ResonanceStone(), new Dye(), new Restrained(), new RandomTest(),
-				new GoldenSoul(), new GremlinBalance(), new IWantAll(), new TemporaryBarricade(), new ShadowAmulet(),
-				new HyperplasticTissue(), new VentureCapital(), new GreedyDevil());
+		addLatest(new Dye(), new GlassSoul(), new ResonanceStone(), new Restrained(), new GoldenSoul(),
+				new VentureCapital(), new GreedyDevil(), new Gather(), new GremlinBalance(), new TemporaryBarricade(),
+				new ShadowAmulet());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
 		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Reproduce(), new HandmadeProducts(),
 				new Automaton(), new PowerStrike());
@@ -334,9 +326,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
 				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller(), new TwinklingStar(),
-				new Metronome())
+				new Metronome(), new Gather(), new HolyLightProtection())
 				.collect(this.toArrayList());
-
+		if (!Loader.isModLoaded("FoggyMod"))
+			RELICS.add(new MistCore());
 		SUB_MOD.forEach(TestMod::editSubModRelics);
 		RELICS.forEach(TestMod::addRelic);
 		MY_RELICS = RELICS.stream().filter(r -> r instanceof AbstractTestRelic).map(r -> (AbstractTestRelic) r)
@@ -346,7 +339,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 
 	public static ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
-	private static ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
+	public static ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
 	
 	private void loadStrings(Class<?> c) {
 		String s = c.getSimpleName().toLowerCase();
@@ -936,8 +929,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		addEvents();
 		addPotions();
 		
-		if ("280 chan".equals(CardCrawlGame.playerName))
+		if ("280 chan".equals(CardCrawlGame.playerName)) {
 			unlockAll();
+			TestCommand.add("test", Test.class);
+		}
 		
 		initLatest();
 		
@@ -989,9 +984,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 	@Override
 	public void receiveRelicGet(AbstractRelic r) {
-		if (!RelicGetManager.loading)
+		if (!RelicGetManager.loading) {
 			this.relicStream().filter(a -> a instanceof GetRelicTrigger)
 					.forEach(a -> ((GetRelicTrigger) a).receiveRelicGet(r));
+		}
 	}
 	
 	public static String eventIMGPath(String ID) {

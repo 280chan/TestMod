@@ -7,6 +7,7 @@ public class ArcanaOfDestiny extends AbstractTestRelic {
 	
 	public ArcanaOfDestiny() {
 		super(RelicTier.UNCOMMON, LandingSound.SOLID);
+		this.counter = -1;
 	}
 	
 	private void tryApplyDebuff() {
@@ -17,10 +18,17 @@ public class ArcanaOfDestiny extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		tryApplyDebuff();
+		this.counter = -2;
     }
+	
+	public void onVictory() {
+		this.counter = -1;
+	}
 
-	public void atTurnStart() {
-		tryApplyDebuff();
-    }
+	public void update() {
+		super.update();
+		if (this.counter == -2)
+			tryApplyDebuff();
+	}
 
 }

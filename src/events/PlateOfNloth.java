@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.RainingGoldEffect;
 
 import mymod.TestMod;
-import utils.PlateOfNlothSelectScreen;
+import screens.PlateOfNlothSelectScreen;
 
 public class PlateOfNloth extends AbstractTestEvent {
 	public static final String IMG = TestMod.eventIMGPath("BoxForYourself");

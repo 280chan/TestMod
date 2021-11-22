@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import mymod.TestMod;
-import utils.BoxForYourselfSelectScreen;
+import screens.BoxForYourselfSelectScreen;
 
 public class BoxForYourself extends AbstractTestEvent {
 	private static final String S_ID = "BoxForYourself";

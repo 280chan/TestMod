@@ -1,14 +1,14 @@
 package relics;
 
 import java.util.HashMap;
-
+import actions.PlaySpecificCardAction;
+import mymod.TestMod;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.blights.AbstractBlight;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -16,13 +16,8 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-import actions.PlaySpecificCardAction;
-import mymod.TestMod;
-
 public class Prudence extends AbstractTestRelic {
 	public static final String ID = "Prudence";
-	
-	public static AbstractPlayer p;
 	private boolean active;
 	private boolean disabledUntilEndOfTurn;
 	private static AbstractCard preHoveredCard;
@@ -43,7 +38,7 @@ public class Prudence extends AbstractTestRelic {
 	
 	private void updateHandGlow() {
 		boolean active = false;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
+		for (AbstractCard c : p().hand.group) {
 			if (EnergyPanel.totalCount >= c.costForTurn && this.calCanPlay(c)) {
 				this.addToGlowChangerList(c, color);
 				this.addHardLockGlow(c);
@@ -83,7 +78,7 @@ public class Prudence extends AbstractTestRelic {
 	
 	private boolean canPlay(AbstractCard c, AbstractMonster m) {
 		if (c.type == CardType.STATUS) {
-			if (p.hasRelic("Medical Kit")) {
+			if (p().hasRelic("Medical Kit")) {
 				return true;
 			}
 			if (!c.cardID.equals("Slimed")) {
@@ -91,7 +86,7 @@ public class Prudence extends AbstractTestRelic {
 			}
 		}
 		if (c.type == CardType.CURSE) {
-			if (p.hasRelic("Blue Candle")) {
+			if (p().hasRelic("Blue Candle")) {
 				return true;
 			}
 			if (!c.cardID.equals("Pride")) {
@@ -100,22 +95,22 @@ public class Prudence extends AbstractTestRelic {
 		}
 		if (AbstractDungeon.actionManager.turnHasEnded) {
 			return false;
-		} else if (p.hasPower("Entangled") && c.type == CardType.ATTACK) {
+		} else if (p().hasPower("Entangled") && c.type == CardType.ATTACK) {
 			return false;
 		} else if (c.freeToPlayOnce) {
 			return true;
 		}
-		for (AbstractRelic r : p.relics)
+		for (AbstractRelic r : p().relics)
 			if (!isThis(r) && !r.canPlay(c))
 				return false;
-		for (AbstractBlight b : p.blights)
+		for (AbstractBlight b : p().blights)
 			if (!b.canPlay(c))
 				return false;
-		for (AbstractCard card : p.hand.group)
+		for (AbstractCard card : p().hand.group)
 			if (!card.canPlay(c))
 				return false;
 		if (c.costForTurn <= EnergyPanel.totalCount) {
-			return c.canUse(p, m);
+			return c.canUse(p(), m);
 		}
 		return false;
 	}
@@ -168,7 +163,6 @@ public class Prudence extends AbstractTestRelic {
 	public void atPreBattle() {
 		if (!this.isActive)
 			return;
-		p = AbstractDungeon.player;
 		TestMod.setActivity(this);
 		this.active = false;
 		if (isActive)
@@ -188,9 +182,6 @@ public class Prudence extends AbstractTestRelic {
 			return;
 		if (this.isActive) {
 			if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
-				if (p == null) {
-					p = AbstractDungeon.player;
-				}
 				GameActionManager g = AbstractDungeon.actionManager;
 				if ((g.cardQueue.size() == 1) && (((CardQueueItem) g.cardQueue.get(0)).isEndTurnAutoPlay)) {
 					this.disabledUntilEndOfTurn = true;
@@ -202,14 +193,14 @@ public class Prudence extends AbstractTestRelic {
 	
 	private void checkPlay() {
 		AbstractCard cardFromHotKey = null;
-		if (p.hoveredCard != null && p.hoveredCard.costForTurn <= EnergyPanel.totalCount) {
-			if (p.isDraggingCard) {
-				if (preHoveredCard != p.hoveredCard && !canPlay.containsKey(p.hoveredCard)) {
-					preHoveredCard = p.hoveredCard;
+		if (p().hoveredCard != null && p().hoveredCard.costForTurn <= EnergyPanel.totalCount) {
+			if (p().isDraggingCard) {
+				if (preHoveredCard != p().hoveredCard && !canPlay.containsKey(p().hoveredCard)) {
+					preHoveredCard = p().hoveredCard;
 					saveCanPlay(preHoveredCard);
 				}
 			}
-		} else if ((cardFromHotKey = InputHelper.getCardSelectedByHotkey(p.hand)) != null) {
+		} else if ((cardFromHotKey = InputHelper.getCardSelectedByHotkey(p().hand)) != null) {
 			if (cardFromHotKey.costForTurn <= EnergyPanel.totalCount) {
 				if (preHoveredCard != cardFromHotKey) {
 					preHoveredCard = cardFromHotKey;

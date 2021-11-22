@@ -135,7 +135,9 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 		if (!show)
 			return;
 		flash();
-	    this.addToBot(new RelicAboveCreatureAction(p(), this));
+		if (!TestMod.relicIMGPath(TestMod.unMakeID(this.relicId)).equals(TestMod.relicIMGPath("relic1"))) {
+		    this.addToBot(new RelicAboveCreatureAction(p(), this));
+		}
 	}
 	
 	public void postUpdate() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import mymod.TestMod;
@@ -18,8 +19,13 @@ public class Metronome extends AbstractTestRelic {
 	
 	public String getUpdatedDescription() {
 		return this.cards == null || this.cards.size() == 0 ? DESCRIPTIONS[0]
-				: DESCRIPTIONS[0] + cards.stream().map(c -> CardLibrary.getCard(c).name).reduce(DESCRIPTIONS[1],
-						(a, b) -> a + ", " + b);
+				: DESCRIPTIONS[0] + cards.stream().map(this::getName).reduce(DESCRIPTIONS[1], (a, b) -> a + ", " + b);
+	}
+
+	private String getName(String id) {
+		AbstractCard c = CardLibrary.getCard(id);
+		if (c == null) print("Can't find card \"" + id + "\" in CardLibrary, F");
+		return c == null ? id : c.name;
 	}
 	
 	private void act() {
@@ -98,5 +104,9 @@ public class Metronome extends AbstractTestRelic {
 			this.updateDescription();
 		}
     }
+	
+	public boolean canSpawn() {
+		return Settings.isEndless || AbstractDungeon.actNum < 3;
+	}
 
 }

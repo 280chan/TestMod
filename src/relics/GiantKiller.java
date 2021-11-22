@@ -8,6 +8,7 @@ public class GiantKiller extends AbstractTestRelic {
 	
 	public GiantKiller() {
 		super(RelicTier.RARE, LandingSound.HEAVY);
+		this.counter = -1;
 	}
 
 	public static int countGiantKiller() {
@@ -34,10 +35,17 @@ public class GiantKiller extends AbstractTestRelic {
 
 	public void atPreBattle() {
 		tryApplyDebuff();
+		this.counter = -2;
     }
+	
+	public void onVictory() {
+		this.counter = -1;
+	}
 
-	public void atTurnStart() {
-		tryApplyDebuff();
-    }
+	public void update() {
+		super.update();
+		if (this.counter == -2)
+			tryApplyDebuff();
+	}
 
 }

@@ -26,14 +26,14 @@ public class VentureCapital extends AbstractTestRelic {
 	
 	public void onEquip() {
 		this.counter = 0;
-		if (AbstractDungeon.player.gold > 0)
-			this.increaseCounter(AbstractDungeon.player.gold);
-		AbstractDungeon.player.loseGold(AbstractDungeon.player.gold);
+		if (p().gold > 0)
+			this.increaseCounter(p().gold);
+		p().loseGold(p().gold);
     }
 	
 	private void increaseCounter(int gold) {
 		this.counter += gold;
-		this.updateDescription(AbstractDungeon.player.chosenClass);
+		this.updateDescription(p().chosenClass);
 	}
 	
 	public double gainGold(double amount) {

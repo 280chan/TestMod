@@ -7,7 +7,7 @@ import powers.InjuryResistancePower;
 public class InjuryResistance extends AbstractTestRelic {
 	
 	public InjuryResistance() {
-		super(RelicTier.RARE, LandingSound.MAGICAL, BAD);
+		super(RelicTier.UNCOMMON, LandingSound.MAGICAL, BAD);
 	}
 	
 	public void onEquip() {

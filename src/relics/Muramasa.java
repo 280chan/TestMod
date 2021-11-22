@@ -14,6 +14,7 @@ public class Muramasa extends AbstractTestRelic {
 	
 	public Muramasa() {
 		super(RelicTier.RARE, LandingSound.CLINK);
+		this.counter = 0;
 	}
 	
 	private void tryDo(AbstractCard c) {
@@ -22,7 +23,7 @@ public class Muramasa extends AbstractTestRelic {
 			if (counter == 2) {
 				counter = 0;
 				this.show();
-				this.addToBot(new DrawCardAction(AbstractDungeon.player, 1));
+				this.addToBot(new DrawCardAction(p(), 1));
 			}
 		}
 	}

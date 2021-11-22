@@ -27,7 +27,7 @@ import cards.curse.Lust;
 import cards.curse.Sloth;
 import cards.curse.Wrath;
 import mymod.TestMod;
-import utils.BossRelicSelectScreen;
+import screens.BossRelicSelectScreen;
 import utils.MiscMethods;
 
 public class Sins extends AbstractTestRelic implements MiscMethods {

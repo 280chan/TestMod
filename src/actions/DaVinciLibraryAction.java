@@ -19,6 +19,7 @@ import com.megacrit.cardcrawl.screens.select.GridCardSelectScreen;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import mymod.TestMod;
+import relics.HeartOfDaVinci;
 import utils.MiscMethods;
 
 public class DaVinciLibraryAction extends AbstractGameAction implements MiscMethods {
@@ -86,10 +87,12 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 			this.addHoarderCard(group, c);
 			AbstractDungeon.player.relics.forEach(AbstractRelic::onMasterDeckChange);
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
+			HeartOfDaVinci.action = null;
 			this.isDone = true;
 			TestMod.info("已获得" + c.name);
 		} else if (AbstractDungeon.screen == pre && AbstractDungeon.overlayMenu.cancelButton.isHidden) {
 			this.isDone = true;
+			HeartOfDaVinci.action = null;
 			TestMod.info("已取消");
 		}
 		if (before != AbstractDungeon.screen) {
