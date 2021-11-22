@@ -509,7 +509,7 @@
 	"testmod-DominatorOfWeakness":{
 		"NAME": "弱小之支配者",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["敌人身上的 #y易伤 、 #y虚弱 不再只生效一次，而是生效其 #y层数 次。"]
+		"DESCRIPTIONS":["敌人身上的 #y易伤 、 #y虚弱 不再只生效一次，而是生效其 #y层数 次(乘算)。"]
 	},
 	
 	"testmod-ShadowAmulet":{
@@ -588,5 +588,23 @@
 		"NAME": "节拍器",
 		"FLAVOR": "这个人很懒，什么都没有写。",
 		"DESCRIPTIONS":["当你在一场战斗中打出的前 #bn 张牌和上一场战斗中打出的前 #bn 张牌同名且顺序相同，增加 #bn 最大生命。", "上一场战斗打出的牌"]
+	},
+	
+	"testmod-Gather":{
+		"NAME": "俱收并蓄",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["战斗开始时，如果你有两个遗物的描述长度相同，能够跳过或者获得战斗胜利并选择其中一个将其变为不同的随机同稀有度遗物。"]
+	},
+	
+	"testmod-MistCore":{
+		"NAME": "迷雾核心",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["将每幕第一层以外的普通战斗房改为 #y？ 房间。每当你进入 #y？ 房间，增加 #b1 最大生命，否则减少 #b1 最大生命。"]
+	},
+	
+	"testmod-HolyLightProtection":{
+		"NAME": "圣光守护",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["若一场战斗出现过多个敌人，只有前两个敌人会对你造成伤害。"]
 	}
 }
