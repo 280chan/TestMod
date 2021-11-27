@@ -14,7 +14,7 @@ public class Brilliant extends AbstractTestRelic {
 	}
 	
 	private static int damageFunction(int gold) {
-		return (int) (Math.cbrt(gold * gold) / 2);
+		return (int) (Math.cbrt(gold) * Math.cbrt(gold) / 2);
 	}
 	
 	private void applyDamage() {
