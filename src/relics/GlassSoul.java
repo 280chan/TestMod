@@ -3,6 +3,8 @@ package relics;
 import java.util.ArrayList;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
+
 import mymod.TestMod;
 import screens.GlassSoulSelectScreen;
 import utils.GetRelicTrigger;
@@ -11,6 +13,7 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 	public static final String ID = "GlassSoul";
 	public static final int PRICE_RATE = 10;
 	public ArrayList<String> relics = new ArrayList<String>();
+	public ArrayList<String> tmpRelics = new ArrayList<String>();
 	private boolean damaged = false;
 	
 	public GlassSoul() {
@@ -23,6 +26,10 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 				.forEach(r -> r.tryPulse(false));
 	}
 	
+	private void save() {
+		TestMod.saveString(ID, relics);
+	}
+	
 	private void setList(ArrayList<String> list) {
 		this.relics.clear();
 		this.relics.addAll(list);
@@ -31,17 +38,24 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 	public void onEquip() {
 		TestMod.setActivity(this);
 		if (this.isActive) {
-			TestMod.saveString(ID, relics);
+			save();
 		} else {
 			this.counter = -1;
 		}
     }
 	
+	public void onEnterRoom(AbstractRoom r) {
+		if (!tmpRelics.isEmpty()) {
+			relics.addAll(tmpRelics);
+			save();
+			tmpRelics.clear();
+		}
+	}
+	
 	@Override
 	public void receiveRelicGet(AbstractRelic r) {
 		if (this.isActive) {
-			relics.add(r.relicId);
-			TestMod.saveString(ID, relics);
+			tmpRelics.add(r.relicId);
 			this.print("获得了" + r.name);
 			tryPulse(false);
 		}
