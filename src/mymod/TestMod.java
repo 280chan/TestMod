@@ -108,7 +108,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 11/18/2021
+ * @version 12/6/2021
  * @since 6/17/2018
  */
 

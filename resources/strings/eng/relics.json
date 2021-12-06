@@ -96,7 +96,7 @@
 	"testmod-Prudence":{
 		"NAME": "Prudence",
 		"FLAVOR": "有bug也不是什么重要的问题吧。",
-		"DESCRIPTIONS":["In your turns, you can play all the cards that wouldn't be allowed to play if having sufficient energy. If it is #yStatus or #yCurse, #yExhaust it."]
+		"DESCRIPTIONS":["If you have sufficient energy, you can play all the cards that wouldn't be allowed to play. If it is #yStatus or #yCurse, #yExhaust it."]
 	},
 	
 	"testmod-Faith":{
