@@ -35,8 +35,6 @@ public class IntensifyImprintPower extends AbstractTestPower implements Invisibl
 	
     public int onAttacked(final DamageInfo info, int damage) {
     	if ((info.owner == null || info.owner == AbstractDungeon.player) && (damage > 0)) {
-			if (this.r.counter > 0)
-				this.r.show();
 			damage += this.r.counter;
 			this.r.incrementCounter();
 		}
