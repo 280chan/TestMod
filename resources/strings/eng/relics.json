@@ -570,5 +570,11 @@
 		"NAME": "Holy Light Protection",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["If multiple enemies appeared in a combat, only the first two can cause damage on you."]
+	},
+	
+	"testmod-EvilDagger":{
+		"NAME": "Evil Dagger",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["At the start of each combat, an Attack card of yours is attached. Whenever that Attack card kills a non-minion enemy, cause extra effect of one of #yFeed, #yLesson #yLearned and #yHand #yof #yGreed.", "Attached to #y", "."]
 	}
 }

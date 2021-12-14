@@ -84,6 +84,7 @@ import cards.*;
 import cards.colorless.*;
 import cards.mahjong.*;
 import christmasMod.mymod.ChristmasMod;
+import commands.Relic;
 import commands.Test;
 import commands.TestCommand;
 import events.*;
@@ -293,9 +294,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new Dye(), new GlassSoul(), new HolyLightProtection(), new ResonanceStone(), new Restrained(),
+		addLatest(new EvilDagger(), new Dye(), new HolyLightProtection(), new ResonanceStone(), new Restrained(),
 				new GoldenSoul(), new VentureCapital(), new GreedyDevil(), new Gather(), new GremlinBalance(),
-				new TemporaryBarricade(), new ShadowAmulet());
+				new TemporaryBarricade(), new GlassSoul(), new ShadowAmulet());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
 		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Reproduce(), new HandmadeProducts(),
 				new Automaton(), new PowerStrike());
@@ -326,7 +327,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
 				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller(), new TwinklingStar(),
-				new Metronome(), new Gather(), new HolyLightProtection())
+				new Metronome(), new Gather(), new HolyLightProtection(), new EvilDagger())
 				.collect(this.toArrayList());
 		if (!Loader.isModLoaded("FoggyMod"))
 			RELICS.add(new MistCore());
@@ -933,6 +934,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			unlockAll();
 			TestCommand.add("test", Test.class);
 		}
+		TestCommand.add("relictest", Relic.class);
 		
 		initLatest();
 		
