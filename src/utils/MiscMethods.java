@@ -467,15 +467,15 @@ public interface MiscMethods {
 	
 	static class CardGlowChanger {
 		private static final ArrayList<Color> COLOR_LIST = new ArrayList<Color>();
-		private static final HashMap<AbstractCard, ArrayList<Color>> GLOW_COLORS = new HashMap<AbstractCard, ArrayList<Color>>();
+		private static final HashMap<AbstractCard, ArrayList<Color>> GLOW_COLORS =
+				new HashMap<AbstractCard, ArrayList<Color>>();
 		private static final ArrayList<AbstractCard> UPDATE_LIST = new ArrayList<AbstractCard>();
 		private static final ArrayList<Integer> USED_COLOR = new ArrayList<Integer>();
 		private static final ArrayList<AbstractCard> HARD_GLOW_LOCK = new ArrayList<AbstractCard>();
-		
+
 		private static void initialize() {
-			Color[] tmp = {Color.GOLD, new Color(0.0F, 1.0F, 0.0F, 0.25F), Color.PINK, Color.SKY, Color.PURPLE, Color.RED, Color.BROWN};
-			for (Color c : tmp)
-				COLOR_LIST.add(c);
+			Stream.of(Color.GOLD, new Color(0.0F, 1.0F, 0.0F, 0.25F), Color.PINK, Color.SKY, Color.PURPLE,
+					Color.RED, Color.BROWN).forEach(COLOR_LIST::add);
 		}
 		
 		private static void addCardToList(AbstractCard c, Color color) {
