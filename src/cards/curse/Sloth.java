@@ -6,10 +6,12 @@ import relics.Sins;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 
 @SuppressWarnings("deprecation")
 public class Sloth extends AbstractTestCurseCard {
+	private static final UIStrings UI = INSTANCE.uiString();
     public static final String ID = "Sloth";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -36,7 +38,7 @@ public class Sloth extends AbstractTestCurseCard {
 		if (this.hasPrudence())
 			return true;
 		if (checkMinimum() && minNumCardsPlayed > -1) {
-			card.cantUseMessage = "怠惰:我无法打出 #r" + minNumCardsPlayed + " 张以上的牌";
+			card.cantUseMessage = UI.TEXT[0] + minNumCardsPlayed + UI.TEXT[1];
 			return false;
 		}
 		return true;

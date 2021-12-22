@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
@@ -18,6 +19,7 @@ import screens.TestBoxRelicSelectScreen;
 import utils.AdvanceClickableRelic;
 
 public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<TestBox> {
+	private static final UIStrings UI = INSTANCE.uiString();
 	
 	public boolean relicSelected = true;
 	private boolean cardSelected = true;
@@ -85,14 +87,12 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		return this.getMonth() == 4 && this.getDate() == 1;
 	}
 	
-	private static final String FOOLS_DAY = "愚人节快乐";
-	
 	private void relic() {
 		if (this.counter == -2 || this.invalidFloor())
 			return;
-		String desc = this.checkFoolsDay() ? FOOLS_DAY : "Test礼物盒";
 		this.checkRandomSet();
-		new TestBoxRelicSelectScreen(true, "选择获得一件遗物，或者跳过。", desc, "礼物，道具，灾厄，或者逃避", this).open();
+		new TestBoxRelicSelectScreen(true, UI.TEXT[0], this.checkFoolsDay() ? UI.TEXT[1] : UI.TEXT[2],
+				UI.TEXT[3], this).open();
 		this.counter = -2;
 	}
 	
@@ -115,9 +115,9 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		if (c != null)
 			g.group.add(0, c);
 		g.group = g.group.stream().limit(3).peek(this::markAsSeen).collect(this.toArrayList());
-		String desc = this.checkFoolsDay() ? FOOLS_DAY : "选择一张牌";
-		AbstractDungeon.gridSelectScreen.open(g, 1, desc, false, false, true, false);
-		AbstractDungeon.overlayMenu.cancelButton.show("跳过");
+		AbstractDungeon.gridSelectScreen.open(g, 1, this.checkFoolsDay() ? UI.TEXT[1] : UI.TEXT[4], false, false, true,
+				false);
+		AbstractDungeon.overlayMenu.cancelButton.show(UI.TEXT[5]);
 		this.counter = -2;
 	}
 	

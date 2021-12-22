@@ -45,6 +45,7 @@ import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.powers.ArtifactPower;
@@ -294,9 +295,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new EvilDagger(), new Dye(), new HolyLightProtection(), new ResonanceStone(), new Restrained(),
-				new GoldenSoul(), new VentureCapital(), new GreedyDevil(), new Gather(), new GremlinBalance(),
-				new TemporaryBarricade(), new GlassSoul(), new ShadowAmulet());
+		addLatest(new HolyLightProtection(), new Dye(), new MistCore(), new ResonanceStone(), new EvilDagger(),
+				new VentureCapital(), new GoldenSoul(), new GreedyDevil(), new Gather(), new GremlinBalance(),
+				new GlassSoul(), new TemporaryBarricade(), new ShadowAmulet());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
 		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Reproduce(), new HandmadeProducts(),
 				new Automaton(), new PowerStrike());
@@ -349,8 +350,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	@Override
 	public void receiveEditStrings() {
-		Stream.of(RelicStrings.class, CardStrings.class, PowerStrings.class, PotionStrings.class, EventStrings.class)
-				.forEach(this::loadStrings);
+		Stream.of(RelicStrings.class, CardStrings.class, PowerStrings.class, PotionStrings.class, EventStrings.class,
+				UIStrings.class).forEach(this::loadStrings);
 		SUB_MOD.forEach(TestMod::editSubModStrings);
 	}
 

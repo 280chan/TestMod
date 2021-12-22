@@ -7,9 +7,11 @@ import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
 public class TemporaryDeletion extends AbstractTestCard {
+	private static final UIStrings UI = INSTANCE.uiString();
 
     public TemporaryDeletion() {
         super(2, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
@@ -29,8 +31,7 @@ public class TemporaryDeletion extends AbstractTestCard {
 			} else if (g.group.isEmpty()) {
 				return;
 			}
-			String info = "[临时删除]";
-			AbstractDungeon.gridSelectScreen.open(g, 1, info, false, false, false, false);
+			AbstractDungeon.gridSelectScreen.open(g, 1, UI.TEXT[0], false, false, false, false);
             this.addTmpActionToTop(() -> {
     			deleteCard(p, AbstractDungeon.gridSelectScreen.selectedCards.get(0));
     			AbstractDungeon.gridSelectScreen.selectedCards.clear();

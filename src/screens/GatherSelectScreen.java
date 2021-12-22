@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import basemod.BaseMod;
@@ -16,12 +17,13 @@ import relics.Gather;
 import utils.MiscMethods;
 
 public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods {
+	private static final UIStrings UI = INSTANCE.uiString();
 	
 	private static HashMap<AbstractRelic, AbstractRelic> map = new HashMap<AbstractRelic, AbstractRelic>();
 	
 	public GatherSelectScreen(ArrayList<AbstractRelic> list, boolean autoSort, String bDesc) {
 		super(copyList(list), true, autoSort);
-		this.setDescription(bDesc, "", "选择一个遗物替换");
+		this.setDescription(bDesc, "", UI.TEXT[0]);
 		this.renderAmount = true;
 	}
 	
@@ -87,7 +89,7 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 
 	@Override
 	protected String descriptionOfCategory(String category) {
-		return "描述长度为" + category + "的遗物";
+		return UI.TEXT[1] + category + UI.TEXT[2];
 	}
 
 	private static void winCombat() {

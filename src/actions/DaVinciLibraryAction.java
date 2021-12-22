@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.screens.select.GridCardSelectScreen;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
@@ -23,6 +24,7 @@ import relics.HeartOfDaVinci;
 import utils.MiscMethods;
 
 public class DaVinciLibraryAction extends AbstractGameAction implements MiscMethods {
+	private static final UIStrings UI = INSTANCE.uiString();
 	private static final int AMOUNT = 20;
 	private float startingDuration;
 	private CardGroup group;
@@ -47,7 +49,7 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 		Collections.shuffle(tmp, new Random(AbstractDungeon.cardRng.randomLong()));
 		tmp.stream().limit(AMOUNT - group.size()).forEach(group::addToBottom);
 		group.group.stream().peek(this::checkEggs).map(c -> c.cardID).forEach(UnlockTracker::markCardAsSeen);
-		AbstractDungeon.gridSelectScreen.open(group, 1, "达芬奇之心：选择获得1张牌。", false, false, true, false);
+		AbstractDungeon.gridSelectScreen.open(group, 1, UI.TEXT[0], false, false, true, false);
 		AbstractDungeon.overlayMenu.cancelButton.show(GridCardSelectScreen.TEXT[1]);
 	}
 

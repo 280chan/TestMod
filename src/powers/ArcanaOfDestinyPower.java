@@ -3,10 +3,7 @@ package powers;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-
 import utils.MiscMethods;
 
 public class ArcanaOfDestinyPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
@@ -37,19 +34,17 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 		this.fontScale = 8.0f;
 	}
 	
-	public float playerRate(AbstractPlayer p) {
-		return p.currentHealth * 1f / p.maxHealth;
+	public float HPRate(AbstractCreature p, float f) {
+		return p == null || p.maxHealth == 0 ? f : p.currentHealth * 1f / p.maxHealth;
 	}
 	
 	public float atDamageGive(float damage, DamageType type) {
-		float tmp = this.owner.maxHealth == 0 ? 1f : this.owner.currentHealth * 1f / this.owner.maxHealth,
-				p = playerRate(AbstractDungeon.player);
+		float tmp = HPRate(this.owner, 1f), p = HPRate(p(), 1f);
 		return tmp > p ? damage * (1 - tmp + p) : damage;
 	}
 	
 	public int onAttacked(DamageInfo info, int damage) {
-		float tmp = this.owner.maxHealth == 0 ? 0f : this.owner.currentHealth * 1f / this.owner.maxHealth,
-				p = playerRate(AbstractDungeon.player);
+		float tmp = HPRate(this.owner, 0f), p = HPRate(p(), 1f);
 		return tmp < p ? (int) (damage * (1 + 2 * (p - tmp))) : damage;
 	}
 	

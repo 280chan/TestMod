@@ -5,12 +5,14 @@ import java.util.HashMap;
 
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
+import basemod.BaseMod;
 import commands.RelicAdd;
 import commands.RelicRemove;
 import commands.TestCommand;
-import mymod.TestMod;
+import relics.AbstractTestRelic;
 import utils.MiscMethods;
 
 public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscMethods {
@@ -32,11 +34,10 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 
 	@Override
 	protected void addRelics() {
-		this.relics.addAll((command instanceof RelicAdd) ? makeCopy(TestMod.RELICS) : copyList(p().relics));
-	}
-	
-	private ArrayList<AbstractRelic> makeCopy(ArrayList<AbstractRelic> list) {
-		return list.stream().map(r -> r.makeCopy()).collect(toArrayList());
+		this.relics.addAll((command instanceof RelicAdd)
+				? BaseMod.listAllRelicIDs().stream().filter(RelicLibrary::isARelic).map(RelicLibrary::getRelic)
+						.map(r -> r.makeCopy()).collect(toArrayList())
+				: copyList(p().relics));
 	}
 	
 	private ArrayList<AbstractRelic> copyList(ArrayList<AbstractRelic> list) {
@@ -69,25 +70,27 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 
 	@Override
 	protected String categoryOf(AbstractRelic r) {
-		switch(r.tier) {
-		case BOSS:
-			return "Boss";
-		case COMMON:
-			return "普通";
-		case DEPRECATED:
-			return "废弃";
-		case RARE:
-			return "稀有";
-		case SHOP:
-			return "商店";
-		case SPECIAL:
-			return "事件";
-		case STARTER:
-			return "初始";
-		case UNCOMMON:
-			return "罕见";
+		if (r instanceof AbstractTestRelic) {
+			switch(r.tier) {
+			case BOSS:
+				return "Boss";
+			case COMMON:
+				return "普通";
+			case DEPRECATED:
+				return "废弃";
+			case RARE:
+				return "稀有";
+			case SHOP:
+				return "商店";
+			case SPECIAL:
+				return "事件";
+			case STARTER:
+				return "初始";
+			case UNCOMMON:
+				return "罕见";
+			}
 		}
-		return "其他";
+		return "非TestMod";
 	}
 
 	@Override
@@ -108,6 +111,6 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 		case "罕见":
 			return "比普通遗物更强大也更少见的遗物。";
 		}
-		return "未被分类的特殊遗物。(-1)";
+		return "非TestMod的遗物。";
 	}
 }

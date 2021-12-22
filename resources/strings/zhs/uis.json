@@ -1,0 +1,179 @@
+{
+	"testmod-ArrangementUpgradingAction": {
+		"TEXT": [
+			"安排(最多",
+			"张)"
+		]
+	},
+
+	"testmod-DaVinciLibraryAction": {
+		"TEXT": [
+			"达芬奇之心：选择获得1张牌。"
+		]
+	},
+
+	"testmod-HopeAction": {
+		"TEXT": [
+			"选择最多10张牌加入手牌"
+		]
+	},
+
+	"testmod-RepeatFormAction": {
+		"TEXT": [
+			"选择1张牌复读形态。(排列：抽牌堆、手牌、弃牌堆)"
+		]
+	},
+
+	"testmod-ReproduceAction": {
+		"TEXT": [
+			"选择1张牌复刻。(排列：抽牌堆、手牌、弃牌堆)"
+		]
+	},
+
+	"testmod-WormholeAction": {
+		"TEXT": [
+			"选择1张牌打出。(排列：抽牌堆、手牌、弃牌堆)",
+			"选择1张牌打出并消耗。(排列：抽牌堆、手牌、弃牌堆)"
+		]
+	},
+
+	"testmod-Librarian": {
+		"TEXT": [
+			"选择",
+			"张牌加入手牌"
+		]
+	},
+
+	"testmod-SubstituteBySubterfuge": {
+		"TEXT": [
+			"选择丢弃任意张牌"
+		]
+	},
+
+	"testmod-TemporaryDeletion": {
+		"TEXT": [
+			"[临时删除]"
+		]
+	},
+
+	"testmod-TradeIn": {
+		"TEXT": [
+			"消耗",
+			"选择",
+			"张牌加入手牌并降低",
+			"耗能"
+		]
+	},
+
+	"testmod-Envy": {
+		"TEXT": [
+			"嫉妒:我无法打出 #r状态牌 或 #r诅咒牌 ",
+			"嫉妒:我无法打出 #r攻击牌 ",
+			"嫉妒:我无法打出 #r技能牌 ",
+			"嫉妒:我无法打出 #r能力牌 "
+		]
+	},
+
+	"testmod-Sloth": {
+		"TEXT": [
+			"怠惰:我无法打出 #r",
+			" 张以上的牌"
+		]
+	},
+
+	"testmod-Wrath": {
+		"TEXT": [
+			"暴怒:我无法打出 #r非攻击牌 "
+		]
+	},
+
+	"testmod-BloodSacrificeSpiritualization": {
+		"TEXT": [
+			"跳过或失去",
+			"点生命来选择1张牌尝试永久升级并打出(亮边的为手牌)",
+			"跳过"
+		]
+	},
+
+	"testmod-CyclicPeriapt": {
+		"TEXT": [
+			"(已用)"
+		]
+	},
+
+	"testmod-Dye": {
+		"TEXT": [
+			"选择"
+		]
+	},
+
+	"testmod-Laevatain": {
+		"TEXT": [
+			"魔剑侵袭..."
+		]
+	},
+
+	"testmod-Sins": {
+		"TEXT": [
+			"请选择达成七原罪任务的奖励。",
+			"七原罪:",
+			"请勇士选择通过试炼的奖励。"
+		]
+	},
+
+	"testmod-Temperance": {
+		"TEXT": [
+			"选择移除1张牌",
+			"次"
+		]
+	},
+
+	"testmod-TestBox": {
+		"TEXT": [
+			"选择获得一件遗物，或者跳过。",
+			"愚人节快乐",
+			"Test礼物盒",
+			"礼物，道具，灾厄，或者逃避",
+			"选择一张牌",
+			"跳过"
+		]
+	},
+
+	"testmod-GatherSelectScreen": {
+		"TEXT": [
+			"选择一个遗物替换",
+			"描述长度为",
+			"的遗物"
+		]
+	},
+
+	"testmod-GlassSoulSelectScreen": {
+		"TEXT": [
+			"免费选择一个遗物获得",
+			"费用过低的遗物，需要10金币兑换",
+			"金币可兑换的遗物"
+		]
+	},
+
+	"testmod-PlateOfNlothSelectScreen": {
+		"TEXT": [
+			"Boss",
+			"普通",
+			"废弃",
+			"稀有",
+			"商店",
+			"事件",
+			"初始",
+			"罕见",
+			"其他",
+			"只在Boss宝箱中出现的遗物。(999)",
+			"很容易找到的弱小遗物。(150)",
+			"极为少见的独特且强大的遗物。(300)",
+			"只能从商人处购买到的遗物。(150)",
+			"只能通过事件获得的遗物。(400)",
+			"角色初始携带的遗物。(300)",
+			"比普通遗物更强大也更少见的遗物。(250)",
+			"未被分类的特殊遗物。(-1)"
+		]
+	}
+}

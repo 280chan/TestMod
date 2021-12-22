@@ -7,10 +7,12 @@ import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 public class SubstituteBySubterfuge extends AbstractTestCard {
+	private static final UIStrings UI = INSTANCE.uiString();
 
 	public SubstituteBySubterfuge() {
 		super(0, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.NONE);
@@ -27,7 +29,7 @@ public class SubstituteBySubterfuge extends AbstractTestCard {
 			if (!p.drawPile.isEmpty()) {
 				CardGroup g = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
 				g.group.addAll(p.drawPile.group);
-				AbstractDungeon.gridSelectScreen.open(g, g.size(), true, "选择丢弃任意张牌");
+				AbstractDungeon.gridSelectScreen.open(g, g.size(), true, UI.TEXT[0]);
 				this.addTmpActionToTop(() -> {
 					AbstractDungeon.gridSelectScreen.selectedCards.forEach(p.drawPile::moveToDiscardPile);
 					AbstractDungeon.gridSelectScreen.selectedCards.clear();

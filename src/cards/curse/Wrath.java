@@ -6,9 +6,11 @@ import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 
 public class Wrath extends AbstractTestCurseCard {
+	private static final UIStrings UI = INSTANCE.uiString();
     public static final String ID = "Wrath";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
@@ -24,7 +26,7 @@ public class Wrath extends AbstractTestCurseCard {
 	public boolean canPlay(AbstractCard card) {
 		if (this.hasPrudence() || card.type == CardType.ATTACK)
 			return true;
-		card.cantUseMessage = "暴怒:我无法打出 #r非攻击牌 ";
+		card.cantUseMessage = UI.TEXT[0];
 		return false;
 	}
 	

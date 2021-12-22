@@ -8,12 +8,14 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDiscardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 
 public class Librarian extends AbstractTestCard {
+	private static final UIStrings UI = INSTANCE.uiString();
 	private static final int BASE_MGC = 1;
 
 	public Librarian() {
@@ -31,7 +33,8 @@ public class Librarian extends AbstractTestCard {
 				g.group.forEach(new CardAdder(p, e)::add);
 				return;
 			}
-			AbstractDungeon.gridSelectScreen.open(g, this.magicNumber, "选择" + this.magicNumber + "张牌加入手牌", false);
+			AbstractDungeon.gridSelectScreen.open(g, this.magicNumber, UI.TEXT[0] + this.magicNumber + UI.TEXT[1],
+					false);
 			this.addTmpActionToTop(() -> {
 				AbstractDungeon.gridSelectScreen.selectedCards.forEach(new CardAdder(p, e)::add);
 				AbstractDungeon.gridSelectScreen.selectedCards.clear();

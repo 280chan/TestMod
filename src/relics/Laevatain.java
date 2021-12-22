@@ -4,11 +4,13 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.relics.Omamori;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 public class Laevatain extends AbstractTestRelic {
+	private static final UIStrings UI = INSTANCE.uiString();
 	
 	public Laevatain() {
 		super(RelicTier.RARE, LandingSound.HEAVY);
@@ -28,7 +30,7 @@ public class Laevatain extends AbstractTestRelic {
 				group.addToBottom(curse.makeCopy());
 			}
 		}
-	    AbstractDungeon.gridSelectScreen.openConfirmationGrid(group, "魔剑侵袭...");
+	    AbstractDungeon.gridSelectScreen.openConfirmationGrid(group, UI.TEXT[0]);
     }
 	
 	public void atPreBattle() {

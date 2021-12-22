@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.shop.ShopScreen;
 import com.megacrit.cardcrawl.vfx.SpeechBubble;
@@ -11,12 +12,13 @@ import relics.GlassSoul;
 import utils.MiscMethods;
 
 public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMethods {
+	private static final UIStrings UI = INSTANCE.uiString();
 	private GlassSoul gs;
 	
 	public GlassSoulSelectScreen(String bDesc, GlassSoul r) {
 		super(null, true, r.counter < 1);
 		this.gs = r;
-		this.setDescription(bDesc, r.name, "免费选择一个遗物获得");
+		this.setDescription(bDesc, r.name, UI.TEXT[0]);
 	}
 
 	@Override
@@ -78,6 +80,6 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 
 	@Override
 	protected String descriptionOfCategory(String category) {
-		return "10".equals(category) ? "费用过低的遗物，需要10金币兑换" : (category + "金币可兑换的遗物");
+		return "10".equals(category) ? UI.TEXT[1] : (category + UI.TEXT[2]);
 	}
 }

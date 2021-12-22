@@ -9,12 +9,14 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 
 import utils.MiscMethods;
 
 public class ArrangementUpgradingAction extends AbstractGameAction implements MiscMethods {
 	public static final float DURATION = Settings.ACTION_DUR_FAST;
 	private ArrayList<AbstractCard> cannotUpgrade = new ArrayList<AbstractCard>();
+	private static final UIStrings UI = INSTANCE.uiString();
 	AbstractPlayer p;
 	
 	public ArrangementUpgradingAction(AbstractPlayer p, int x) {
@@ -40,7 +42,8 @@ public class ArrangementUpgradingAction extends AbstractGameAction implements Mi
 				return;
 			}
 			this.p.hand.group.removeAll(this.cannotUpgrade);
-			AbstractDungeon.handCardSelectScreen.open("安排(最多" + this.amount + "张)", this.amount, true, true, false, true);
+			AbstractDungeon.handCardSelectScreen.open(UI.TEXT[0] + this.amount + UI.TEXT[1], this.amount, true, true,
+					false, true);
 			tickDuration();
 			return;
 		}

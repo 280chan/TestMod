@@ -4,12 +4,14 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 
 import mymod.TestMod;
 
 public class Temperance extends AbstractTestRelic {
+	private static final UIStrings UI = INSTANCE.uiString();
 	
 	public static int sizeToRemove;
 	public static boolean cardSelected = true;
@@ -45,7 +47,7 @@ public class Temperance extends AbstractTestRelic {
 				phase = AbstractDungeon.getCurrRoom().phase;
 				AbstractDungeon.getCurrRoom().phase = RoomPhase.INCOMPLETE;
 				AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getPurgeableCards(),
-						1, "选择移除1张牌" + sizeToRemove + "次", false, false, true, true);
+						1, UI.TEXT[0] + sizeToRemove + UI.TEXT[1], false, false, true, true);
 			} else if (AbstractDungeon.gridSelectScreen.selectedCards.size() == 1) {
 				cardSelected = true;
 				AbstractDungeon.topLevelEffects.add(new PurgeCardEffect(

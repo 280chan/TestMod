@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 
 public class CyclicPeriapt extends AbstractTestRelic {
+	private static final UIStrings UI = INSTANCE.uiString();
 	
 	private static Color color = null;
 	private ArrayList<UUID> used = new ArrayList<UUID>();
@@ -20,7 +22,7 @@ public class CyclicPeriapt extends AbstractTestRelic {
 		if (!c.purgeOnUse && !this.used.contains(c.uuid) && action.exhaustCard) {
 			this.used.add(c.uuid);
 			action.exhaustCard = false;
-			c.name += "(已用)";
+			c.name += UI.TEXT[0];
 			this.show();
 		}
 	}

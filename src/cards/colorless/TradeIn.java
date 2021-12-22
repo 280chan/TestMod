@@ -8,9 +8,11 @@ import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
 public class TradeIn extends AbstractTestCard {
+	private static final UIStrings UI = INSTANCE.uiString();
     private static final int BASE_MGC = 1;
 
     public TradeIn() {
@@ -22,7 +24,7 @@ public class TradeIn extends AbstractTestCard {
     public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpActionToBot(() -> {
 			if (!p.hand.isEmpty()) {
-				AbstractDungeon.handCardSelectScreen.open("消耗", p.hand.size(), true, true, false, false);
+				AbstractDungeon.handCardSelectScreen.open(UI.TEXT[0], p.hand.size(), true, true, false, false);
 				this.addTmpActionToTop(() -> {
 					if (!AbstractDungeon.handCardSelectScreen.wereCardsRetrieved) {
 						int size = AbstractDungeon.handCardSelectScreen.selectedCards.size();
@@ -38,7 +40,7 @@ public class TradeIn extends AbstractTestCard {
 									return;
 								}
 								AbstractDungeon.gridSelectScreen.open(tmp, size,
-										"选择" + size + "张牌加入手牌并降低" + this.magicNumber + "耗能", false);
+										UI.TEXT[1] + size + UI.TEXT[2] + this.magicNumber + UI.TEXT[3], false);
 								this.addTmpActionToTop(() -> {
 									if (AbstractDungeon.gridSelectScreen.selectedCards.size() != 0) {
 										AbstractDungeon.gridSelectScreen.selectedCards.stream().forEach(this::moveCard);

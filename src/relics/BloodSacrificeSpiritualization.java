@@ -15,10 +15,13 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mymod.TestMod;
 
+@SuppressWarnings("deprecation")
 public class BloodSacrificeSpiritualization extends AbstractTestRelic {
+	private static final UIStrings UI = INSTANCE.uiString();
 	
 	public BloodSacrificeSpiritualization() {
 		super(RelicTier.BOSS, LandingSound.MAGICAL);
@@ -35,9 +38,9 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 			if (g.group.isEmpty()) {
 				return;
 			}
-			String info = "跳过或失去" + amount + "点生命来选择1张牌尝试永久升级并打出(亮边的为手牌)";
+			String info = UI.TEXT[0] + amount + UI.TEXT[1];
 			AbstractDungeon.gridSelectScreen.open(g, 1, info, false, false, true, false);
-			AbstractDungeon.overlayMenu.cancelButton.show("跳过");
+			AbstractDungeon.overlayMenu.cancelButton.show(UI.TEXT[2]);
 			this.addTmpActionToTop(() -> {
 				if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
 					p.damage(new DamageInfo(p, amount, DamageType.HP_LOSS));

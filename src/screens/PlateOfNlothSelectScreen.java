@@ -1,11 +1,13 @@
 package screens;
 
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import events.PlateOfNloth;
+import utils.MiscMethods;
 
-public class PlateOfNlothSelectScreen extends RelicSelectScreen {
+public class PlateOfNlothSelectScreen extends RelicSelectScreen implements MiscMethods {
+	private static final UIStrings UI = INSTANCE.uiString();
 	
 	public PlateOfNlothSelectScreen(String bDesc) {
 		super(true, 1, false);
@@ -14,7 +16,7 @@ public class PlateOfNlothSelectScreen extends RelicSelectScreen {
 
 	@Override
 	protected void addRelics() {
-		AbstractDungeon.player.relics.stream().map(r -> r.makeCopy()).forEach(this.relics::add);
+		p().relics.stream().map(r -> r.makeCopy()).forEach(this.relics::add);
 	}
 
 	private void sendIndexSelected(int index) {
@@ -34,43 +36,41 @@ public class PlateOfNlothSelectScreen extends RelicSelectScreen {
 	protected String categoryOf(AbstractRelic r) {
 		switch(r.tier) {
 		case BOSS:
-			return "Boss";
+			return UI.TEXT[0];
 		case COMMON:
-			return "普通";
+			return UI.TEXT[1];
 		case DEPRECATED:
-			return "废弃";
+			return UI.TEXT[2];
 		case RARE:
-			return "稀有";
+			return UI.TEXT[3];
 		case SHOP:
-			return "商店";
+			return UI.TEXT[4];
 		case SPECIAL:
-			return "事件";
+			return UI.TEXT[5];
 		case STARTER:
-			return "初始";
+			return UI.TEXT[6];
 		case UNCOMMON:
-			return "罕见";
+			return UI.TEXT[7];
 		}
-		return "其他";
+		return UI.TEXT[8];
 	}
 
 	@Override
 	protected String descriptionOfCategory(String category) {
-		switch (category) {
-		case "Boss":
-			return "只在Boss宝箱中出现的遗物。(999)";
-		case "普通":
-			return "很容易找到的弱小遗物。(150)";
-		case "稀有":
-			return "极为少见的独特且强大的遗物。(300)";
-		case "商店":
-			return "只能从商人处购买到的遗物。(150)";
-		case "事件":
-			return "只能通过事件获得的遗物。(400)";
-		case "初始":
-			return "角色初始携带的遗物。(300)";
-		case "罕见":
-			return "比普通遗物更强大也更少见的遗物。(250)";
-		}
-		return "未被分类的特殊遗物。(-1)";
+		if (category.equals(UI.TEXT[0]))
+			return UI.TEXT[9];
+		if (category.equals(UI.TEXT[1]))
+			return UI.TEXT[10];
+		if (category.equals(UI.TEXT[3]))
+			return UI.TEXT[11];
+		if (category.equals(UI.TEXT[4]))
+			return UI.TEXT[12];
+		if (category.equals(UI.TEXT[5]))
+			return UI.TEXT[13];
+		if (category.equals(UI.TEXT[6]))
+			return UI.TEXT[14];
+		if (category.equals(UI.TEXT[7]))
+			return UI.TEXT[15];
+		return UI.TEXT[16];
 	}
 }

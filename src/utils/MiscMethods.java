@@ -18,6 +18,7 @@ import com.megacrit.cardcrawl.daily.mods.Careless;
 import com.megacrit.cardcrawl.daily.mods.ControlledChaos;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ModHelper;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
@@ -44,6 +45,25 @@ public interface MiscMethods {
 	
 	default void print(String s) {
 		TestMod.info(s);
+	}
+	
+
+	static String getIDForUI() {
+		try {
+			return Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
+					.filter(s -> !"utils.MiscMethods".equals(s)).findFirst().get()).getSimpleName();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	default UIStrings uiString() {
+		return uiString(getIDForUI());
+	}
+	
+	default UIStrings uiString(String id) {
+		return CardCrawlGame.languagePack.getUIString(TestMod.makeID(id));
 	}
 	
 	default void addEnergy() {

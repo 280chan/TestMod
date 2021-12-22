@@ -1,14 +1,14 @@
 package relics;
 
-import java.util.Iterator;
+import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
-import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.curses.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.CardCrawlGame.GameMode;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.BlueCandle;
 import com.megacrit.cardcrawl.relics.DarkstonePeriapt;
@@ -31,6 +31,7 @@ import screens.BossRelicSelectScreen;
 import utils.MiscMethods;
 
 public class Sins extends AbstractTestRelic implements MiscMethods {
+	private static final UIStrings UI = INSTANCE.uiString();
 	public static final String ID = "SevenDeadlySins";
 	
 	public static final AbstractCard[] SINS = { new Pride(), new Lust(), new Wrath(), new Sloth(), new Envy(),
@@ -43,10 +44,6 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
     public static boolean dontCopy = false;
     public static boolean isFull = true;
 	public static boolean isSelect;
-    
-	private static final String RELIC_SELECT_BDESC = "请选择达成七原罪任务的奖励。";
-	private static final String RELIC_SELECT_TITLE = "七原罪:";
-	private static final String RELIC_SELECT_INFO = "请勇士选择通过试炼的奖励。";
 	
 	public static void load(int loadValue) {
 		preMaxHP = loadValue;
@@ -118,7 +115,8 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
     		if (dontCopy) {
     			TestMod.info("暴食引起,不复制暴食");
     			dontCopy = false;
-			} else if ((AbstractDungeon.player.hasRelic("Omamori")) && (AbstractDungeon.player.getRelic("Omamori").counter != 0)) {
+			} else if ((AbstractDungeon.player.hasRelic("Omamori"))
+					&& (AbstractDungeon.player.getRelic("Omamori").counter != 0)) {
 				TestMod.info("御守有效,不复制暴食");
 				((Omamori) AbstractDungeon.player.getRelic("Omamori")).use();
 			} else {
@@ -142,35 +140,19 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
 		this.updateFull();
 	}
 	
-	private void obtainCard(AbstractCard c) {
-		Iterator<AbstractRelic> var1 = AbstractDungeon.player.relics.iterator();
-		AbstractRelic r;
-		while (var1.hasNext()) {
-			r = (AbstractRelic) var1.next();
-			r.onObtainCard(c);
-		}
-		
+	private static void obtainCard(AbstractCard c) {
+		INSTANCE.p().relics.forEach(r -> r.onObtainCard(c));
 		UnlockTracker.markCardAsSeen(c.cardID);
-		CardGroup group = AbstractDungeon.player.masterDeck;
-		group.addToTop(c);
-		this.addHoarderCard(group, c);
-		
-		var1 = AbstractDungeon.player.relics.iterator();
-		while (var1.hasNext()) {
-			r = (AbstractRelic) var1.next();
-			r.onMasterDeckChange();
-		}
+		INSTANCE.p().masterDeck.addToTop(c);
+		INSTANCE.addHoarderCard(INSTANCE.p().masterDeck, c);
+		INSTANCE.p().relics.forEach(r -> r.onMasterDeckChange());
 	}
 	
 	public static void equipAction() {
 		TestMod.info("获得七原罪诅咒与遗物");
 		AbstractTestRelic.setTryEquip(Sins.class, false);
-		for (AbstractRelic r : RELICS) {
-			TestMod.obtain(AbstractDungeon.player, r, false);
-		}
-		for (AbstractCard c : SINS) {
-			new Sins().obtainCard(c.makeCopy());
-		}
+		Stream.of(RELICS).forEach(r -> TestMod.obtain(INSTANCE.p(), r, false));
+		Stream.of(SINS).forEach(c -> obtainCard(c.makeCopy()));
 	}
 	
 	public void onEquip() {
@@ -182,11 +164,7 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
     }
 	
 	public static boolean isSin(AbstractCard c) {
-		if (c instanceof Pride)
-			return true;
-		if (c instanceof AbstractTestCurseCard)
-			return true;
-		return false;
+		return c instanceof Pride || c instanceof AbstractTestCurseCard;
 	}
 	
 	public void onUnequip() {
@@ -244,7 +222,7 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
 		if (isFull && bossChest) {
 			stopPulse();
 			if (!Sins.isSelect) {
-				new BossRelicSelectScreen(true, RELIC_SELECT_BDESC, RELIC_SELECT_TITLE, RELIC_SELECT_INFO).open();;
+				new BossRelicSelectScreen(true, UI.TEXT[0], UI.TEXT[1], UI.TEXT[2]).open();;
 			}
 		}
 	}

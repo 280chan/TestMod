@@ -1,0 +1,179 @@
+{
+	"testmod-ArrangementUpgradingAction": {
+		"TEXT": [
+			"Upgrade (At Most ",
+			")"
+		]
+	},
+
+	"testmod-DaVinciLibraryAction": {
+		"TEXT": [
+			"Heart of Da Vinci: Select to get a card."
+		]
+	},
+
+	"testmod-HopeAction": {
+		"TEXT": [
+			"Select at most 10 cards to add to hand"
+		]
+	},
+
+	"testmod-RepeatFormAction": {
+		"TEXT": [
+			"Select a card to Repeat Form. (Order: Draw Pile, Hand, Discard Pile)"
+		]
+	},
+
+	"testmod-ReproduceAction": {
+		"TEXT": [
+			"Select a card to Reproduce. (Order: Draw Pile, Hand, Discard Pile)"
+		]
+	},
+
+	"testmod-WormholeAction": {
+		"TEXT": [
+			"Select a card to play. (Order: Draw Pile, Hand, Discard Pile)",
+			"Select a card to play and exhaust. (Order: Draw Pile, Hand, Discard Pile)"
+		]
+	},
+
+	"testmod-Librarian": {
+		"TEXT": [
+			"Select ",
+			" card(s) to add to hand."
+		]
+	},
+
+	"testmod-SubstituteBySubterfuge": {
+		"TEXT": [
+			"Select any amount of cards to discard"
+		]
+	},
+
+	"testmod-TemporaryDeletion": {
+		"TEXT": [
+			"[Temporary Deletion]"
+		]
+	},
+
+	"testmod-TradeIn": {
+		"TEXT": [
+			"Exhaust",
+			"Select ",
+			" card(s) to add to hand and reduce cost by ",
+			""
+		]
+	},
+
+	"testmod-Envy": {
+		"TEXT": [
+			"Envy: I can not play #rStatus and #rCurse ",
+			"Envy: I can not play #rAttack ",
+			"Envy: I can not play #rSkill ",
+			"Envy: I can not play #rPower "
+		]
+	},
+
+	"testmod-Sloth": {
+		"TEXT": [
+			"Sloth: I can not play more than #r",
+			" cards"
+		]
+	},
+
+	"testmod-Wrath": {
+		"TEXT": [
+			"Wrath: I can not play #rNon-Attack "
+		]
+	},
+
+	"testmod-BloodSacrificeSpiritualization": {
+		"TEXT": [
+			"Cancel or Lose ",
+			" hp to select a card to upgrade in the Game and play (hand highlighted)",
+			"Cancel"
+		]
+	},
+
+	"testmod-CyclicPeriapt": {
+		"TEXT": [
+			"(Cycled)"
+		]
+	},
+
+	"testmod-Dye": {
+		"TEXT": [
+			"Select"
+		]
+	},
+
+	"testmod-Laevatain": {
+		"TEXT": [
+			"Laevatain Invasion..."
+		]
+	},
+
+	"testmod-Sins": {
+		"TEXT": [
+			"Please choose the reward for preserving Sins.",
+			"Seven Deadly Sins:",
+			"Please choose the reward for preserving Sins."
+		]
+	},
+
+	"testmod-Temperance": {
+		"TEXT": [
+			"Select a card to remove from deck, ",
+			"time(s) remain"
+		]
+	},
+
+	"testmod-TestBox": {
+		"TEXT": [
+			"Choose a relic to get, or cancel.",
+			"Happy April Fools' Day",
+			"Test Box",
+			"Presents, Props, Disasters, or Evasions",
+			"Select a card",
+			"Cancel"
+		]
+	},
+
+	"testmod-GatherSelectScreen": {
+		"TEXT": [
+			"Choose a relic to convert",
+			"Relics have description length of ",
+			""
+		]
+	},
+
+	"testmod-GlassSoulSelectScreen": {
+		"TEXT": [
+			"Choose a relic to get again for free",
+			"Relics that are too cheap, can be redeemed with 10 gold",
+			" gold redeemable relics"
+		]
+	},
+
+	"testmod-PlateOfNlothSelectScreen": {
+		"TEXT": [
+			"Boss",
+			"Common",
+			"Deprecated",
+			"Rare",
+			"Shop",
+			"Event",
+			"Starter",
+			"Uncommon",
+			"Other",
+			"Relics found only within Boss chests.(999)",
+			"Weak relics that are found commonly.(150)",
+			"Unique and powerful relics which are rarely seen.(300)",
+			"Relics which can only be purchased from the Merchant.(150)",
+			"Relics which can only be obtained through events.(400)",
+			"Characters can start with these relics.(300)",
+			"Stronger relics which appear less often than common relics.(250)",
+			"Uncategorized relics.(-1)"
+		]
+	}
+}

@@ -10,11 +10,13 @@ import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 
 import powers.RepeatFormPower;
 import utils.MiscMethods;
 
 public class RepeatFormAction extends AbstractGameAction implements MiscMethods {
+	private static final UIStrings UI = INSTANCE.uiString();
 	private static final float DURATION = Settings.ACTION_DUR_FAST;
 	private CardGroup g;
 	private AbstractPlayer p;
@@ -54,8 +56,7 @@ public class RepeatFormAction extends AbstractGameAction implements MiscMethods 
 				this.isDone = true;
 				return;
 			}
-			String info = "选择1张牌复读形态。(排列：抽牌堆、手牌、弃牌堆)";
-			AbstractDungeon.gridSelectScreen.open(g, 1, info, false, false, false, false);
+			AbstractDungeon.gridSelectScreen.open(g, 1, UI.TEXT[0], false, false, false, false);
 		} else if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
 			this.addPowerToPlayer(AbstractDungeon.gridSelectScreen.selectedCards.get(0));
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
