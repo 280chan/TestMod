@@ -2,15 +2,15 @@
   "testmod-BoxForYourself": {
     "NAME": "Box For Yourself",
     "DESCRIPTIONS": [
-      	"你在一系列坟墓间穿行，前方出现了一个圆形房间，中间是一个小台子，上面有着一个 #p~带有挪动痕迹的~ 大盒子。 NL 你无法判断盒子里有什么，但你能注意到有 #y~强大的力量~ 从盒子的两侧渗透出来。 NL 盒子上方贴着一张纸条。纸条上写着： NL “高塔之心在等待。” NL NL 这……是你自己的笔迹。",
-		"打开盒子，你在里面找到了一件 #y宝物 。",
-		"选择一件遗物存放。",
-		"这究竟是怎么回事？"
+      	"You walk through a series of tombs, and a circular room appears in front of you with a small table in the middle, on top of it there is a big box #p~with~ #p~traces~ #p~of~ #p~movement.~ NL You can't determine what's inside the box, but you notice #y~Powerful~ #y~Energy~ seeping out from both sides of the box. NL You find a note on top of the box. It reads, NL \"The Heart awaits.\" NL NL This is your handwriting.",
+		"Opened the box, you find a #yTreasure.",
+		"Choose a relic to store.",
+		"What is going on?"
     ],
     "OPTIONS": [
-		"[Continue] 打开看看",
+		"[Continue] Open it",
 		"[Take and Give] #gObtain #b",
-		" #rDeposit #ra #rrelic. ",
+		" #rStore #ra #rrelic. ",
 		"[Ignore]",
 		"[Leave]"
     ]
@@ -18,14 +18,14 @@
   "testmod-PlateOfNloth": {
     "NAME": "Plate Of N'loth",
     "DESCRIPTIONS": [
-		"你在一系列坟墓间穿行，前方出现了一个圆形房间，中间是一个小台子，上面有着一个 #p~带有挪动痕迹的~ 大盘子。 NL 你无法判断盘子的主人，但你能注意到当你盯着它看时，你有想把什么东西放上去的 #y~强烈欲望~ 。 NL 盘子旁边贴着一张纸条。纸条上写着： NL “收购宝物 NL ——恩洛斯。”",
-		"你将要无法继续忍受。在欲望的驱使下开始从自己的包中选择 #y宝物 想要将其放到盘中。",
-		"选择一件遗物放到盘中。",
-		"遗物消失了。天上忽然落下许多金币。你收集齐了所有金币，然后满足的离开。",
-		"你忍住心中的欲望，直接转身离开。"
+		"You walk through a series of tombs, and a circular room appears in front of you with a small table in the middle, on top of it there is a big plate #p~with~ #p~traces~ #p~of~ #p~movement.~ NL You don't know its owner, but you notice when you look at it, you have a #y~Strong~ #y~Desire~ to put something on it. NL A note was pasted next to the plate. It reads, NL \"Buying Treasures —— N'loth\"",
+		"You will not be able to bear it anymore. Driven by desire, you start to choose #yTreasure from your bag and wanted to put it on the plate.",
+		"Choose a relic to put in plate.",
+		"The relic disappeared. Suddenly many gold coins fell in the sky. You collected all the gold coins, and then left contentedly.",
+		"You hold back the desire in your heart and just turn around and leave."
     ],
     "OPTIONS": [
-		"[Continue] 靠近盘子",
+		"[Continue] get close to the plate",
 		"[Sell] #rLose #ra #rrelic. #gGain #ggold. ",
 		"[Refuse] #rLose #r",
 		" #rHP. ",
