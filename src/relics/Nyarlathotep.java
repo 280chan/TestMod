@@ -17,7 +17,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 
 	private static final String[] CARD_IDs = { "Force Field" };
 	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm", "Curiosity",
-			TestMod.makeID("PlagueActPower") };
+			TestMod.makeID("PlagueActPower"), "Recycle_Bin_Power" };
 	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets",
 			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots",
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",
@@ -102,7 +102,8 @@ public class Nyarlathotep extends AbstractTestRelic {
 		Stream.concat(Stream.of(RELIC_IDs), RELIC_LIST.stream()).distinct().filter(p()::hasRelic)
 				.forEach(id -> p().getRelic(id).onUseCard(tmp, a));
 		Stream.of(p().hand, p().discardPile, p().drawPile).flatMap(g -> g.group.stream()).filter(this::valid)
-				.forEach(b -> b.triggerOnCardPlayed(tmp));
+				.forEach(b -> b.triggerOnCardPlayed(c));
+		p().hand.group.stream().forEach(b -> b.triggerOnOtherCardPlayed(c));
 	}
 	
 	public void onExhaust(final AbstractCard c) {
