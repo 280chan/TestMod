@@ -18,11 +18,11 @@ public class Nyarlathotep extends AbstractTestRelic {
 	private static final String[] CARD_IDs = { "Force Field" };
 	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm", "Curiosity",
 			TestMod.makeID("PlagueActPower"), "Recycle_Bin_Power" };
-	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets",
-			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots",
+	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets", "SynthV:C4",
+			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots", "Clover",
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",
-			"DemoExt:GalacticMedalOfValor", "SynthV:C4", "Clover", "SynthV:MejaisSoulstealer",
-			"youkari:Boundary_crack", "BirthdayGift-Icosahedron" };
+			"DemoExt:GalacticMedalOfValor", "SynthV:MejaisSoulstealer", "youkari:Boundary_crack",
+			"BirthdayGift-Icosahedron", "RU OrangePellets", "RU Bird Faced Urn" };
 	private static final ArrayList<String> CARD_LIST = new ArrayList<String>();
 	private static final ArrayList<String> POWER_LIST = new ArrayList<String>();
 	private static final ArrayList<String> RELIC_LIST = new ArrayList<String>();

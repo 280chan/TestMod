@@ -36,6 +36,7 @@ import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 import actions.AbstractXCostAction;
 import basemod.BaseMod;
 import basemod.Pair;
+import basemod.ReflectionHacks;
 import mymod.TestMod;
 import relics.AbstractTestRelic;
 
@@ -47,6 +48,14 @@ public interface MiscMethods {
 		TestMod.info(s);
 	}
 	
+	static String getIDWithoutLog(Class<?> c) {
+		try {
+			c.getDeclaredField("ID");
+		} catch (NoSuchFieldException | SecurityException e) {
+			return c.getSimpleName();
+		}
+		return ReflectionHacks.getPrivateStatic(c, "ID");
+	}
 
 	static String getIDForUI() {
 		try {

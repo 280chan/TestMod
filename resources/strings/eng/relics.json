@@ -197,7 +197,7 @@
 	"testmod-MagicalMallet":{
 		"NAME": "Magical Mallet",
 		"FLAVOR": "上面的文字被人抹去了",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] . At the start of each turn, record the maximum and minimum cost of your hand, make all cards with these two costs in your hand switch to the other cost for rest of combat. Once each combat, you can right click this relic to active the effect."]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . At the start of each turn, record the maximum and minimum cost of your hand, make all cards with these two costs in your hand switch to the other cost for the turn. Once each combat, you can right click this relic to active the effect."]
 	},
 	
 	"testmod-Laevatain":{
@@ -443,7 +443,7 @@
 	"testmod-GoldenSoul":{
 		"NAME": "Golden Soul",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Upon pickup, lose #b75% of your #yMaximum #yhp. Whenever receive a fatal damage, instead of losing hp, lose same amount of #yGold, if you don't have enough #yGold, lose all and take rest of damage."]
+		"DESCRIPTIONS":["Upon pickup, lose #b75% of your #yMaximum #yhp. Whenever receive a fatal damage, instead of losing hp, lose same amount of #yGold, if you don't have enough #yGold, lose all and take rest of damage. For each fatal damage this relic blocks, you gain #b10% more gold in future.", " Gold rate: #b", "% "]
 	},
 	
 	"testmod-RandomTest":{
@@ -545,7 +545,7 @@
 	"testmod-TwinklingStar":{
 		"NAME": "Twinkling Star",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever an relic other than Twinkling Star flashes, damages #yAll #yEnemies by #b", ". For every #b100 effects, double the damage."]
+		"DESCRIPTIONS":["Whenever an relic other than Twinkling Star flashes, damages #yAll #yEnemies by #b", ". For every #b128 effects, doubles the damage. Next doubling at #b", " "]
 	},
 	
 	"testmod-Metronome":{

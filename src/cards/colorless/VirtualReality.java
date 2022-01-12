@@ -24,7 +24,7 @@ public class VirtualReality extends AbstractTestCard {
     }
     
     public VirtualReality() {
-        super(0, CardType.SKILL, CardRarity.RARE, CardTarget.SELF);
+        super(0, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.SELF);
         this.baseBlock = BASE_BLK;
     }
 

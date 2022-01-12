@@ -8,7 +8,7 @@ public class Nine extends AbstractRevivalRelicToModifyDamage {
 	public static String ID = "Nine";
 	
 	public Nine() {
-		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
+		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
 		this.setTestTier(BAD);
 	}
 	

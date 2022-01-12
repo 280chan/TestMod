@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
@@ -27,10 +28,7 @@ public class StringDisintegratorPatch {
 	public static class RenderTitlePatch {
 		@SpireInsertPatch(rloc = 0)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
-			if (check()) {
-				return SpireReturn.Return(null);
-			}
-			return SpireReturn.Continue();
+			return check() ? SpireReturn.Return(null) : SpireReturn.Continue();
 		}
 	}
 	
@@ -38,10 +36,7 @@ public class StringDisintegratorPatch {
 	public static class RenderDescriptionCNPatch {
 		@SpireInsertPatch(rloc = 0)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
-			if (check()) {
-				return SpireReturn.Return(null);
-			}
-			return SpireReturn.Continue();
+			return check() ? SpireReturn.Return(null) : SpireReturn.Continue();
 		}
 	}
 
@@ -49,10 +44,7 @@ public class StringDisintegratorPatch {
 	public static class RenderDescriptionPatch {
 		@SpireInsertPatch(rloc = 0)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
-			if (check()) {
-				return SpireReturn.Return(null);
-			}
-			return SpireReturn.Continue();
+			return check() ? SpireReturn.Return(null) : SpireReturn.Continue();
 		}
 	}
 	
@@ -60,10 +52,7 @@ public class StringDisintegratorPatch {
 	public static class RenderTipsPatch {
 		@SpireInsertPatch(rloc = 0)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
-			if (check()) {
-				return SpireReturn.Return(null);
-			}
-			return SpireReturn.Continue();
+			return check() ? SpireReturn.Return(null) : SpireReturn.Continue();
 		}
 	}
 
@@ -144,6 +133,23 @@ public class StringDisintegratorPatch {
 			e.printStackTrace();
 		}
 		c.hb.render(sb);
+	}
+	
+
+	@SpirePatch(clz = FontHelper.class, method = "ClearSCPFontTextures")
+	public static class FontHelperPatch {
+		@SpireInsertPatch(rloc = 3)
+		public static void Insert() {
+			if (FontHelper.SCP_cardTitleFont_small == null) {
+				TestMod.info("确认SCP_cardTitleFont_small为null，开始重新构建");
+				FontHelper.SCP_cardTitleFont_small = FontHelper.prepFont(46.0F, true);
+				if (FontHelper.SCP_cardTitleFont_small == null) {
+					TestMod.info("仍旧为null？？？");
+				} else {
+					TestMod.info("构建完毕");
+				}
+			}
+		}
 	}
 	
 }

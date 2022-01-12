@@ -9,7 +9,6 @@ import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import basemod.ReflectionHacks;
 import basemod.abstracts.CustomRelic;
 import mymod.TestMod;
 import utils.MiscMethods;
@@ -90,8 +89,7 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	
 	protected static <T extends AbstractTestRelic> String shortID(Class<T> c) {
 		if (!IDS.containsKey(c)) {
-			String tmp = ReflectionHacks.getPrivateStatic(c, "ID");
-			IDS.put(c, tmp == null ? c.getSimpleName() : tmp);
+			IDS.put(c, MiscMethods.getIDWithoutLog(c));
 		}
 		return IDS.get(c);
 	}

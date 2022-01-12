@@ -14,7 +14,7 @@ public class TemporaryDeletion extends AbstractTestCard {
 	private static final UIStrings UI = INSTANCE.uiString();
 
     public TemporaryDeletion() {
-        super(2, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
+        super(1, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
         this.isEthereal = true;
     }
 
@@ -51,7 +51,7 @@ public class TemporaryDeletion extends AbstractTestCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(1);
+            this.upgradeBaseCost(0);
         }
     }
 }

@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 
 public class PainDetonator extends AbstractTestCard {
-    private static final int BASE_MGC = 30;
+    private static final int BASE_MGC = 50;
     private static final int BASE_DMG = 0;
     
     public PainDetonator() {
@@ -30,7 +30,7 @@ public class PainDetonator extends AbstractTestCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(20);
+            this.upgradeMagicNumber(10);
         }
     }
 }

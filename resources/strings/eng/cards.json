@@ -129,6 +129,11 @@
 		"DESCRIPTION": "Add 'Infernal Blade', 'Distraction', 'White noise' and 'Discovery' into your hand. Which cost 0 this turn. Exhaust. Ethereal.",
 		"UPGRADE_DESCRIPTION": "Add 'Infernal Blade', 'Distraction', 'White noise' and 'Discovery' into your hand. Which cost 0 this turn. Ethereal."
 	},
+	"testmod-Enchant": {
+		"NAME": "Enchant",
+		"DESCRIPTION": "Choose a card from all your cards, set its magic number to !M! times, and it becomes Exhaust on use. Exhaust.",
+		"UPGRADE_DESCRIPTION": "Choose a card from all your cards, set its magic number to !M! times, and it becomes Exhaust on use."
+	},
 	"testmod-EnhanceArmerment": {
 		"NAME": "Enhance Armerment",
 		"DESCRIPTION": "Your next Attack deal double damage. Exhaust it."

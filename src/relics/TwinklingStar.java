@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 
 public class TwinklingStar extends AbstractTestRelic {
+	public static final int STEP = 128;
 	
 	public TwinklingStar() {
 		super(RelicTier.COMMON, LandingSound.MAGICAL);
@@ -13,22 +14,22 @@ public class TwinklingStar extends AbstractTestRelic {
 	}
 	
 	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0] + f() + DESCRIPTIONS[1];
+		return DESCRIPTIONS[0] + f() + DESCRIPTIONS[1] + (counter - (counter % STEP) + STEP) + DESCRIPTIONS[2];
 	}
 	
 	private int f() {
-		if (this.counter > 3099) {
+		if (this.counter > (31 * STEP - 1)) {
 			return 2000000000;
 		}
-		return this.getIdenticalList(2, this.counter / 100).stream().reduce(1, (a, b) -> a * b);
+		return this.getIdenticalList(2, this.counter / STEP).stream().reduce(1, (a, b) -> a * b);
 	}
 	
 	public void act() {
 		if (this.hasEnemies()) {
 			this.counter++;
-			if (this.counter % 100 == 99) {
+			if (this.counter % STEP == STEP - 1) {
 				this.beginLongPulse();
-			} else if (this.counter % 100 == 0) {
+			} else if (this.counter % STEP == 0) {
 				this.stopPulse();
 				this.updateDescription(p().chosenClass);
 			}

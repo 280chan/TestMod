@@ -19,6 +19,15 @@ public class PowerStrike extends AbstractTestCard {
     	this.addToBot(new PowerStrikeAction(p, this.magicNumber));
     }
     
+    public void initializeDescription() {
+		if (this.magicNumber > 4) {
+			int mod = magicNumber % 10, whole = 1 + magicNumber / 10;
+			this.rawDescription = exDesc()[0]
+					+ (mod == 0 ? whole : (magicNumber < 10 ? 1 + ". !M! " : whole + "." + mod)) + exDesc()[1];
+		}
+    	super.initializeDescription();
+    }
+    
     public boolean canUpgrade() {
     	return true;
     }
@@ -28,9 +37,6 @@ public class PowerStrike extends AbstractTestCard {
     	this.name = this.name() + "+" + ++this.timesUpgraded;
         this.initializeTitle();
         this.upgradeMagicNumber(1);
-		this.upDesc(exDesc()[0]
-				+ (magicNumber % 10 == 0 ? (1 + magicNumber / 10)
-						: (magicNumber < 10 ? 1 + ". !M! " : (1 + magicNumber / 10) + "." + (magicNumber % 10)))
-				+ exDesc()[1]);
+		this.initializeDescription();
     }
 }

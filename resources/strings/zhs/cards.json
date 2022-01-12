@@ -129,6 +129,11 @@
 		"DESCRIPTION": "将地狱之刃、声东击西、白噪声、发现加入手牌，其耗能在本回合变为0。 消耗 。 虚无 。",
 		"UPGRADE_DESCRIPTION": "将地狱之刃、声东击西、白噪声、发现加入手牌，其耗能在本回合变为0。 虚无 。"
 	},
+	"testmod-Enchant": {
+		"NAME": "附魔",
+		"DESCRIPTION": "从你所有牌中选择一张牌，将其特殊值变为 !M! 倍，并在打出时 消耗 。 消耗 。",
+		"UPGRADE_DESCRIPTION": "从你所有牌中选择一张牌，将其特殊值变为 !M! 倍，并在打出时 消耗 。"
+	},
 	"testmod-EnhanceArmerment": {
 		"NAME": "完全支配",
 		"DESCRIPTION": "你打出的下一张攻击牌的伤害翻倍，但其将被 消耗 。"

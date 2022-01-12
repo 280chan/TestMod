@@ -5,14 +5,13 @@ import java.util.stream.IntStream;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import mymod.TestMod;
 
 public class MagicalMallet extends AbstractTestRelic implements ClickableRelic {
 	private boolean playerTurn = false, used = false;
 	
 	public MagicalMallet() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL, BAD);
+		super(RelicTier.SHOP, LandingSound.MAGICAL, BAD);
 	}
 	
 	public void onEquip() {
@@ -42,7 +41,7 @@ public class MagicalMallet extends AbstractTestRelic implements ClickableRelic {
 	
 	public void atTurnStartPostDraw() {
 		this.addTmpActionToBot(() -> {
-			List<AbstractCard> hand = AbstractDungeon.player.hand.group;
+			List<AbstractCard> hand = p().hand.group;
 			if (hand.isEmpty())
 				return;
 			int min = costs(hand).min().orElse(999);
@@ -50,10 +49,8 @@ public class MagicalMallet extends AbstractTestRelic implements ClickableRelic {
 			TestMod.info("最大: " + max + ",最小: " + min);
 			if (min == max)
 				return;
-			hand.stream().filter(c -> c.costForTurn == min || c.costForTurn == max).forEach(c -> {
-				c.modifyCostForCombat(min - c.costForTurn + max - c.costForTurn);
-				c.costForTurn = c.cost;
-			});
+			hand.stream().filter(c -> c.costForTurn == min || c.costForTurn == max)
+					.forEach(c -> c.setCostForTurn(min - c.costForTurn + max));
 			this.show();
 		});
     }

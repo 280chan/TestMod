@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.stream.Stream;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
-import basemod.ReflectionHacks;
 import basemod.abstracts.CustomCard;
 import mymod.TestMod;
 import utils.MiscMethods;
@@ -106,8 +105,7 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 	
 	protected static <T extends AbstractTestCard> String shortID(Class<T> c) {
 		if (!IDS.containsKey(c)) {
-			String tmp = ReflectionHacks.getPrivateStatic(c, "ID");
-			IDS.put(c, tmp == null ? c.getSimpleName() : tmp);
+			IDS.put(c, MiscMethods.getIDWithoutLog(c));
 		}
 		return IDS.get(c);
 	}

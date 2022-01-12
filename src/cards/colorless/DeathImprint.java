@@ -16,7 +16,7 @@ import com.megacrit.cardcrawl.dungeons.*;
 
 public class DeathImprint extends AbstractTestCard {
     private static final int BASE_DMG = 8;
-    private static final int BASE_MGC = 80;
+    private static final int BASE_MGC = 100;
     public boolean same = false;
 	@SuppressWarnings("unchecked")
 	private static final Supplier<Boolean> G = () -> AbstractDungeon.getMonsters().monsters.stream()

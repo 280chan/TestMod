@@ -12,7 +12,7 @@ public class MoneyShot extends AbstractTestCard {
     private static final int BASE_DMG = 0;
 
     public MoneyShot() {
-        super(1, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
+        super(0, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;
     }
     

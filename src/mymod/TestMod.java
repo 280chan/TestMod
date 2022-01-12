@@ -110,7 +110,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 12/6/2021
+ * @version 1/11/2022
  * @since 6/17/2018
  */
 
@@ -299,8 +299,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new VentureCapital(), new GoldenSoul(), new GreedyDevil(), new Gather(), new GremlinBalance(),
 				new GlassSoul(), new TemporaryBarricade(), new ShadowAmulet());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
-		addLatest(new VirtualReality(), new WeaknessCounterattack(), new Reproduce(), new HandmadeProducts(),
-				new Automaton(), new PowerStrike());
+		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
+				new HandmadeProducts(), new Automaton());
 	}
 
 	private static void addRelic(AbstractRelic r) {
@@ -371,7 +371,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new RabbitOfFibonacci(), new TradeIn(), new Reproduce(), new PainDetonator(), new Reverberation(),
 				new CardIndex(), new PowerStrike(), new TaurusBlackCat(), new PerfectCombo(), new Lexicography(),
 				new Librarian(), new VirtualReality(), new HandmadeProducts(), new DeathImprint(),
-				new TreasureHunter(), new MoneyShot())
+				new TreasureHunter(), new MoneyShot(), new Enchant())
 				.collect(this.toArrayList());
 		addAnonymousCards();
 		
@@ -433,7 +433,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				(c, p, m) -> this.addTmpActionToTop(new IncreaseMaxOrbAction(1),
 						apply(p, new ChaoticCorePower(p, c.magicNumber))),
 				c -> c.upMGC(1)));
-		add(new AnonymousCard("Collector", 2, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY, 8, 0, 1,
+		add(new AnonymousCard("Collector", 1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY, 8, 0, 1,
 				(c, p, m) -> {
 					AttackEffect e = AttackEffect.SLASH_DIAGONAL;
 			    	if (c.damage > 40)
@@ -496,7 +496,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		add(new AnonymousCard("FightingIntention", 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,
 				(c, p, m) -> att(apply(p, new FightingIntentionPower(p, c.magicNumber))), c -> c.upCost(2)));
 		add(new AnonymousCard("HeadAttack", 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY, false, true,
-				false, 0, 0, 1, (c, p, m) -> {
+				false, 0, 0, 2, (c, p, m) -> {
 					att(new DrawCardAction(p, c.magicNumber));
 					this.rollIntentAction(m);
 				}, c -> c.upMGC(1)));
