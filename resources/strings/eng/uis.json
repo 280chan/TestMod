@@ -175,5 +175,12 @@
 			"Stronger relics which appear less often than common relics.(250)",
 			"Uncategorized relics.(-1)"
 		]
+	},
+
+	"testmod-Enchant": {
+		"TEXT": [
+			"Choose a card, set its magic number to ",
+			" times"
+		]
 	}
 }
