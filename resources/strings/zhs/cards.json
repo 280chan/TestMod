@@ -136,7 +136,7 @@
 	},
 	"testmod-EnhanceArmerment": {
 		"NAME": "完全支配",
-		"DESCRIPTION": "你打出的下一张攻击牌的伤害翻倍，但其将被 消耗 。"
+		"DESCRIPTION": "你打出的下一张攻击牌的伤害翻倍 !M! 次，但其将被 消耗 。"
 	},
 	"testmod-EternalityOfKhronos": {
 		"NAME": "柯罗诺斯的永恒",
@@ -149,7 +149,7 @@
 	},
 	"testmod-HandmadeProducts": {
 		"NAME": "手工产品",
-		"DESCRIPTION": "造成你手牌中所有牌的[耗能加一]之积( !D! )点伤害。杀死敌人则耗能在本局游戏中增加 !M! 。能被多次 升级 。 升级 会将耗能变为1。"
+		"DESCRIPTION": "造成你手牌中所有牌的[耗能加 !M! ]之积( !D! )点伤害。杀死敌人则耗能在本局游戏中增加1。能被多次 升级 。 升级 会将耗能变为1。"
 	},
 	"testmod-HeadAttack": {
 		"NAME": "头部攻击",
@@ -209,8 +209,8 @@
 	},
 	"testmod-Plague": {
 		"NAME": "瘟疫",
-		"DESCRIPTION": "每回合开始使随机敌人获得X层 中毒 、 缠绕 、 勒脖 。每当你打出 能力牌 ，使所有敌人的 中毒 缠绕 生效一次。 虚无 。",
-		"UPGRADE_DESCRIPTION": "每回合开始使随机敌人获得X层 中毒 、 缠绕 、 勒脖 。每当你打出 能力牌 ，使所有敌人的 中毒 缠绕 生效一次。"
+		"DESCRIPTION": "每回合开始使随机敌人获得X层 中毒 、 缠绕 、 勒脖 。每当你打出 能力牌 ，使所有敌人的 中毒 缠绕 生效 !M! 次。 虚无 。",
+		"UPGRADE_DESCRIPTION": "每回合开始使随机敌人获得X层 中毒 、 缠绕 、 勒脖 。每当你打出 能力牌 ，使所有敌人的 中毒 缠绕 生效 !M! 次。"
 	},
 	"testmod-PocketStoneCalender": {
 		"NAME": "掌上历石",

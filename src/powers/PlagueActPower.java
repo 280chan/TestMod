@@ -17,16 +17,13 @@ public class PlagueActPower extends AbstractTestPower {
 	private static final String NAME = PS.NAME;
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
-	public PlagueActPower(AbstractCreature owner) {
+	public PlagueActPower(AbstractCreature owner, int amount) {
 		super(POWER_ID);
 		this.name = NAME;
 		this.owner = owner;
+		this.amount = amount;
 		updateDescription();
 		this.type = PowerType.BUFF;
-	}
-	
-	public void stackPower(int stackAmount) {
-		this.fontScale = 8.0f;
 	}
 	
 	public void updateDescription() {
@@ -35,7 +32,7 @@ public class PlagueActPower extends AbstractTestPower {
 	
 	public void onUseCard(AbstractCard c, UseCardAction action) {
 		if (c.type == CardType.POWER)
-			AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(this::inBattle).forEach(this::actPower);
+			AbstractDungeon.getMonsters().monsters.stream().filter(this::inBattle).forEach(this::actPower);
 	}
 	
 	private boolean inBattle(AbstractCreature m) {
@@ -43,10 +40,12 @@ public class PlagueActPower extends AbstractTestPower {
 	}
 	
 	private void actPower(AbstractCreature m) {
-		if (m.hasPower(PoisonPower.POWER_ID))
-			this.addToTop(new PlaguePoisonActAction(this.owner, m.getPower(PoisonPower.POWER_ID)));
-		if (m.hasPower(ConstrictedPower.POWER_ID))
-			m.getPower(ConstrictedPower.POWER_ID).atEndOfTurn(false);
+		for (int i = 0; i < this.amount; i++) {
+			if (m.hasPower(PoisonPower.POWER_ID))
+				this.addToTop(new PlaguePoisonActAction(this.owner, m.getPower(PoisonPower.POWER_ID)));
+			if (m.hasPower(ConstrictedPower.POWER_ID))
+				m.getPower(ConstrictedPower.POWER_ID).atEndOfTurn(false);
+		}
 	}
 
 }

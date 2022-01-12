@@ -51,9 +51,9 @@ public class AssimilatedRunePower extends AbstractTestPower {
 	}
 	
 	private Stream<AbstractCard> getList() {
-		Stream<CardGroup> s = Stream.of(AbstractDungeon.player.hand);
+		Stream<CardGroup> s = Stream.of(p().hand);
 		if (this.upgraded) {
-			s = Stream.concat(s, Stream.of(AbstractDungeon.player.drawPile, AbstractDungeon.player.discardPile));
+			s = Stream.concat(s, Stream.of(p().drawPile, p().discardPile));
 		}
 		return s.flatMap(g -> g.group.stream());
 	}

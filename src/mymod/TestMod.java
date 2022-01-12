@@ -449,7 +449,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				}).override("calculateCardDamage", l -> {
 					AnonymousCard c = (AnonymousCard) l.get(0);
 					AbstractMonster m = (AbstractMonster) l.get(1);
-			    	c.baseDamage = c.misc + c.magicNumber * AbstractDungeon.player.relics.size();
+			    	c.baseDamage = c.misc + c.magicNumber * p().relics.size();
 					c.absoluteSkip = true;
 					c.calculateCardDamage(m);
 					c.absoluteSkip = false;
@@ -515,8 +515,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				}, c -> c.upMGC(1))
 						.glow(a -> AbstractDungeon.player.drawPile.group.stream().anyMatch(c -> c.isEthereal)));	
 		add(new AnonymousCard("Plague", -1, CardType.POWER, CardRarity.RARE, CardTarget.SELF, false, true, false,
-				0, 0, 0, (c, p, m) -> {
-					att(apply(p, new PlagueActPower(p)));
+				0, 0, 1, (c, p, m) -> {
+					att(apply(p, new PlagueActPower(p, c.magicNumber)));
 					this.addTmpXCostActionToTop(c, e -> att(apply(p, new PlaguePower(p, e))));
 				}, c -> {
 					c.upDesc();

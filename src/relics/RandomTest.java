@@ -27,6 +27,7 @@ public class RandomTest extends AbstractTestRelic {
 							.filter(c -> c.cost > -2 && c.costForTurn != 0 && !c.freeToPlayOnce)
 							.collect(Collectors.toList());
 					reduceRandom(list.isEmpty() ? p().hand.group : list);
+				    this.show();
 				}
 			});
 		}
@@ -48,6 +49,7 @@ public class RandomTest extends AbstractTestRelic {
 		AbstractCard c = randomFrom(TestMod.CARDS).makeCopy();
 		UnlockTracker.markCardAsSeen(c.cardID);
 	    this.addToBot(new MakeTempCardInHandAction(c));
+	    this.show();
     }
 	
 	public void onRefreshHand() {

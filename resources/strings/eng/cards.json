@@ -136,7 +136,7 @@
 	},
 	"testmod-EnhanceArmerment": {
 		"NAME": "Enhance Armerment",
-		"DESCRIPTION": "Your next Attack deal double damage. Exhaust it."
+		"DESCRIPTION": "Your next Attack card's damage is doubled !M! time. But it will Exhaust."
 	},
 	"testmod-EternalityOfKhronos": {
 		"NAME": "Eternality of Khronos",
@@ -149,7 +149,7 @@
 	},
 	"testmod-HandmadeProducts": {
 		"NAME": "Handmade Products",
-		"DESCRIPTION": "Deal damage of the product of all cards' [cost plus 1] in your hand. If kills enemy, increase this card's cost by !M! . Can be Upgraded any number of times. Upgrade will set cost to 1."
+		"DESCRIPTION": "Deal damage of the product of all cards' [cost plus !M! ] in your hand. If kills enemy, increase this card's cost by 1. Can be Upgraded any number of times. Upgrade will set cost to 1."
 	},
 	"testmod-HeadAttack": {
 		"NAME": "Head Attack",
@@ -209,8 +209,8 @@
 	},
 	"testmod-Plague": {
 		"NAME": "Plague",
-		"DESCRIPTION": "At start of each turn, apply X Poison, Constricted and Choked to random enemy. Whenever you play a Power card, make all enemies' Poison and Constricted affect once. Ethereal.",
-		"UPGRADE_DESCRIPTION": "At start of each turn, apply X Poison, Constricted and Choked to random enemy. Whenever you play a Power card, make all enemies' Poison and Constricted affect once."
+		"DESCRIPTION": "At start of each turn, apply X Poison, Constricted and Choked to random enemy. Whenever you play a Power card, make all enemies' Poison and Constricted affect !M! time. Ethereal.",
+		"UPGRADE_DESCRIPTION": "At start of each turn, apply X Poison, Constricted and Choked to random enemy. Whenever you play a Power card, make all enemies' Poison and Constricted affect !M! time."
 	},
 	"testmod-PocketStoneCalender": {
 		"NAME": "Pocket Stone Calender",
