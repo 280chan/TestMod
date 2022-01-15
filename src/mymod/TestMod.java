@@ -76,7 +76,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 1/14/2022
+ * @version 1/15/2022
  * @since 6/17/2018
  */
 
@@ -263,7 +263,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private void initLatest() {
 		addLatest(new HolyLightProtection(), new Dye(), new MistCore(), new ResonanceStone(), new EvilDagger(),
 				new VentureCapital(), new GoldenSoul(), new GreedyDevil(), new Gather(), new GremlinBalance(),
-				new GlassSoul(), new TemporaryBarricade(), new ShadowAmulet());
+				new GlassSoul(), new TemporaryBarricade(), new ShadowAmulet(), new Match3());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton());
@@ -294,7 +294,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new Brilliant(),
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
 				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller(), new TwinklingStar(),
-				new Metronome(), new Gather(), new HolyLightProtection(), new EvilDagger())
+				new Metronome(), new Gather(), new HolyLightProtection(), new EvilDagger(), new Match3())
 				.collect(this.toArrayList());
 		if (!Loader.isModLoaded("FoggyMod"))
 			RELICS.add(new MistCore());

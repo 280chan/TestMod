@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import mymod.TestMod;
 
 public class RandomTest extends AbstractTestRelic {
@@ -47,7 +46,6 @@ public class RandomTest extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		AbstractCard c = randomFrom(TestMod.CARDS).makeCopy();
-		UnlockTracker.markCardAsSeen(c.cardID);
 	    this.addToBot(new MakeTempCardInHandAction(c));
 	    this.show();
     }
@@ -62,7 +60,7 @@ public class RandomTest extends AbstractTestRelic {
 		boolean active = false;
 		if (!this.inCombat())
 			return;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
+		for (AbstractCard c : p().hand.group) {
 			if (c.color == CardColor.COLORLESS && c.hasEnoughEnergy()
 					&& c.cardPlayable(AbstractDungeon.getRandomMonster())) {
 				this.addToGlowChangerList(c, color);

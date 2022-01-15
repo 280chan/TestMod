@@ -13,12 +13,14 @@ public abstract class AbstractTestPotion extends AbstractPotion {
 	
 	public AbstractTestPotion(String name, String id, PotionRarity rarity, PotionSize size, PotionColor color) {
 		super(name, id, rarity, size, color);
-		this.potency = this.getPotency();
-		this.description = this.getDesc();
-		this.tips.clear();
-		this.tips.add(new PowerTip(this.name, this.description));
 	}
 
 	protected abstract String getDesc();
 	
+	public void initializeData() {
+		this.potency = getPotency();
+		this.description = getDesc();
+		this.tips.clear();
+		this.tips.add(new PowerTip(this.name, this.description));
+	}
 }

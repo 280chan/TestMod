@@ -1,6 +1,8 @@
 package relics;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.OnPlayerDeathRelic;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
@@ -13,10 +15,8 @@ import com.megacrit.cardcrawl.helpers.ModHelper;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
-import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.EventRoom;
@@ -68,32 +68,38 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	private boolean checkDefenceDown(AbstractMonster m, boolean preBattle) {
 		if (!preBattle && DefenceDownPower.hasThis(m))
 			return false;
-		if (m.type == EnemyType.NORMAL && checkLevel(2))
-			return true;
-		if (m.type == EnemyType.ELITE && checkLevel(3))
-			return true;
-		if (m.type == EnemyType.BOSS && checkLevel(4))
-			return true;
+		switch (m.type) {
+		case BOSS:
+			return checkLevel(4);
+		case ELITE:
+			return checkLevel(3);
+		case NORMAL:
+			return checkLevel(2);
+		}
 		return false;
 	}
 	
 	private boolean checkReceiveDamage(AbstractMonster m) {
-		if (m.type == EnemyType.NORMAL && checkLevel(7))
-			return true;
-		if (m.type == EnemyType.ELITE && checkLevel(8))
-			return true;
-		if (m.type == EnemyType.BOSS && checkLevel(9))
-			return true;
+		switch (m.type) {
+		case BOSS:
+			return checkLevel(9);
+		case ELITE:
+			return checkLevel(8);
+		case NORMAL:
+			return checkLevel(7);
+		}
 		return false;
 	}
 	
 	private boolean checkLoseStrength(AbstractMonster m) {
-		if (m.type == EnemyType.NORMAL && checkLevel(17))
-			return true;
-		if (m.type == EnemyType.ELITE && checkLevel(18))
-			return true;
-		if (m.type == EnemyType.BOSS && checkLevel(19))
-			return true;
+		switch (m.type) {
+		case BOSS:
+			return checkLevel(19);
+		case ELITE:
+			return checkLevel(18);
+		case NORMAL:
+			return checkLevel(17);
+		}
 		return false;
 	}
 	
@@ -116,7 +122,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 			}
 		}
 		if (checkLevel(21)) {
-			AbstractDungeon.player.gainGold(10);
+			p().gainGold(10);
 		}
 	}
 	
@@ -126,9 +132,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	
 	public void onPlayerEndTurn() {
 		if (checkLevel(10))
-			AbstractDungeon.player.hand.group.stream().filter(c -> c.type == CardType.CURSE).forEach(c -> {
-				c.exhaust = true;
-			});
+			p().hand.group.stream().filter(c -> c.type == CardType.CURSE).forEach(c -> c.exhaust = true);
     }
 	
 	private void setEthereal(AbstractCard c) {
@@ -138,18 +142,18 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	}
 	
 	private boolean checkAddEthereal(AbstractCard c) {
-		return (c.type == CardType.CURSE && !c.isEthereal && checkLevel(10))
-				|| (c.type == CardType.STATUS && !c.isEthereal && checkLevel(24));
+		return !c.isEthereal && ((c.type == CardType.CURSE && checkLevel(10))
+				|| (c.type == CardType.STATUS && checkLevel(24)));
 	}
 	
 	public void onRefreshHand() {
-		AbstractDungeon.player.hand.group.stream().filter(this::checkAddEthereal).forEach(this::setEthereal);
+		p().hand.group.stream().filter(this::checkAddEthereal).forEach(this::setEthereal);
 	}
 	
 	public void onSpendGold() {
 		if (checkLevel(16) && !looping) {
 			looping = true;
-			AbstractDungeon.player.gainGold(10);
+			p().gainGold(10);
 		}
 		looping = false;
 	}
@@ -161,7 +165,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		this.counter = AbstractDungeon.ascensionLevel;
 		if (this.counter == 0)
 			this.counter = -1;
-		this.updateDescription(AbstractDungeon.player.chosenClass);
+		this.updateDescription(p().chosenClass);
     }
 	
 	private boolean alive(AbstractMonster m) {
@@ -170,9 +174,9 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	
 	public void atPreBattle() {
 		if (checkLevel(6)) {
-			AbstractDungeon.player.heal(1, true);
+			p().heal(1, true);
 		}
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+		for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
 			if (!m.isDead && !m.isDying && !m.halfDead && !m.isEscaping && !m.escaped) {
 				if (checkDefenceDown(m, true))
 					m.powers.add(new DefenceDownPower(m, 10));
@@ -197,11 +201,10 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
     }
 	
 	public void atTurnStart() {
-		AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(this::alive)
-			.filter(m -> { return checkDefenceDown(m, false); })
-			.forEach(m -> { m.powers.add(new DefenceDownPower(m, 10));});
+		AbstractDungeon.getMonsters().monsters.stream().filter(this::alive).filter(m -> checkDefenceDown(m, false))
+				.forEach(m -> m.powers.add(new DefenceDownPower(m, 10)));
 		if (checkLevel(25)) {
-			int e = (int) AbstractDungeon.player.relics.stream().filter(r -> {return r.tier == RelicTier.RARE;}).count();
+			int e = (int) p().relics.stream().filter(r -> r.tier == RelicTier.RARE).count();
 			if (e > 2)
 				this.addToBot(new GainEnergyAction(e / 3));
 		}
@@ -211,7 +214,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		AbstractRoom room = AbstractDungeon.getCurrRoom();
 		if (room instanceof MonsterRoomElite) {
 			if (checkLevel(14))
-				AbstractDungeon.player.increaseMaxHp(1, true);
+				p().increaseMaxHp(1, true);
 			if (checkLevel(1))
 				startEliteSwarm();
 		}
@@ -219,26 +222,24 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 			if (checkLevel(13))
 				room.addGoldToRewards(50);
 			if (checkLevel(5))
-				AbstractDungeon.player.increaseMaxHp(5, true);
+				p().increaseMaxHp(5, true);
 		}
     }
 	
 	private static boolean eliteSwarm = false;
 	
 	private static void updateChangeCard() {
-		if (eliteSwarm && checkNumCards() && AbstractDungeon.screen == CurrentScreen.COMBAT_REWARD) {
-			for (RewardItem r : AbstractDungeon.combatRewardScreen.rewards) {
-				if (r.type == RewardType.CARD) {
-					for (int i = 0; i < r.cards.size(); i++) {
-						AbstractCard c = r.cards.get(i);
-						if (c.rarity == CardRarity.COMMON || c.rarity == CardRarity.UNCOMMON) {
-							ArrayList<AbstractCard> pool = AbstractDungeon.srcRareCardPool.group;
-							r.cards.set(i, pool.get(AbstractDungeon.cardRandomRng.random(pool.size() - 1)).makeCopy());
-						}
-					}
-				}
-			}
-		}
+		if (!(eliteSwarm && checkNumCards() && AbstractDungeon.screen == CurrentScreen.COMBAT_REWARD))
+			return;
+		AbstractDungeon.combatRewardScreen.rewards.stream().filter(r -> r.type == RewardType.CARD).forEach(r -> {
+			int size = r.cards.size();
+			r.cards = r.cards.stream().filter(c -> c.rarity == CardRarity.RARE).collect(INSTANCE.toArrayList());
+			ArrayList<AbstractCard> pool = AbstractDungeon.srcRareCardPool.group.stream()
+					.filter(b -> r.cards.stream().noneMatch(a -> b.cardID.equals(a.cardID)))
+					.collect(INSTANCE.toArrayList());
+			Collections.shuffle(pool, new Random(AbstractDungeon.cardRng.randomLong()));
+			pool.stream().limit(size - r.cards.size()).forEach(r.cards::add);
+		});
 	}
 	
 	public void update() {
@@ -247,7 +248,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	}
 	
 	private static boolean checkNumCards() {
-		AbstractPlayer p = AbstractDungeon.player;
+		AbstractPlayer p = INSTANCE.p();
 		return !p.hasRelic("Busted Crown") || !ModHelper.isModEnabled("Binary") || p.hasRelic("Question Card");
 	}
 	
@@ -261,21 +262,21 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	
 	@Override
 	public boolean onPlayerDeath(AbstractPlayer p, DamageInfo info) {
-		if (checkLevel(20) && !revived && !AbstractDungeon.player.hasRelic("Mark of the Bloom")) {
+		if (checkLevel(20) && !revived && !p().hasRelic("Mark of the Bloom")) {
 			revived = true;
 			save();
 			this.updateDescription();
-			AbstractDungeon.player.heal(AbstractDungeon.player.maxHealth, true);
-			return AbstractDungeon.player.currentHealth < 1;
+			p().heal(p().maxHealth, true);
+			return p().currentHealth < 1;
 		}
 		return true;
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (room instanceof EventRoom) {
-			AbstractDungeon.player.powers.add(new EventHalfDamagePower(AbstractDungeon.player, this));
+			p().powers.add(new EventHalfDamagePower(p(), this));
 		} else if (EventHalfDamagePower.hasThis()) {
-			AbstractDungeon.player.powers.remove(EventHalfDamagePower.getThis());
+			p().powers.remove(EventHalfDamagePower.getThis());
 		}
 		if (eliteSwarm) {
 			stopEliteSwarm();
@@ -284,12 +285,12 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	
 	public void onUsePotion() {
 		if (checkLevel(11))
-			AbstractDungeon.player.heal(3, true);
+			p().heal(3, true);
 	}
 	
 	public void onLoseHp(int damageAmount) {
 		if (checkLevel(22)) {
-			AbstractDungeon.player.gainGold(10);
+			p().gainGold(10);
 		}
 	}
 	

@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 import basemod.ReflectionHacks;
 import mymod.TestMod;
+import utils.MiscMethods.Lambda;
 
 @SuppressWarnings("rawtypes")
 public class StringDisintegratorPatch {
@@ -24,11 +25,16 @@ public class StringDisintegratorPatch {
 				&& AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT && AbstractDungeon.player.hasRelic(id);
 	}
 
+	private static SpireReturn setReturn(Lambda act) {
+		if (check() && act != null) act.run();
+		return check() ? SpireReturn.Return(null) : SpireReturn.Continue();
+	}
+	
 	@SpirePatch(clz = SingleCardViewPopup.class, method = "renderTitle")
 	public static class RenderTitlePatch {
 		@SpireInsertPatch(rloc = 0)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return check() ? SpireReturn.Return(null) : SpireReturn.Continue();
+			return setReturn(null);
 		}
 	}
 	
@@ -36,7 +42,7 @@ public class StringDisintegratorPatch {
 	public static class RenderDescriptionCNPatch {
 		@SpireInsertPatch(rloc = 0)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return check() ? SpireReturn.Return(null) : SpireReturn.Continue();
+			return setReturn(null);
 		}
 	}
 
@@ -44,7 +50,7 @@ public class StringDisintegratorPatch {
 	public static class RenderDescriptionPatch {
 		@SpireInsertPatch(rloc = 0)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return check() ? SpireReturn.Return(null) : SpireReturn.Continue();
+			return setReturn(null);
 		}
 	}
 	
@@ -52,7 +58,7 @@ public class StringDisintegratorPatch {
 	public static class RenderTipsPatch {
 		@SpireInsertPatch(rloc = 0)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return check() ? SpireReturn.Return(null) : SpireReturn.Continue();
+			return setReturn(null);
 		}
 	}
 
@@ -60,26 +66,15 @@ public class StringDisintegratorPatch {
 	public static class RenderPatch {
 		@SpireInsertPatch(rloc = 0)
 		public static SpireReturn Insert(CardGroup g, SpriteBatch sb) {
-			if (check()) {
-				for (AbstractCard c : g.group)
-					renderRewardCard(c, sb);
-				return SpireReturn.Return(null);
-			}
-			return SpireReturn.Continue();
+			return setReturn(() -> g.group.stream().forEach(c -> renderRewardCard(c, sb)));
 		}
 	}
 
 	@SpirePatch(clz = CardGroup.class, method = "renderExceptOneCard")
 	public static class renderExceptOneCardPatch {
 		@SpireInsertPatch(rloc = 0)
-		public static SpireReturn Insert(CardGroup g, SpriteBatch sb, AbstractCard card) {
-			if (check()) {
-				for (AbstractCard c : g.group)
-					if (!c.equals(card))
-						renderRewardCard(c, sb);
-				return SpireReturn.Return(null);
-			}
-			return SpireReturn.Continue();
+		public static SpireReturn Insert(CardGroup g, SpriteBatch sb, AbstractCard c) {
+			return setReturn(() -> g.group.stream().filter(a -> !a.equals(c)).forEach(a -> renderRewardCard(a, sb)));
 		}
 	}
 	
@@ -87,13 +82,7 @@ public class StringDisintegratorPatch {
 	public static class RenderCardRewardPatch {
 		@SpireInsertPatch(rloc = 38)
 		public static SpireReturn Insert(CardRewardScreen crs, SpriteBatch sb) {
-			if (check()) {
-				for (AbstractCard c : crs.rewardGroup) {
-					renderRewardCard(c, sb);
-				}
-				return SpireReturn.Return(null);
-			}
-			return SpireReturn.Continue();
+			return setReturn(() -> crs.rewardGroup.stream().forEach(c -> renderRewardCard(c, sb)));
 		}
 	}
 	
@@ -101,10 +90,13 @@ public class StringDisintegratorPatch {
 		ReflectionHacks.privateMethod(AbstractCard.class, name, SpriteBatch.class).invoke(c, sb);
 	}
 	
-	private static void methodInvokeWithBoolean(String name, AbstractCard c, SpriteBatch sb) {
-		boolean hovered = ReflectionHacks.getPrivate(c, AbstractCard.class, "hovered");
+	private static void methodInvokeWithHovered(String name, AbstractCard c, SpriteBatch sb) {
+		methodInvokeWithSelected(name, c, sb, ReflectionHacks.getPrivate(c, AbstractCard.class, "hovered"));
+	}
+	
+	private static void methodInvokeWithSelected(String name, AbstractCard c, SpriteBatch sb, boolean selected) {
 		ReflectionHacks.privateMethod(AbstractCard.class, name, SpriteBatch.class, boolean.class, boolean.class)
-				.invoke(c, sb, hovered, false);
+				.invoke(c, sb, selected, false);
 	}
 	
 	private static void renderRewardCard(AbstractCard c, SpriteBatch sb) {
@@ -122,12 +114,12 @@ public class StringDisintegratorPatch {
 			if (!c.isFlipped) {
 				ReflectionHacks.privateMethod(AbstractCard.class, "updateGlow").invoke(c);
 				methodInvoke("renderGlow", c, sb);
-				methodInvokeWithBoolean("renderImage", c, sb);
+				methodInvokeWithHovered("renderImage", c, sb);
 				methodInvoke("renderType", c, sb);
 				methodInvoke("renderTint", c, sb);
 				methodInvoke("renderEnergy", c, sb);
 			} else {
-				methodInvokeWithBoolean("renderBack", c, sb);
+				methodInvokeWithHovered("renderBack", c, sb);
 			}
 		} catch (SecurityException | IllegalArgumentException e) {
 			e.printStackTrace();
@@ -135,6 +127,49 @@ public class StringDisintegratorPatch {
 		c.hb.render(sb);
 	}
 	
+	private static void renderRewardCard(AbstractCard c, SpriteBatch sb, boolean selected) {
+		if (Settings.hideCards)
+			return;
+		if (c.flashVfx != null)
+			c.flashVfx.render(sb);
+		
+		boolean isOnScreen = c.current_y >= -200.0F * Settings.scale
+				&& c.current_y <= (float) Settings.HEIGHT + 200.0F * Settings.scale;
+		if (!isOnScreen) {
+			return;
+		}
+		try {
+			if (!c.isFlipped) {
+				ReflectionHacks.privateMethod(AbstractCard.class, "updateGlow").invoke(c);
+				methodInvoke("renderGlow", c, sb);
+				methodInvokeWithSelected("renderImage", c, sb, selected);
+				methodInvoke("renderType", c, sb);
+				methodInvoke("renderTint", c, sb);
+				methodInvoke("renderEnergy", c, sb);
+			} else {
+				methodInvokeWithSelected("renderBack", c, sb, selected);
+			}
+		} catch (SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		c.hb.render(sb);
+	}
+	
+	@SpirePatch(clz = AbstractCard.class, method = "renderCard")
+	public static class renderCardPatch {
+		@SpireInsertPatch(rloc = 0)
+		public static SpireReturn Insert(AbstractCard c, SpriteBatch sb, boolean hovered, boolean selected) {
+			return setReturn(() -> renderRewardCard(c, sb, selected));
+		}
+	}
+	
+	@SpirePatch(clz = AbstractCard.class, method = "renderCardTip")
+	public static class renderCardTipPatch {
+		@SpireInsertPatch(rloc = 0)
+		public static SpireReturn Insert(AbstractCard c, SpriteBatch sb) {
+			return setReturn(null);
+		}
+	}
 
 	@SpirePatch(clz = FontHelper.class, method = "ClearSCPFontTextures")
 	public static class FontHelperPatch {

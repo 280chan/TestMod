@@ -5,7 +5,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.shrines.WeMeetAgain;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.potions.PotionSlot;
@@ -22,13 +21,6 @@ public class SpacePotion extends AbstractTestPotion {
 	public SpacePotion() {
 		super(NAME, POTION_ID, PotionRarity.UNCOMMON, PotionSize.T, PotionColor.NONE);
 		this.isThrown = false;
-	}
-
-	public void initializeData() {
-		this.potency = getPotency();
-		this.description = getDesc();
-		this.tips.clear();
-		this.tips.add(new PowerTip(this.name, this.description));
 	}
 	
 	public String getDesc() {
