@@ -26,7 +26,7 @@
 	"testmod-EnergyCheck":{
 		"NAME": "Energy Check",
 		"FLAVOR": "有借有还，除非杀完。",
-		"DESCRIPTIONS":["If you have insufficient energy to play a card, you may advance energy next turn. If the amount of energy your advanced surpass your default energy each turn, for each energy surpassed, lose #r1 HP; for each more energy surpassed, lose #r1 more HP."]
+		"DESCRIPTIONS":["Right click this relic to advance energy next turn. If the amount of energy your advanced surpass your default energy each turn, for nth energy surpassed, lose #rn HP."]
 	},
 	
 	"testmod-SevenDeadlySins":{

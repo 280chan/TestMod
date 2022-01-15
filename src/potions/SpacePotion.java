@@ -26,11 +26,11 @@ public class SpacePotion extends AbstractTestPotion {
 
 	public void initializeData() {
 		this.potency = getPotency();
-		this.description = this.getDesc();
+		this.description = getDesc();
 		this.tips.clear();
 		this.tips.add(new PowerTip(this.name, this.description));
 	}
-
+	
 	public String getDesc() {
 		return DESCRIPTIONS[0] + this.potency + DESCRIPTIONS[1];
 	}
@@ -68,23 +68,5 @@ public class SpacePotion extends AbstractTestPotion {
 	public int getPotency(int ascensionLevel) {
 		return 1;
 	}
-	/*
-	@SpirePatch(cls = "chronoMods.coop.CoopBossRelicSelectScreen", method = "open")
-	public static class CoopBossRelicSelectScreenPatch {
-		public static void Prefix(Object __instance, ArrayList<AbstractBlight> chosenBlights) {
-			if ("VaporFunnel".equals(chosenBlights.get(0).blightID) || "VaporFunnel".equals(chosenBlights.get(1).blightID)) {
-				return;
-			} else {
-				try {
-					Class<?> c = Class.forName("chronoMods.TogetherManager");
-					ArrayList<AbstractBlight> list = ReflectionHacks.getPrivateStatic(c, "teamBlights");
-					for (AbstractBlight ab : list)
-						if ("VaporFunnel".equals(ab.blightID))
-							chosenBlights.set(0, ab);
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}*/
+	
 }

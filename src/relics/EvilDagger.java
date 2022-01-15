@@ -68,19 +68,17 @@ public class EvilDagger extends AbstractTestRelic {
 
 	public class SmhStupidDev extends AbstractGameAction {
 		AbstractCard c;
-		EvilDagger r;
-		public SmhStupidDev(AbstractCard c, EvilDagger r) {
+		public SmhStupidDev(AbstractCard c) {
 			this.c = c;
-			this.r = r;
 		}
 		@Override
 		public void update() {
 			this.isDone = true;
-			if (!r.killed.isEmpty() && c.equals(r.c)) {
-				r.killed.forEach(m -> doSth(c, m));
-				r.show();
+			if (!killed.isEmpty() && c.equals(EvilDagger.this.c)) {
+				killed.forEach(m -> doSth(c, m));
+				show();
 			}
-			r.killed.clear();
+			killed.clear();
 		}
 	}
 	
@@ -102,7 +100,7 @@ public class EvilDagger extends AbstractTestRelic {
 	}
 	
 	public void onUseCard(AbstractCard c, UseCardAction a) {
-		this.addToBot(new SmhStupidDev(c, this));
+		this.addToBot(new SmhStupidDev(c));
 	}
 	
 	public void atPreBattle() {

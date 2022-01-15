@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
@@ -29,6 +30,13 @@ public class TestPotion extends AbstractTestPotion implements MiscMethods {
 		this.isThrown = false;
 	}
 
+	public void initializeData() {
+		this.potency = getPotency();
+		this.description = getDesc();
+		this.tips.clear();
+		this.tips.add(new PowerTip(this.name, this.description));
+	}
+	
 	public String getDesc() {
 		return DESCRIPTIONS[0] + this.potency + DESCRIPTIONS[1];
 	}

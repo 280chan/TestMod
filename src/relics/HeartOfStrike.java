@@ -5,7 +5,6 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardTags;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
 import powers.AbstractTestPower;
@@ -14,11 +13,15 @@ public class HeartOfStrike extends AbstractTestRelic {
 	
 	public HeartOfStrike() {
 		super(RelicTier.RARE, LandingSound.HEAVY);
+		this.counter = 2;
 	}
 	
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, DESCRIPTIONS[0] + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2]));
+		if (this.counter > 2)
+			this.tips.add(new PowerTip(this.name, DESCRIPTIONS[0] + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2]));
+		else
+			this.tips.add(new PowerTip(this.name, DESCRIPTIONS[0]));
 	    initializeTips();
 	}
 	
@@ -30,12 +33,13 @@ public class HeartOfStrike extends AbstractTestRelic {
 	public void onExhaust(AbstractCard c) {
 		if (c.hasTag(CardTags.STRIKE)) {
 			this.counter++;
-			this.updateDescription(null);
+			this.updateDescription(p().chosenClass);
 		}
 	}
 
 	public void onVictory() {
-		this.counter = -1;
+		this.counter = 2;
+		this.updateDescription(p().chosenClass);
 	}
 	
 	private class HeartOfStrikePower extends AbstractTestPower implements InvisiblePower {
