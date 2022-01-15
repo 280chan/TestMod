@@ -576,5 +576,11 @@
 		"NAME": "Evil Dagger",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each combat, an Attack card of yours is attached. Whenever that Attack card kills a non-minion enemy, cause extra effect of one of #yFeed, #yLesson #yLearned and #yHand #yof #yGreed.", "Attached to #y", "."]
+	},
+	
+	"testmod-Match3":{
+		"NAME": "Match 3",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["At the start of each turn after drawing cards, if you have multiple of #b3 relics, gain [E] ; if you have multiple of #b3 cards in draw pile, gain [E] ."]
 	}
 }
