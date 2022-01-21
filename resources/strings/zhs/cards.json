@@ -207,6 +207,17 @@
 			"你每有一张牌 升级 过一次，几率+1%。"
 		]
 	},
+	"testmod-PhasePocketWatchOptionCard": {
+		"NAME": "相位怀表",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"失去",
+			"点生命",
+			"次",
+			"2xn",
+			"nx2"
+		]
+	},
 	"testmod-Plague": {
 		"NAME": "瘟疫",
 		"DESCRIPTION": "每回合开始使随机敌人获得X层 中毒 、 缠绕 、 勒脖 。每当你打出 能力牌 ，使所有敌人的 中毒 缠绕 生效 !M! 次。 虚无 。",

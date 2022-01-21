@@ -207,6 +207,17 @@
 			"Each Upgrade, Gain 1% probability."
 		]
 	},
+	"testmod-PhasePocketWatchOptionCard": {
+		"NAME": "Phase Pocket Watch - ",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Lose ",
+			" HP ",
+			" times",
+			"2xn",
+			"nx2"
+		]
+	},
 	"testmod-Plague": {
 		"NAME": "Plague",
 		"DESCRIPTION": "At start of each turn, apply X Poison, Constricted and Choked to random enemy. Whenever you play a Power card, make all enemies' Poison and Constricted affect !M! time. Ethereal.",

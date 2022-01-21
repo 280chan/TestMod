@@ -582,5 +582,11 @@
 		"NAME": "Match 3",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn after drawing cards, if you have multiple of #b3 relics, gain [E] ; if you have multiple of #b3 cards in draw pile, gain [E] ."]
+	},
+	
+	"testmod-PhasePocketWatch":{
+		"NAME": "Phase Pocket Watch",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["You no longer lose HP during enemy turn, instead increase relic counter. At the start of your turn, choose from Lose #r2 HP [ #bcounter/2 ] times and Lose [ #rcounter/2 ] HP #b2 times. You can right click this relic during your turn or outside combat to switch between #yChoose #yEverytime and #yAlways #y2xn and #yAlways #ynx2 .", " NL Current mode: ", "#yChoose #yEverytime ", "#yAlways #y2xn ", "#yAlways #ynx2 "]
 	}
 }
