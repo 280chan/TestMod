@@ -148,14 +148,14 @@ public class PulseDistributorPower extends AbstractTestPower {
     public void atEndOfRound() {
     	if (!this.DAMAGES.isEmpty()) {
     		TestMod.info(this.name + ":伤害前:" + DAMAGES);
-    		this.pretendAttack(AbstractDungeon.player, DAMAGES.remove(0));
+    		this.pretendAttack(DAMAGES.remove(0));
     		TestMod.info(this.name + ":伤害后:" + DAMAGES);
     		this.updateDescription();
 		}
     }
 
-	private void pretendAttack(AbstractPlayer p, int damage) {
-		p.damage(new DamageInfo(p, damage, DamageType.HP_LOSS));
+	private void pretendAttack(int damage) {
+		p().damage(new DamageInfo(p(), damage, DamageType.HP_LOSS));
 	}
     
 }

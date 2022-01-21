@@ -11,6 +11,8 @@ import powers.AbstractTestPower;
 
 public class HeartOfStrike extends AbstractTestRelic {
 	
+	private HeartOfStrikePower hosp;
+	
 	public HeartOfStrike() {
 		super(RelicTier.RARE, LandingSound.HEAVY);
 		this.counter = 2;
@@ -27,7 +29,7 @@ public class HeartOfStrike extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		this.counter = 2;
-		this.p().powers.add(new HeartOfStrikePower());
+		this.p().powers.add(hosp = new HeartOfStrikePower());
 	}
 	
 	public void onExhaust(AbstractCard c) {
@@ -42,6 +44,18 @@ public class HeartOfStrike extends AbstractTestRelic {
 		this.updateDescription(p().chosenClass);
 	}
 	
+	public void onEquip() {
+		if (this.inCombat()) {
+			this.atPreBattle();
+		}
+	}
+	
+	public void onUnequip() {
+		if (p() != null && p().powers != null && p().powers.stream().anyMatch(p -> p.equals(hosp))) {
+			p().powers.remove(hosp);
+		}
+	}
+	
 	private class HeartOfStrikePower extends AbstractTestPower implements InvisiblePower {
 		public HeartOfStrikePower() {
 			super("HeartOfStrike");
@@ -53,7 +67,7 @@ public class HeartOfStrike extends AbstractTestRelic {
 		}
 		
 		public void onRemove() {
-			this.addTmpActionToTop(() -> this.owner.powers.add(new HeartOfStrikePower()));
+			this.addTmpActionToTop(() -> this.owner.powers.add(hosp = new HeartOfStrikePower()));
 		}
 	}
 

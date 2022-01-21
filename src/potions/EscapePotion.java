@@ -76,7 +76,7 @@ public class EscapePotion extends AbstractTestPotion implements MiscMethods {
 		AbstractMonster m = (AbstractMonster) target;
 		AbstractPlayer p = AbstractDungeon.player;
 		boolean flipPlayer = false, darkling = false;
-		if (m.type == EnemyType.BOSS)
+		if (m.type == EnemyType.BOSS) // TODO
 			return;
 		if (darkling = m.id.equals("Darkling")) {
 			if (AbstractDungeon.getMonsters().monsters.stream().noneMatch(this::notHalfDead)) {

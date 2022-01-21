@@ -59,7 +59,7 @@ public class AssimilatedRunePower extends AbstractTestPower {
 	}
 	
     public float atDamageGive(final float damage, final DamageType type) {
-    	return type == DamageType.NORMAL && isActive() ? this.maxIn(this.getList(), true) : damage;
+    	return type == DamageType.NORMAL && isActive() ? Math.max(this.maxIn(this.getList(), true), damage) : damage;
     }
     
     public void atEndOfTurn(final boolean isPlayer) {

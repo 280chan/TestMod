@@ -42,7 +42,7 @@ public class EvilDagger extends AbstractTestRelic {
 	
 	public void doSth(AbstractCard c, AbstractMonster m) {
 		ArrayList<Lambda> lambda = new ArrayList<Lambda>();
-		Lambda a = () -> p().increaseMaxHp(c.upgraded ? 4 : 3, false);
+		Lambda a = () -> p().increaseMaxHp(c.upgraded ? 4 : 3, true);
 		lambda.add(a);
 		a = () -> {
 			ArrayList<AbstractCard> list = p().masterDeck.group.stream().filter(i -> i.canUpgrade())
@@ -63,7 +63,7 @@ public class EvilDagger extends AbstractTestRelic {
 				AbstractDungeon.effectList.add(new GainPennyEffect(p(), m.hb.cX, m.hb.cY, p().hb.cX, p().hb.cY, true));
 		};
 		lambda.add(a);
-		TestMod.randomItem(lambda, AbstractDungeon.cardRng).run();
+		TestMod.randomItem(lambda, AbstractDungeon.cardRandomRng).run();
 	}
 
 	public class SmhStupidDev extends AbstractGameAction {
@@ -77,6 +77,7 @@ public class EvilDagger extends AbstractTestRelic {
 			if (!killed.isEmpty() && c.equals(EvilDagger.this.c)) {
 				killed.forEach(m -> doSth(c, m));
 				show();
+				c.superFlash(COLOR);
 			}
 			killed.clear();
 		}
@@ -107,7 +108,7 @@ public class EvilDagger extends AbstractTestRelic {
 		ArrayList<AbstractCard> list = Stream.of(p().drawPile, p().hand, p().discardPile)
 				.flatMap(g -> g.group.stream()).filter(c -> c.type == CardType.ATTACK).collect(toArrayList());
 		if (!list.isEmpty())
-			this.c = TestMod.randomItem(list, AbstractDungeon.cardRng);
+			this.c = TestMod.randomItem(list, AbstractDungeon.cardRandomRng);
 		this.updateDescription();
 	}
 	
