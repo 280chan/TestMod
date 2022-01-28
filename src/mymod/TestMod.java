@@ -19,6 +19,7 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.red.SearingBlow;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -76,7 +77,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 1/16/2022
+ * @version 1/27/2022
  * @since 6/17/2018
  */
 
@@ -405,7 +406,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		// Mahjong.saveDefaultYama();
 		
 		// 初始遗物
-		obtain(AbstractDungeon.player, new TestBox());
+		obtain(p(), new TestBox());
 	}
 	
 	public void unlockAll() {

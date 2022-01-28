@@ -1,8 +1,5 @@
 package commands;
 
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import mymod.TestMod;
-
 public class Test extends TestCommand {
 	
 	public void execute(String[] tokens, int depth) {
@@ -10,9 +7,6 @@ public class Test extends TestCommand {
 			cmdHelp();
 			return;
 		}
-		TestMod.info("准备测试药水bug");
-		AbstractDungeon.returnRandomPotion();
-		TestMod.info("测试药水bug完成");
 		// TODO
 	}
 
