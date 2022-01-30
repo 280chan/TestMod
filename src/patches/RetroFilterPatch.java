@@ -9,7 +9,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.shop.ShopScreen;
 
 import javassist.CannotCompileException;
@@ -21,9 +20,7 @@ public class RetroFilterPatch {
 	public static class ShopScreenPatch {
 		@SpireInsertPatch(locator = Locator.class, localvars = { "c" })
 		public static void Insert(ShopScreen ss, AbstractCard hoveredCard, AbstractCard c) {
-			AbstractRelic r = RetroFilter.getThis();
-			if (r != null)
-				r.onPreviewObtainCard(c);
+			RetroFilter.getThis().forEach(r -> r.onPreviewObtainCard(c));
 		}
 		
 		private static class Locator extends SpireInsertLocator {

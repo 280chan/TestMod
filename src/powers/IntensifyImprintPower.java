@@ -9,19 +9,17 @@ import relics.IntensifyImprint;
 public class IntensifyImprintPower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "IntensifyImprintPower";
 	private static final int PRIORITY = 999999;
-	private IntensifyImprint r;
 	
 	public static boolean hasThis(AbstractCreature owner) {
 		return owner.powers.stream().anyMatch(p -> p instanceof IntensifyImprintPower);
 	}
 	
-	public IntensifyImprintPower(AbstractCreature owner, IntensifyImprint r) {
+	public IntensifyImprintPower(AbstractCreature owner) {
 		super(POWER_ID);
 		this.name = POWER_ID;
 		this.owner = owner;
 		updateDescription();
 		this.type = PowerType.BUFF;
-		this.r = r;
 		this.priority = PRIORITY;
 	}
 	
@@ -35,8 +33,8 @@ public class IntensifyImprintPower extends AbstractTestPower implements Invisibl
 	
     public int onAttacked(final DamageInfo info, int damage) {
     	if ((info.owner == null || info.owner == AbstractDungeon.player) && (damage > 0)) {
-			damage += this.r.counter;
-			this.r.incrementCounter();
+			damage += this.relicStream(IntensifyImprint.class).mapToInt(r -> r.counter).sum();
+			this.relicStream(IntensifyImprint.class).forEach(r -> r.incrementCounter());
 		}
 		return damage;
     }

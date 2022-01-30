@@ -1,5 +1,7 @@
 package relics;
 
+import java.util.ArrayList;
+
 import com.megacrit.cardcrawl.actions.common.InstantKillAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
@@ -14,6 +16,8 @@ import powers.OneHitWonderDebuffPower;
 
 public class OneHitWonder extends AbstractTestRelic {
 	
+	private static ArrayList<AbstractMonster> queue;
+	
 	private boolean getRoll() {
 		return AbstractDungeon.cardRandomRng.randomBoolean();
 	}
@@ -23,8 +27,8 @@ public class OneHitWonder extends AbstractTestRelic {
 	}
 	
 	public void atPreBattle() {
-		if (!isActive)
-			return;
+		if (this.isActive)
+			queue.clear();
 		this.controlPulse();
 		if (AbstractDungeon.currMapNode == null)
 			return;
@@ -45,8 +49,6 @@ public class OneHitWonder extends AbstractTestRelic {
 	}
 	
 	public int onPlayerHeal(final int healAmount) {
-		if (!isActive)
-			return healAmount;
 		this.controlPulse();
         return healAmount;
     }
@@ -56,8 +58,9 @@ public class OneHitWonder extends AbstractTestRelic {
 			return;
 		if (isActive() && info.type == DamageType.NORMAL && target != null && !target.isPlayer) {
 			AbstractMonster m = (AbstractMonster)target;
-			if (m.type != EnemyType.BOSS && getRoll()) {
+			if (!queue.contains(m) && m.type != EnemyType.BOSS && getRoll()) {
 				TestMod.info("一血传奇：条件满足，准备秒杀" + m.name);
+				queue.add(m);
 				this.addTmpActionToTop(() -> {
 					if (m.isDeadOrEscaped() || m.escaped) {
 						TestMod.info("一血传奇：秒杀失败，" + m.name + "已死亡或逃跑");

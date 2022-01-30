@@ -36,7 +36,7 @@ public class EqualTreatment extends AbstractTestRelic {
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
 		if (c.target == CardTarget.ENEMY && this.counter == -2) {
 			AbstractDungeon.getMonsters().monsters.stream().filter(this::alive).filter(not(action.target::equals))
-					.forEach(combine(c::calculateCardDamage, m -> c.use(AbstractDungeon.player, m)));
+					.forEach(combine(c::calculateCardDamage, m -> c.use(p(), m)));
 			this.changeState(false);
 			this.show();
 		}
@@ -50,9 +50,8 @@ public class EqualTreatment extends AbstractTestRelic {
 	
 	private void updateHandGlow() {
 		ColorRegister cr = new ColorRegister(color);
-		this.streamIfElse(AbstractDungeon.player.hand.group.stream(),
-				c -> c.target == CardTarget.ENEMY && this.counter == -2, cr::addToGlowChangerList,
-				cr::removeFromGlowList);
+		this.streamIfElse(p().hand.group.stream(), c -> c.target == CardTarget.ENEMY && this.counter == -2,
+				cr::addToGlowChangerList, cr::removeFromGlowList);
 	}
 	
 	public void onVictory() {

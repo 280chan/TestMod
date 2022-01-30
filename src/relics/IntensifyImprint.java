@@ -52,7 +52,7 @@ public class IntensifyImprint extends AbstractTestRelic {
 			return;
 		if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT)
 			AbstractDungeon.getMonsters().monsters.stream().filter(not(IntensifyImprintPower::hasThis))
-					.forEach(m -> m.powers.add(new IntensifyImprintPower(m, this)));
+					.forEach(m -> m.powers.add(new IntensifyImprintPower(m)));
 	}
 	
 }

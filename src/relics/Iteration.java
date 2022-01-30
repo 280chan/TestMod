@@ -8,22 +8,26 @@ public class Iteration extends AbstractTestRelic {
 		super(ID, RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
+	private int relicAmount() {
+		return (int) this.relicStream(Iteration.class).count();
+	}
+	
 	public void atPreBattle() {
+		this.counter = 0;
 		if (!isActive)
 			return;
 		baseHandSize = p().gameHandSize;
-		this.counter = 0;
-		p().gameHandSize += 5;
+		p().gameHandSize += 5 * relicAmount();
     }
 	
 	public void onPlayerEndTurn() {
-		if (!isActive)
-			return;
 		counter++;
 		if (counter == 10) {
 			counter = 0;
 		}
-		p().gameHandSize = baseHandSize + 5 - counter;
+		if (!isActive)
+			return;
+		p().gameHandSize = baseHandSize + (5 - counter) * relicAmount();
     }
 	
 }

@@ -11,13 +11,13 @@ public class Justice extends AbstractTestRelic {
 	public void atPreBattle() {
 		if (!isActive)
 			return;
-		this.addToTop(apply(p(), new JusticePower(p(), this)));
+		p().powers.add(new JusticePower(p()));
     }
 	
 	public void atTurnStart() {
 		if (!isActive)
 			return;
 		if (!JusticePower.hasThis(p()))
-			this.addToTop(apply(p(), new JusticePower(p(), this)));
+			this.addTmpActionToTop(() -> p().powers.add(new JusticePower(p())));
     }
 }

@@ -1,9 +1,13 @@
 package powers;
 
+import java.util.function.UnaryOperator;
+
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+
+import relics.ArcanaOfDestiny;
 import utils.MiscMethods;
 
 public class ArcanaOfDestinyPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
@@ -38,14 +42,26 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 		return p == null || p.maxHealth == 0 ? f : p.currentHealth * 1f / p.maxHealth;
 	}
 	
-	public float atDamageGive(float damage, DamageType type) {
+	private float damage(float damage) {
 		float tmp = HPRate(this.owner, 1f), p = HPRate(p(), 1f);
 		return tmp > p ? damage * (1 - tmp + p) : damage;
 	}
 	
-	public int onAttacked(DamageInfo info, int damage) {
+	private int attack(int attack) {
 		float tmp = HPRate(this.owner, 0f), p = HPRate(p(), 1f);
-		return tmp < p ? (int) (damage * (1 + 2 * (p - tmp))) : damage;
+		return tmp < p ? (int) (attack * (1 + 2 * (p - tmp))) : attack;
+	}
+	
+	private <T> UnaryOperator<T> repeat(UnaryOperator<T> f) {
+		return this.relicStream(ArcanaOfDestiny.class).map(r -> f).reduce(a -> a, (a, b) -> c -> b.apply(a.apply(c)));
+	}
+	
+	public float atDamageGive(float damage, DamageType type) {
+		return repeat(this::damage).apply(damage);
+	}
+	
+	public int onAttacked(DamageInfo info, int damage) {
+		return repeat(this::attack).apply(damage);
 	}
 	
 	public void onRemove() {

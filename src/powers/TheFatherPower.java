@@ -14,7 +14,6 @@ import relics.TheFather;
 public class TheFatherPower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "TheFatherPower";
 	private static final int PRIORITY = 1000;
-	private TheFather relic;
 	private static final HashMap<AbstractMonster, ArrayList<DamageAction>> MAP =
 			new HashMap<AbstractMonster, ArrayList<DamageAction>>();
 
@@ -26,14 +25,13 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 		return owner.powers.stream().anyMatch(p -> p instanceof TheFatherPower);
 	}
 	
-	public TheFatherPower(AbstractCreature owner, TheFather relic) {
+	public TheFatherPower(AbstractCreature owner) {
 		super(POWER_ID);
 		this.name = POWER_ID;
 		this.owner = owner;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
 		this.priority = PRIORITY;
-		this.relic = relic;
 	}
 	
 	public void updateDescription() {
@@ -47,27 +45,29 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	public void onRemove() {
 		this.addTmpActionToTop(() -> {
 			if (!hasThis(this.owner))
-				this.owner.powers.add(new TheFatherPower(this.owner, this.relic));
+				this.owner.powers.add(new TheFatherPower(this.owner));
 		});
 	}
 	
-	private void countAction() {
+	private void countAction(TheFather r) {
 		this.addTmpActionToBot(() -> {
-			this.relic.count();
+			r.count();
 		});
 	}
 	
 	private void addDamageAction(AbstractMonster m, int damage) {
-		DamageAction a = new DamageAction(m, new DamageInfo(p(), damage, DamageType.THORNS), true);
-		if (MAP.containsKey(m)) {
-			MAP.get(m).add(a);
-		} else {
-			ArrayList<DamageAction> list = new ArrayList<DamageAction>();
-			list.add(a);
-			MAP.put(m, list);
-		}
-		this.addToBot(a);
-		this.countAction();
+		this.relicStream(TheFather.class).forEach(r -> {
+			DamageAction a = new DamageAction(m, new DamageInfo(p(), damage, DamageType.THORNS), true);
+			if (MAP.containsKey(m)) {
+				MAP.get(m).add(a);
+			} else {
+				ArrayList<DamageAction> list = new ArrayList<DamageAction>();
+				list.add(a);
+				MAP.put(m, list);
+			}
+			this.addToBot(a);
+			this.countAction(r);
+		});
 	}
 	
 	private static void clearDamageActions(AbstractMonster m) {

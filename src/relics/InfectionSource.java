@@ -1,6 +1,5 @@
 package relics;
 
-import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import powers.InfectionPower;
@@ -13,12 +12,9 @@ public class InfectionSource extends AbstractTestRelic {
 	}
 
 	public void atBattleStart() {
-		flash();
-		this.addToTop(new RelicAboveCreatureAction(p(), this));
-		for (AbstractMonster m : AbstractDungeon.getMonsters().monsters)
-			if (!m.isDead && !m.isDying)
-				m.powers.add(new InfectionPower(m));
-
+		this.show();
+		AbstractDungeon.getMonsters().monsters.stream().filter(m -> !m.isDead && !m.isDying)
+				.forEach(m -> m.powers.add(new InfectionPower(m)));
 		this.addToTop(apply(p(), new InfectionSourcePower(p())));
     }
 	

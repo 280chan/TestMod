@@ -77,7 +77,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 1/27/2022
+ * @version 1/30/2022
  * @since 6/17/2018
  */
 
@@ -262,9 +262,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new MistCore(), new ResonanceStone(), new VentureCapital(), new EvilDagger(), new GlassSoul(), 
-				new HolyLightProtection(), new GoldenSoul(), new GreedyDevil(), new Gather(), new GremlinBalance(),
-				new TemporaryBarricade(), new ShadowAmulet(), new Match3());
+		addLatest(new MistCore(), new VentureCapital(), new GlassSoul(), new GreedyDevil(), new HolyLightProtection(),
+				new GoldenSoul(), new Gather(), new GremlinBalance(), new TemporaryBarricade(), new ShadowAmulet(),
+				new Match3(), new PhasePocketWatch());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton());

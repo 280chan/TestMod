@@ -30,7 +30,7 @@ public class TheFather extends AbstractTestRelic {
 
 	private void tryAdd() {
 		AbstractDungeon.getMonsters().monsters.stream().filter(not(TheFatherPower::hasThis))
-				.forEach(m -> m.powers.add(new TheFatherPower(m, this)));
+				.forEach(m -> m.powers.add(new TheFatherPower(m)));
 	}
 	
 	public void update() {
@@ -60,7 +60,8 @@ public class TheFather extends AbstractTestRelic {
 	}
 	
 	public void onVictory() {
-		TheFatherPower.reset();
+		if (this.isActive)
+			TheFatherPower.reset();
 		this.stopPulse();
 		canUpdate = false;
 		numberOfMonsters = 0;

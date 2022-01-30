@@ -30,7 +30,7 @@ public class Metronome extends AbstractTestRelic {
 	
 	private void act() {
 		if (this.counter > 0) {
-			this.relicStream(Metronome.class).peek(r -> r.flash()).forEach(r -> p().increaseMaxHp(this.counter, true));
+			this.relicStream(Metronome.class).peek(r -> r.show()).forEach(r -> p().increaseMaxHp(this.counter, true));
 		}
 		this.stopPulse();
 		this.counter = -1;

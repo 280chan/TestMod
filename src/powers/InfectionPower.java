@@ -2,17 +2,14 @@ package powers;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.PoisonPower;
 
-import utils.MiscMethods;
+import relics.InfectionSource;
 
-public class InfectionPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
+public class InfectionPower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "InfectionPower";
 	private float tempDamage;
 	
@@ -43,11 +40,11 @@ public class InfectionPower extends AbstractTestPower implements InvisiblePower,
     
     public int onAttacked(final DamageInfo info, final int damageAmount) {
     	if (info.type == DamageType.NORMAL) {
-    		int temp = MathUtils.floor(tempDamage);
-        	if (temp > 0) {
-        		AbstractPlayer p = AbstractDungeon.player;
-        		this.addToTop(new ApplyPowerAction(owner, p, new PoisonPower(owner, p, temp), temp));
-        		if (damageAmount > 0) {
+    		int dmg = MathUtils.floor(tempDamage);
+        	if (dmg > 0) {
+				this.relicStream(InfectionSource.class).peek(r -> r.show())
+						.forEach(r -> this.addToTop(this.apply(p(), new PoisonPower(owner, p(), dmg))));
+				if (damageAmount > 0) {
         			return 1;
         		}
         	}

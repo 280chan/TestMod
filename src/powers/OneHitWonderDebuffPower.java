@@ -5,9 +5,8 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import relics.OneHitWonder;
-import utils.MiscMethods;
 
-public class OneHitWonderDebuffPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
+public class OneHitWonderDebuffPower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "OneHitWonderDebuffPower";
 	
 	public static boolean hasThis(AbstractCreature owner) {

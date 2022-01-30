@@ -9,10 +9,15 @@ import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
 
 import relics.DominatorOfWeakness;
+import utils.MiscMethods;
 
 public class DominatorOfWeaknessPatch {
 	private static boolean hasRelic() {
-		return DominatorOfWeakness.hasThis();
+		return MiscMethods.INSTANCE.relicStream(DominatorOfWeakness.class).findAny().isPresent();
+	}
+	
+	private static int amount() {
+		return (int) MiscMethods.INSTANCE.relicStream(DominatorOfWeakness.class).count();
 	}
 	
 	private static boolean hasFrog(VulnerablePower p) {
@@ -29,7 +34,7 @@ public class DominatorOfWeaknessPatch {
 		public static SpireReturn<Float> Insert(VulnerablePower p, float damage, DamageType type) {
 			if (!hasRelic() || p.amount < 2 || p.owner.isPlayer)
 				return SpireReturn.Continue();
-			return SpireReturn.Return((float)(damage * Math.pow((hasFrog(p) ? 1.75F : 1.5F), p.amount)));
+			return SpireReturn.Return((float)(damage * Math.pow((hasFrog(p) ? 1.75F : 1.5F), p.amount * amount())));
 		}
 	}
 	
@@ -39,7 +44,7 @@ public class DominatorOfWeaknessPatch {
 		public static SpireReturn<Float> Insert(WeakPower p, float damage, DamageType type) {
 			if (!hasRelic() || p.amount < 2 || p.owner.isPlayer)
 				return SpireReturn.Continue();
-			return SpireReturn.Return((float)(damage * Math.pow((hasCrane(p) ? 0.6F : 0.75F), p.amount)));
+			return SpireReturn.Return((float)(damage * Math.pow((hasCrane(p) ? 0.6F : 0.75F), p.amount * amount())));
 		}
 	}
 }

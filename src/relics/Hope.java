@@ -81,8 +81,10 @@ public class Hope extends AbstractTestRelic {
         			TestMod.info("希望:尝试跳过秒杀先古境地灵梦，尝试添加其对应遗物...");
         			Class<? extends AbstractDungeon> c = CardCrawlGame.dungeon.getClass();
 					try {
-						c.getMethod("addRelicReward", String.class).invoke(null, "paleoftheancients:SoulOfTheShrineMaiden");
-					} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						c.getMethod("addRelicReward", String.class).invoke(null,
+								"paleoftheancients:SoulOfTheShrineMaiden");
+					} catch (NoSuchMethodException | SecurityException | IllegalAccessException
+							| IllegalArgumentException | InvocationTargetException e) {
 						e.printStackTrace();
 					}
         		}
