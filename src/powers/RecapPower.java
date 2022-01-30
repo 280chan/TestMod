@@ -60,7 +60,7 @@ public class RecapPower extends AbstractTestPower implements MiscMethods {
     		if (a instanceof UseCardAction) {
     			AbstractCard b = ReflectionHacks.getPrivate(a, UseCardAction.class, "targetCard");
     			if (c.equals(b)) {
-    				return a.target;
+    				return a.target.isPlayer ? null : a.target;
     			}
     		}
     	}
