@@ -16,7 +16,7 @@ import powers.OneHitWonderDebuffPower;
 
 public class OneHitWonder extends AbstractTestRelic {
 	
-	private static ArrayList<AbstractMonster> queue;
+	private static ArrayList<AbstractMonster> queue = new ArrayList<AbstractMonster>();
 	
 	private boolean getRoll() {
 		return AbstractDungeon.cardRandomRng.randomBoolean();
