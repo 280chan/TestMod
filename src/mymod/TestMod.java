@@ -262,9 +262,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new MistCore(), new VentureCapital(), new GlassSoul(), new GreedyDevil(), new HolyLightProtection(),
+		addLatest(new VentureCapital(), new Match3(), new GlassSoul(), new GreedyDevil(), new HolyLightProtection(),
 				new GoldenSoul(), new Gather(), new GremlinBalance(), new TemporaryBarricade(), new ShadowAmulet(),
-				new Match3(), new PhasePocketWatch());
+				new PhasePocketWatch(), new MistCore());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton());

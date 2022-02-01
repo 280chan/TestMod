@@ -371,7 +371,8 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 			FontHelper.renderFontCentered(sb, FontHelper.menuBannerFont, MOD_ID, X,
 					Y + 170.0F * Settings.scale - DungeonMapScreen.offsetY / 50.0F, c2);
 			sb.setColor(c2);
-			FontHelper.renderFontLeftTopAligned(sb, FontHelper.panelNameFont, screen.bottomDesc, TEXT_X - 50.0F * Settings.scale,
+			FontHelper.renderFontLeftTopAligned(sb, FontHelper.panelNameFont, screen.bottomDesc,
+					TEXT_X - 50.0F * Settings.scale,
 					Y - SPACE_Y * 0.0F + 113.0F * Settings.scale - DungeonMapScreen.offsetY / 50.0F, c);
 		}
 	}

@@ -20,7 +20,6 @@ import com.megacrit.cardcrawl.screens.select.GridCardSelectScreen;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import mymod.TestMod;
-import relics.HeartOfDaVinci;
 import utils.MiscMethods;
 
 public class DaVinciLibraryAction extends AbstractGameAction implements MiscMethods {
@@ -55,14 +54,9 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 
 	private void checkEggs(AbstractCard c) {
 		AbstractPlayer p = AbstractDungeon.player;
-		boolean hasEgg = false;
-		if (c.type == CardType.ATTACK && p.hasRelic("Molten Egg 2")) {
-			hasEgg = true;
-		} else if (c.type == CardType.POWER && p.hasRelic("Frozen Egg 2")) {
-			hasEgg = true;
-		} else if (c.type == CardType.SKILL && p.hasRelic("Toxic Egg 2")) {
-			hasEgg = true;
-		}
+		boolean hasEgg = (c.type == CardType.ATTACK && p.hasRelic("Molten Egg 2"))
+				|| (c.type == CardType.POWER && p.hasRelic("Frozen Egg 2"))
+				|| (c.type == CardType.SKILL && p.hasRelic("Toxic Egg 2"));
 		if (hasEgg && c.canUpgrade()) {
 			c.upgrade();
 		}
@@ -89,12 +83,10 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 			this.addHoarderCard(group, c);
 			AbstractDungeon.player.relics.forEach(AbstractRelic::onMasterDeckChange);
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
-			HeartOfDaVinci.action = null;
 			this.isDone = true;
 			TestMod.info("已获得" + c.name);
 		} else if (AbstractDungeon.screen == pre && AbstractDungeon.overlayMenu.cancelButton.isHidden) {
 			this.isDone = true;
-			HeartOfDaVinci.action = null;
 			TestMod.info("已取消");
 		}
 		if (before != AbstractDungeon.screen) {

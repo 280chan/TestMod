@@ -8,9 +8,12 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import relics.Sins;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 public class BossRelicSelectScreen extends RelicSelectScreen {
 	public static final String[] ILLEGAL = {"Pandora's Box", "Calling Bell"};
+	
+	private String bd, t, d;
 	
 	public BossRelicSelectScreen() {
 		super();
@@ -30,6 +33,9 @@ public class BossRelicSelectScreen extends RelicSelectScreen {
 	
 	public BossRelicSelectScreen(boolean canSkip, String bDesc, String title, String desc) {
 		super(canSkip, bDesc, title, desc);
+		this.bd = bDesc;
+		this.t = title;
+		this.d = desc;
 	}
 
 	public BossRelicSelectScreen(Collection<? extends AbstractRelic> c, boolean canSkip) {
@@ -41,10 +47,7 @@ public class BossRelicSelectScreen extends RelicSelectScreen {
 	}
 
 	private boolean checkIllegal(String id) {
-		for (String s : ILLEGAL)
-			if (id.equals(s))
-				return true;
-		return false;
+		return Stream.of(ILLEGAL).anyMatch(id::equals);
 	}
 	
 	@Override
@@ -58,16 +61,26 @@ public class BossRelicSelectScreen extends RelicSelectScreen {
 		}
 	}
 
+	private void checkNext(boolean select) {
+		if (Sins.screenQueue > 0) {
+			Sins.screenQueue--;
+			this.rejectSelection = select;
+			new BossRelicSelectScreen(true, this.bd, this.t, this.d).open();
+		} else {
+			Sins.isSelect = true;
+		}
+	}
+	
 	@Override
 	protected void afterSelected() {
 		AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2,
 				this.selectedRelic);
-		Sins.isSelect = true;
+		this.checkNext(true);
 	}
 
 	@Override
 	protected void afterCanceled() {
-		Sins.isSelect = true;
+		this.checkNext(false);
 	}
 
 	@Override

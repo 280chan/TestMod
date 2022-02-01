@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -12,7 +11,6 @@ import java.util.stream.Stream;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -31,10 +29,8 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 	public static final String ID = "HeartOfDaVinci";
 	private static final ArrayList<AbstractRelic> ADDED = new ArrayList<AbstractRelic>();
 	public static DaVinciLibraryAction action;
-	
-	public static HeartOfDaVinci getThis() {
-		return INSTANCE.relicStream(HeartOfDaVinci.class).findFirst().orElse(null);
-	}
+	private static int actionInQueue = 0;
+	private static CardColor color = null;
 	
 	public HeartOfDaVinci() {
 		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
@@ -45,7 +41,7 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 	}
 	
 	private void addIfPossible(ArrayList<String> pool, String id) {
-		if (pool.contains(id) || p().hasRelic(id))
+		if (pool == null || pool.contains(id) || p().hasRelic(id))
 			return;
 		pool.add((int) (Math.random() * pool.size()), id);
 	}
@@ -68,72 +64,48 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 	private static HashMap<CardColor, HashMap<String, AbstractRelic>> map;
 	
 	private void addAllCharacterRelics() {
-		Stream.of(RelicLibrary.redList, RelicLibrary.greenList, RelicLibrary.blueList).forEach(ADDED::addAll);
-
+		Stream.of(RelicLibrary.redList, RelicLibrary.greenList, RelicLibrary.blueList, RelicLibrary.whiteList)
+				.forEach(ADDED::addAll);
+		
 		(map = BaseMod.getAllCustomRelics()).values().stream().map(HashMap::values).forEach(ADDED::addAll);
 		ADDED.forEach(this::addToRelicPool);
 	}
 	
-	private void removeAllCharacterRelics(AbstractPlayer p) {
-		PlayerClass c = p.chosenClass;
-		ArrayList<ArrayList<String>> pools = new ArrayList<ArrayList<String>>();
+	private void removeAllCharacterRelics() {
+		PlayerClass c = p().chosenClass;
 
-		ArrayList<String> remove = AbstractDungeon.relicsToRemoveOnStart;
+		ArrayList<String> remove = AbstractDungeon.floorNum < 1 ? new ArrayList<String>()
+				: p().relics.stream().map(r -> r.relicId).collect(toArrayList());
+		
+		Stream.of(RelicTier.COMMON, RelicTier.UNCOMMON, RelicTier.RARE, RelicTier.SHOP, RelicTier.BOSS)
+				.map(this.split(this.t(), this::relicPool)).forEach(consumer((t, pool) -> {
+					pool.clear();
+					RelicLibrary.populateRelicPool(pool, t, c);
+					Collections.shuffle(pool, new Random(AbstractDungeon.relicRng.randomLong()));
+					pool.removeAll(remove);
+				}));
+		
 		remove.clear();
-		Iterator<AbstractRelic> var1;
-		if (AbstractDungeon.floorNum >= 1) {
-			var1 = p.relics.iterator();
-			while (var1.hasNext()) {
-				AbstractRelic r = (AbstractRelic) var1.next();
-				remove.add(r.relicId);
-			}
-		}
-		
-		pools.add(AbstractDungeon.commonRelicPool);
-		pools.add(AbstractDungeon.uncommonRelicPool);
-		pools.add(AbstractDungeon.rareRelicPool);
-		pools.add(AbstractDungeon.shopRelicPool);
-		pools.add(AbstractDungeon.bossRelicPool);
-		
-		final RelicTier[] TIERS = {RelicTier.COMMON, RelicTier.UNCOMMON, RelicTier.RARE, RelicTier.SHOP, RelicTier.BOSS};
-		
-		for (int i = 0; i < pools.size(); i++) {
-			ArrayList<String> pool = pools.get(i);
-			pool.clear();
-			RelicLibrary.populateRelicPool(pool, TIERS[i], c);
-			Collections.shuffle(pool, new Random(AbstractDungeon.relicRng.randomLong()));
-			
-			Iterator<String> var2 = remove.iterator();
-			while (var2 != null && var2.hasNext()) {
-				if (this.remove(pool.iterator(), var2.next())) {
-					var2.remove();
-				}
-			}
-		}
-		
-	}
-	
-	private boolean remove(Iterator<String> s, String string) {
-		while (s.hasNext()) {
-			if (s.next().equals(string)) {
-				s.remove();
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	private void tryAddOrbSlot() {
-		if (AbstractDungeon.player.masterMaxOrbs == 0) {
-			AbstractDungeon.player.masterMaxOrbs = 1;
+		if (p().masterMaxOrbs == 0) {
+			p().masterMaxOrbs = 1;
 		}
 	}
 	
 	public void postUpdate() {
-		if (action != null) {
+		if (this.isActive && action != null) {
 			if (action.isDone) {
-				action = null;
-				TestMod.info("结束当前选牌");
+				if (actionInQueue > 0) {
+					initAction(color);
+					actionInQueue--;
+					TestMod.info("开始新一轮选牌");
+				} else {
+					action = null;
+					color = null;
+					TestMod.info("结束选牌");
+				}
 			} else {
 				action.update();
 			}
@@ -144,7 +116,7 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 		ArrayList<AbstractCard> pool = CardLibrary.cards.entrySet().stream()
 				.filter(c -> Settings.treatEverythingAsUnlocked() || !UnlockTracker.isCardLocked(c.getKey()))
 				.map(Map.Entry::getValue).filter(c -> c.color == color && c.rarity != CardRarity.BASIC)
-				.collect(this.toArrayList());
+				.collect(toArrayList());
 		Collections.shuffle(pool, new Random(AbstractDungeon.cardRng.randomLong()));
 		if (pool.size() < 20) {
 			TestMod.info("WTF! This character has less than 20 cards");
@@ -152,8 +124,8 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 		return pool.stream().limit(20).map(AbstractCard::makeCopy).collect(this.toArrayList());
 	}
 	
-	private CardColor getColor(AbstractPlayer p) {
-		return p.getCardColor();
+	private CardColor getColor() {
+		return p().getCardColor();
 	}
 	
 	private CardColor getColor(AbstractRelic r) {
@@ -195,13 +167,18 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
     }
 	
 	public void onUnequip() {
-		this.removeAllCharacterRelics(AbstractDungeon.player);
+		if (this.isActive)
+			this.removeAllCharacterRelics();
     }
 	
 	public boolean canSpawn() {
 		return Settings.isEndless || AbstractDungeon.actNum < 2;
 	}
 
+	private void initAction(CardColor c) {
+		action = new DaVinciLibraryAction(this.cards(c), AbstractDungeon.screen);
+	}
+	
 	@Override
 	public void receiveRelicGet(AbstractRelic r) {
 		if (!this.isActive)
@@ -215,9 +192,11 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 			TestMod.info(name + "非角色限定遗物");
 			return;
 		}
-		if (c != getColor(AbstractDungeon.player)) {
+		if (c != getColor()) {
 			TestMod.info(name + "准备开始大图书馆");
-			action = new DaVinciLibraryAction(this.cards(c), AbstractDungeon.screen);
+			initAction(color = c);
+			actionInQueue = (int) this.relicStream(HeartOfDaVinci.class).peek(a -> a.flash()).count() - 1;
+			TestMod.info("队列：" + actionInQueue);
 		} else {
 			TestMod.info(name + "角色本身遗物");
 		}
