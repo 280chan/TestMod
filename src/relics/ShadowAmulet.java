@@ -16,7 +16,7 @@ public class ShadowAmulet extends AbstractTestRelic {
 	}
 	
 	public ShadowAmulet() {
-		super(RelicTier.UNCOMMON, LandingSound.SOLID);
+		super(RelicTier.RARE, LandingSound.SOLID);
 	}
 	
 	public String getUpdatedDescription() {
