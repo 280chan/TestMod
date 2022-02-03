@@ -1,7 +1,9 @@
 package relics;
 
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
@@ -19,8 +21,8 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	
 	public void onEquip() {
 		if (!TestMod.addPotionSlotMultiplayer()) {
-			AbstractDungeon.player.potionSlots++;
-			AbstractDungeon.player.potions.add(new PotionSlot(AbstractDungeon.player.potionSlots - 1));
+			p().potionSlots++;
+			p().potions.add(new PotionSlot(p().potionSlots - 1));
 		}
     }
 	
@@ -38,6 +40,10 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	
 	private boolean canUse() {
 		return this.counter == -2 && !used;
+	}
+	
+	private boolean canSwap() {
+		return !this.inCombat();
 	}
 	
 	public void atPreBattle() {
@@ -61,25 +67,29 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 		this.toggleState(false);
     }
 	
+	private Stream<AbstractPotion> potions() {
+		return p().potions.stream().filter(po -> !(po instanceof PotionSlot));
+	}
+	
 	@Override
 	public void onRightClick() {
 		if (this.canUse()) {
-			this.toggleState(false);
-			AbstractPlayer p = AbstractDungeon.player;
-			AbstractPotion p1 = p.potions.stream().filter(po -> !(po instanceof PotionSlot) && po.canUse()).findFirst()
-					.orElse(null);
-			if (p1 != null) {
+			AbstractPotion p = potions().filter(po -> po.canUse()).findFirst().orElse(null);
+			if (p != null) {
 				this.used = true;
-				if (p1.targetRequired) {
-					p1.use(AbstractDungeon.getRandomMonster());
-				} else {
-					p1.use(null);
-				}
-				TestMod.info("炼金术士: 使用了" + p1.name);
+				p.use(p.targetRequired ? AbstractDungeon.getRandomMonster() : null);
+				TestMod.info("炼金术士: 使用了" + p.name);
+				this.toggleState(false);
 			} else {
 				TestMod.info("炼金术士: 没有可使用药水");
-				this.toggleState(true);
 			}
+		} else if (this.canSwap() && p().potionSlots > 1 && potions().count() > 0) {
+			ArrayList<AbstractPotion> l = potions().skip(1).collect(toArrayList());
+			l.add(potions().findFirst().get());
+			this.getNumberList(l.size(), p().potionSlots).forEach(i -> l.add(new PotionSlot(i)));
+			p().potions = l;
+			p().adjustPotionPositions();
+			TestMod.info("炼金术士: 交换了药水排序");
 		}
 	}
 
