@@ -238,7 +238,7 @@
 	},
 	"testmod-Provocation": {
 		"NAME": "挑衅",
-		"DESCRIPTION": "获得 !M! 点 力量 。如果目标没有生气，使其获得1层生气。"
+		"DESCRIPTION": "获得 !M! 点 力量 。如果目标没有 生气 ，使其获得1层 生气 。"
 	},
 	"testmod-PulseDistributor": {
 		"NAME": "脉冲分配器",

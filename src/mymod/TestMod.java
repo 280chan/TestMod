@@ -32,6 +32,7 @@ import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.PotionBelt;
@@ -77,7 +78,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 1/30/2022
+ * @version 2/3/2022
  * @since 6/17/2018
  */
 
@@ -164,10 +165,14 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		case ZHS:
 		case ZHT:
 			BaseMod.addKeyword(new String[] { "死亡刻印" }, "被标记 #y死亡刻印 的敌人在失去生命时会增加等量的层数。");
+			BaseMod.addKeyword(new String[] { "生气" },
+					AngryPower.DESCRIPTIONS[1] + 1 + AngryPower.DESCRIPTIONS[2]);
 			break;
 		default:
 			BaseMod.addKeyword(new String[] { "Imprint" },
 					"#yImprint will increase the amount of damage whenever the owner loses HP.");
+			BaseMod.addKeyword(new String[] { "Angry" },
+					AngryPower.DESCRIPTIONS[1] + 1 + AngryPower.DESCRIPTIONS[2]);
 			break;
 		}
 		SUB_MOD.forEach(TestMod::editSubModKeywords);
@@ -262,9 +267,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new VentureCapital(), new Match3(), new GlassSoul(), new GreedyDevil(), new HolyLightProtection(),
-				new GoldenSoul(), new Gather(), new GremlinBalance(), new TemporaryBarricade(), new ShadowAmulet(),
-				new PhasePocketWatch(), new MistCore());
+		addLatest(new Match3(), new GlassSoul(), new GreedyDevil(), new HolyLightProtection(), new GoldenSoul(),
+				new Gather(), new GremlinBalance(), new TemporaryBarricade(), new PhasePocketWatch(), new MistCore());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton());
