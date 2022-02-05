@@ -160,7 +160,7 @@
 	"testmod-PlagueActPower":{
 		"NAME":"瘟疫 - 触发",
 		"DESCRIPTIONS":[
-			"每当你打出 #y能力牌 ，使所有敌人的 #y中毒 、 #y缠绕 生效一次。"
+			"每当你打出 #y能力牌 ，使所有敌人的 #y中毒 、 #y缠绕 生效 #b", " 次。"
 		]
 	},
 	"testmod-PulseDistributorPower":{

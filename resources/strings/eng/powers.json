@@ -160,7 +160,7 @@
 	"testmod-PlagueActPower":{
 		"NAME":"Plague",
 		"DESCRIPTIONS":[
-			"Whenever you play a #yPower card, make all enemies' #yPoison and #yConstricted affect once."
+			"Whenever you play a #yPower card, make all enemies' #yPoison and #yConstricted affect #b", " times."
 		]
 	},
 	"testmod-PulseDistributorPower": {
