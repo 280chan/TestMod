@@ -78,7 +78,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 2/3/2022
+ * @version 2/5/2022
  * @since 6/17/2018
  */
 
@@ -267,8 +267,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new Match3(), new GlassSoul(), new GreedyDevil(), new HolyLightProtection(), new GoldenSoul(),
-				new Gather(), new GremlinBalance(), new TemporaryBarricade(), new PhasePocketWatch(), new MistCore());
+		addLatest(new GlassSoul(), new GreedyDevil(), new HolyLightProtection(), new GoldenSoul(), new Gather(),
+				new GremlinBalance(), new TemporaryBarricade(), new PhasePocketWatch(), new MistCore());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(this.toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton());
@@ -844,8 +844,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	private static void checkEnableConsoleMultiplayer() {
 		if (Loader.isModLoaded("chronoMods")) {
+			boolean enableConsole = true;
 			try {
-				if ("280 chan".equals(CardCrawlGame.playerName)) {
+				if (enableConsole || "280 chan".equals(CardCrawlGame.playerName)) {
 					changeConsoleMultiplayer(true);
 				} else {
 					CopyOnWriteArrayList<?> players = ReflectionHacks

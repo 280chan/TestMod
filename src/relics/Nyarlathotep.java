@@ -22,7 +22,8 @@ public class Nyarlathotep extends AbstractTestRelic {
 			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots", "Clover",
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",
 			"DemoExt:GalacticMedalOfValor", "SynthV:MejaisSoulstealer", "youkari:Boundary_crack",
-			"BirthdayGift-Icosahedron", "RU OrangePellets", "RU Bird Faced Urn" };
+			"BirthdayGift-Icosahedron", "RU OrangePellets", "RU Bronze Scales", "RU Bird Faced Urn",
+			"Kaltsit_LearningSimulationPower" };
 	private static final ArrayList<String> CARD_LIST = new ArrayList<String>();
 	private static final ArrayList<String> POWER_LIST = new ArrayList<String>();
 	private static final ArrayList<String> RELIC_LIST = new ArrayList<String>();
