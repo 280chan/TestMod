@@ -43,7 +43,7 @@ public class VoidShardEventDamagePower extends AbstractTestPower implements Invi
 	
 	public int onLoseHp(int damage) {
 		return AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT
-				? damage * this.vs.damageRate() : damage;
+				? (int) (damage * this.vs.damageRate()) : damage;
 	}
 
 }

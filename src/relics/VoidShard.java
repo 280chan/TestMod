@@ -4,10 +4,10 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import powers.VoidShardEventDamagePower;
 
 public class VoidShard extends AbstractTestRelic {
-	private static final int DAMAGE_RATE = 3;
+	private static final double DAMAGE_RATE = 2.5;
 	private VoidShardEventDamagePower p;
 	
-	public int damageRate() {
+	public double damageRate() {
 		this.flash();
 		return DAMAGE_RATE;
 	}
