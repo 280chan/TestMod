@@ -47,8 +47,7 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	public void atPreBattle() {
-		this.used = false;
-		this.toggleState(true);
+		this.toggleState(!(this.used = false));
     }
 	
 	public void atTurnStart() {
@@ -76,10 +75,10 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 		if (this.canUse()) {
 			AbstractPotion p = potions().filter(po -> po.canUse()).findFirst().orElse(null);
 			if (p != null) {
-				this.used = true;
 				p.use(p.targetRequired ? AbstractDungeon.getRandomMonster() : null);
 				TestMod.info("炼金术士: 使用了" + p.name);
 				this.toggleState(false);
+				this.used = true;
 			} else {
 				TestMod.info("炼金术士: 没有可使用药水");
 			}
