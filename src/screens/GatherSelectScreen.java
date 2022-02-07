@@ -36,12 +36,10 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 	protected void afterSelected() {
 		AbstractRelic tmp = map.get(this.selectedRelic);
 		if (p().relics.contains(tmp)) {
-			p().relics.remove(tmp);
-			tmp.onUnequip();
+			remove(tmp);
 			print("移除成功");
 		} else {
-			p().getRelic(tmp.relicId).onUnequip();
-			p().loseRelic(tmp.relicId);
+			remove(p().getRelic(tmp.relicId));
 			print("移除失败");
 		}
 		rewards(this.selectedRelic).stream().peek(TestMod::removeFromPool).forEach(r -> r.instantObtain());
@@ -51,6 +49,14 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 		AbstractDungeon.topPanel.adjustRelicHbs();
 	}
 
+	private void remove(AbstractRelic r) {
+		if (r == null)
+			return;
+		r.onVictory();
+		r.onUnequip();
+		p().relics.remove(r);
+	}
+	
 	@Override
 	protected void afterCanceled() {
 		p().reorganizeRelics();
