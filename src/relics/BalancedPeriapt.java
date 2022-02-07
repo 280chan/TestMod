@@ -2,8 +2,6 @@ package relics;
 
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class BalancedPeriapt extends AbstractTestRelic {
 	
@@ -11,15 +9,19 @@ public class BalancedPeriapt extends AbstractTestRelic {
 		super(RelicTier.UNCOMMON, LandingSound.FLAT, BAD);
 	}
 	
+	private float modify(float input) {
+		return input * 3;
+	}
+	
 	public float preChangeMaxHP(float amount) {
-		AbstractPlayer p = AbstractDungeon.player;
-		if (p.isDead || p.isDying)
+		if (!this.isActive || p().isDead || p().isDying)
 			return 0;
-		float tmp = amount * 3;
 		if (amount < 0) {
-			p.damage(new DamageInfo(p, (int)(-amount), DamageType.HP_LOSS));
+			p().damage(new DamageInfo(p(), (int)(-amount), DamageType.HP_LOSS));
 		} else if (amount > 0) {
-			p.heal((int)tmp);
+			p().heal(relicStream(BalancedPeriapt.class).map(r -> get(this::modify)).reduce(t(), this::chain)
+					.apply(amount).intValue());
+			this.show();
 		}
     	return 0;
     }
