@@ -41,7 +41,7 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 	}
 	
 	public PhasePocketWatch() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
+		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
 	public String getUpdatedDescription() {
