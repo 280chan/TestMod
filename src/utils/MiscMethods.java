@@ -471,7 +471,7 @@ public interface MiscMethods {
     	AbstractDungeon.actionManager.actions.clear();
     	AbstractDungeon.actionManager.actions.addAll(actions);
     	this.addTmpActionToTop(AbstractDungeon.getMonsters()::showIntent);
-    	addToTop(new RollMoveAction(m));
+    	att(new RollMoveAction(m));
 	}
 	
 	public static class ColorRegister {
@@ -699,7 +699,7 @@ public interface MiscMethods {
 	public static interface Lambda extends Runnable {}
 	
 	public default void addTmpActionToTop(Lambda... lambda) {
-		addToTop(new AbstractGameAction() {
+		att(new AbstractGameAction() {
 			@Override
 			public void update() {
 				this.isDone = true;
@@ -709,7 +709,7 @@ public interface MiscMethods {
 	}
 	
 	public default void addTmpActionToBot(Lambda... lambda) {
-		addToBot(new AbstractGameAction() {
+		atb(new AbstractGameAction() {
 			@Override
 			public void update() {
 				this.isDone = true;
@@ -719,7 +719,7 @@ public interface MiscMethods {
 	}
 	
 	public default void addTmpActionToTop(AbstractGameAction... actions) {
-		addToTop(new AbstractGameAction() {
+		att(new AbstractGameAction() {
 			@Override
 			public void update() {
 				this.isDone = true;
@@ -731,7 +731,7 @@ public interface MiscMethods {
 	}
 	
 	public default void addTmpActionToBot(AbstractGameAction... actions) {
-		addToBot(new AbstractGameAction() {
+		atb(new AbstractGameAction() {
 			@Override
 			public void update() {
 				this.isDone = true;
@@ -743,11 +743,11 @@ public interface MiscMethods {
 	}
 
 	public default void addTmpXCostActionToTop(AbstractCard c, Consumer<Integer> action) {
-		addToTop(new AbstractXCostAction(c, action) {});
+		att(new AbstractXCostAction(c, action) {});
 	}
 	
 	public default void addTmpXCostActionToBot(AbstractCard c, Consumer<Integer> action) {
-		addToBot(new AbstractXCostAction(c, action) {});
+		atb(new AbstractXCostAction(c, action) {});
 	}
 	
 	public static void addToTop(AbstractGameAction a) {
@@ -759,11 +759,11 @@ public interface MiscMethods {
 	}
 	
 	public default void att(AbstractGameAction a) {
-		addToTop(a);
+		AbstractDungeon.actionManager.addToTop(a);
 	}
 	
 	public default void atb(AbstractGameAction a) {
-		addToBot(a);
+		AbstractDungeon.actionManager.addToBottom(a);
 	}
 	
     public default <T> Predicate<T> not(Predicate<T> a) {
@@ -778,8 +778,16 @@ public interface MiscMethods {
     	return Stream.of(list).reduce(a -> false, Predicate::or);
     }
 	
-	public default <T> Function<T, T> t() {
+	public default <T> UnaryOperator<T> get(UnaryOperator<T> f) {
+		return f;
+	}
+	
+	public default <T> UnaryOperator<T> t() {
 		return t -> t;
+	}
+	
+	public default <T> UnaryOperator<T> chain(UnaryOperator<T> a, UnaryOperator<T> b) {
+		return c -> b.apply(a.apply(c));
 	}
 	
 	public default <T> Collector<T, ?, ArrayList<T>> toArrayList() {

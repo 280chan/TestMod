@@ -1,8 +1,6 @@
 package patches;
 
 import java.util.ArrayList;
-import java.util.function.UnaryOperator;
-
 import com.evacipated.cardcrawl.modthespire.lib.ByRef;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
@@ -14,7 +12,7 @@ import com.megacrit.cardcrawl.ui.panels.TopPanel;
 
 import utils.MiscMethods;
 
-public class ChangeGainGoldAmountPatch {
+public class ChangeGainGoldAmountPatch implements MiscMethods {
 	@SpirePatch(clz = AbstractPlayer.class, method = "gainGold")
 	public static class AbstractPlayerPatch {
 		@SpireInsertPatch(rloc = 8)
@@ -33,9 +31,8 @@ public class ChangeGainGoldAmountPatch {
 	}
 	
 	private static double modifyGoldAmountThroughList(ArrayList<? extends Object> list, double input) {
-		return list.stream().filter(o -> o instanceof MiscMethods)
-				.map(o -> (UnaryOperator<Double>) (((MiscMethods) o)::gainGold))
-				.reduce(a -> a, (a, b) -> c -> b.apply(a.apply(c))).apply(input);
+		return list.stream().filter(o -> o instanceof MiscMethods).map(o -> INSTANCE.get(((MiscMethods) o)::gainGold))
+				.reduce(INSTANCE.t(), INSTANCE::chain).apply(input);
 	}
 	
 	private static boolean hasEnemy() {
