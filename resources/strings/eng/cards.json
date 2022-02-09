@@ -147,6 +147,11 @@
 		"NAME": "Fighting Intention",
 		"DESCRIPTION": "At the start of your turn, for each enemy intend to Attack, Gain !M! Strength, these enemies lose !M! Strength."
 	},
+	"testmod-FormForm": {
+		"NAME": "Form Form",
+		"DESCRIPTION": "Play all other *Form cards !M! time. At the start of your turn, lose [E] [E] [E] .",
+		"UPGRADE_DESCRIPTION": "Play all other upgraded *Form cards !M! time. At the start of your turn, lose [E] [E] [E] ."
+	},
 	"testmod-HandmadeProducts": {
 		"NAME": "Handmade Products",
 		"DESCRIPTION": "Deal damage of the product of all cards' [cost plus !M! ] in your hand. If kills enemy, increase this card's cost by 1. Can be Upgraded any number of times. Upgrade will set cost to 1."

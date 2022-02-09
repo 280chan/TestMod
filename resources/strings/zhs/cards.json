@@ -147,6 +147,11 @@
 		"NAME": "战意",
 		"DESCRIPTION": "回合开始时，每个攻击意图的敌人使你获得 !M! 点 力量 ，使攻击意图的敌人失去 !M! 点 力量 。"
 	},
+	"testmod-FormForm": {
+		"NAME": "形态形态",
+		"DESCRIPTION": "打出所有其他 *形态 牌 !M! 次。每回合开始失去 [E] [E] [E] 。",
+		"UPGRADE_DESCRIPTION": "打出 升级 后的所有其他 *形态 牌 !M! 次。每回合开始失去 [E] [E] [E] 。"
+	},
 	"testmod-HandmadeProducts": {
 		"NAME": "手工产品",
 		"DESCRIPTION": "造成你手牌中所有牌的[耗能加 !M! ]之积( !D! )点伤害。杀死敌人则耗能在 *本局游戏 中增加1。能被多次 升级 。 升级 会将耗能变为1。"

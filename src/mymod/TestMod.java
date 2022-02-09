@@ -343,7 +343,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new RabbitOfFibonacci(), new TradeIn(), new Reproduce(), new PainDetonator(), new Reverberation(),
 				new CardIndex(), new PowerStrike(), new TaurusBlackCat(), new PerfectCombo(), new Lexicography(),
 				new Librarian(), new VirtualReality(), new HandmadeProducts(), new DeathImprint(),
-				new TreasureHunter(), new MoneyShot(), new Enchant())
+				new TreasureHunter(), new MoneyShot(), new Enchant(), new FormForm())
 				.collect(toArrayList());
 		new AddAnonymousCards().add();
 		
