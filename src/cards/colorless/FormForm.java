@@ -3,6 +3,9 @@ package cards.colorless;
 
 import cards.AbstractTestCard;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
@@ -12,6 +15,7 @@ import com.megacrit.cardcrawl.cards.green.WraithForm;
 import com.megacrit.cardcrawl.cards.purple.DevaForm;
 import com.megacrit.cardcrawl.cards.red.DemonForm;
 import com.megacrit.cardcrawl.characters.*;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.watcher.EnergyDownPower;
@@ -27,16 +31,20 @@ public class FormForm extends AbstractTestCard {
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.atb(apply(p, new EnergyDownPower(p, 3, true)));
-		this.addTmpActionToBot(() -> CardLibrary.cards.values().stream().filter(this::check).forEach(this::play));
+		this.addTmpActionToBot(() -> {
+			ArrayList<AbstractCard> l = CardLibrary.cards.values().stream().filter(this::check).collect(toArrayList());
+			Collections.shuffle(l, new Random(AbstractDungeon.cardRandomRng.randomLong()));
+			l.forEach(this::play);
+		});
 	}
     
     private boolean check(AbstractCard c) {
     	if (c instanceof FormForm)
     		return false;
-    	if (c.name.toLowerCase().endsWith("form") || c.name.endsWith("形态"))
+    	if (c.name.endsWith("Form") || c.name.endsWith("形态") || c.cardID.endsWith("Form"))
     		return true;
 		return Stream.of(DemonForm.class, WraithForm.class, EchoForm.class, DevaForm.class)
-				.anyMatch(c.getClass()::isAssignableFrom);
+				.anyMatch(a -> a.isAssignableFrom(c.getClass()));
 	}
     
     private void play(AbstractCard c) {
