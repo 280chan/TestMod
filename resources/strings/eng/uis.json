@@ -149,7 +149,7 @@
 
 	"testmod-GlassSoulSelectScreen": {
 		"TEXT": [
-			"Choose a relic to get again for free",
+			" count redeemable relics",
 			"Relics that are too cheap, can be redeemed with 10 gold",
 			" gold redeemable relics"
 		]

@@ -1,7 +1,10 @@
 package relics;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
+
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
@@ -63,9 +66,20 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 
 	@Override
 	public void onRightClick() {
-		if (this.isActive && !this.relics.isEmpty() && !this.inCombat() && (this.counter > 0 || p().gold > 9)) {
+		if (this.isActive && !relics.isEmpty() && !inCombat() && relics.stream().anyMatch(this::canBuy)) {
 			new GlassSoulSelectScreen("", this).open();
+		} else {
+			GlassSoulSelectScreen.playCantBuySfx();
 		}
+	}
+	
+	public Stream<AbstractRelic> streamOf(String id) {
+		return p().relics.stream().filter(a -> a.relicId.equals(id));
+	}
+	
+	private boolean canBuy(String id) {
+		return (p().gold >= RelicLibrary.getRelic(id).getPrice() * (int) (streamOf(id).count()) / GlassSoul.PRICE_RATE
+				&& p().gold > 9) || this.counter >= streamOf(id).count();
 	}
 	
 	public void onUnequip() {
@@ -82,7 +96,7 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 	}
 	
 	public void tryPulse(boolean skip) {
-		if ((skip || !this.inCombat()) && !this.relics.isEmpty() && (this.counter > 0 || p().gold > 9))
+		if ((skip || !this.inCombat()) && !this.relics.isEmpty() && relics.stream().anyMatch(this::canBuy))
 			this.beginLongPulse();
 	}
 	
