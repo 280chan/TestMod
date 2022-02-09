@@ -16,11 +16,14 @@ import javassist.CannotCompileException;
 import javassist.CtBehavior;
 
 public class VirtualRealityPatch {
+	
 	@SpirePatch(clz = AbstractCreature.class, method = "addBlock")
 	public static class AbstractCreaturePatch {
 		@SpireInsertPatch(locator = Locator.class, localvars = { "tmp" })
 		public static void Insert(AbstractCreature c, int blockAmount, float tmp) {
-			VirtualReality.gainBlock(MathUtils.floor(tmp));
+			if (c.isPlayer) {
+				VirtualReality.gainBlock(MathUtils.floor(tmp));
+			}
 		}
 		
 		private static class Locator extends SpireInsertLocator {

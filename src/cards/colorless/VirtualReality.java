@@ -29,9 +29,9 @@ public class VirtualReality extends AbstractTestCard {
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.addToBot(new GainBlockAction(p, p, this.block));
+    	this.atb(new GainBlockAction(p, p, this.block));
     	if (blockGainLastTurn > 0)
-    		this.addToBot(new LoseBlockAction(p, p, blockGainLastTurn));
+    		this.atb(new LoseBlockAction(p, p, blockGainLastTurn));
     }
     
     public void upgrade() {
