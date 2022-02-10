@@ -267,8 +267,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new GlassSoul(), new GreedyDevil(), new HolyLightProtection(), new GoldenSoul(), new Gather(),
-				new GremlinBalance(), new TemporaryBarricade(), new PhasePocketWatch(), new MistCore());
+		addLatest(new StomachOfGluttonous(), new GreedyDevil(), new HolyLightProtection(), new GoldenSoul(),
+				new Gather(), new GremlinBalance(), new TemporaryBarricade(), new PhasePocketWatch(), new MistCore());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton());
@@ -300,7 +300,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
 				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller(), new TwinklingStar(),
 				new Metronome(), new Gather(), new HolyLightProtection(), new EvilDagger(), new Match3(),
-				new PhasePocketWatch())
+				new PhasePocketWatch(), new StomachOfGluttonous())
 				.collect(toArrayList());
 		if (!Loader.isModLoaded("FoggyMod"))
 			RELICS.add(new MistCore());
