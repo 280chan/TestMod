@@ -581,7 +581,7 @@
 	"testmod-Match3":{
 		"NAME": "Match 3",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn after drawing cards, if you have multiple of #b3 relics, gain [E] ; if you have multiple of #b3 cards in draw pile, gain [E] ."]
+		"DESCRIPTIONS":["At the start of each turn after drawing cards, if you have multiple of #b3 relics, gain [E] , or else draw #b1 card; if you have multiple of #b3 cards in draw pile, gain [E] , or else draw #b1 card."]
 	},
 	
 	"testmod-PhasePocketWatch":{
@@ -594,5 +594,11 @@
 		"NAME": "Stomach Of Gluttonous",
 		"FLAVOR": "这个是我改动后的最终版。这个改动可以在打三柱这种精英时回多次血。\n——Little Wolf影幽",
 		"DESCRIPTIONS":["Whenever you kill an enemy that is #yElite or #yBoss, gain current hp / max hp #ycount , and fully heal. Whenever you increase max hp, increase #ycount % more."]
+	},
+	
+	"testmod-Encyclopedia":{
+		"NAME": "Encyclopedia",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["For each time you meet an enemy, you deal #b50% more damage to enemies with same name in this run."]
 	}
 }

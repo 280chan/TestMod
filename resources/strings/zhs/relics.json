@@ -617,7 +617,7 @@
 	"testmod-Match3":{
 		"NAME": "三消",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["每回合开始抽牌后：若你的遗物数量为 #b3 的倍数，获得 [E] ；若你的抽牌堆的牌数为 #b3 的倍数，获得 [E] 。"]
+		"DESCRIPTIONS":["每回合开始抽牌后： NL 若你的遗物数量为 #b3 的倍数，获得 [E] ，否则抽 #b1 张牌； NL 若你的抽牌堆的牌数为 #b3 的倍数，获得 [E] ，否则抽 #b1 张牌。"]
 	},
 	
 	"testmod-PhasePocketWatch":{
@@ -629,6 +629,12 @@
 	"testmod-StomachOfGluttonous":{
 		"NAME": "饕餮的胃袋",
 		"FLAVOR": "这个是我改动后的最终版。这个改动可以在打三柱这种精英时回多次血。\n——Little Wolf影幽",
-		"DESCRIPTIONS":["每当击败 #y精英 或 #yBoss 敌人时，增加当前生命百分比的计数并恢复所有生命值。每当你增加最大生命值，额外增加 #y计数 %。"]
+		"DESCRIPTIONS":["每当击败 #y精英 或 #yBoss 敌人时，增加当前生命百分比的 #y计数 并恢复所有生命值。每当你增加最大生命值，额外增加 #y计数 %。"]
+	},
+	
+	"testmod-Encyclopedia":{
+		"NAME": "百科全书",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["每见过一个敌人一次，对本局游戏后续见到相同敌人造成伤害增加 #b50% 。"]
 	}
 }
