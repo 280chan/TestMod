@@ -1,5 +1,6 @@
 package relics;
 
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 
 public class Match3 extends AbstractTestRelic {
@@ -13,10 +14,8 @@ public class Match3 extends AbstractTestRelic {
 	}
 	
 	private void act(int size) {
-		if (size % 3 != 0)
-			return;
-		this.addToBot(new GainEnergyAction(1));
 		this.show();
+		this.addToBot(size % 3 == 0 ? new GainEnergyAction(1) : new DrawCardAction(1));
 	}
 	
 	public void atTurnStartPostDraw() {
