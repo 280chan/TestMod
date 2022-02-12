@@ -1,6 +1,5 @@
 package powers;
 
-import java.util.function.Function;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -29,8 +28,7 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 	}
 	
 	private float finalDamage(float input) {
-		return this.getIdenticalList((Function<Float, Float>) this::damage, GiantKiller.countGiantKiller()).stream()
-				.reduce(t(), Function::andThen).apply(input);
+		return getIdenticalList(get(this::damage), GiantKiller.count()).stream().reduce(t(), this::chain).apply(input);
 	}
 	
 	private float damage(float input) {

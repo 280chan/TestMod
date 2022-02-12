@@ -11,7 +11,7 @@ public class GiantKiller extends AbstractTestRelic {
 		this.counter = -1;
 	}
 
-	public static int countGiantKiller() {
+	public static int count() {
 		return (int) INSTANCE.relicStream(GiantKiller.class).count();
 	}
 	
@@ -29,7 +29,7 @@ public class GiantKiller extends AbstractTestRelic {
 	}
 	
 	public static void addIfNotHave(AbstractCreature m) {
-		if (notHave(m) && countGiantKiller() > 0)
+		if (notHave(m) && count() > 0)
 			addThis(m);
 	}
 
