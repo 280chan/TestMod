@@ -19,8 +19,8 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.red.SearingBlow;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.core.Settings.GameLanguage;
@@ -58,6 +58,7 @@ import basemod.interfaces.RelicGetSubscriber;
 import basemod.interfaces.StartGameSubscriber;
 import basemod.interfaces.OnStartBattleSubscriber;
 import basemod.interfaces.PostBattleSubscriber;
+import basemod.interfaces.PostCreateStartingRelicsSubscriber;
 import basemod.interfaces.MaxHPChangeSubscriber;
 import cards.*;
 import cards.colorless.*;
@@ -78,7 +79,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 2/9/2022
+ * @version 2/11/2022
  * @since 6/17/2018
  */
 
@@ -86,7 +87,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber, StartGameSubscriber,
 		PreUpdateSubscriber, PostUpdateSubscriber, PostInitializeSubscriber, PostDungeonInitializeSubscriber,
 		OnStartBattleSubscriber, MaxHPChangeSubscriber, EditKeywordsSubscriber, PostBattleSubscriber, MiscMethods,
-		RelicGetSubscriber {
+		RelicGetSubscriber, PostCreateStartingRelicsSubscriber {
 	public static final String MOD_ID = "testmod";
 	public static final String MOD_NAME = "TestMod";
 	public static final String SAVE_NAME = "TestMod";
@@ -267,8 +268,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new StomachOfGluttonous(), new GreedyDevil(), new HolyLightProtection(), new GoldenSoul(),
-				new Gather(), new GremlinBalance(), new TemporaryBarricade(), new PhasePocketWatch(), new MistCore());
+		addLatest(new StomachOfGluttonous(), new Encyclopedia(), new GreedyDevil(), new HolyLightProtection(),
+				new GoldenSoul(), new GremlinBalance(), new TemporaryBarricade(), new PhasePocketWatch(),
+				new Gather(), new MistCore());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton());
@@ -300,7 +302,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new TheFather(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
 				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller(), new TwinklingStar(),
 				new Metronome(), new Gather(), new HolyLightProtection(), new EvilDagger(), new Match3(),
-				new PhasePocketWatch(), new StomachOfGluttonous())
+				new PhasePocketWatch(), new StomachOfGluttonous(), new Encyclopedia())
 				.collect(toArrayList());
 		if (!Loader.isModLoaded("FoggyMod"))
 			RELICS.add(new MistCore());
@@ -391,13 +393,17 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private void addLatest(AbstractCard... list) {
 		LATEST_CARD = Stream.of(list).collect(toArrayList());
 	}
+
+	@Override
+	public void receivePostCreateStartingRelics(PlayerClass c, ArrayList<String> relics) {
+		relics.add(TestMod.makeID("TestBox"));
+	}
 	
 	@Override
 	public void receivePostDungeonInitialize() {
 		if (AbstractDungeon.floorNum > 1) {
 			return;
 		}
-		
 		checkEnableConsoleMultiplayer();
 		
 		if (config == null)
@@ -409,8 +415,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		AscensionHeart.reset();
 		// Mahjong.saveDefaultYama();
 		
-		// 初始遗物
-		obtain(p(), new TestBox());
 	}
 	
 	public void unlockAll() {
@@ -566,6 +570,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(GlassSoul.ID, "0");
 		DEFAULT.setProperty(Metronome.ID, "0");
 		DEFAULT.setProperty(PhasePocketWatch.SAVE_NAME, "0");
+		DEFAULT.setProperty(Encyclopedia.SAVE_NAME, "0");
 		
 		/*DEFAULT.setProperty(Mahjong.SAVE_KANG, "0");
 		DEFAULT.setProperty(Mahjong.SAVE_TURN, "0");
@@ -629,10 +634,15 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		GlassSoul.load(getStringList(GlassSoul.ID));
 		Metronome.load();
 		PhasePocketWatch.load(getInt(PhasePocketWatch.SAVE_NAME));
+		Encyclopedia.load();
 	}
 	
 	public static boolean hasSaveData(String key) {
 		return config.has(key);
+	}
+	
+	public static String getString(String key) {
+		return config.getString(key);
 	}
 	
 	public static int getInt(String key) {

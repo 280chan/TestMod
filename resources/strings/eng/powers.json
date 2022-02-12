@@ -91,6 +91,14 @@
 			" fewer cards next turn."
 		]
 	},
+	"testmod-Encyclopedia":{
+		"NAME":"Encyclopedia",
+		"DESCRIPTIONS":[
+			" #y",
+			" receives #b",
+			" % more damage."
+		]
+	},
 	"testmod-EnhanceArmermentPower": {
 		"NAME": "Enhance Armerment",
 		"DESCRIPTIONS": [
