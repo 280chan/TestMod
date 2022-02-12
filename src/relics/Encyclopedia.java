@@ -108,7 +108,12 @@ public class Encyclopedia extends AbstractTestRelic {
 		}
 		
 		public void updateDescription() {
-			 this.description = ps.DESCRIPTIONS[0] + owner.name + ps.DESCRIPTIONS[1] + amount + ps.DESCRIPTIONS[2];
+			this.description = ps.DESCRIPTIONS[0] + owner.name + ps.DESCRIPTIONS[1] + (dmgRate(100f) - 100)
+					+ ps.DESCRIPTIONS[2];
+		}
+		
+		private float dmgRate(float input) {
+			return relicStream(Encyclopedia.class).map(r -> get(this::dmg)).reduce(t(), this::chain).apply(input);
 		}
 		
 		private float dmg(float input) {
@@ -116,10 +121,13 @@ public class Encyclopedia extends AbstractTestRelic {
 		}
 		
 		public float atDamageFinalReceive(float damage, DamageInfo.DamageType type) {
-			if (damage < 0)
+			return damage < 0 ? damage : dmgRate(damage);
+		}
+
+		public int onAttacked(DamageInfo info, int damage) {
+			if (relicStream(TwinklingStar.class).count() > 0)
 				return damage;
-			return this.relicStream(Encyclopedia.class).peek(r -> r.show()).map(r -> get(this::dmg))
-					.reduce(t(), this::chain).apply(damage);
+			return relicStream(Encyclopedia.class).peek(r -> r.show()).mapToInt(r -> damage).findAny().orElse(damage);
 		}
 		
 		public void onRemove() {
