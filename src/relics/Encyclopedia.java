@@ -3,11 +3,22 @@ package relics;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
+import com.evacipated.cardcrawl.modthespire.lib.Matcher;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.saveAndContinue.SaveAndContinue;
+
+import javassist.CannotCompileException;
+import javassist.CtBehavior;
 import mymod.TestMod;
 import powers.AbstractTestPower;
 
@@ -16,6 +27,7 @@ public class Encyclopedia extends AbstractTestRelic {
 	private static final HashMap<AbstractMonster, Integer> CURR = new HashMap<AbstractMonster, Integer>();
 	private static final HashMap<String, Integer> SEEN = new HashMap<String, Integer>();
 	private static boolean start = false;
+	private static boolean victory = false;
 	
 	public static void clear() {
 		SEEN.clear();
@@ -27,6 +39,7 @@ public class Encyclopedia extends AbstractTestRelic {
 		int size = TestMod.getInt(SAVE_NAME);
 		for (int i = 1; i <= size; i++)
 			SEEN.put(TestMod.getString(SAVE_NAME + (-i)), TestMod.getInt(SAVE_NAME + i));
+		victory = start = false;
 	}
 	
 	private static void save() {
@@ -87,9 +100,27 @@ public class Encyclopedia extends AbstractTestRelic {
 			return;
 		CURR.keySet().forEach(this::add);
 		CURR.clear();
-		save();
+		//save();
 		start = false;
+		victory = true;
     }
+	
+	@SpirePatch(clz = AbstractRoom.class, method = "update")
+	public static class StupidSavePatch {
+		@SpireInsertPatch(locator = Locator.class)
+		public static void Insert(AbstractRoom room) {
+			if (victory)
+				save();
+		}
+	}
+	
+	private static class Locator extends SpireInsertLocator {
+		public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+			Matcher finalMatcher = new Matcher.MethodCallMatcher(SaveAndContinue.class, "save");
+			int[] raw = LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+			return new int[] { raw[0] + 1 };
+		}
+	}
 	
 	public static class EncyclopediaPower extends AbstractTestPower {
 		private static final PowerStrings ps = Strings(SAVE_NAME);
@@ -108,8 +139,8 @@ public class Encyclopedia extends AbstractTestRelic {
 		}
 		
 		public void updateDescription() {
-			this.description = ps.DESCRIPTIONS[0] + owner.name + ps.DESCRIPTIONS[1] + (dmgRate(100f) - 100)
-					+ ps.DESCRIPTIONS[2];
+			this.description = ps.DESCRIPTIONS[0] + owner.name + ps.DESCRIPTIONS[1]
+					+ (single() ? amount : (dmgRate(100f) - 100)) + ps.DESCRIPTIONS[2];
 		}
 		
 		private float dmgRate(float input) {
@@ -124,6 +155,10 @@ public class Encyclopedia extends AbstractTestRelic {
 			return damage < 0 ? damage : dmgRate(damage);
 		}
 
+		private boolean single() {
+			return relicStream(Encyclopedia.class).count() == 1;
+		}
+		
 		public int onAttacked(DamageInfo info, int damage) {
 			if (relicStream(TwinklingStar.class).count() > 0)
 				return damage;
