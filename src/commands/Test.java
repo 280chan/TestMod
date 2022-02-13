@@ -1,5 +1,8 @@
 package commands;
 
+import basemod.BaseMod;
+import mymod.TestMod;
+
 public class Test extends TestCommand {
 	
 	public void execute(String[] tokens, int depth) {
@@ -7,6 +10,7 @@ public class Test extends TestCommand {
 			cmdHelp();
 			return;
 		}
+		TestMod.info("手牌上限：" + BaseMod.MAX_HAND_SIZE);
 		// TODO
 	}
 
