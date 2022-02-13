@@ -160,8 +160,6 @@ public class Encyclopedia extends AbstractTestRelic {
 		}
 		
 		public int onAttacked(DamageInfo info, int damage) {
-			if (relicStream(TwinklingStar.class).count() > 0)
-				return damage;
 			return relicStream(Encyclopedia.class).peek(r -> r.show()).mapToInt(r -> damage).findAny().orElse(damage);
 		}
 		

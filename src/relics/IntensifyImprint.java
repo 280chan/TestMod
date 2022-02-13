@@ -32,8 +32,7 @@ public class IntensifyImprint extends AbstractTestRelic {
 	public void incrementCounter() {
 		this.counter++;
 		this.updateDescription(null);
-		if (relicStream(TwinklingStar.class).count() == 0)
-			this.show();
+		this.show();
 	}
 	
 	public void atPreBattle() {
