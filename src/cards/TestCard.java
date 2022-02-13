@@ -19,7 +19,7 @@ import com.megacrit.cardcrawl.cards.status.Burn;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 
-public class Test extends CustomCard {
+public class TestCard extends CustomCard {
     public static final String ID = "SpecialIDThatDontRepeatWithOthers";
     public static final String NAME = "功能";
     public static final String IMG = TestMod.cardIMGPath("relic1");
@@ -29,7 +29,7 @@ public class Test extends CustomCard {
     private static final int BASE_DMG = 0;
     private static final int BASE_MGC = 0;
 
-    public Test() {
+    public TestCard() {
         super(ID, NAME, IMG, COST, DESCRIPTION, CardType.SKILL, CardColor.COLORLESS, CardRarity.SPECIAL, CardTarget.ENEMY);
         this.baseBlock = BASE_BLK;
         this.baseDamage = BASE_DMG;
