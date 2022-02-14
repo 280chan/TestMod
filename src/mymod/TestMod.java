@@ -729,6 +729,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}
 		TestCommand.add("relictest", Relic.class);
 		TestCommand.add("handsize", HandSize.class);
+		TestCommand.add("ascension", Ascension.class);
 		
 		initLatest();
 		
