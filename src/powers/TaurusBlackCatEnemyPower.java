@@ -50,11 +50,16 @@ public class TaurusBlackCatEnemyPower extends AbstractTestPower implements Invis
 			this.addTmpActionToBot(() -> {
 				int d = (int) (damage / 100f / this.monsterAmount() * this.amount);
 				if (d > 0)
-					this.addToTop(new DamageAllEnemiesAction(AbstractDungeon.player,
+					this.addToTop(new DamageAllEnemiesAction(p(),
 							DamageInfo.createDamageMatrix(d, true), DamageType.HP_LOSS, AttackEffect.POISON, true));
 			});
 		}
 		return damage;
+	}
+	
+	public void onRemove() {
+		this.addTmpActionToTop(() -> p().powers.stream().filter(p -> p instanceof TaurusBlackCatPower).limit(1)
+				.forEach(p -> p.stackPower(0)));
 	}
     
 }

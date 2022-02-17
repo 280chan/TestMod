@@ -2,7 +2,9 @@ package powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+
 import relics.GiantKiller;
 import utils.MiscMethods;
 
@@ -17,6 +19,7 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 		updateDescription();
 		this.type = PowerType.DEBUFF;
 		this.priority = -10000;
+		this.addMap(p -> new GiantKillerPower(p.owner));
 	}
 	
 	public void updateDescription() {
@@ -28,7 +31,8 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 	}
 	
 	private float finalDamage(float input) {
-		return getIdenticalList(get(this::damage), GiantKiller.count()).stream().reduce(t(), this::chain).apply(input);
+		return relicStream(GiantKiller.class).peek(r -> r.show()).map(r -> get(this::damage)).reduce(t(), this::chain)
+				.apply(input);
 	}
 	
 	private float damage(float input) {
@@ -36,17 +40,16 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 		return tmp > Integer.MAX_VALUE || tmp < 0 ? Integer.MAX_VALUE : tmp;
 	}
 	
-	public float atDamageFinalReceive(float damage, DamageInfo.DamageType type) {
-		if (damage > 0) {
-			if (p().maxHealth < 1)
-				return Integer.MAX_VALUE;
-			return p().maxHealth < this.owner.maxHealth ? finalDamage(damage) : damage;
-		}
-		return damage;
+	public float atDamageFinalReceive(float damage, DamageType type) {
+		return damage > 0 && type == DamageType.NORMAL && p().maxHealth > 0 && p().maxHealth < this.owner.maxHealth
+				? finalDamage(damage) : damage;
 	}
 	
-	public void onRemove() {
-		this.addTmpActionToTop(() -> GiantKiller.addIfNotHave(this.owner));
+	public int onAttacked(DamageInfo info, int damage) {
+		if (p().maxHealth < 1 && damage > 0)
+			return Integer.MAX_VALUE;
+		return damage > 0 && p().maxHealth < this.owner.maxHealth && info.type != DamageType.NORMAL
+				? (int) finalDamage(damage) : damage;
 	}
 
 }

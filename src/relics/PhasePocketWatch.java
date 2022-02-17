@@ -86,6 +86,7 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 		public PhasePocketWatchPower() {
 			super(SAVE_NAME);
 			this.owner = p();
+			this.addMapWithSkip(p -> new PhasePocketWatchPower());
 		}
 		public int onLoseHp(int damage) {
 			if (enemyTurn && damage > 0) {
@@ -93,9 +94,6 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 				counter += damage;
 			}
 			return enemyTurn ? 0 : damage;
-		}
-		public void onRemove() {
-			this.addTmpActionToTop(() -> this.owner.powers.add(new PhasePocketWatchPower()));
 		}
 	}
 

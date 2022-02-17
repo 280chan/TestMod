@@ -29,6 +29,7 @@ public class InorganicPower extends AbstractTestPower implements OnReceivePowerP
 		this.amount = -1;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
+		this.addMap(p -> new InorganicPower(p.owner));
 	}
 	
 	public void updateDescription() {
@@ -43,13 +44,6 @@ public class InorganicPower extends AbstractTestPower implements OnReceivePowerP
 	public boolean onReceivePower(AbstractPower p, AbstractCreature t, AbstractCreature s) {
 		return !(check(s) && t.equals(this.owner) && s.equals(this.owner) && p.type == PowerType.BUFF)
 				|| p.ID.equals("Mode Shift");
-	}
-	
-	public void onRemove() {
-		this.addTmpActionToTop(() -> {
-			if (!hasThis(this.owner))
-				this.owner.powers.add(new InorganicPower(this.owner));
-		});
 	}
     
 }

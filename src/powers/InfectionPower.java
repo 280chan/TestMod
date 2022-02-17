@@ -24,6 +24,7 @@ public class InfectionPower extends AbstractTestPower implements InvisiblePower 
 		this.amount = -1;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
+		this.addMap(p -> new InfectionPower(p.owner));
 	}
 	
 	public void updateDescription() {
@@ -51,12 +52,5 @@ public class InfectionPower extends AbstractTestPower implements InvisiblePower 
     	}
     	return damageAmount;
     }
-
-	public void onRemove() {
-		this.addTmpActionToTop(() -> {
-			if (!hasThis(this.owner))
-				this.owner.powers.add(new InfectionPower(this.owner));
-		});
-	}
 
 }

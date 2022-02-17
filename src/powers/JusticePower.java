@@ -21,6 +21,7 @@ public class JusticePower extends AbstractTestPower implements OnReceivePowerPow
 		this.amount = -1;
 		updateDescription();
 		this.type = PowerType.BUFF;
+		this.addMap(p -> new JusticePower(p.owner));
 	}
 	
 	public void updateDescription() {
@@ -34,15 +35,8 @@ public class JusticePower extends AbstractTestPower implements OnReceivePowerPow
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature t, AbstractCreature source) {
 		if (t.isPlayer && p.type == PowerType.DEBUFF)
-			relicStream(Justice.class).peek(r -> r.show()).forEach(r -> addToTop(apply(t, new StrengthPower(t, 1))));
+			relicStream(Justice.class).peek(r -> r.show()).forEach(r -> att(apply(t, new StrengthPower(t, 1))));
 		return true;
-	}
-
-	public void onRemove() {
-		this.addTmpActionToTop(() -> {
-			if (!hasThis(this.owner))
-				this.owner.powers.add(new JusticePower(this.owner));
-		});
 	}
 	
 }

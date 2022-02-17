@@ -70,47 +70,53 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 
 	@Override
 	protected String categoryOf(AbstractRelic r) {
-		if (r instanceof AbstractTestRelic) {
-			switch(r.tier) {
-			case BOSS:
-				return "Boss";
-			case COMMON:
-				return "普通";
-			case DEPRECATED:
-				return "废弃";
-			case RARE:
-				return "稀有";
-			case SHOP:
-				return "商店";
-			case SPECIAL:
-				return "事件";
-			case STARTER:
-				return "初始";
-			case UNCOMMON:
-				return "罕见";
-			}
+		String postfix = r instanceof AbstractTestRelic ? "test" : "";
+		switch(r.tier) {
+		case BOSS:
+			return "Boss" + postfix;
+		case COMMON:
+			return "普通" + postfix;
+		case DEPRECATED:
+			return "废弃" + postfix;
+		case RARE:
+			return "稀有" + postfix;
+		case SHOP:
+			return "商店" + postfix;
+		case SPECIAL:
+			return "事件" + postfix;
+		case STARTER:
+			return "初始" + postfix;
+		case UNCOMMON:
+			return "罕见" + postfix;
 		}
-		return "非TestMod";
+		return "未知" + postfix;
 	}
 
 	@Override
 	protected String descriptionOfCategory(String category) {
 		switch (category) {
 		case "Boss":
+		case "Bosstest":
 			return "只在Boss宝箱中出现的遗物。";
 		case "普通":
+		case "普通test":
 			return "很容易找到的弱小遗物。";
 		case "稀有":
+		case "稀有test":
 			return "极为少见的独特且强大的遗物。";
 		case "商店":
+		case "商店test":
 			return "只能从商人处购买到的遗物。";
 		case "事件":
+		case "事件test":
 			return "只能通过事件获得的遗物。";
 		case "初始":
+		case "初始test":
 			return "角色初始携带的遗物。";
 		case "罕见":
+		case "罕见test":
 			return "比普通遗物更强大也更少见的遗物。";
 		}
-		return "非TestMod的遗物。";
+		return "未知稀有度的遗物。";
 	}
 }

@@ -2,8 +2,9 @@ package commands;
 
 import basemod.DevConsole;
 import basemod.devcommands.ConsoleCommand;
+import utils.MiscMethods;
 
-public abstract class TestCommand extends ConsoleCommand {
+public abstract class TestCommand extends ConsoleCommand implements MiscMethods {
 	public static void add(String name, Class<? extends TestCommand> c) {
 		ConsoleCommand.addCommand(name, c);
 	}

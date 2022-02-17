@@ -60,14 +60,11 @@ public class HeartOfStrike extends AbstractTestRelic {
 		public HeartOfStrikePower() {
 			super("HeartOfStrike");
 			this.owner = p();
+			this.addMapWithSkip(p -> (hosp = new HeartOfStrikePower()));
 		}
 		
 		public float atDamageFinalGive(float damage, DamageType type, AbstractCard c) {
 			return c.hasTag(CardTags.STRIKE) ? damage * counter : damage;
-		}
-		
-		public void onRemove() {
-			this.addTmpActionToTop(() -> this.owner.powers.add(hosp = new HeartOfStrikePower()));
 		}
 	}
 

@@ -1,7 +1,5 @@
 package powers;
 
-import java.util.function.Predicate;
-
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -15,6 +13,7 @@ public class TaurusBlackCatPower extends AbstractTestPower implements MiscMethod
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+	private boolean removed = false;
 	
 	public TaurusBlackCatPower(AbstractCreature owner, int amount) {
 		super(POWER_ID);
@@ -38,6 +37,8 @@ public class TaurusBlackCatPower extends AbstractTestPower implements MiscMethod
 	
 	private void updateAmount(AbstractMonster m) {
 		AbstractPower p = TaurusBlackCatEnemyPower.getThis(m);
+		if (p.amount == this.amount)
+			return;
 		p.stackPower(this.amount - p.amount);
 		p.updateDescription();
 	}
@@ -54,14 +55,16 @@ public class TaurusBlackCatPower extends AbstractTestPower implements MiscMethod
 		AbstractDungeon.getMonsters().monsters.forEach(this::addEnemyPower);
 	}
 	
-	public void atStartOfTurn() {
-		AbstractDungeon.getMonsters().monsters.stream()
-				.filter(((Predicate<AbstractMonster>) TaurusBlackCatEnemyPower::hasThis).negate())
-				.forEach(this::addEnemyPower);
+	public void update(int slot) {
+		super.update(slot);
+		if (this.removed)
+			return;
+		this.stackPower(0);
 	}
 	
 	public void onRemove() {
 		AbstractDungeon.getMonsters().monsters.forEach(this::removeEnemyPower);
+		this.removed = true;
 	}
     
 }

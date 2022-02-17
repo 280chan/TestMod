@@ -56,7 +56,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		if (!isObtained)
 			return DESCRIPTIONS[0];
 		String retVal = DESCRIPTIONS[0];
-		for (int i = 0; i < this.counter; i++)
+		for (int i = 0; i < this.counter && i < 25; i++)
 			retVal += " NL " + (i + 1) + "." + DESCRIPTIONS[i == 19 && revived ? 26 : i + 1];
 		return retVal;
 	}
@@ -162,11 +162,15 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		TestMod.setActivity(this);
 		if (!isActive)
 			return;
-		this.counter = AbstractDungeon.ascensionLevel;
-		if (this.counter == 0)
-			this.counter = -1;
+		this.initCounter();
 		this.updateDescription(p().chosenClass);
     }
+	
+	public void initCounter() {
+		this.counter = AbstractDungeon.ascensionLevel;
+		if (this.counter <= 0)
+			this.counter = -1;
+	}
 	
 	private boolean alive(AbstractMonster m) {
 		return !(m.isDead || m.isDying || m.halfDead || m.isEscaping || m.escaped);

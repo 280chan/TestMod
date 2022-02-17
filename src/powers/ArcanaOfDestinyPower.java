@@ -28,6 +28,7 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 		this.amount = -1;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
+		this.addMap(p -> new ArcanaOfDestinyPower(p.owner));
 	}
 	
 	public void updateDescription() {
@@ -62,13 +63,6 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 	
 	public int onAttacked(DamageInfo info, int damage) {
 		return repeat(this::attack).apply(damage);
-	}
-	
-	public void onRemove() {
-		this.addTmpActionToTop(() -> {
-			if (!hasThis(this.owner))
-				addThis(this.owner);
-		});
 	}
 
 }

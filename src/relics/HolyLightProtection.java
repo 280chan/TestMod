@@ -3,6 +3,7 @@ package relics;
 import java.util.ArrayList;
 
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
@@ -17,6 +18,10 @@ public class HolyLightProtection extends AbstractTestRelic {
 		this.counter = -1;
 	}
 	
+	public boolean notHas(AbstractCreature m) {
+		return m.powers.stream().noneMatch(p -> p instanceof HolyLightProtectionPower);
+	}
+	
 	private static MonsterGroup m() {
 		return AbstractDungeon.getMonsters();
 	}
@@ -28,9 +33,8 @@ public class HolyLightProtection extends AbstractTestRelic {
 	private void addPower() {
 		if (this.isActive && this.counter == -3) {
 			checkPulse = false;
-			m().monsters.stream().filter(m -> !m.isDeadOrEscaped()).filter(not(list::contains))
-					.filter(HolyLightProtectionPower::notHasThis).peek(this::f)
-					.forEach(m -> m.powers.add(new HolyLightProtectionPower(m)));
+			m().monsters.stream().filter(m -> !m.isDeadOrEscaped()).filter(not(list::contains)).filter(this::notHas)
+					.peek(this::f).forEach(m -> m.powers.add(new HolyLightProtectionPower(m)));
 			if (checkPulse)
 				this.beginLongPulse();
 		}

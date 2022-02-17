@@ -38,6 +38,7 @@ import basemod.BaseMod;
 import basemod.Pair;
 import basemod.ReflectionHacks;
 import mymod.TestMod;
+import powers.AbstractTestPower;
 import relics.AbstractTestRelic;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -822,6 +823,22 @@ public interface MiscMethods {
 	public default ApplyPowerAction apply(AbstractCreature source, AbstractPower p) {
 		return p.amount == 0 || (p.amount == -1 && !p.canGoNegative) ? new ApplyPowerAction(p.owner, source, p)
 				: new ApplyPowerAction(p.owner, source, p, p.amount);
+	}
+	
+	public default void regainPowerOnRemove(AbstractTestPower p, UnaryOperator<AbstractTestPower> f) {
+		this.addTmpActionToTop(() -> {
+			AbstractTestPower po = f.apply(p);
+			po.owner.powers.add(po);
+		});
+	}
+	
+	public default void regainPowerOnRemoveWithoutStack(AbstractTestPower p,
+			UnaryOperator<AbstractTestPower> f) {
+		this.addTmpActionToTop(() -> {
+			AbstractTestPower po = f.apply(p);
+			if (!po.owner.hasPower(po.ID))
+				po.owner.powers.add(po);
+		});
 	}
 	
 }

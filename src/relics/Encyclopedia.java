@@ -10,6 +10,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -125,10 +126,6 @@ public class Encyclopedia extends AbstractTestRelic {
 	public static class EncyclopediaPower extends AbstractTestPower {
 		private static final PowerStrings ps = Strings(SAVE_NAME);
 		
-		public boolean hasThis(AbstractCreature owner) {
-			return owner.powers.stream().anyMatch(p -> p instanceof EncyclopediaPower);
-		}
-		
 		public EncyclopediaPower(AbstractCreature owner, int amount) {
 			super(SAVE_NAME);
 			this.name = ps.NAME;
@@ -136,6 +133,7 @@ public class Encyclopedia extends AbstractTestRelic {
 			this.amount = amount;
 			this.type = PowerType.DEBUFF;
 			this.updateDescription();
+			this.addMap(p -> new EncyclopediaPower(p.owner, p.amount));
 		}
 		
 		public void updateDescription() {
@@ -150,24 +148,18 @@ public class Encyclopedia extends AbstractTestRelic {
 		private float dmg(float input) {
 			return input * (100 + this.amount) / 100;
 		}
-		
-		public float atDamageFinalReceive(float damage, DamageInfo.DamageType type) {
-			return damage < 0 ? damage : dmgRate(damage);
-		}
 
 		private boolean single() {
 			return relicStream(Encyclopedia.class).count() == 1;
 		}
 		
-		public int onAttacked(DamageInfo info, int damage) {
-			return relicStream(Encyclopedia.class).peek(r -> r.show()).mapToInt(r -> damage).findAny().orElse(damage);
+		public float atDamageFinalReceive(float damage, DamageType type) {
+			return type == DamageType.NORMAL ? dmgRate(damage) : damage;
 		}
 		
-		public void onRemove() {
-			this.addTmpActionToTop(() -> {
-				if (!hasThis(this.owner))
-					this.owner.powers.add(new EncyclopediaPower(this.owner, this.amount));
-			});
+		public int onAttacked(DamageInfo info, int damage) {
+			relicStream(Encyclopedia.class).forEach(r -> r.show());
+			return damage <= 0 || info.type == DamageType.NORMAL ? damage : (int) dmgRate(damage);
 		}
 		
 	}

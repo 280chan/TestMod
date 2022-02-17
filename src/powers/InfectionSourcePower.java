@@ -12,7 +12,7 @@ public class InfectionSourcePower extends AbstractTestPower implements Invisible
 	private static final int PRIORITY = 1000000;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof InfectionSourcePower;});
+		return owner.powers.stream().anyMatch(p ->  p instanceof InfectionSourcePower);
 	}
 	
 	public InfectionSourcePower(AbstractCreature owner) {
@@ -23,6 +23,7 @@ public class InfectionSourcePower extends AbstractTestPower implements Invisible
 		updateDescription();
 		this.type = PowerType.DEBUFF;
 		this.priority = PRIORITY;
+		this.addMap(p -> new InfectionSourcePower(p.owner));
 	}
 	
 	public void updateDescription() {
@@ -36,12 +37,5 @@ public class InfectionSourcePower extends AbstractTestPower implements Invisible
     public float atDamageFinalGive(final float damage, final DamageInfo.DamageType type) {
     	return type == DamageType.NORMAL ? damage * 0.5F : damage;
     }
-
-    public void onRemove() {
-		this.addTmpActionToTop(() -> {
-			if (!hasThis(this.owner))
-				this.owner.powers.add(new InfectionSourcePower(this.owner));
-		});
-	}
 
 }

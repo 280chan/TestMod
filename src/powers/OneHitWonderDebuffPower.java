@@ -20,6 +20,7 @@ public class OneHitWonderDebuffPower extends AbstractTestPower implements Invisi
 		this.amount = -1;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
+		this.addMap(p -> new OneHitWonderDebuffPower(p.owner));
 	}
 	
 	public void updateDescription() {
@@ -48,13 +49,6 @@ public class OneHitWonderDebuffPower extends AbstractTestPower implements Invisi
     
 	public float atDamageFinalReceive(float damage, DamageType type) {
 		return checkPlayerHealth() && type == DamageType.NORMAL ? f(1.5f, damage) : damage;
-	}
-
-	public void onRemove() {
-		this.addTmpActionToTop(() -> {
-			if (!hasThis(this.owner))
-				this.owner.powers.add(new OneHitWonderDebuffPower(this.owner));
-		});
 	}
     
 }

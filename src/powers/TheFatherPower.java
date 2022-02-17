@@ -32,6 +32,7 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 		updateDescription();
 		this.type = PowerType.DEBUFF;
 		this.priority = PRIORITY;
+		this.addMap(p -> new TheFatherPower(p.owner));
 	}
 	
 	public void updateDescription() {
@@ -40,13 +41,6 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
-	}
-	
-	public void onRemove() {
-		this.addTmpActionToTop(() -> {
-			if (!hasThis(this.owner))
-				this.owner.powers.add(new TheFatherPower(this.owner));
-		});
 	}
 	
 	private void countAction(TheFather r) {
