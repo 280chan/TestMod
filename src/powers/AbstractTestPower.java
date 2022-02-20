@@ -17,6 +17,8 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 			new HashMap<Class<? extends AbstractTestPower>, UnaryOperator<AbstractTestPower>>();
 	protected static ArrayList<Class<? extends AbstractTestPower>> SKIP =
 			new ArrayList<Class<? extends AbstractTestPower>>();
+	protected static ArrayList<Class<? extends AbstractTestPower>> TOP =
+			new ArrayList<Class<? extends AbstractTestPower>>();
 
 	protected static PowerStrings Strings(String shortID) {
 		return CardCrawlGame.languagePack.getPowerStrings(TestMod.makeID(shortID));
@@ -44,11 +46,7 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 	public void onRemove() {
 		Class<? extends AbstractTestPower> c = this.getClass();
 		if (MAP.containsKey(c)) {
-			if (SKIP.contains(c)) {
-				regainPowerOnRemove(this, MAP.get(c));
-			} else {
-				regainPowerOnRemoveWithoutStack(this, MAP.get(c));
-			}
+			regainPowerOnRemove(this, MAP.get(c), SKIP.contains(c), TOP.contains(c));
 		}
 	}
 	
@@ -60,10 +58,20 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 		MAP.putIfAbsent(this.getClass(), f);
 	}
 	
-	protected void addMapWithSkip(UnaryOperator<AbstractTestPower> f) {
+	protected void addMap(UnaryOperator<AbstractTestPower> f, boolean noStack, boolean top) {
 		Class<? extends AbstractTestPower> c = this.getClass();
-		if (!SKIP.contains(c))
+		if (!TOP.contains(c) && top)
+			TOP.add(c);
+		if (!SKIP.contains(c) && noStack)
 			SKIP.add(c);
 		MAP.putIfAbsent(c, f);
+	}
+	
+	protected void addMapToTop(UnaryOperator<AbstractTestPower> f) {
+		addMap(f, false, true);
+	}
+	
+	protected void addMapWithSkip(UnaryOperator<AbstractTestPower> f) {
+		addMap(f, true, false);
 	}
 }

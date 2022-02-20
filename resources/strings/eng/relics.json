@@ -600,5 +600,17 @@
 		"NAME": "Encyclopedia",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["For each time you meet an enemy, you deal #b50% more damage to enemies with same name in this run."]
+	},
+	
+	"testmod-GoldenContract":{
+		"NAME": "Golden Contract",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["You gain #b50% less #yGold, each time you gain #yGold, you gain #b10% less #yGold in future. Your base Attack damage is increased by amount of your #yGold, whenever you play an Attack card, lose #b5% #yGold (at least #b1 ).", " NL Current #yGold rate: NL #b", "% "]
+	},
+	
+	"testmod-ConjureBlade":{
+		"NAME": "Conjure Blade",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Base damage and #yBlock of All cards in your hand are increased by the sum of #yCost of their neighboring cards."]
 	}
 }
