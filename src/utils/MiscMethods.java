@@ -6,6 +6,7 @@ import java.util.stream.*;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.RandomXS128;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.*;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.utility.*;
@@ -37,6 +38,10 @@ import actions.AbstractXCostAction;
 import basemod.BaseMod;
 import basemod.Pair;
 import basemod.ReflectionHacks;
+import javassist.CannotCompileException;
+import javassist.NotFoundException;
+import javassist.expr.ExprEditor;
+import javassist.expr.Instanceof;
 import mymod.TestMod;
 import powers.AbstractTestPower;
 import relics.AbstractTestRelic;
@@ -652,10 +657,11 @@ public interface MiscMethods {
 		}
 	}
 	
-	public default <T> void streamIfElse(Stream<T> s, Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
+	public default <T> void streamIfElse(Stream<T> s, Predicate<? super T> p, Consumer<? super T> c1,
+			Consumer<? super T> c2) {
 		s.forEach(ifElse(p, c1, c2));
 	}
-	
+
 	public default <T> Consumer<T> ifElse(Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
 		return t -> ((Consumer<T>) (p.test(t) ? c1 : c2)).accept(t);
 	}
@@ -767,6 +773,10 @@ public interface MiscMethods {
 		AbstractDungeon.actionManager.addToBottom(a);
 	}
 	
+	public default <T> Consumer<T> empty() {
+		return t -> {};
+	}
+	
     public default <T> Predicate<T> not(Predicate<T> a) {
     	return a.negate();
     }
@@ -825,20 +835,69 @@ public interface MiscMethods {
 				: new ApplyPowerAction(p.owner, source, p, p.amount);
 	}
 	
-	public default void regainPowerOnRemove(AbstractTestPower p, UnaryOperator<AbstractTestPower> f) {
+	public default void regainPowerOnRemove(AbstractTestPower p, UnaryOperator<AbstractTestPower> f, boolean noStack,
+			boolean top) {
 		this.addTmpActionToTop(() -> {
 			AbstractTestPower po = f.apply(p);
-			po.owner.powers.add(po);
+			Consumer<ArrayList<AbstractPower>> c = top ? (l) -> l.add(0, po) : (l) -> l.add(po);
+			if (!(noStack && po.owner.hasPower(po.ID))) {
+				c.accept(po.owner.powers);
+			}
 		});
 	}
 	
-	public default void regainPowerOnRemoveWithoutStack(AbstractTestPower p,
-			UnaryOperator<AbstractTestPower> f) {
-		this.addTmpActionToTop(() -> {
-			AbstractTestPower po = f.apply(p);
-			if (!po.owner.hasPower(po.ID))
-				po.owner.powers.add(po);
-		});
+	public default void stupidDevToBot(AbstractGameAction a) {
+		this.atb(new SmhStupidDev(a));
+	}
+	
+	public default void stupidDevToBot(Lambda l) {
+		this.atb(new SmhStupidDev(l));
+	}
+	
+	public default void stupidDevToTop(AbstractGameAction a) {
+		this.att(new SmhStupidDev(a));
+	}
+	
+	public default void stupidDevToTop(Lambda l) {
+		this.att(new SmhStupidDev(l));
+	}
+	
+	static class SmhStupidDev extends AbstractGameAction {
+		AbstractGameAction a;
+		Lambda l;
+		public SmhStupidDev(AbstractGameAction a) {
+			this.a = a;
+		}
+		public SmhStupidDev(Lambda l) {
+			this.l = l;
+		}
+		@Override
+		public void update() {
+			if (this.a != null) {
+				this.a.update();
+				this.isDone = this.a.isDone;
+			} else if (this.l != null) {
+				this.l.run();
+				this.isDone = true;
+			}
+		}
+	}
+	
+	@SpirePatch(clz = GameActionManager.class, method = "clearPostCombatActions")
+	public static class GameActionManagerClearPostCombatActionsPatch {
+		public static ExprEditor Instrument() {
+			return new ExprEditor() {
+				public void edit(Instanceof i) throws CannotCompileException {
+					try {
+						if (i.getType().getName().equals(UseCardAction.class.getName())) {
+							i.replace("$_ = $proceed($$) || e instanceof utils.MiscMethods.SmhStupidDev;");
+						}
+					} catch (NotFoundException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+		}
 	}
 	
 }
