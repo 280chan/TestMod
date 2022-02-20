@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import com.badlogic.gdx.graphics.Color;
-import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
@@ -17,10 +14,6 @@ import com.megacrit.cardcrawl.vfx.GainPennyEffect;
 import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 
-import javassist.CannotCompileException;
-import javassist.NotFoundException;
-import javassist.expr.ExprEditor;
-import javassist.expr.Instanceof;
 import mymod.TestMod;
 
 public class EvilDagger extends AbstractTestRelic {
@@ -65,43 +58,16 @@ public class EvilDagger extends AbstractTestRelic {
 		lambda.add(a);
 		TestMod.randomItem(lambda, AbstractDungeon.cardRandomRng).run();
 	}
-
-	public class SmhStupidDev extends AbstractGameAction {
-		AbstractCard c;
-		public SmhStupidDev(AbstractCard c) {
-			this.c = c;
-		}
-		@Override
-		public void update() {
-			this.isDone = true;
-			if (!killed.isEmpty() && c.equals(EvilDagger.this.c)) {
+	
+	public void onUseCard(AbstractCard c, UseCardAction a) {
+		this.stupidDevToBot(() -> {
+			if (!killed.isEmpty() && c.equals(this.c)) {
 				killed.forEach(m -> doSth(c, m));
 				show();
 				c.superFlash(COLOR);
 			}
 			killed.clear();
-		}
-	}
-	
-	@SpirePatch(clz = GameActionManager.class, method = "clearPostCombatActions")
-	public static class GameActionManagerClearPostCombatActionsPatch {
-		public static ExprEditor Instrument() {
-			return new ExprEditor() {
-				public void edit(Instanceof i) throws CannotCompileException {
-					try {
-						if (i.getType().getName().equals(UseCardAction.class.getName())) {
-							i.replace("$_ = $proceed($$) || e instanceof relics.EvilDagger.SmhStupidDev;");
-						}
-					} catch (NotFoundException e) {
-						e.printStackTrace();
-					}
-				}
-			};
-		}
-	}
-	
-	public void onUseCard(AbstractCard c, UseCardAction a) {
-		this.addToBot(new SmhStupidDev(c));
+		});
 	}
 	
 	public void atPreBattle() {
