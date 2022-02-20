@@ -89,7 +89,7 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 			p().potions.clear();
 			p().potions = l;
 			for (int i = 0; i < p().potions.size(); i++)
-				p().potions.get(i).adjustPosition(i);
+				p().potions.get(i).setAsObtained(i);
 			TestMod.info("炼金术士: 交换了药水排序");
 		}
 	}

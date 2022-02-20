@@ -1,5 +1,7 @@
 package powers;
 
+import java.util.function.Consumer;
+
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
@@ -30,8 +32,8 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 		this.fontScale = 8.0f;
 	}
 	
-	private float finalDamage(float input) {
-		return relicStream(GiantKiller.class).peek(r -> r.show()).map(r -> get(this::damage)).reduce(t(), this::chain)
+	private float finalDamage(float input, Consumer<GiantKiller> show) {
+		return relicStream(GiantKiller.class).peek(show).map(r -> get(this::damage)).reduce(t(), this::chain)
 				.apply(input);
 	}
 	
@@ -42,14 +44,14 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 	
 	public float atDamageFinalReceive(float damage, DamageType type) {
 		return damage > 0 && type == DamageType.NORMAL && p().maxHealth > 0 && p().maxHealth < this.owner.maxHealth
-				? finalDamage(damage) : damage;
+				? finalDamage(damage, empty()) : damage;
 	}
 	
 	public int onAttacked(DamageInfo info, int damage) {
 		if (p().maxHealth < 1 && damage > 0)
 			return Integer.MAX_VALUE;
 		return damage > 0 && p().maxHealth < this.owner.maxHealth && info.type != DamageType.NORMAL
-				? (int) finalDamage(damage) : damage;
+				? (int) finalDamage(damage, r -> r.show()) : damage;
 	}
 
 }
