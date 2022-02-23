@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import powers.AbstractTestPower;
 
 public class GreedyDevil extends AbstractTestRelic {
-	private final HashMap<DamageInfo, AbstractCreature> MAP = new HashMap<DamageInfo, AbstractCreature>();
+	private final HashMap<DamageInfo, AbstractCreature> INFO_MAP = new HashMap<DamageInfo, AbstractCreature>();
 	private final ArrayList<AbstractPower> TO_REMOVE = new ArrayList<AbstractPower>();
 	
 	public GreedyDevil() {
@@ -19,16 +19,16 @@ public class GreedyDevil extends AbstractTestRelic {
 	
 	public void onAttack(final DamageInfo info, final int damageAmount, final AbstractCreature target) {
 		if (damageAmount > 0 && !target.isPlayer) {
-			this.MAP.put(info, target);
+			this.INFO_MAP.put(info, target);
 			AbstractTestPower p = new AbstractTestPower(this.relicId) {
-			    public int onAttacked(final DamageInfo info, final int damage) {
-			    	if (MAP.containsKey(info)) {
+			    public int onAttacked(final DamageInfo i, final int damage) {
+			    	if (INFO_MAP.containsKey(i)) {
 						int dmg = damage - target.currentHealth;
 						if (dmg > 0) {
 							p().gainGold(Math.min(dmg, 100));
 							GreedyDevil.this.flash();
 						}
-						MAP.remove(info);
+						INFO_MAP.remove(i, target);
 						TO_REMOVE.add(this);
 					}
 					return damage;
@@ -40,7 +40,7 @@ public class GreedyDevil extends AbstractTestRelic {
     }
 	
 	public void onVictory() {
-		this.MAP.clear();
+		this.INFO_MAP.clear();
 		this.TO_REMOVE.clear();
 	}
 	

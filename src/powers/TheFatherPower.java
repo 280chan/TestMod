@@ -14,11 +14,11 @@ import relics.TheFather;
 public class TheFatherPower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "TheFatherPower";
 	private static final int PRIORITY = 1000;
-	private static final HashMap<AbstractMonster, ArrayList<DamageAction>> MAP =
+	private static final HashMap<AbstractMonster, ArrayList<DamageAction>> ACTION_MAP =
 			new HashMap<AbstractMonster, ArrayList<DamageAction>>();
 
 	public static void reset() {
-		MAP.clear();
+		ACTION_MAP.clear();
 	}
 	
 	public static boolean hasThis(AbstractCreature owner) {
@@ -52,12 +52,12 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	private void addDamageAction(AbstractMonster m, int damage) {
 		this.relicStream(TheFather.class).forEach(r -> {
 			DamageAction a = new DamageAction(m, new DamageInfo(p(), damage, DamageType.THORNS), true);
-			if (MAP.containsKey(m)) {
-				MAP.get(m).add(a);
+			if (ACTION_MAP.containsKey(m)) {
+				ACTION_MAP.get(m).add(a);
 			} else {
 				ArrayList<DamageAction> list = new ArrayList<DamageAction>();
 				list.add(a);
-				MAP.put(m, list);
+				ACTION_MAP.put(m, list);
 			}
 			this.addToBot(a);
 			this.countAction(r);
@@ -65,9 +65,9 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	}
 	
 	private static void clearDamageActions(AbstractMonster m) {
-		if (MAP.containsKey(m)) {
-			AbstractDungeon.actionManager.actions.removeAll(MAP.get(m));
-			MAP.remove(m);
+		if (ACTION_MAP.containsKey(m)) {
+			AbstractDungeon.actionManager.actions.removeAll(ACTION_MAP.get(m));
+			ACTION_MAP.remove(m);
 		}
 	}
 	
