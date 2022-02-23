@@ -1,5 +1,6 @@
 package screens;
 
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.modthespire.Loader;
@@ -41,15 +42,22 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		// TODO 圣诞
 		if (month == 12 && date > 20)
 			return (AbstractTestRelic) ChristmasMod.randomRelic();
+		Predicate<String> check = s -> TestMod.checkHash(CardCrawlGame.playerName, s);
 		if (!Settings.seedSet) {
-			if (Stream.of("BrkStarshine", "280 chan", "test", "test2")
-					.anyMatch(s -> s.equals(CardCrawlGame.playerName))) {
+			if (Stream.of("1023dba2e158f257fba87f85d932b1df69c1989dc87c14389787a681f056cc5e",
+						"c870968e2499df3ec4a1e386c21f19628af4cef6e5aaa8aa6da2071ab1fba5e4",
+						"a4e624d686e03ed2767c0abd85c14426b0b1157d2ce81d27bb4fe4f6f01d688a",
+						"342840f6340d15691f4be1c0e0157fb0983992c4f436c18267d41dbe6bb74a2")
+						.anyMatch(check)) {
 				Object o = TestMod.checkLatest(true);
 				if (o != null)
 					return (AbstractTestRelic) o;
 			}
 		} else if (Loader.isModLoaded("chronoMods")
-				&& Stream.of("BrkStarshine", "test", "test2").anyMatch(s -> s.equals(CardCrawlGame.playerName))) {
+				&& Stream.of("c870968e2499df3ec4a1e386c21f19628af4cef6e5aaa8aa6da2071ab1fba5e4",
+						"a4e624d686e03ed2767c0abd85c14426b0b1157d2ce81d27bb4fe4f6f01d688a",
+						"342840f6340d15691f4be1c0e0157fb0983992c4f436c18267d41dbe6bb74a2")
+						.anyMatch(check)) {
 			Object o = TestMod.checkLatest(true);
 			if (o != null)
 				return (AbstractTestRelic) o;

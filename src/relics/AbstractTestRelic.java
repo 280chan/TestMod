@@ -2,6 +2,7 @@ package relics;
 
 import java.util.HashMap;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -154,7 +155,7 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 		return amount;
 	}
 	
-	public Function<Float, Float> maxHPChanger() {
+	public UnaryOperator<Float> maxHPChanger() {
 		return this::preChangeMaxHP;
 	}
 	

@@ -2,7 +2,10 @@ package mymod;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -57,7 +60,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 2/19/2022
+ * @version 2/22/2022
  * @since 6/17/2018
  */
 
@@ -180,7 +183,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	public static boolean isLocalTest() {
-		return "280 chan".equals(CardCrawlGame.playerName) && !SteamAPI.isSteamRunning();
+		return checkHash(CardCrawlGame.playerName, "1023dba2e158f257fba87f85d932b1df69c1989dc87c14389787a681f056cc5e")
+				&& checkHash(TestMod.class.getProtectionDomain().getCodeSource().getLocation().getPath(),
+						"77ce59ba93d1f3e3087656846b13cf4b197f693cc21cf2aeaf1197dbf6c2c4a6");
 	}
 	
 	public static String makeID(String id) {
@@ -724,7 +729,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		addEvents();
 		addPotions();
 		
-		if ("280 chan".equals(CardCrawlGame.playerName)) {
+		if (checkHash(CardCrawlGame.playerName, "1023dba2e158f257fba87f85d932b1df69c1989dc87c14389787a681f056cc5e")) {
 			unlockAll();
 			TestCommand.add("test", Test.class);
 		}
@@ -776,8 +781,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 	@Override
 	public int receiveMapHPChange(int amount) {
-		return this.relicStream().map(r -> r.maxHPChanger()).reduce(a -> a, Function::andThen).apply(amount * 1f)
-				.intValue();
+		return this.relicStream().map(r -> r.maxHPChanger()).reduce(t(), this::chain).apply(amount * 1f).intValue();
 	}
 
 	@Override
@@ -817,13 +821,28 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	public static boolean spireWithFriendLogger = true;
 	
+	public static String hash(String input) {
+		try {
+			return new BigInteger(1, MessageDigest.getInstance("SHA-256").digest((input + input.length()).getBytes()))
+					.toString(16);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return input;
+	}
+	
+	public static boolean checkHash(String input, String hash) {
+		return hash.equals(hash(input));
+	}
+	
 	private static void changeConsoleMultiplayer(boolean value) throws ClassNotFoundException {
 		ReflectionHacks.setPrivateStatic(Class.forName("chronoMods.TogetherManager"), "debug", value);
 		spireWithFriendLogger = !value;
 	}
 	
 	private static boolean checkMySteamName(Object o, Class<?> c) {
-		return "彼君不触".equals(ReflectionHacks.getPrivate(o, c, "userName"));
+		return checkHash(ReflectionHacks.getPrivate(o, c, "userName"),
+				"520fbb3f83c083f3c6ad52f5943fd5e24b4b042d7911b0ed229aea9b264f664");
 	}
 	
 	private static boolean checkSteamName(Object remotePlayer) {
@@ -836,7 +855,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		if (Loader.isModLoaded("chronoMods")) {
 			boolean enableConsole = true;
 			try {
-				if (enableConsole || "280 chan".equals(CardCrawlGame.playerName)) {
+				if (enableConsole || checkHash(CardCrawlGame.playerName,
+						"1023dba2e158f257fba87f85d932b1df69c1989dc87c14389787a681f056cc5e")) {
 					changeConsoleMultiplayer(true);
 				} else {
 					CopyOnWriteArrayList<?> players = ReflectionHacks

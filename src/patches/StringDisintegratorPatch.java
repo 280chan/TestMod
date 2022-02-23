@@ -14,15 +14,16 @@ import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 import basemod.ReflectionHacks;
 import mymod.TestMod;
+import relics.StringDisintegrator;
 import utils.MiscMethods.Lambda;
 
 @SuppressWarnings("rawtypes")
 public class StringDisintegratorPatch {
 
 	private static boolean check() {
-		String id = TestMod.isLocalTest() ? TestMod.makeID("TestBox") : TestMod.makeID("StringDisintegrator");
 		return AbstractDungeon.floorNum > 0 && AbstractDungeon.currMapNode != null
-				&& AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT && AbstractDungeon.player.hasRelic(id);
+				&& AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT
+				&& AbstractDungeon.player.relics.stream().anyMatch(r -> r instanceof StringDisintegrator);
 	}
 
 	private static SpireReturn setReturn(Lambda act) {
