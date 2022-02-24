@@ -4,16 +4,27 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.ui.panels.PotionPopUp;
+import com.megacrit.cardcrawl.ui.panels.TopPanel;
 
+import basemod.ReflectionHacks;
 import mymod.TestMod;
 
 public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	private boolean used = false;
+	private static boolean target = false, regain = false;
+	private static int index = -1;
+	private static Alchemist current = null;
 	
 	public Alchemist() {
 		super(RelicTier.RARE, LandingSound.MAGICAL);
@@ -47,7 +58,7 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	public void atPreBattle() {
-		this.toggleState(!(this.used = false));
+		this.toggleState(!(this.used = target = false));
     }
 	
 	public void atTurnStart() {
@@ -64,6 +75,7 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	
 	public void onVictory() {
 		this.toggleState(false);
+		target = false;
     }
 	
 	private Stream<AbstractPotion> potions() {
@@ -75,10 +87,17 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 		if (this.canUse()) {
 			AbstractPotion p = potions().filter(po -> po.canUse()).findFirst().orElse(null);
 			if (p != null) {
-				p.use(p.targetRequired ? AbstractDungeon.getRandomMonster() : null);
-				TestMod.info("炼金术士: 使用了" + p.name);
-				this.toggleState(false);
-				this.used = true;
+				if (p.targetRequired) {
+					if (!this.hasEnemies()) {
+						TestMod.info("炼金术士: 没有可使用目标");
+						return;
+					}
+					openPopUp(AbstractDungeon.topPanel.potionUi, p);
+				} else {
+					p.use(null);
+					p().relics.forEach(r -> r.onUsePotion());
+					this.pretendUse(p);
+				}
 			} else {
 				TestMod.info("炼金术士: 没有可使用药水");
 			}
@@ -93,9 +112,56 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 			TestMod.info("炼金术士: 交换了药水排序");
 		}
 	}
+	
+	private int pretendUse(AbstractPotion p) {
+		TestMod.info("炼金术士: 使用了" + p.name);
+		this.toggleState(false);
+		this.used = true;
+		return -1;
+	}
 
 	public boolean canSpawn() {
 		return Settings.isEndless || AbstractDungeon.floorNum <= 48;
+	}
+	
+	private void openPopUp(PotionPopUp ui, AbstractPotion p) {
+		ui.open(index = p.slot, p);
+		ui.isHidden = ui.targetMode = target = true;
+		current = this;
+	}
+	
+	private void regainUse() {
+		this.used = target = false;
+		this.toggleState(regain = true);
+	}
+	
+	@SpirePatch(clz = TopPanel.class, method = "destroyPotion")
+	public static class TopPanelPatch {
+		@SpirePrefixPatch()
+		public static SpireReturn<Void> Prefix(TopPanel p, int slot) {
+			return target && slot == index ? SpireReturn.Return() : SpireReturn.Continue();
+		}
+	}
+	
+	@SpirePatch(clz = PotionPopUp.class, method = "updateTargetMode")
+	public static class PotionPopUpPatch {
+		@SpireInsertPatch(rloc = 4)
+		public static void Insert(PotionPopUp ui) {
+			TestMod.info("插入" + target);
+			if (target) {
+				current.regainUse();
+			}
+		}
+		@SpirePostfixPatch()
+		public static void Postfix(PotionPopUp ui) {
+			if (regain) {
+				index = -1;
+				regain = false;
+				return;
+			}
+			index = (target &= ui.targetMode) ? index
+					: current.pretendUse(ReflectionHacks.getPrivate(ui, PotionPopUp.class, "potion"));
+		}
 	}
 	
 }
