@@ -113,11 +113,10 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 		}
 	}
 	
-	private int pretendUse(AbstractPotion p) {
+	private void pretendUse(AbstractPotion p) {
 		TestMod.info("炼金术士: 使用了" + p.name);
 		this.toggleState(false);
 		this.used = true;
-		return -1;
 	}
 
 	public boolean canSpawn() {
@@ -147,7 +146,6 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	public static class PotionPopUpPatch {
 		@SpireInsertPatch(rloc = 4)
 		public static void Insert(PotionPopUp ui) {
-			TestMod.info("插入" + target);
 			if (target) {
 				current.regainUse();
 			}
@@ -159,8 +157,10 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 				regain = false;
 				return;
 			}
-			index = (target &= ui.targetMode) ? index
-					: current.pretendUse(ReflectionHacks.getPrivate(ui, PotionPopUp.class, "potion"));
+			if (target && !ui.targetMode) {
+				current.pretendUse(ReflectionHacks.getPrivate(ui, PotionPopUp.class, "potion"));
+			}
+			index = (target &= ui.targetMode) ? index : -1;
 		}
 	}
 	
