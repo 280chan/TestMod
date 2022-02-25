@@ -60,7 +60,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 2/23/2022
+ * @version 2/24/2022
  * @since 6/17/2018
  */
 
@@ -399,6 +399,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		AscensionHeart.reset();
 		// Mahjong.saveDefaultYama();
 		
+		if (this.relicStream(TestBox.class).count() < 1) {
+			obtain(p(), new TestBox());
+		}
 	}
 	
 	public void unlockAll() {
