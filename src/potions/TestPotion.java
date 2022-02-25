@@ -9,7 +9,6 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.PotionStrings;
-import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDiscardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
@@ -49,17 +48,13 @@ public class TestPotion extends AbstractTestPotion implements MiscMethods {
 						AbstractCard card = AbstractDungeon.cardRewardScreen.discoveryCard.makeCopy();
 						card.setCostForTurn(0);
 						card.current_x = (-1000.0F * Settings.scale);
-						AbstractDungeon.effectList.add(AbstractDungeon.player.hand.size() < BaseMod.MAX_HAND_SIZE
+						AbstractDungeon.effectList.add(p().hand.size() < BaseMod.MAX_HAND_SIZE
 								? new ShowCardAndAddToHandEffect(card) : new ShowCardAndAddToDiscardEffect(card));
 						AbstractDungeon.cardRewardScreen.discoveryCard = null;
 					}
 				});
 			});
 		}
-	}
-
-	public AbstractPotion makeCopy() {
-		return new TestPotion();
 	}
 
 	public int getPotency(int ascensionLevel) {

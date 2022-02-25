@@ -5,8 +5,9 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 
-public abstract class AbstractTestPotion extends AbstractPotion {
+import utils.MiscMethods;
 
+public abstract class AbstractTestPotion extends AbstractPotion implements MiscMethods {
 	protected static PotionStrings Strings(String ID) {
 		return CardCrawlGame.languagePack.getPotionString(ID);
 	}
@@ -16,6 +17,14 @@ public abstract class AbstractTestPotion extends AbstractPotion {
 	}
 
 	protected abstract String getDesc();
+	
+	public AbstractPotion makeCopy() {
+		try {
+			return this.getClass().newInstance();
+		} catch (IllegalAccessException | InstantiationException var2) {
+			throw new RuntimeException("Failed to auto-generate makeCopy for potion: " + this.ID);
+		}
+	}
 	
 	public void initializeData() {
 		this.potency = getPotency();

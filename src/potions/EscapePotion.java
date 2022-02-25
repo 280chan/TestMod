@@ -3,13 +3,11 @@ package potions;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.EscapeAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
-import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 
 import mymod.TestMod;
@@ -62,9 +60,9 @@ public class EscapePotion extends AbstractTestPotion implements MiscMethods {
 	}
 	
 	private void checkFlip(AbstractMonster m) {
-		if (S.has(AbstractDungeon.player)) {
-			AbstractDungeon.player.flipHorizontal = (m.drawX < AbstractDungeon.player.drawX);
-			TestMod.info("flipHorizontal:" + AbstractDungeon.player.flipHorizontal);
+		if (S.has(p())) {
+			p().flipHorizontal = (m.drawX < p().drawX);
+			TestMod.info("flipHorizontal:" + p().flipHorizontal);
 		}
 	}
 	
@@ -74,7 +72,6 @@ public class EscapePotion extends AbstractTestPotion implements MiscMethods {
 	
 	public void use(AbstractCreature target) {
 		AbstractMonster m = (AbstractMonster) target;
-		AbstractPlayer p = AbstractDungeon.player;
 		boolean flipPlayer = false, darkling = false;
 		if (m.type == EnemyType.BOSS) // TODO
 			return;
@@ -85,30 +82,26 @@ public class EscapePotion extends AbstractTestPotion implements MiscMethods {
 				m.halfDead = true;
 				m.currentHealth = 0;
 			}
-		} else if (S.has(p)) {
+		} else if (S.has(p())) {
 			flipPlayer = true;
 		}
 		this.addToBot(new VFXAction(new SmokeBombEffect(m.hb.cX, m.hb.cY)));
 		this.addToBot(new EscapeAction(m));
 		if (darkling) {
-			this.addTmpActionToBot(() -> {AbstractDungeon.getMonsters().monsters.remove(m);}, this::filterEscape);
+			this.addTmpActionToBot(() -> AbstractDungeon.getMonsters().monsters.remove(m), this::filterEscape);
 		} else if (flipPlayer) {
 			this.addTmpActionToBot(() -> {
 				if (!B.has(m)) {
 					AbstractDungeon.getMonsters().monsters.stream().filter(this::alive).peek(this::checkFlip)
 							.filter(B::has).forEach(B::remove);
 				} else {
-					p.flipHorizontal = false;
+					p().flipHorizontal = false;
 				}
-				S.remove(p);
+				S.remove(p());
 			});
 		} else {
 			this.addTmpActionToBot(this::filterEscape);
 		}
-	}
-
-	public AbstractPotion makeCopy() {
-		return new EscapePotion();
 	}
 
 	public int getPotency(int ascensionLevel) {

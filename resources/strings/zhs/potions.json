@@ -2,14 +2,14 @@
 	"testmod-EscapePotion": {
 		"NAME": "丢人药水",
 		"DESCRIPTIONS": [
-			"使一名非Boss敌人立即逃跑。"
+			"使一名非 #yBoss 敌人立即逃跑。"
 		]
 	},
 	"testmod-SpacePotion": {
 		"NAME": "空间药水",
 		"DESCRIPTIONS": [
 			"使用后永久增加 #b",
-			" 个药水栏位。超过 #b10 个栏位的部分改为获得相同数量瓶随机药水。"
+			" 个药水栏位。若你未持有 #y炼金术士 ，超过 #b10 个栏位的部分改为获得相同数量瓶随机药水。"
 		]
 	},
 	"testmod-TimePotion": {

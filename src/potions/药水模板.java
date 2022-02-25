@@ -42,10 +42,6 @@ public class 药水模板 extends AbstractTestPotion {
 				this.potency));
 	}
 
-	public AbstractPotion makeCopy() {
-		return new 药水模板();
-	}
-
 	public int getPotency(int ascensionLevel) {
 		return 3;
 	}

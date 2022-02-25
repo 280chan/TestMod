@@ -2,8 +2,6 @@ package potions;
 
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.localization.PotionStrings;
-import com.megacrit.cardcrawl.potions.AbstractPotion;
-
 import mymod.TestMod;
 import utils.MiscMethods;
 
@@ -24,10 +22,6 @@ public class TimePotion extends AbstractTestPotion implements MiscMethods {
 
 	public void use(AbstractCreature target) {
 		this.turnSkipperStart();
-	}
-
-	public AbstractPotion makeCopy() {
-		return new TimePotion();
 	}
 
 	public int getPotency(int ascensionLevel) {
