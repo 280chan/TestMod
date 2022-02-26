@@ -6,19 +6,15 @@ import cards.AbstractTestCard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.stream.Stream;
-
 import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.blue.EchoForm;
-import com.megacrit.cardcrawl.cards.green.WraithForm;
-import com.megacrit.cardcrawl.cards.purple.DevaForm;
-import com.megacrit.cardcrawl.cards.red.DemonForm;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.watcher.EnergyDownPower;
+
+import basemod.helpers.BaseModCardTags;
 
 public class FormForm extends AbstractTestCard {
     private static final int COST = 3;
@@ -27,6 +23,7 @@ public class FormForm extends AbstractTestCard {
     public FormForm() {
         super(COST, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
+        this.tags.add(BaseModCardTags.FORM);
     }
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
@@ -41,10 +38,9 @@ public class FormForm extends AbstractTestCard {
     private boolean check(AbstractCard c) {
     	if (c instanceof FormForm)
     		return false;
-    	if (c.name.endsWith("Form") || c.name.endsWith("形态") || c.cardID.endsWith("Form"))
+    	if (c.hasTag(BaseModCardTags.FORM))
     		return true;
-		return Stream.of(DemonForm.class, WraithForm.class, EchoForm.class, DevaForm.class)
-				.anyMatch(a -> a.isAssignableFrom(c.getClass()));
+    	return c.name.endsWith("Form") || c.name.endsWith("形态") || c.cardID.endsWith("Form");
 	}
     
     private void play(AbstractCard c) {
