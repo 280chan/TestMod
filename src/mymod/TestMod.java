@@ -60,7 +60,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 2/24/2022
+ * @version 2/25/2022
  * @since 6/17/2018
  */
 
@@ -286,7 +286,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller(), new TwinklingStar(),
 				new Metronome(), new Gather(), new HolyLightProtection(), new EvilDagger(), new Match3(),
 				new PhasePocketWatch(), new StomachOfGluttonous(), new Encyclopedia(), new GoldenContract(),
-				new ConjureBlade())
+				new ConjureBlade(), new PortablePortal())
 				.collect(toArrayList());
 		if (!Loader.isModLoaded("FoggyMod"))
 			RELICS.add(new MistCore());

@@ -648,5 +648,11 @@
 		"NAME": "聚能成刃",
 		"FLAVOR": "这个人很懒，什么都没有写。",
 		"DESCRIPTIONS":["你的手牌中的所有牌的基础伤害与 #y格挡 提升与其相邻的牌的 #y耗能 点。"]
+	},
+	
+	"testmod-PortablePortal":{
+		"NAME": "便携传送门",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["每回合开始获得 [E] 。拾起后你进入第一个房间时将被传送至 #yBoss 房。"]
 	}
 }

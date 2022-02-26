@@ -612,5 +612,11 @@
 		"NAME": "Conjure Blade",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Base damage and #yBlock of All cards in your hand are increased by the sum of #yCost of their neighboring cards."]
+	},
+	
+	"testmod-PortablePortal":{
+		"NAME": "Portable Portal",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . When you enter the first room after pickup, you will teleport to #yBoss room."]
 	}
 }
