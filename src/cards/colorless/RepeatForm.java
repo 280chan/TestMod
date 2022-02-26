@@ -4,6 +4,7 @@ import cards.AbstractTestCard;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import actions.RepeatFormAction;
+import basemod.helpers.BaseModCardTags;
 
 public class RepeatForm extends AbstractTestCard {
 	private static final int BASE_MGC = 1;
@@ -12,6 +13,7 @@ public class RepeatForm extends AbstractTestCard {
         super(3, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
         this.isEthereal = true;
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
+        this.tags.add(BaseModCardTags.FORM);
 	}
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
