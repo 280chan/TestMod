@@ -11,61 +11,34 @@ import screens.PlateOfNlothSelectScreen;
 public class PlateOfNloth extends AbstractTestEvent {
 	private static final int DAMAGE_PERCENT = 10;
 	private static final int ASCENSION_DAMAGE_PERCENT = 15;
-	private CUR_SCREEN screen = CUR_SCREEN.INTRO;
 
 	private int damage = 0;
 	private static AbstractRelic giveRelic = null;
 	private boolean relicSelect = false;
 	private static int indexSelected = -1;
-	
-	private static enum CUR_SCREEN {
-		INTRO, CHOOSE, SECONDARY, COMPLETE;
 
-		private CUR_SCREEN() {
-		}
+	@Override
+	protected void intro() {
+		this.damage = (int) (p().maxHealth / 100.0
+				* (AbstractDungeon.ascensionLevel <= 14 ? DAMAGE_PERCENT : ASCENSION_DAMAGE_PERCENT));
+		this.imageEventText.updateBodyText(desc()[1]);
+		this.imageEventText.updateDialogOption(0, option()[1], p().relics.size() < 1);
+		this.imageEventText.setDialogOption(option()[2] + this.damage + option()[3]);
 	}
 
-	public PlateOfNloth() {
-		super();
-		this.imageEventText.setDialogOption(option()[0]);
-		this.damage = p().maxHealth;
-		this.damage *= (AbstractDungeon.ascensionLevel <= 14 ? DAMAGE_PERCENT : ASCENSION_DAMAGE_PERCENT);
-		this.damage /= 100;
-	}
-
-	protected void buttonEffect(int buttonPressed) {
-		switch (this.screen) {
-		case INTRO:
-			this.imageEventText.updateBodyText(desc()[1]);
-			this.screen = CUR_SCREEN.CHOOSE;
-			if (p().relics.size() > 0)
-				this.imageEventText.updateDialogOption(0, option()[1]);
-			else
-				this.imageEventText.updateDialogOption(0, option()[5], true);
-			this.imageEventText.setDialogOption(option()[2] + this.damage + option()[3]);
-			break;
-		case CHOOSE:
-			switch (buttonPressed) {
-			case 0:
-				giveRelic();
-				this.screen = CUR_SCREEN.SECONDARY;
-				this.imageEventText.updateDialogOption(0, option()[4]);
-				this.imageEventText.removeDialogOption(1);
-				return;
-			default:
-				logMetricTakeDamage(this.title, "Ignored", this.damage);
-				p().damage(new DamageInfo(null, this.damage));
-				this.imageEventText.updateBodyText(desc()[4]);
-				this.screen = CUR_SCREEN.COMPLETE;
-				this.imageEventText.updateDialogOption(0, option()[4]);
-				this.imageEventText.clearRemainingOptions();
-				return;
-			}
-		case SECONDARY:
-			openMap();
-			break;
-		case COMPLETE:
-			openMap();
+	@Override
+	protected void choose(int choice) {
+		this.imageEventText.updateDialogOption(0, option()[4]);
+		this.imageEventText.clearRemainingOptions();
+		switch (choice) {
+		case 0:
+			giveRelic();
+			return;
+		default:
+			logMetricTakeDamage(this.title, "Ignored", this.damage);
+			p().damage(new DamageInfo(null, this.damage));
+			this.imageEventText.updateBodyText(desc()[4]);
+			return;
 		}
 	}
 	
