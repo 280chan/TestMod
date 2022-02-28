@@ -60,7 +60,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 2/26/2022
+ * @version 2/28/2022
  * @since 6/17/2018
  */
 
@@ -383,24 +383,29 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		relics.add(TestMod.makeID("TestBox"));
 	}
 	
+	public static boolean seen = false;
+	
 	@Override
 	public void receivePostDungeonInitialize() {
-		if (AbstractDungeon.floorNum > 1) {
-			return;
+		if (AbstractDungeon.floorNum < 2) {
+			checkEnableConsoleMultiplayer();
+			
+			if (config == null)
+				this.initSavingConfig();
+			SUB_MOD.forEach(TestMod::editSubModPostDungeonInit);
+			TheFatherPower.clear();
+			DragonStarHat.resetValue();
+			Faith.reset();
+			AscensionHeart.reset();
+			// Mahjong.saveDefaultYama();
+			
+			if (this.relicStream(TestBox.class).count() < 1) {
+				obtain(p(), new TestBox());
+			}
+			seen = false;
 		}
-		checkEnableConsoleMultiplayer();
-		
-		if (config == null)
-			this.initSavingConfig();
-		SUB_MOD.forEach(TestMod::editSubModPostDungeonInit);
-		TheFatherPower.clear();
-		DragonStarHat.resetValue();
-		Faith.reset();
-		AscensionHeart.reset();
-		// Mahjong.saveDefaultYama();
-		
-		if (this.relicStream(TestBox.class).count() < 1) {
-			obtain(p(), new TestBox());
+		if (AbstractDungeon.actNum == 3 && seen) {
+			AbstractDungeon.eventList.remove("testmod-MysteryExchangeTable");
 		}
 	}
 	
@@ -475,8 +480,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private static void invoke(AbstractTestRelic r, boolean equip) {
 		try {
 			r.getClass().getMethod(equip ? "equipAction" : "unequipAction").invoke(null);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
 	}
@@ -709,7 +714,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 
 	private static void addEvents() {
-		Stream.of(BoxForYourself.class, PlateOfNloth.class).forEach(AbstractTestEvent::addEvent);
+		Stream.of(BoxForYourself.class, PlateOfNloth.class, MysteryExchangeTable.class)
+				.forEach(AbstractTestEvent::addEvent);
 	}
 
 	private static void addPotions() {

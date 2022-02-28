@@ -182,5 +182,13 @@
 			"选择一张牌，将其特殊值变为",
 			"倍且打出时消耗"
 		]
+	},
+
+	"testmod-MysteryExchangeTableSelectScreen": {
+		"TEXT": [
+			"选择一件事件遗物",
+			"迷之交易台",
+			"只能通过事件获得的遗物。"
+		]
 	}
 }

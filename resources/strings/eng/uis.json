@@ -182,5 +182,13 @@
 			"Choose a card, set its magic number to ",
 			" times"
 		]
+	},
+
+	"testmod-MysteryExchangeTableSelectScreen": {
+		"TEXT": [
+			"Choose an event relic",
+			"Mystery Exchange Table",
+			"Relics which can only be obtained through events."
+		]
 	}
 }

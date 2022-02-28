@@ -1,36 +1,54 @@
 {
-  "testmod-BoxForYourself": {
-    "NAME": "Box For Yourself",
-    "DESCRIPTIONS": [
-      	"You walk through a series of tombs, and a circular room appears in front of you with a small table in the middle, on top of it there is a big box #p~with~ #p~traces~ #p~of~ #p~movement.~ NL You can't determine what's inside the box, but you notice #y~Powerful~ #y~Energy~ seeping out from both sides of the box. NL You find a note on top of the box. It reads, NL \"The Heart awaits.\" NL NL This is your handwriting.",
+"testmod-BoxForYourself": {
+	"NAME": "Box For Yourself",
+	"DESCRIPTIONS": [
+	  	"You walk through a series of tombs, and a circular room appears in front of you with a small table in the middle, on top of it there is a big box #p~with~ #p~traces~ #p~of~ #p~movement.~ NL You can't determine what's inside the box, but you notice #y~Powerful~ #y~Energy~ seeping out from both sides of the box. NL You find a note on top of the box. It reads, NL \"The Heart awaits.\" NL NL This is your handwriting.",
 		"Opened the box, you find a #yTreasure.",
 		"Choose a relic to store.",
 		"What is going on?"
-    ],
-    "OPTIONS": [
+	],
+	"OPTIONS": [
 		"[Continue] Open it",
 		"[Take and Give] #gObtain #b",
 		" #rStore #ra #rrelic. ",
 		"[Ignore]",
 		"[Leave]"
-    ]
-  },
-  "testmod-PlateOfNloth": {
-    "NAME": "Plate Of N'loth",
-    "DESCRIPTIONS": [
+	]
+},
+
+"testmod-PlateOfNloth": {
+	"NAME": "Plate Of N'loth",
+	"DESCRIPTIONS": [
 		"You walk through a series of tombs, and a circular room appears in front of you with a small table in the middle, on top of it there is a big plate #p~with~ #p~traces~ #p~of~ #p~movement.~ NL You don't know its owner, but you notice when you look at it, you have a #y~Strong~ #y~Desire~ to put something on it. NL A note was pasted next to the plate. It reads, NL \"Buying Treasures —— N'loth\"",
 		"You will not be able to bear it anymore. Driven by desire, you start to choose #yTreasure from your bag and wanted to put it on the plate.",
 		"Choose a relic to put in plate.",
 		"The relic disappeared. Suddenly many gold coins fell in the sky. You collected all the gold coins, and then left contentedly.",
 		"You hold back the desire in your heart and just turn around and leave."
-    ],
-    "OPTIONS": [
+	],
+	"OPTIONS": [
 		"[Continue] get close to the plate",
 		"[Sell] #rLose #ra #rrelic. #gGain #ggold. ",
 		"[Refuse] #rLose #r",
 		" #rHP. ",
 		"[Leave]",
 		"[Locked] Need #yRelic "
-    ]
-  }
+	]
+},
+
+"testmod-MysteryExchangeTable": {
+	"NAME": "Mystery Exchange Table",
+	"DESCRIPTIONS": [
+		"You walk through a series of tombs, and a circular room appears in front of you with a small table in the middle, on top of it there is a pressure plate  #p~with~ #p~strange~ #p~shape.~ NL You don't know what will the pressure plate trigger, but you notice #y~Powerful~ #y~Energy~ seeping out from the pressure plate.",
+		"You recall you have relic with suitable shape, opening your bag.",
+		"Choose a relic to put on pressure plate.",
+		"As you put relic on the pressure plate, you feel you know many things in the spire, as soon as you start thinking about a relic you want, you get it. What is going on?",
+		"You recall you don't have relic with suitable shape, you leave regretfully."
+	],
+	"OPTIONS": [
+		"[Continue] check your bag",
+		"[Put relic] #rLose #ran #revent #rrelic. #gGain #gan #gevent #grelic. ",
+		"[Ignore]",
+		"[Leave]"
+	]
+}
 }
