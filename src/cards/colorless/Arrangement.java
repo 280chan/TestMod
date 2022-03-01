@@ -12,7 +12,6 @@ import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-import com.megacrit.cardcrawl.dungeons.*;
 import com.badlogic.gdx.math.MathUtils;
 
 public class Arrangement extends AbstractTestCard {
@@ -55,8 +54,7 @@ public class Arrangement extends AbstractTestCard {
 	}
     
 	public void calculateCardDamage(AbstractMonster m) {
-		AbstractPlayer player = AbstractDungeon.player;
-
+		boolean monsterPower = m != null && m.powers != null;
 		this.isBlockModified = false;
 		float blc = this.baseBlock;
 
@@ -65,13 +63,13 @@ public class Arrangement extends AbstractTestCard {
 
 		if (!this.upgraded) {
 			int x = this.energyOnUse == -1 ? EnergyPanel.totalCount : this.energyOnUse;
-			if (player.hasRelic("Chemical X"))
+			if (p().hasRelic("Chemical X"))
 				x += 2;
 			blc = tmp = x;
 		}
 
 		// 防御
-		for (AbstractPower p : player.powers) {
+		for (AbstractPower p : p().powers) {
 			blc = p.modifyBlock(blc);
 			if (this.baseBlock != MathUtils.floor(blc)) {
 				this.isBlockModified = true;
@@ -83,31 +81,35 @@ public class Arrangement extends AbstractTestCard {
 		this.block = MathUtils.floor(blc);
 
 		// 攻击
-		if (AbstractDungeon.player.hasRelic("WristBlade") && (this.costForTurn == 0 || this.freeToPlayOnce)) {
+		if (p().hasRelic("WristBlade") && (this.costForTurn == 0 || this.freeToPlayOnce)) {
 			tmp += 3.0F;
 			if (this.baseDamage != (int) tmp) {
 				this.isDamageModified = true;
 			}
 		}
-		for (AbstractPower p : player.powers) {
+		for (AbstractPower p : p().powers) {
 			tmp = p.atDamageGive(tmp, this.damageTypeForTurn);
 			if (this.baseDamage != (int) tmp) {
 				this.isDamageModified = true;
 			}
 		}
-		for (AbstractPower p : m.powers) {
-			tmp = p.atDamageReceive(tmp, this.damageTypeForTurn);
+		if (monsterPower) {
+			for (AbstractPower p : m.powers) {
+				tmp = p.atDamageReceive(tmp, this.damageTypeForTurn);
+			}
 		}
-		for (AbstractPower p : player.powers) {
+		for (AbstractPower p : p().powers) {
 			tmp = p.atDamageFinalGive(tmp, this.damageTypeForTurn);
 			if (this.baseDamage != (int) tmp) {
 				this.isDamageModified = true;
 			}
 		}
-		for (AbstractPower p : m.powers) {
-			tmp = p.atDamageFinalReceive(tmp, this.damageTypeForTurn);
-			if (this.baseDamage != (int) tmp) {
-				this.isDamageModified = true;
+		if (monsterPower) {
+			for (AbstractPower p : m.powers) {
+				tmp = p.atDamageFinalReceive(tmp, this.damageTypeForTurn);
+				if (this.baseDamage != (int) tmp) {
+					this.isDamageModified = true;
+				}
 			}
 		}
 		if (tmp < 0.0F) {
