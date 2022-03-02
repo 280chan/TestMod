@@ -1,8 +1,9 @@
 package relics;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -11,12 +12,14 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import powers.AbstractTestPower;
 
 public class ConjureBlade extends AbstractTestRelic {
+	private static final HashMap<AbstractCard, Integer> BONUS = new HashMap<AbstractCard, Integer>();
 	
 	public ConjureBlade() {
 		super(RelicTier.COMMON, LandingSound.FLAT);
 	}
 	
 	public void atPreBattle() {
+		BONUS.clear();
 		if (this.isActive && p().powers.stream().noneMatch(p -> p instanceof ConjureBladePower))
 			p().powers.add(new ConjureBladePower());
     }
@@ -66,15 +69,22 @@ public class ConjureBlade extends AbstractTestRelic {
 		}
 		
 		private int bonus(AbstractCard c) {
-			return getNeighbor(c).stream().mapToInt(this::cost).sum() * (int) relicStream(ConjureBlade.class).count();
+			int tmp = getNeighbor(c).stream().mapToInt(this::cost).sum() * (int) relicStream(ConjureBlade.class).count();
+			BONUS.computeIfPresent(c, (a, b) -> tmp > 0 ? tmp : Math.max(tmp, b));
+			BONUS.putIfAbsent(c, tmp);
+			return BONUS.get(c);
 		}
-
+		
 		public float atDamageGive(float damage, DamageInfo.DamageType type, AbstractCard c) {
 			return super.atDamageGive(damage, type, c) + ((type == DamageInfo.DamageType.NORMAL) ? bonus(c) : 0);
 		}
-
+		
 		public float modifyBlock(float block, AbstractCard c) {
 			return super.modifyBlock(block, c) + bonus(c);
+		}
+		
+		public void onAfterUseCard(AbstractCard c, UseCardAction a) {
+			BONUS.remove(c);
 		}
 	}
 
