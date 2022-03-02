@@ -15,6 +15,11 @@ public class TwinklingStar extends AbstractTestRelic {
 		this.counter = 0;
 	}
 	
+	public void onVictory() {
+		if (this.isActive && lock)
+			lock = false;
+	}
+	
 	public String getUpdatedDescription() {
 		return DESCRIPTIONS[0] + f() + DESCRIPTIONS[1] + (counter - (counter % STEP) + STEP) + DESCRIPTIONS[2];
 	}
