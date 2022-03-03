@@ -1,5 +1,9 @@
 package events;
 
+import java.util.ArrayList;
+
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 
@@ -13,9 +17,16 @@ public class MysteryExchangeTable extends AbstractTestEvent {
 	@Override
 	protected void intro() {
 		boolean noRelic = p().relics.stream().noneMatch(r -> r.tier == RelicTier.SPECIAL);
-		this.imageEventText.updateBodyText(desc()[noRelic ? 4 : 1]);
-		this.imageEventText.updateDialogOption(0, option()[1], noRelic);
+		ArrayList<AbstractRelic> l = p().relics.stream().filter(r -> r.tier != RelicTier.SPECIAL).collect(toArrayList());
+		lose = l.isEmpty() ? null : TestMod.randomItem(l, AbstractDungeon.miscRng);
+		this.imageEventText.updateBodyText(desc()[noRelic && lose == null ? 4 : 1]);
+		this.imageEventText.updateDialogOption(0, option()[noRelic ? 7 : 1], noRelic);
+		if (lose == null)
+			this.imageEventText.setDialogOption(option()[4], true);
+		else
+			this.imageEventText.setDialogOption(option()[5] + lose.name + option()[6], lose);
 		this.imageEventText.setDialogOption(option()[2]);
+		l.clear();
 	}
 
 	@Override
@@ -25,6 +36,11 @@ public class MysteryExchangeTable extends AbstractTestEvent {
 			new MysteryExchangeTableSelectScreen(p().relics.stream().filter(r -> r.tier == RelicTier.SPECIAL)
 					.collect(toArrayList()), false, this).open();
 			this.imageEventText.updateBodyText(desc()[2]);
+			break;
+		case 1:
+			p().relics.remove(lose);
+			p().reorganizeRelics();
+			new MysteryExchangeTableSelectScreen(RelicLibrary.specialList, true, this).open();
 			break;
 		default:
 			logMetric("Ignored");

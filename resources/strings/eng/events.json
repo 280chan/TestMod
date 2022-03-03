@@ -10,7 +10,7 @@
 	"OPTIONS": [
 		"[Continue] Open it",
 		"[Take and Give] #gObtain #b",
-		" #rStore #ra #rrelic. ",
+		" #rStore #ra #rrelic",
 		"[Ignore]",
 		"[Leave]"
 	]
@@ -27,9 +27,9 @@
 	],
 	"OPTIONS": [
 		"[Continue] get close to the plate",
-		"[Sell] #rLose #ra #rrelic. #gGain #ggold. ",
+		"[Sell] #rLose #ra #rrelic. #gGain #ggold",
 		"[Refuse] #rLose #r",
-		" #rHP. ",
+		" #rHP",
 		"[Leave]",
 		"[Locked] Need #yRelic "
 	]
@@ -46,9 +46,14 @@
 	],
 	"OPTIONS": [
 		"[Continue] check your bag",
-		"[Put relic] #rLose #ran #revent #rrelic. #gGain #gan #gevent #grelic. ",
+		"[Put relic] #rLose #ran #revent #rrelic #gGain #gan #gevent #grelic",
 		"[Ignore]",
-		"[Leave]"
+		"[Leave]",
+		"[Locked] Need non-event relic",
+		"[Put other relic] #rLose #b",
+		" #gGain #gan #gevent #grelic",
+		"[Locked] Need event relic"
 	]
 }
+
 }
