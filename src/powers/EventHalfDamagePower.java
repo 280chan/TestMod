@@ -39,9 +39,16 @@ public class EventHalfDamagePower extends AbstractTestPower implements Invisible
 		this.fontScale = 8.0f;
 	}
 	
+	private float changeDmg(float damage) {
+		return damage / 2f;
+	}
+	
 	public int onLoseHp(int damage) {
 		return AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom() instanceof EventRoom
-				&& AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT && ah.checkLevel(15) ? damage / 2 : damage;
+				&& AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT && ah.checkLevel(15)
+						? relicStream(AscensionHeart.class).map(r -> get(this::changeDmg)).reduce(t(), this::chain)
+								.apply(damage * 1f).intValue()
+						: damage;
 	}
 
 }

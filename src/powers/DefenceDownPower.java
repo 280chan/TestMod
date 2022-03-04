@@ -4,6 +4,8 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 
+import relics.AscensionHeart;
+
 public class DefenceDownPower extends AbstractTestPower {
 	public static final String POWER_ID = "DefenceDownPower";
 	private static final PowerStrings PS = Strings(POWER_ID);
@@ -24,11 +26,22 @@ public class DefenceDownPower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
+		 this.description = DESCRIPTIONS[0] + (single() ? amount : (dmgRate(100f) - 100)) + DESCRIPTIONS[1];
+	}
+	
+	private float dmg(float input) {
+		return input * (100 + this.amount) / 100;
+	}
+	
+	private float dmgRate(float input) {
+		return relicStream(AscensionHeart.class).map(r -> get(this::dmg)).reduce(t(), this::chain).apply(input);
 	}
 	
     public float atDamageReceive(float damage, DamageType damageType) {
-        return damage / 100f * (100 + this.amount);
+        return dmgRate(damage);
     }
     
+    private boolean single() {
+		return relicStream(AscensionHeart.class).count() == 1;
+	}
 }

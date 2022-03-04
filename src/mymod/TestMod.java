@@ -383,8 +383,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		relics.add(TestMod.makeID("TestBox"));
 	}
 	
-	public static boolean seen = false;
-	
 	@Override
 	public void receivePostDungeonInitialize() {
 		if (AbstractDungeon.floorNum < 2) {
@@ -402,10 +400,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			if (this.relicStream(TestBox.class).count() < 1) {
 				obtain(p(), new TestBox());
 			}
-			seen = false;
-		}
-		if (AbstractDungeon.actNum == 3 && seen) {
-			AbstractDungeon.eventList.remove("testmod-MysteryExchangeTable");
 		}
 	}
 	
@@ -558,7 +552,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(DragonStarHat.SAVE_NAME, "0");
 		DEFAULT.setProperty(Faith.SAVE_NAME, "false");
 		DEFAULT.setProperty(Faith.SAVE_NAME1, "0");
-		DEFAULT.setProperty(AscensionHeart.SAVE_NAME, "false");
+		DEFAULT.setProperty(AscensionHeart.SAVE_SIZE, "0");
 		DEFAULT.setProperty(GlassSoul.ID, "0");
 		DEFAULT.setProperty(Metronome.ID, "0");
 		DEFAULT.setProperty(PhasePocketWatch.SAVE_NAME, "0");
@@ -620,7 +614,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		}*/
 
 		Automaton.loadMagicNumber();
-		AscensionHeart.load(getBool(AscensionHeart.SAVE_NAME));
+		AscensionHeart.load(getInt(AscensionHeart.SAVE_SIZE));
 		TemporaryBarricade.pulseLoader();
 		IWantAll.loadVictory();
 		GlassSoul.load(getStringList(GlassSoul.ID));

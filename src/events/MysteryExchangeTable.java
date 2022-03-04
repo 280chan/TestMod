@@ -57,7 +57,6 @@ public class MysteryExchangeTable extends AbstractTestEvent {
 		this.gain = r;
 		this.imageEventText.updateBodyText(desc()[3]);
 		logMetricRelicSwap(title, "Swap Relic", gain, lose);
-		TestMod.seen = true;
 	}
 	
 }
