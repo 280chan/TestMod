@@ -18,8 +18,9 @@ public class BoxForYourself extends AbstractTestEvent {
 	protected void intro() {
 		initializeObtainRelic();
 		this.imageEventText.updateBodyText(desc()[1]);
-		this.imageEventText.updateDialogOption(0, option()[3]);
+		this.imageEventText.removeDialogOption(0);
 		this.imageEventText.setDialogOption(option()[1] + this.obtainRelic.name + option()[2], this.obtainRelic);
+		this.imageEventText.setDialogOption(option()[3]);
 	}
 
 	@Override
