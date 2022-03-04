@@ -2,7 +2,7 @@
 	"testmod-ChristmasGift":{
 		"NAME": "圣诞礼物",
 		"FLAVOR": "圣诞快乐",
-		"DESCRIPTIONS":["每回合开始将一张随机的圣诞礼物加入手牌。每 消耗 一张牌恢复 #b1 点生命值。"]
+		"DESCRIPTIONS":["每回合开始将一张随机的 #y圣诞礼物 加入手牌。每 #y消耗 一张牌恢复 #b1 点生命值。"]
 	},
 	
 	"testmod-GiftOfSatan":{
