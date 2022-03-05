@@ -192,6 +192,8 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 						m.getPower("Strength").amount--;
 						if (m.getPower("Strength").amount == 0) {
 							m.powers.remove(m.getPower("Strength"));
+						} else {
+							m.getPower("Strength").updateDescription();
 						}
 					} else {
 						AbstractPower temp = new StrengthPower(m, -1);

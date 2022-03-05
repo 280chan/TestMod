@@ -210,7 +210,7 @@ public class Hope extends AbstractTestRelic {
 		} else {
 			result = rng.random(RANGECARD) < RATE;
 		}
-		this.updateDescription(AbstractDungeon.player.chosenClass);
+		this.updateDescription(p().chosenClass);
 		return result;
 	}
 
@@ -230,7 +230,7 @@ public class Hope extends AbstractTestRelic {
 	}
 
 	public void onRefreshHand() {
-		if ((AbstractDungeon.actionManager.actions.isEmpty()) && (AbstractDungeon.player.hand.isEmpty())
+		if ((AbstractDungeon.actionManager.actions.isEmpty()) && (p().hand.isEmpty())
 				&& (!AbstractDungeon.actionManager.turnHasEnded) && (this.canDraw) && (!AbstractDungeon.isScreenUp)) {
 			if ((AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) && (!this.disabledUntilEndOfTurn)) {
 				TestMod.info("希望随机中:...");
