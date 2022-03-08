@@ -50,7 +50,7 @@ import relics.AbstractTestRelic;
 public interface MiscMethods {
 	public static final MiscMethods INSTANCE = new MiscMethods() {};
 	
-	default void print(String s) {
+	default void print(Object s) {
 		TestMod.info(s);
 	}
 	

@@ -618,5 +618,11 @@
 		"NAME": "Portable Portal",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] . When you enter the first room after pickup, you will teleport to #yBoss room."]
+	},
+	
+	"testmod-SpireNexus":{
+		"NAME": "Spire Nexus",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["When you encounter random #yEvent, choose from #b3 #yEvents instead. Outside combat, right click on this relic to toggle it on and off."]
 	}
 }

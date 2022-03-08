@@ -35,12 +35,12 @@ public abstract class AbstractTestEvent extends AbstractImageEvent implements Mi
 	protected void buttonEffect(int buttonPressed) {
 		switch (this.screen) {
 		case INTRO:
-			this.intro();
 			this.choose();
+			this.intro();
 			break;
 		case CHOOSE:
-			this.choose(buttonPressed);
 			this.complete();
+			this.choose(buttonPressed);
 			break;
 		case COMPLETE:
 			openMap();

@@ -60,7 +60,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 3/3/2022
+ * @version 3/8/2022
  * @since 6/17/2018
  */
 
@@ -178,7 +178,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		SUB_MOD.forEach(new RoomTrigger(r)::postTrigger);
 	}
 	
-	public static void info(String s) {
+	public static void info(Object s) {
 		LOGGER.info(s);
 	}
 	
@@ -251,9 +251,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new ConjureBlade(), new MistCore(), new GoldenSoul(), new GreedyDevil(), new GremlinBalance(),
-				new TemporaryBarricade(), new StomachOfGluttonous(), new PhasePocketWatch(), new Gather(),
-				new HolyLightProtection());
+		addLatest(new SpireNexus(), new ConjureBlade(), new MistCore(), new GoldenSoul(), new GreedyDevil(),
+				new GremlinBalance(), new TemporaryBarricade(), new StomachOfGluttonous(), new PhasePocketWatch(),
+				new Gather(), new HolyLightProtection());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton());
@@ -286,7 +286,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new VentureCapital(), new ResonanceStone(), new GlassSoul(), new GiantKiller(), new TwinklingStar(),
 				new Metronome(), new Gather(), new HolyLightProtection(), new EvilDagger(), new Match3(),
 				new PhasePocketWatch(), new StomachOfGluttonous(), new Encyclopedia(), new GoldenContract(),
-				new ConjureBlade(), new PortablePortal())
+				new ConjureBlade(), new PortablePortal(), new SpireNexus())
 				.collect(toArrayList());
 		if (!Loader.isModLoaded("FoggyMod"))
 			RELICS.add(new MistCore());

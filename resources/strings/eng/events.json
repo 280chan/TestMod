@@ -54,6 +54,18 @@
 		" #gGain #gan #gevent #grelic",
 		"[Locked] Need event relic"
 	]
+},
+
+"testmod-SpireNexusEvent": {
+	"NAME": "Spire Nexus",
+	"DESCRIPTIONS": [
+		"IT IS DONE."
+	],
+	"OPTIONS": [
+		"[Continue] Choose an event",
+		"[Locked] Need event",
+		"[Leave]"
+	]
 }
 
 }
