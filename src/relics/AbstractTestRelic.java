@@ -1,7 +1,6 @@
 package relics;
 
 import java.util.HashMap;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import com.badlogic.gdx.Gdx;
