@@ -25,13 +25,14 @@ public class Enchant extends AbstractTestCard {
     public void use(final AbstractPlayer p, final AbstractMonster m) {
     	this.addTmpActionToBot(() -> {
 			CardGroup tmp = new CardGroup(CardGroupType.UNSPECIFIED);
-			tmp.group = Stream.of(p.drawPile, p.hand, p.discardPile).flatMap(g -> g.group.stream())
-					.filter(c -> c != this && c.magicNumber != -1).collect(toArrayList());
+			tmp.group = Stream.of(p.drawPile, p.hand, p.discardPile).flatMap(g -> g.group.stream()).filter(this::filter)
+					.collect(toArrayList());
 			String msg = UI.TEXT[0] + this.magicNumber + UI.TEXT[1];
 			if (tmp.size() > 1) {
 				AbstractDungeon.gridSelectScreen.open(tmp, 1, msg, false);
 			} else if (tmp.size() == 1) {
 				affect(tmp.getTopCard());
+				return;
 			} else {
 				return;
 			}
@@ -42,6 +43,10 @@ public class Enchant extends AbstractTestCard {
 				}
 			});
     	});
+    }
+    
+    private boolean filter(AbstractCard c) {
+    	return c != this && !(c instanceof Mystery) && !(c instanceof PerfectCombo) && c.magicNumber != -1;
     }
     
     private void affect(AbstractCard c) {

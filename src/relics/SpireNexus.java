@@ -4,6 +4,7 @@ import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.random.Random;
@@ -51,6 +52,10 @@ public class SpireNexus extends AbstractTestRelic implements ClickableRelic {
 	
 	public void onVictory() {
 		this.changePulse();
+	}
+	
+	public boolean canSpawn() {
+		return Settings.isEndless || AbstractDungeon.actNum < 3;
 	}
 	
 	@Override

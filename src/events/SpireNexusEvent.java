@@ -6,12 +6,13 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.EventHelper;
 import com.megacrit.cardcrawl.localization.EventStrings;
 
 public class SpireNexusEvent extends AbstractTestEvent {
-	ArrayList<String> tmp;
+	private ArrayList<String> tmp;
 	
 	@Override
 	protected void intro() {
@@ -19,7 +20,9 @@ public class SpireNexusEvent extends AbstractTestEvent {
 		this.imageEventText.removeDialogOption(0);
 		tmp = Stream.of(AbstractDungeon.shrineList, AbstractDungeon.specialOneTimeEventList, AbstractDungeon.eventList)
 				.flatMap(l -> l.stream()).collect(toArrayList());
-		Collections.shuffle(tmp, new Random(AbstractDungeon.miscRng.randomLong()));
+		Collections.shuffle(tmp,
+				new Random(new com.megacrit.cardcrawl.random.Random(Settings.seed, AbstractDungeon.eventRng.counter)
+						.randomLong()));
 		tmp = tmp.stream().limit(3).collect(toArrayList());
 		tmp.forEach(s -> this.imageEventText.setDialogOption(this.getNameFor(s)));
 		if (tmp.size() < 3)
