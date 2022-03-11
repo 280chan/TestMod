@@ -1,11 +1,8 @@
 package commands;
 
-import com.evacipated.cardcrawl.modthespire.Loader;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower.PowerType;
-
-import mymod.TestMod;
+import com.megacrit.cardcrawl.events.AbstractEvent;
+import basemod.ReflectionHacks;
 
 public class Test extends TestCommand {
 	
@@ -14,13 +11,12 @@ public class Test extends TestCommand {
 			cmdHelp();
 			return;
 		}
-		//TestMod.info("手牌上限：" + BaseMod.MAX_HAND_SIZE);
+		//this.print("手牌上限：" + BaseMod.MAX_HAND_SIZE);
 		/*Loader.getWorkshopInfos().forEach(i -> {
 			i.getID();
 		});*/
-		this.print(this.isLocalTesting());
-		this.print(TestMod.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-		this.print(TestMod.hash(TestMod.class.getProtectionDomain().getCodeSource().getLocation().getPath()));
+		this.print("img是否为null" + (ReflectionHacks.getPrivate(AbstractDungeon.getCurrRoom().event, AbstractEvent.class, "img") == null));
+		this.print("type: " + AbstractEvent.type);
 		// TODO
 	}
 
