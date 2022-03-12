@@ -2,6 +2,7 @@ package relics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.Consumer;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -27,8 +28,18 @@ public class ConjureBlade extends AbstractTestRelic {
 	public void onDrawOrDiscard() {
 		if (!this.isActive)
 			return;
-		AbstractMonster m = chooseMonster();
-		p().hand.group.forEach(c -> c.calculateCardDamage(m));
+		Consumer<AbstractCard> c = tryCalDmg(chooseMonster());
+		p().hand.group.forEach(c);
+	}
+	
+	private Consumer<AbstractCard> tryCalDmg(AbstractMonster m) {
+		return c -> {
+			if (m == null) {
+				c.applyPowers();
+			} else {
+				c.calculateCardDamage(m);
+			}
+		};
 	}
 	
 	private AbstractMonster chooseMonster() {
