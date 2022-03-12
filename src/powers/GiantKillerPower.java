@@ -33,8 +33,7 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 	}
 	
 	private float finalDamage(float input, Consumer<GiantKiller> show) {
-		return relicStream(GiantKiller.class).peek(show).map(r -> get(this::damage)).reduce(t(), this::chain)
-				.apply(input);
+		return chain(relicStream(GiantKiller.class).peek(show).map(r -> get(this::damage))).apply(input);
 	}
 	
 	private float damage(float input) {

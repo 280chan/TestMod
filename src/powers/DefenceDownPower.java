@@ -34,7 +34,7 @@ public class DefenceDownPower extends AbstractTestPower {
 	}
 	
 	private float dmgRate(float input) {
-		return relicStream(AscensionHeart.class).map(r -> get(this::dmg)).reduce(t(), this::chain).apply(input);
+		return chain(relicStream(AscensionHeart.class).map(r -> get(this::dmg))).apply(input);
 	}
 	
     public float atDamageReceive(float damage, DamageType damageType) {

@@ -54,7 +54,7 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 	}
 	
 	private <T> UnaryOperator<T> repeat(UnaryOperator<T> f) {
-		return this.relicStream(ArcanaOfDestiny.class).map(r -> f).reduce(t(), this::chain);
+		return chain(relicStream(ArcanaOfDestiny.class).map(r -> f));
 	}
 	
 	public float atDamageGive(float damage, DamageType type) {

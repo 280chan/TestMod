@@ -142,7 +142,7 @@ public class Encyclopedia extends AbstractTestRelic {
 		}
 		
 		private float dmgRate(float input) {
-			return relicStream(Encyclopedia.class).map(r -> get(this::dmg)).reduce(t(), this::chain).apply(input);
+			return chain(relicStream(Encyclopedia.class).map(r -> get(this::dmg))).apply(input);
 		}
 		
 		private float dmg(float input) {

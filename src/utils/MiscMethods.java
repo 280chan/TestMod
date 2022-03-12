@@ -5,6 +5,7 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.RandomXS128;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.*;
@@ -799,6 +800,10 @@ public interface MiscMethods {
 	
 	public default <T> UnaryOperator<T> chain(UnaryOperator<T> a, UnaryOperator<T> b) {
 		return c -> b.apply(a.apply(c));
+	}
+	
+	public default <T> UnaryOperator<T> chain(Stream<UnaryOperator<T>> s) {
+		return s.reduce(t(), this::chain);
 	}
 	
 	public default <T> Collector<T, ?, ArrayList<T>> toArrayList() {

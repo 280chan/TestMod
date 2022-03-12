@@ -60,7 +60,7 @@ import utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 3/9/2022
+ * @version 3/11/2022
  * @since 6/17/2018
  */
 
@@ -784,7 +784,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 	@Override
 	public int receiveMapHPChange(int amount) {
-		return this.relicStream().map(r -> r.maxHPChanger()).reduce(t(), this::chain).apply(amount * 1f).intValue();
+		return chain(relicStream().map(r -> r.maxHPChanger())).apply(amount * 1f).intValue();
 	}
 
 	@Override

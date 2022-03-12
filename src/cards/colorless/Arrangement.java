@@ -1,6 +1,7 @@
 
 package cards.colorless;
 
+import java.util.function.UnaryOperator;
 import cards.AbstractTestCard;
 import actions.ArrangementUpgradingAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -11,6 +12,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -52,7 +54,31 @@ public class Arrangement extends AbstractTestCard {
 	private void block(AbstractPlayer p) {
 		this.addToTop(new GainBlockAction(p, p, this.block, true));
 	}
+	
+	private UnaryOperator<Float> blo(AbstractPower p) {
+		return p::modifyBlock;
+	}
     
+	private UnaryOperator<Float> adm(AbstractRelic r) {
+		return f -> r.atDamageModify(f, this);
+	}
+	
+	private UnaryOperator<Float> adg(AbstractPower r) {
+		return f -> r.atDamageGive(f, this.damageTypeForTurn);
+	}
+	
+	private UnaryOperator<Float> adr(AbstractPower r) {
+		return f -> r.atDamageReceive(f, this.damageTypeForTurn);
+	}
+	
+	private UnaryOperator<Float> adfg(AbstractPower r) {
+		return f -> r.atDamageFinalGive(f, this.damageTypeForTurn);
+	}
+	
+	private UnaryOperator<Float> adfr(AbstractPower r) {
+		return f -> r.atDamageFinalReceive(f, this.damageTypeForTurn);
+	}
+	
 	public void calculateCardDamage(AbstractMonster m) {
 		boolean monsterPower = m != null && m.powers != null;
 		this.isBlockModified = false;
@@ -69,11 +95,9 @@ public class Arrangement extends AbstractTestCard {
 		}
 
 		// 防御
-		for (AbstractPower p : p().powers) {
-			blc = p.modifyBlock(blc);
-			if (this.baseBlock != MathUtils.floor(blc)) {
-				this.isBlockModified = true;
-			}
+		blc = chain(p().powers.stream().map(this::blo)).apply(blc);
+		if (this.baseBlock != MathUtils.floor(blc)) {
+			this.isBlockModified = true;
 		}
 		if (blc < 0.0F) {
 			blc = 0.0F;
@@ -81,36 +105,18 @@ public class Arrangement extends AbstractTestCard {
 		this.block = MathUtils.floor(blc);
 
 		// 攻击
-		if (p().hasRelic("WristBlade") && (this.costForTurn == 0 || this.freeToPlayOnce)) {
-			tmp += 3.0F;
-			if (this.baseDamage != (int) tmp) {
-				this.isDamageModified = true;
-			}
-		}
-		for (AbstractPower p : p().powers) {
-			tmp = p.atDamageGive(tmp, this.damageTypeForTurn);
-			if (this.baseDamage != (int) tmp) {
-				this.isDamageModified = true;
-			}
-		}
+		tmp = chain(p().relics.stream().map(this::adm)).apply(tmp);
+		tmp = chain(p().powers.stream().map(this::adg)).apply(tmp);
+		tmp = p().stance.atDamageGive(tmp, this.damageTypeForTurn, this);
 		if (monsterPower) {
-			for (AbstractPower p : m.powers) {
-				tmp = p.atDamageReceive(tmp, this.damageTypeForTurn);
-			}
+			tmp = chain(m.powers.stream().map(this::adr)).apply(tmp);
 		}
-		for (AbstractPower p : p().powers) {
-			tmp = p.atDamageFinalGive(tmp, this.damageTypeForTurn);
-			if (this.baseDamage != (int) tmp) {
-				this.isDamageModified = true;
-			}
-		}
+		tmp = chain(p().powers.stream().map(this::adfg)).apply(tmp);
 		if (monsterPower) {
-			for (AbstractPower p : m.powers) {
-				tmp = p.atDamageFinalReceive(tmp, this.damageTypeForTurn);
-				if (this.baseDamage != (int) tmp) {
-					this.isDamageModified = true;
-				}
-			}
+			tmp = chain(m.powers.stream().map(this::adfr)).apply(tmp);
+		}
+		if (this.baseDamage != (int) tmp) {
+			this.isDamageModified = true;
 		}
 		if (tmp < 0.0F) {
 			tmp = 0.0F;
