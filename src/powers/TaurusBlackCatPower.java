@@ -6,9 +6,7 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-import utils.MiscMethods;
-
-public class TaurusBlackCatPower extends AbstractTestPower implements MiscMethods {
+public class TaurusBlackCatPower extends AbstractTestPower {
 	public static final String POWER_ID = "TaurusBlackCatPower";
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
@@ -43,6 +41,12 @@ public class TaurusBlackCatPower extends AbstractTestPower implements MiscMethod
 		p.updateDescription();
 	}
 	
+	private boolean needUpdate(AbstractMonster m) {
+		if (!TaurusBlackCatEnemyPower.hasThis(m))
+			return true;
+		return TaurusBlackCatEnemyPower.getThis(m).amount != this.amount;
+	}
+	
 	private void addEnemyPower(AbstractMonster m) {
 		m.powers.add(new TaurusBlackCatEnemyPower(m, this.amount));
 	}
@@ -57,9 +61,8 @@ public class TaurusBlackCatPower extends AbstractTestPower implements MiscMethod
 	
 	public void update(int slot) {
 		super.update(slot);
-		if (this.removed)
-			return;
-		this.stackPower(0);
+		if (!this.removed && AbstractDungeon.getMonsters().monsters.stream().anyMatch(this::needUpdate))
+			this.stackPower(0);
 	}
 	
 	public void onRemove() {
