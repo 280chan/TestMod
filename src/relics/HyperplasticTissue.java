@@ -3,9 +3,10 @@ package relics;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import basemod.BaseMod;
+import mymod.TestMod;
 
 public class HyperplasticTissue extends AbstractTestRelic {
-	private static int max;
+	private static int max = 11;
 	
 	public HyperplasticTissue() {
 		super(RelicTier.COMMON, LandingSound.SOLID);
@@ -19,6 +20,10 @@ public class HyperplasticTissue extends AbstractTestRelic {
 	
 	public void onEquip() {
 		this.counter = ++BaseMod.MAX_HAND_SIZE;
+		TestMod.setActivity(this);
+		if (this.inCombat() && this.isActive) {
+			this.atPreBattle();
+		}
     }
 	
 	public void onUnequip() {

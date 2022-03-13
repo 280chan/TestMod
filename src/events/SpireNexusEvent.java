@@ -16,11 +16,17 @@ import com.megacrit.cardcrawl.events.GenericEventDialog;
 import com.megacrit.cardcrawl.helpers.EventHelper;
 import com.megacrit.cardcrawl.localization.EventStrings;
 
-import mymod.TestMod;
+import relics.SpireNexus;
 
 public class SpireNexusEvent extends AbstractTestEvent {
 	private static final HashMap<String, Supplier<Boolean>> EVENTS = new HashMap<String, Supplier<Boolean>>();
 	private ArrayList<String> tmp;
+	
+	public SpireNexusEvent() {
+		super();
+		if (!SpireNexus.skipEffect)
+			this.relicStream(SpireNexus.class).forEach(r -> r.flash());
+	}
 	
 	@Override
 	protected void intro() {
@@ -101,10 +107,7 @@ public class SpireNexusEvent extends AbstractTestEvent {
 	}
 	
 	private static boolean canEventSpawn(String id) {
-		if (TestMod.isLocalTest()) return true;
-		if (EVENTS.containsKey(id))
-			return EVENTS.get(id).get();
-		return true;
+		return !EVENTS.containsKey(id) || EVENTS.get(id).get();
 	}
 	
 }

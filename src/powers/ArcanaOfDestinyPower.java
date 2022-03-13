@@ -8,9 +8,8 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 
 import relics.ArcanaOfDestiny;
-import utils.MiscMethods;
 
-public class ArcanaOfDestinyPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
+public class ArcanaOfDestinyPower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "ArcanaOfDestinyPower";
 	
 	public static boolean hasThis(AbstractCreature m) {
