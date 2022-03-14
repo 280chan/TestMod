@@ -22,7 +22,7 @@ import basemod.interfaces.OnStartBattleSubscriber;
 import christmasMod.cards.*;
 import christmasMod.relics.*;
 import christmasMod.utils.ChristmasMiscMethods;
-import mymod.TestMod;
+import testmod.mymod.TestMod;
 
 /**
  * @author 彼君不触

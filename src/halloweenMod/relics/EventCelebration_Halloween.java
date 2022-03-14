@@ -9,8 +9,8 @@ import com.megacrit.cardcrawl.relics.BlueCandle;
 import com.megacrit.cardcrawl.relics.PrismaticShard;
 import halloweenMod.cards.Halloween;
 import halloweenMod.mymod.HalloweenMod;
-import mymod.TestMod;
-import relics.AbstractTestRelic;
+import testmod.mymod.TestMod;
+import testmod.relics.AbstractTestRelic;
 
 public class EventCelebration_Halloween extends AbstractTestRelic {
 	public static final String ID = HalloweenMod.MOD_PREFIX + "Halloween";

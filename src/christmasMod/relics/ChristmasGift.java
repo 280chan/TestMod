@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import christmasMod.mymod.ChristmasMod;
 import christmasMod.powers.GiftDamagedPower;
-import relics.AbstractTestRelic;
+import testmod.relics.AbstractTestRelic;
 
 public class ChristmasGift extends AbstractTestRelic {
 	public static final String ID = "ChristmasGift";

@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.TheBombPower;
 
-import powers.AbstractTestPower;
+import testmod.powers.AbstractTestPower;
 
 public class GiftExplosionPower extends AbstractTestPower {
 	public static final String POWER_ID = "GiftExplosionPower";

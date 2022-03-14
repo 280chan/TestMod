@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import christmasMod.mymod.ChristmasMod;
-import powers.AbstractTestPower;
+import testmod.powers.AbstractTestPower;
 
 public class GiftInfinitePower extends AbstractTestPower {
 	public static final String POWER_ID = "GiftInfinitePower";

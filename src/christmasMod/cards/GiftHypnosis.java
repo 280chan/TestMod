@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.*;
 
-import utils.MiscMethods;
+import testmod.utils.MiscMethods;
 
 public class GiftHypnosis extends AbstractChristmasCard implements MiscMethods {
     public static final String ID = "GiftHypnosis";

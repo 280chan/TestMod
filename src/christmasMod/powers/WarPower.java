@@ -14,8 +14,8 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-import mymod.TestMod;
-import powers.AbstractTestPower;
+import testmod.mymod.TestMod;
+import testmod.powers.AbstractTestPower;
 
 public class WarPower extends AbstractTestPower {
 	public static final String POWER_ID = "WarPower";

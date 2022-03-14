@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.PoisonPower;
 
 import christmasMod.actions.PlaguePoisonActAction;
-import powers.AbstractTestPower;
+import testmod.powers.AbstractTestPower;
 
 public class PlaguePower extends AbstractTestPower {
 	public static final String POWER_ID = "christmas-PlaguePower";

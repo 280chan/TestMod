@@ -29,7 +29,7 @@ import basemod.interfaces.PostBattleSubscriber;
 import halloweenMod.cards.*;
 import halloweenMod.relics.*;
 import halloweenMod.utils.HalloweenMiscMethods;
-import mymod.TestMod;
+import testmod.mymod.TestMod;
 
 /**
  * @author 彼君不触

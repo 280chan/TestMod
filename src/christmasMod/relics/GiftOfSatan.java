@@ -19,7 +19,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import christmasMod.mymod.ChristmasMod;
 import christmasMod.utils.ChristmasMiscMethods;
-import relics.AbstractTestRelic;
+import testmod.relics.AbstractTestRelic;
 
 public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMethods, ClickableRelic {
 	public static final String ID = "GiftOfSatan";

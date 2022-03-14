@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import christmasMod.mymod.ChristmasMod;
-import powers.AbstractTestPower;
+import testmod.powers.AbstractTestPower;
 
 public class GiftDamagedPower extends AbstractTestPower {
 	public static final String POWER_ID = "GiftDamagedPower";
