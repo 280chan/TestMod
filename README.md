@@ -11,7 +11,7 @@ private static void exampleNyarlathotepAddRelic() {
 		list.add("relic id0");
 		list.add("relic id1");
 		try {
-			ReflectionHacks.privateStaticMethod(Class.forName("mymod.TestMod"), "addNyarlathotepRelic",
+			ReflectionHacks.privateStaticMethod(Class.forName("testmod.mymod.TestMod"), "addNyarlathotepRelic",
 					new Class[] { ArrayList.class }).invoke(null, new Object[] { list });
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
