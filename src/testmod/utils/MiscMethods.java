@@ -67,7 +67,7 @@ public interface MiscMethods {
 	static String getIDForUI() {
 		try {
 			return Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
-					.filter(s -> !"utils.MiscMethods".equals(s)).findFirst().get()).getSimpleName();
+					.filter(s -> !"testmod.utils.MiscMethods".equals(s)).findFirst().get()).getSimpleName();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
