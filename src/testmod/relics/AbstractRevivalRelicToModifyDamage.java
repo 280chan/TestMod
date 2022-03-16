@@ -3,7 +3,6 @@ package testmod.relics;
 import com.evacipated.cardcrawl.mod.stslib.relics.OnPlayerDeathRelic;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public abstract class AbstractRevivalRelicToModifyDamage extends AbstractTestRelic implements OnPlayerDeathRelic {
 
@@ -22,14 +21,14 @@ public abstract class AbstractRevivalRelicToModifyDamage extends AbstractTestRel
 		super.update();
 		if (!this.isActive)
 			return;
-		if (this.previousFuckHp > 0 && AbstractDungeon.player.currentHealth < 1) {
+		if (this.previousFuckHp > 0 && p().currentHealth < 1) {
 			this.deathTriggered = true;
-			int tempDmg = this.previousFuckHp - AbstractDungeon.player.currentHealth;
-			if (tempDmg > 1 && this.resetHpCheck(AbstractDungeon.player, tempDmg)) {
-				AbstractDungeon.player.currentHealth = this.previousFuckHp;
+			int tempDmg = this.previousFuckHp - p().currentHealth;
+			if (tempDmg > 1 && this.resetHpCheck(p(), tempDmg)) {
+				p().currentHealth = this.previousFuckHp;
 			}
 		} else {
-			this.previousFuckHp = AbstractDungeon.player.currentHealth;
+			this.previousFuckHp = p().currentHealth;
 		}
 	}
 	
