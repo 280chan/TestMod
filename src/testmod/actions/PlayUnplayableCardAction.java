@@ -42,16 +42,15 @@ public class PlayUnplayableCardAction extends AbstractGameAction {
 	private void dequeueCard() {
 		this.c.calculateCardDamage(this.m);
 		GameActionManager gam = AbstractDungeon.actionManager;
-		this.p.cardsPlayedThisTurn++;
 		this.c.isInAutoplay = true;
 		this.c.energyOnUse = c.cost == -1 ? EnergyPanel.getCurrentEnergy() : this.c.costForTurn;
 		if (!this.c.dontTriggerOnUseCard) {
-			p.powers.forEach(a -> { a.onPlayCard(c, this.m); });
-			p.relics.forEach(a -> { a.onPlayCard(c, this.m); });
-			p.blights.forEach(a -> { a.onPlayCard(c, this.m); });
-			p.hand.group.forEach(a -> { a.onPlayCard(c, this.m); });
-			p.discardPile.group.forEach(a -> { a.onPlayCard(c, this.m); });
-			p.drawPile.group.forEach(a -> { a.onPlayCard(c, this.m); });
+			p.powers.forEach(a -> a.onPlayCard(c, this.m));
+			p.relics.forEach(a -> a.onPlayCard(c, this.m));
+			p.blights.forEach(a -> a.onPlayCard(c, this.m));
+			p.hand.group.forEach(a -> a.onPlayCard(c, this.m));
+			p.discardPile.group.forEach(a -> a.onPlayCard(c, this.m));
+			p.drawPile.group.forEach(a -> a.onPlayCard(c, this.m));
 			gam.cardsPlayedThisTurn.add(c);
 		}
 		if (gam.cardsPlayedThisTurn.size() == 25) {

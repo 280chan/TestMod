@@ -60,7 +60,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 3/13/2022
+ * @version 3/16/2022
  * @since 6/17/2018
  */
 
@@ -925,7 +925,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 
 	private static void exampleNyarlathotepAddRelic() {
-		String instruction = "Copy this method to your mod, call it in receivePostInitialize() will register your relics that make effect when player plays a power card.";
+		String instruction = "Copy this method to your mod, call it in receivePostInitialize() will register your "
+				+ "relics that make effect when player plays a power card.";
 		if (Loader.isModLoaded("testmod")) {
 			ArrayList<String> list = new ArrayList<String>();
 			list.add("relic id0");
