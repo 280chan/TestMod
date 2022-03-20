@@ -60,7 +60,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 3/19/2022
+ * @version 3/20/2022
  * @since 6/17/2018
  */
 
@@ -303,7 +303,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	private void loadStrings(Class<?> c) {
 		String s = c.getSimpleName().toLowerCase();
-		BaseMod.loadCustomStrings(c, readString(s.substring(0, s.length() - 7) + "s"));
+		BaseMod.loadCustomStrings(c, readString(s.substring(0, s.length() - 6)));
 	}
 	
 	@Override

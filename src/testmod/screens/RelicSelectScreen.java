@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.GameCursor;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.core.Settings.GameLanguage;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.MathHelper;
@@ -198,7 +199,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	public RelicSelectScreen(Collection<? extends AbstractRelic> c, boolean canSkip, String bDesc, String title,
 			String desc, boolean autoSort, int amountToSelect, boolean anyNum) {
 		this.scrollBar = new ScrollBar(this);
-		this.button = new ConfirmButton("跳过");
+		this.button = new ConfirmButton(Settings.language == GameLanguage.ZHT ? "跳过" : "Skip");
 		this.button.isDisabled = !canSkip;
 		this.setDescription(bDesc, title, desc);
 		if (c != null)
@@ -308,6 +309,13 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 		return START_Y + rows * SPACE;
 	}
 	
+	private void clear() {
+		this.sortedRelics.forEach(l -> l.clear());
+		this.sortedRelics.clear();
+		this.category.clear();
+		screen = null;
+	}
+	
 	private void update() {
 		if (this.hoveredRelic != null) {
 			CardCrawlGame.cursor.changeType(GameCursor.CursorType.INSPECT);
@@ -321,11 +329,11 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 					this.selectedRelics.add(this.selectedRelic);
 					if (this.amountToSelect == this.selectedRelics.size()) {
 						this.afterSelectedAll();
-						screen = null;
+						this.clear();
 					} else if (this.anyNum && this.button.isDisabled)
 						this.button.isDisabled = false;
 				} else if (!rejectSelection) {
-					screen = null;
+					this.clear();
 				} else {
 					rejectSelection = false;
 				}
@@ -337,10 +345,10 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 			this.button.update();
 			if ((this.button.hb.clicked) || (InputHelper.pressedEscape)) {
 				CardCrawlGame.mainMenuScreen.screen = MainMenuScreen.CurScreen.NONE;
-				screen = null;
 				InputHelper.pressedEscape = false;
 				this.button.hide();
 				this.afterCanceled();
+				this.clear();
 				CardCrawlGame.mainMenuScreen.panelScreen.refresh();
 			}
 		}
@@ -460,8 +468,8 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 			this.renderLists(sb);
 		else
 			this.renderList(sb, this.infoTitle, this.infoDesc, this.relics);
-		this.button.render(sb);
 		this.scrollBar.render(sb);
+		this.button.render(sb);
 	}
 	
 	private void setPosition(AbstractRelic r, ArrayList<AbstractRelic> list) {
