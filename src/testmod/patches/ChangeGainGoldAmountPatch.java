@@ -15,6 +15,8 @@ import com.megacrit.cardcrawl.ui.panels.TopPanel;
 import testmod.utils.MiscMethods;
 
 public class ChangeGainGoldAmountPatch implements MiscMethods {
+	private static final int MAX = 2000000000;
+	
 	@SpirePatch(clz = AbstractPlayer.class, method = "gainGold")
 	public static class AbstractPlayerPatch {
 		@SpireInsertPatch(rloc = 8)
@@ -29,7 +31,7 @@ public class ChangeGainGoldAmountPatch implements MiscMethods {
 			input = INSTANCE.chain(list.stream()).apply(input);
 			if (input < 0)
 				input = 0;
-			amount[0] = (int) (input + 0.01);
+			amount[0] = input + player.gold > MAX ? (player.gold <= 0 ? MAX : MAX - player.gold) : (int) (input + 0.01);
 		}
 	}
 	
