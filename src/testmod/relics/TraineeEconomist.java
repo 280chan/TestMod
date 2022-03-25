@@ -1,18 +1,25 @@
 package testmod.relics;
 
+import java.util.stream.Stream;
+
+import com.badlogic.gdx.math.MathUtils;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.ShopRoom;
+import com.megacrit.cardcrawl.shop.ShopScreen;
+import com.megacrit.cardcrawl.shop.StorePotion;
+import com.megacrit.cardcrawl.shop.StoreRelic;
 
 public class TraineeEconomist extends AbstractTestRelic {
 	private static final int DELTA_BONUS = 5;
 	private static final int DELTA_PRICE = 5;
 	private static final double PERCENTAGE = 100.0;
 	private boolean used = false;
-	//private boolean useCourier = false;
 	
 	public TraineeEconomist() {
 		super(RelicTier.RARE, LandingSound.SOLID);
@@ -37,7 +44,16 @@ public class TraineeEconomist extends AbstractTestRelic {
 	}
 	
 	private float priceRate() {
-		return (float) Math.pow((100 - DELTA_PRICE) / PERCENTAGE, this.counter);
+		return priceRate(this.counter);
+	}
+	
+	private static float priceRate(int counter) {
+		return (float) Math.pow((100 - DELTA_PRICE) / PERCENTAGE, counter);
+	}
+	
+	private static float totalRate() {
+		int c = INSTANCE.relicStream(TraineeEconomist.class).mapToInt(a -> a.counter).sum();
+		return c == 0 ? 1f : priceRate(c);
 	}
 	
 	public void onEquip() {
@@ -45,8 +61,8 @@ public class TraineeEconomist extends AbstractTestRelic {
     }
 	
 	public void onMonsterDeath(AbstractMonster m) {
-		this.counter += m.type == EnemyType.BOSS ? 3 : (m.type == EnemyType.ELITE ? 2 : 1);
-		this.updateDescription(AbstractDungeon.player.chosenClass);
+		this.counter += m.type.ordinal() + 1;
+		this.updateDescription(p().chosenClass);
     }
 	
 	public double gainGold(double amount) {
@@ -56,14 +72,42 @@ public class TraineeEconomist extends AbstractTestRelic {
 	
 	private void addDiscount() {
 		AbstractDungeon.shopScreen.applyDiscount(this.priceRate(), true);
-		if (AbstractDungeon.player.hasRelic("The Courier")) {
-			this.used = false;
+	}
+	
+	public void onPreviewObtainCard(AbstractCard c) {
+		if (Stream.of(new Exception().getStackTrace()).peek(e -> this.print(e.getClassName())).noneMatch(
+				e -> ShopScreen.class.getName().equals(e.getClassName()) && "initCards".equals(e.getMethodName())))
+			c.price = MathUtils.round(c.price * totalRate());
+	}
+	
+	@SpirePatch(clz = ShopScreen.class, method = "getNewPrice", paramtypez = { StorePotion.class })
+	public static class ShopScreenPotionPatch {
+		@SpirePostfixPatch
+		public static void Postfix(ShopScreen __instance, StorePotion p) {
+			p.price = MathUtils.round(p.price * totalRate());
 		}
 	}
-
-	public void onSpendGold() {
-		if ((AbstractDungeon.player != null) && (AbstractDungeon.player.hasRelic("The Courier"))) {
-			//this.useCourier = false;
+	
+	@SpirePatch(clz = ShopScreen.class, method = "getNewPrice", paramtypez = { StoreRelic.class })
+	public static class ShopScreenRelicPatch {
+		@SpirePostfixPatch
+		public static void Postfix(ShopScreen __instance, StoreRelic r) {
+			r.price = MathUtils.round(r.price * totalRate());
+		}
+	}
+	
+	@SpirePatch(cls = "downfall.rooms.HeartShopRoom", method = "showHeartMerchant", optional = true)
+	public static class HeartShopRoomPatch {
+		@SpirePostfixPatch
+		public static void Postfix(Object __instance) {
+			if (INSTANCE.relicStream(TraineeEconomist.class).count() > 0) {
+				AbstractDungeon.shopScreen.applyDiscount(totalRate(), true);
+				INSTANCE.relicStream(TraineeEconomist.class).forEach(r -> {
+					r.flash();
+					r.beginLongPulse();
+					r.used = true;
+				});
+			}
 		}
 	}
 
@@ -71,22 +115,31 @@ public class TraineeEconomist extends AbstractTestRelic {
 		super.update();
 		if (!this.isObtained)
 			return;
-		if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom() instanceof ShopRoom && !this.used) {
-			this.flash();
-			this.beginLongPulse();
-			this.addDiscount();
-			this.used = true;
+		if (AbstractDungeon.currMapNode != null && !this.used) {
+			if (AbstractDungeon.getCurrRoom() instanceof ShopRoom) {
+				if (!checkDFshop(AbstractDungeon.getCurrRoom())) {
+					this.beginLongPulse();
+					this.addDiscount();
+					this.used = true;
+				}
+			}
 		}
 	}
 	
-	public void onEnterRoom(AbstractRoom room) {
+	public void onEnterRoom(AbstractRoom r) {
 		this.used = false;
-		if (room instanceof ShopRoom) {
-			this.flash();
+		if (r instanceof ShopRoom) {
+			if (!checkDFshop(r)) {
+				this.flash();
+			}
 			this.beginLongPulse();
 		} else {
 			this.stopPulse();
 		}
+	}
+	
+	private static boolean checkDFshop(AbstractRoom r) {
+		return "downfall.rooms.HeartShopRoom".equals(r.getClass().getName());
 	}
 
 	public boolean canSpawn() {
