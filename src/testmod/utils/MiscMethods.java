@@ -790,6 +790,10 @@ public interface MiscMethods {
     	return Stream.of(list).reduce(a -> false, Predicate::or);
     }
 	
+	public default <T> Supplier<T> get(Supplier<T> f) {
+		return f;
+	}
+	
 	public default <T> UnaryOperator<T> get(UnaryOperator<T> f) {
 		return f;
 	}
