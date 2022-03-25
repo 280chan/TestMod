@@ -25,5 +25,23 @@ public class ArcanaOfDestiny extends AbstractTestRelic {
 		if (this.isActive && this.inCombat())
 			tryApplyDebuff();
 	}
+	
+	private void updateHp(int input) {
+		if (hasEnemies() && input > 0) {
+			this.addTmpActionToTop(() -> {
+				tryApplyDebuff();
+				AbstractDungeon.getMonsters().monsters.forEach(m -> m.applyPowers());
+			});
+		}
+	}
+	
+	public void wasHPLost(int damage) {
+		this.updateHp(damage);
+	}
+	
+	public int onPlayerHeal(int amount) {
+		this.updateHp(amount);
+		return amount;
+	}
 
 }

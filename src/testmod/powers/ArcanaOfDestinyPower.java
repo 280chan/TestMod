@@ -6,6 +6,7 @@ import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import testmod.relics.ArcanaOfDestiny;
 
@@ -61,7 +62,18 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 	}
 	
 	public int onAttacked(DamageInfo info, int damage) {
-		return repeat(this::attack).apply(damage);
+		if (damage > 0) {
+			this.addTmpActionToTop(() -> ((AbstractMonster) this.owner).applyPowers());
+			return repeat(this::attack).apply(damage);
+		}
+		return 0;
+	}
+	
+	public int onHeal(int amount) {
+		if (amount > 0) {
+			this.addTmpActionToTop(() -> ((AbstractMonster) this.owner).applyPowers());
+		}
+		return amount;
 	}
 
 }
