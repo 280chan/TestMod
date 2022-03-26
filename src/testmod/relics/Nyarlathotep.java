@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import testmod.mymod.TestMod;
@@ -23,7 +24,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",
 			"DemoExt:GalacticMedalOfValor", "SynthV:MejaisSoulstealer", "youkari:Boundary_crack",
 			"BirthdayGift-Icosahedron", "RU OrangePellets", "RU Bronze Scales", "RU Bird Faced Urn",
-			"Kaltsit_LearningSimulationPower" };
+			"Kaltsit_LearningSimulationPower", "Steelbody" };
 	private static final ArrayList<String> CARD_LIST = new ArrayList<String>();
 	private static final ArrayList<String> POWER_LIST = new ArrayList<String>();
 	private static final ArrayList<String> RELIC_LIST = new ArrayList<String>();
@@ -95,16 +96,28 @@ public class Nyarlathotep extends AbstractTestRelic {
 		p().relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onManualDiscard());
 	}
 	
+	private String checkID(Object i) {
+		if (i instanceof AbstractPower)
+			return ((AbstractPower)i).ID;
+		if (i instanceof AbstractRelic)
+			return ((AbstractRelic)i).relicId;
+		return ((AbstractCard)i).cardID;
+	}
+	
+	private <T> Stream<T> get(ArrayList<T> list, String id) {
+		return list.stream().filter(i -> id.equals(checkID(i)));
+	}
+	
 	private void triggerUsePowerCard(AbstractCard c, UseCardAction a) {
 		AbstractCard tmp = c.makeSameInstanceOf();
 		tmp.type = CardType.POWER;
 		Stream.concat(Stream.of(POWER_IDs), POWER_LIST.stream()).distinct().filter(p()::hasPower)
-				.forEach(id -> p().getPower(id).onUseCard(tmp, a));
+				.flatMap(id -> get(p().powers, id)).forEach(p -> p.onUseCard(tmp, a));
 		Stream.concat(Stream.of(RELIC_IDs), RELIC_LIST.stream()).distinct().filter(p()::hasRelic)
-				.forEach(id -> p().getRelic(id).onUseCard(tmp, a));
+				.flatMap(id -> get(p().relics, id)).forEach(r -> r.onUseCard(tmp, a));
 		Stream.of(p().hand, p().discardPile, p().drawPile).flatMap(g -> g.group.stream()).filter(this::valid)
 				.forEach(b -> b.triggerOnCardPlayed(c));
-		p().hand.group.stream().forEach(b -> b.triggerOnOtherCardPlayed(c));
+		p().hand.group.forEach(b -> b.triggerOnOtherCardPlayed(c));
 	}
 	
 	public void onExhaust(final AbstractCard c) {
