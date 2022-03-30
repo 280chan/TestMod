@@ -1,5 +1,6 @@
 package testmod.relics;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
@@ -64,7 +65,9 @@ public class Dye extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	private void changeCards(CardGroup g, AbstractCard c) {
+		ArrayList<AbstractCard> old = g.group;
 		g.group = g.group.stream().map(a -> c.makeStatEquivalentCopy()).collect(this.toArrayList());
+		old.clear();
 	}
 
 }
