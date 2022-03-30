@@ -89,9 +89,9 @@ public class Encyclopedia extends AbstractTestRelic {
 	
 	public void update() {
 		super.update();
-		if (!this.isActive)
+		if (!this.isActive || !start || !this.inCombat())
 			return;
-		if (start && AbstractDungeon.getMonsters() != null && AbstractDungeon.getMonsters().monsters != null) {
+		if (AbstractDungeon.getMonsters() != null && AbstractDungeon.getMonsters().monsters != null) {
 			AbstractDungeon.getMonsters().monsters.stream().filter(not(CURR::containsKey)).forEach(this::put);
 		}
 	}
