@@ -624,5 +624,11 @@
 		"NAME": "Spire Nexus",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["When you encounter random #yEvent, choose from #b3 #yEvents instead. Outside combat, right click on this relic to toggle it on and off."]
+	},
+	
+	"testmod-FissionDevice":{
+		"NAME": "Fission Device",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Once per turn, right click on this relic to choose a card from your hand which has #yCost greater than #b1, remove it from current combat, but add its #yCost copies with all values #b1 / #yCost of original to your hand, remainder become an extra #b0 #yCost copy."]
 	}
 }
