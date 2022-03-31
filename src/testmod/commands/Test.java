@@ -13,8 +13,8 @@ public class Test extends TestCommand {
 			return;
 		}
 		
-		p().masterDeck.group.clear();
-		TestMod.CARDS.stream().map(c -> c.makeCopy()).forEach(p().masterDeck.group::add);
+		/*p().masterDeck.group.clear();
+		TestMod.CARDS.stream().map(c -> c.makeCopy()).forEach(p().masterDeck.group::add);*/
 		
 	}
 
