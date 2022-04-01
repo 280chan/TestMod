@@ -199,7 +199,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	public RelicSelectScreen(Collection<? extends AbstractRelic> c, boolean canSkip, String bDesc, String title,
 			String desc, boolean autoSort, int amountToSelect, boolean anyNum) {
 		this.scrollBar = new ScrollBar(this);
-		this.button = new ConfirmButton(Settings.language == GameLanguage.ZHT ? "跳过" : "Skip");
+		this.button = new ConfirmButton(Settings.language == GameLanguage.ZHS ? "跳过" : "Skip");
 		this.button.isDisabled = !canSkip;
 		this.setDescription(bDesc, title, desc);
 		if (c != null)
