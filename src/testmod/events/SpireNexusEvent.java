@@ -15,6 +15,7 @@ import com.megacrit.cardcrawl.events.GenericEventDialog;
 import com.megacrit.cardcrawl.helpers.EventHelper;
 import com.megacrit.cardcrawl.localization.EventStrings;
 
+import basemod.eventUtil.EventUtils;
 import testmod.relics.SpireNexus;
 
 public class SpireNexusEvent extends AbstractTestEvent {
@@ -103,8 +104,28 @@ public class SpireNexusEvent extends AbstractTestEvent {
 		EVENTS.put("Colosseum", () -> AbstractDungeon.currMapNode != null && gold(75));
 	}
 	
+	private static boolean canConditionModEventSpawn(String id) {
+		boolean r = true;
+		if (EventUtils.normalEvents.containsKey(id)) {
+			r &= EventUtils.normalEvents.get(id).isValid();
+			if (EventUtils.normalEventBonusConditions.containsKey(id)) {
+				r &= EventUtils.normalEventBonusConditions.get(id).test();
+			}
+		}
+		if (EventUtils.shrineEvents.containsKey(id)) {
+			r &= EventUtils.shrineEvents.get(id).isValid();
+			if (EventUtils.specialEventBonusConditions.containsKey(id)) {
+				r &= EventUtils.specialEventBonusConditions.get(id).test();
+			}
+		}
+		if (EventUtils.oneTimeEvents.containsKey(id)) {
+			r &= EventUtils.oneTimeEvents.get(id).isValid();
+		}
+		return r;
+	}
+	
 	private static boolean canEventSpawn(String id) {
-		return !EVENTS.containsKey(id) || EVENTS.get(id).get();
+		return canConditionModEventSpawn(id) && (!EVENTS.containsKey(id) || EVENTS.get(id).get());
 	}
 	
 }
