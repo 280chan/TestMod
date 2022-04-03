@@ -44,6 +44,7 @@ public class Encyclopedia extends AbstractTestRelic {
 	}
 	
 	private static void save() {
+		victory = false;
 		int size;
 		TestMod.save(SAVE_NAME, size = SEEN.size());
 		ArrayList<String> id = SEEN.keySet().stream().collect(INSTANCE.toArrayList());
@@ -61,6 +62,9 @@ public class Encyclopedia extends AbstractTestRelic {
 		TestMod.setActivity(this);
 		if (this.isActive) {
 			clear();
+			if (this.inCombat() && !start) {
+				this.atPreBattle();
+			}
 		}
 	}
 	
