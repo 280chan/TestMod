@@ -1,8 +1,11 @@
 package testmod.screens;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
@@ -22,6 +25,10 @@ public class MysteryExchangeTableSelectScreen extends RelicSelectScreen implemen
 		this.gain = gain;
 		this.e = e;
 	}
+	
+	public MysteryExchangeTableSelectScreen(MysteryExchangeTable e) {
+		this(randomList(), true, e);
+	}
 
 	@Override
 	protected void addRelics() {
@@ -32,13 +39,21 @@ public class MysteryExchangeTableSelectScreen extends RelicSelectScreen implemen
 				.peek(p -> MAP.put(p.getKey(), p.getValue())).map(p -> p.getKey()).collect(INSTANCE.toArrayList());
 	}
 	
+	private static ArrayList<AbstractRelic> randomList() {
+		ArrayList<AbstractRelic> tmp = RelicLibrary.specialList.stream().collect(INSTANCE.toArrayList());
+		Collections.shuffle(tmp, new Random(AbstractDungeon.miscRng.randomLong()));
+		ArrayList<AbstractRelic> ret = tmp.stream().limit(Math.max(tmp.size() / 3, 1)).collect(INSTANCE.toArrayList());
+		tmp.clear();
+		return ret;
+	}
+	
 	@Override
 	protected void afterSelected() {
 		if (!gain) {
 			p().relics.remove(MAP.get(this.selectedRelic));
 			p().reorganizeRelics();
 			e.setLose(MAP.get(this.selectedRelic));
-			new MysteryExchangeTableSelectScreen(RelicLibrary.specialList, this.rejectSelection = true, e).open();
+			new MysteryExchangeTableSelectScreen(e).open();
 		} else {
 			TestMod.obtain(p(), this.selectedRelic, true);
 			e.setGainAndLog(this.selectedRelic);

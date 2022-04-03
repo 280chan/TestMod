@@ -3,7 +3,6 @@ package testmod.events;
 import java.util.ArrayList;
 
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 
@@ -11,7 +10,6 @@ import testmod.mymod.TestMod;
 import testmod.screens.MysteryExchangeTableSelectScreen;
 
 public class MysteryExchangeTable extends AbstractTestEvent {
-
 	private AbstractRelic lose, gain;
 	
 	@Override
@@ -40,7 +38,7 @@ public class MysteryExchangeTable extends AbstractTestEvent {
 		case 1:
 			p().relics.remove(lose);
 			p().reorganizeRelics();
-			new MysteryExchangeTableSelectScreen(RelicLibrary.specialList, true, this).open();
+			new MysteryExchangeTableSelectScreen(this).open();
 			break;
 		default:
 			logMetric("Ignored");
