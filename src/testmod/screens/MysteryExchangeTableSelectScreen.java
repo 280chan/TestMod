@@ -53,6 +53,7 @@ public class MysteryExchangeTableSelectScreen extends RelicSelectScreen implemen
 			p().relics.remove(MAP.get(this.selectedRelic));
 			p().reorganizeRelics();
 			e.setLose(MAP.get(this.selectedRelic));
+			this.rejectSelection = true;
 			new MysteryExchangeTableSelectScreen(e).open();
 		} else {
 			TestMod.obtain(p(), this.selectedRelic, true);
