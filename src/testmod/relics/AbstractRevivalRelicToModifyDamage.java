@@ -19,7 +19,7 @@ public abstract class AbstractRevivalRelicToModifyDamage extends AbstractTestRel
 	
 	public void update() {
 		super.update();
-		if (!this.isActive)
+		if (!this.isObtained || !this.isActive || p() == null)
 			return;
 		if (this.previousFuckHp > 0 && p().currentHealth < 1) {
 			this.deathTriggered = true;
