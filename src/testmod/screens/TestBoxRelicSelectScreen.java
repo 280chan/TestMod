@@ -1,5 +1,6 @@
 package testmod.screens;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -7,6 +8,7 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import christmasMod.mymod.ChristmasMod;
 import halloweenMod.relics.EventCelebration_Halloween;
@@ -25,7 +27,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		this.box.relicSelected = false;
 	}
 
-	private boolean checkIllegal(AbstractRelic r) {
+	private boolean checkIllegal(AbstractTestRelic r) {
 		return checkIllegal(r.relicId);
 	}
 	
@@ -62,7 +64,9 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 			if (o != null)
 				return (AbstractTestRelic) o;
 		}
-		return null;
+		ArrayList<AbstractTestRelic> l = TestMod.RELICS.stream().map(r -> RelicLibrary.getRelic(r.relicId))
+				.filter(r -> !r.isSeen).map(r -> (AbstractTestRelic)r).collect(toArrayList());
+		return l.size() == 0 ? null : TestMod.randomItem(l, this.box.rng);
 	}
 	
 	private AbstractTestRelic randomRelic(AbstractTestRelic priority) {
@@ -90,16 +94,16 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 
 	private void completeSelection() {
 		this.box.relicSelected = true;
-		AbstractDungeon.player.relics.remove(this.box);
-		AbstractDungeon.player.reorganizeRelics();
+		p().relics.remove(this.box);
+		p().reorganizeRelics();
 	}
 	
 	@Override
 	protected void afterSelected() {
-		AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2,
-				this.selectedRelic);
-		this.selectedRelic.onEquip();
-		TestMod.removeFromPool(this.selectedRelic);
+		AbstractRelic tmp = this.selectedRelic.makeCopy();
+		AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, tmp);
+		tmp.onEquip();
+		TestMod.removeFromPool(tmp);
 		this.completeSelection();
 	}
 

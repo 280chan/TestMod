@@ -5,7 +5,6 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.RandomXS128;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.*;
@@ -840,8 +839,7 @@ public interface MiscMethods {
 	}
 	
 	public default ApplyPowerAction apply(AbstractCreature source, AbstractPower p) {
-		return p.amount == 0 || (p.amount == -1 && !p.canGoNegative) ? new ApplyPowerAction(p.owner, source, p)
-				: new ApplyPowerAction(p.owner, source, p, p.amount);
+		return new ApplyPowerAction(p.owner, source, p);
 	}
 	
 	public default void regainPowerOnRemove(AbstractTestPower p, UnaryOperator<AbstractTestPower> f, boolean noStack,
