@@ -70,6 +70,14 @@
 			"% 。"
 		]
 	},
+	"testmod-DemonSummonPower":{
+		"NAME":"恶魔召唤",
+		"DESCRIPTIONS":[
+			"在你的回合开始时，获得 #b",
+			" 层 #y[",
+			"] "
+		]
+	},
 	"testmod-DischargedPower":{
 		"NAME":"能量减少",
 		"DESCRIPTIONS":[

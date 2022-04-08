@@ -70,6 +70,14 @@
 			"% more damage."
 		]
 	},
+	"testmod-DemonSummonPower":{
+		"NAME":"Demon Summon",
+		"DESCRIPTIONS":[
+			"At the start of your turn, gain #b",
+			" #y[",
+			"] "
+		]
+	},
 	"testmod-DischargedPower": {
 		"NAME": "Discharged",
 		"DESCRIPTIONS": [
