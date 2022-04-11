@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import testmod.mymod.TestMod;
+import testmod.patches.SwFPatch;
 
 public class Nyarlathotep extends AbstractTestRelic {
 	public static final String ID = "Nyarlathotep";
@@ -66,6 +67,18 @@ public class Nyarlathotep extends AbstractTestRelic {
 		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
+	public void onEquip() {
+		TestMod.setActivity(this);
+		if (this.isActive && this.inCombat()) {
+			SwFPatch.BingoExhaustPatch.exhaust = 0;
+		}
+	}
+	
+	public void atPreBattle() {
+		if (this.isActive)
+			SwFPatch.BingoExhaustPatch.exhaust = 0;
+	}
+	
 	public static boolean hasThis() {
 		return INSTANCE.p().relics.stream().anyMatch(r -> r instanceof Nyarlathotep);
 	}
@@ -85,6 +98,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 		p().relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onExhaust(c));
 		p().powers.forEach(p -> p.onExhaust(c));
 		c.triggerOnExhaust();
+		SwFPatch.BingoExhaustPatch.exhaust(true);
 	}
 	
 	private void triggerDiscardFor(AbstractCard c) {
