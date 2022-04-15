@@ -179,6 +179,13 @@
 			"每当你打出 #y能力牌 ，使所有敌人的 #y中毒 、 #y缠绕 生效 #b", " 次。"
 		]
 	},
+	"testmod-PortableTranscriptPower":{
+		"NAME":"便携抄本",
+		"DESCRIPTIONS":[
+			"每回合开始，使弃牌堆中的所有 #y能力 牌生效 #b",
+			" 次，并赋予那些牌 虚无 。"
+		]
+	},
 	"testmod-PulseDistributorPower":{
 		"NAME":"脉冲分配",
 		"DESCRIPTIONS":[

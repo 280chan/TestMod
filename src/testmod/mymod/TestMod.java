@@ -63,7 +63,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 4/11/2022
+ * @version 4/14/2022
  * @since 6/17/2018
  */
 
@@ -331,7 +331,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new RabbitOfFibonacci(), new TradeIn(), new Reproduce(), new PainDetonator(), new Reverberation(),
 				new CardIndex(), new PowerStrike(), new TaurusBlackCat(), new PerfectCombo(), new Lexicography(),
 				new Librarian(), new VirtualReality(), new HandmadeProducts(), new DeathImprint(),
-				new TreasureHunter(), new MoneyShot(), new Enchant(), new FormForm())
+				new TreasureHunter(), new MoneyShot(), new Enchant(), new FormForm(), new PortableTranscript())
 				.collect(toArrayList());
 		new AddAnonymousCards().add();
 		

@@ -179,6 +179,13 @@
 			"Whenever you play a #yPower card, make all enemies' #yPoison and #yConstricted affect #b", " times."
 		]
 	},
+	"testmod-PortableTranscriptPower":{
+		"NAME":"Portable Transcript",
+		"DESCRIPTIONS":[
+			"At start of each turn, function all #yPower cards in your discard pile #b",
+			" times and make them Ethereal. "
+		]
+	},
 	"testmod-PulseDistributorPower": {
 		"NAME": "Pulse Distributor",
 		"DESCRIPTIONS": [

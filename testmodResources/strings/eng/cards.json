@@ -233,6 +233,10 @@
 		"DESCRIPTION": "Deal damage of square of turn number. Increase this cards cost by !M! this combat. Whenever you draw this card, reduce its cost by 1 this combat.",
 		"UPGRADE_DESCRIPTION": "Deal damage of square of turn number( !D! ). Increase this cards cost by !M! this combat. Whenever you draw this card, reduce its cost by 1 this combat."
 	},
+	"testmod-PortableTranscript": {
+		"NAME": "Portable Transcript",
+		"DESCRIPTION": "Innate. At start of each turn, function all Power cards in your discard pile !M! times and make them Ethereal."
+	},
 	"testmod-PowerStrike": {
 		"NAME": "Power Strike",
 		"DESCRIPTION": "Ethereal. Reduce all enemies' HP to its logarithm, the base number is 1.5. Apply the number of enemies Intangible to all enemies. Can be Upgraded any number of time. Exhaust.",
