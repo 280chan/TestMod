@@ -101,26 +101,26 @@ public interface MiscMethods {
 		return Calendar.getInstance().get(Calendar.MONTH) + 1;
 	}
 	
-	public default int getDate() {
+	default int getDate() {
 		return Calendar.getInstance().get(Calendar.DATE);
 	}
 	
-	public default AbstractPlayer p() {
+	default AbstractPlayer p() {
 		return AbstractDungeon.player;
 	}
 	
-	public default <T> ArrayList<T> getIdenticalList(T value, int size) {
+	default <T> ArrayList<T> getIdenticalList(T value, int size) {
 		ArrayList<T> list = new ArrayList<T>();
 		while (list.size() < size)
 			list.add(value);
 		return list;
 	}
 	
-	public default ArrayList<Integer> getNaturalNumberList(int n) {
+	default ArrayList<Integer> getNaturalNumberList(int n) {
 		return getNumberList(0, n);
 	}
 	
-	public default ArrayList<Integer> getNumberList(int start, int end) {
+	default ArrayList<Integer> getNumberList(int start, int end) {
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		int s = end > start ? 1 : -1;
 		for (int i = start; (end - i) * s > 0; i += s)
@@ -128,57 +128,57 @@ public interface MiscMethods {
 		return list;
 	}
 	
-	public default void togglePulse(AbstractRelic r, boolean pulse) {
+	default void togglePulse(AbstractRelic r, boolean pulse) {
 		Lambda f = pulse ? r::beginLongPulse : r::stopPulse;
 		f.run();
 	}
 	
-	public default void markAsSeen(AbstractRelic r) {
+	default void markAsSeen(AbstractRelic r) {
 		if (!UnlockTracker.isRelicSeen(r.relicId)) {
 			UnlockTracker.markRelicAsSeen(r.relicId);
 			TestMod.info("成功解锁了未见过的 " + r.name);
 		}
 	}
 	
-	public default void markAsSeen(AbstractCard c) {
+	default void markAsSeen(AbstractCard c) {
 		if (!UnlockTracker.isCardSeen(c.cardID)) {
 			UnlockTracker.markCardAsSeen(c.cardID);
 			TestMod.info("成功解锁了未见过的 " + c.name);
 		}
 	}
 	
-	public default CardGroup getSource(AbstractCard c) {
+	default CardGroup getSource(AbstractCard c) {
 		return Stream.of(p().discardPile, p().hand, p().drawPile).filter(g -> g.contains(c)).findAny().orElse(null);
 	}
 	
-	public default boolean handFull() {
+	default boolean handFull() {
 		return p().hand.size() >= BaseMod.MAX_HAND_SIZE;
 	}
 	
-	public default boolean isLocalTesting() {
+	default boolean isLocalTesting() {
 		return TestMod.isLocalTest();
 	}
 	
-	public default void setXCostEnergy(AbstractCard c) {
+	default void setXCostEnergy(AbstractCard c) {
 		if (c.cost == -1)
 			c.energyOnUse = EnergyPanel.totalCount;
 	}
 	
-	public default boolean hasPrudence() {
+	default boolean hasPrudence() {
 		return p().hasRelic(TestMod.makeID("Prudence"));
 	}
 	
-	public default boolean hasStringDisintegrator() {
+	default boolean hasStringDisintegrator() {
 		return p().hasRelic(TestMod.makeID("StringDisintegrator"));
 	}
 	
-	public default void addHoarderCard(CardGroup g, AbstractCard c) {
+	default void addHoarderCard(CardGroup g, AbstractCard c) {
 		if (ModHelper.isModEnabled("Hoarder")) {
 			addExtraCard(g, c, 2);
 		}
 	}
 	
-	public default void addExtraCard(CardGroup g, AbstractCard c, int num) {
+	default void addExtraCard(CardGroup g, AbstractCard c, int num) {
 		this.getIdenticalList(0, num).forEach(i -> g.addToTop(c.makeStatEquivalentCopy()));
 	}
 	
@@ -195,7 +195,7 @@ public interface MiscMethods {
 		}
 	}
 	
-	public default ArrayList<AbstractCard> getAllInBattleInstance(String cardID) {
+	default ArrayList<AbstractCard> getAllInBattleInstance(String cardID) {
 		IdChecker checker = new IdChecker(cardID);
 		AbstractPlayer p = p();
 		return Stream
@@ -204,15 +204,15 @@ public interface MiscMethods {
 				.filter(checker::check).collect(this.toArrayList());
 	}
 	
-	public default void turnSkipperStart() {
+	default void turnSkipperStart() {
     	TurnSkipper.start();
     } 
 	
-	public default void turnSkipperStartByCard(AbstractCard c) {
+	default void turnSkipperStartByCard(AbstractCard c) {
 		TurnSkipper.startByCard(c);
     }
 	
-	public default void turnSkipperUpdate() {
+	default void turnSkipperUpdate() {
 		TurnSkipper.updateThis();
 	}
 	
@@ -409,11 +409,11 @@ public interface MiscMethods {
 		}
 	}
 	
-	public default Random copyRNG(Random source) {
+	default Random copyRNG(Random source) {
 		return RNGTools.copyRNG(source);
 	}
 	
-	public default void playAgain(AbstractCard card, AbstractMonster m) {
+	default void playAgain(AbstractCard card, AbstractMonster m) {
 		AbstractCard tmp = card.makeSameInstanceOf();
 		p().limbo.addToBottom(tmp);
 		tmp.current_x = card.current_x;
@@ -426,7 +426,7 @@ public interface MiscMethods {
 		AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
 	}
 	
-	public default void autoplayInOrder(AbstractCard self, ArrayList<AbstractCard> list, AbstractMonster m) {
+	default void autoplayInOrder(AbstractCard self, ArrayList<AbstractCard> list, AbstractMonster m) {
 		int i = 0;
 		ArrayList<CardQueueItem> queue = AbstractDungeon.actionManager.cardQueue;
 		int startIndex = AutoplayProgressManager.indexOfLastItemIn(queue) + 1;
@@ -470,7 +470,7 @@ public interface MiscMethods {
 		}
 	}
 	
-	public default void rollIntentAction(AbstractMonster m) {
+	default void rollIntentAction(AbstractMonster m) {
 		ArrayList<AbstractGameAction> actions = new ArrayList<AbstractGameAction>();
 		actions.addAll(AbstractDungeon.actionManager.actions);
 		m.takeTurn();
@@ -483,12 +483,17 @@ public interface MiscMethods {
 	public static class ColorRegister {
 		Color c;
 		AbstractRelic r;
+		Predicate<AbstractCard> p;
 		public ColorRegister(Color c) {
 			this.c = c;
 		}
-		public ColorRegister(Color c, AbstractRelic r) {
-			this(c);
+		public ColorRegister addRelic(AbstractRelic r) {
 			this.r = r;
+			return this;
+		}
+		public ColorRegister addPredicate(Predicate<AbstractCard> p) {
+			this.p = p;
+			return this;
 		}
 		public void addToGlowChangerList(AbstractCard c) {
 			CardGlowChanger.addCardToList(c, this.c);
@@ -498,6 +503,17 @@ public interface MiscMethods {
 		public void removeFromGlowList(AbstractCard c) {
 			CardGlowChanger.removeFromList(c, this.c);
 		}
+		public void updateCard(AbstractCard c) {
+			Consumer<AbstractCard> a = p != null && p.test(c) ? this::addToGlowChangerList : this::removeFromGlowList;
+			a.accept(c);
+		}
+		public void updateHand() {
+			INSTANCE.p().hand.group.forEach(this::updateCard);
+		}
+	}
+	
+	default ColorRegister colorRegister(Color c) {
+		return new ColorRegister(c);
 	}
 	
 	static class CardGlowChanger {
@@ -592,40 +608,40 @@ public interface MiscMethods {
 		}
 	}
 	
-	public default boolean inCombat() {
+	default boolean inCombat() {
 		return AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT;
 	}
 	
-	public default Color initGlowColor() {
+	default Color initGlowColor() {
 		return CardGlowChanger.unusedGlowColor();
 	}
 	
-	public default void updateGlow() {
+	default void updateGlow() {
 		CardGlowChanger.updateGlow();
 	}
 	
-	public default void addToGlowChangerList(AbstractCard c, Color color) {
+	default void addToGlowChangerList(AbstractCard c, Color color) {
 		CardGlowChanger.addCardToList(c, color);
 	}
 	
-	public default void removeFromGlowList(AbstractCard c, Color color) {
+	default void removeFromGlowList(AbstractCard c, Color color) {
 		CardGlowChanger.removeFromList(c, color);
 	}
 	
-	public default void addHardLockGlow(AbstractCard c) {
+	default void addHardLockGlow(AbstractCard c) {
 		CardGlowChanger.addHardLockGlow(c);
 	}
 
-	public default boolean hasEnemies() {
+	default boolean hasEnemies() {
 		return !(AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom() == null
 				|| AbstractDungeon.getMonsters() == null || AbstractDungeon.getMonsters().monsters == null);
 	}
 	
-	public default double gainGold(double amount) {
+	default double gainGold(double amount) {
 		return amount;
 	}
 	
-	public default ArrayList<String> relicPool(RelicTier t) {
+	default ArrayList<String> relicPool(RelicTier t) {
 		switch (t) {
 		case BOSS:
 			return AbstractDungeon.bossRelicPool;
@@ -649,7 +665,7 @@ public interface MiscMethods {
 		return INSTANCE.energyString(amount);
 	}
 	
-	public default String energyString(int amount) {
+	default String energyString(int amount) {
 		if (amount < 4 && amount > 0) {
 			return this.getIdenticalList("[E] ", amount).stream().reduce(" ", (a, b) -> a + b);
 		} else {
@@ -657,12 +673,12 @@ public interface MiscMethods {
 		}
 	}
 	
-	public default <T> void streamIfElse(Stream<T> s, Predicate<? super T> p, Consumer<? super T> c1,
+	default <T> void streamIfElse(Stream<T> s, Predicate<? super T> p, Consumer<? super T> c1,
 			Consumer<? super T> c2) {
 		s.forEach(ifElse(p, c1, c2));
 	}
 
-	public default <T> Consumer<T> ifElse(Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
+	default <T> Consumer<T> ifElse(Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
 		return t -> ((Consumer<T>) (p.test(t) ? c1 : c2)).accept(t);
 	}
 	
@@ -670,42 +686,42 @@ public interface MiscMethods {
 		return f.andThen(g);
 	}
 	
-	public default <T, R> void streamMaps(Stream<T> s, Consumer<R> action, Function... functions) {
+	default <T, R> void streamMaps(Stream<T> s, Consumer<R> action, Function... functions) {
 		s.forEach(functionsConsumer(action, functions));
 	}
 	
-	public default <T, R> Consumer<T> functionsConsumer(Consumer<R> action, Function... functions) {
+	default <T, R> Consumer<T> functionsConsumer(Consumer<R> action, Function... functions) {
 		Function<T, R> f = (Function<T, R>) Stream.of(functions).reduce(t -> t, (u, v) -> andThen(u, v));
 		return t -> action.accept(f.apply(t));
 	}
 	
-	public default <T, R> Consumer<T> f(Consumer<R> action, Function<T, R> f) {
+	default <T, R> Consumer<T> f(Consumer<R> action, Function<T, R> f) {
 		return t -> action.accept(f.apply(t));
 	}
 	
-	public default <T, R, V> Function<Pair<T, R>, V> merge(BiFunction<T, R, V> f) {
+	default <T, R, V> Function<Pair<T, R>, V> merge(BiFunction<T, R, V> f) {
 		return p -> f.apply(p.getKey(), p.getValue());
 	}
 	
-	public default <T, R> Consumer<Pair<T, R>> consumer(BiConsumer<T, R> action) {
+	default <T, R> Consumer<Pair<T, R>> consumer(BiConsumer<T, R> action) {
 		return p -> action.accept(p.getKey(), p.getValue());
 	}
 
-	public default <T, R, V> Function<T, Pair<R, V>> split(Function<T, R> f, Function<T, V> g) {
+	default <T, R, V> Function<T, Pair<R, V>> split(Function<T, R> f, Function<T, V> g) {
 		return t -> split(t, f, g);
 	}
 	
-	public default <T, R, V> Pair<R, V> split(T t, Function<T, R> f, Function<T, V> g) {
+	default <T, R, V> Pair<R, V> split(T t, Function<T, R> f, Function<T, V> g) {
 		return new Pair<R, V>(f.apply(t), g.apply(t));
 	}
 	
-	public default <T> Consumer<T> combine(Consumer<T>... actions) {
+	default <T> Consumer<T> combine(Consumer<T>... actions) {
 		return Stream.of(actions).reduce(t -> {}, Consumer::andThen);
 	}
 	
 	public static interface Lambda extends Runnable {}
 	
-	public default void addTmpActionToTop(Lambda... lambda) {
+	default void addTmpActionToTop(Lambda... lambda) {
 		att(new AbstractGameAction() {
 			@Override
 			public void update() {
@@ -715,7 +731,7 @@ public interface MiscMethods {
 		});
 	}
 	
-	public default void addTmpActionToBot(Lambda... lambda) {
+	default void addTmpActionToBot(Lambda... lambda) {
 		atb(new AbstractGameAction() {
 			@Override
 			public void update() {
@@ -725,7 +741,7 @@ public interface MiscMethods {
 		});
 	}
 	
-	public default void addTmpActionToTop(AbstractGameAction... actions) {
+	default void addTmpActionToTop(AbstractGameAction... actions) {
 		att(new AbstractGameAction() {
 			@Override
 			public void update() {
@@ -737,7 +753,7 @@ public interface MiscMethods {
 		});
 	}
 	
-	public default void addTmpActionToBot(AbstractGameAction... actions) {
+	default void addTmpActionToBot(AbstractGameAction... actions) {
 		atb(new AbstractGameAction() {
 			@Override
 			public void update() {
@@ -749,11 +765,11 @@ public interface MiscMethods {
 		});
 	}
 
-	public default void addTmpXCostActionToTop(AbstractCard c, Consumer<Integer> action) {
+	default void addTmpXCostActionToTop(AbstractCard c, Consumer<Integer> action) {
 		att(new AbstractXCostAction(c, action) {});
 	}
 	
-	public default void addTmpXCostActionToBot(AbstractCard c, Consumer<Integer> action) {
+	default void addTmpXCostActionToBot(AbstractCard c, Consumer<Integer> action) {
 		atb(new AbstractXCostAction(c, action) {});
 	}
 	
@@ -765,84 +781,84 @@ public interface MiscMethods {
 		AbstractDungeon.actionManager.addToBottom(a);
 	}
 	
-	public default void att(AbstractGameAction a) {
+	default void att(AbstractGameAction a) {
 		AbstractDungeon.actionManager.addToTop(a);
 	}
 	
-	public default void atb(AbstractGameAction a) {
+	default void atb(AbstractGameAction a) {
 		AbstractDungeon.actionManager.addToBottom(a);
 	}
 	
-	public default <T> Consumer<T> empty() {
+	default <T> Consumer<T> empty() {
 		return t -> {};
 	}
 	
-    public default <T> Predicate<T> not(Predicate<T> a) {
+    default <T> Predicate<T> not(Predicate<T> a) {
     	return a.negate();
     }
 
-	public default <T> Predicate<T> and(Predicate<T>... list) {
+	default <T> Predicate<T> and(Predicate<T>... list) {
     	return Stream.of(list).reduce(a -> true, Predicate::and);
     }
 
-	public default <T> Predicate<T> or(Predicate<T>... list) {
+	default <T> Predicate<T> or(Predicate<T>... list) {
     	return Stream.of(list).reduce(a -> false, Predicate::or);
     }
 	
-	public default <T> Supplier<T> get(Supplier<T> f) {
+	default <T> Supplier<T> get(Supplier<T> f) {
 		return f;
 	}
 	
-	public default <T> UnaryOperator<T> get(UnaryOperator<T> f) {
+	default <T> UnaryOperator<T> get(UnaryOperator<T> f) {
 		return f;
 	}
 	
-	public default <T> UnaryOperator<T> t() {
+	default <T> UnaryOperator<T> t() {
 		return t -> t;
 	}
 	
-	public default <T> UnaryOperator<T> chain(UnaryOperator<T> a, UnaryOperator<T> b) {
+	default <T> UnaryOperator<T> chain(UnaryOperator<T> a, UnaryOperator<T> b) {
 		return c -> b.apply(a.apply(c));
 	}
 	
-	public default <T> UnaryOperator<T> chain(Stream<UnaryOperator<T>> s) {
+	default <T> UnaryOperator<T> chain(Stream<UnaryOperator<T>> s) {
 		return s.reduce(t(), this::chain);
 	}
 	
-	public default <T> Collector<T, ?, ArrayList<T>> toArrayList() {
+	default <T> Collector<T, ?, ArrayList<T>> toArrayList() {
 		return Collectors.toCollection(ArrayList::new);
 	}
 	
-	public default <T> ArrayList<T> createList(T... elements) {
+	default <T> ArrayList<T> createList(T... elements) {
 		return Stream.of(elements).collect(this.toArrayList());
 	}
 	
-	public default Stream<AbstractRelic> replicaRelicStream() {
+	default Stream<AbstractRelic> replicaRelicStream() {
 		ArrayList<AbstractRelic> list = new ArrayList<AbstractRelic>();
 		list.addAll(p().relics);
 		return list.stream();
 	}
 	
-	public default Stream<AbstractTestRelic> relicStream() {
+	default Stream<AbstractTestRelic> relicStream() {
 		return TestMod.MY_RELICS.stream().flatMap(r -> this.relicStream(r.getClass()));
 	}
 	
-	public default <T extends AbstractTestRelic> Stream<T> relicStream(Class<T> sample) {
+	default <T extends AbstractTestRelic> Stream<T> relicStream(Class<T> sample) {
 		return p().relics.stream().filter(r -> r.getClass().isAssignableFrom(sample)).map(r -> (T) r)
 				.collect(toArrayList()).stream();
 	}
 	
-	public default <T> T last(ArrayList<T> list) {
+	default <T> T last(ArrayList<T> list) {
 		if (list == null || list.isEmpty())
 			return null;
 		return list.get(list.size() - 1);
 	}
 	
-	public default ApplyPowerAction apply(AbstractCreature source, AbstractPower p) {
+	default ApplyPowerAction apply(AbstractCreature source, AbstractPower p) {
 		return new ApplyPowerAction(p.owner, source, p);
 	}
 	
-	public default void regainPowerOnRemove(AbstractTestPower p, UnaryOperator<AbstractTestPower> f, boolean noStack,
+	default void regainPowerOnRemove(AbstractTestPower p, UnaryOperator<AbstractTestPower> f, boolean noStack,
 			boolean top) {
 		this.addTmpActionToTop(() -> {
 			AbstractTestPower po = f.apply(p);
@@ -853,19 +869,19 @@ public interface MiscMethods {
 		});
 	}
 	
-	public default void stupidDevToBot(AbstractGameAction a) {
+	default void stupidDevToBot(AbstractGameAction a) {
 		this.atb(new SmhStupidDev(a));
 	}
 	
-	public default void stupidDevToBot(Lambda l) {
+	default void stupidDevToBot(Lambda l) {
 		this.atb(new SmhStupidDev(l));
 	}
 	
-	public default void stupidDevToTop(AbstractGameAction a) {
+	default void stupidDevToTop(AbstractGameAction a) {
 		this.att(new SmhStupidDev(a));
 	}
 	
-	public default void stupidDevToTop(Lambda l) {
+	default void stupidDevToTop(Lambda l) {
 		this.att(new SmhStupidDev(l));
 	}
 	
