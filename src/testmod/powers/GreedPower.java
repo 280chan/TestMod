@@ -1,10 +1,7 @@
 package testmod.powers;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
@@ -28,13 +25,12 @@ public class GreedPower extends AbstractTestPower {
 	}
 	
     public void atEndOfTurn(final boolean isPlayer) {
-    	AbstractPlayer p = AbstractDungeon.player;
-    	int handLeft = p.hand.size() * this.amount;
+    	int handLeft = p().hand.size() * this.amount;
     	int energyLeft = EnergyPanel.totalCount * this.amount;
 		if (handLeft > 0)
-			this.addToBot(new ApplyPowerAction(p, p, new DischargePower(p, handLeft), handLeft));
+			this.addToBot(this.apply(p(), new DischargePower(p(), this.amount)));
 		if (energyLeft > 0)
-			this.addToBot(new ApplyPowerAction(p, p, new DrawDownPower(p, energyLeft), energyLeft));
+			this.addToBot(this.apply(p(), new DrawDownPower(p(), this.amount)));
     	this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
     }
     

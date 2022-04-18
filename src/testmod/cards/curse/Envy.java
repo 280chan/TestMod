@@ -33,10 +33,6 @@ public class Envy extends AbstractTestCurseCard {
 	public boolean canPlay(AbstractCard card) {
 		if (this.hasPrudence())
 			return true;
-		if (card.type == CardType.CURSE || card.type == CardType.STATUS) {
-			card.cantUseMessage = UI.TEXT[0];
-			return false;
-		}
 		if (card.type == CardType.ATTACK && hasIntentNot(ATTACK)) {
 			card.cantUseMessage = UI.TEXT[1];
 			return false;

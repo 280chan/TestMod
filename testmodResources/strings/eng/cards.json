@@ -1,7 +1,7 @@
 {
 	"testmod-Envy": {
 		"NAME": "Envy",
-		"DESCRIPTION": "Exhaust. While in hand, you cannot play Status and Curse. If no ememy intends to attack/ inflict a Negative Effect on you or defend/ use a buff, you cannot play Attact/ Skill/ Power."
+		"DESCRIPTION": "Exhaust. While in hand, If no ememy intends to attack/ inflict a Negative Effect on you or defend/ use a buff, you cannot play Attact/ Skill/ Power."
 	},
 	"testmod-Gluttony": {
 		"NAME": "Gluttony",
@@ -9,11 +9,11 @@
 	},
 	"testmod-Greed": {
 		"NAME": "Greed",
-		"DESCRIPTION": "Exhaust. At the end of your turn drawing this card, For each [E] remain, draw !M! fewer cards next turn. For each card in hand, gain !M! less [E] next turn."
+		"DESCRIPTION": "Exhaust. At the end of your turn drawing this card, if you have [E] remain, draw !M! fewer cards next turn. If you have card in hand, gain !M! less [E] next turn."
 	},
 	"testmod-Lust": {
 		"NAME": "Lust",
-		"DESCRIPTION": "At the end of your turn, lose !M! Strength, Dexterity, Focus, gain 3 Vulnerable, Weak, Frail. "
+		"DESCRIPTION": "At the end of your turn, gain !M! Vulnerable, Weak, Frail. "
 	},
 	"testmod-Sloth": {
 		"NAME": "Sloth",

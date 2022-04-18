@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.localization.UIStrings;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 
 public class Wrath extends AbstractTestCurseCard {
 	private static final UIStrings UI = INSTANCE.uiString();
@@ -40,7 +39,6 @@ public class Wrath extends AbstractTestCurseCard {
 	public void triggerWhenDrawn() {
 		AbstractDungeon.getMonsters().monsters.stream()
 				.filter(m -> !(m.isDead || m.isDying || m.isEscaping || m.escaped))
-				.forEach(m -> this.addToBot(new ApplyPowerAction(m, AbstractDungeon.player,
-						new AngryPower(m, this.magicNumber), this.magicNumber)));
+				.forEach(m -> this.addToBot(this.apply(p(), new AngryPower(m, this.magicNumber))));
 	}
 }

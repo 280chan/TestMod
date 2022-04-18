@@ -6,8 +6,6 @@ import testmod.powers.GreedPower;
 import testmod.relics.Sins;
 
 import com.megacrit.cardcrawl.cards.*;
-import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
@@ -25,8 +23,7 @@ public class Greed extends AbstractTestCurseCard {
     }
 
 	public void triggerWhenDrawn() {
-		AbstractPlayer p = AbstractDungeon.player;
-		this.addToBot(new ApplyPowerAction(p, p, new GreedPower(p, this.magicNumber), this.magicNumber));
+		this.addToBot(new ApplyPowerAction(p(), p(), new GreedPower(p(), this.magicNumber), this.magicNumber));
 	}
     
     public AbstractCard makeCopy() {

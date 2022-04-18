@@ -5,16 +5,10 @@ import testmod.cards.AbstractTestCurseCard;
 import testmod.relics.Sins;
 
 import com.megacrit.cardcrawl.cards.*;
-import com.megacrit.cardcrawl.characters.*;
-import com.megacrit.cardcrawl.powers.DexterityPower;
-import com.megacrit.cardcrawl.powers.FocusPower;
 import com.megacrit.cardcrawl.powers.FrailPower;
-import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
-import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
-import com.megacrit.cardcrawl.actions.common.*;
 
 public class Lust extends AbstractTestCurseCard {
 	public static final String ID = "Lust";
@@ -29,13 +23,9 @@ public class Lust extends AbstractTestCurseCard {
     }
 
 	public void triggerOnEndOfPlayerTurn() {
-		AbstractPlayer p = AbstractDungeon.player;
-	    this.addToBot(new ApplyPowerAction(p, p, new FocusPower(p, -this.magicNumber), -this.magicNumber));
-	    this.addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, -this.magicNumber), -this.magicNumber));
-	    this.addToBot(new ApplyPowerAction(p, p, new DexterityPower(p, -this.magicNumber), -this.magicNumber));
-	    this.addToBot(new ApplyPowerAction(p, p, new WeakPower(p, 3, false), 3));
-	    this.addToBot(new ApplyPowerAction(p, p, new FrailPower(p, 3, false), 3));
-	    this.addToBot(new ApplyPowerAction(p, p, new VulnerablePower(p, 3, false), 3));
+	    this.addToBot(this.apply(p(), new WeakPower(p(), this.magicNumber, false)));
+	    this.addToBot(this.apply(p(), new FrailPower(p(), this.magicNumber, false)));
+	    this.addToBot(this.apply(p(), new VulnerablePower(p(), this.magicNumber, false)));
 	}
     
     public AbstractCard makeCopy() {

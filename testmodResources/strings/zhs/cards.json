@@ -1,7 +1,7 @@
 {
 	"testmod-Envy": {
 		"NAME": "嫉妒",
-		"DESCRIPTION": "消耗 。在手牌时，不能打出 *状态 和 诅咒 牌。有敌人的意图不是攻击/debuff或防御/强化时，不能打出 攻击 /技能/ 能力 牌。"
+		"DESCRIPTION": "消耗 。在手牌时，有敌人的意图不是攻击/debuff或防御/强化时，不能打出 攻击 /技能/ 能力 牌。"
 	},
 	"testmod-Gluttony": {
 		"NAME": "暴食",
@@ -9,11 +9,11 @@
 	},
 	"testmod-Greed": {
 		"NAME": "贪婪",
-		"DESCRIPTION": "消耗 。抽到这张牌的回合结束时，每有一点 [E] 剩余，下回合少抽 !M! 张牌；每有一张牌剩余，下回合减少 !M! 点 [E] 。"
+		"DESCRIPTION": "消耗 。抽到这张牌的回合结束时，如果有 [E] 剩余，下回合少抽 !M! 张牌；如果有手牌剩余，下回合减少 !M! 点 [E] 。"
 	},
 	"testmod-Lust": {
 		"NAME": "色欲",
-		"DESCRIPTION": "回合结束时，失去 !M! 力量 、 敏捷 、 集中 ，获得3层 易伤 、 虚弱 、 脆弱 。"
+		"DESCRIPTION": "回合结束时，获得 !M! 层 易伤 、 虚弱 、 脆弱 。"
 	},
 	"testmod-Sloth": {
 		"NAME": "怠惰",
