@@ -365,7 +365,7 @@
 	"testmod-DeterminationOfClimber":{
 		"NAME": "The Determination Of Climber",
 		"FLAVOR": "然而某些登山者总是喜欢原地踏步。",
-		"DESCRIPTIONS":["Whenever you play a card cost more than the previous one, for every more cost, gain [E] , heal #b1, draw #b1, deal #b1 damage to ALL enemies, gain #b1 #ygold. "]
+		"DESCRIPTIONS":["Lose [E] at the start of each turn. NL Whenever you play a card cost more than the previous one, for every more cost, gain [E] , heal #b1, draw #b1, deal #b1 damage to ALL enemies, gain #b1 #ygold. "]
 	},
 	
 	"testmod-BloodSacrificeSpiritualization":{
