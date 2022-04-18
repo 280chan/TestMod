@@ -34,11 +34,8 @@ public class BatchProcessingSystem extends AbstractTestRelic {
 		if (!this.inCombat())
 			return;
 		this.stopPulse();
-		ColorRegister cr = new ColorRegister(color, this);
-		this.streamIfElse(AbstractDungeon.player.hand.group.stream(),
-				c -> c.costForTurn == this.counter && c.hasEnoughEnergy()
-						&& c.cardPlayable(AbstractDungeon.getRandomMonster()),
-				cr::addToGlowChangerList, cr::removeFromGlowList);
+		colorRegister(color).addRelic(this).addPredicate(c -> c.costForTurn == this.counter && c.hasEnoughEnergy()
+						&& c.cardPlayable(AbstractDungeon.getRandomMonster())).updateHand();
 	}
 	
 	public void onEquip() {

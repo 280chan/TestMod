@@ -37,11 +37,10 @@ public class CyclicPeriapt extends AbstractTestRelic {
 		if (!this.inCombat())
 			return;
 		this.stopPulse();
-		ColorRegister cr = new ColorRegister(color, this);
-		this.streamIfElse(AbstractDungeon.player.hand.group.stream(),
-				c -> (c.exhaust || c.exhaustOnUseOnce) && !this.used.contains(c.uuid) && c.hasEnoughEnergy()
-						&& c.cardPlayable(AbstractDungeon.getRandomMonster()),
-				cr::addToGlowChangerList, cr::removeFromGlowList);
+		colorRegister(color).addRelic(this)
+				.addPredicate(c -> (c.exhaust || c.exhaustOnUseOnce) && !this.used.contains(c.uuid)
+						&& c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster()))
+				.updateHand();
 	}
 	
 	public void atPreBattle() {
