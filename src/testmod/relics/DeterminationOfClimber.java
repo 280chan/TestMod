@@ -11,7 +11,6 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
@@ -23,17 +22,25 @@ public class DeterminationOfClimber extends AbstractTestRelic {
 		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
+	public void onEquip() {
+		this.reduceEnergy();
+	}
+	
+	public void onUnequip() {
+		this.addEnergy();
+	}
+	
 	public void atPreBattle() {
 		this.counter = -1;
 	}
 	
 	public void act(int count) {
-		AbstractCreature p = AbstractDungeon.player;
 		this.addToBot(new GainEnergyAction(count));
-		this.addToBot(new HealAction(p, p, count));
-		this.addToBot(new DrawCardAction(p, count));
+		this.addToBot(new HealAction(p(), p(), count));
+		this.addToBot(new DrawCardAction(p(), count));
 		this.addToBot(new GainGoldAction(count));
-		this.addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(count, true), DamageType.THORNS, AttackEffect.BLUNT_LIGHT));
+		this.addToBot(new DamageAllEnemiesAction(p(), DamageInfo.createDamageMatrix(count, true), DamageType.THORNS,
+				AttackEffect.BLUNT_LIGHT));
 		this.show();
 	}
 	
@@ -62,11 +69,8 @@ public class DeterminationOfClimber extends AbstractTestRelic {
 		if (!this.inCombat())
 			return;
 		this.stopPulse();
-		ColorRegister cr = new ColorRegister(color, this);
-		this.streamIfElse(AbstractDungeon.player.hand.group.stream(),
-				(c -> this.getValue(c) > this.counter && this.counter != -1 && c.hasEnoughEnergy()
-						&& c.cardPlayable(AbstractDungeon.getRandomMonster())),
-				cr::addToGlowChangerList, cr::removeFromGlowList);
+		colorRegister(color).addRelic(this).addPredicate(c -> this.getValue(c) > this.counter && this.counter != -1
+				&& c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())).updateHand();
 	}
 
 	public void onVictory() {
