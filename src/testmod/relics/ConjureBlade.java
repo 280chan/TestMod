@@ -55,8 +55,6 @@ public class ConjureBlade extends AbstractTestRelic {
 	
 	private class ConjureBladePower extends AbstractTestPower implements InvisiblePower {
 		public ConjureBladePower() {
-			super("ConjureBlade");
-			this.name = "";
 			this.owner = p();
 			this.type = PowerType.BUFF;
 			this.updateDescription();

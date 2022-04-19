@@ -2,21 +2,13 @@ package testmod.powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.OnReceivePowerPower;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 public class SelfRegulatingSystemPower extends AbstractTestPower implements OnReceivePowerPower {
-	public static final String POWER_ID = "SelfRegulatingSystemPower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
-	
 	private boolean buffed = false;
 	private boolean debuffed = false;
 	
 	public SelfRegulatingSystemPower(AbstractCreature owner, int amount) {
-		super(POWER_ID);
-		this.name = NAME;
 		this.owner = owner;
 		this.amount = amount;
 		updateDescription();
@@ -24,7 +16,7 @@ public class SelfRegulatingSystemPower extends AbstractTestPower implements OnRe
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + this.amount + DESCRIPTIONS[2];
+		 this.description = desc(0) + this.amount + desc(1) + this.amount + desc(2);
 	}
 	
     public void atStartOfTurn() {

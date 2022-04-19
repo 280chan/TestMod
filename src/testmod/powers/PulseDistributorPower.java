@@ -6,19 +6,11 @@ import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import testmod.mymod.TestMod;
 
 public class PulseDistributorPower extends AbstractTestPower {
-	public static final String POWER_ID = "PulseDistributorPower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
-	private static final String DAMAGE_DESCRIPTION = DESCRIPTIONS[2];
-	private static final String SPLITTER = DESCRIPTIONS[3];
 	public int magic;
 	
 	public final ArrayList<Integer> DAMAGES = new ArrayList<Integer>();
@@ -33,8 +25,6 @@ public class PulseDistributorPower extends AbstractTestPower {
 	}
 	
 	public PulseDistributorPower(AbstractPlayer owner, int magic) {
-		super(POWER_ID);
-		this.name = NAME;
 		if ((this.magic = magic) != 0) {
 			this.name += magic > 0 ? " + " + magic : magic;
 		}
@@ -51,15 +41,12 @@ public class PulseDistributorPower extends AbstractTestPower {
 		this.updateDescription();
 	}
 	
-	private static String rawDescription(int magic) {
+	private String rawDescription(int magic) {
 		String temp = "n";
 		if (magic != 0) {
-			if (magic > 0) {
-				temp += "+";
-			}
-			temp += magic;
+			temp += magic > 0 ? " + " + magic : magic;
 		}
-		return DESCRIPTIONS[0] + toBlue(temp) + DESCRIPTIONS[1];
+		return desc(0) + toBlue(temp) + desc(1);
 	}
 	
 	private static String toBlue(int num) {
@@ -73,7 +60,7 @@ public class PulseDistributorPower extends AbstractTestPower {
 	private String damages() {
 		String retVal = "";
 		for (int num : DAMAGES) {
-			retVal += toBlue(num) + SPLITTER;
+			retVal += toBlue(num) + desc(3);
 		}
 		return retVal.substring(0, retVal.length() - 1);
 	}
@@ -81,7 +68,7 @@ public class PulseDistributorPower extends AbstractTestPower {
 	public void updateDescription() {
 		this.description = rawDescription(this.magic);
 		if (!this.DAMAGES.isEmpty()) {
-			this.description += DAMAGE_DESCRIPTION;
+			this.description += desc(2);
 			this.description += damages();
 		}
 	}
@@ -126,7 +113,7 @@ public class PulseDistributorPower extends AbstractTestPower {
         GameActionManager.damageReceivedThisTurn += damage;
         GameActionManager.damageReceivedThisCombat += damage;
         if (damage > 0)
-        	AbstractDungeon.player.damagedThisCombat += 1;
+        	p().damagedThisCombat += 1;
     	this.updateList(damage);
     	return 0;
     }

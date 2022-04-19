@@ -22,8 +22,6 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 	}
 	
 	public ArcanaOfDestinyPower(AbstractCreature owner) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
 		updateDescription();

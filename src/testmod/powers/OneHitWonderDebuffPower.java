@@ -8,15 +8,12 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import testmod.relics.OneHitWonder;
 
 public class OneHitWonderDebuffPower extends AbstractTestPower implements InvisiblePower {
-	public static final String POWER_ID = "OneHitWonderDebuffPower";
 	
 	public static boolean hasThis(AbstractCreature owner) {
 		return owner.powers.stream().anyMatch(p -> p instanceof OneHitWonderDebuffPower);
 	}
 	
 	public OneHitWonderDebuffPower(AbstractCreature owner) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
 		updateDescription();

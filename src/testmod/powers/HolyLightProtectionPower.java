@@ -8,9 +8,7 @@ public class HolyLightProtectionPower extends AbstractTestPower implements Invis
 	public static final String POWER_ID = "HolyLightProtection";
 	
 	public HolyLightProtectionPower(AbstractCreature m) {
-		super(POWER_ID);
 		this.owner = m;
-		this.name = POWER_ID;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
 		this.addMap(p -> new HolyLightProtectionPower(p.owner));

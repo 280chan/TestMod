@@ -6,18 +6,11 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 
 public class EnhanceArmermentPower extends AbstractTestPower {
-	public static final String POWER_ID = "EnhanceArmermentPower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	private static final int PRIORITY = 99000;
 	
 	public EnhanceArmermentPower(AbstractCreature owner, int amount) {
-		super(POWER_ID);
-		this.name = NAME;
 		this.owner = owner;
 		this.amount = amount;
 		updateDescription();
@@ -26,7 +19,7 @@ public class EnhanceArmermentPower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		this.description = DESCRIPTIONS[0] + (this.overflowMultiplier() ? 2147483647 : this.multiplier()) + DESCRIPTIONS[1];
+		this.description = desc(0) + (this.overflowMultiplier() ? 2147483647 : this.multiplier()) + desc(1);
 	}
 
 	private boolean overflowMultiplier() {

@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.powers.PoisonPower;
 import testmod.relics.InfectionSource;
 
 public class InfectionPower extends AbstractTestPower implements InvisiblePower {
-	public static final String POWER_ID = "InfectionPower";
 	private float tempDamage;
 	
 	public static boolean hasThis(AbstractCreature owner) {
@@ -18,8 +17,6 @@ public class InfectionPower extends AbstractTestPower implements InvisiblePower 
 	}
 	
 	public InfectionPower(AbstractCreature owner) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
 		updateDescription();

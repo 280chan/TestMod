@@ -5,20 +5,13 @@ import java.util.function.Consumer;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.MalleablePower;
 
 public class ConditionedReflexPower extends AbstractTestPower {
-	public static final String POWER_ID = "ConditionedReflexPower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	private int activeAmount;
 	
 	public ConditionedReflexPower(AbstractCreature owner, int amount) {
-		super(POWER_ID);
-		this.name = NAME;
 		this.owner = owner;
 		this.amount = amount;
 		updateDescription();
@@ -26,9 +19,9 @@ public class ConditionedReflexPower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
+		 this.description = desc(0) + this.amount + desc(1);
 		 if (this.activeAmount > 0)
-			 this.description += DESCRIPTIONS[2] + this.activeAmount + DESCRIPTIONS[3];
+			 this.description += desc(2) + this.activeAmount + desc(3);
 	}
 	
 	private void activate(AbstractPower p) {

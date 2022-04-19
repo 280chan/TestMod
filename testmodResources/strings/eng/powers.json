@@ -78,8 +78,8 @@
 			"] "
 		]
 	},
-	"testmod-DischargedPower": {
-		"NAME": "Discharged",
+	"testmod-DischargePower": {
+		"NAME": "Discharge",
 		"DESCRIPTIONS": [
 			"At the start of next turn, lose #b",
 			" #yEnergy."
@@ -99,7 +99,7 @@
 			" fewer cards next turn."
 		]
 	},
-	"testmod-Encyclopedia":{
+	"testmod-EncyclopediaPower":{
 		"NAME":"Encyclopedia",
 		"DESCRIPTIONS":[
 			" #y",
@@ -125,8 +125,8 @@
 	"testmod-GreedPower": {
 		"NAME": "Greed",
 		"DESCRIPTIONS": [
-			"At the end of your turn: For each [E] remain, draw #r",
-			" fewer cards next turn; For each card in hand, lose #r",
+			"At the end of your turn: If you have [E] remain, draw #r",
+			" fewer cards next turn; If you have card in hand, lose #r",
 			" [E] next turn."
 		]
 	},

@@ -2,21 +2,13 @@ package testmod.powers;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 
-import testmod.utils.MiscMethods;
-
-public class ReproducePower extends AbstractTestPower implements MiscMethods {
-	public static final String POWER_ID = "ReproducePower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+public class ReproducePower extends AbstractTestPower {
 	private AbstractCard c;
 	
 	public ReproducePower(AbstractPlayer owner, AbstractCard card, int amount) {
-		super(POWER_ID);
 		this.c = card;
-		this.name = NAME + "[" + c.name + "]";
+		this.name += "[" + c.name + "]";
 		this.ID += c.cardID + c;
 		this.owner = owner;
 		this.amount = amount;
@@ -25,7 +17,7 @@ public class ReproducePower extends AbstractTestPower implements MiscMethods {
 	}
 	
 	public void updateDescription() {
-		this.description = DESCRIPTIONS[0] + c.name + DESCRIPTIONS[1];
+		this.description = desc(0) + c.name + desc(1);
 	}
     
 	public void stackPower(int stackAmount) {

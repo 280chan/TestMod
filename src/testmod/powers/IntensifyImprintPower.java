@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import testmod.relics.IntensifyImprint;
 
 public class IntensifyImprintPower extends AbstractTestPower implements InvisiblePower {
-	public static final String POWER_ID = "IntensifyImprintPower";
 	private static final int PRIORITY = 999999;
 	
 	public static boolean hasThis(AbstractCreature owner) {
@@ -16,8 +15,6 @@ public class IntensifyImprintPower extends AbstractTestPower implements Invisibl
 	}
 	
 	public IntensifyImprintPower(AbstractCreature owner) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		updateDescription();
 		this.type = PowerType.BUFF;

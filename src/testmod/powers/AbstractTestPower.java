@@ -3,6 +3,7 @@ package testmod.powers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -19,10 +20,6 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 			new ArrayList<Class<? extends AbstractTestPower>>();
 	protected static ArrayList<Class<? extends AbstractTestPower>> TOP =
 			new ArrayList<Class<? extends AbstractTestPower>>();
-
-	protected static PowerStrings Strings(String shortID) {
-		return CardCrawlGame.languagePack.getPowerStrings(TestMod.makeID(shortID));
-	}
 	
 	private String IMGPath(String shortID) {
 		return TestMod.powerIMGPath(shortID);
@@ -35,6 +32,16 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 	
 	public AbstractTestPower(String shortID, String region) {
 		this.ID = TestMod.makeID(shortID);
+		this.loadRegion(region);
+	}
+	
+	public AbstractTestPower() {
+		this(shortID(getPowerClass()));
+		this.name = name();
+	}
+	
+	protected void setRegion(String region) {
+		this.img = null;
 		this.loadRegion(region);
 	}
 	
@@ -74,4 +81,53 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 	protected void addMapWithSkip(UnaryOperator<AbstractTestPower> f) {
 		addMap(f, true, false);
 	}
+	
+	protected String shortID() {
+		return shortID(this.getClass());
+	}
+	
+	protected static <T extends AbstractTestPower> String shortID(Class<T> c) {
+		if (!IDS.containsKey(c)) {
+			IDS.put(c, MiscMethods.getIDForPowerWithoutLog(c));
+		}
+		return IDS.get(c);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T extends AbstractTestPower> Class<T> getPowerClass() {
+		try {
+			return (Class<T>) Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
+					.filter(s -> !"testmod.powers.AbstractTestPower".equals(s)).findFirst().get());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static final HashMap<String, PowerStrings> PS = new HashMap<String, PowerStrings>();
+	private static final HashMap<Class<? extends AbstractTestPower>, String> IDS = 
+			new HashMap<Class<? extends AbstractTestPower>, String>();
+
+	protected static PowerStrings Strings(String ID) {
+		if (!PS.containsKey(ID))
+			PS.put(ID, CardCrawlGame.languagePack.getPowerStrings(TestMod.makeID(ID)));
+		return PS.get(ID);
+	}
+	
+	protected static String name(String id) {
+		return Strings(id).NAME;
+	}
+	
+	protected static String[] desc(String id) {
+		return Strings(id).DESCRIPTIONS;
+	}
+	
+	protected String name() {
+		return name(shortID());
+	}
+	
+	protected String desc(int index) {
+		return desc(shortID()).length > index ? desc(shortID())[index] : this.ID + "描述下标越界";
+	}
+	
 }

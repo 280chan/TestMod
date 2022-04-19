@@ -8,8 +8,6 @@ import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-
 import testmod.relics.FatalChain;
 
 public class FatalChainCheckDamagePower extends AbstractTestPower implements InvisiblePower {
@@ -21,8 +19,6 @@ public class FatalChainCheckDamagePower extends AbstractTestPower implements Inv
 	public FatalChain r;
 	
 	public FatalChainCheckDamagePower(AbstractCreature owner, HashMap<DamageInfo, AbstractCreature> map, FatalChain r) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.ID += idFix++;
 		this.owner = owner;
 		updateDescription();
@@ -44,7 +40,7 @@ public class FatalChainCheckDamagePower extends AbstractTestPower implements Inv
 			int dmg;
 			if ((dmg = damageAmount - this.map.get(info).currentHealth) > 0) {
 				int[] dmgArr = DamageInfo.createDamageMatrix((int) (dmg * E), true);
-				this.addToBot(new DamageAllEnemiesAction(AbstractDungeon.player, dmgArr, DamageType.THORNS, AttackEffect.POISON));
+				this.addToBot(new DamageAllEnemiesAction(p(), dmgArr, DamageType.THORNS, AttackEffect.POISON));
 			}
 			this.map.remove(info);
 			this.r.TO_REMOVE.add(this);

@@ -7,21 +7,12 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.PowerStrings;
-
-import testmod.mymod.TestMod;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 
 public class AssimilatedRunePower extends AbstractTestPower {
-	public static final String POWER_ID = "AssimilatedRunePower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	private boolean upgraded = false;
 	
 	public AssimilatedRunePower(AbstractCreature owner, int amount, boolean upgraded) {
-		super(POWER_ID);
-		this.name = NAME;
 		this.ID += (this.upgraded = upgraded);
 		if (this.upgraded) {
 			this.name += "+";
@@ -33,13 +24,15 @@ public class AssimilatedRunePower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
-		 this.description += this.upgraded ? DESCRIPTIONS[3] : DESCRIPTIONS[2];
-		 this.description += DESCRIPTIONS[4];
+		 this.description = desc(0) + this.amount + desc(1) + desc(this.upgraded ? 3 : 2) + desc(4);
+	}
+	
+	private boolean test(AbstractPower p) {
+		return ((AssimilatedRunePower)p).upgraded;
 	}
 	
 	private boolean isActive() {
-		return this.upgraded || !AbstractDungeon.player.hasPower(TestMod.makeID(POWER_ID) + true);
+		return upgraded || p().powers.stream().filter(p -> p instanceof AssimilatedRunePower).noneMatch(this::test);
 	}
 	
 	private int getValue(AbstractCard c, boolean atk) {

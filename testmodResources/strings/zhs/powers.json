@@ -78,7 +78,7 @@
 			"] "
 		]
 	},
-	"testmod-DischargedPower":{
+	"testmod-DischargePower":{
 		"NAME":"能量减少",
 		"DESCRIPTIONS":[
 			"在下一回合，少获得",
@@ -99,7 +99,7 @@
 			" 张牌。"
 		]
 	},
-	"testmod-Encyclopedia":{
+	"testmod-EncyclopediaPower":{
 		"NAME":"百科全书",
 		"DESCRIPTIONS":[
 			" #y",
@@ -125,8 +125,8 @@
 	"testmod-GreedPower":{
 		"NAME":"贪婪",
 		"DESCRIPTIONS":[
-			"回合结束时，每有一点能量剩余，下回合少抽 #r",
-			" 张牌；每有一张牌剩余，下回合减少 #r",
+			"回合结束时，如果有能量剩余，下回合少抽 #r",
+			" 张牌；如果有手牌剩余，下回合减少 #r",
 			" 点能量。"
 		]
 	},

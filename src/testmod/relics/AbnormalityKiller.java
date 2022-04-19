@@ -51,7 +51,6 @@ public class AbnormalityKiller extends AbstractTestRelic {
 		}
 		
 		public AbnormalityKillerPower(AbstractCreature owner) {
-			super("AbnormalityKillerPower");
 			this.type = PowerType.DEBUFF;
 			this.owner = owner;
 			this.addMapWithSkip(p -> new AbnormalityKillerPower(p.owner));

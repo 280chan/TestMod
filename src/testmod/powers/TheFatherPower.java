@@ -13,7 +13,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import testmod.relics.TheFather;
 
 public class TheFatherPower extends AbstractTestPower implements InvisiblePower {
-	public static final String POWER_ID = "TheFatherPower";
 	private static final int PRIORITY = 1000;
 	private static final HashMap<AbstractMonster, ArrayList<DamageAction>> ACTION_MAP =
 			new HashMap<AbstractMonster, ArrayList<DamageAction>>();
@@ -27,8 +26,6 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	}
 	
 	public TheFatherPower(AbstractCreature owner) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
@@ -45,9 +42,7 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	}
 	
 	private void countAction(TheFather r) {
-		this.addTmpActionToBot(() -> {
-			r.count();
-		});
+		this.addTmpActionToBot(() -> r.count());
 	}
 	
 	private void addDamageAction(AbstractMonster m, int damage) {

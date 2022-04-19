@@ -4,19 +4,13 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 
 public class AutoReboundPower extends AbstractTestPower {
-	public static final String POWER_ID = "AutoReboundPower";
 	private static final String REGION = "rebound";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	private int cardsReboundedThisTurn = 0;
 	
 	public AutoReboundPower(AbstractCreature owner, int amount) {
-		super(POWER_ID, REGION);
-		this.name = NAME;
+		this.setRegion(REGION);
 		this.owner = owner;
 		this.amount = amount;
 		updateDescription();
@@ -24,7 +18,7 @@ public class AutoReboundPower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
+		 this.description = desc(0) + this.amount + desc(1);
 	}
 	
 	public void atStartOfTurn() {

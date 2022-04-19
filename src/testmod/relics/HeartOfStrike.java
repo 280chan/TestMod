@@ -58,7 +58,6 @@ public class HeartOfStrike extends AbstractTestRelic {
 	
 	private class HeartOfStrikePower extends AbstractTestPower implements InvisiblePower {
 		public HeartOfStrikePower() {
-			super("HeartOfStrike");
 			this.owner = p();
 			this.addMapWithSkip(p -> (hosp = new HeartOfStrikePower()));
 		}

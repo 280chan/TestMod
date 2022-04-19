@@ -2,18 +2,11 @@ package testmod.powers;
 
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 public class GreedPower extends AbstractTestPower {
-	public static final String POWER_ID = "GreedPower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	
 	public GreedPower(AbstractCreature owner, int amount) {
-		super(POWER_ID);
-		this.name = NAME;
 		this.owner = owner;
 		this.amount = amount;
 		updateDescription();
@@ -21,7 +14,7 @@ public class GreedPower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + this.amount + DESCRIPTIONS[2];
+		 this.description = desc(0) + this.amount + desc(1) + this.amount + desc(2);
 	}
 	
     public void atEndOfTurn(final boolean isPlayer) {

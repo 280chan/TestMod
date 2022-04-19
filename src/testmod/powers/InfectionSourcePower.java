@@ -5,9 +5,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 
-import testmod.utils.MiscMethods;
-
-public class InfectionSourcePower extends AbstractTestPower implements InvisiblePower, MiscMethods {
+public class InfectionSourcePower extends AbstractTestPower implements InvisiblePower {
 	public static final String POWER_ID = "InfectionSourcePower";
 	private static final int PRIORITY = 1000000;
 	
@@ -16,8 +14,6 @@ public class InfectionSourcePower extends AbstractTestPower implements Invisible
 	}
 	
 	public InfectionSourcePower(AbstractCreature owner) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
 		updateDescription();

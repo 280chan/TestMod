@@ -19,8 +19,6 @@ public class IndustrialRevolutionPower extends AbstractTestPower implements OnRe
 	}
 	
 	public IndustrialRevolutionPower(AbstractCreature owner) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
 		updateDescription();

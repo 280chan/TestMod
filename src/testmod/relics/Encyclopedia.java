@@ -13,7 +13,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.saveAndContinue.SaveAndContinue;
@@ -128,21 +127,16 @@ public class Encyclopedia extends AbstractTestRelic {
 	}
 	
 	public static class EncyclopediaPower extends AbstractTestPower {
-		private static final PowerStrings ps = Strings(SAVE_NAME);
-		
 		public EncyclopediaPower(AbstractCreature owner, int amount) {
-			super(SAVE_NAME);
-			this.name = ps.NAME;
 			this.owner = owner;
 			this.amount = amount;
 			this.type = PowerType.DEBUFF;
 			this.updateDescription();
 			this.addMap(p -> new EncyclopediaPower(p.owner, p.amount));
 		}
-		
+
 		public void updateDescription() {
-			this.description = ps.DESCRIPTIONS[0] + owner.name + ps.DESCRIPTIONS[1]
-					+ (single() ? amount : (dmgRate(100f) - 100)) + ps.DESCRIPTIONS[2];
+			this.description = desc(0) + owner.name + desc(1) + (single() ? amount : (dmgRate(100f) - 100)) + desc(2);
 		}
 		
 		private float dmgRate(float input) {

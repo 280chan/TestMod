@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import testmod.relics.AscensionHeart;
 
 public class EventHalfDamagePower extends AbstractTestPower implements InvisiblePower {
-	public static final String POWER_ID = "EventHalfDamagePower";
 	private static AscensionHeart ah = null;
 	
 	public static boolean hasThis() {
@@ -23,8 +22,6 @@ public class EventHalfDamagePower extends AbstractTestPower implements Invisible
 	}
 	
 	public EventHalfDamagePower(AbstractCreature owner, AscensionHeart relic) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
 		ah = relic;

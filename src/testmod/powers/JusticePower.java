@@ -9,15 +9,12 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 import testmod.relics.Justice;
 
 public class JusticePower extends AbstractTestPower implements OnReceivePowerPower, InvisiblePower {
-	public static final String POWER_ID = "JusticePower";
 	
 	public static boolean hasThis(AbstractCreature owner) {
 		return owner.powers.stream().anyMatch(p -> p instanceof JusticePower);
 	}
 	
 	public JusticePower(AbstractCreature owner) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
 		updateDescription();

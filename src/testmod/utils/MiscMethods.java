@@ -54,13 +54,23 @@ public interface MiscMethods {
 		TestMod.info(s);
 	}
 	
-	static String getIDWithoutLog(Class<?> c) {
-		try {
-			c.getDeclaredField("ID");
-		} catch (NoSuchFieldException | SecurityException e) {
-			return c.getSimpleName();
+	static String getIDForPowerWithoutLog(Class<?> c) {
+		return GetID.getIDPrivate(c, "POWER_ID");
+	}
+	
+	static class GetID {
+		private static String getIDPrivate(Class<?> c, String varName) {
+			try {
+				c.getDeclaredField(varName);
+			} catch (NoSuchFieldException | SecurityException e) {
+				return c.getSimpleName();
+			}
+			return ReflectionHacks.getPrivateStatic(c, varName);
 		}
-		return ReflectionHacks.getPrivateStatic(c, "ID");
+	}
+	
+	static String getIDWithoutLog(Class<?> c) {
+		return GetID.getIDPrivate(c, "ID");
 	}
 
 	static String getIDForUI() {

@@ -48,8 +48,6 @@ public class GoldenContract extends AbstractTestRelic {
 	
 	private class GoldenContractPower extends AbstractTestPower implements InvisiblePower {
 		public GoldenContractPower() {
-			super("GoldenContract");
-			this.name = "";
 			this.owner = p();
 			this.type = PowerType.BUFF;
 			this.updateDescription();

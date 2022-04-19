@@ -7,15 +7,9 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
-import testmod.utils.MiscMethods;
-
-public class TaurusBlackCatEnemyPower extends AbstractTestPower implements InvisiblePower, MiscMethods {
-	public static final String POWER_ID = "TaurusBlackCatEnemyPower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
+public class TaurusBlackCatEnemyPower extends AbstractTestPower implements InvisiblePower {
 	private static final int PRIORITY = 100000;
 
 	public static boolean hasThis(AbstractCreature owner) {
@@ -27,8 +21,6 @@ public class TaurusBlackCatEnemyPower extends AbstractTestPower implements Invis
 	}
 	
 	public TaurusBlackCatEnemyPower(AbstractCreature owner, int amount) {
-		super(POWER_ID);
-		this.name = NAME;
 		this.owner = owner;
 		this.amount = amount;
 		updateDescription();

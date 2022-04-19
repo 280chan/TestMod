@@ -84,7 +84,6 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 	
 	private class PhasePocketWatchPower extends AbstractTestPower implements InvisiblePower {
 		public PhasePocketWatchPower() {
-			super(SAVE_NAME);
 			this.owner = p();
 			this.addMapWithSkip(p -> new PhasePocketWatchPower());
 		}

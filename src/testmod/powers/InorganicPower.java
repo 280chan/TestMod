@@ -2,17 +2,11 @@ package testmod.powers;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.OnReceivePowerPower;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import testmod.relics.IndustrialRevolution;
-import testmod.utils.MiscMethods;
 
-public class InorganicPower extends AbstractTestPower implements OnReceivePowerPower, MiscMethods {
-	public static final String POWER_ID = "InorganicPower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+public class InorganicPower extends AbstractTestPower implements OnReceivePowerPower {
 	
 	private static boolean check(AbstractCreature m) {
 		return IndustrialRevolution.LIST.contains(m);
@@ -23,8 +17,6 @@ public class InorganicPower extends AbstractTestPower implements OnReceivePowerP
 	}
 	
 	public InorganicPower(AbstractCreature owner) {
-		super(POWER_ID);
-		this.name = NAME;
 		this.owner = owner;
 		this.amount = -1;
 		updateDescription();
@@ -33,7 +25,7 @@ public class InorganicPower extends AbstractTestPower implements OnReceivePowerP
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.owner.name + DESCRIPTIONS[1];
+		 this.description = desc(0) + this.owner.name + desc(1);
 	}
 	
 	public void stackPower(int stackAmount) {

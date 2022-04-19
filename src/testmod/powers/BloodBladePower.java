@@ -3,20 +3,13 @@ package testmod.powers;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 public class BloodBladePower extends AbstractTestPower {
-	public static final String POWER_ID = "BloodBladePower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
 	private boolean upgraded = false;
 	private float bonus = 0;
 	
 	public BloodBladePower(AbstractCreature owner, boolean upgraded) {
-		super(POWER_ID);
-		this.name = NAME;
 		if (upgraded)
 			this.name += "+";
 		this.ID += upgraded;
@@ -29,12 +22,10 @@ public class BloodBladePower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0];
-		 this.description += upgraded ? DESCRIPTIONS[2] : DESCRIPTIONS[1];
-		 this.description += DESCRIPTIONS[3];
+		 this.description = desc(0) + desc(upgraded ? 2 : 1) + desc(3);
 		 if (this.bonus > 0) {
 			 double tmp = (((int)(this.bonus * 10000 + 0.5)) / 100.0);
-			 this.description += DESCRIPTIONS[4] + (tmp) + "% ";
+			 this.description += desc(4) + (tmp) + "% ";
 		 }
 	}
 	

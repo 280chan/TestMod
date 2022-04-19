@@ -14,17 +14,13 @@ import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import basemod.BaseMod;
 import testmod.cards.AbstractTestCurseCard;
 import testmod.cards.mahjong.AbstractMahjongCard;
 import testmod.mymod.TestMod;
 
 public class TemporaryDeletionPower extends AbstractTestPower {
-	public static final String POWER_ID = "TemporaryDeletionPower";
-	private static final PowerStrings PS = Strings(POWER_ID);
-	private static final String NAME = PS.NAME;
-	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+	private static final String[] DESCRIPTIONS = desc(shortID(TemporaryDeletionPower.class));
 	private static final String[] RARITY = split(3, 9);
 	private CardRarity rarity;
 	private CardGroup group;
@@ -39,23 +35,24 @@ public class TemporaryDeletionPower extends AbstractTestPower {
 	}
 	
 	public TemporaryDeletionPower(AbstractCreature owner, int amount, AbstractCard c) {
-		super(POWER_ID);
 		this.owner = owner;
 		this.amount = amount;
 
-		this.fuckedRarity = c.getClass().getSuperclass().getCanonicalName().equals("lobotomyMod.card.AbstractLobotomyCard");
-		
+		this.fuckedRarity = c.getClass().getSuperclass().getCanonicalName()
+				.equals("lobotomyMod.card.AbstractLobotomyCard");
+
 		ArrayList<AbstractCard> list = getList(c.rarity, c.color);
 		
 		// ??? WTF did I write
-		if (c.rarity != CardRarity.BASIC && c.rarity != CardRarity.SPECIAL && c.color == CardColor.COLORLESS && c.type != CardType.STATUS) {
+		if (c.rarity != CardRarity.BASIC && c.rarity != CardRarity.SPECIAL && c.color == CardColor.COLORLESS
+				&& c.type != CardType.STATUS) {
 			list.addAll(getList(c.rarity, c.color));
 		}
 		
 		this.group = getGroup(list);
 		this.index = c.rarity.ordinal();
 		this.rarity = c.rarity;
-		this.name = NAME + this.rarityDesc();
+		this.name += this.rarityDesc();
 		this.ID += "" + c.color + this.index;
 		updateDescription();
 		this.type = PowerType.BUFF;
@@ -66,7 +63,7 @@ public class TemporaryDeletionPower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + this.rarityDesc() + DESCRIPTIONS[2];
+		 this.description = desc(0) + this.amount + desc(1) + this.rarityDesc() + desc(2);
 	}
 	
 	private static boolean checkValid(AbstractCard c) {
@@ -115,7 +112,8 @@ public class TemporaryDeletionPower extends AbstractTestPower {
 		if (!AbstractDungeon.getMonsters().areMonstersBasicallyDead()) {
 			flash();
 			for (int i = 0; i < this.amount; i++) {
-				this.addToBot(new MakeTempCardInHandAction(group.getRandomCard(AbstractDungeon.cardRandomRng).makeCopy(), 1, false));
+				this.addToBot(new MakeTempCardInHandAction(
+						group.getRandomCard(AbstractDungeon.cardRandomRng).makeCopy(), 1, false));
 			}
 		}
 	}

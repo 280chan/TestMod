@@ -12,7 +12,6 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import testmod.relics.VoidShard;
 
 public class VoidShardEventDamagePower extends AbstractTestPower implements InvisiblePower {
-	public static final String POWER_ID = "VoidShardEventDamagePower";
 	private VoidShard vs = null;
 	
 	public static boolean hasThis() {
@@ -25,8 +24,6 @@ public class VoidShardEventDamagePower extends AbstractTestPower implements Invi
 	}
 	
 	public VoidShardEventDamagePower(AbstractCreature owner, VoidShard relic) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = -1;
 		this.vs = relic;

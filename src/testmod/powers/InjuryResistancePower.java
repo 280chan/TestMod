@@ -6,17 +6,14 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import testmod.relics.InjuryResistance;
 
 public class InjuryResistancePower extends AbstractTestPower implements InvisiblePower {
-	public static final String POWER_ID = "InjuryResistancePower";
 	private static final int PRIORITY = 1000000;
 	private InjuryResistance r;
 	
 	public static boolean hasThis(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> {return p instanceof InjuryResistancePower;});
+		return owner.powers.stream().anyMatch(p -> p instanceof InjuryResistancePower);
 	}
 	
 	public InjuryResistancePower(AbstractCreature owner, InjuryResistance r) {
-		super(POWER_ID);
-		this.name = POWER_ID;
 		this.owner = owner;
 		this.amount = r.counter;
 		this.r = r;
