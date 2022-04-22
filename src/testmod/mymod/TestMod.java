@@ -63,7 +63,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 4/14/2022
+ * @version 4/21/2022
  * @since 6/17/2018
  */
 
@@ -559,6 +559,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(Metronome.ID, "0");
 		DEFAULT.setProperty(PhasePocketWatch.SAVE_NAME, "0");
 		DEFAULT.setProperty(Encyclopedia.SAVE_NAME, "0");
+		DEFAULT.setProperty(ManifoldPotion.POTION_ID, "");
 		
 		/*DEFAULT.setProperty(Mahjong.SAVE_KANG, "0");
 		DEFAULT.setProperty(Mahjong.SAVE_TURN, "0");
@@ -623,6 +624,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		Metronome.load();
 		PhasePocketWatch.load(getInt(PhasePocketWatch.SAVE_NAME));
 		Encyclopedia.load();
+		ManifoldPotion.load();
 	}
 	
 	public static boolean hasSaveData(String key) {
@@ -715,7 +717,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 
 	private static void addPotions() {
-		Stream.of(EscapePotion.class, TimePotion.class, SpacePotion.class, TestPotion.class)
+		Stream.of(EscapePotion.class, TimePotion.class, SpacePotion.class, TestPotion.class, ManifoldPotion.class)
 				.forEach(c -> BaseMod.addPotion(c, null, null, null, ReflectionHacks.getPrivateStatic(c, "POTION_ID")));
 	}
 	
