@@ -29,7 +29,7 @@ public class HyperplasticTissue extends AbstractTestRelic {
     }
 	
 	public void onUnequip() {
-		BaseMod.MAX_HAND_SIZE -= this.delta;
+		BaseMod.MAX_HAND_SIZE -= this.delta + 1;
     }
 	
 	public void atPreBattle() {
@@ -39,6 +39,7 @@ public class HyperplasticTissue extends AbstractTestRelic {
 	
 	public void onVictory() {
 		this.counter = (BaseMod.MAX_HAND_SIZE -= this.delta);
+		this.delta = 0;
     }
 
 }
