@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
-
+import basemod.ReflectionHacks;
 import testmod.utils.MiscMethods;
 
 public abstract class AbstractTestPotion extends AbstractPotion implements MiscMethods {
@@ -14,6 +14,10 @@ public abstract class AbstractTestPotion extends AbstractPotion implements MiscM
 	
 	public AbstractTestPotion(String name, String id, PotionRarity rarity, PotionSize size, PotionColor color) {
 		super(name, id, rarity, size, color);
+	}
+	
+	protected void setEffect(PotionEffect effect) {
+		ReflectionHacks.setPrivateFinal(this, AbstractPotion.class, "p_effect", effect);
 	}
 
 	protected abstract String getDesc();

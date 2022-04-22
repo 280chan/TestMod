@@ -26,11 +26,8 @@ public class 药水模板 extends AbstractTestPotion {
 
 	public 药水模板() {
 		super(NAME, POTION_ID, PotionRarity.COMMON, PotionSize.SPHERE, PotionColor.WEAK);
-		this.potency = getPotency();
-		this.description = this.getDesc();
 		this.isThrown = true;
 		this.targetRequired = true;
-		this.tips.add(new PowerTip(this.name, this.description));
 	}
 
 	public String getDesc() {
@@ -38,7 +35,7 @@ public class 药水模板 extends AbstractTestPotion {
 	}
 
 	public void use(AbstractCreature target) {
-		this.addToBot(new ApplyPowerAction(target, AbstractDungeon.player, new WeakPower(target, this.potency, false),
+		this.addToBot(new ApplyPowerAction(target, p(), new WeakPower(target, this.potency, false),
 				this.potency));
 	}
 
