@@ -31,6 +31,11 @@ public class ManifoldPotion extends AbstractTestPotion {
 	private static AbstractPotion last;
 	private boolean isInLab = false;
 
+	public static void clear() {
+		last = null;
+		save();
+	}
+	
 	public static void load() {
 		String id = TestMod.getString(POTION_ID);
 		last = "".equals(id) ? null : PotionHelper.getPotion(id);

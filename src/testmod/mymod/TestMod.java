@@ -402,6 +402,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			if (this.relicStream(TestBox.class).count() < 1) {
 				obtain(p(), new TestBox());
 			}
+			ManifoldPotion.clear();
 		}
 	}
 	
@@ -760,7 +761,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			});
 		}*/
 		// this.settingsPanel.addUIElement(filterRelics);
-		if (Settings.language == GameLanguage.ZHS) {
+		if (Settings.language == GameLanguage.ZHS || Settings.language == GameLanguage.ZHT) {
 			BaseMod.registerModBadge(badgeTexture, MOD_NAME, "彼君不触",
 					"遗物、卡牌、事件、药水。", this.settingsPanel);
 		} else {
