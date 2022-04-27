@@ -1,7 +1,5 @@
 package testmod.relics;
 
-import java.util.stream.Stream;
-
 import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
@@ -73,12 +71,13 @@ public class TraineeEconomist extends AbstractTestRelic {
 	private void addDiscount() {
 		AbstractDungeon.shopScreen.applyDiscount(this.priceRate(), true);
 	}
-	
-	public void onPreviewObtainCard(AbstractCard c) {
-		if (Stream.of(new Exception().getStackTrace()).peek(e -> this.print(e.getClassName())).noneMatch(
+	/*public void onPreviewObtainCard(AbstractCard c) {
+		System.out.println("生成卡牌降价前" + c.name + c.price);
+		if (this.isActive && Stream.of(new Exception().getStackTrace()).noneMatch(
 				e -> ShopScreen.class.getName().equals(e.getClassName()) && "initCards".equals(e.getMethodName())))
 			c.price = MathUtils.round(c.price * totalRate());
-	}
+		System.out.println("生成卡牌降价后" + c.name + c.price);
+	}*/
 	
 	@SpirePatch(clz = ShopScreen.class, method = "setPrice")
 	public static class ShopScreenCardPatch {
