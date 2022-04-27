@@ -6,6 +6,7 @@ import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.common.LoseHPAction;
 import com.megacrit.cardcrawl.actions.watcher.ChooseOneAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -118,6 +119,9 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 			int size = this.misc == 1 ? this.magicNumber : 2;
 			this.getIdenticalList(dmg, size).forEach(i -> this.atb(new LoseHPAction(p(), p(), i)));
 			counter = 0;
+		}
+		public AbstractCard makeCopy() {
+			return new PhasePocketWatchOptionCard(this.misc, this.baseMagicNumber);
 		}
 	}
 	
