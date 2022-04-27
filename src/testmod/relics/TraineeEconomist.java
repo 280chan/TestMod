@@ -80,6 +80,14 @@ public class TraineeEconomist extends AbstractTestRelic {
 			c.price = MathUtils.round(c.price * totalRate());
 	}
 	
+	@SpirePatch(clz = ShopScreen.class, method = "setPrice")
+	public static class ShopScreenCardPatch {
+		@SpirePostfixPatch
+		public static void Postfix(ShopScreen __instance, AbstractCard card) {
+			card.price = MathUtils.round(card.price * totalRate());
+		}
+	}
+	
 	@SpirePatch(clz = ShopScreen.class, method = "getNewPrice", paramtypez = { StorePotion.class })
 	public static class ShopScreenPotionPatch {
 		@SpirePostfixPatch
