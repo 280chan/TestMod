@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import com.megacrit.cardcrawl.actions.common.InstantKillAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import basemod.BaseMod;
@@ -44,7 +46,16 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 		}
 		rewards(this.selectedRelic).stream().peek(TestMod::removeFromPool).forEach(r -> r.instantObtain());
 		p().reorganizeRelics();
-		winCombat();
+		int n = (int) this.relicStream(Gather.class).count();
+		if (n >= AbstractDungeon.getMonsters().monsters.stream().filter(m -> !(m.isDead || m.isDying)).count()) {
+			this.addTmpActionToTop(GatherSelectScreen::winCombat);
+			AbstractDungeon.getMonsters().monsters.stream().map(InstantKillAction::new).forEach(this::att);
+		} else {
+			ArrayList<AbstractMonster> l = AbstractDungeon.getMonsters().monsters.stream()
+					.filter(m -> !(m.isDead || m.isDying)).collect(toArrayList());
+			Collections.shuffle(l);
+			l.stream().limit(n).map(InstantKillAction::new).forEach(this::att);
+		}
 		map.clear();
 		AbstractDungeon.topPanel.adjustRelicHbs();
 	}

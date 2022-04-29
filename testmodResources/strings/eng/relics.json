@@ -557,7 +557,7 @@
 	"testmod-Gather":{
 		"NAME": "Gather",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each combat, if you have two relics with same length description, you can choose to select one of them to convert to a same-tier relic and win the combat."]
+		"DESCRIPTIONS":["At the start of each combat, if you have two relics with same length description, you can choose to select one of them to convert to a same-tier relic and kill a random enemy."]
 	},
 	
 	"testmod-MistCore":{
@@ -629,7 +629,7 @@
 	"testmod-FissionDevice":{
 		"NAME": "Fission Device",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Once per turn, right click on this relic to choose a card from your hand which has #yCost greater than #b1, remove it from current combat, but add its #yCost copies with all values #b1 / #yCost of original to your hand, remainder become an extra #b0 #yCost copy. All copies exhaust when use."]
+		"DESCRIPTIONS":["Once per turn, right click on this relic to choose a card from your hand which has #yCost greater than #b1, remove it from current combat, but add its #yCost copies with all values #b1 / #yCost of original to your hand, remainder become an extra #b0 #yCost copy. All copies exhaust when use. NL "]
 	},
 	
 	"testmod-AbnormalityKiller":{
