@@ -17,22 +17,25 @@ import org.apache.logging.log4j.Logger;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.codedisaster.steamworks.SteamAPI;
+import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
+import com.google.gson.Gson;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
-import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.core.Settings.GameLanguage;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.TipTracker;
-import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.localization.EventStrings;
+import com.megacrit.cardcrawl.localization.PotionStrings;
+import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.localization.RelicStrings;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.powers.AngryPower;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
@@ -63,7 +66,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 4/26/2022
+ * @version 4/28/2022
  * @since 6/17/2018
  */
 
@@ -146,16 +149,17 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	@Override
 	public void receiveEditKeywords() {
 		// TODO
+		Stream.of(new Gson().fromJson(readString("keywords"), Keyword[].class))
+				.forEach(k -> BaseMod.addKeyword(k.PROPER_NAME, k.NAMES, k.DESCRIPTION));
+		//BaseMod.addKeyword(arg0, arg1, arg2, arg3);
+		
 		switch (Settings.language) {
 		case ZHS:
 		case ZHT:
-			BaseMod.addKeyword(new String[] { "死亡刻印" }, "被标记 #y死亡刻印 的敌人在失去生命时会增加等量的层数。");
 			BaseMod.addKeyword(new String[] { "生气" },
 					AngryPower.DESCRIPTIONS[1] + 1 + AngryPower.DESCRIPTIONS[2]);
 			break;
 		default:
-			BaseMod.addKeyword(new String[] { "Imprint" },
-					"#yImprint will increase the amount of damage whenever the owner loses HP.");
 			BaseMod.addKeyword(new String[] { "Angry" },
 					AngryPower.DESCRIPTIONS[1] + 1 + AngryPower.DESCRIPTIONS[2]);
 			break;

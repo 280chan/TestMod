@@ -131,8 +131,8 @@
 	},
 	"testmod-Enchant": {
 		"NAME": "附魔",
-		"DESCRIPTION": "从你所有牌中选择一张牌，将其 *特殊值 变为 !M! 倍，并在打出时 消耗 。 消耗 。",
-		"UPGRADE_DESCRIPTION": "从你所有牌中选择一张牌，将其 *特殊值 变为 !M! 倍，并在打出时 消耗 。"
+		"DESCRIPTION": "从你所有牌中选择一张牌，将其 特殊值 变为 !M! 倍，并在打出时 消耗 。 消耗 。",
+		"UPGRADE_DESCRIPTION": "从你所有牌中选择一张牌，将其 特殊值 变为 !M! 倍，并在打出时 消耗 。"
 	},
 	"testmod-EnhanceArmerment": {
 		"NAME": "完全支配",

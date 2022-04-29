@@ -118,7 +118,7 @@
 	},
 	"testmod-DeathImprint": {
 		"NAME": "Death Imprint",
-		"DESCRIPTION": "Deal !D! damage. If target has Imprint, remove it and increase base damage by !M! % of its amount. Otherwise, give Imprint."
+		"DESCRIPTION": "Deal !D! damage. If target has imprint, remove it and increase base damage by !M! % of its amount. Otherwise, give imprint."
 	},
 	"testmod-DisillusionmentEcho": {
 		"NAME": "Disillusionment Echo",
@@ -131,8 +131,8 @@
 	},
 	"testmod-Enchant": {
 		"NAME": "Enchant",
-		"DESCRIPTION": "Choose a card from all your cards, set its magic number to !M! times, and it becomes Exhaust on use. Exhaust.",
-		"UPGRADE_DESCRIPTION": "Choose a card from all your cards, set its magic number to !M! times, and it becomes Exhaust on use."
+		"DESCRIPTION": "Choose a card from all your cards, set its magicnumber to !M! times original, and it becomes Exhaust on use. Exhaust.",
+		"UPGRADE_DESCRIPTION": "Choose a card from all your cards, set its magicnumber to !M! times original, and it becomes Exhaust on use."
 	},
 	"testmod-EnhanceArmerment": {
 		"NAME": "Enhance Armerment",

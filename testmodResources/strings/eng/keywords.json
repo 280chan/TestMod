@@ -1,0 +1,19 @@
+[
+
+{
+    "PROPER_NAME": "Imprint",
+    "NAMES": [
+      "imprint"
+    ],
+    "DESCRIPTION": "#yImprint will increase by the amount of damage whenever the owner loses HP."
+},
+
+{
+    "PROPER_NAME": "Magic Number",
+    "NAMES": [
+      "magicnumber"
+    ],
+    "DESCRIPTION": "#yMagic #yNumber is number in card that is not damage or block."
+}
+
+]
