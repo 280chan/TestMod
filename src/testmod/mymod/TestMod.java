@@ -66,7 +66,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 4/28/2022
+ * @version 5/1/2022
  * @since 6/17/2018
  */
 
@@ -292,7 +292,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new TheFather(), new TwinklingStar(), new GlassSoul(), new Laevatain(), new Match3(), new Brilliant(), 
 				new BalancedPeriapt(), new ConjureBlade(), new PortablePortal(), new Encyclopedia(), new SpireNexus(),
 				new Gather(), new FissionDevice(), new DemonSummon(), new HolyLightProtection(), new GoldenContract(),
-				new StomachOfGluttonous(), new AbnormalityKiller(), new Metronome(), new ResonanceStone())
+				new StomachOfGluttonous(), new AbnormalityKiller(), new Metronome(), new ResonanceStone(),
+				new Reverse())
 				.collect(toArrayList());
 		if (!Loader.isModLoaded("FoggyMod"))
 			RELICS.add(new MistCore());

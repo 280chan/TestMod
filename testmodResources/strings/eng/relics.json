@@ -642,5 +642,11 @@
 		"NAME": "Demon Summon",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the first turn each combat, gain #b1 #yDemon #yForm, for each turn starts after first turn, gain #bTurn #bCount #yDemon #ySummon of tier #bTurn #bCount. Tier #bn #yDemon #ySummon gives you its amount #yDemon #ySummon of tier one lower, tier #b2 #yDemon #ySummon gives you #yDemon #yForm instead of #yDemon #ySummon."]
+	},
+	
+	"testmod-Reverse":{
+		"NAME": "Reverse",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Whenever you gain a buff or debuff with #rnegative amount, change its amount to #gabsolute #gvalue of original amount."]
 	}
 }
