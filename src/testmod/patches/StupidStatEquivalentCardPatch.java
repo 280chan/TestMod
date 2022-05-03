@@ -1,6 +1,7 @@
 package testmod.patches;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
 import com.evacipated.cardcrawl.modthespire.lib.Matcher;
@@ -31,11 +32,17 @@ public class StupidStatEquivalentCardPatch {
 			tmpName = MN;
 			return _return;
 		}
-		
+
+		private static boolean notBaka() {
+			return Stream.of(new Exception().getStackTrace()).noneMatch(
+					e -> "RumiaBox.relics.Baka".equals(e.getClassName()) && "update".equals(e.getMethodName()));
+		}
+
 		@SpireInsertPatch(locator = Locator.class, localvars = { "card" })
 		public static void Insert(AbstractCard __instance, AbstractCard card) {
 			tmpName = __instance.name;
-			__instance.name = card.name;
+			if (notBaka())
+				__instance.name = card.name;
 		}
 		
 		private static class Locator extends SpireInsertLocator {
