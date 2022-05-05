@@ -1,8 +1,6 @@
 package testmod.cards.colorless;
 
 import testmod.cards.AbstractUpdatableCard;
-import testmod.mymod.TestMod;
-
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
@@ -12,7 +10,6 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 public class CardIndex extends AbstractUpdatableCard {
     public static final String ID = "CardIndex";
@@ -35,34 +32,28 @@ public class CardIndex extends AbstractUpdatableCard {
     		if (this.cards.isEmpty()) {
         		this.addTmpActionToTop(() -> {
 					CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
-					g.group = Stream.of(p.discardPile, p.hand, p.drawPile).flatMap(a -> a.group.stream())
-							.collect(this.toArrayList());
+					g.group = this.combatCards().collect(this.toArrayList());
 					g.removeCard(this);
 					p.hand.group.forEach(AbstractCard::beginGlowing);
-					if (g.isEmpty()) {
+					if (g.isEmpty() || this.magicNumber < 1) {
 						this.removeCard(null);
 						return;
 					}
 					int size = Math.min(this.magicNumber, g.size());
-					String info = "选择" + size + "张牌卡牌索引";
+					String info = EXTENDED_DESCRIPTION[4] + size + EXTENDED_DESCRIPTION[5];
 					AbstractDungeon.gridSelectScreen.open(g, size, true, info);
 					this.addTmpActionToTop(() -> {
 						if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
-							String tmp = "选择了" + AbstractDungeon.gridSelectScreen.selectedCards.stream().sequential()
-									.peek(this::removeCard).map(c -> c.name + " ").reduce("", (a, b) -> a + b);
-							TestMod.info(tmp);
 							AbstractDungeon.gridSelectScreen.selectedCards.clear();
 						} else {
-							TestMod.info("取消了选择，之后打出不会生效。");
 							this.removeCard(null);
 						}
 					});
         		});
-        	} else if (this.cards.size() == 1 && this.cards.get(0) == null) {
-    		} else {
-    			this.cards.stream().forEach(this::setXCostEnergy);
+        	} else if (this.cards.size() != 1 || this.cards.get(0) != null) {
+    			this.cards.forEach(this::setXCostEnergy);
     			this.autoplayInOrder(this, this.cards, m);
-        	}
+    		}
     	});
     }
     
@@ -145,11 +136,9 @@ public class CardIndex extends AbstractUpdatableCard {
 	
 	public AbstractCard makeStatEquivalentCopy() {
 		AbstractCard tmp = super.makeStatEquivalentCopy();
-
-		if (AbstractDungeon.player == null || AbstractDungeon.player.masterDeck == null
-				|| AbstractDungeon.player.masterDeck.group == null)
+		if (p() == null || p().masterDeck == null || p().masterDeck.group == null)
 			return tmp;
-		if (AbstractDungeon.player.masterDeck.group.stream().noneMatch(c -> c == this))
+		if (p().masterDeck.group.stream().noneMatch(c -> c == this))
 			((CardIndex) tmp).cards = this.cards;
 		return tmp;
 	}
