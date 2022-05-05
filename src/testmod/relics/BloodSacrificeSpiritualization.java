@@ -22,20 +22,20 @@ import testmod.mymod.TestMod;
 
 @SuppressWarnings("deprecation")
 public class BloodSacrificeSpiritualization extends AbstractTestRelic {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	
 	public BloodSacrificeSpiritualization() {
 		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public void atBattleStart() {
+		if (!this.isActive)
+			return;
 		this.addTmpActionToBot(() -> {
-			AbstractPlayer p = AbstractDungeon.player;
 			CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
-			g.group = Stream.of(p.discardPile, p.hand, p.drawPile).flatMap(c -> c.group.stream())
-					.collect(this.toArrayList());
-			p.hand.group.forEach(AbstractCard::beginGlowing);
-	        int amount = Math.max(p.maxHealth / 10, 1);
+			g.group = this.combatCards().collect(this.toArrayList());
+			p().hand.group.forEach(AbstractCard::beginGlowing);
+	        int amount = Math.max(p().maxHealth / 10, 1);
 			if (g.group.isEmpty()) {
 				return;
 			}
@@ -44,10 +44,20 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 			AbstractDungeon.overlayMenu.cancelButton.show(UI.TEXT[2]);
 			this.addTmpActionToTop(() -> {
 				if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
-					p.damage(new DamageInfo(p, amount, DamageType.HP_LOSS));
+					p().damage(new DamageInfo(p(), amount, DamageType.HP_LOSS));
 					AbstractCard c = AbstractDungeon.gridSelectScreen.selectedCards.get(0);
-					this.upgrade(p, c);
-					this.addTmpActionToTop(() -> this.playCard(p, c));
+					boolean first = true;
+					for (int i = 0; i < this.relicStream(BloodSacrificeSpiritualization.class).count(); i++) {
+						this.upgrade(c);
+						if (first) {
+							first = false;
+							this.addTmpActionToTop(() -> this.playCard(c));
+						} else {
+							AbstractCard tmp = c.makeSameInstanceOf();
+							tmp.purgeOnUse = true;
+							this.addTmpActionToTop(() -> this.playCard(tmp));
+						}
+					}
 					AbstractDungeon.gridSelectScreen.selectedCards.clear();
 				}
 			});
@@ -58,18 +68,20 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 		return !(m.isDead || m.halfDead || m.escaped || m.isEscaping || m.isDying);
 	}
 	
-	private void playCard(AbstractPlayer p, AbstractCard c) {
+	private void playCard(AbstractCard c) {
 		ArrayList<AbstractMonster> list = AbstractDungeon.getMonsters().monsters.stream().filter(this::checkMonster)
 				.collect(this.toArrayList());
 		AbstractMonster m = list.isEmpty() ? null : list.get(AbstractDungeon.cardRandomRng.random(0, list.size() - 1));
-		CardGroup g = getSource(p, c);
-		if (g != null)
-			g.group.remove(c);
-		else
-			TestMod.info("CardGroup == null ???");
+		if (!c.purgeOnUse) {
+			CardGroup g = getSource(p(), c);
+			if (g != null)
+				g.group.remove(c);
+			else
+				TestMod.info("CardGroup == null ???");
+		}
         AbstractDungeon.getCurrRoom().souls.remove(c);
         c.freeToPlayOnce = true;
-        p.limbo.group.add(c);
+        p().limbo.group.add(c);
         c.current_y = (-200.0F * Settings.scale);
         c.target_x = (Settings.WIDTH / 2.0F + 200.0F * Settings.scale);
         c.target_y = (Settings.HEIGHT / 2.0F);
@@ -77,9 +89,9 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
         c.lighten(false);
         c.drawScale = 0.12F;
         c.targetDrawScale = 0.75F;
-		if (!c.canUse(p, m)) {
+		if (!c.canUse(p(), m)) {
 			this.addToTop(new UnlimboAction(c));
-			this.addToTop(new DiscardSpecificCardAction(c, p.limbo));
+			this.addToTop(c.purgeOnUse ? new UnlimboAction(c) : new DiscardSpecificCardAction(c, p().limbo));
 			this.addToTop(new WaitAction(0.4F));
 		} else {
 			c.applyPowers();
@@ -89,11 +101,11 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 		}
 	}
 	
-	private void upgrade(AbstractPlayer p, AbstractCard card) {
+	private void upgrade(AbstractCard card) {
 		if (card.canUpgrade()) {
 			card.upgrade();
 		}
-		p.masterDeck.group.stream().filter(c -> c.uuid.equals(card.uuid) && c.canUpgrade()).limit(1)
+		p().masterDeck.group.stream().filter(c -> c.uuid.equals(card.uuid) && c.canUpgrade()).limit(1)
 				.forEach(AbstractCard::upgrade);
 	}
 
@@ -102,7 +114,7 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 	}
 
 	public boolean canSpawn() {
-		return Settings.isEndless || !(AbstractDungeon.actNum > 1);
+		return Settings.isEndless || AbstractDungeon.actNum < 2;
 	}
 	
 }
