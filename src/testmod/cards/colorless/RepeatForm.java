@@ -19,7 +19,7 @@ public class RepeatForm extends AbstractTestCard {
 	}
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.addToBot(new RepeatFormAction(p, this));
+    	this.addToBot(new RepeatFormAction(this));
     }
 
     public void upgrade() {

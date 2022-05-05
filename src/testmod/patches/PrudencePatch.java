@@ -18,7 +18,7 @@ import testmod.utils.MiscMethods;
 public class PrudencePatch {
 	
 	public static boolean hasRelic() {
-		return MiscMethods.INSTANCE.relicStream(Prudence.class).count() > 0;
+		return MiscMethods.MISC.relicStream(Prudence.class).count() > 0;
 	}
 	
 	public static boolean canPlay(AbstractCard c) {

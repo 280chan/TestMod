@@ -51,9 +51,9 @@ public class PerfectCombo extends AbstractEquivalentableCard {
     
     private void lambda(boolean addToBot, AbstractMonster m) {
     	if (addToBot) {
-    		this.addTmpActionToBot(() -> {lambda(m);});
+    		this.addTmpActionToBot(() -> lambda(m));
     	} else {
-    		this.addTmpActionToTop(() -> {lambda(m);});
+    		this.addTmpActionToTop(() -> lambda(m));
     	}
     }
     
@@ -89,10 +89,7 @@ public class PerfectCombo extends AbstractEquivalentableCard {
 	
 	
 	public int countUpgrades() {
-		AbstractPlayer p = AbstractDungeon.player;
-		return Stream
-				.concat(Stream.of(p.drawPile, p.discardPile, p.hand).flatMap(g -> g.group.stream()), Stream.of(this))
-				.distinct().mapToInt(c -> c.timesUpgraded).sum();
+		return Stream.concat(this.combatCards(), Stream.of(this)).distinct().mapToInt(c -> c.timesUpgraded).sum();
 	}
 
     public void calculateCardDamage(AbstractMonster m) {

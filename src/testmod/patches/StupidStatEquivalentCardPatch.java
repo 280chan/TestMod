@@ -1,8 +1,6 @@
 package testmod.patches;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
-
 import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
 import com.evacipated.cardcrawl.modthespire.lib.Matcher;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
@@ -13,8 +11,9 @@ import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
+import testmod.utils.MiscMethods;
 
-public class StupidStatEquivalentCardPatch {
+public class StupidStatEquivalentCardPatch implements MiscMethods {
 	
 	@SpirePatch(clz = AbstractCard.class, method = "makeStatEquivalentCopy")
 	public static class MakeStatEquivalentCopyPatch {
@@ -33,15 +32,10 @@ public class StupidStatEquivalentCardPatch {
 			return _return;
 		}
 
-		private static boolean notBaka() {
-			return Stream.of(new Exception().getStackTrace()).noneMatch(
-					e -> "RumiaBox.relics.Baka".equals(e.getClassName()) && "update".equals(e.getMethodName()));
-		}
-
 		@SpireInsertPatch(locator = Locator.class, localvars = { "card" })
 		public static void Insert(AbstractCard __instance, AbstractCard card) {
 			tmpName = __instance.name;
-			if (notBaka())
+			if (!MISC.hasStack("RumiaBox.relics.Baka", "update"))
 				__instance.name = card.name;
 		}
 		

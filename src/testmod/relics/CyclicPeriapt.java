@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 
 public class CyclicPeriapt extends AbstractTestRelic {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	
 	private static Color color = null;
 	private ArrayList<UUID> used = new ArrayList<UUID>();

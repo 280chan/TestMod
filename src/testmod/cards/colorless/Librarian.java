@@ -16,7 +16,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDiscardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 
 public class Librarian extends AbstractTestCard {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	private static final int BASE_MGC = 1;
 
 	public Librarian() {

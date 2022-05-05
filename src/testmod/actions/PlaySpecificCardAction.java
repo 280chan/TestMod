@@ -62,7 +62,6 @@ public class PlaySpecificCardAction extends AbstractGameAction implements MiscMe
 			c.drawScale = 0.12F;
 			c.targetDrawScale = 0.75F;
 			if (!c.canUse(p, this.m)) {
-				this.print("啊" + autoUse);
 				if (autoUse) {
 					if (checkExhaust(c, false)) {
 						this.addToTop(new ExhaustSpecificCardAction(c, p.limbo));
@@ -84,7 +83,6 @@ public class PlaySpecificCardAction extends AbstractGameAction implements MiscMe
 					}
 				}
 			} else {
-				this.print("哦");
 				c.applyPowers();
 				if (this.m != null)
 					c.calculateCardDamage(this.m);
@@ -102,15 +100,12 @@ public class PlaySpecificCardAction extends AbstractGameAction implements MiscMe
 	}
 	
 	private void triggerPlayCard(AbstractCard c) {
-		AbstractPlayer p = AbstractDungeon.player;
 		GameActionManager gam = AbstractDungeon.actionManager;
 		if (!c.dontTriggerOnUseCard) {
-			p.powers.forEach(a -> a.onPlayCard(c, this.m));
-			p.relics.forEach(a -> a.onPlayCard(c, this.m));
-			p.blights.forEach(a -> a.onPlayCard(c, this.m));
-			p.hand.group.forEach(a -> a.onPlayCard(c, this.m));
-			p.discardPile.group.forEach(a -> a.onPlayCard(c, this.m));
-			p.drawPile.group.forEach(a -> a.onPlayCard(c, this.m));
+			p().powers.forEach(a -> a.onPlayCard(c, this.m));
+			p().relics.forEach(a -> a.onPlayCard(c, this.m));
+			p().blights.forEach(a -> a.onPlayCard(c, this.m));
+			this.combatCards().forEach(a -> a.onPlayCard(c, this.m));
 			gam.cardsPlayedThisTurn.add(c);
 		}
 		if (gam.cardsPlayedThisTurn.size() == 25) {

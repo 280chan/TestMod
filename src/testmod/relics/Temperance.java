@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import testmod.mymod.TestMod;
 
 public class Temperance extends AbstractTestRelic {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	
 	public static int sizeToRemove;
 	public static boolean cardSelected = true;

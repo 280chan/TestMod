@@ -38,8 +38,8 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	
 	public static void reset() {
 		offset = 0;
-		INSTANCE.relicStream(AscensionHeart.class).forEach(AscensionHeart::reset);
-		INSTANCE.getIdenticalList((AscensionHeart) null, peak - offset).forEach(AscensionHeart::reset);
+		MISC.relicStream(AscensionHeart.class).forEach(AscensionHeart::reset);
+		MISC.getIdenticalList((AscensionHeart) null, peak - offset).forEach(AscensionHeart::reset);
 	}
 	
 	private static void reset(AscensionHeart r) {
@@ -49,7 +49,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	public static void load(int size) {
 		peak = size;
 		offset = 0;
-		INSTANCE.relicStream(AscensionHeart.class).forEach(AscensionHeart::load);
+		MISC.relicStream(AscensionHeart.class).forEach(AscensionHeart::load);
 	}
 	
 	private static void load(AscensionHeart r) {
@@ -59,7 +59,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	
 	private static void save() {
 		offset = 0;
-		INSTANCE.relicStream(AscensionHeart.class).forEach(AscensionHeart::save);
+		MISC.relicStream(AscensionHeart.class).forEach(AscensionHeart::save);
 		TestMod.save(SAVE_SIZE, peak = Math.max(peak, offset));
 	}
 	

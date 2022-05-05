@@ -50,7 +50,7 @@ public class TraineeEconomist extends AbstractTestRelic {
 	}
 	
 	private static float totalRate() {
-		int c = INSTANCE.relicStream(TraineeEconomist.class).mapToInt(a -> a.counter).sum();
+		int c = MISC.relicStream(TraineeEconomist.class).mapToInt(a -> a.counter).sum();
 		return c == 0 ? 1f : priceRate(c);
 	}
 	
@@ -107,9 +107,9 @@ public class TraineeEconomist extends AbstractTestRelic {
 	public static class HeartShopRoomPatch {
 		@SpirePostfixPatch
 		public static void Postfix(Object __instance) {
-			if (INSTANCE.relicStream(TraineeEconomist.class).count() > 0) {
+			if (MISC.relicStream(TraineeEconomist.class).count() > 0) {
 				AbstractDungeon.shopScreen.applyDiscount(totalRate(), true);
-				INSTANCE.relicStream(TraineeEconomist.class).forEach(r -> {
+				MISC.relicStream(TraineeEconomist.class).forEach(r -> {
 					r.flash();
 					r.beginLongPulse();
 					r.used = true;

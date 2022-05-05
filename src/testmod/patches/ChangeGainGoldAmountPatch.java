@@ -24,11 +24,11 @@ public class ChangeGainGoldAmountPatch implements MiscMethods {
 			double input = amount[0];
 			ArrayList<UnaryOperator<Double>> list = new ArrayList<UnaryOperator<Double>>();
 			if (hasEnemy()) {
-				list.add(INSTANCE.chain(AbstractDungeon.getMonsters().monsters.stream().map(c -> operator(c))));
+				list.add(MISC.chain(AbstractDungeon.getMonsters().monsters.stream().map(c -> operator(c))));
 			}
 			list.add(operator(player));
 			list.add(operator(player.relics));
-			input = INSTANCE.chain(list.stream()).apply(input);
+			input = MISC.chain(list.stream()).apply(input);
 			if (input < 0)
 				input = 0;
 			amount[0] = input + player.gold > MAX ? (player.gold <= 0 ? MAX : MAX - player.gold) : (int) (input + 0.01);
@@ -36,13 +36,13 @@ public class ChangeGainGoldAmountPatch implements MiscMethods {
 	}
 	
 	private static UnaryOperator<Double> operator(AbstractCreature c) {
-		return INSTANCE.chain(c.powers.stream().filter(o -> o instanceof MiscMethods)
-				.map(o -> INSTANCE.get(((MiscMethods) o)::gainGold)));
+		return MISC.chain(c.powers.stream().filter(o -> o instanceof MiscMethods)
+				.map(o -> MISC.get(((MiscMethods) o)::gainGold)));
 	}
 	
 	private static UnaryOperator<Double> operator(ArrayList<? extends Object> list) {
-		return INSTANCE.chain(list.stream().filter(o -> o instanceof MiscMethods)
-				.map(o -> INSTANCE.get(((MiscMethods) o)::gainGold)));
+		return MISC.chain(list.stream().filter(o -> o instanceof MiscMethods)
+				.map(o -> MISC.get(((MiscMethods) o)::gainGold)));
 	}
 	
 	private static boolean hasEnemy() {

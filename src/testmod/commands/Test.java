@@ -1,5 +1,7 @@
 package testmod.commands;
 
+import java.util.ArrayList;
+
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 
 import testmod.mymod.TestMod;

@@ -20,7 +20,7 @@ import testmod.screens.TestBoxRelicSelectScreen;
 import testmod.utils.AdvanceClickableRelic;
 
 public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<TestBox> {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	
 	public boolean relicSelected = true;
 	private boolean cardSelected = true;

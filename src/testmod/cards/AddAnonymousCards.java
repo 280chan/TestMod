@@ -66,7 +66,7 @@ public class AddAnonymousCards implements MiscMethods {
 				}, c -> c.upDesc()));
 		add(new AnonymousCard("BackupPower", 1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.NONE, 0, 0, 2,
 				(c, p, m) -> att(new GainEnergyAction(c.magicNumber)), c -> c.upMGC(1),
-				c -> c.upDesc(c.exD()[0] + INSTANCE.energyString(c.magicNumber) + c.exD()[1])) {
+				c -> c.upDesc(c.exD()[0] + MISC.energyString(c.magicNumber) + c.exD()[1])) {
 		}.override("upgradeMagicNumber", l -> {
 			AnonymousCard c = (AnonymousCard) l.get(0);
 			int n = (int) l.get(1);

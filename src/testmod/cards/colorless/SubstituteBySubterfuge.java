@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import testmod.cards.AbstractTestCard;
 
 public class SubstituteBySubterfuge extends AbstractTestCard {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 
 	public SubstituteBySubterfuge() {
 		super(0, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.NONE);

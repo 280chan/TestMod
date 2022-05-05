@@ -1,7 +1,6 @@
 package testmod.cards;
 
 import java.util.HashMap;
-import java.util.stream.Stream;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import basemod.abstracts.CustomCard;
@@ -104,21 +103,12 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 	}
 	
 	protected static <T extends AbstractTestCard> String shortID(Class<T> c) {
-		if (!IDS.containsKey(c)) {
-			IDS.put(c, MiscMethods.getIDWithoutLog(c));
-		}
+		IDS.putIfAbsent(c, MiscMethods.getIDWithoutLog(c));
 		return IDS.get(c);
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	private static <T extends AbstractTestCard> Class<T> getCardClass() {
-		try {
-			return (Class<T>) Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
-					.filter(s -> !"testmod.cards.AbstractTestCard".equals(s)).findFirst().get());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return MISC.get(AbstractTestCard.class);
 	}
 
 	private static final HashMap<String, CardStrings> CS = new HashMap<String, CardStrings>();

@@ -50,7 +50,7 @@ public class TemporaryBarricade extends AbstractTestRelic implements ClickableRe
 	}
 	
 	public static void pulseLoader() {
-		INSTANCE.relicStream(TemporaryBarricade.class).forEach(AbstractRelic::onVictory);
+		MISC.relicStream(TemporaryBarricade.class).forEach(AbstractRelic::onVictory);
 	}
 	
 	@Override

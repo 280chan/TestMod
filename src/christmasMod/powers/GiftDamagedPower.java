@@ -1,13 +1,11 @@
 package christmasMod.powers;
 
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-
 import christmasMod.mymod.ChristmasMod;
 import testmod.powers.AbstractTestPower;
 
@@ -16,22 +14,6 @@ public class GiftDamagedPower extends AbstractTestPower {
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
-	
-	private static boolean check = true;
-	
-	public static boolean hasThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof GiftDamagedPower)
-				return true;
-		return false;
-	}
-	
-	public static AbstractPower getThis(AbstractCreature owner) {
-		for (AbstractPower p : owner.powers)
-			if (p instanceof GiftDamagedPower)
-				return p;
-		return null;
-	}
 	
 	public GiftDamagedPower(AbstractCreature owner, int amount) {
 		super(POWER_ID);
@@ -46,39 +28,46 @@ public class GiftDamagedPower extends AbstractTestPower {
 		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
 	}
     
-	private static boolean isGift(AbstractCard c) {
-		for (AbstractCard gift : ChristmasMod.GIFTS)
-			if (c.cardID.equals(gift.cardID))
-				return true;
-		return false;
+	private boolean isGift(AbstractCard c) {
+		return ChristmasMod.GIFTS.stream().map(a -> a.cardID).anyMatch(c.cardID::equals);
 	}
 	
-	private static void setCost(CardGroup g) {
-		for (AbstractCard c : g.group) {
-			if (isGift(c) && (c.costForTurn != 0)) {
-				c.modifyCostForCombat(-9999);
-			}
-		}
+	private boolean check(AbstractCard c) {
+		return isGift(c) && !c.freeToPlayOnce && c.cost > -1;
+	}
+	
+	private void modify(AbstractCard c) {
+		c.freeToPlayOnce = true;
 	}
 	
 	public void onInitialApplication() {
-		setCost(AbstractDungeon.player.hand);
-		setCost(AbstractDungeon.player.drawPile);
-		setCost(AbstractDungeon.player.discardPile);
-		setCost(AbstractDungeon.player.exhaustPile);
+		combatCards(false, true).filter(this::check).forEach(this::modify);
 	}
 	
-	public void onDrawOrDiscard() {
-		if (check) {
-			setCost(AbstractDungeon.player.hand);
-		}
+	public void onCardDraw(AbstractCard c) {
+		if (c.type == CardType.STATUS) {
+			p().hand.moveToExhaustPile(c);
+			for (int i = 0; i < this.amount; i++)
+				this.addToBot(new MakeTempCardInHandAction(ChristmasMod.randomGift(false)));
+		} else if (check(c))
+			modify(c);
 	}
     
-	public void onUseCard(AbstractCard c, UseCardAction action) {
+	public void onUseCard(AbstractCard c, UseCardAction a) {
 		if (isGift(c)) {
 			flash();
-			action.exhaustCard = true;
+			a.exhaustCard = true;
 		}
+	}
+	
+	public void onAfterUseCard(AbstractCard c, UseCardAction a) {
+		if (isGift(c) && !a.exhaustCard) {
+			this.addTmpActionToTop(() -> modify(c));
+		}
+	}
+	
+	public void onRemove() {
+		combatCards(false, true).filter(this::isGift).forEach(c -> c.freeToPlayOnce = false);
 	}
     
 }

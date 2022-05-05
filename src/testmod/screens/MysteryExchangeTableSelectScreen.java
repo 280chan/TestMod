@@ -15,7 +15,7 @@ import testmod.mymod.TestMod;
 import testmod.utils.MiscMethods;
 
 public class MysteryExchangeTableSelectScreen extends RelicSelectScreen implements MiscMethods {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	private boolean gain;
 	private static final HashMap<AbstractRelic, AbstractRelic> MAP = new HashMap<AbstractRelic, AbstractRelic>();
 	private MysteryExchangeTable e;
@@ -35,14 +35,14 @@ public class MysteryExchangeTableSelectScreen extends RelicSelectScreen implemen
 	}
 	
 	private static ArrayList<AbstractRelic> copyList(ArrayList<AbstractRelic> list) {
-		return list.stream().map(INSTANCE.split(r -> r.makeCopy(), r -> r))
-				.peek(p -> MAP.put(p.getKey(), p.getValue())).map(p -> p.getKey()).collect(INSTANCE.toArrayList());
+		return list.stream().map(MISC.split(r -> r.makeCopy(), r -> r))
+				.peek(p -> MAP.put(p.getKey(), p.getValue())).map(p -> p.getKey()).collect(MISC.toArrayList());
 	}
 	
 	private static ArrayList<AbstractRelic> randomList() {
-		ArrayList<AbstractRelic> tmp = RelicLibrary.specialList.stream().collect(INSTANCE.toArrayList());
+		ArrayList<AbstractRelic> tmp = RelicLibrary.specialList.stream().collect(MISC.toArrayList());
 		Collections.shuffle(tmp, new Random(AbstractDungeon.miscRng.randomLong()));
-		ArrayList<AbstractRelic> ret = tmp.stream().limit(Math.max(tmp.size() / 3, 1)).collect(INSTANCE.toArrayList());
+		ArrayList<AbstractRelic> ret = tmp.stream().limit(Math.max(tmp.size() / 3, 1)).collect(MISC.toArrayList());
 		tmp.clear();
 		return ret;
 	}

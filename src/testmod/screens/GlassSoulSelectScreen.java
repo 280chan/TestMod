@@ -13,7 +13,7 @@ import testmod.relics.GlassSoul;
 import testmod.utils.MiscMethods;
 
 public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMethods {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	private GlassSoul gs;
 	
 	public GlassSoulSelectScreen(String bDesc, GlassSoul r) {

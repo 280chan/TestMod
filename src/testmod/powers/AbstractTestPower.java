@@ -3,8 +3,6 @@ package testmod.powers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
-
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -87,21 +85,12 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 	}
 	
 	protected static <T extends AbstractTestPower> String shortID(Class<T> c) {
-		if (!IDS.containsKey(c)) {
-			IDS.put(c, MiscMethods.getIDForPowerWithoutLog(c));
-		}
+		IDS.putIfAbsent(c, MiscMethods.getIDForPowerWithoutLog(c));
 		return IDS.get(c);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private static <T extends AbstractTestPower> Class<T> getPowerClass() {
-		try {
-			return (Class<T>) Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
-					.filter(s -> !"testmod.powers.AbstractTestPower".equals(s)).findFirst().get());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return MISC.get(AbstractTestPower.class);
 	}
 
 	private static final HashMap<String, PowerStrings> PS = new HashMap<String, PowerStrings>();
@@ -109,8 +98,7 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 			new HashMap<Class<? extends AbstractTestPower>, String>();
 
 	protected static PowerStrings Strings(String ID) {
-		if (!PS.containsKey(ID))
-			PS.put(ID, CardCrawlGame.languagePack.getPowerStrings(TestMod.makeID(ID)));
+		PS.putIfAbsent(ID, CardCrawlGame.languagePack.getPowerStrings(TestMod.makeID(ID)));
 		return PS.get(ID);
 	}
 	

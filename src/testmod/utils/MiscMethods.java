@@ -48,7 +48,7 @@ import testmod.relics.AbstractTestRelic;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public interface MiscMethods {
-	public static final MiscMethods INSTANCE = new MiscMethods() {};
+	public static final MiscMethods MISC = new MiscMethods() {};
 	
 	default void print(Object s) {
 		TestMod.info(s);
@@ -74,13 +74,7 @@ public interface MiscMethods {
 	}
 
 	static String getIDForUI() {
-		try {
-			return Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
-					.filter(s -> !"testmod.utils.MiscMethods".equals(s)).findFirst().get()).getSimpleName();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return MISC.bottomClassExcept().getSimpleName();
 	}
 	
 	default UIStrings uiString() {
@@ -207,11 +201,8 @@ public interface MiscMethods {
 	
 	default ArrayList<AbstractCard> getAllInBattleInstance(String cardID) {
 		IdChecker checker = new IdChecker(cardID);
-		AbstractPlayer p = p();
-		return Stream
-				.concat(Stream.of(p.drawPile, p.discardPile, p.exhaustPile, p.limbo, p.hand)
-						.flatMap(g -> g.group.stream()), Stream.of(p.cardInUse))
-				.filter(checker::check).collect(this.toArrayList());
+		return Stream.concat(combatCards(true, true), Stream.of(p().cardInUse)).filter(checker::check)
+				.collect(toArrayList());
 	}
 	
 	default void turnSkipperStart() {
@@ -239,7 +230,7 @@ public interface MiscMethods {
 	    public static void start() {
 	    	if (inProgress())
 				return;
-	    	INSTANCE.addTmpActionToBot(() -> {
+	    	MISC.addTmpActionToBot(() -> {
 				AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
 				AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
 				startEndingTurn = true;
@@ -250,7 +241,7 @@ public interface MiscMethods {
 	    	if (inProgress())
 	    		return;
 			start();
-			INSTANCE.addTmpActionToBot(() -> {
+			MISC.addTmpActionToBot(() -> {
 				if (!c.dontTriggerOnUseCard)
 					for (AbstractMonster monster : AbstractDungeon.getMonsters().monsters) {
 						boolean timecollector = false;
@@ -294,11 +285,11 @@ public interface MiscMethods {
 			});
 	    	AbstractDungeon.actionManager.cardQueue.clear();
 	    	
-	    	INSTANCE.p().limbo.group.forEach(c -> AbstractDungeon.effectList.add(new ExhaustCardEffect(c)));
+	    	MISC.p().limbo.group.forEach(c -> AbstractDungeon.effectList.add(new ExhaustCardEffect(c)));
 	    	
-	    	TestMod.info("limbo数量 = " + INSTANCE.p().limbo.size());
-	    	INSTANCE.p().limbo.group.clear();
-	    	INSTANCE.p().releaseCard();
+	    	TestMod.info("limbo数量 = " + MISC.p().limbo.size());
+	    	MISC.p().limbo.group.clear();
+	    	MISC.p().releaseCard();
 	        // Start Ending Turn
 	        
 	        addToBot(new NewQueueCardAction());
@@ -307,7 +298,7 @@ public interface MiscMethods {
 	        etb.isGlowing = false;
 	        etb.updateText(EndTurnButton.ENEMY_TURN_MSG);
 	        CardCrawlGame.sound.play("END_TURN");
-	        INSTANCE.p().releaseCard();
+	        MISC.p().releaseCard();
 	        // EndTurnButton Effect
 	        
 	        endTurnQueued = true;
@@ -331,7 +322,7 @@ public interface MiscMethods {
 	    }
 	    
 		private static void endTurn() {
-			AbstractPlayer p = INSTANCE.p();
+			AbstractPlayer p = MISC.p();
 			p.applyEndOfTurnTriggers();
 
 			addToBot(new ClearCardQueueAction());
@@ -342,7 +333,7 @@ public interface MiscMethods {
 			if (p.hoveredCard != null)
 				p.hoveredCard.resetAttributes();
 
-			INSTANCE.addTmpActionToBot(() -> {
+			MISC.addTmpActionToBot(() -> {
 				addToBot(new EndTurnAction());
 				addToBot(new WaitAction(Settings.FAST_MODE ? 0.1F : 1.2F));
 				startMonsterTurn = true;
@@ -375,35 +366,35 @@ public interface MiscMethods {
 			if ((gam.turnHasEnded) && (!AbstractDungeon.getMonsters().areMonstersBasicallyDead())) {
 				startNextTurn = false;
 				AbstractDungeon.getCurrRoom().monsters.applyEndOfTurnPowers();
-				INSTANCE.p().cardsPlayedThisTurn = 0;
+				MISC.p().cardsPlayedThisTurn = 0;
 				gam.orbsChanneledThisTurn.clear();
 				if (ModHelper.isModEnabled("Careless"))
 					Careless.modAction();
 				if (ModHelper.isModEnabled("ControlledChaos")) {
 					ControlledChaos.modAction();
-					INSTANCE.p().hand.applyPowers();
+					MISC.p().hand.applyPowers();
 				}
-				INSTANCE.p().applyStartOfTurnRelics();
-				INSTANCE.p().applyStartOfTurnPreDrawCards();
-				INSTANCE.p().applyStartOfTurnCards();
-				INSTANCE.p().applyStartOfTurnPowers();
-				INSTANCE.p().applyStartOfTurnOrbs();
+				MISC.p().applyStartOfTurnRelics();
+				MISC.p().applyStartOfTurnPreDrawCards();
+				MISC.p().applyStartOfTurnCards();
+				MISC.p().applyStartOfTurnPowers();
+				MISC.p().applyStartOfTurnOrbs();
 				GameActionManager.turn++;
 				gam.turnHasEnded = false;
 				GameActionManager.totalDiscardedThisTurn = 0;
 				gam.cardsPlayedThisTurn.clear();
 				GameActionManager.damageReceivedThisTurn = 0;
-				if ((!INSTANCE.p().hasPower("Barricade")) && (!INSTANCE.p().hasPower("Blur"))) {
-					if (!INSTANCE.p().hasRelic("Calipers")) {
-						INSTANCE.p().loseBlock();
+				if ((!MISC.p().hasPower("Barricade")) && (!MISC.p().hasPower("Blur"))) {
+					if (!MISC.p().hasRelic("Calipers")) {
+						MISC.p().loseBlock();
 					} else {
-						INSTANCE.p().loseBlock(15);
+						MISC.p().loseBlock(15);
 					}
 				}
 				if (!AbstractDungeon.getCurrRoom().isBattleOver) {
-					addToBot(new DrawCardAction(null, INSTANCE.p().gameHandSize, true));
-					INSTANCE.p().applyStartOfTurnPostDrawRelics();
-					INSTANCE.p().applyStartOfTurnPostDrawPowers();
+					addToBot(new DrawCardAction(null, MISC.p().gameHandSize, true));
+					MISC.p().applyStartOfTurnPostDrawRelics();
+					MISC.p().applyStartOfTurnPostDrawPowers();
 					addToBot(new EnableEndTurnButtonAction());
 				}
 			}
@@ -518,7 +509,7 @@ public interface MiscMethods {
 			a.accept(c);
 		}
 		public void updateHand() {
-			INSTANCE.p().hand.group.forEach(this::updateCard);
+			MISC.p().hand.group.forEach(this::updateCard);
 		}
 	}
 	
@@ -672,7 +663,7 @@ public interface MiscMethods {
 	}
 	
 	public static String energy(int amount) {
-		return INSTANCE.energyString(amount);
+		return MISC.energyString(amount);
 	}
 	
 	default String energyString(int amount) {
@@ -690,6 +681,15 @@ public interface MiscMethods {
 
 	default <T> Consumer<T> ifElse(Predicate<? super T> p, Consumer<? super T> c1, Consumer<? super T> c2) {
 		return t -> ((Consumer<T>) (p.test(t) ? c1 : c2)).accept(t);
+	}
+	
+	default <T> Function<? super T, ? extends Stream<? extends T>> flatmapIfElse(Predicate<? super T> p,
+			Consumer<? super T> c1, Consumer<? super T> c2) {
+		return t -> {
+			ifElse(p, c1, c2);
+			boolean flag = p.test(t);
+			return flag ? Stream.of(t) : Stream.empty();
+		};
 	}
 	
 	static Function andThen(Function f, Function g) {
@@ -758,7 +758,7 @@ public interface MiscMethods {
 				this.isDone = true;
 				ArrayList<AbstractGameAction> list = new ArrayList<AbstractGameAction>();
 				Stream.of(actions).forEach(a -> list.add(0, a));
-				list.forEach(INSTANCE::att);
+				list.forEach(MISC::att);
 			}
 		});
 	}
@@ -770,7 +770,7 @@ public interface MiscMethods {
 				this.isDone = true;
 				ArrayList<AbstractGameAction> list = new ArrayList<AbstractGameAction>();
 				Stream.of(actions).forEach(a -> list.add(0, a));
-				list.forEach(INSTANCE::att);
+				list.forEach(MISC::att);
 			}
 		});
 	}
@@ -858,10 +858,8 @@ public interface MiscMethods {
 				.collect(toArrayList()).stream();
 	}
 	
-	default <T> T last(ArrayList<T> list) {
-		if (list == null || list.isEmpty())
-			return null;
-		return list.get(list.size() - 1);
+	default <T> T last(T first, T second) {
+		return second;
 	}
 	
 	default ApplyPowerAction apply(AbstractCreature source, AbstractPower p) {
@@ -931,6 +929,47 @@ public interface MiscMethods {
 				}
 			};
 		}
+	}
+	
+	default Stream<StackTraceElement> stackTrace() {
+		return Stream.of(new Exception().getStackTrace());
+	}
+	
+	default boolean hasStack(String className, String methodName) {
+		return stackTrace().anyMatch(e -> className.equals(e.getClassName()) && methodName.equals(e.getMethodName()));
+	}
+	
+	default String bottomClassNameExcept(Class<?>... sample) {
+		return stackTrace().map(i -> i.getClassName()).filter(s -> Stream
+				.concat(Stream.of(MiscMethods.class), Stream.of(sample)).noneMatch(a -> s.equals(a.getCanonicalName())))
+				.findFirst().get();
+	}
+	
+	default <T> Class<T> bottomClassExcept(Class<?>... exception) {
+		try {
+			return (Class<T>) Class.forName(bottomClassNameExcept(exception));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	default <T, R extends T> Class<R> get(Class<T> exception) {
+		return bottomClassExcept(exception);
+	}
+	
+	default Stream<AbstractCard> combatCards() {
+		return Stream.of(p().drawPile, p().hand, p().discardPile).flatMap(g -> g.group.stream());
+	}
+	
+	default Stream<AbstractCard> combatCards(boolean limbo, boolean exhaust) {
+		Stream<CardGroup> l = limbo ? Stream.of(p().limbo) : Stream.empty();
+		Stream<CardGroup> e = exhaust ? Stream.of(p().exhaustPile) : Stream.empty();
+		return Stream.concat(combatCards(), Stream.concat(l, e).flatMap(g -> g.group.stream()));
+	}
+	
+	default void forEachCombatCard(boolean limbo, boolean exhaust, Consumer<AbstractCard> f) {
+		combatCards(limbo, exhaust).forEach(f);
 	}
 	
 }

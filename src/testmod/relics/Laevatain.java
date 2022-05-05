@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.relics.Omamori;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 public class Laevatain extends AbstractTestRelic {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	
 	public Laevatain() {
 		super(RelicTier.RARE, LandingSound.HEAVY);

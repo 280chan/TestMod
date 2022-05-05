@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.monsters.*;
 import testmod.cards.AbstractTestCard;
 
 public class TradeIn extends AbstractTestCard {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
     private static final int BASE_MGC = 1;
 
     public TradeIn() {

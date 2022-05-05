@@ -14,7 +14,7 @@ import testmod.mymod.TestMod;
 import testmod.utils.MiscMethods;
 
 public class WormholeAction extends AbstractGameAction implements MiscMethods {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	private float startingDuration;
 	private CardGroup g;
 	private boolean exhaust;

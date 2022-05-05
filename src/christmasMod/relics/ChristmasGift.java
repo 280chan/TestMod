@@ -2,11 +2,7 @@ package christmasMod.relics;
 
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import christmasMod.mymod.ChristmasMod;
-import christmasMod.powers.GiftDamagedPower;
 import testmod.relics.AbstractTestRelic;
 
 public class ChristmasGift extends AbstractTestRelic {
@@ -17,21 +13,8 @@ public class ChristmasGift extends AbstractTestRelic {
 		super(ID, RelicTier.SPECIAL, LandingSound.MAGICAL);
 	}
 	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-	
-	public void onCardDraw(AbstractCard c) {
-		AbstractPlayer p = AbstractDungeon.player;
-		if (GiftDamagedPower.hasThis(p) && c.type == CardType.STATUS) {
-			p.hand.moveToExhaustPile(c);
-			for (int i = 0; i < GiftDamagedPower.getThis(p).amount; i++)
-				this.addToBot(new MakeTempCardInHandAction(ChristmasMod.randomGift(false)));
-		}
-	}
-	
 	public void onExhaust(final AbstractCard card) {
-		AbstractDungeon.player.heal(1);
+		p().heal(1);
 		this.flash();
     }
 	

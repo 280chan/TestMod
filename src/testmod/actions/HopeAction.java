@@ -13,7 +13,7 @@ import testmod.utils.MiscMethods;
 public class HopeAction extends AbstractGameAction implements MiscMethods {
 	private float startingDuration;
 	public static final int MAX_NUM = 10;
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 
 	public HopeAction() {
 		this.amount = MAX_NUM;

@@ -1,6 +1,5 @@
 package testmod.events;
 
-import java.util.stream.Stream;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.events.AbstractImageEvent;
 import com.megacrit.cardcrawl.localization.EventStrings;
@@ -76,15 +75,8 @@ public abstract class AbstractTestEvent extends AbstractImageEvent implements Mi
 		BaseMod.addEvent(TestMod.makeID(MiscMethods.getIDWithoutLog(c)), c);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private static <T extends AbstractTestEvent> Class<T> getEventClass() {
-		try {
-			return (Class<T>) Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
-					.filter(s -> !"testmod.events.AbstractTestEvent".equals(s)).findFirst().get());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return MISC.get(AbstractTestEvent.class);
 	}
 	
 }

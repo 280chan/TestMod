@@ -7,7 +7,7 @@ import testmod.events.PlateOfNloth;
 import testmod.utils.MiscMethods;
 
 public class PlateOfNlothSelectScreen extends RelicSelectScreen implements MiscMethods {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	
 	public PlateOfNlothSelectScreen(String bDesc) {
 		super(true, 1, false);

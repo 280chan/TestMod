@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 
 @SuppressWarnings("deprecation")
 public class Sloth extends AbstractTestCurseCard {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
     public static final String ID = "Sloth";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;

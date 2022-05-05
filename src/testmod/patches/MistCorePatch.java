@@ -25,7 +25,7 @@ public class MistCorePatch {
 				ArrayList<AbstractRoom> roomList) {
 			if (Loader.isModLoaded("FoggyMod"))
 				return map;
-			if (MiscMethods.INSTANCE.relicStream(MistCore.class).findAny().isPresent())
+			if (MiscMethods.MISC.relicStream(MistCore.class).findAny().isPresent())
 				MistCore.changeRooms(map, false);
 			return map;
 		}
@@ -35,7 +35,7 @@ public class MistCorePatch {
 	public static class CoopMultiRoomPatch {
 		@SpirePostfixPatch
 		public static void Postfix(MapRoomNode __instance, AbstractRoom room) {
-			if (MiscMethods.INSTANCE.relicStream(MistCore.class).findAny().isPresent()) {
+			if (MiscMethods.MISC.relicStream(MistCore.class).findAny().isPresent()) {
 				modify(__instance);
 			}
 		}

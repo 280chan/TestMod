@@ -73,7 +73,7 @@ public class IWantAll extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	public static void loadVictory() {
-		INSTANCE.relicStream(IWantAll.class).forEach(AbstractRelic::onVictory);
+		MISC.relicStream(IWantAll.class).forEach(AbstractRelic::onVictory);
 	}
 	
 	public boolean canSpawn() {

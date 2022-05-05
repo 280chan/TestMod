@@ -19,7 +19,7 @@ import testmod.relics.Gather;
 import testmod.utils.MiscMethods;
 
 public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	
 	private static HashMap<AbstractRelic, AbstractRelic> map = new HashMap<AbstractRelic, AbstractRelic>();
 	
@@ -30,8 +30,8 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 	}
 	
 	private static ArrayList<AbstractRelic> copyList(ArrayList<AbstractRelic> list) {
-		return list.stream().map(INSTANCE.split(r -> r.makeCopy(), INSTANCE.t()))
-				.peek(p -> map.put(p.getKey(), p.getValue())).map(p -> p.getKey()).collect(INSTANCE.toArrayList());
+		return list.stream().map(MISC.split(r -> r.makeCopy(), MISC.t()))
+				.peek(p -> map.put(p.getKey(), p.getValue())).map(p -> p.getKey()).collect(MISC.toArrayList());
 	}
 	
 	@Override

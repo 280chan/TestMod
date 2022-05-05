@@ -16,7 +16,7 @@ import testmod.utils.MiscMethods;
 public class ArrangementUpgradingAction extends AbstractGameAction implements MiscMethods {
 	public static final float DURATION = Settings.ACTION_DUR_FAST;
 	private ArrayList<AbstractCard> cannotUpgrade = new ArrayList<AbstractCard>();
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	AbstractPlayer p;
 	
 	public ArrangementUpgradingAction(AbstractPlayer p, int x) {

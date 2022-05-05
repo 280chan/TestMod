@@ -65,7 +65,7 @@ public class SpireNexus extends AbstractTestRelic implements ClickableRelic {
 	public static class GenerateEventPatch {
 		@SpirePrefixPatch
 		public static SpireReturn<AbstractEvent> Prefix(Random rng) {
-			return skipEffect || INSTANCE.relicStream(SpireNexus.class).count() == 0 ? SpireReturn.Continue()
+			return skipEffect || MISC.relicStream(SpireNexus.class).count() == 0 ? SpireReturn.Continue()
 					: SpireReturn.Return(new SpireNexusEvent());
 		}
 	}

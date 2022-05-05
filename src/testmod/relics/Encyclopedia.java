@@ -46,7 +46,7 @@ public class Encyclopedia extends AbstractTestRelic {
 		victory = false;
 		int size;
 		TestMod.save(SAVE_NAME, size = SEEN.size());
-		ArrayList<String> id = SEEN.keySet().stream().collect(INSTANCE.toArrayList());
+		ArrayList<String> id = SEEN.keySet().stream().collect(MISC.toArrayList());
 		for (int i = 1; i <= size; i++) {
 			TestMod.save(SAVE_NAME + (-i), id.get(i - 1));
 			TestMod.save(SAVE_NAME + i, SEEN.get(id.get(i - 1)));

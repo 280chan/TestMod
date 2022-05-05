@@ -2,7 +2,6 @@ package testmod.relics;
 
 import java.util.HashMap;
 import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
@@ -88,21 +87,12 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	}
 	
 	protected static <T extends AbstractTestRelic> String shortID(Class<T> c) {
-		if (!IDS.containsKey(c)) {
-			IDS.put(c, MiscMethods.getIDWithoutLog(c));
-		}
+		IDS.putIfAbsent(c, MiscMethods.getIDWithoutLog(c));
 		return IDS.get(c);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private static <T extends AbstractTestRelic> Class<T> getRelicClass() {
-		try {
-			return (Class<T>) Class.forName(Stream.of(new Exception().getStackTrace()).map(i -> i.getClassName())
-					.filter(s -> !"testmod.relics.AbstractTestRelic".equals(s)).findFirst().get());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return MISC.get(AbstractTestRelic.class);
 	}
 	
 	public AbstractTestRelic(RelicTier tier, LandingSound sfx) {
@@ -123,9 +113,7 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	}
 	
 	private static Texture getTexture(String id, String path) {
-		if (!IMG.containsKey(id)) {
-			IMG.put(id, new Texture(Gdx.files.internal(path)));
-		}
+		IMG.putIfAbsent(id, new Texture(Gdx.files.internal(path)));
 		return IMG.get(id);
 	}
 	

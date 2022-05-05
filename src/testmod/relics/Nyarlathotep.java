@@ -82,7 +82,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	public static boolean hasThis() {
-		return INSTANCE.p().relics.stream().anyMatch(r -> r instanceof Nyarlathotep);
+		return MISC.p().relics.stream().anyMatch(r -> r instanceof Nyarlathotep);
 	}
 	
 	private static boolean isThis(AbstractRelic r) {
@@ -133,8 +133,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 				.flatMap(id -> get(p().relics, id)).forEach(r -> r.onUseCard(tmp, a));
 		Stream.of(RELIC_ON_PLAY_IDs).filter(p()::hasRelic).flatMap(id -> get(p().relics, id)).forEach(
 				r -> r.onPlayCard(tmp, (a.target instanceof AbstractMonster) ? (AbstractMonster) a.target : null));
-		Stream.of(p().hand, p().discardPile, p().drawPile).flatMap(g -> g.group.stream()).filter(this::valid)
-				.forEach(b -> b.triggerOnCardPlayed(c));
+		this.combatCards().filter(this::valid).forEach(b -> b.triggerOnCardPlayed(c));
 		p().hand.group.forEach(b -> b.triggerOnOtherCardPlayed(c));
 	}
 	

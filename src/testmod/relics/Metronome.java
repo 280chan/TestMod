@@ -38,7 +38,7 @@ public class Metronome extends AbstractTestRelic {
 	}
 	
 	public static void load() {
-		INSTANCE.relicStream(Metronome.class).filter(r -> r.isActive).forEach(r -> r.loadList());
+		MISC.relicStream(Metronome.class).filter(r -> r.isActive).forEach(r -> r.loadList());
 	}
 	
 	private static void save(ArrayList<String> list) {

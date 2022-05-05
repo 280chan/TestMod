@@ -103,7 +103,7 @@ public class ManifoldPotion extends AbstractTestPotion {
 			if (!isReplica(p)) {
 				last = p;
 				save();
-				INSTANCE.p().potions.stream().filter(ManifoldPotion::isReplica).forEach(ManifoldPotion::copyStat);
+				MISC.p().potions.stream().filter(ManifoldPotion::isReplica).forEach(ManifoldPotion::copyStat);
 			}
 		}
 	}

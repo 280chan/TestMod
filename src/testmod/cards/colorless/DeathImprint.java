@@ -20,7 +20,7 @@ public class DeathImprint extends AbstractTestCard {
     public boolean same = false;
 	@SuppressWarnings("unchecked")
 	private static final Supplier<Boolean> G = () -> AbstractDungeon.getMonsters().monsters.stream()
-			.anyMatch(INSTANCE.and(INSTANCE.not(AbstractMonster::isDeadOrEscaped), DeathImprintPower::hasThis));
+			.anyMatch(MISC.and(MISC.not(AbstractMonster::isDeadOrEscaped), DeathImprintPower::hasThis));
 
     public DeathImprint() {
         super(1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);

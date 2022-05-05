@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 public class Dye extends AbstractTestRelic implements ClickableRelic {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	private boolean used = false;
 	
 	public Dye() {

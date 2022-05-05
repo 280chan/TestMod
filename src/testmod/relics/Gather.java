@@ -18,7 +18,7 @@ public class Gather extends AbstractTestRelic {
 	}
 	
 	public static boolean valid() {
-		return INSTANCE.replicaRelicStream().mapToInt(r -> f(r)).distinct().count() < INSTANCE.p().relics.size();
+		return MISC.replicaRelicStream().mapToInt(r -> f(r)).distinct().count() < MISC.p().relics.size();
 	}
 	
 	public void openScreen() {

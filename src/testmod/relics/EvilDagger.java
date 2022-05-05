@@ -1,8 +1,6 @@
 package testmod.relics;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
-
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -71,8 +69,7 @@ public class EvilDagger extends AbstractTestRelic {
 	}
 	
 	public void atPreBattle() {
-		ArrayList<AbstractCard> list = Stream.of(p().drawPile, p().hand, p().discardPile)
-				.flatMap(g -> g.group.stream()).filter(c -> c.type == CardType.ATTACK).collect(toArrayList());
+		ArrayList<AbstractCard> list = this.combatCards().filter(c -> c.type == CardType.ATTACK).collect(toArrayList());
 		if (!list.isEmpty())
 			this.c = TestMod.randomItem(list, AbstractDungeon.cardRandomRng);
 		this.updateDescription();

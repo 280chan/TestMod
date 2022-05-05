@@ -23,7 +23,7 @@ import testmod.mymod.TestMod;
 import testmod.utils.MiscMethods;
 
 public class DaVinciLibraryAction extends AbstractGameAction implements MiscMethods {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	private static final int AMOUNT = 20;
 	private float startingDuration;
 	private CardGroup group;

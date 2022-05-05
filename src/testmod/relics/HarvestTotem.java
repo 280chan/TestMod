@@ -28,7 +28,7 @@ public class HarvestTotem extends AbstractTestRelic {
 	
 	private static void increaseMaxHp(AbstractCreature m, int amount) {
 		if (!Settings.isEndless) {
-			if (m.isPlayer && INSTANCE.p().hasBlight("FullBelly"))
+			if (m.isPlayer && MISC.p().hasBlight("FullBelly"))
 				return;
 			m.maxHealth += amount;
 			AbstractDungeon.effectsQueue.add(new TextAboveCreatureEffect(m.hb.cX - m.animX, m.hb.cY,

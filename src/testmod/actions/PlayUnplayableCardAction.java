@@ -1,7 +1,6 @@
 package testmod.actions;
 
-import java.util.Iterator;
-
+import java.util.ArrayList;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -15,7 +14,9 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 
-public class PlayUnplayableCardAction extends AbstractGameAction {
+import testmod.utils.MiscMethods;
+
+public class PlayUnplayableCardAction extends AbstractGameAction implements MiscMethods {
 	private AbstractCard c;
 	private AbstractPlayer p;
 	private AbstractMonster m;
@@ -48,9 +49,7 @@ public class PlayUnplayableCardAction extends AbstractGameAction {
 			p.powers.forEach(a -> a.onPlayCard(c, this.m));
 			p.relics.forEach(a -> a.onPlayCard(c, this.m));
 			p.blights.forEach(a -> a.onPlayCard(c, this.m));
-			p.hand.group.forEach(a -> a.onPlayCard(c, this.m));
-			p.discardPile.group.forEach(a -> a.onPlayCard(c, this.m));
-			p.drawPile.group.forEach(a -> a.onPlayCard(c, this.m));
+			this.combatCards().forEach(a -> a.onPlayCard(c, this.m));
 			gam.cardsPlayedThisTurn.add(c);
 		}
 		if (gam.cardsPlayedThisTurn.size() == 25) {
@@ -62,14 +61,10 @@ public class PlayUnplayableCardAction extends AbstractGameAction {
 		}
 		if (this.c != null) {
 			if ((this.c.target == AbstractCard.CardTarget.ENEMY) && (this.m == null || this.m.isDying)) {
-				for (Iterator<AbstractCard> i = this.p.limbo.group.iterator(); i.hasNext();) {
-					AbstractCard e = (AbstractCard) i.next();
-					if (e == this.c) {
-						this.c.fadingOut = true;
-						AbstractDungeon.effectList.add(new ExhaustCardEffect(this.c));
-						i.remove();
-					}
-				}
+				ArrayList<AbstractCard> tmp = p().limbo.group.stream()
+						.flatMap(flatmapIfElse(this.c::equals, empty(), this::fadeExhaust)).collect(toArrayList());
+				p().limbo.group.clear();
+				p().limbo.group = tmp;
 				if (this.m == null) {
 					this.c.drawScale = this.c.targetDrawScale;
 					this.c.angle = this.c.targetAngle;
@@ -82,6 +77,11 @@ public class PlayUnplayableCardAction extends AbstractGameAction {
 				this.p.useCard(this.c, this.m, this.c.energyOnUse);
 			}
 		}
+	}
+	
+	private void fadeExhaust(AbstractCard c) {
+		c.fadingOut = true;
+		AbstractDungeon.effectList.add(new ExhaustCardEffect(c));
 	}
 	
 }

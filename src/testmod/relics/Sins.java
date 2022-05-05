@@ -31,7 +31,7 @@ import testmod.screens.BossRelicSelectScreen;
 import testmod.utils.MiscMethods;
 
 public class Sins extends AbstractTestRelic implements MiscMethods {
-	private static final UIStrings UI = INSTANCE.uiString();
+	private static final UIStrings UI = MISC.uiString();
 	public static final String ID = "SevenDeadlySins";
 	
 	public static final AbstractCard[] SINS = { new Pride(), new Lust(), new Wrath(), new Sloth(), new Envy(),
@@ -136,17 +136,17 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
 	}
 	
 	private static void obtainCard(AbstractCard c) {
-		INSTANCE.p().relics.forEach(r -> r.onObtainCard(c));
+		MISC.p().relics.forEach(r -> r.onObtainCard(c));
 		UnlockTracker.markCardAsSeen(c.cardID);
-		INSTANCE.p().masterDeck.addToTop(c);
-		INSTANCE.addHoarderCard(INSTANCE.p().masterDeck, c);
-		INSTANCE.p().relics.forEach(r -> r.onMasterDeckChange());
+		MISC.p().masterDeck.addToTop(c);
+		MISC.addHoarderCard(MISC.p().masterDeck, c);
+		MISC.p().relics.forEach(r -> r.onMasterDeckChange());
 	}
 	
 	public static void equipAction() {
 		TestMod.info("获得七原罪诅咒与遗物");
 		AbstractTestRelic.setTryEquip(Sins.class, false);
-		Stream.of(RELICS).forEach(r -> TestMod.obtain(INSTANCE.p(), r, false));
+		Stream.of(RELICS).forEach(r -> TestMod.obtain(MISC.p(), r, false));
 		Stream.of(SINS).forEach(c -> obtainCard(c.makeCopy()));
 	}
 	

@@ -12,8 +12,8 @@ public class TwinklingStarPatch implements MiscMethods {
 	public static class RelicFlashPatch {
 		@SpirePostfixPatch
 		public static void Postfix(AbstractRelic c) {
-			if ((!(c instanceof TwinklingStar)) && INSTANCE.p() != null && INSTANCE.p().relics != null) {
-				INSTANCE.relicStream(TwinklingStar.class).forEach(r -> r.act());
+			if ((!(c instanceof TwinklingStar)) && MISC.p() != null && MISC.p().relics != null) {
+				MISC.relicStream(TwinklingStar.class).forEach(r -> r.act());
 			}
 		}
 	}

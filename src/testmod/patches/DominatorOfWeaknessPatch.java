@@ -13,11 +13,11 @@ import testmod.utils.MiscMethods;
 
 public class DominatorOfWeaknessPatch {
 	private static boolean hasRelic() {
-		return MiscMethods.INSTANCE.relicStream(DominatorOfWeakness.class).findAny().isPresent();
+		return MiscMethods.MISC.relicStream(DominatorOfWeakness.class).findAny().isPresent();
 	}
 	
 	private static int amount() {
-		return (int) MiscMethods.INSTANCE.relicStream(DominatorOfWeakness.class).count();
+		return (int) MiscMethods.MISC.relicStream(DominatorOfWeakness.class).count();
 	}
 	
 	private static boolean hasFrog(VulnerablePower p) {

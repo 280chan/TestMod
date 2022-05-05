@@ -14,7 +14,7 @@ public class RetroFilter extends AbstractTestRelic {
 	public static final int DEFAULT_RATE = 60;
 	
 	public static Stream<RetroFilter> getThis() {
-		return INSTANCE.relicStream(RetroFilter.class);
+		return MISC.relicStream(RetroFilter.class);
 	}
 	
 	public RetroFilter() {

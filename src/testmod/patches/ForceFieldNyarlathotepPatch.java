@@ -13,7 +13,7 @@ public class ForceFieldNyarlathotepPatch {
 	public static class ForceFieldPatch {
 		@SpirePrefixPatch
 		public static void Prefix(ForceField c) {
-			int r = (int) MiscMethods.INSTANCE.relicStream(Nyarlathotep.class).count();
+			int r = (int) MiscMethods.MISC.relicStream(Nyarlathotep.class).count();
 			int n = AbstractDungeon.actionManager.cardsPlayedThisCombat.size();
 			if (r > 0)
 				c.updateCost(- r * n);

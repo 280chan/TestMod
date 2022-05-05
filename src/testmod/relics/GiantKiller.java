@@ -13,7 +13,7 @@ public class GiantKiller extends AbstractTestRelic {
 	}
 
 	public static int count() {
-		return (int) INSTANCE.relicStream(GiantKiller.class).count();
+		return (int) MISC.relicStream(GiantKiller.class).count();
 	}
 	
 	private void tryApplyDebuff() {

@@ -4,7 +4,6 @@ import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -44,11 +43,7 @@ public class AssimilatedRunePower extends AbstractTestPower {
 	}
 	
 	private Stream<AbstractCard> getList() {
-		Stream<CardGroup> s = Stream.of(p().hand);
-		if (this.upgraded) {
-			s = Stream.concat(s, Stream.of(p().drawPile, p().discardPile));
-		}
-		return s.flatMap(g -> g.group.stream());
+		return this.upgraded ? this.combatCards() : p().hand.group.stream();
 	}
 	
     public float atDamageGive(final float damage, final DamageType type) {
