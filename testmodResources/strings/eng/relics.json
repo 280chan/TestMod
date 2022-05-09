@@ -648,5 +648,11 @@
 		"NAME": "Reverse",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you gain a buff or debuff with #rnegative amount, change its amount to #gabsolute #gvalue of original amount."]
+	},
+	
+	"testmod-Extravagant":{
+		"NAME": "Extravagant",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Right click on this relic during your turn, if your max hand size is not #b0, reduce it by half, play all cards in your hand, the size of your hand times."]
 	}
 }

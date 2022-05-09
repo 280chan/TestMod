@@ -66,7 +66,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 5/5/2022
+ * @version 5/9/2022
  * @since 6/17/2018
  */
 
@@ -258,8 +258,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new Reverse(), new GremlinBalance(), new GoldenSoul(), new GreedyDevil(), new TemporaryBarricade(),
-				new StomachOfGluttonous(), new PhasePocketWatch());
+		addLatest(new Extravagant(), new Reverse(), new GremlinBalance(), new GoldenSoul(), new GreedyDevil(),
+				new TemporaryBarricade(), new StomachOfGluttonous(), new PhasePocketWatch());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
 				new HandmadeProducts(), new Automaton());
@@ -293,7 +293,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new BalancedPeriapt(), new ConjureBlade(), new PortablePortal(), new Encyclopedia(), new SpireNexus(),
 				new Gather(), new FissionDevice(), new DemonSummon(), new HolyLightProtection(), new GoldenContract(),
 				new StomachOfGluttonous(), new AbnormalityKiller(), new Metronome(), new ResonanceStone(),
-				new Reverse())
+				new Reverse(), new Extravagant())
 				.collect(toArrayList());
 		if (!Loader.isModLoaded("FoggyMod"))
 			RELICS.add(new MistCore());

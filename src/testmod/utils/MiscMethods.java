@@ -972,4 +972,30 @@ public interface MiscMethods {
 		combatCards(limbo, exhaust).forEach(f);
 	}
 	
+	default int damageTimes(AbstractMonster m) {
+		if (m.intent.ordinal() > 3)
+			return 0;
+		int amount = ReflectionHacks.getPrivate(m, AbstractMonster.class, "intentMultiAmt");
+		return amount > 1 ? amount : 1;
+	}
+	
+	static class ComparatorBuilder<T> {
+		static ComparatorBuilder<?> current;
+		ArrayList<T> l = new ArrayList<T>();
+		
+		public void add(T t) {
+			l.add(0, t);
+		}
+	}
+	
+	default <T> ArrayList<T> reverse(ArrayList<T> l) {
+		ArrayList<T> tmp = new ArrayList<T>();
+		l.forEach(a -> tmp.add(0, a));
+		return tmp;
+	}
+	
+	default <T> Stream<T> reverse(Stream<T> s) {
+		return reverse(s.collect(toArrayList())).stream();
+	}
+	
 }
