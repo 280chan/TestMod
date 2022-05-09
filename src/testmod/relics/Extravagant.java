@@ -31,6 +31,17 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic {
 		this.counter = stop ? -1 : -2;
 	}
 	
+	public void onEquip() {
+		if (this.inCombat())
+			this.atPreBattle();
+	}
+	
+	public void onUnequip() {
+		if (this.isActive) {
+			this.onVictory();
+		}
+	}
+	
 	public void atPreBattle() {
 		if (this.isActive)
 			delta = 0;
