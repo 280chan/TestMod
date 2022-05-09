@@ -2,13 +2,10 @@ package testmod.cards.colorless;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.AttackDamageRandomEnemyAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.*;
-import com.megacrit.cardcrawl.monsters.AbstractMonster.Intent;
-import basemod.ReflectionHacks;
 import testmod.cards.AbstractTestCard;
 
 public class WeaknessCounterattack extends AbstractTestCard {
@@ -26,52 +23,24 @@ public class WeaknessCounterattack extends AbstractTestCard {
 				.forEach(e -> this.addToBot(new AttackDamageRandomEnemyAction(this, e)));
     }
     
-    private int calculateBonus() {
-    	int count = 0;
-		for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
-			if (m.isDead || m.escaped)
-				continue;
-			if (m.getClass().getSuperclass().getCanonicalName().equals("charbosses.bosses.AbstractCharBoss")) {
-				try {
-					for (AbstractCard c : ((CardGroup)m.getClass().getField("hand").get(m)).group) {
-						if (c.type == CardType.ATTACK) {
-							if (c.magicNumber <= 1)
-								count++;
-							else
-								count += c.magicNumber;
-						}
-					}
-				} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
-						| SecurityException e) {
-					e.printStackTrace();
-				}
-			} else {
-				if (checkIntent(m.intent)) {
-					try {
-						int amount = ReflectionHacks.getPrivate(m, AbstractMonster.class, "intentMultiAmt");
-						if (amount > 1)
-							count += amount;
-						else
-							count++;
-					} catch (SecurityException | IllegalArgumentException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		return count;
-    }
+	private int calculateBonus() {
+		return AbstractDungeon.getMonsters().monsters.stream().filter(m -> !m.isDead && !m.escaped)
+				.mapToInt(this::count).sum();
+	}
     
-    private static boolean checkIntent(Intent i) {
-    	if (i == Intent.ATTACK)
-    		return true;
-    	if (i == Intent.ATTACK_BUFF)
-    		return true;
-    	if (i == Intent.ATTACK_DEBUFF)
-    		return true;
-    	if (i == Intent.ATTACK_DEFEND)
-    		return true;
-    	return false;
+    private int count(AbstractMonster m) {
+    	if (m.getClass().getSuperclass().getCanonicalName().equals("charbosses.bosses.AbstractCharBoss")) {
+			try {
+				return ((CardGroup) m.getClass().getField("hand").get(m)).group.stream()
+						.filter(c -> c.type == CardType.ATTACK).mapToInt(c -> Math.max(c.magicNumber, 1)).sum();
+			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
+					| SecurityException e) {
+				e.printStackTrace();
+				return 0;
+			}
+		} else {
+			return this.damageTimes(m);
+		}
     }
     
     public void upgrade() {
