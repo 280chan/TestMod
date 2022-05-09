@@ -12,31 +12,32 @@ import testmod.cards.AbstractTestCard;
 public class LimitFlipper extends AbstractTestCard {
     private static final int BASE_MGC = 2;
     private boolean active = false;
-    private boolean delayActive = false;
-
+    
     public LimitFlipper() {
         super(1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.SELF);
         this.magicNumber = this.baseMagicNumber = BASE_MGC;
     }
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
-		addTmpActionToBot(() -> {
-			addTmpActionToTop(() -> this.active |= this.delayActive);
-			addToTop(active ? new LimitBreakAction() : apply(p, new StrengthPower(p, this.magicNumber)));
-		});
+		this.updateActive(secondLastIfLastIsThis());
+		atb(active ? new LimitBreakAction() : apply(p, new StrengthPower(p, this.magicNumber)));
 	}
 
 	public void triggerOnGlowCheck() {
-		this.glowColor = active ? AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy() : AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
+		this.glowColor = (active ? AbstractCard.GOLD_BORDER_GLOW_COLOR : AbstractCard.BLUE_BORDER_GLOW_COLOR).cpy();
 	}
 	
     public void triggerOnCardPlayed(AbstractCard c) {
-    	if (this.equals(c)) {
-    		delayActive = true;
-    	} else {
+    	if (!this.equals(c)) {
         	this.updateActive(c);
     	}
     }
+    
+	private AbstractCard secondLastIfLastIsThis() {
+		return lastCard() != this ? lastCard()
+				: reverse(AbstractDungeon.actionManager.cardsPlayedThisCombat).stream().skip(1).findFirst()
+						.orElse(null);
+	}
     
     private AbstractCard lastCard() {
 		return AbstractDungeon.actionManager == null || AbstractDungeon.actionManager.cardsPlayedThisCombat == null
@@ -47,12 +48,6 @@ public class LimitFlipper extends AbstractTestCard {
     	if (c == null)
     		return;
 		this.active = this.upgraded ? c.color == CardColor.COLORLESS : c instanceof LimitFlipper;
-    }
-    
-    public AbstractCard makeStatEquivalentCopy() {
-    	LimitFlipper tmp = (LimitFlipper) super.makeStatEquivalentCopy();
-    	tmp.triggerOnCardPlayed(lastCard());
-    	return tmp;
     }
 
     public void upgrade() {
