@@ -503,7 +503,7 @@
 	"testmod-VoidShard":{
 		"NAME": "Void Shard",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] . You receive #r250% damage outside combats."]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . You receive #r200% damage outside combats."]
 	},
 	
 	"testmod-Restrained":{
@@ -653,6 +653,6 @@
 	"testmod-Extravagant":{
 		"NAME": "Extravagant",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Right click on this relic during your turn, if your max hand size is not #b0, reduce it by half for the combat, play all cards in your hand, the size of your hand times."]
+		"DESCRIPTIONS":["Right click on this relic during your turn, if your max hand size is not #b0, reduce it by half for the combat, play all cards in your hand, the size of your hand times (at most max energy times)."]
 	}
 }
