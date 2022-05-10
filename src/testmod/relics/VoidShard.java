@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import testmod.powers.VoidShardEventDamagePower;
 
 public class VoidShard extends AbstractTestRelic {
-	private static final double DAMAGE_RATE = 2.5;
+	private static final double DAMAGE_RATE = 2;
 	private VoidShardEventDamagePower p;
 	
 	public double damageRate() {
