@@ -3,6 +3,8 @@ package testmod.commands;
 import java.util.ArrayList;
 
 import basemod.BaseMod;
+import testmod.relics.Extravagant;
+import testmod.relics.HyperplasticTissue;
 
 public class HandSizeSet extends TestCommand {
 	
@@ -10,6 +12,8 @@ public class HandSizeSet extends TestCommand {
 		try {
 			int i = Integer.parseInt(tokens[2]);
 			BaseMod.MAX_HAND_SIZE = i;
+			HyperplasticTissue.updateCounter();
+			Extravagant.updateCounter();
 		} catch (Exception e) {
 			HandSize.cmdHelp();
 		}
