@@ -6,6 +6,8 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.powers.AbstractPower;
+
 import christmasMod.mymod.ChristmasMod;
 import testmod.powers.AbstractTestPower;
 
@@ -14,6 +16,14 @@ public class GiftDamagedPower extends AbstractTestPower {
 	private static final PowerStrings PS = Strings(POWER_ID);
 	private static final String NAME = PS.NAME;
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+	
+	public static boolean hasThis() {
+		return MISC.p().powers.stream().anyMatch(p -> p instanceof GiftDamagedPower);
+	}
+	
+	public static AbstractPower getThis() {
+		return MISC.p().powers.stream().filter(p -> p instanceof GiftDamagedPower).findFirst().orElse(null);
+	}
 	
 	public GiftDamagedPower(AbstractCreature owner, int amount) {
 		super(POWER_ID);
