@@ -1,8 +1,10 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.Collections;
 import java.util.Random;
 import java.util.stream.Stream;
+
+import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
@@ -16,11 +18,12 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import testmod.mymod.TestMod;
+import testmod.relics.AbstractTestRelic;
+import testmod.relics.TestBox;
 import testmod.screens.TestBoxRelicSelectScreen;
-import testmod.utils.AdvanceClickableRelic;
 
-public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<TestBox> {
-	public static final UIStrings UI = MISC.uiString();
+public class TestBoxUp extends AbstractTestRelic implements ClickableRelic, UpgradedRelic {
+	private static final UIStrings UI = TestBox.UI;
 	
 	public boolean relicSelected = true;
 	private boolean cardSelected = true;
@@ -40,15 +43,9 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		return tmp;
 	}
 	
-	public TestBox() {
+	public TestBoxUp() {
 		super(RelicTier.SPECIAL, LandingSound.MAGICAL);
-		this.setDuration(300).addRightClickActions(null, () -> {
-			if (this.checkFoolsDay()) {
-				this.relic();
-			} else {
-				this.card();
-			}
-		});
+		this.counter = -1;
 	}
 
 	public void onEquip() {
@@ -84,22 +81,12 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		}
 	}
 	
-	private boolean checkFoolsDay() {
-		return this.getMonth() == 4 && this.getDate() == 1;
-	}
-	
 	private void relic() {
-		if (this.counter == -2 || this.invalidFloor())
-			return;
 		this.checkRandomSet();
-		new TestBoxRelicSelectScreen(true, UI.TEXT[0], this.checkFoolsDay() ? UI.TEXT[1] : UI.TEXT[2],
-				UI.TEXT[3], this).open();
-		this.counter = -2;
+		new TestBoxRelicSelectScreen(true, UI.TEXT[0], UI.TEXT[2] + "+", UI.TEXT[3], this).open();
 	}
 	
 	private void card() {
-		if (this.counter == -2 || this.invalidFloor())
-			return;
 		this.checkRandomSet();
 		pre = AbstractDungeon.screen;
 		if (AbstractDungeon.isScreenUp) {
@@ -115,11 +102,9 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		AbstractCard c = this.priority();
 		if (c != null)
 			g.group.add(0, c);
-		g.group = g.group.stream().limit(3).peek(this::markAsSeen).collect(this.toArrayList());
-		AbstractDungeon.gridSelectScreen.open(g, 1, this.checkFoolsDay() ? UI.TEXT[1] : UI.TEXT[4], false, false, true,
-				false);
+		g.group = g.group.stream().limit(5).peek(this::markAsSeen).collect(this.toArrayList());
+		AbstractDungeon.gridSelectScreen.open(g, 1, UI.TEXT[4], false, false, true, false);
 		AbstractDungeon.overlayMenu.cancelButton.show(UI.TEXT[5]);
-		this.counter = -2;
 	}
 	
 	private void checkRandomSet() {
@@ -147,20 +132,12 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 	}
 
 	@Override
-	public void onSingleRightClick() {
-		if (this.checkFoolsDay()) {
-			this.card();
-		} else {
-			this.relic();
-		}
-	}
-
-	@Override
-	public void onEachRightClick() {
-	}
-
-	@Override
-	public void onDurationEnd() {
+	public void onRightClick() {
+		if (this.counter == -2 || this.invalidFloor())
+			return;
+		this.counter = -2;
+		this.card();
+		this.relic();
 	}
 
 }

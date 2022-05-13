@@ -850,7 +850,9 @@ public interface MiscMethods {
 	}
 	
 	default Stream<AbstractTestRelic> relicStream() {
-		return TestMod.MY_RELICS.stream().flatMap(r -> this.relicStream(r.getClass()));
+		Stream.Builder b = Stream.builder();
+		p().relics.stream().filter(r -> r instanceof AbstractTestRelic).forEach(b::add);
+		return b.build().map(r -> (AbstractTestRelic) r);
 	}
 	
 	default <T extends AbstractTestRelic> Stream<T> relicStream(Class<T> sample) {

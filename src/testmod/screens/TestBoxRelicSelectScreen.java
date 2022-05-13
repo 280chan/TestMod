@@ -15,16 +15,24 @@ import halloweenMod.relics.EventCelebration_Halloween;
 import testmod.mymod.TestMod;
 import testmod.relics.AbstractTestRelic;
 import testmod.relics.TestBox;
+import testmod.relicsup.TestBoxUp;
 import testmod.utils.MiscMethods;
 
 public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscMethods {
 	public static final String[] ILLEGAL = {TestMod.makeID("TestBox")};
 	private TestBox box;
+	private TestBoxUp boxUp;
 	
 	public TestBoxRelicSelectScreen(boolean canSkip, String bDesc, String title, String desc, TestBox box) {
 		super(canSkip, bDesc, title, desc);
 		this.box = box;
 		this.box.relicSelected = false;
+	}
+
+	public TestBoxRelicSelectScreen(boolean canSkip, String bDesc, String title, String desc, TestBoxUp box) {
+		super(canSkip, bDesc, title, desc);
+		this.boxUp = box;
+		this.boxUp.relicSelected = false;
 	}
 
 	private boolean checkIllegal(AbstractTestRelic r) {
@@ -74,7 +82,8 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	}
 	
 	private AbstractTestRelic randomRelic(boolean priority) {
-		return (AbstractTestRelic) TestMod.randomItem((priority ? TestMod.BAD_RELICS : TestMod.RELICS), this.box.rng);
+		return (AbstractTestRelic) TestMod.randomItem((priority ? TestMod.BAD_RELICS : TestMod.RELICS),
+				this.box == null ? this.boxUp.rng : this.box.rng);
 	}
 	
 	private void addAndMarkAsSeen(AbstractRelic r) {
@@ -84,18 +93,22 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	
 	@Override
 	protected void addRelics() {
-		AbstractTestRelic priority = this.priority();
-		if (priority != null)
-			addAndMarkAsSeen(priority);
-		for (AbstractTestRelic r = randomRelic(priority); this.relics.size() < 3; r = randomRelic(priority))
+		AbstractTestRelic pri = this.priority();
+		if (pri != null)
+			addAndMarkAsSeen(pri);
+		for (AbstractTestRelic r = randomRelic(pri); relics.size() < (box == null ? 5 : 3); r = randomRelic(pri))
 			if (!(this.checkIllegal(r) || this.relics.stream().anyMatch(r::sameAs)))
 				addAndMarkAsSeen(r);
 	}
 
 	private void completeSelection() {
-		this.box.relicSelected = true;
-		p().relics.remove(this.box);
-		p().reorganizeRelics();
+		if (this.box != null) {
+			this.box.relicSelected = true;
+			p().relics.remove(this.box);
+			p().reorganizeRelics();
+		} else {
+			this.boxUp.relicSelected = true;
+		}
 	}
 	
 	@Override

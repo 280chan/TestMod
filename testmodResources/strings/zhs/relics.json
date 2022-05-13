@@ -425,7 +425,13 @@
 	"testmod-TestBox":{
 		"NAME": "Test礼物盒",
 		"FLAVOR": "来自彼君的礼物。",
-		"DESCRIPTIONS":["右键单击或右键双击本遗物，从遗物和卡牌中选择一类，再从随机的 #b3 件本 #bmod 内的该类物品中选择 #b1 件获得。使用后本遗物 #y失效 。 #r只能在0层使用 。"]
+		"DESCRIPTIONS":["右键单击或右键双击本遗物，从遗物和卡牌中选择一类，再从随机的 #b3 件本 #bmod 内的该类物品中选择 #b1 件获得。使用后本遗物 #y失效 。 #r只能在0层使用 。 NL #g订阅 #yRelicUpgradeLib #g可以升级该遗物。 "]
+	},
+	
+	"testmod-TestBoxUp":{
+		"NAME": "Test礼物盒+",
+		"FLAVOR": "来自彼君的礼物。",
+		"DESCRIPTIONS":["右键单击本遗物，从随机的 #b5 件本 #bmod 内的遗物和卡牌中各选择 #b1 件获得。使用后本遗物 #y失效 。 #r只能在0层使用 。"]
 	},
 	
 	"testmod-Acrobat":{
