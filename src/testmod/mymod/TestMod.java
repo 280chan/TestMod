@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
@@ -46,6 +47,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import basemod.BaseMod;
+import basemod.DevConsole;
 import basemod.ModPanel;
 import basemod.ReflectionHacks;
 import basemod.helpers.RelicType;
@@ -57,16 +59,19 @@ import testmod.cards.colorless.*;
 import testmod.cards.mahjong.*;
 import testmod.commands.*;
 import testmod.events.*;
+import testmod.patches.SwFPatch;
 import testmod.potions.*;
 import testmod.powers.*;
 import testmod.relics.*;
+import testmod.relicsup.AllUpgradeRelic;
+import testmod.relicsup.TestBoxUp;
 import testmod.screens.RelicSelectScreen;
 import testmod.utils.*;
 import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 5/9/2022
+ * @version 5/13/2022
  * @since 6/17/2018
  */
 
@@ -195,12 +200,17 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 						"77ce59ba93d1f3e3087656846b13cf4b197f693cc21cf2aeaf1197dbf6c2c4a6");
 	}
 	
+	private static final HashMap<String, String> MAKE_ID_MAP = new HashMap<String, String>();
+	
 	public static String makeID(String id) {
+		if (MAKE_ID_MAP.containsKey(id))
+			return MAKE_ID_MAP.get(id);
 		if (id.length() > TestMod.MOD_ID.length() + 1 && id.substring(0, TestMod.MOD_ID.length()).equals(MOD_ID)) {
 			info("这个为什么id重复了前缀:" + id);
 			return id;
 		}
-		return MOD_ID + "-" + id;
+		MAKE_ID_MAP.put(id, MOD_ID + "-" + id);
+		return MAKE_ID_MAP.get(id);
 	}
 	
 	public static String unMakeID(String newID) {
@@ -303,6 +313,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				.collect(toArrayList());
 		
 		MY_RELICS.forEach(AbstractTestRelic::addToMap);
+		if (Loader.isModLoaded("RelicUpgradeLib"))
+			AllUpgradeRelic.add();
 	}
 
 	public static ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
@@ -406,6 +418,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			
 			if (this.relicStream(TestBox.class).count() < 1) {
 				obtain(p(), new TestBox());
+				TestMod.info("礼物盒小于1，添加");
 			}
 			ManifoldPotion.clear();
 		}
@@ -500,11 +513,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receivePostUpdate() {
 		SUB_MOD.forEach(TestMod::editSubModPostUpdate);
 		// TODO Auto-generated method stub
-		AbstractPlayer p = AbstractDungeon.player;
 		
-		if (p != null) {
+		if (p() != null) {
 			if (!TO_OBTAIN.isEmpty() && AbstractDungeon.topLevelEffects.isEmpty()) {
-				obtain(p, TO_OBTAIN.remove(0), true);
+				obtain(p(), TO_OBTAIN.remove(0), true);
 			}
 
 			this.relicStream().peek(TestMod::setActivity).forEach(TestMod::setShow);
@@ -514,15 +526,16 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			
 			if (AbstractDungeon.currMapNode != null) {
 				if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
-					PerfectCombo.TO_UPDATE.stream().filter(p.hand::contains)
+					PerfectCombo.TO_UPDATE.stream().filter(p().hand::contains)
 							.filter(c -> c.magicNumber < c.countUpgrades() + c.misc).forEach(c -> c.applyPowers());
-					Stream<AbstractUpdatableCard> s = AbstractUpdatableCard.TO_UPDATE.stream().filter(p.hand::contains)
-							.peek(c -> c.preApplyPowers(p, AbstractDungeon.getMonsters().hoveredMonster));
+					Stream<AbstractUpdatableCard> s = AbstractUpdatableCard.TO_UPDATE.stream()
+							.filter(p().hand::contains)
+							.peek(c -> c.preApplyPowers(p(), AbstractDungeon.getMonsters().hoveredMonster));
 					if (!this.hasStringDisintegrator())
 						s.forEach(c -> c.applyPowers());
 					else
 						s.close();
-					AbstractUpdatableCard.TO_UPDATE.stream().filter(not(p.hand::contains))
+					AbstractUpdatableCard.TO_UPDATE.stream().filter(not(p().hand::contains))
 							.forEach(c -> c.resetDescription());
 				} else {
 					PerfectCombo.TO_UPDATE.clear();
@@ -754,6 +767,12 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		
 		// TODO
 		initializeModPanel();
+		
+		if (Loader.isModLoaded("chronoMods")) {
+			DevConsole.enabled = true;
+			SwFPatch.StupidSwFPatch.init = false;
+		}
+		
 	}
 	
 	private void initializeModPanel() {
@@ -853,7 +872,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private static void changeConsoleMultiplayer(boolean value) throws ClassNotFoundException {
-		ReflectionHacks.setPrivateStatic(Class.forName("chronoMods.TogetherManager"), "debug", value);
+		ReflectionHacks.setPrivateStaticFinal(Class.forName("chronoMods.TogetherManager"), "debug", value);
+		DevConsole.enabled |= value;
 		spireWithFriendLogger = !value;
 	}
 	
