@@ -2,16 +2,21 @@ package testmod.patches;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Logger;
+
 import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
 import com.evacipated.cardcrawl.modthespire.lib.Matcher;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
+import basemod.DevConsole;
 import basemod.ReflectionHacks;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
@@ -19,10 +24,28 @@ import testmod.mymod.TestMod;
 
 @SuppressWarnings("rawtypes")
 public class SwFPatch {
-	@SpirePatch(cls = "chronoMods.TogetherManager", method = "log", optional = true)
+	public static int inited() {
+		TestMod.info("初始化TogetherManagerPatch1类");
+		return 1;
+	}
+
+	@SpirePatch(cls = "chronoMods.utilities.AntiConsolePrintingPatches$RemoveLogging", method = "patch", paramtypez = {
+			Logger.class, String.class }, optional = true)
+	public static class StupidSwFPatch {
+		public static boolean init = true;
+		@SpirePrefixPatch
+		public static SpireReturn<Logger> Prefix(Logger __result, String s) {
+			return init || TestMod.isLocalTest() ? SpireReturn.Return(__result) : SpireReturn.Continue();
+		}
+	}
+	
+	@SpirePatch(cls = "chronoMods.TogetherManager$ConvenienceDebugPresses", method = "Postfix", paramtypez = {
+			AbstractDungeon.class }, optional = true)
 	public static class TogetherManagerPatch {
-		public static SpireReturn Prefix(String outmessage) {
-			return TestMod.spireWithFriendLogger ? SpireReturn.Continue() : SpireReturn.Return(null);
+		public static int test = inited();
+		@SpirePostfixPatch
+		public static void Postfix(AbstractDungeon dungeon) {
+			DevConsole.enabled = true;
 		}
 	}
 	
