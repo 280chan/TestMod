@@ -1,8 +1,12 @@
 package testmod.relics;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
@@ -10,6 +14,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
@@ -38,6 +43,10 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 			this.beginLongPulse();
 		}
 		return tmp;
+	}
+	
+	public String getUpdatedDescription() {
+		return DESCRIPTIONS[0] + DESCRIPTIONS[Loader.isModLoaded("RelicUpgradeLib") ? 2 : 1];
 	}
 	
 	public TestBox() {
@@ -92,8 +101,8 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		if (this.counter == -2 || this.invalidFloor())
 			return;
 		this.checkRandomSet();
-		new TestBoxRelicSelectScreen(true, UI.TEXT[0], this.checkFoolsDay() ? UI.TEXT[1] : UI.TEXT[2],
-				UI.TEXT[3], this).open();
+		new TestBoxRelicSelectScreen(UI.TEXT[0], this.checkFoolsDay() ? UI.TEXT[1] : UI.TEXT[2], UI.TEXT[3], this.rng,
+				false).open();
 		this.counter = -2;
 	}
 	
@@ -113,9 +122,11 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		g.group = TestMod.CARDS.stream().collect(this.toArrayList());
 		Collections.shuffle(g.group, this.rng);
 		AbstractCard c = this.priority();
+		Predicate<AbstractCard> p = a -> c == null || a.cardID.equals(c.cardID);
+		g.group = g.group.stream().filter(p).limit(c != null ? 4 : 5).collect(this.toArrayList());
 		if (c != null)
 			g.group.add(0, c);
-		g.group = g.group.stream().limit(3).peek(this::markAsSeen).collect(this.toArrayList());
+		g.group.forEach(this::markAsSeen);
 		AbstractDungeon.gridSelectScreen.open(g, 1, this.checkFoolsDay() ? UI.TEXT[1] : UI.TEXT[4], false, false, true,
 				false);
 		AbstractDungeon.overlayMenu.cancelButton.show(UI.TEXT[5]);
@@ -142,6 +153,9 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 				if (o != null)
 					return (AbstractCard) o;
 			}
+			ArrayList<AbstractCard> l = TestMod.CARDS.stream().map(c -> CardLibrary.getCard(c.cardID))
+					.filter(c -> !c.isSeen).map(c -> (AbstractCard) c).collect(toArrayList());
+			return l.size() == 0 ? null : TestMod.randomItem(l, this.rng);
 		}
 		return null;
 	}
