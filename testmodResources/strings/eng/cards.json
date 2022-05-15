@@ -133,8 +133,8 @@
 	},
 	"testmod-Enchant": {
 		"NAME": "Enchant",
-		"DESCRIPTION": "Choose a card from all your cards, set its magicnumber to !M! times original, and it becomes Exhaust on use. Exhaust.",
-		"UPGRADE_DESCRIPTION": "Choose a card from all your cards, set its magicnumber to !M! times original, and it becomes Exhaust on use."
+		"DESCRIPTION": "Choose a card from all your cards, set its magic-number to !M! times of original, and it becomes Exhaust on use. Exhaust.",
+		"UPGRADE_DESCRIPTION": "Choose a card from all your cards, set its magic-number to !M! times of original, and it becomes Exhaust on use."
 	},
 	"testmod-EnhanceArmerment": {
 		"NAME": "Enhance Armerment",
