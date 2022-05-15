@@ -5,10 +5,9 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class Nine extends AbstractRevivalRelicToModifyDamage {
-	public static String ID = "Nine";
 	
 	public Nine() {
-		super(ID, RelicTier.SHOP, LandingSound.MAGICAL);
+		super(RelicTier.SHOP, LandingSound.MAGICAL);
 		this.setTestTier(BAD);
 	}
 	

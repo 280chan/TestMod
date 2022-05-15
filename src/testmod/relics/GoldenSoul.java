@@ -7,11 +7,10 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
 public class GoldenSoul extends AbstractRevivalRelicToModifyDamage {
-	public static String ID = "GoldenSoul";
 	public static final int RATE = 10;
 	
 	public GoldenSoul() {
-		super(ID, RelicTier.BOSS, LandingSound.CLINK);
+		super(RelicTier.BOSS, LandingSound.CLINK);
 		this.setTestTier(BAD);
 		this.counter = 0;
 	}

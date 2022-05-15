@@ -27,6 +27,7 @@ import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 
+import basemod.patches.com.megacrit.cardcrawl.cards.AbstractCard.MultiCardPreview;
 import testmod.actions.AdversityCounterattackAction;
 import testmod.actions.ComboMasterAction;
 import testmod.mymod.TestMod;
@@ -145,13 +146,15 @@ public class AddAnonymousCards implements MiscMethods {
 					if (amount > 0)
 						att(apply(p, new DisillusionmentEchoPower(p, amount)));
 				}), c -> c.upMGC(-1)));
-		add(new AnonymousCard("Dream", 3, CardType.SKILL, CardRarity.RARE, CardTarget.NONE, true, true, false, 0, 0,
-				0, (c, p, m) -> Stream.of(new Discovery(), new WhiteNoise(), new Distraction(), new InfernalBlade())
+		
+		add(new AnonymousCard("Dream", 3, CardType.SKILL, CardRarity.RARE, CardTarget.NONE, true, true, false, 0, 0, 0,
+				(c, p, m) -> Stream.of(new Discovery(), new WhiteNoise(), new Distraction(), new InfernalBlade())
 						.peek(a -> a.costForTurn = 0).map(MakeTempCardInHandAction::new).forEach(this::att),
 				c -> {
 					c.upDesc();
 					c.exhaust = false;
-				}));
+				}, c -> MultiCardPreview.add(c, new InfernalBlade(), new Distraction(), new WhiteNoise(),
+						new Discovery())));
 		add(new AnonymousCard("EnhanceArmerment", 1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE, 0, 0, 1,
 				(c, p, m) -> att(apply(p, new EnhanceArmermentPower(p, c.magicNumber))), c -> c.upCost(0)));
 		add(new AnonymousCard("FightingIntention", 3, CardType.POWER, CardRarity.RARE, CardTarget.SELF, 0, 0, 1,

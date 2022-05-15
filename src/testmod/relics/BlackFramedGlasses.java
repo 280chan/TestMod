@@ -6,10 +6,9 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 
 public class BlackFramedGlasses extends AbstractRevivalRelicToModifyDamage {
-	public static final String ID = "BlackFramedGlasses";
 	
 	public BlackFramedGlasses() {
-		super(ID, RelicTier.RARE, LandingSound.MAGICAL);
+		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public void atTurnStart() {

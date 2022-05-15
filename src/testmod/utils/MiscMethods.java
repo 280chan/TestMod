@@ -956,7 +956,7 @@ public interface MiscMethods {
 		return null;
 	}
 	
-	default <T, R extends T> Class<R> get(Class<T> exception) {
+	default <T, R extends T> Class<R> get(Class<? extends T>... exception) {
 		return bottomClassExcept(exception);
 	}
 	

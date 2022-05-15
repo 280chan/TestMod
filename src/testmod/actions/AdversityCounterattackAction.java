@@ -1,6 +1,8 @@
 package testmod.actions;
 
 import java.util.ArrayList;
+
+import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -57,7 +59,8 @@ public class AdversityCounterattackAction extends AbstractGameAction implements 
 	}
 
 	private static int countAmount(AbstractCreature c, PowerType t) {
-		return c.powers.stream().filter(p -> p.type == t).map(p -> Math.abs(p.amount)).reduce(0, Integer::sum);
+		return c.powers.stream().filter(p -> !(p instanceof InvisiblePower) && p.type == t).map(p -> Math.abs(p.amount))
+				.reduce(0, Integer::sum);
 	}
 
 	public void update() {

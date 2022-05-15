@@ -9,8 +9,8 @@ public abstract class AbstractRevivalRelicToModifyDamage extends AbstractTestRel
 	protected int previousFuckHp = -1;
 	protected boolean deathTriggered = false;
 	
-	public AbstractRevivalRelicToModifyDamage(String id, RelicTier tier, LandingSound sfx) {
-		super(id, tier, sfx);
+	public AbstractRevivalRelicToModifyDamage(RelicTier tier, LandingSound sfx) {
+		super(tier, sfx);
 	}
 	
 	protected abstract int damageModifyCheck(AbstractPlayer p, DamageInfo info, int originalDamage);
