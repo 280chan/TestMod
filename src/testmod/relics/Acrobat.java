@@ -15,7 +15,7 @@ public class Acrobat extends AbstractTestRelic {
 	}
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
-		int index = 1 + AbstractDungeon.player.hand.group.indexOf(c);
+		int index = 1 + p().hand.group.indexOf(c);
 		int state = 0;
 		if (this.counter == -1)
 			this.counter = index;
@@ -23,7 +23,7 @@ public class Acrobat extends AbstractTestRelic {
 			state = this.counter <= index ? 1 : -1;
 		this.counter = index;
 		if (this.state * state < 0) {
-			AbstractDungeon.player.gainGold(1);
+			p().gainGold(1);
 			this.show();
 		}
 		this.updateHandGlow();
@@ -40,8 +40,8 @@ public class Acrobat extends AbstractTestRelic {
 		boolean active = false;
 		if (!this.inCombat())
 			return;
-		for (AbstractCard c : AbstractDungeon.player.hand.group) {
-			int index = 1 + AbstractDungeon.player.hand.group.indexOf(c);
+		for (AbstractCard c : p().hand.group) {
+			int index = 1 + p().hand.group.indexOf(c);
 			int state = 0;
 			if (this.counter == -1)
 				return;
