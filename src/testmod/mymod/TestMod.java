@@ -71,7 +71,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 5/13/2022
+ * @version 5/15/2022
  * @since 6/17/2018
  */
 
@@ -268,7 +268,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new Extravagant(), new Reverse(), new GremlinBalance(), new GoldenSoul(), new GreedyDevil(),
+		addLatest(new Extravagant(), new GremlinBalance(), new GoldenSoul(), new GreedyDevil(),
 				new TemporaryBarricade(), new StomachOfGluttonous(), new PhasePocketWatch());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
@@ -325,10 +325,16 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		BaseMod.loadCustomStrings(c, readString(s.substring(0, s.length() - 6)));
 	}
 	
+	private void loadUpgradedRelicStrings() {
+		String s = "upgraded" + RelicStrings.class.getSimpleName().toLowerCase();
+		BaseMod.loadCustomStrings(RelicStrings.class, readString(s.substring(0, s.length() - 6)));
+	}
+	
 	@Override
 	public void receiveEditStrings() {
 		Stream.of(RelicStrings.class, CardStrings.class, PowerStrings.class, PotionStrings.class, EventStrings.class,
 				UIStrings.class).forEach(this::loadStrings);
+		this.loadUpgradedRelicStrings();
 		SUB_MOD.forEach(TestMod::editSubModStrings);
 	}
 

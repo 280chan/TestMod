@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import basemod.abstracts.CustomRelic;
 import testmod.mymod.TestMod;
-import testmod.relicsup.UpgradedRelic;
+import testmod.relicsup.AbstractUpgradedRelic;
 import testmod.utils.MiscMethods;
 
 public abstract class AbstractTestRelic extends CustomRelic implements MiscMethods {
@@ -92,12 +92,13 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 		return IDS.get(c);
 	}
 	
-	private static <T extends AbstractTestRelic> Class<T> getRelicClass() {
-		return MISC.get(AbstractTestRelic.class);
+	@SuppressWarnings("unchecked")
+	protected static <T extends AbstractTestRelic> Class<T> getRelicClass() {
+		return MISC.get(AbstractTestRelic.class, AbstractRevivalRelicToModifyDamage.class, AbstractUpgradedRelic.class);
 	}
 	
 	protected static boolean isUpgraded() {
-		return getRelicClass().isAssignableFrom(UpgradedRelic.class);
+		return getRelicClass().isAssignableFrom(AbstractUpgradedRelic.class);
 	}
 	
 	public AbstractTestRelic(RelicTier tier, LandingSound sfx) {

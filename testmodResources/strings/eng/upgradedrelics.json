@@ -1,89 +1,89 @@
 {
-	"testmod-ObsoleteBoomerang":{
+	"testmod-ObsoleteBoomerangUp":{
 		"NAME": "Obsolete Boomerang",
 		"FLAVOR": "你越是使用这个回旋镖，你越会沉迷于其中。",
 		"DESCRIPTIONS":["Whenever playing a card, deal a damage of the amount of cards played this turn to random enemy."]
 	},
 	
-	"testmod-BlackFramedGlasses":{
+	"testmod-BlackFramedGlassesUp":{
 		"NAME": "Black Framed Glasses",
 		"FLAVOR": "这个眼镜让你感觉还能再撑一秒。",
 		"DESCRIPTIONS":["At the start of each turn, heal #b1 HP, every enemies lose #b1 HP. Whenever you would receive an unblocked damage not less than half of your Max HP, reduce it to #b1; if it is from yourself, reduce it to #b0."]
 	},
 	
-	"testmod-BouquetWithThorns":{
+	"testmod-BouquetWithThornsUp":{
 		"NAME": "Bouquet With Thorns",
 		"FLAVOR": "捧着这束花，你仿佛不再需要击退你的敌人。",
 		"DESCRIPTIONS":["At the start of each combat, gain #b1 Thorns. Whenever being attacked, gain #b1 Thorns; whenever you receive unblocked attack damage, gain #b1 extra Thorns. Whenever damaged by losing HP, gain #b1 Thorns for each HP lost in this damage."]
 	},
 	
-	"testmod-PortableAltar":{
+	"testmod-PortableAltarUp":{
 		"NAME": "Portable Altar",
 		"FLAVOR": "这个祭坛给予了你强大的能力，但也贪婪地吞噬着你的生命。",
 		"DESCRIPTIONS":["At the start of each turn, lose #r1 HP. Whenever you climb a floor, lose #r1 Max HP. For every #b5 Max HP lost through this relic: At the start of each combat, gain #b1 #yStrength,  #yDexterity and #yPlated Armor; you will not lose HP from this relic in the first #b1 turn of each combat."]
 	},
 	
-	"testmod-EnergyCheck":{
+	"testmod-EnergyCheckUp":{
 		"NAME": "Energy Check",
 		"FLAVOR": "有借有还，除非杀完。",
 		"DESCRIPTIONS":["Right click this relic to advance energy next turn. If the amount of energy your advanced surpass your default energy each turn, for nth energy surpassed, lose #rn HP."]
 	},
 	
-	"testmod-SevenDeadlySins":{
+	"testmod-SevenDeadlySinsUp":{
 		"NAME": "Seven Deadly Sins",
 		"FLAVOR": "原罪是人类的本性。",
 		"DESCRIPTIONS":["Upon pickup, if not having, obtain #yDu-Vu #yDoll, #yDarkstone #yPeriapt, #yBlue #yCandle, #rCurses #rof #rSins. Whenever defeating Boss with each kind of #rSins, you may choose to obtain an extra Boss relic."]
 	},
 	
-	"testmod-Register":{
+	"testmod-RegisterUp":{
 		"NAME": "Register",
 		"FLAVOR": "关机前自动保存，启动时自动读取。",
 		"DESCRIPTIONS":["All the powers that were greater than #b1 at the end of a combat will be saved, you will gain #b1 of each of these powers at the start of next combat. ( #ySL will cause losing saved powers)"]
 	},
 	
-	"testmod-InfectionSource":{
+	"testmod-InfectionSourceUp":{
 		"NAME": "Infection Source",
 		"FLAVOR": "你感到自己变得虚弱了，但同时变得能操纵病毒。",
 		"DESCRIPTIONS":["Your attack damage is decreased by #r50%. All enemies that attacked by you will gain same amount of #yPoison as the damage amount they should receive, however they will only lose #b1 HP from your attack."]
 	},
 	
-	"testmod-OneHitWonder":{
+	"testmod-OneHitWonderUp":{
 		"NAME": "One Hit Wonder",
 		"FLAVOR": "你已知晓死亡。",
 		"DESCRIPTIONS":["Whenever your HP is #b1: your attack has half chance cause non-Boss target to die; Boss enemies' damage is decreased by #b50%, Boss enemies receive #b50% more attack damage and unblocked non-attack damage."]
 	},
 	
-	"testmod-Recursion":{
+	"testmod-RecursionUp":{
 		"NAME": "Recursion",
 		"FLAVOR": "“人理解迭代，神理解递归 。” —— 彼得杜奇",
 		"DESCRIPTIONS":["Draw #b5 additional cards on the first turn of each combat. For rest of turns, draw #b1 fewer card than the previous turn. Reset the progress every #b10 turns."]
 	},
 	
-	"testmod-Temperance":{
+	"testmod-TemperanceUp":{
 		"NAME": "Temperance",
 		"FLAVOR": "“节制是最好的医术。” —— 博恩",
 		"DESCRIPTIONS":["Whenever you add #b3 cards to your deck, you may remove #b1 card from your deck."]
 	},
 	
-	"testmod-Justice":{
+	"testmod-JusticeUp":{
 		"NAME": "Justice",
 		"FLAVOR": "“有多少邪恶，就有多少正义。”",
 		"DESCRIPTIONS":["Whenever gain a negative effect, gain #b1 #yStrength. "]
 	},
 	
-	"testmod-Fortitude":{
+	"testmod-FortitudeUp":{
 		"NAME": "Fortitude",
 		"FLAVOR": "“勇敢不在于能够蔑视危险，而在于认请危险、战胜危险。” —— 布勒森东",
 		"DESCRIPTIONS":["If you end your turn without #yBlock, gain #b3 #yStrength. "]
 	},
 	
-	"testmod-Charity":{
+	"testmod-CharityUp":{
 		"NAME": "Charity",
 		"FLAVOR": "“慈善的行为比金钱更能解除别人的痛苦。” —— 卢梭",
 		"DESCRIPTIONS":["Whenever you gain #ygold, gain #b1 less, increase your Max HP by #b1 instead."]
 	},
 	
-	"testmod-Hope":{
+	"testmod-HopeUp":{
 		"NAME": "Hope",
 		"FLAVOR": "“希望是坚韧的拐杖，忍耐是旅行袋，携带它们，人可以登上永恒之旅。” —— 罗素",
 		"DESCRIPTIONS":[
@@ -93,55 +93,55 @@
 		]
 	},
 	
-	"testmod-Prudence":{
+	"testmod-PrudenceUp":{
 		"NAME": "Prudence",
 		"FLAVOR": "有bug也不是什么重要的问题吧。",
 		"DESCRIPTIONS":["If you have sufficient energy, you can play all the cards that wouldn't be allowed to play. If it is #yStatus or #yCurse, #yExhaust it."]
 	},
 	
-	"testmod-Faith":{
+	"testmod-FaithUp":{
 		"NAME": "Faith",
 		"FLAVOR": "七美德终于做完了。",
 		"DESCRIPTIONS":["Whenever you enter a shop, gain a huge amount of #ygold which will be removed when leaving this shop. After purchasing the first product in this shop, reset your #ygold back to what it was before gaining the huge amount of #ygold. When entering next shop, lose the amount of gold of this product's price, if your #ygold is insufficient, set your #ygold to #b0 and receive a damage of the maximum between #b25% of current HP and #b10% of the amount of overdraft, (at least #b1), the overdraft will remain for next shop."]
 	},
 	
-	"testmod-AssaultLearning":{
+	"testmod-AssaultLearningUp":{
 		"NAME": "Assault Learning",
 		"FLAVOR": "停一下，让我先学一学。",
 		"DESCRIPTIONS":["At the start of each turn, #upgrade the first upgradable card from top of your draw pile for rest of combat."]
 	},
 	
-	"testmod-Muramasa":{
+	"testmod-MuramasaUp":{
 		"NAME": "Muramasa",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever the number of drawing and playing of #b0 cost attacks sum up to #b2, draw #b1 card."]
 	},
 	
-	"testmod-D_4":{
+	"testmod-D_4Up":{
 		"NAME": "Runic Tetrahedron",
 		"FLAVOR": "上面的符文无法辨识。",
 		"DESCRIPTIONS":["Whenever you play a card, one of the following #b4 effects will become effective. NL #yExhaust this card, regain its energy cost, play it one more time, #yNightTerror the card. NL You can know which the effect will become effective for the next card.", "Whenever you play a card, one of the #b4 effects will become effective. NL Next effect: NL "]
 	},
 	
-	"testmod-HeartOfDaVinci":{
+	"testmod-HeartOfDaVinciUp":{
 		"NAME": "Heart Of Da Vinci",
 		"FLAVOR": "你现在感觉到你仿佛能接受所有恩惠。",
 		"DESCRIPTIONS":["Other character's relics are now obtainable. NL Whenever you pickup another character's relic, choose and add #b1 of #b20 of that character's cards to your deck."]
 	},
 	
-	"testmod-IncinerationGenerator":{
+	"testmod-IncinerationGeneratorUp":{
 		"NAME": "Incineration Generator",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn: gain [E] , #yExhaust a card."]
 	},
 	
-	"testmod-IndustrialRevolution":{
+	"testmod-IndustrialRevolutionUp":{
 		"NAME": "Industrial Revolution",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Enemies that had #yArtifact, will not be able to give positive effects to themselves, nor negative effects to player."]
 	},
 	
-	"testmod-AscensionHeart":{
+	"testmod-AscensionHeartUp":{
 		"NAME": "Ascension Heart",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":[
@@ -176,481 +176,481 @@
 		]
 	},
 	
-	"testmod-RealStoneCalender":{
+	"testmod-RealStoneCalenderUp":{
 		"NAME": "The Real Stone Calender",
 		"FLAVOR": "最强遗物——历石",
 		"DESCRIPTIONS":["At the end of each turn, deal the number of turn squared damage to ALL enemies. Reset turn counter for damage every #b7 turns."]
 	},
 	
-	"testmod-Nyarlathotep":{
+	"testmod-NyarlathotepUp":{
 		"NAME": "Nyarlathotep",
 		"FLAVOR": "玩牌类游戏的时候可以无限制的变出Joker，因此立于不败之地。",
 		"DESCRIPTIONS":["All the cards you played, will also be treated as being #yExhausted, being #yDiscarded and a #yPower. Whenever a card is #yExhausted or #yDiscarded, it will also be treated as the other one."]
 	},
 	
-	"testmod-BalancedPeriapt":{
+	"testmod-BalancedPeriaptUp":{
 		"NAME": "Balanced Periapt",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Your Max HP will never change anymore. Whenever you would change your Max HP, change your HP instead by a factor of #b3 if increase, #b1 if decrease."]
 	},
 	
-	"testmod-MagicalMallet":{
+	"testmod-MagicalMalletUp":{
 		"NAME": "Magical Mallet",
 		"FLAVOR": "上面的文字被人抹去了",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] . At the start of each turn, record the maximum and minimum cost of your hand, make all cards with these two costs in your hand switch to the other cost for the turn. Once each combat, you can right click this relic to active the effect."]
 	},
 	
-	"testmod-Laevatain":{
+	"testmod-LaevatainUp":{
 		"NAME": "Laevatain",
 		"FLAVOR": "“KA(兰)KA(兰)A(露)！” ——北凉",
 		"DESCRIPTIONS":["Upon pickup, obtain #b3 random #yCurse. At the start of each combat, gain #b3 #yStrength. Every #b3 turns, for each #yCurse in your deck, gain #b1 #yStrength. "]
 	},
 	
-	"testmod-TimeTraveler":{
+	"testmod-TimeTravelerUp":{
 		"NAME": "The Time Traveler",
 		"FLAVOR": "El Psy Congroo",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] . You have #b100 (Max) #ySAN by default. Whenever #ySL will decrease your #ySAN by #r50%, at the end of combat, gain #b5 #ySAN, gain #b10 #ySAN when you Rest. Whenever you end combat with less than #b20 #ySAN, lose #r10 Max HP. Whenever you start a turn with less than #b10 #ySAN, lose #r1 HP."]
 	},
 	
-	"testmod-Maize":{
+	"testmod-MaizeUp":{
 		"NAME": "The Maize",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["When you play #b5 #ySkill during your turn, gain #b1 #yIntangible. "]
 	},
 	
-	"testmod-DragonStarHat":{
+	"testmod-DragonStarHatUp":{
 		"NAME": "The Dragon Star Hat",
 		"FLAVOR": "并没有在偷懒。",
 		"DESCRIPTIONS":["Whenever you Rest, increase #yCharge #yCapacity by #b1. Whenever you enter a Rest Site, get fully charged. Whenever you enter a Rest Site, start next few combat with #yCharge amount of #yStrength and reduce it by #b1. ", "NL Current #Capacity is #b", ", you will start next combat with #b", " #yStrength. "]
 	},
 	
-	"testmod-SaigiyounoYou":{
+	"testmod-SaigiyounoYouUp":{
 		"NAME": "Saigiyou no You",
 		"FLAVOR": "邪恶又优雅的不祥之物",
 		"DESCRIPTIONS":["Whenever you cause unblocked damage to enemies, heal #b1 HP."]
 	},
 	
-	"testmod-Nine":{
+	"testmod-NineUp":{
 		"NAME": "(9)",
 		"FLAVOR": "这样你还GG，那你就是个BAKA！",
 		"DESCRIPTIONS":["Whenever you would die, lose #b9 Max HP, and reduce the damage to #b1. This Max HP reduction will not be affected."]
 	},
 	
-	"testmod-Motorcycle":{
+	"testmod-MotorcycleUp":{
 		"NAME": "The Motorcycle",
 		"FLAVOR": "人生不能重来。",
 		"DESCRIPTIONS":["When you are in the first turn of Non-Boss combat, you may right click on this relic to escape. NL (Disabled for one combat after #ySL) "]
 	},
 	
-	"testmod-DreamHouse":{
+	"testmod-DreamHouseUp":{
 		"NAME": "Dream House",
 		"FLAVOR": "简单，粗暴，直接。",
 		"DESCRIPTIONS":["Upon pickup, obtain #yHappy #yFlower and #yLantern. Gain [E] at the start of each turn. You can #rONLY obtain cards with #yCommon #yRarity."]
 	},
 	
-	"testmod-CrystalShield":{
+	"testmod-CrystalShieldUp":{
 		"NAME": "Crystal Shield",
 		"FLAVOR": "你构筑的防御，透过这个护盾后，看起来仿佛被模糊了。",
 		"DESCRIPTIONS":["If you have gained any #yBlock in your turn, gain #b1 #yBlur when this turn ends."]
 	},
 	
-	"testmod-Alchemist":{
+	"testmod-AlchemistUp":{
 		"NAME": "The Alchemist",
 		"FLAVOR": "无法无中生有，却可以复制一个已有的样本。",
 		"DESCRIPTIONS":["Upon pickup, gain #b1 #yPotion slot. For each combat, during your turn, you have #b1 chance to right click on this relic to use your first usable #yPotion without consume it. Outside combat, right click on this relic to change the order of your potions."]
 	},
 	
-	"testmod-StringDisintegrator":{
+	"testmod-StringDisintegratorUp":{
 		"NAME": "String Disintegrator",
 		"FLAVOR": "这台机器上没有任何文字，但你不知为何能理解它的用途。",
 		"DESCRIPTIONS":["Gain [E] at the start of each turn. Cards will be #rTEXTLESS during combat."]
 	},
 	
-	"testmod-HarvestTotem":{
+	"testmod-HarvestTotemUp":{
 		"NAME": "The Harvest Totem",
 		"FLAVOR": "尖塔住民祈求丰收的象征，仿佛能给尖塔带来生命力。",
 		"DESCRIPTIONS":["Upon pickup, doubles your Max HP. Your Max HP increase and healing are doubled. normal enemies have #b110% Max HP, elites have #b120% Max HP, #yBosses have #b150% Max HP."]
 	},
 	
-	"testmod-BatchProcessingSystem":{
+	"testmod-BatchProcessingSystemUp":{
 		"NAME": "Batch Processing System",
 		"FLAVOR": "Modular computing.",
 		"DESCRIPTIONS":["Lose [E] at the start of each turn. NL Whenever you play two cards of same cost in a row, gain [E] ."]
 	},
 	
-	"testmod-CardMagician":{
+	"testmod-CardMagicianUp":{
 		"NAME": "The Card Magician",
 		"FLAVOR": "A miracle in a flash.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] and shuffle your discard pile into your draw pile."]
 	},
 	
-	"testmod-NegativeEmotionEnhancer":{
+	"testmod-NegativeEmotionEnhancerUp":{
 		"NAME": "The Negative Emotion Enhancer",
 		"FLAVOR": "Collect, sort, transform.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] , gain #yFragile, #yWeak, #yVulnerable in order. Whenever an enemy dies, heal #b1 HP. At the end of combat, increase your Max HP by #b1. "]
 	},
 	
-	"testmod-Brilliant":{
+	"testmod-BrilliantUp":{
 		"NAME": "Brilliant",
 		"FLAVOR": "Brilliant!",
 		"DESCRIPTIONS":["Whenever an enemy dies and at the start of each combat, deal an damage of half of your #ygold to the power of #b2/3 to ALL enemies."]
 	},
 	
-	"testmod-IWantAll":{
+	"testmod-IWantAllUp":{
 		"NAME": "I Want All",
 		"FLAVOR": "小孩子才做选择；而我，全都要！",
 		"DESCRIPTIONS":["You have #b10 chances to right click on this relic at the combat reward screen, to make a copy of the card reward.", "This relic has been used up."]
 	},
 	
-	"testmod-Antiphasic":{
+	"testmod-AntiphasicUp":{
 		"NAME": "Antiphasic",
 		"FLAVOR": "我想要挨一顿毒打！",
 		"DESCRIPTIONS":["Whenever you would lose HP not less than #b25% Max HP, increase your Max HP by #b5 before you lose HP. This relic will #rNOT be active when your Max HP and the damage amount are both #b1. "]
 	},
 	
-	"testmod-IntensifyImprint":{
+	"testmod-IntensifyImprintUp":{
 		"NAME": "Intensify Imprint",
 		"FLAVOR": "你还能坚持到什么时候呢？",
 		"DESCRIPTIONS":["Whenever you cause an unblocked damage to enemies, your final damage to enemies will be increased by #b1 till next turn starts.", "Until next turn starts, Your final damage to enemies is increased by #b", ". "]
 	},
 	
-	"testmod-KeyOfTheVoid":{
+	"testmod-KeyOfTheVoidUp":{
 		"NAME": "The Key Of The Void",
 		"FLAVOR": "虚空是这个世界的终极答案。",
 		"DESCRIPTIONS":["At the end of combat, for each other #yBoss relic you have, remove #b1 card from your deck.", "Choose to remove ", " card(s) from your deck."]
 	},
 	
-	"testmod-ThousandKnives":{
+	"testmod-ThousandKnivesUp":{
 		"NAME": "Thousand Knives",
 		"FLAVOR": "不要停下来啊。",
 		"DESCRIPTIONS":["Whenever you draw a #b0 cost #yAttack, add a copy to your hand. Whenever you play a #b0 cost #yAttack, add a copy to your discard pile, and for each #b0 cost #yAttack in your hand, gain #b1 #yBlock. "]
 	},
 	
-	"testmod-FatalChain":{
+	"testmod-FatalChainUp":{
 		"NAME": "Fatal Chain",
 		"FLAVOR": "Die! Die! Die!",
 		"DESCRIPTIONS":["Whenever you kills an enemy, deal a damage of #b271.8% of the overkill of the fatal damage to ALL enemies."]
 	},
 	
-	"testmod-CyclicPeriapt":{
+	"testmod-CyclicPeriaptUp":{
 		"NAME": "Cyclic Periapt",
 		"FLAVOR": "不准走！再来一次。",
 		"DESCRIPTIONS":["Cards which would #yExhaust when played will instead discard at the first time."]
 	},
 	
-	"testmod-EqualTreatment":{
+	"testmod-EqualTreatmentUp":{
 		"NAME": "Equal Treatment",
 		"FLAVOR": "一个都跑不了。",
 		"DESCRIPTIONS":["The first card you played which is targeting to single enemy each turn will also affect ALL other enemies."]
 	},
 	
-	"testmod-ConstraintPeriapt":{
+	"testmod-ConstraintPeriaptUp":{
 		"NAME": "Constraint Periapt",
 		"FLAVOR": "交锋才不是最菜的呢！",
 		"DESCRIPTIONS":["Start combats with #b1 #yBurn in your draw pile. For each card that is #yUnplayable in your hand when you end your turn with, heal #b1 and deal #b10 damage to ALL enemies."]
 	},
 	
-	"testmod-InjuryResistance":{
+	"testmod-InjuryResistanceUp":{
 		"NAME": "Injury Resistance",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you lose HP, ALL future final HP loss would reduced by #b1. NL When you completely block a HP loss through this relic, reset the reduction back to #b0. "]
 	},
 	
-	"testmod-Déjàvu":{
+	"testmod-DéjàvuUp":{
 		"NAME": "Déjàvu",
 		"FLAVOR": "Déjàvu.",
 		"DESCRIPTIONS":["If you end your turn without energy, and ALL the cards played this turn have same card type, add the copies of these cards into your hand, which cost #b0 until the end of turn and #yExhaust when played."]
 	},
 	
-	"testmod-DeterminationOfClimber":{
+	"testmod-DeterminationOfClimberUp":{
 		"NAME": "The Determination Of Climber",
 		"FLAVOR": "然而某些登山者总是喜欢原地踏步。",
 		"DESCRIPTIONS":["Lose [E] at the start of each turn. NL Whenever you play a card cost more than the previous one, for every more cost, gain [E] , heal #b1, draw #b1, deal #b1 damage to ALL enemies, gain #b1 #ygold. "]
 	},
 	
-	"testmod-BloodSacrificeSpiritualization":{
+	"testmod-BloodSacrificeSpiritualizationUp":{
 		"NAME": "Blood Sacrifice Spiritualization",
 		"FLAVOR": "血祭，降临。",
 		"DESCRIPTIONS":["At the start of each combat, you may choose to lose HP of #b10% of your Max HP (at least #b1), to choose a card from ALL your cards to auto play. Before auto playing it, if it is upgradable, #yUpgrade it for this run."]
 	},
 	
-	"testmod-LifeArmor":{
+	"testmod-LifeArmorUp":{
 		"NAME": "Life Armor",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you lose HP in combat, gain same amount of #yBlock, and increase future #yBlock gain through this relic by #b1 for this combat."]
 	},
 	
-	"testmod-CasingShield":{
+	"testmod-CasingShieldUp":{
 		"NAME": "Casing Shield",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you gain #yBlock, increase future #yBlock gain by #b1 for this turn."]
 	},
 	
-	"testmod-TestBox":{
-		"NAME": "Test Box",
+	"testmod-TestBoxUp":{
+		"NAME": "Test Box+",
 		"FLAVOR": "My present.",
-		"DESCRIPTIONS":["Right click or double right click on this relic to active relic reward or card reward. You may choose a reward from #b3. #rThis #rrelic #rcan #rONLY #ractive #ronce. #rThis #rrelic #rcan #rONLY #rbe #rused #rat #rfloor #r0.", " NL #gSubscribe #yRelicUpgradeLib #gto #gget #gbenefit #gof #gupgraded #gversion #gof #gthis #grelic.", " NL #gComplete #gcurrent #groom #gand #gclick #gkey #gto #gchoose #gupgrade."]
+		"DESCRIPTIONS":["Right click on this relic to active, select a reward from #b5 to get, for both relic reward and card rewards. #rThis #rrelic #rcan #rONLY #ractive #ronce. #rThis #rrelic #rcan #rONLY #rbe #rused #rat #rfloor #r0. "]
 	},
 	
-	"testmod-Acrobat":{
-		"NAME": "The Acrobat",
+	"testmod-AcrobatUp":{
+		"NAME": "The Acrobat+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["During your turn, whenever the numbering of two cards you play in a row has different change direction from the previous one, gain #b1 #ygold. "]
+		"DESCRIPTIONS":["During combat, whenever the ordinal of two cards you play in a row has different change direction from the previous one, gain #b1 #ygold. Whenever you play leftmost or rightmost card in your hand, gain #b1 #ygold."]
 	},
 	
-	"testmod-Mahjong":{
+	"testmod-MahjongUp":{
 		"NAME": "The Mahjong (Work In Progress)",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["#rBUG #rALERT. #rUNFINISHED #rRELIC. 在战斗中进行麻将游戏，每回合开始摸一张麻将牌后选择切出一张，将其加入手牌。打出 #y宝牌 的效果翻倍。根据和牌点数获得其他效果。 NL #r这件遗物还未制作完成，只能发挥一小部分效果，并含有许多bug(初次战斗闪退，重开自动修复)若目前不想测试本遗物可选择重开。"]
 	},
 	
-	"testmod-ArcanaOfDestiny":{
+	"testmod-ArcanaOfDestinyUp":{
 		"NAME": "Arcana of Destiny",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["For all enemies that have hp percentage less than player, for every #b1% less, receiving #b2% more damage. For all enemies that have hp percentage more than player, for every #b1% more, its Attack damage will be #b1% less."]
 	},
 	
-	"testmod-TheFather":{
+	"testmod-TheFatherUp":{
 		"NAME": "The Father",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you an enemy are being damage by an amount of a prime number, deal a damage of the ordinal number of that prime number to all other enemy. Whenever you an enemy are being damage by an amount of a composite number, deal damage of the ordinal number of all prime factors to the enemy. Whenever this relic cause a damage, add #b1 to its counter, whenever it reaches a prime number, gain #b1 gold."]
 	},
 	
-	"testmod-Fanaticism":{
+	"testmod-FanaticismUp":{
 		"NAME": "Fanaticism",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] , #yWrath: gain [E] . At the end of each turn, #yWrath: exit #yWrath. Otherwise, enter #yWrath. Whenever you lose hp, for each point you lose, gain #b1% hp absorb, #yWrath: gain double.", " NL Current hp absorb: #b", "%"]
 	},
 	
-	"testmod-TurbochargingSystem":{
+	"testmod-TurbochargingSystemUp":{
 		"NAME": "Turbocharging System",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Increase base damage of all your cards by amount of its cost."]
 	},
 	
-	"testmod-HeartOfStrike":{
+	"testmod-HeartOfStrikeUp":{
 		"NAME": "Heart of Strike",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["All your #yStrike cards deal #b2 times damage, whenever you #yExhaust a #yStrike card, increase #b1 times of damage this combat.", " NL #yStrike cards deal #b", " times damage."]
 	},
 	
-	"testmod-RainbowHikingShoes":{
+	"testmod-RainbowHikingShoesUp":{
 		"NAME": "Rainbow Hiking Shoes",
 		"FLAVOR": "The shoes shine light with changing color when walking.",
 		"DESCRIPTIONS":["Whenever cards with different rarity played in a row, draw #b1 card."]
 	},
 	
-	"testmod-GoldenSoul":{
+	"testmod-GoldenSoulUp":{
 		"NAME": "Golden Soul",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Upon pickup, lose #b75% of your #yMaximum #yhp. Whenever receive a fatal damage, instead of losing hp, lose same amount of #yGold, if you don't have enough #yGold, lose all and take rest of damage. For each fatal damage this relic blocks, you gain #b10% more gold in future.", " Gold rate: #b", "% "]
 	},
 	
-	"testmod-RandomTest":{
+	"testmod-RandomTestUp":{
 		"NAME": "Random Test",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each combat, add a random #yTest card to your hand. Whenever you play a #yColorless card, a random card in your hand costs #b1 less for the turn."]
 	},
 	
-	"testmod-TemporaryBarricade":{
+	"testmod-TemporaryBarricadeUp":{
 		"NAME": "Temporary Barricade",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At start of each turn, if you have #yBlock, gain [E] . Right click this relic to toggle. When active: Gain #yBarricade at start of each combat. At start of each turn, reduce your #yBlock to its natural logarithm raised to power of #b2.5 ."]
 	},
 	
-	"testmod-GremlinBalance":{
+	"testmod-GremlinBalanceUp":{
 		"NAME": "Gremlin Balance",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At start of each turn, gain [E] for each enemy has no more hp than you, draw #b1 card for each enemy has no less hp than you."]
 	},
 	
-	"testmod-RetroFilter":{
+	"testmod-RetroFilterUp":{
 		"NAME": "Retro Filter",
 		"FLAVOR": "这个阴间滤镜能让商人视灰色如粪土…这家伙这么精明是怎么被骗过去的？",
 		"DESCRIPTIONS":["Price of #yColorless cards in shop is reduced from #b120% of normal card price to #b60%, for each normal card you have decrease an extra #b1%. Whenever you play a #yColorless card, gain #b1 #yGold."]
 	},
 	
-	"testmod-DominatorOfWeakness":{
+	"testmod-DominatorOfWeaknessUp":{
 		"NAME": "Dominator of Weakness",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":[" #yVulnerable and #yWeakened no longer only affect once on enemies, instead it will affect its amount times."]
 	},
 	
-	"testmod-ShadowAmulet":{
+	"testmod-ShadowAmuletUp":{
 		"NAME": "Shadow Amulet",
 		"FLAVOR": "你失去的那些一切，都会悄无声息的守护着你。",
 		"DESCRIPTIONS":["Whenever you lose #bn #yBlock, you gain #b1 #yBlock when turn ends for the following #bn turns.", "Following #yBlock gain when your turn end:"]
 	},
 	
-	"testmod-HyperplasticTissue":{
+	"testmod-HyperplasticTissueUp":{
 		"NAME": "Hyperplastic Tissue",
 		"FLAVOR": "杀不死你的，都会让你更加强大。",
 		"DESCRIPTIONS":["Increase maximum hand size by #b1 for rest of the run. Whenever you draw a #yStatus or #yCurse card, increase maximum hand size by #b1 for rest of the combat."]
 	},
 	
-	"testmod-TraineeEconomist":{
+	"testmod-TraineeEconomistUp":{
 		"NAME": "Trainee Economist",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you kill an enemy, your future #yGold gain increase by #b5% (add), shops prices decrease by #b5% (multiply). Killing #yElites and #yBoss enemy would be counted as #b2 and #b3 enemies respectively. ( #yGold amount will not change in rewards)", " NL Current #yGold multiplier: #b", "% NL Current price multiplier: #b", "%"]
 	},
 	
-	"testmod-VentureCapital":{
+	"testmod-VentureCapitalUp":{
 		"NAME": "Venture Capital",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Upon pick up, lose #All #yGold. Whenever you gain #yGold, lose #b1 #yGold. For each #b1 #yGold you lose, increase future #yGold gain by #b1% (add). ( #yGold amount will not change in rewards)", " NL Current #yGold multiplier: #b", "%"]
 	},
 	
-	"testmod-VoidShard":{
+	"testmod-VoidShardUp":{
 		"NAME": "Void Shard",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] . You receive #r200% damage outside combats."]
 	},
 	
-	"testmod-Restrained":{
+	"testmod-RestrainedUp":{
 		"NAME": "Restrained",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] . You cannot play #yPower #yCard at first turn of each combat."]
 	},
 	
-	"testmod-Dye":{
+	"testmod-DyeUp":{
 		"NAME": "Dye",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["One chance each combat, right click this relic during your turn, choose a card from your hand, replace all cards in your draw pile and discard pile to a copy of the card."]
 	},
 	
-	"testmod-GreedyDevil":{
+	"testmod-GreedyDevilUp":{
 		"NAME": "Greedy Devil",
 		"FLAVOR": "它在你的肩头飞行着，渴求着过量的献血。",
 		"DESCRIPTIONS":["Whenever you kill an enemy, gain same amount of #yGold as the overkill of the fatal damage. At most #b100 #yGold at a time."]
 	},
 	
-	"testmod-ResonanceStone":{
+	"testmod-ResonanceStoneUp":{
 		"NAME": "Resonance Stone",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you #yUpgrade a card in your deck, #yUpgrade all cards with same name in your deck which are #yUpgradable. Whenever a card is #Upgraded by this relic, gain #b1 #yGold and max health, each active increase future effect by #b1."]
 	},
 	
-	"testmod-GlassSoul":{
+	"testmod-GlassSoulUp":{
 		"NAME": "Glass Soul",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you get a relic, record it into list when you enter #rnext #rroom. Whenever you win a combat without losing hp, gain #b1 count. Outside combat you can right click this relic to choose a relic from list, for each same relic you have, use #b1 count or #b10% its price to get it again."]
 	},
 	
-	"testmod-GiantKiller":{
+	"testmod-GiantKillerUp":{
 		"NAME": "Giant Killer",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Enemies have more #yMax #yHP than you, for each #b1% higher, receive #b1% more damage."]
 	},
 	
-	"testmod-TwinklingStar":{
+	"testmod-TwinklingStarUp":{
 		"NAME": "Twinkling Star",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever an relic other than Twinkling Star flashes, damages #yAll #yEnemies by #b", ". For every #b128 effects, doubles the damage. Next doubling at #b", " "]
 	},
 	
-	"testmod-Metronome":{
+	"testmod-MetronomeUp":{
 		"NAME": "Metronome",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["When your first #bn cards played in a combat is same as last combat, gain #bn #yMax #yHP.", " Cards played in last combat"]
 	},
 	
-	"testmod-Gather":{
+	"testmod-GatherUp":{
 		"NAME": "Gather",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each combat, if you have two relics with same length description, you can choose to select one of them to convert to a same-tier relic and kill a random enemy."]
 	},
 	
-	"testmod-MistCore":{
+	"testmod-MistCoreUp":{
 		"NAME": "Mist Core",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Change ALL normal combat rooms into #y? room, except the first room in Each Act. Whenever enters #y? room, gain #b1 #yMax #yHP, otherwise lose #b1 #yMax #yHP."]
 	},
 	
-	"testmod-HolyLightProtection":{
+	"testmod-HolyLightProtectionUp":{
 		"NAME": "Holy Light Protection",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["If multiple enemies appeared in a combat, only the first two can cause damage on you."]
 	},
 	
-	"testmod-EvilDagger":{
+	"testmod-EvilDaggerUp":{
 		"NAME": "Evil Dagger",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each combat, an Attack card of yours is attached. Whenever that Attack card kills a non-minion enemy, cause extra effect of one of #yFeed, #yLesson #yLearned and #yHand #yof #yGreed.", "Attached to #y", "."]
 	},
 	
-	"testmod-Match3":{
+	"testmod-Match3Up":{
 		"NAME": "Match 3",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn after drawing cards, if you have multiple of #b3 relics, gain [E] , or else draw #b1 card; if you have multiple of #b3 cards in draw pile, gain [E] , or else draw #b1 card."]
 	},
 	
-	"testmod-PhasePocketWatch":{
+	"testmod-PhasePocketWatchUp":{
 		"NAME": "Phase Pocket Watch",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["You no longer lose HP during enemy turn, instead increase relic counter. At the start of your turn, choose from Lose #r2 HP [ #bcounter/2 ] times and Lose [ #rcounter/2 ] HP #b2 times. You can right click this relic during your turn or outside combat to switch between #yChoose #yEverytime and #yAlways #y2xn and #yAlways #ynx2 .", " NL Current mode: ", "#yChoose #yEverytime ", "#yAlways #y2xn ", "#yAlways #ynx2 "]
 	},
 	
-	"testmod-StomachOfGluttonous":{
+	"testmod-StomachOfGluttonousUp":{
 		"NAME": "Stomach Of Gluttonous",
 		"FLAVOR": "这个是我改动后的最终版。这个改动可以在打三柱这种精英时回多次血。\n——Little Wolf影幽",
 		"DESCRIPTIONS":["Whenever you kill an enemy that is #yElite or #yBoss, gain current hp / max hp #ycount , and fully heal. Whenever you increase max hp, increase #ycount % more."]
 	},
 	
-	"testmod-Encyclopedia":{
+	"testmod-EncyclopediaUp":{
 		"NAME": "Encyclopedia",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["For each time you meet an enemy, you deal #b50% more damage to enemies with same name in this run."]
 	},
 	
-	"testmod-GoldenContract":{
+	"testmod-GoldenContractUp":{
 		"NAME": "Golden Contract",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["You gain #b50% less #yGold, each time you gain #yGold, you gain #b10% less #yGold in future. Your base Attack damage is increased by amount of your #yGold, whenever you play an Attack card, lose #b5% #yGold (at least #b1 ).", " NL Current #yGold rate: NL #b", "% "]
 	},
 	
-	"testmod-ConjureBlade":{
+	"testmod-ConjureBladeUp":{
 		"NAME": "Conjure Blade",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Base damage and #yBlock of All cards in your hand are increased by the sum of #yCost of their neighboring cards."]
 	},
 	
-	"testmod-PortablePortal":{
+	"testmod-PortablePortalUp":{
 		"NAME": "Portable Portal",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the start of each turn, gain [E] . When you enter the first room after pickup, you will teleport to #yBoss room."]
 	},
 	
-	"testmod-SpireNexus":{
+	"testmod-SpireNexusUp":{
 		"NAME": "Spire Nexus",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["When you encounter random #yEvent, choose from #b3 #yEvents instead. Outside combat, right click on this relic to toggle it on and off."]
 	},
 	
-	"testmod-FissionDevice":{
+	"testmod-FissionDeviceUp":{
 		"NAME": "Fission Device",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Once per turn, right click on this relic to choose a card from your hand which has #yCost greater than #b1, remove it from current combat, but add its #yCost copies with all values #b1 / #yCost of original to your hand, remainder become an extra #b0 #yCost copy. All copies exhaust when use. NL "]
 	},
 	
-	"testmod-AbnormalityKiller":{
-		"NAME": "Abnormality Killer",
+	"testmod-AbnormalityKillerUp":{
+		"NAME": "Abnormality Killer+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["For each debuff an enemy has, it receives #b25% more damage."]
+		"DESCRIPTIONS":["For each buff and debuff an enemy has, it receives #b25% more damage."]
 	},
 	
-	"testmod-DemonSummon":{
+	"testmod-DemonSummonUp":{
 		"NAME": "Demon Summon",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["At the first turn each combat, gain #b1 #yDemon #yForm, for each turn starts after first turn, gain #bTurn #bCount #yDemon #ySummon of tier #bTurn #bCount. Tier #bn #yDemon #ySummon gives you its amount #yDemon #ySummon of tier one lower, tier #b2 #yDemon #ySummon gives you #yDemon #yForm instead of #yDemon #ySummon."]
 	},
 	
-	"testmod-Reverse":{
+	"testmod-ReverseUp":{
 		"NAME": "Reverse",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Whenever you gain a buff or debuff with #rnegative amount, change its amount to #gabsolute #gvalue of original amount."]
 	},
 	
-	"testmod-Extravagant":{
+	"testmod-ExtravagantUp":{
 		"NAME": "Extravagant",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Right click on this relic during your turn, if your max hand size is not #b0, reduce it by half for the combat, play all cards in your hand, the size of your hand times (at most max energy times)."]

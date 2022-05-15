@@ -23,7 +23,8 @@ public class AllUpgradeRelic {
 	
 	public static void add() {
 		Register.set(new TestBox(), new TestBoxUp(), 99);
-		
+		Register.set(new AbnormalityKiller(), new AbnormalityKillerUp(), 150);
+		Register.set(new Acrobat(), new AcrobatUp(), 50);
 		
 	}
 	
