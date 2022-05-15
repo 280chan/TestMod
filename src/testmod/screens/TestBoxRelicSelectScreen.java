@@ -1,6 +1,7 @@
 package testmod.screens;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -15,32 +16,21 @@ import halloweenMod.relics.EventCelebration_Halloween;
 import testmod.mymod.TestMod;
 import testmod.relics.AbstractTestRelic;
 import testmod.relics.TestBox;
-import testmod.relicsup.TestBoxUp;
 import testmod.utils.MiscMethods;
 
 public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscMethods {
-	public static final String[] ILLEGAL = {TestMod.makeID("TestBox")};
-	private TestBox box;
-	private TestBoxUp boxUp;
+	public static final String[] ILLEGAL = { TestMod.makeID("TestBox") };
+	private Random rng;
+	private boolean boxUp = false;
 	
-	public TestBoxRelicSelectScreen(boolean canSkip, String bDesc, String title, String desc, TestBox box) {
-		super(canSkip, bDesc, title, desc);
-		this.box = box;
-		this.box.relicSelected = false;
-	}
-
-	public TestBoxRelicSelectScreen(boolean canSkip, String bDesc, String title, String desc, TestBoxUp box) {
-		super(canSkip, bDesc, title, desc);
-		this.boxUp = box;
-		this.boxUp.relicSelected = false;
+	public TestBoxRelicSelectScreen(String bDesc, String title, String desc, Random rng, boolean up) {
+		super(true, bDesc, title, desc);
+		this.rng = rng;
+		this.boxUp = up;
 	}
 
 	private boolean checkIllegal(AbstractTestRelic r) {
-		return checkIllegal(r.relicId);
-	}
-	
-	private boolean checkIllegal(String id) {
-		return Stream.of(ILLEGAL).anyMatch(id::equals);
+		return Stream.of(ILLEGAL).anyMatch(r.relicId::equals);
 	}
 	
 	private AbstractTestRelic priority() {
@@ -73,8 +63,8 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 				return (AbstractTestRelic) o;
 		}
 		ArrayList<AbstractTestRelic> l = TestMod.RELICS.stream().map(r -> RelicLibrary.getRelic(r.relicId))
-				.filter(r -> !r.isSeen).map(r -> (AbstractTestRelic)r).collect(toArrayList());
-		return l.size() == 0 ? null : TestMod.randomItem(l, this.box.rng);
+				.filter(r -> !r.isSeen).map(r -> (AbstractTestRelic) r).collect(toArrayList());
+		return l.size() == 0 ? null : TestMod.randomItem(l, this.rng);
 	}
 	
 	private AbstractTestRelic randomRelic(AbstractTestRelic priority) {
@@ -82,8 +72,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	}
 	
 	private AbstractTestRelic randomRelic(boolean priority) {
-		return (AbstractTestRelic) TestMod.randomItem((priority ? TestMod.BAD_RELICS : TestMod.RELICS),
-				this.box == null ? this.boxUp.rng : this.box.rng);
+		return (AbstractTestRelic) TestMod.randomItem((priority ? TestMod.BAD_RELICS : TestMod.RELICS), this.rng);
 	}
 	
 	private void addAndMarkAsSeen(AbstractRelic r) {
@@ -96,19 +85,16 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		AbstractTestRelic pri = this.priority();
 		if (pri != null)
 			addAndMarkAsSeen(pri);
-		for (AbstractTestRelic r = randomRelic(pri); relics.size() < (box == null ? 5 : 3); r = randomRelic(pri))
+		for (AbstractTestRelic r = randomRelic(pri); relics.size() < (this.boxUp ? 5 : 3); r = randomRelic(pri))
 			if (!(this.checkIllegal(r) || this.relics.stream().anyMatch(r::sameAs)))
 				addAndMarkAsSeen(r);
 	}
 
 	private void completeSelection() {
-		if (this.box != null) {
-			this.box.relicSelected = true;
-			p().relics.remove(this.box);
-			p().reorganizeRelics();
-		} else {
-			this.boxUp.relicSelected = true;
+		if (!this.boxUp) {
+			p().relics.remove(relicStream(TestBox.class).findFirst().orElse(null));
 		}
+		p().reorganizeRelics();
 	}
 	
 	@Override
