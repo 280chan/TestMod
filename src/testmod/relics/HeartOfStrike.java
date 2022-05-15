@@ -14,7 +14,7 @@ public class HeartOfStrike extends AbstractTestRelic {
 	private HeartOfStrikePower hosp;
 	
 	public HeartOfStrike() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
+		super(RelicTier.UNCOMMON, LandingSound.HEAVY);
 		this.counter = 2;
 	}
 	
