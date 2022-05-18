@@ -255,9 +255,9 @@
 	},
 	
 	"testmod-AlchemistUp":{
-		"NAME": "The Alchemist",
+		"NAME": "The Alchemist+",
 		"FLAVOR": "无法无中生有，却可以复制一个已有的样本。",
-		"DESCRIPTIONS":["Upon pickup, gain #b1 #yPotion slot. For each combat, during your turn, you have #b1 chance to right click on this relic to use your first usable #yPotion without consume it. Outside combat, right click on this relic to change the order of your potions."]
+		"DESCRIPTIONS":["Upon pickup, gain #b1 #yPotion slot. During each of your turn, you have #b1 chance to right click on this relic to use your first usable #yPotion without consume it. Outside combat, right click on this relic to change the order of your potions."]
 	},
 	
 	"testmod-StringDisintegratorUp":{

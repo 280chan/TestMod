@@ -25,6 +25,7 @@ public class AllUpgradeRelic {
 		Register.set(new TestBox(), new TestBoxUp(), 99);
 		Register.set(new AbnormalityKiller(), new AbnormalityKillerUp(), 150);
 		Register.set(new Acrobat(), new AcrobatUp(), 50);
+		Register.set(new Alchemist(), new AlchemistUp(), true, false, false);
 		
 	}
 	
