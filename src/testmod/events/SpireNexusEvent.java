@@ -1,5 +1,6 @@
 package testmod.events;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import com.megacrit.cardcrawl.events.GenericEventDialog;
 import com.megacrit.cardcrawl.helpers.EventHelper;
 import com.megacrit.cardcrawl.localization.EventStrings;
 
+import basemod.BaseMod;
 import basemod.eventUtil.EventUtils;
 import testmod.relics.SpireNexus;
 
@@ -35,7 +37,9 @@ public class SpireNexusEvent extends AbstractTestEvent {
 		tmp = Stream.of(AbstractDungeon.shrineList, AbstractDungeon.specialOneTimeEventList, AbstractDungeon.eventList)
 				.flatMap(l -> l.stream()).filter(SpireNexusEvent::canEventSpawn).collect(toArrayList());
 		Collections.shuffle(tmp, new Random(this.copyRNG(AbstractDungeon.eventRng).randomLong()));
-		tmp = tmp.stream().limit(3).collect(toArrayList());
+		ArrayList<String> ids = tmp.stream().limit(3).collect(toArrayList());
+		tmp.clear();
+		tmp = ids;
 		tmp.forEach(s -> this.imageEventText.setDialogOption(this.getNameFor(s)));
 		if (tmp.size() < 3)
 			imageEventText.setDialogOption(option()[1], true);
@@ -45,12 +49,23 @@ public class SpireNexusEvent extends AbstractTestEvent {
 	
 	private String getNameFor(String id) {
 		String n = EventHelper.getEventName(id);
-		if (n == null || n.equals("")) {
-			EventStrings es = CardCrawlGame.languagePack.getEventString(id);
-			return "[MISSING_NAME]".equals(es.NAME) ? id : es.NAME;
-		} else {
+		if (n != null && !n.equals("")) {
 			return n;
 		}
+		EventStrings es = CardCrawlGame.languagePack.getEventString(id);
+		if (!"[MISSING_NAME]".equals(es.NAME)) {
+			return es.NAME;
+		}
+		es = Stream.of(BaseMod.getEvent(id).getFields()).filter(f -> f.getType() == EventStrings.class).map(f -> {
+			try {
+				f.setAccessible(true);
+				return Modifier.isStatic(f.getModifiers()) ? (EventStrings) f.get(null) : null;
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}).filter(f -> f != null).findFirst().orElse(null);
+		return es == null || "[MISSING_NAME]".equals(es.NAME) ? id : es.NAME;
 	}
 
 	@Override
