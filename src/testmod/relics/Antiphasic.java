@@ -1,7 +1,6 @@
 package testmod.relics;
 
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class Antiphasic extends AbstractTestRelic {
 	
@@ -10,12 +9,9 @@ public class Antiphasic extends AbstractTestRelic {
 	}
 	
 	public int onAttacked(final DamageInfo info, final int damage) {
-        if (damage >= AbstractDungeon.player.maxHealth / 4.0) {
-        	if (damage == AbstractDungeon.player.maxHealth && damage == 1) {
-        		return damage;
-        	}
-        	AbstractDungeon.player.increaseMaxHp(5, true);
-        }
+		if (damage >= p().maxHealth / 4.0 && (damage != p().maxHealth || damage != 1)) {
+	    	p().increaseMaxHp(5, true);
+    	}
 		return damage;
     }
 
