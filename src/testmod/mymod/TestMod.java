@@ -71,7 +71,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 5/18/2022
+ * @version 5/19/2022
  * @since 6/17/2018
  */
 
@@ -314,7 +314,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		
 		MY_RELICS.forEach(AbstractTestRelic::addToMap);
 		if (Loader.isModLoaded("RelicUpgradeLib"))
-			AllUpgradeRelic.add();
+			MY_RELICS.forEach(AllUpgradeRelic::add);
 	}
 
 	public static ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
@@ -330,10 +330,16 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		BaseMod.loadCustomStrings(RelicStrings.class, readString(s.substring(0, s.length() - 6)));
 	}
 	
+	private void loadUpgradedRelicCosts() {
+		BaseMod.loadCustomStrings(UIStrings.class,
+				Gdx.files.internal(stringsPathFix("upgrade")).readString(String.valueOf(StandardCharsets.UTF_8)));
+	}
+	
 	@Override
 	public void receiveEditStrings() {
 		Stream.of(RelicStrings.class, CardStrings.class, PowerStrings.class, PotionStrings.class, EventStrings.class,
 				UIStrings.class).forEach(this::loadStrings);
+		this.loadUpgradedRelicCosts();
 		this.loadUpgradedRelicStrings();
 		SUB_MOD.forEach(TestMod::editSubModStrings);
 	}

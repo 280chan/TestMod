@@ -303,9 +303,9 @@
 	},
 	
 	"testmod-AntiphasicUp":{
-		"NAME": "Antiphasic",
+		"NAME": "Antiphasic+",
 		"FLAVOR": "我想要挨一顿毒打！",
-		"DESCRIPTIONS":["Whenever you would lose HP not less than #b25% Max HP, increase your Max HP by #b5 before you lose HP. This relic will #rNOT be active when your Max HP and the damage amount are both #b1. "]
+		"DESCRIPTIONS":["Whenever you would lose HP not less than #b10% Max HP, increase your Max HP by #b5 before you lose HP. This relic will #rNOT be active when your Max HP and the damage amount are both #b1. "]
 	},
 	
 	"testmod-IntensifyImprintUp":{
@@ -405,9 +405,9 @@
 	},
 	
 	"testmod-ArcanaOfDestinyUp":{
-		"NAME": "Arcana of Destiny",
+		"NAME": "Arcana of Destiny+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["For all enemies that have hp percentage less than player, for every #b1% less, receiving #b2% more damage. For all enemies that have hp percentage more than player, for every #b1% more, its Attack damage will be #b1% less."]
+		"DESCRIPTIONS":["For all enemies, for every #b1% less hp percentage than player, receiving #b3% more damage, at least #b50% more. For all enemies, for every #b1% more hp percentage than player, its Attack damage will be #b1% less, at least #b10% less."]
 	},
 	
 	"testmod-TheFatherUp":{
