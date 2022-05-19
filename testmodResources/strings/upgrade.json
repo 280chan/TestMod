@@ -1,0 +1,764 @@
+{
+	"testmod-upgrade-GiftOfSatan":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-ChristmasGift":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+
+	"testmod-upgrade-EventCelebration_Halloween":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-ObsoleteBoomerang":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-ThreeSidedDice":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-BlackFramedGlasses":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-BouquetWithThorns":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-PortableAltar":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-EnergyCheck":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Sins":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Register":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-InfectionSource":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-OneHitWonder":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Iteration":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Temperance":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Justice":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Fortitude":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Charity":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Hope":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Prudence":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Faith":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-AssaultLearning":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Muramasa":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-D_4":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-HeartOfDaVinci":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-IncinerationGenerator":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-IndustrialRevolution":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-AscensionHeart":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-RealStoneCalender":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Nyarlathotep":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-BalancedPeriapt":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-MagicalMallet":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Laevatain":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-TimeTraveler":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Maize":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-DragonStarHat":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-SaigiyounoYou":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Nine":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Motorcycle":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-DreamHouse":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-CrystalShield":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Alchemist":{
+		"TEXT": [
+			"1",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-StringDisintegrator":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-HarvestTotem":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-BatchProcessingSystem":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-CardMagician":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-NegativeEmotionEnhancer":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-LackOfCard":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Brilliant":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-IWantAll":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Antiphasic":{
+		"TEXT": [
+			"0",
+			"50"
+		]
+	},
+	
+	"testmod-upgrade-IntensifyImprint":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-KeyOfTheVoid":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-ThousandKnives":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-FatalChain":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-CyclicPeriapt":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-EqualTreatment":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-ConstraintPeriapt":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-InjuryResistance":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Déjàvu":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-DeterminationOfClimber":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-BloodSacrificeSpiritualization":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-LifeArmor":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-CasingShield":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-TestBox":{
+		"TEXT": [
+			"0",
+			"99"
+		]
+	},
+	
+	"testmod-upgrade-Acrobat":{
+		"TEXT": [
+			"0",
+			"50"
+		]
+	},
+	
+	"testmod-upgrade-Mahjong":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-ArcanaOfDestiny":{
+		"TEXT": [
+			"2",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-TheFather":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Fanaticism":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-TurbochargingSystem":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-HeartOfStrike":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-RainbowHikingShoes":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-GoldenSoul":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-RandomTest":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-TemporaryBarricade":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-GremlinBalance":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-RetroFilter":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-DominatorOfWeakness":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-ShadowAmulet":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-HyperplasticTissue":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-TraineeEconomist":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-VentureCapital":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-VoidShard":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Restrained":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Dye":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-GreedyDevil":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-ResonanceStone":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-GlassSoul":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-GiantKiller":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-TwinklingStar":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Metronome":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Gather":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-MistCore":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-HolyLightProtection":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-EvilDagger":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Match3":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-PhasePocketWatch":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-StomachOfGluttonous":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Encyclopedia":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-GoldenContract":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-ConjureBlade":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-PortablePortal":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-SpireNexus":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-FissionDevice":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-AbnormalityKiller":{
+		"TEXT": [
+			"0",
+			"150"
+		]
+	},
+	
+	"testmod-upgrade-DemonSummon":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Reverse":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	},
+	
+	"testmod-upgrade-Extravagant":{
+		"TEXT": [
+			"0",
+			"0"
+		]
+	}
+}
