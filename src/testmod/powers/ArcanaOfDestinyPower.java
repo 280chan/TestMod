@@ -46,9 +46,9 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 		return tmp > p ? damage * (1 - tmp + p) : damage;
 	}
 	
-	private int attack(int attack) {
+	private float attack(float attack) {
 		float tmp = HPRate(this.owner, 0f), p = HPRate(p(), 1f);
-		return tmp < p ? (int) (attack * (1 + 2 * (p - tmp))) : attack;
+		return tmp < p ? (attack * (1 + 2 * (p - tmp))) : attack;
 	}
 	
 	private <T> UnaryOperator<T> repeat(UnaryOperator<T> f) {
@@ -62,7 +62,7 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 	public int onAttacked(DamageInfo info, int damage) {
 		if (damage > 0) {
 			this.addTmpActionToTop(() -> ((AbstractMonster) this.owner).applyPowers());
-			return repeat(this::attack).apply(damage);
+			return repeat(this::attack).apply(damage * 1f).intValue();
 		}
 		return 0;
 	}
