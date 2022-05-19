@@ -26,6 +26,7 @@ public class Test extends TestCommand {
 		/*p().masterDeck.group.clear();
 		TestMod.CARDS.stream().map(c -> c.makeCopy()).forEach(p().masterDeck.group::add);*/
 		
+		
 	}
 
 	private static void cmdHelp() {
