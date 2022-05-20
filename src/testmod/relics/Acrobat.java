@@ -1,14 +1,24 @@
 package testmod.relics;
 
+import java.util.function.Supplier;
+
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import testmod.relicsup.AcrobatUp;
+
 public class Acrobat extends AbstractTestRelic {
-	private static Color color = null;
+	public static Color color = null;
 	public int state = 0;
+
+	public static Color setColorIfNull(Supplier<Color> c) {
+		if (color == null)
+			color = c.get();
+		return color;
+	}
 	
 	public Acrobat() {
 		super(RelicTier.COMMON, LandingSound.CLINK, BAD);
@@ -32,7 +42,7 @@ public class Acrobat extends AbstractTestRelic {
 	
 	public void onRefreshHand() {
 		if (color == null)
-			color = this.initGlowColor();
+			color = AcrobatUp.setColorIfNull(this::initGlowColor);
 		this.updateHandGlow();
 	}
 	
