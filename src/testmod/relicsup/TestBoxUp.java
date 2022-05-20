@@ -52,6 +52,8 @@ public class TestBoxUp extends AbstractUpgradedRelic implements ClickableRelic {
 	public void onEquip() {
 		this.counter = -1;
 		this.setRandom();
+		this.cardSelected = true;
+		this.remove = false;
 		p().loseGold(p().gold);
 	}
 	
@@ -112,8 +114,7 @@ public class TestBoxUp extends AbstractUpgradedRelic implements ClickableRelic {
 	}
 	
 	private void checkRandomSet() {
-		if (this.rng == null)
-			this.setRandom();
+		this.setRandom();
 	}
 	
 	public void setRandom() {
