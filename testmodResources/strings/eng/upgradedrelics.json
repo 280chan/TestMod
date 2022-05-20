@@ -390,7 +390,7 @@
 	"testmod-TestBoxUp":{
 		"NAME": "Test Box+",
 		"FLAVOR": "My present.",
-		"DESCRIPTIONS":["Right click on this relic to active, select a reward from #b5 to get, for both relic reward and card rewards. Relic reward will be upgraded if possible. #rThis #rrelic #rcan #rONLY #ractive #ronce. #rThis #rrelic #rcan #rONLY #rbe #rused #rat #rfloor #r0. "]
+		"DESCRIPTIONS":["Upon pickup, lose all gold. Right click on this relic to active, select a reward from #b5 to get, for both relic reward and card rewards. Relic reward will be upgraded if possible. #rThis #rrelic #rcan #rONLY #ractive #ronce. #rThis #rrelic #rcan #rONLY #rbe #rused #rat #rfloor #r0. "]
 	},
 	
 	"testmod-AcrobatUp":{

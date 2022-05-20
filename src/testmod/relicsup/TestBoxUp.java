@@ -52,6 +52,7 @@ public class TestBoxUp extends AbstractUpgradedRelic implements ClickableRelic {
 	public void onEquip() {
 		this.counter = -1;
 		this.setRandom();
+		p().loseGold(p().gold);
 	}
 	
 	public void update() {
