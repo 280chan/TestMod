@@ -149,7 +149,7 @@
 	"testmod-upgrade-AssaultLearning":{
 		"TEXT": [
 			"0",
-			"0"
+			"100"
 		]
 	},
 	
@@ -190,7 +190,7 @@
 	
 	"testmod-upgrade-AscensionHeart":{
 		"TEXT": [
-			"0",
+			"7",
 			"0"
 		]
 	},
@@ -211,7 +211,7 @@
 	
 	"testmod-upgrade-BalancedPeriapt":{
 		"TEXT": [
-			"0",
+			"3",
 			"0"
 		]
 	},

@@ -2,6 +2,7 @@ package testmod.relicsup;
 
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import relicupgradelib.arch.*;
 import testmod.relics.*;
@@ -46,6 +47,14 @@ public class AllUpgradeRelic {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			return null;
 		}
+	}
+	
+	public static AbstractRelic getUpgrade(AbstractRelic r) {
+		return ProxyManager.getProxyByRelic(r).braches.get(0).relic;
+	}
+	
+	public static boolean canUpgrade(AbstractRelic r) {
+		return ProxyManager.getProxyByRelic(r) != null;
 	}
 	
 }

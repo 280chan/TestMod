@@ -70,6 +70,13 @@
 			"% 。"
 		]
 	},
+	"testmod-DefenceDownUpPower":{
+		"NAME":"受到伤害增加+",
+		"DESCRIPTIONS":[
+			"受到伤害增加 #b",
+			"% 。"
+		]
+	},
 	"testmod-DemonSummonPower":{
 		"NAME":"恶魔召唤",
 		"DESCRIPTIONS":[

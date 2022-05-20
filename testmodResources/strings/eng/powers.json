@@ -70,6 +70,13 @@
 			"% more damage."
 		]
 	},
+	"testmod-DefenceDownUpPower": {
+		"NAME": "Damage Receive Increase+",
+		"DESCRIPTIONS": [
+			"Receive #b",
+			"% more damage."
+		]
+	},
 	"testmod-DemonSummonPower":{
 		"NAME":"Demon Summon",
 		"DESCRIPTIONS":[

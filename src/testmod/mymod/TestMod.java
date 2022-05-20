@@ -64,7 +64,7 @@ import testmod.potions.*;
 import testmod.powers.*;
 import testmod.relics.*;
 import testmod.relicsup.AllUpgradeRelic;
-import testmod.relicsup.TestBoxUp;
+import testmod.relicsup.AscensionHeartUp;
 import testmod.screens.RelicSelectScreen;
 import testmod.utils.*;
 import testmod.utils.GetRelicTrigger.RelicGetManager;
@@ -426,6 +426,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			DragonStarHat.resetValue();
 			Faith.reset();
 			AscensionHeart.reset();
+			AscensionHeartUp.reset();
 			// Mahjong.saveDefaultYama();
 			
 			if (this.relicStream(TestBox.class).count() < 1) {
@@ -586,6 +587,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(Faith.SAVE_NAME, "false");
 		DEFAULT.setProperty(Faith.SAVE_NAME1, "0");
 		DEFAULT.setProperty(AscensionHeart.SAVE_SIZE, "0");
+		DEFAULT.setProperty(AscensionHeartUp.SAVE_SIZE, "0");
 		DEFAULT.setProperty(GlassSoul.ID, "0");
 		DEFAULT.setProperty(Metronome.ID, "0");
 		DEFAULT.setProperty(PhasePocketWatch.SAVE_NAME, "0");
@@ -649,6 +651,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 		Automaton.loadMagicNumber();
 		AscensionHeart.load(getInt(AscensionHeart.SAVE_SIZE));
+		AscensionHeartUp.load(getInt(AscensionHeartUp.SAVE_SIZE));
 		TemporaryBarricade.pulseLoader();
 		IWantAll.loadVictory();
 		GlassSoul.load(getStringList(GlassSoul.ID));
