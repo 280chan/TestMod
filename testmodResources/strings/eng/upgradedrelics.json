@@ -6,9 +6,9 @@
 	},
 	
 	"testmod-BlackFramedGlassesUp":{
-		"NAME": "Black Framed Glasses",
+		"NAME": "Black Framed Glasses+",
 		"FLAVOR": "这个眼镜让你感觉还能再撑一秒。",
-		"DESCRIPTIONS":["At the start of each turn, heal #b1 HP, every enemies lose #b1 HP. Whenever you would receive an unblocked damage not less than half of your Max HP, reduce it to #b1; if it is from yourself, reduce it to #b0."]
+		"DESCRIPTIONS":["At the start of each turn, for each enemy exists, heal #b1 HP, every enemies lose #b1 HP. Whenever you would receive an unblocked damage not less than #b1/3 of your Max HP, reduce it to #b0; if it is not from yourself, damage source loses same amount HP instead."]
 	},
 	
 	"testmod-BouquetWithThornsUp":{
@@ -274,9 +274,9 @@
 	},
 	
 	"testmod-BatchProcessingSystemUp":{
-		"NAME": "Batch Processing System",
+		"NAME": "Batch Processing System+",
 		"FLAVOR": "Modular computing.",
-		"DESCRIPTIONS":["Lose [E] at the start of each turn. NL Whenever you play two cards of same cost in a row, gain [E] ."]
+		"DESCRIPTIONS":["Whenever you play two cards of same cost in a row, gain [E] ."]
 	},
 	
 	"testmod-CardMagicianUp":{

@@ -275,7 +275,7 @@
 	"testmod-BatchProcessingSystem":{
 		"NAME": "Batch Processing System",
 		"FLAVOR": "Modular computing.",
-		"DESCRIPTIONS":["Lose [E] at the start of each turn. NL Whenever you play two cards of same cost in a row, gain [E] ."]
+		"DESCRIPTIONS":["Lose [E] at the start of each turn. NL Whenever you play two cards of same cost in a row during your turn, gain [E] ."]
 	},
 	
 	"testmod-CardMagician":{

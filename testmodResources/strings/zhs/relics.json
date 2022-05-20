@@ -425,7 +425,7 @@
 	"testmod-TestBox":{
 		"NAME": "Test礼物盒",
 		"FLAVOR": "来自彼君的礼物。",
-		"DESCRIPTIONS":["右键单击或右键双击本遗物，从遗物和卡牌中选择一类，再从随机的 #b3 件本 #bmod 内的该类物品中选择 #b1 件获得。使用后本遗物 #y失效 。 #r只能在0层使用 。", " NL #g订阅 #yRelicUpgradeLib #g可以升级该遗物。 ", " NL #g完成当前房间后点击钥匙来选择升级。 "]
+		"DESCRIPTIONS":["右键单击或右键双击本遗物，从遗物和卡牌中选择一类，再从随机的 #b3 件本 #bmod 内的该类物品中选择 #b1 件获得。使用后本遗物 #y失效 。 #r只能在0层使用 。", " NL #g订 #g阅 #yRelicUpgradeLib #g可 #g以 #g升 #g级 #g该 #g遗 #g物。 ", " NL #g完 #g成 #g当 #g前 #g房 #g间 #g后 #g点 #g击 #g钥 #g匙 #g来 #g选 #g择 #g升 #g级。 "]
 	},
 	
 	"testmod-Acrobat":{

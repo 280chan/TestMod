@@ -5,6 +5,8 @@ import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 
+import testmod.relicsup.BlackFramedGlassesUp;
+
 public class BlackFramedGlasses extends AbstractRevivalRelicToModifyDamage {
 	
 	public BlackFramedGlasses() {
@@ -19,7 +21,7 @@ public class BlackFramedGlasses extends AbstractRevivalRelicToModifyDamage {
 	}
 	
 	public int onAttacked(final DamageInfo info, final int damageAmount) {
-		if (2 * damageAmount >= p().maxHealth) {
+		if (this.relicStream(BlackFramedGlassesUp.class).count() == 0 && damageAmount >= p().maxHealth / 2.0) {
         	show();
         	return info.owner == null || info.owner.isPlayer ? 0 : 1;
         }
@@ -28,12 +30,13 @@ public class BlackFramedGlasses extends AbstractRevivalRelicToModifyDamage {
 	
 	@Override
 	protected int damageModifyCheck(AbstractPlayer p, DamageInfo info, int originalDamage) {
-		return 2 * info.output < p.maxHealth ? originalDamage : (info.owner == null || info.owner.isPlayer ? 0 : 1);
+		return this.relicStream(BlackFramedGlassesUp.class).count() > 0 || info.output < p.maxHealth / 2.0
+				? originalDamage : (info.owner == null || info.owner.isPlayer ? 0 : 1);
 	}
 
 	@Override
 	protected boolean resetHpCheck(AbstractPlayer p, int damageAmount) {
-		return 2 * damageAmount >= p().maxHealth;
+		return this.relicStream(BlackFramedGlassesUp.class).count() == 0 && damageAmount >= p.maxHealth / 2.0;
 	}
 	
 }

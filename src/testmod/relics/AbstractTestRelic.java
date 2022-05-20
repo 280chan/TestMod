@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import basemod.abstracts.CustomRelic;
 import testmod.mymod.TestMod;
 import testmod.relicsup.AbstractUpgradedRelic;
+import testmod.relicsup.AbstractUpgradedRevivalRelic;
 import testmod.utils.MiscMethods;
 
 public abstract class AbstractTestRelic extends CustomRelic implements MiscMethods {
@@ -94,7 +95,8 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	
 	@SuppressWarnings("unchecked")
 	protected static <T extends AbstractTestRelic> Class<T> getRelicClass() {
-		return MISC.get(AbstractTestRelic.class, AbstractRevivalRelicToModifyDamage.class, AbstractUpgradedRelic.class);
+		return MISC.get(AbstractTestRelic.class, AbstractRevivalRelicToModifyDamage.class, AbstractUpgradedRelic.class,
+				AbstractUpgradedRevivalRelic.class);
 	}
 	
 	protected static boolean isUpgraded() {

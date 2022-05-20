@@ -1,4 +1,4 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.function.Supplier;
 
@@ -8,11 +8,11 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import testmod.relicsup.BatchProcessingSystemUp;
+import testmod.relics.BatchProcessingSystem;
 
-public class BatchProcessingSystem extends AbstractTestRelic {
+public class BatchProcessingSystemUp extends AbstractUpgradedRelic {
 	private static Color color = null;
-
+	
 	public static Color setColorIfNull(Supplier<Color> c) {
 		if (color == null)
 			color = c.get();
@@ -21,10 +21,10 @@ public class BatchProcessingSystem extends AbstractTestRelic {
 	
 	private void initColor() {
 		if (color == null)
-			color = BatchProcessingSystemUp.setColorIfNull(this::initGlowColor);
+			color = BatchProcessingSystem.setColorIfNull(this::initGlowColor);
 	}
 	
-	public BatchProcessingSystem() {
+	public BatchProcessingSystemUp() {
 		super(RelicTier.BOSS, LandingSound.SOLID);
 	}
 	
@@ -57,20 +57,16 @@ public class BatchProcessingSystem extends AbstractTestRelic {
 	}
 	
 	public void onEquip() {
-		this.reduceEnergy();
 		this.initColor();
-    }
-	
-	public void onUnequip() {
-		this.addEnergy();
-    }
-	
-	public void atTurnStart() {
-		this.counter = -1;
     }
 	
 	public void onVictory() {
 		this.stopPulse();
+		this.counter = -1;
+	}
+	
+	public void atPreBattle() {
+		this.counter = -1;
 	}
 	
 }

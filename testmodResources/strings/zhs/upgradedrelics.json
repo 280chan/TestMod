@@ -6,9 +6,9 @@
 	},
 	
 	"testmod-BlackFramedGlassesUp":{
-		"NAME": "黑框眼镜",
+		"NAME": "黑框眼镜+",
 		"FLAVOR": "这个眼镜让你感觉还能再撑一秒。",
-		"DESCRIPTIONS":["每回合使所有敌人失去 #b1 点生命，并给自己恢复 #b1 点生命。当受到大于等于生命上限的一半的伤害时，将其降为 #b1 点；如果该伤害来自自己，将其降为 #b0 点。"]
+		"DESCRIPTIONS":["每回合每个敌人使所有敌人失去 #b1 点生命，并给自己恢复 #b1 点生命。当受到大于等于生命上限的 #b1/3 的伤害时，将其降为 #b0 点，如果伤害来源不是玩家，其失去该次伤害数值的生命。"]
 	},
 	
 	"testmod-BouquetWithThornsUp":{
@@ -274,9 +274,9 @@
 	},
 	
 	"testmod-BatchProcessingSystemUp":{
-		"NAME": "批量处理系统",
+		"NAME": "批量处理系统+",
 		"FLAVOR": "模块化运算。",
-		"DESCRIPTIONS":["每回合开始减少 [E] 。 NL 每当你在同一回合内连续打出的两张牌耗能相同时，获得 [E] 。"]
+		"DESCRIPTIONS":["每当你在一场战斗内连续打出的两张牌耗能相同时，获得 [E] 。"]
 	},
 	
 	"testmod-CardMagicianUp":{
