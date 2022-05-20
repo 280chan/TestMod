@@ -88,15 +88,15 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	private boolean checkDefenceDown(AbstractMonster m, boolean preBattle) {
 		if (!preBattle && DefenceDownPower.hasThis(m))
 			return false;
-		return m.type.ordinal() < 3 ? checkLevel(m.type.ordinal() + 2) : false;
+		return m.type.ordinal() < 3 && checkLevel(m.type.ordinal() + 2);
 	}
-	
+		
 	private boolean checkReceiveDamage(AbstractMonster m) {
-		return m.type.ordinal() < 3 ? checkLevel(m.type.ordinal() + 7) : false;
+		return m.type.ordinal() < 3 && checkLevel(m.type.ordinal() + 7);
 	}
-	
+		
 	private boolean checkLoseStrength(AbstractMonster m) {
-		return m.type.ordinal() < 3 ? checkLevel(m.type.ordinal() + 17) : false;
+		return m.type.ordinal() < 3 && checkLevel(m.type.ordinal() + 17);
 	}
 	
 	public void onObtainCard(AbstractCard card) {
@@ -132,7 +132,9 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	}
 	
 	public void onPlayerEndTurn() {
-		if (this.isActive && checkLevel(10))
+		if (this.isActive && checkLevel(24))
+			p().hand.group.stream().filter(c -> c.type == CardType.STATUS).forEach(c -> c.exhaust = true);
+		else if (this.isActive && checkLevel(10))
 			p().hand.group.stream().filter(c -> c.type == CardType.CURSE).forEach(c -> c.exhaust = true);
     }
 	
