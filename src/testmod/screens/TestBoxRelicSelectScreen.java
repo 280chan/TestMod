@@ -1,6 +1,7 @@
 package testmod.screens;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -16,6 +17,7 @@ import halloweenMod.relics.EventCelebration_Halloween;
 import testmod.mymod.TestMod;
 import testmod.relics.AbstractTestRelic;
 import testmod.relics.TestBox;
+import testmod.relicsup.AllUpgradeRelic;
 import testmod.utils.MiscMethods;
 
 public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscMethods {
@@ -29,7 +31,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		this.boxUp = up;
 	}
 
-	private boolean checkIllegal(AbstractTestRelic r) {
+	private boolean checkIllegal(AbstractRelic r) {
 		return Stream.of(ILLEGAL).anyMatch(r.relicId::equals);
 	}
 	
@@ -67,27 +69,35 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		return l.size() == 0 ? null : TestMod.randomItem(l, this.rng);
 	}
 	
-	private AbstractTestRelic randomRelic(AbstractTestRelic priority) {
-		return randomRelic(priority != null);
-	}
-	
-	private AbstractTestRelic randomRelic(boolean priority) {
-		return (AbstractTestRelic) TestMod.randomItem((priority ? TestMod.BAD_RELICS : TestMod.RELICS), this.rng);
+	private boolean rollUpgrade() {
+		return this.boxUp/* && this.rng.nextDouble() < 0.05*/;
 	}
 	
 	private void addAndMarkAsSeen(AbstractRelic r) {
-		this.relics.add(r);
 		this.markAsSeen(r);
+		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.canUpgrade(r) && this.rollUpgrade()) {
+			this.relics.add(AllUpgradeRelic.getUpgrade(r));
+			return;
+		}
+		this.relics.add(r);
 	}
 	
 	@Override
 	protected void addRelics() {
 		AbstractTestRelic pri = this.priority();
-		if (pri != null)
-			addAndMarkAsSeen(pri);
-		for (AbstractTestRelic r = randomRelic(pri); relics.size() < (this.boxUp ? 5 : 3); r = randomRelic(pri))
-			if (!(this.checkIllegal(r) || this.relics.stream().anyMatch(r::sameAs)))
-				addAndMarkAsSeen(r);
+		ArrayList<AbstractRelic> l = new ArrayList<AbstractRelic>();
+		ArrayList<AbstractRelic> result = new ArrayList<AbstractRelic>();
+		l.addAll(pri == null ? TestMod.RELICS : TestMod.BAD_RELICS);
+		l.removeIf(this::checkIllegal);
+		if (pri != null) {
+			l.removeIf(pri::sameAs);
+			result.add(pri);
+		}
+		Collections.shuffle(l, this.rng);
+		l.stream().limit((this.boxUp ? 5 : 3) - (pri == null ? 0 : 1)).forEach(result::add);
+		l.clear();
+		result.forEach(this::addAndMarkAsSeen);
+		result.clear();
 	}
 
 	private void completeSelection() {
