@@ -1,7 +1,6 @@
 package testmod.relics;
 
 import java.util.function.Consumer;
-
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -37,9 +36,8 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	public void onUnequip() {
-		if (this.isActive) {
+		if (this.isActive)
 			this.onVictory();
-		}
 	}
 	
 	public void atPreBattle() {
@@ -61,6 +59,7 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic {
 		if (delta > 0) {
 			BaseMod.MAX_HAND_SIZE += delta;
 			delta = 0;
+			updateCounter();
 			HyperplasticTissue.updateCounter();
 		}
     }
@@ -87,6 +86,7 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic {
 			int tmp = Math.max(1, BaseMod.MAX_HAND_SIZE / 2);
 			delta += tmp;
 			BaseMod.MAX_HAND_SIZE -= tmp;
+			updateCounter();
 			HyperplasticTissue.updateCounter();
 			this.updateAllPulse();
 			if ((tmp = Math.min(p().energy.energyMaster, p().hand.group.size())) > 0) {
