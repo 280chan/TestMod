@@ -101,7 +101,7 @@ public class TestBoxUp extends AbstractUpgradedRelic implements ClickableRelic {
 		g.group = TestMod.CARDS.stream().collect(this.toArrayList());
 		Collections.shuffle(g.group, this.rng);
 		AbstractCard c = this.priority();
-		Predicate<AbstractCard> p = a -> c == null || a.cardID.equals(c.cardID);
+		Predicate<AbstractCard> p = a -> c == null || !a.cardID.equals(c.cardID);
 		g.group = g.group.stream().filter(p).limit(c != null ? 4 : 5).collect(this.toArrayList());
 		if (c != null)
 			g.group.add(0, c);
