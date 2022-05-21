@@ -1,4 +1,4 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -13,13 +13,12 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import testmod.relics.BloodSacrificeSpiritualization;
 
-import testmod.relicsup.BloodSacrificeSpiritualizationUp;
-
-public class BloodSacrificeSpiritualization extends AbstractTestRelic {
-	public static final UIStrings UI = MISC.uiString();
+public class BloodSacrificeSpiritualizationUp extends AbstractUpgradedRelic {
+	private static final UIStrings UI = BloodSacrificeSpiritualization.UI;
 	
-	public BloodSacrificeSpiritualization() {
+	public BloodSacrificeSpiritualizationUp() {
 		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
@@ -39,13 +38,13 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 	}
 	
 	public void atBattleStart() {
-		if (!this.isActive || relicStream(BloodSacrificeSpiritualizationUp.class).count() > 0)
+		if (!this.isActive)
 			return;
 		this.addTmpActionToBot(() -> {
 			CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
 			g.group = this.combatCards().collect(this.toArrayList());
 			p().hand.group.forEach(AbstractCard::beginGlowing);
-	        int amount = Math.max(p().maxHealth / 10, 1);
+	        int amount = Math.max(p().maxHealth / 20, 1);
 			if (g.group.isEmpty()) {
 				return;
 			}
@@ -56,7 +55,8 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 				if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
 					p().damage(new DamageInfo(p(), amount, DamageType.HP_LOSS));
 					AbstractCard c = AbstractDungeon.gridSelectScreen.selectedCards.get(0);
-					int size = (int) this.relicStream(BloodSacrificeSpiritualization.class).count();
+					int size = (int) (2 * this.relicStream(BloodSacrificeSpiritualizationUp.class).count()
+							+ this.relicStream(BloodSacrificeSpiritualization.class).count());
 					for (int i = 0; i < size; i++) {
 						this.upgrade(c);
 					}

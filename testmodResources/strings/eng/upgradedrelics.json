@@ -8,7 +8,7 @@
 	"testmod-BlackFramedGlassesUp":{
 		"NAME": "Black Framed Glasses+",
 		"FLAVOR": "这个眼镜让你感觉还能再撑一秒。",
-		"DESCRIPTIONS":["At the start of each turn, for each enemy exists, heal #b1 HP, every enemies lose #b1 HP. Whenever you would receive an unblocked damage not less than #b1/3 of your Max HP, reduce it to #b0; if it is not from yourself, damage source loses same amount HP instead."]
+		"DESCRIPTIONS":["At the start of each turn, for each enemy exists, heal #b1 HP, every enemies lose #b1 HP. Let #bn be your max HP. Whenever you would receive an unblocked damage not less than #bn/3, reduce it to #b0. If it is not from yourself, source loses same amount HP instead, and only reduce damage to #b0 if it's the first #bn times damage you receive, otherwise reduce it to #b1."]
 	},
 	
 	"testmod-BouquetWithThornsUp":{
@@ -370,9 +370,9 @@
 	},
 	
 	"testmod-BloodSacrificeSpiritualizationUp":{
-		"NAME": "Blood Sacrifice Spiritualization",
+		"NAME": "Blood Sacrifice Spiritualization+",
 		"FLAVOR": "血祭，降临。",
-		"DESCRIPTIONS":["At the start of each combat, you may choose to lose HP of #b10% of your Max HP (at least #b1), to choose a card from ALL your cards to auto play. Before auto playing it, if it is upgradable, #yUpgrade it for this run."]
+		"DESCRIPTIONS":["At the start of each combat, you may choose to lose HP of #b5% of your Max HP (at least #b1), to choose a card from ALL your cards to auto play twice. Before auto playing it, if it is upgradable, #yUpgrade it for this run."]
 	},
 	
 	"testmod-LifeArmorUp":{
