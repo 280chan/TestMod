@@ -23,11 +23,28 @@ public class BlackFramedGlassesUp extends AbstractUpgradedRevivalRelic {
 		show();
 	}
 	
+	public void atPreBattle() {
+		this.counter = 0;
+	}
+	
+	public void onVictory() {
+		this.counter = -1;
+	}
+	
+	private BlackFramedGlassesUp min() {
+		return relicStream(BlackFramedGlassesUp.class).reduce((a, b) -> a.counter <= b.counter ? a : b).orElse(null);
+	}
+	
 	public int onAttacked(final DamageInfo info, final int damage) {
-		if (damage >= p().maxHealth / 3.0) {
+		if (this.isActive && damage >= p().maxHealth / 3.0) {
         	show();
         	if (info.owner != null && !info.owner.isPlayer) {
-        		this.att(new LoseHPAction(info.owner, null, damage));
+        		BlackFramedGlassesUp min = min();
+        		min.counter++;
+				relicStream(BlackFramedGlassesUp.class).forEach(r -> att(new LoseHPAction(info.owner, null, damage)));
+				if (min.counter > p().maxHealth) {
+        			return 1;
+        		}
         	}
         	return 0;
         }
@@ -35,19 +52,24 @@ public class BlackFramedGlassesUp extends AbstractUpgradedRevivalRelic {
     }
 	
 	@Override
-	protected int damageModifyCheck(AbstractPlayer p, DamageInfo info, int originalDamage) {
-		if (info.output >= p.maxHealth / 3.0) {
+	protected int damageModifyCheck(AbstractPlayer p, DamageInfo info, int damage) {
+		if (this.isActive && info.output >= p.maxHealth / 3.0) {
         	if (info.owner != null && !info.owner.isPlayer) {
-        		this.att(new LoseHPAction(info.owner, null, originalDamage));
+        		BlackFramedGlassesUp min = min();
+        		min.counter++;
+        		relicStream(BlackFramedGlassesUp.class).forEach(r -> att(new LoseHPAction(info.owner, null, damage)));
+        		if (min.counter > p().maxHealth) {
+        			return 1;
+        		}
         	}
         	return 0;
 		}
-		return originalDamage;
+		return damage;
 	}
 
 	@Override
 	protected boolean resetHpCheck(AbstractPlayer p, int damage) {
-		return damage >= p.maxHealth / 3.0;
+		return this.isActive && damage >= p.maxHealth / 3.0;
 	}
 	
 }
