@@ -37,7 +37,7 @@ public class BatchProcessingSystemUp extends AbstractUpgradedRelic {
 			return;
 		if (this.check(c)) {
 			this.show();
-			this.addToBot(new GainEnergyAction(1));
+			this.addToBot(new GainEnergyAction(Math.max(1, c.freeToPlayOnce ? 0 : c.costForTurn)));
 		}
 		this.counter = c.freeToPlayOnce ? 0 : Math.max(c.costForTurn, 0);
 		this.updateHandGlow();
