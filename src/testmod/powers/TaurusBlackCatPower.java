@@ -22,8 +22,8 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
         this.amount += stackAmount;
-		this.streamIfElse(AbstractDungeon.getMonsters().monsters.stream(), TaurusBlackCatEnemyPower::hasThis,
-				this::updateAmount, this::addEnemyPower);
+		this.streamIfElse(AbstractDungeon.getMonsters().monsters.stream().filter(m -> !m.isDeadOrEscaped()),
+				TaurusBlackCatEnemyPower::hasThis, this::updateAmount, this::addEnemyPower);
 	}
 	
 	private void updateAmount(AbstractMonster m) {
@@ -35,6 +35,8 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 	}
 	
 	private boolean needUpdate(AbstractMonster m) {
+		if (m.isDeadOrEscaped())
+			return false;
 		if (!TaurusBlackCatEnemyPower.hasThis(m))
 			return true;
 		return TaurusBlackCatEnemyPower.getThis(m).amount != this.amount;
