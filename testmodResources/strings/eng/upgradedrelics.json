@@ -276,7 +276,7 @@
 	"testmod-BatchProcessingSystemUp":{
 		"NAME": "Batch Processing System+",
 		"FLAVOR": "Modular computing.",
-		"DESCRIPTIONS":["Whenever you play two cards of same cost in a row, gain [E] ."]
+		"DESCRIPTIONS":["Whenever you play two cards of same cost in a row, gain same amount of [E] as the cost of card you played, gain at least [E] ."]
 	},
 	
 	"testmod-CardMagicianUp":{
@@ -292,9 +292,9 @@
 	},
 	
 	"testmod-BrilliantUp":{
-		"NAME": "Brilliant",
+		"NAME": "Brilliant+",
 		"FLAVOR": "Brilliant!",
-		"DESCRIPTIONS":["Whenever an enemy dies and at the start of each combat, deal an damage of half of your #ygold to the power of #b2/3 to ALL enemies."]
+		"DESCRIPTIONS":["Whenever an enemy dies and at the start of each combat, gain #b10% current #yGold (at least #b100 ), deal an damage of half of your #ygold to the power of #b2/3 to ALL enemies. Lose #yGold you gain from this relic when you win the combat."]
 	},
 	
 	"testmod-IWantAllUp":{

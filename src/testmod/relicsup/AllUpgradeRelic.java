@@ -11,26 +11,32 @@ public class AllUpgradeRelic {
 	
 	private static class Register {
 		private static Proxy p;
-		private static void set(AbstractTestRelic r, AbstractTestRelic r1, boolean red, boolean green, boolean blue,
+		private static void set(AbstractTestRelic r, boolean red, boolean green, boolean blue,
 				int gold) {
-			p = new Proxy(r);
-			p.addBranch(new UpgradeBranch(r1, null, red, green, blue, gold));
+			p.addBranch(new UpgradeBranch(r, null, red, green, blue, gold));
 			ProxyManager.register(p);
+		}
+		private static void init(AbstractTestRelic r) {
+			p = new Proxy(r);
 		}
 	}
 	
 	public static void add(AbstractTestRelic r) {
 		String original = r.getClass().getSimpleName();
-		UIStrings tmp = CardCrawlGame.languagePack.getUIString(UIID(original));
-		int key = Integer.parseInt(tmp.TEXT[0]);
-		int gold = Integer.parseInt(tmp.TEXT[1]);
-		// blue * 4 + green * 2 + red
-		boolean red = key % 2 == 1;
-		boolean green = (key % 4) / 2 == 1;
-		boolean blue = key / 4 == 1;
 		AbstractUpgradedRelic up = upgrade(original);
-		if (up != null)
-			Register.set(r, up, red, green, blue, gold);
+		if (up != null) {
+			Register.init(r);
+			UIStrings tmp = CardCrawlGame.languagePack.getUIString(UIID(original));
+			for (int i = 0; i < tmp.TEXT.length; i += 2) {
+				int key = Integer.parseInt(tmp.TEXT[i]);
+				int gold = Integer.parseInt(tmp.TEXT[i + 1]);
+				// blue * 4 + green * 2 + red
+				boolean red = key % 2 == 1;
+				boolean green = (key % 4) / 2 == 1;
+				boolean blue = key / 4 == 1;
+				Register.set(up, red, green, blue, gold);
+			}
+		}
 	}
 	
 	private static String UIID(String original) {

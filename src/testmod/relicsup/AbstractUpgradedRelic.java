@@ -1,5 +1,6 @@
 package testmod.relicsup;
 
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.FloatyEffect;
 
 import basemod.ReflectionHacks;
@@ -23,7 +24,9 @@ public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
 	public void bossObtainLogic() {
 		if (this.tier != RelicTier.BOSS)
 			return;
-		int index = p().relics.indexOf(p().getRelic(removePostfixForIMG(this.relicId)));
+		AbstractRelic r = p().getRelic(removePostfixForIMG(this.relicId));
+		r.onUnequip();
+		int index = p().relics.indexOf(r);
 		this.instantObtain(p(), index != -1 ? index : p().relics.size(), true);
 		this.flash();
 		FloatyEffect fe = ReflectionHacks.getPrivateInherited(this, getClass(), "f_effect");

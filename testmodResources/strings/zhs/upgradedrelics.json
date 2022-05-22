@@ -276,7 +276,7 @@
 	"testmod-BatchProcessingSystemUp":{
 		"NAME": "批量处理系统+",
 		"FLAVOR": "模块化运算。",
-		"DESCRIPTIONS":["每当你在一场战斗内连续打出的两张牌耗能相同时，获得 [E] 。"]
+		"DESCRIPTIONS":["每当你在一场战斗内连续打出的两张牌耗能相同时，获得等量于该耗能的 [E] ，至少获得 [E] 。"]
 	},
 	
 	"testmod-CardMagicianUp":{
@@ -292,9 +292,9 @@
 	},
 	
 	"testmod-BrilliantUp":{
-		"NAME": "金币辉煌",
+		"NAME": "金币辉煌+",
 		"FLAVOR": "壕气逼人",
-		"DESCRIPTIONS":["每场战斗开始时和每当敌人死亡时，对所有敌人造成当前 #y金币 数量的平方的三次根的一半的伤害。"]
+		"DESCRIPTIONS":["每场战斗开始时和每当敌人死亡时，获得当前 #y金币 #b10% (至少 #b100 )的 #y金币 ，对所有敌人造成当前 #y金币 数量的平方的三次根的一半的伤害。战斗胜利时失去通过该遗物获得的 #y金币 。"]
 	},
 	
 	"testmod-IWantAllUp":{
