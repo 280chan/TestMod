@@ -12,9 +12,9 @@
 	},
 	
 	"testmod-BouquetWithThornsUp":{
-		"NAME": "Bouquet With Thorns",
+		"NAME": "Bouquet With Thorns+",
 		"FLAVOR": "捧着这束花，你仿佛不再需要击退你的敌人。",
-		"DESCRIPTIONS":["At the start of each combat, gain #b1 Thorns. Whenever being attacked, gain #b1 Thorns; whenever you receive unblocked attack damage, gain #b1 extra Thorns. Whenever damaged by losing HP, gain #b1 Thorns for each HP lost in this damage."]
+		"DESCRIPTIONS":["At the start of each combat, gain #b1 Thorns. Whenever being attacked, gain #b1 Thorns for each power this damage's dealer has (at least #b1). Whenever receive non-Attack damage, gain Thorns same as amount of this damage."]
 	},
 	
 	"testmod-PortableAltarUp":{
