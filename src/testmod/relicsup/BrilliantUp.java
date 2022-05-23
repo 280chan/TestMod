@@ -26,7 +26,7 @@ public class BrilliantUp extends AbstractUpgradedRelic {
 		if (this.counter < 0)
 			this.counter = 0;
 		this.counter += input;
-		return this.counter;
+		return input;
 	}
 	
 	private int getCounter() {
