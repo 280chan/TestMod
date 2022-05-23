@@ -3,6 +3,8 @@ package testmod.powers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.UnaryOperator;
+
+import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -20,7 +22,7 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 			new ArrayList<Class<? extends AbstractTestPower>>();
 	
 	private String IMGPath(String shortID) {
-		return TestMod.powerIMGPath(shortID);
+		return TestMod.powerIMGPath(shortID.endsWith("Up") ? shortID.substring(0, shortID.length() - 2) : shortID);
 	}
 
 	public AbstractTestPower(String shortID) {
@@ -35,7 +37,7 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 	
 	public AbstractTestPower() {
 		this(shortID(getPowerClass()));
-		this.name = name();
+		this.name = (this instanceof InvisiblePower) ? "" : name();
 	}
 	
 	protected void setRegion(String region) {
