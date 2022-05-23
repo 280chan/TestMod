@@ -280,9 +280,9 @@
 	},
 	
 	"testmod-CardMagicianUp":{
-		"NAME": "纸牌魔术师",
+		"NAME": "纸牌魔术师+",
 		"FLAVOR": "转瞬奇迹。",
-		"DESCRIPTIONS":["在每回合开始获得 [E] ，并将你的弃牌堆洗入抽牌堆。"]
+		"DESCRIPTIONS":["在每回合开始获得 [E] ，并将你的弃牌堆洗入抽牌堆。每场战斗开始时持有的所有牌第一次被抽到时，记录回合数，该牌被打出时额外打出记录的回合数次。"]
 	},
 	
 	"testmod-NegativeEmotionEnhancerUp":{
@@ -388,9 +388,9 @@
 	},
 	
 	"testmod-CasingShieldUp":{
-		"NAME": "层叠防护罩",
+		"NAME": "层叠防护罩+",
 		"FLAVOR": "叠叠乐。",
-		"DESCRIPTIONS":["每当你获得一次 #y格挡 ，本回合接下来获得的 #y格挡 数值都将增加 #b1 。"]
+		"DESCRIPTIONS":["每场战斗中，每当你获得 #y格挡 额外获得遗物计数的 #y格挡 ，遗物计数增加 #b1 。回合开始时，遗物计数减半。"]
 	},
 	
 	"testmod-TestBoxUp":{

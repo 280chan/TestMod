@@ -280,9 +280,9 @@
 	},
 	
 	"testmod-CardMagicianUp":{
-		"NAME": "The Card Magician",
+		"NAME": "The Card Magician+",
 		"FLAVOR": "A miracle in a flash.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] and shuffle your discard pile into your draw pile."]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] and shuffle your discard pile into your draw pile. For all cards you start combat with, record turns when you first draw it, whenever you play it, play it the recorded turn number more times."]
 	},
 	
 	"testmod-NegativeEmotionEnhancerUp":{
@@ -382,9 +382,9 @@
 	},
 	
 	"testmod-CasingShieldUp":{
-		"NAME": "Casing Shield",
+		"NAME": "Casing Shield+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you gain #yBlock, increase future #yBlock gain by #b1 for this turn."]
+		"DESCRIPTIONS":["For each combat, whenever you gain #yBlock, gain counter more #yBlock, increase counter by #b1. At the start of each turn, counter is halved."]
 	},
 	
 	"testmod-TestBoxUp":{

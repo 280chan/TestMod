@@ -316,7 +316,7 @@
 	
 	"testmod-upgrade-CardMagician":{
 		"TEXT": [
-			"0",
+			"5",
 			"0"
 		]
 	},
@@ -447,7 +447,7 @@
 	"testmod-upgrade-CasingShield":{
 		"TEXT": [
 			"0",
-			"0"
+			"150"
 		]
 	},
 	
