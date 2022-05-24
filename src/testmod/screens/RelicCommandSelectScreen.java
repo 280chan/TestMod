@@ -64,7 +64,7 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 	
 	@Override
 	protected void afterSelected() {
-		doSth(command instanceof RelicAdd ? this.selectedRelic : map.get(this.selectedRelic));
+		doSth(command instanceof RelicAdd ? this.selectedRelic.makeCopy() : map.get(this.selectedRelic));
 		map.clear();
 	}
 
