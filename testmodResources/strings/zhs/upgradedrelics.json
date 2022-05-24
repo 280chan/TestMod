@@ -78,9 +78,9 @@
 	},
 	
 	"testmod-CharityUp":{
-		"NAME": "慈善",
+		"NAME": "慈善+",
 		"FLAVOR": "“慈善的行为比金钱更能解除别人的痛苦。” —— 卢梭",
-		"DESCRIPTIONS":["每次获得 #y金币 数额减少 #b1 ，但增加 #b1 点最大生命。"]
+		"DESCRIPTIONS":["每次获得 #y金币 数额减少 #b1 ，但增加 #b1 点最大生命。每获得一次 #y金币 ，后续 #y金币 获得量增加 #b1% 。"]
 	},
 	
 	"testmod-HopeUp":{
@@ -616,9 +616,9 @@
 	},
 	
 	"testmod-ConjureBladeUp":{
-		"NAME": "聚能成刃",
+		"NAME": "聚能成刃+",
 		"FLAVOR": "此聚能成刃非彼聚能成刃。",
-		"DESCRIPTIONS":["你的手牌中的所有牌的基础伤害与 #y格挡 提升与其相邻的牌的 #y耗能 点。"]
+		"DESCRIPTIONS":["你的手牌中的所有牌的基础伤害与 #y格挡 提升手牌中所有牌的 #y耗能 之和点。"]
 	},
 	
 	"testmod-PortablePortalUp":{

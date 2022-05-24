@@ -78,9 +78,9 @@
 	},
 	
 	"testmod-CharityUp":{
-		"NAME": "Charity",
+		"NAME": "Charity+",
 		"FLAVOR": "“慈善的行为比金钱更能解除别人的痛苦。” —— 卢梭",
-		"DESCRIPTIONS":["Whenever you gain #ygold, gain #b1 less, increase your Max HP by #b1 instead."]
+		"DESCRIPTIONS":["Whenever you gain #ygold, gain #b1 less, increase your Max HP by #b1 instead. Whenever you gain #ygold, gain #b1% more future #ygold."]
 	},
 	
 	"testmod-HopeUp":{
@@ -610,9 +610,9 @@
 	},
 	
 	"testmod-ConjureBladeUp":{
-		"NAME": "Conjure Blade",
+		"NAME": "Conjure Blade+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Base damage and #yBlock of All cards in your hand are increased by the sum of #yCost of their neighboring cards."]
+		"DESCRIPTIONS":["Base damage and #yBlock of All cards in your hand are increased by the sum of #yCost of all cards in your hand."]
 	},
 	
 	"testmod-PortablePortalUp":{

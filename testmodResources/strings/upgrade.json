@@ -121,7 +121,7 @@
 	"testmod-upgrade-Charity":{
 		"TEXT": [
 			"0",
-			"0"
+			"150"
 		]
 	},
 	
@@ -712,7 +712,11 @@
 	
 	"testmod-upgrade-ConjureBlade":{
 		"TEXT": [
+			"1",
 			"0",
+			"2",
+			"0",
+			"4",
 			"0"
 		]
 	},
