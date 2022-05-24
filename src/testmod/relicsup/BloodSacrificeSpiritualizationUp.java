@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import testmod.relics.BloodSacrificeSpiritualization;
@@ -78,10 +77,6 @@ public class BloodSacrificeSpiritualizationUp extends AbstractUpgradedRelic {
 	private static ArrayList<AbstractCard> get(AbstractCard c) {
 		return Stream.of(MISC.p().discardPile, MISC.p().hand, MISC.p().drawPile).filter(g -> g.contains(c))
 				.map(g -> g.group).findAny().orElse(new ArrayList<AbstractCard>());
-	}
-
-	public boolean canSpawn() {
-		return Settings.isEndless || AbstractDungeon.actNum < 2;
 	}
 	
 }
