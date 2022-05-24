@@ -14,7 +14,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.ModHelper;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
@@ -189,7 +188,7 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 		for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
 			if (!m.isDead && !m.isDying && !m.halfDead && !m.isEscaping && !m.escaped) {
 				if (this.isActive && checkDefenceDown(m, true))
-					m.powers.add(new DefenceDownUpPower(m, 10));
+					m.powers.add(new DefenceDownPowerUp(m, 10));
 				if (checkReceiveDamage(m)) {
 					m.currentHealth -= m.maxHealth / 10;
 					m.healthBarUpdatedEvent();
@@ -216,7 +215,7 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 		if (!this.isActive)
 			return;
 		AbstractDungeon.getMonsters().monsters.stream().filter(this::alive).filter(m -> checkDefenceDown(m, false))
-				.forEach(m -> m.powers.add(new DefenceDownUpPower(m, 10)));
+				.forEach(m -> m.powers.add(new DefenceDownPowerUp(m, 10)));
 		if (checkLevel(25)) {
 			int e = (int) (p().relics.stream().filter(r -> r.tier == RelicTier.RARE).count()
 					* relicStream(AscensionHeartUp.class).count());
@@ -362,12 +361,11 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 	}
 	
 	public boolean hasDefenceDownPower(AbstractCreature owner) {
-		return owner.powers.stream().anyMatch(p -> p instanceof DefenceDownUpPower);
+		return owner.powers.stream().anyMatch(p -> p instanceof DefenceDownPowerUp);
 	}
 	
-	private class DefenceDownUpPower extends AbstractTestPower {
-		public DefenceDownUpPower(AbstractCreature owner, int amount) {
-			this.img = ImageMaster.loadImage(TestMod.powerIMGPath("DefenceDownPower"));
+	private class DefenceDownPowerUp extends AbstractTestPower {
+		public DefenceDownPowerUp(AbstractCreature owner, int amount) {
 			this.owner = owner;
 			this.amount = amount;
 			updateDescription();
