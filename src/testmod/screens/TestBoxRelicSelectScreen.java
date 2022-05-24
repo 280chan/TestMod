@@ -12,6 +12,8 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
+
 import christmasMod.mymod.ChristmasMod;
 import halloweenMod.relics.EventCelebration_Halloween;
 import testmod.mymod.TestMod;
@@ -75,7 +77,8 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	
 	private void addAndMarkAsSeen(AbstractRelic r) {
 		this.markAsSeen(r);
-		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.canUpgrade(r) && this.rollUpgrade()) {
+		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.canUpgrade(r) && r.tier != RelicTier.BOSS
+				&& this.rollUpgrade()) {
 			this.relics.add(AllUpgradeRelic.getUpgrade(r));
 			return;
 		}
