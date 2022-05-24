@@ -89,7 +89,7 @@ public class ConjureBladeUp extends AbstractUpgradedRelic {
 		}
 		
 		public void onAfterUseCard(AbstractCard c, UseCardAction a) {
-			BONUS.remove(c);
+			this.addTmpActionToBot(() -> BONUS.remove(c));
 		}
 	}
 
