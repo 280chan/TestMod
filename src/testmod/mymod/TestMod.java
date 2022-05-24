@@ -65,13 +65,14 @@ import testmod.powers.*;
 import testmod.relics.*;
 import testmod.relicsup.AllUpgradeRelic;
 import testmod.relicsup.AscensionHeartUp;
+import testmod.relicsup.TestBoxUp;
 import testmod.screens.RelicSelectScreen;
 import testmod.utils.*;
 import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 5/23/2022
+ * @version 5/24/2022
  * @since 6/17/2018
  */
 
@@ -268,7 +269,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new Extravagant(), new GremlinBalance(), new GoldenSoul(), new GreedyDevil(),
+		addLatest(new GremlinBalance(), new GoldenSoul(), new GreedyDevil(),
 				new TemporaryBarricade(), new StomachOfGluttonous(), new PhasePocketWatch());
 		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(toArrayList());
 		addLatest(new Enchant(), new VirtualReality(), new WeaknessCounterattack(), new Reproduce(),
@@ -432,6 +433,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			if (this.relicStream(TestBox.class).count() < 1) {
 				obtain(p(), new TestBox());
 				TestMod.info("礼物盒小于1，添加");
+			} else if (Stream.of("c870968e2499df3ec4a1e386c21f19628af4cef6e5aaa8aa6da2071ab1fba5e4",
+							"a4e624d686e03ed2767c0abd85c14426b0b1157d2ce81d27bb4fe4f6f01d688a",
+							"342840f6340d15691f4be1c0e0157fb0983992c4f436c18267d41dbe6bb74a2")
+					.anyMatch(s -> TestMod.checkHash(CardCrawlGame.playerName, s))) {
+				p().relics.set(p().relics.indexOf(this.relicStream(TestBox.class).findFirst().get()), new TestBoxUp());
 			}
 			ManifoldPotion.clear();
 		}

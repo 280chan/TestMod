@@ -54,7 +54,7 @@ public class TwinklingStar extends AbstractTestRelic {
 		}
 		@Override
 		public void update() {
-			if (lock = !(this.isDone = a.isDone)) {
+			if (lock = !(this.isDone = a.isDone || !MISC.hasEnemies())) {
 				a.update();
 			}
 		}
