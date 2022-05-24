@@ -12,7 +12,10 @@ import basemod.BaseMod;
 import testmod.commands.RelicAdd;
 import testmod.commands.RelicRemove;
 import testmod.commands.TestCommand;
+import testmod.mymod.TestMod;
 import testmod.relics.AbstractTestRelic;
+import testmod.relicsup.AbstractUpgradedRelic;
+import testmod.relicsup.AllUpgradeRelic;
 import testmod.utils.MiscMethods;
 
 public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscMethods {
@@ -34,10 +37,12 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 
 	@Override
 	protected void addRelics() {
-		this.relics.addAll((command instanceof RelicAdd)
-				? BaseMod.listAllRelicIDs().stream().filter(RelicLibrary::isARelic).map(RelicLibrary::getRelic)
-						.map(r -> r.makeCopy()).collect(toArrayList())
-				: copyList(p().relics));
+		((command instanceof RelicAdd) ? BaseMod.listAllRelicIDs().stream().filter(RelicLibrary::isARelic)
+				.map(RelicLibrary::getRelic).map(r -> r.makeCopy()).collect(toArrayList()) : copyList(p().relics))
+						.forEach(this.relics::add);
+		if (command instanceof RelicAdd)
+			TestMod.MY_RELICS.stream().filter(AllUpgradeRelic::canUpgrade).map(AllUpgradeRelic::getUpgrade)
+					.forEach(this.relics::add);
 	}
 	
 	private ArrayList<AbstractRelic> copyList(ArrayList<AbstractRelic> list) {
@@ -71,6 +76,8 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 	@Override
 	protected String categoryOf(AbstractRelic r) {
 		String postfix = r instanceof AbstractTestRelic ? "test" : "";
+		if (r instanceof AbstractUpgradedRelic)
+			return "升级";
 		switch(r.tier) {
 		case BOSS:
 			return "Boss" + postfix;
@@ -95,6 +102,8 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 	@Override
 	protected String descriptionOfCategory(String category) {
 		switch (category) {
+		case "升级":
+			return "升级后的test遗物。";
 		case "Boss":
 		case "Bosstest":
 			return "只在Boss宝箱中出现的遗物。";
