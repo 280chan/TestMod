@@ -47,7 +47,7 @@ public class D_4Up extends AbstractUpgradedRelic implements ClickableRelic {
 			cost = 0;
 		else if (cost == -1)
 			cost = c.energyOnUse;
-		if (cost > 1)
+		if (cost > 0)
 			MISC.atb(new GainEnergyAction((cost - 1) * amount()));
 	}
 	
