@@ -162,8 +162,10 @@
 	
 	"testmod-upgrade-D_4":{
 		"TEXT": [
+			"7",
 			"0",
-			"0"
+			"0",
+			"999"
 		]
 	},
 	
@@ -281,8 +283,10 @@
 	
 	"testmod-upgrade-CrystalShield":{
 		"TEXT": [
+			"5",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	
@@ -391,7 +395,7 @@
 	"testmod-upgrade-CyclicPeriapt":{
 		"TEXT": [
 			"0",
-			"0"
+			"200"
 		]
 	},
 	
@@ -405,7 +409,7 @@
 	"testmod-upgrade-ConstraintPeriapt":{
 		"TEXT": [
 			"0",
-			"0"
+			"300"
 		]
 	},
 	

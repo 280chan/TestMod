@@ -415,16 +415,12 @@ public interface MiscMethods {
 	}
 	
 	default void playAgain(AbstractCard card, AbstractMonster m) {
-		AbstractCard tmp = card.makeSameInstanceOf();
-		p().limbo.addToBottom(tmp);
-		tmp.current_x = card.current_x;
-		tmp.current_y = card.current_y;
-		tmp.target_x = (Settings.WIDTH / 2.0F - 300.0F * Settings.scale);
-		tmp.target_y = (Settings.HEIGHT / 2.0F);
+		AbstractCard c = card.makeSameInstanceOf();
+		c.purgeOnUse = true;
 		if (m != null)
-			tmp.calculateCardDamage(m);
-		tmp.purgeOnUse = true;
-		AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
+			c.calculateCardDamage(m);
+        att(new NewQueueCardAction(c, m, true, true));
+        this.print("添加队列了:" + c.name);
 	}
 	
 	default void autoplayInOrder(AbstractCard self, ArrayList<AbstractCard> list, AbstractMonster m) {

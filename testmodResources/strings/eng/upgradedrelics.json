@@ -118,9 +118,9 @@
 	},
 	
 	"testmod-D_4Up":{
-		"NAME": "Runic Tetrahedron",
+		"NAME": "Runic Tetrahedron+",
 		"FLAVOR": "上面的符文无法辨识。",
-		"DESCRIPTIONS":["Whenever you play a card, one of the following #b4 effects will become effective. NL #yExhaust this card, regain its energy cost, play it one more time, #yNightTerror the card. NL You can know which the effect will become effective for the next card.", "Whenever you play a card, one of the #b4 effects will become effective. NL Next effect: NL "]
+		"DESCRIPTIONS":["Right click this relic to cycle effect. Whenever you play a card, triggers the chosen effect. Effects are: NL #yExhaust this card, regain its energy cost - #b1, play it one more time, #yNightTerror the card. NL Normal Runic Tetrahedron will be inactive, but increase effect of this relic instead.", "Whenever you play a card, triggers: NL "]
 	},
 	
 	"testmod-HeartOfDaVinciUp":{
@@ -250,15 +250,15 @@
 	},
 	
 	"testmod-CrystalShieldUp":{
-		"NAME": "Crystal Shield",
+		"NAME": "Crystal Shield+",
 		"FLAVOR": "你构筑的防御，透过这个护盾后，看起来仿佛被模糊了。",
-		"DESCRIPTIONS":["If you have gained any #yBlock in your turn, gain #b1 #yBlur when this turn ends."]
+		"DESCRIPTIONS":["If you have gained any #yBlock in your turn, gain #b1 #yBlur when this turn ends. When you have #yBlur, rebound half the damage you receive to damage source."]
 	},
 	
 	"testmod-AlchemistUp":{
 		"NAME": "The Alchemist+",
 		"FLAVOR": "无法无中生有，却可以复制一个已有的样本。",
-		"DESCRIPTIONS":["Upon pickup, gain #b1 #yPotion slot. During each of your turn, you have #b1 chance to right click on this relic to use your first usable #yPotion without consume it. Outside combat, right click on this relic to change the order of your potions."]
+		"DESCRIPTIONS":["Upon pickup, gain #b1 #yPotion slot. During each of your turn, you have #b1 chance to right click on this relic to use your first usable #yPotion without consume it. #gEssence #gof #gKronos can only be used by this relic once each combat. Outside combat, right click on this relic to change the order of your potions."]
 	},
 	
 	"testmod-StringDisintegratorUp":{
@@ -334,9 +334,9 @@
 	},
 	
 	"testmod-CyclicPeriaptUp":{
-		"NAME": "Cyclic Periapt",
+		"NAME": "Cyclic Periapt+",
 		"FLAVOR": "不准走！再来一次。",
-		"DESCRIPTIONS":["Cards which would #yExhaust when played will instead discard at the first time."]
+		"DESCRIPTIONS":["Right click this relic to toggle. When active: cards which would #yExhaust when played will instead discard. Whenever this relic prevent a card from exhaust, gain #b1 gold. Whenever this relic prevent #b10 cards from exhaust, heal #b1 at the end of current combat."]
 	},
 	
 	"testmod-EqualTreatmentUp":{
@@ -346,9 +346,9 @@
 	},
 	
 	"testmod-ConstraintPeriaptUp":{
-		"NAME": "Constraint Periapt",
+		"NAME": "Constraint Periapt+",
 		"FLAVOR": "交锋才不是最菜的呢！",
-		"DESCRIPTIONS":["Start combats with #b1 #yBurn in your draw pile. For each card that is #yUnplayable in your hand when you end your turn with, heal #b1 and deal #b10 damage to ALL enemies."]
+		"DESCRIPTIONS":["Start combats with #b1 #yBurn in your draw pile. For each card that can not be played (including insufficient energy) in your hand when you end your turn with, heal #b1 and deal #b1 damage to ALL enemies and increase future damage by #b1. "]
 	},
 	
 	"testmod-InjuryResistanceUp":{

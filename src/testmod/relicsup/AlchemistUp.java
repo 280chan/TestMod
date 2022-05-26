@@ -19,12 +19,14 @@ import com.megacrit.cardcrawl.ui.panels.TopPanel;
 
 import basemod.ReflectionHacks;
 import testmod.mymod.TestMod;
+import testmod.potions.TimePotion;
 
 public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic {
 	private boolean used = false;
 	private static boolean target = false, regain = false;
 	private static int index = -1;
 	private static AlchemistUp current = null;
+	private boolean timePotionUsed = false;
 	
 	public AlchemistUp() {
 		super(RelicTier.RARE, LandingSound.MAGICAL);
@@ -58,7 +60,7 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 	}
 	
 	public void atPreBattle() {
-		this.toggleState(!(this.used = target = false));
+		this.toggleState(!(this.used = this.timePotionUsed = target = false));
     }
 	
 	public void atTurnStart() {
@@ -75,17 +77,21 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 	
 	public void onVictory() {
 		this.toggleState(false);
-		target = false;
+		this.timePotionUsed = target = false;
     }
 	
 	private Stream<AbstractPotion> potions() {
 		return p().potions.stream().filter(po -> !(po instanceof PotionSlot));
 	}
 	
+	private boolean filter(AbstractPotion p) {
+		return p.canUse() && !(p instanceof TimePotion && timePotionUsed);
+	}
+	
 	@Override
 	public void onRightClick() {
 		if (this.canUse()) {
-			AbstractPotion p = potions().filter(po -> po.canUse()).findFirst().orElse(null);
+			AbstractPotion p = potions().filter(this::filter).findFirst().orElse(null);
 			if (p != null) {
 				if (p.targetRequired) {
 					if (!this.hasEnemies()) {
@@ -97,6 +103,7 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 					p.use(null);
 					p().relics.forEach(r -> r.onUsePotion());
 					this.pretendUse(p);
+					this.timePotionUsed |= p instanceof TimePotion;
 				}
 			} else {
 				TestMod.info("炼金术士+: 没有可使用药水");

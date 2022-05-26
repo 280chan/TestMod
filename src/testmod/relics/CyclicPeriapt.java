@@ -2,17 +2,32 @@ package testmod.relics;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.function.Supplier;
+
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 
+import testmod.relicsup.CyclicPeriaptUp;
+
 public class CyclicPeriapt extends AbstractTestRelic {
 	private static final UIStrings UI = MISC.uiString();
 	
 	private static Color color = null;
 	private ArrayList<UUID> used = new ArrayList<UUID>();
+
+	public static Color setColorIfNull(Supplier<Color> c) {
+		if (color == null)
+			color = c.get();
+		return color;
+	}
+	
+	private void initColor() {
+		if (color == null)
+			color = CyclicPeriaptUp.setColorIfNull(this::initGlowColor);
+	}
 	
 	public CyclicPeriapt() {
 		super(RelicTier.SHOP, LandingSound.MAGICAL, BAD);
@@ -28,8 +43,7 @@ public class CyclicPeriapt extends AbstractTestRelic {
 	}
 	
 	public void onRefreshHand() {
-		if (color == null)
-			color = this.initGlowColor();
+		this.initColor();
 		this.updateHandGlow();
 	}
 	

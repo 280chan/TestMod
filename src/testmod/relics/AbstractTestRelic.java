@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.function.UnaryOperator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import basemod.abstracts.CustomRelic;
 import testmod.mymod.TestMod;
@@ -41,6 +44,30 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	
 	public boolean sameAs(AbstractRelic r) {
 		return this.relicId.equals(r.relicId);
+	}
+	
+	@SpirePatch(clz = com.megacrit.cardcrawl.helpers.RelicLibrary.class, method = "getRelic")
+	public static class getRelicFix {
+		@SpirePostfixPatch
+		public static AbstractRelic Postfix(AbstractRelic _return, String key) {
+			if (_return instanceof AbstractUpgradedRelic)
+				return _return;
+			if (key.length() > 10 && key.endsWith("Up") && "testmod-".equals(key.substring(0, 8))) {
+				AbstractUpgradedRelic tmp = ((AbstractTestRelic) RelicLibrary
+						.getRelic(key.substring(0, key.length() - 2))).upgrade();
+				return tmp == null ? _return : tmp;
+			}
+			return _return;
+		}
+	}
+	
+	public AbstractUpgradedRelic upgrade() {
+		try {
+			return (AbstractUpgradedRelic) Class.forName("testmod.relicsup." + this.getClass().getSimpleName() + "Up")
+					.newInstance();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			return null;
+		}
 	}
 	
 	public void setAsInactive() {

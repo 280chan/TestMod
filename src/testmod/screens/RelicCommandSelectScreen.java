@@ -15,7 +15,6 @@ import testmod.commands.TestCommand;
 import testmod.mymod.TestMod;
 import testmod.relics.AbstractTestRelic;
 import testmod.relicsup.AbstractUpgradedRelic;
-import testmod.relicsup.AllUpgradeRelic;
 import testmod.utils.MiscMethods;
 
 public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscMethods {
@@ -41,8 +40,19 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 				.map(RelicLibrary::getRelic).map(r -> r.makeCopy()).collect(toArrayList()) : copyList(p().relics))
 						.forEach(this.relics::add);
 		if (command instanceof RelicAdd)
-			TestMod.MY_RELICS.stream().filter(AllUpgradeRelic::canUpgrade).map(AllUpgradeRelic::getUpgrade)
-					.forEach(this.relics::add);
+			TestMod.MY_RELICS.stream().map(this::upgrade).filter(r -> r != null).forEach(this.relics::add);
+	}
+	
+	private String up(AbstractRelic r) {
+		return "testmod.relicsup." + r.getClass().getSimpleName() + "Up";
+	}
+	
+	private AbstractRelic upgrade(AbstractRelic r) {
+		try {
+			return (AbstractRelic) Class.forName(up(r)).newInstance();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			return null;
+		}
 	}
 	
 	private ArrayList<AbstractRelic> copyList(ArrayList<AbstractRelic> list) {

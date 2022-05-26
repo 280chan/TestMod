@@ -14,6 +14,12 @@ import testmod.mymod.TestMod;
 @SuppressWarnings("unused")
 public class Test extends TestCommand {
 	
+	private void example() {
+		//*
+		// \u000a cmdHelp();
+		//*/
+	}
+	
 	public void execute(String[] tokens, int depth) {
 		if (tokens.length > 1) {
 			cmdHelp();

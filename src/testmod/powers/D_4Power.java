@@ -18,11 +18,11 @@ public class D_4Power extends AbstractTestPower {
 	private static final int PRIORITY = -100000;
 	
 	public static boolean hasThis(AbstractPlayer p) {
-		return p.powers.stream().anyMatch(po -> {return po instanceof D_4Power;});
+		return p.powers.stream().anyMatch(po -> po instanceof D_4Power);
 	}
 	
 	public static String getString(Situation s) {
-		return (s != null && s.ordinal() < 4) ? DESCRIPTIONS[s.ordinal() + 1] : DESCRIPTIONS[5];
+		return DESCRIPTIONS[(s != null && s.ordinal() < 4) ? s.ordinal() + 1 : 5];
 	}
 	
 	public D_4Power(AbstractCreature owner, Situation s) {

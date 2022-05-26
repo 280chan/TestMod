@@ -75,11 +75,22 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		return this.boxUp/* && this.rng.nextDouble() < 0.05*/;
 	}
 	
+	private boolean isBrkStar() {
+		return Stream.of("c870968e2499df3ec4a1e386c21f19628af4cef6e5aaa8aa6da2071ab1fba5e4",
+				"a4e624d686e03ed2767c0abd85c14426b0b1157d2ce81d27bb4fe4f6f01d688a",
+				"342840f6340d15691f4be1c0e0157fb0983992c4f436c18267d41dbe6bb74a2")
+				.anyMatch(s -> TestMod.checkHash(CardCrawlGame.playerName, s));
+	}
+	
 	private void addAndMarkAsSeen(AbstractRelic r) {
 		this.markAsSeen(r);
 		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.canUpgrade(r) && r.tier != RelicTier.BOSS
 				&& this.rollUpgrade()) {
 			this.relics.add(AllUpgradeRelic.getUpgrade(r));
+			return;
+		} else if (isBrkStar() && ((AbstractTestRelic) r).upgrade() != null && r.tier != RelicTier.BOSS
+				&& this.rollUpgrade()) {
+			this.relics.add(((AbstractTestRelic) r).upgrade());
 			return;
 		}
 		this.relics.add(r);
@@ -90,7 +101,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		AbstractTestRelic pri = this.priority();
 		ArrayList<AbstractRelic> l = new ArrayList<AbstractRelic>();
 		ArrayList<AbstractRelic> result = new ArrayList<AbstractRelic>();
-		l.addAll(pri == null ? TestMod.RELICS : TestMod.BAD_RELICS);
+		l.addAll(pri == null || this.boxUp ? TestMod.RELICS : TestMod.BAD_RELICS);
 		l.removeIf(this::checkIllegal);
 		if (pri != null) {
 			l.removeIf(pri::sameAs);
