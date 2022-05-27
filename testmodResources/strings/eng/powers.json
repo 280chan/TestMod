@@ -70,7 +70,7 @@
 			"% more damage."
 		]
 	},
-	"testmod-DefenceDownUpPower": {
+	"testmod-DefenceDownPowerUp": {
 		"NAME": "Damage Receive Increase+",
 		"DESCRIPTIONS": [
 			"Receive #b",
