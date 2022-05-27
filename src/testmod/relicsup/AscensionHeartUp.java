@@ -230,7 +230,7 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 			if (checkLevel(14))
 				p().increaseMaxHp(1, true);
 			if (checkLevel(1))
-				startEliteSwarm();
+				addEliteReward();
 		}
 		if (room instanceof MonsterRoomBoss) {
 			if (checkLevel(13))
@@ -264,11 +264,12 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 	}
 	
 	private boolean checkNumCards() {
-		return p().relics.stream().map(r -> get(r::changeNumberOfCardsInReward)).reduce(a -> a, this::chain)
+		return p().relics.stream().map(r -> get(r::changeNumberOfCardsInReward)).reduce(t(), this::chain)
 				.apply(3) > (ModHelper.isModEnabled("Binary") ? 1 : 0);
 	}
 	
-	private static void startEliteSwarm() {
+	private static void addEliteReward() {
+		AbstractDungeon.getCurrRoom().rewards.add(new RewardItem(null, RewardType.EMERALD_KEY));
 		eliteSwarm = true;
 	}
 	
