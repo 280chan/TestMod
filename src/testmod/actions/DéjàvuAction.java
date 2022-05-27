@@ -10,10 +10,12 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import basemod.BaseMod;
 import testmod.relics.Déjàvu;
+import testmod.relicsup.DéjàvuUp;
 
 public class DéjàvuAction extends AbstractGameAction {
 	public static final float DURATION = Settings.ACTION_DUR_MED;
 	private Déjàvu d;
+	private DéjàvuUp d1;
 	private ArrayList<AbstractCard> list;
 	private static boolean flag = false;
 	
@@ -24,19 +26,31 @@ public class DéjàvuAction extends AbstractGameAction {
 		this.list = list;
 	}
 	
+	public DéjàvuAction(ArrayList<AbstractCard> list, DéjàvuUp d) {
+		this(null, list);
+		this.d1 = d;
+	}
+	
 	@Override
 	public void update() {
 		this.isDone = true;
-		this.list.stream().sequential().map(AbstractCard::makeStatEquivalentCopy).forEach(this::addCard);
-		this.d.setState(false);
+		this.list.stream().map(AbstractCard::makeStatEquivalentCopy).forEach(this::addCard);
+		if (this.d != null) {
+			this.d.setState(false);
+			this.d.show();
+		} else {
+			this.d1.setState(false);
+			this.d1.show();
+		}
 		this.list.clear();
-		this.d.show();
 		flag = false;
 	}
 	
 	private void addCard(AbstractCard c) {
 		AbstractPlayer p = AbstractDungeon.player;
-		if (c.costForTurn > 0) {
+		if (this.d == null)
+			c.freeToPlayOnce = true;
+		else {
 			c.costForTurn = 0;
 			c.isCostModifiedForTurn = true;
 		}

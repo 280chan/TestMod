@@ -358,9 +358,9 @@
 	},
 	
 	"testmod-DéjàvuUp":{
-		"NAME": "Déjàvu",
+		"NAME": "Déjàvu+",
 		"FLAVOR": "Déjàvu.",
-		"DESCRIPTIONS":["If you end your turn without energy, and ALL the cards played this turn have same card type, add the copies of these cards into your hand, which cost #b0 until the end of turn and #yExhaust when played."]
+		"DESCRIPTIONS":["If you end your turn without energy, and the amount of card types of cards played this turn is not #b2, add the copies of these cards into your hand, which cost #b0 until played and #yExhaust when played."]
 	},
 	
 	"testmod-DeterminationOfClimberUp":{
@@ -640,9 +640,9 @@
 	},
 	
 	"testmod-DemonSummonUp":{
-		"NAME": "Demon Summon",
+		"NAME": "Demon Summon+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the first turn each combat, gain #b1 #yDemon #yForm, for each turn starts after first turn, gain #bTurn #bCount #yDemon #ySummon of tier #bTurn #bCount. Tier #bn #yDemon #ySummon gives you its amount #yDemon #ySummon of tier one lower, tier #b2 #yDemon #ySummon gives you #yDemon #yForm instead of #yDemon #ySummon."]
+		"DESCRIPTIONS":["At the start of each turn, for each kind of buff you have, gain #b1 #yDexterity. At the first turn each combat, gain #b1 #yDemon #yForm, for each turn starts after first turn, gain #bTurn #bCount #yDemon #ySummon of tier #bTurn #bCount. Tier #bn #yDemon #ySummon gives you its amount #yDemon #ySummon of tier one lower, tier #b2 #yDemon #ySummon gives you #yDemon #yForm instead of #yDemon #ySummon."]
 	},
 	
 	"testmod-ReverseUp":{

@@ -423,7 +423,7 @@
 	"testmod-upgrade-Déjàvu":{
 		"TEXT": [
 			"0",
-			"0"
+			"150"
 		]
 	},
 	
@@ -755,7 +755,7 @@
 	
 	"testmod-upgrade-DemonSummon":{
 		"TEXT": [
-			"0",
+			"5",
 			"0"
 		]
 	},

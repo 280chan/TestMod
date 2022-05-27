@@ -1,5 +1,6 @@
 package testmod.relics;
 
+import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -12,6 +13,11 @@ public class DemonSummon extends AbstractTestRelic {
 		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
+	public void onEquip() {
+		if (this.inCombat())
+			this.counter = GameActionManager.turn;
+	}
+	
 	public void atPreBattle() {
 		this.counter = 0;
 	}
@@ -22,11 +28,11 @@ public class DemonSummon extends AbstractTestRelic {
 	
 	public void atTurnStartPostDraw() {
 		this.counter++;
-		this.atb(this.apply(this.p(), demon(p(), this.counter, this.counter)));
+		this.att(this.apply(this.p(), demon(p(), this.counter, this.counter)));
 		this.show();
     }
 	
-	private static AbstractPower demon(AbstractCreature owner, int amount, int version) {
+	public static AbstractPower demon(AbstractCreature owner, int amount, int version) {
 		return version <= 1 ? new DemonFormPower(owner, amount) : new DemonSummonPower(owner, amount, version);
 	}
 
