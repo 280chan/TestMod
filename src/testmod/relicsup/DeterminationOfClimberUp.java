@@ -1,8 +1,11 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.graphics.Color;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
@@ -14,13 +17,20 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.rewards.RewardItem;
+import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.rooms.TreasureRoom;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-import testmod.relicsup.DeterminationOfClimberUp;
+import testmod.relics.AaSapphireKey;
+import testmod.relics.AbstractTestRelic;
+import testmod.relics.DeterminationOfClimber;
 
-public class DeterminationOfClimber extends AbstractTestRelic {
+public class DeterminationOfClimberUp extends AbstractUpgradedRelic {
 	private static Color color = null;
-	
+	public static RewardItem TMP;
+
 	public static Color setColorIfNull(Supplier<Color> c) {
 		if (color == null)
 			color = c.get();
@@ -29,23 +39,11 @@ public class DeterminationOfClimber extends AbstractTestRelic {
 	
 	private void initColor() {
 		if (color == null)
-			color = DeterminationOfClimberUp.setColorIfNull(this::initGlowColor);
+			color = DeterminationOfClimber.setColorIfNull(this::initGlowColor);
 	}
 	
-	public DeterminationOfClimber() {
+	public DeterminationOfClimberUp() {
 		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
-	public void onEquip() {
-		this.reduceEnergy();
-	}
-	
-	public void onUnequip() {
-		this.addEnergy();
-	}
-	
-	public void atPreBattle() {
-		this.counter = -1;
 	}
 	
 	public void act(int count) {
@@ -89,4 +87,38 @@ public class DeterminationOfClimber extends AbstractTestRelic {
 	public void onVictory() {
 		this.stopPulse();
 	}
+	
+	private AbstractTestRelic tryUp(AbstractTestRelic r) {
+		AbstractTestRelic t = null;
+		if (r != null)
+			t = r.upgrade();
+		return t == null ? r : t;
+	}
+	
+	public void onChestOpenAfter(boolean boss) {
+		AbstractRoom r;
+		if (!boss && AbstractDungeon.currMapNode != null && ((r = AbstractDungeon.getCurrRoom()) != null)
+				&& r instanceof TreasureRoom) {
+			r.rewards.stream().filter(a -> a.type == RewardType.RELIC && a.relic instanceof AbstractTestRelic)
+					.forEach(a -> a.relic = tryUp((AbstractTestRelic) a.relic));
+			
+			RewardItem i = new RewardItem(TMP == null ? TMP = new RewardItem() : TMP, RewardType.SAPPHIRE_KEY);
+			RewardItem j = new RewardItem(i, RewardType.SAPPHIRE_KEY);
+			i.relicLink = j;
+			i.relic = AaSapphireKey.PRE;
+			j.relic = AaSapphireKey.KEY;
+			
+			r.rewards.add(i);
+			r.rewards.add(j);
+		}
+	}
+	
+	@SpirePatch(clz = RewardItem.class, method = "renderRelicLink")
+	public static class RemoveRenderLinkPatch {
+		@SpirePrefixPatch
+		public static SpireReturn<Void> Prefix(RewardItem r) {
+			return r.relic == AaSapphireKey.PRE ? SpireReturn.Return() : SpireReturn.Continue();
+		}
+	}
+	
 }

@@ -429,8 +429,10 @@
 	
 	"testmod-upgrade-DeterminationOfClimber":{
 		"TEXT": [
+			"7",
 			"0",
-			"0"
+			"0",
+			"999"
 		]
 	},
 	

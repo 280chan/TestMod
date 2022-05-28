@@ -370,9 +370,9 @@
 	},
 	
 	"testmod-DeterminationOfClimberUp":{
-		"NAME": "登山者的决心",
+		"NAME": "登山者的决心+",
 		"FLAVOR": "然而某些登山者总是喜欢原地踏步。",
-		"DESCRIPTIONS":["每回合开始减少 [E] 。 NL 在每场战斗内，每当你打出的牌的耗能比前一张牌高时，每高出 #b1 点，获得 [E] ，回复 #b1 生命，抽 #b1 张牌，对所有敌人造成 #b1 伤害，获得 #b1 金币。"]
+		"DESCRIPTIONS":["每当你打出的牌的耗能比前一张牌高时，每高出 #b1 点，获得 [E] ，回复 #b1 生命，抽 #b1 张牌，对所有敌人造成 #b1 伤害，获得 #b1 金币。非 #yBoss 宝箱中额外添加 #b蓝宝石钥匙 ，如果该宝箱中的遗物奖励是可被升级的 #yTest 遗物，将其升级。"]
 	},
 	
 	"testmod-BloodSacrificeSpiritualizationUp":{

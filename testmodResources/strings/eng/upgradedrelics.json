@@ -364,9 +364,9 @@
 	},
 	
 	"testmod-DeterminationOfClimberUp":{
-		"NAME": "The Determination Of Climber",
+		"NAME": "The Determination Of Climber+",
 		"FLAVOR": "然而某些登山者总是喜欢原地踏步。",
-		"DESCRIPTIONS":["Lose [E] at the start of each turn. NL Whenever you play a card cost more than the previous one, for every more cost, gain [E] , heal #b1, draw #b1, deal #b1 damage to ALL enemies, gain #b1 #ygold. "]
+		"DESCRIPTIONS":["Whenever you play a card cost more than the previous one, for each more cost, gain [E] , heal #b1, draw #b1, deal #b1 damage to ALL enemies, gain #b1 #ygold. #yNon-Boss Chest now has an extra #bSapphire #bKey, if the chest contains #yTest relic that can be upgraded, upgrade it."]
 	},
 	
 	"testmod-BloodSacrificeSpiritualizationUp":{
