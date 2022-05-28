@@ -1,5 +1,6 @@
 package christmasMod.powers;
 
+import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -11,9 +12,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-
 import testmod.mymod.TestMod;
 import testmod.powers.AbstractTestPower;
 
@@ -52,34 +50,27 @@ public class WarPower extends AbstractTestPower {
 		}
 	}
 	
-	private static void apply(int[] damage) {
+	private void apply(int[] damage) {
 		AbstractGameAction a = currentAction();
 		if (a != null) {
 			AbstractCreature source = a.source;
 			DamageType damageType = a.damageType;
 			AttackEffect attackEffect = a.attackEffect;
-			for (AbstractPower p : AbstractDungeon.player.powers) {
-				p.onDamageAllEnemies(damage);
-			}
-			int temp = AbstractDungeon.getCurrRoom().monsters.monsters.size();
-			for (int i = 0; i < temp; i++) {
-				if (!((AbstractMonster) AbstractDungeon.getCurrRoom().monsters.monsters.get(i)).isDeadOrEscaped()) {
-					if (attackEffect == AbstractGameAction.AttackEffect.POISON) {
-						((AbstractMonster) AbstractDungeon.getCurrRoom().monsters.monsters
-								.get(i)).tint.color = Color.CHARTREUSE.cpy();
-						((AbstractMonster) AbstractDungeon.getCurrRoom().monsters.monsters.get(i)).tint
-								.changeColor(Color.WHITE.cpy());
-					} else if (attackEffect == AbstractGameAction.AttackEffect.FIRE) {
-						((AbstractMonster) AbstractDungeon.getCurrRoom().monsters.monsters
-								.get(i)).tint.color = Color.RED.cpy();
-						((AbstractMonster) AbstractDungeon.getCurrRoom().monsters.monsters.get(i)).tint
-								.changeColor(Color.WHITE.cpy());
-					}
-					((AbstractMonster) AbstractDungeon.getCurrRoom().monsters.monsters.get(i))
-							.damage(new DamageInfo(source, damage[i], damageType));
+			p().powers.forEach(p -> p.onDamageAllEnemies(damage));
+			ArrayList<Integer> dmg = new ArrayList<Integer>();
+			for (int i : damage)
+				dmg.add(i);
+			AbstractDungeon.getMonsters().monsters.stream().filter(m -> !m.isDeadOrEscaped()).forEach(m -> {
+				if (attackEffect == AbstractGameAction.AttackEffect.POISON) {
+					m.tint.color = Color.CHARTREUSE.cpy();
+					m.tint.changeColor(Color.WHITE.cpy());
+				} else if (attackEffect == AbstractGameAction.AttackEffect.FIRE) {
+					m.tint.color = Color.RED.cpy();
+					m.tint.changeColor(Color.WHITE.cpy());
 				}
-			}
-			if (AbstractDungeon.getCurrRoom().monsters.areMonstersBasicallyDead()) {
+				m.damage(new DamageInfo(source, dmg.remove(0), damageType));
+			});
+			if (AbstractDungeon.getMonsters().areMonstersBasicallyDead()) {
 				AbstractDungeon.actionManager.clearPostCombatActions();
 			}
 		}
