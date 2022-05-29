@@ -51,6 +51,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	private boolean grabbedScreen = false;
 	private float grabStartY = 0.0F;
 	private ScrollBar scrollBar;
+	private boolean allowScroll = false;
 	private int row = 0;
 	private ConfirmButton button;
 	private static final Color RED_OUTLINE_COLOR = Settings.RED_RELIC_COLOR.cpy();
@@ -169,7 +170,8 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	 * @param title 遗物列表的标题
 	 * @param desc 遗物列表的描述
 	 */
-	public RelicSelectScreen(Collection<? extends AbstractRelic> c, boolean canSkip, String bDesc, String title, String desc) {
+	public RelicSelectScreen(Collection<? extends AbstractRelic> c, boolean canSkip, String bDesc, String title, 
+			String desc) {
 		this(c, canSkip, bDesc, title, desc, false, 1, false);
 	}
 	
@@ -199,7 +201,6 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	 */
 	public RelicSelectScreen(Collection<? extends AbstractRelic> c, boolean canSkip, String bDesc, String title,
 			String desc, boolean autoSort, int amountToSelect, boolean anyNum) {
-		this.scrollBar = new ScrollBar(this);
 		this.button = new ConfirmButton(Settings.language == GameLanguage.ZHS ? "跳过" : "Skip");
 		this.button.isDisabled = !canSkip;
 		this.setDescription(bDesc, title, desc);
@@ -243,6 +244,8 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 			this.addRelics();
 		if (this.autoSort)
 			this.sort();
+		else
+			this.scrollUpperBound = this.calculateScrollBound();
 		this.button.show();
 		this.scrollY = (Settings.HEIGHT - 400.0F * Settings.scale);
 		CardCrawlGame.mainMenuScreen.screen = MainMenuScreen.CurScreen.RELIC_VIEW;
@@ -304,7 +307,12 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	private float calculateScrollBound() {
 		int rows0 = (this.autoSort ? this.sortedRelics.stream() : Stream.of(this.relics))
 				.mapToInt(l -> l.size() / 10 + 3).sum();
-		return Math.max(START_Y, rows0 * SPACE);
+		this.allowScroll = Settings.HEIGHT < rows0 * SPACE;
+		if (this.allowScroll && this.scrollBar == null)
+			this.scrollBar = new ScrollBar(this);
+		else if (!this.allowScroll)
+			this.scrollBar = null;
+		return Math.max(Settings.HEIGHT, rows0 * SPACE);
 	}
 	
 	private void clear() {
@@ -350,7 +358,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 				CardCrawlGame.mainMenuScreen.panelScreen.refresh();
 			}
 		}
-		if (!this.scrollBar.update())
+		if (this.allowScroll && !this.scrollBar.update())
 			this.updateScrolling();
 		InputHelper.justClickedLeft = false;
 		this.hoveredRelic = null;
@@ -466,14 +474,15 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 			this.renderLists(sb);
 		else
 			this.renderList(sb, this.infoTitle, this.infoDesc, this.relics);
-		this.scrollBar.render(sb);
+		if (this.allowScroll)
+			this.scrollBar.render(sb);
 		this.button.render(sb);
 	}
 	
 	private void setPosition(AbstractRelic r, ArrayList<AbstractRelic> list) {
 		int i = list.indexOf(r);
 		r.currentX = START_X + SPACE * (i % 10);
-		r.currentY = (this.scrollY - SPACE * (i / 10 + this.row));
+		r.currentY = ((this.allowScroll ? this.scrollY : Settings.HEIGHT) - SPACE * (i / 10 + this.row));
 	}
 	
 	private Color getColor(AbstractRelic r) {
@@ -496,18 +505,21 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	
 	private void renderList(SpriteBatch sb, String msg, String desc, ArrayList<AbstractRelic> list) {
 		this.row += 2;
+		float y = this.allowScroll ? this.scrollY : Settings.HEIGHT;
 		FontHelper.renderSmartText(sb, FontHelper.buttonLabelFont, msg, START_X - 50.0F * Settings.scale,
-				this.scrollY + 4.0F * Settings.scale - SPACE * this.row, 99999.0F, 0.0F, Settings.GOLD_COLOR);
+				y + 4.0F * Settings.scale - SPACE * this.row, 99999.0F, 0.0F, Settings.GOLD_COLOR);
 		FontHelper.renderSmartText(sb, FontHelper.cardDescFont_N, desc,
 				START_X - 50.0F * Settings.scale
 						+ FontHelper.getSmartWidth(FontHelper.buttonLabelFont, msg, 99999.0F, 0.0F),
-				this.scrollY - 0.0F * Settings.scale - SPACE * this.row, 99999.0F, 0.0F, Settings.CREAM_COLOR);
+				y - SPACE * this.row, 99999.0F, 0.0F, Settings.CREAM_COLOR);
 		this.row += 1;
 		list.stream().peek(r -> r.isSeen = true).peek(r -> setPosition(r, list)).forEach(r -> render(sb, r));
 		this.row += (list.size() - 1) / 10;
 	}
 	
 	public void scrolledUsingBar(float newPercent) {
+		if (!this.allowScroll)
+			return;
 		float newPosition = MathHelper.valueFromPercentBetween(this.scrollLowerBound, this.scrollUpperBound,
 				newPercent);
 		this.scrollY = newPosition;
