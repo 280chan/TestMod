@@ -20,6 +20,7 @@ import testmod.mymod.TestMod;
 import testmod.relics.AbstractTestRelic;
 import testmod.relics.TestBox;
 import testmod.relicsup.AllUpgradeRelic;
+import testmod.relicsup.TestBoxUp;
 import testmod.utils.MiscMethods;
 
 public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscMethods {
@@ -115,9 +116,8 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	}
 
 	private void completeSelection() {
-		if (!this.boxUp) {
-			p().relics.remove(relicStream(TestBox.class).findFirst().orElse(null));
-		}
+		p().relics.remove(
+				(this.boxUp ? relicStream(TestBoxUp.class) : relicStream(TestBox.class)).findFirst().orElse(null));
 		p().reorganizeRelics();
 	}
 	

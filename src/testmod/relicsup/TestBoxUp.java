@@ -72,9 +72,10 @@ public class TestBoxUp extends AbstractUpgradedRelic implements ClickableRelic {
 			} else if (AbstractDungeon.screen != pre) {
 				return;
 			}
-			remove = cardSelected = true;
+			cardSelected = true;
 			AbstractDungeon.getCurrRoom().phase = phase;
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
+			this.relic();
 		}
 	}
 	
@@ -150,7 +151,6 @@ public class TestBoxUp extends AbstractUpgradedRelic implements ClickableRelic {
 			return;
 		this.counter = -2;
 		this.card();
-		this.relic();
 	}
 
 }
