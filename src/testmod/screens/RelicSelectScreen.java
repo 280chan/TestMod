@@ -26,10 +26,11 @@ import basemod.interfaces.RenderSubscriber;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 /**
  * @author 彼君不触
- * @version 11/30/2020
+ * @version 5/28/2022
  * @since 8/29/2018
  */
 public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSubscriber, ScrollBarListener {
@@ -289,8 +290,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 		for (AbstractRelic r : this.relics) {
 			String c = this.categoryOf(r);
 			if (this.category.contains(c)) {
-				int index = this.category.indexOf(c);
-				this.sortedRelics.get(index).add(r);
+				this.sortedRelics.get(this.category.indexOf(c)).add(r);
 			} else {
 				this.category.add(c);
 				ArrayList<AbstractRelic> tmp = new ArrayList<AbstractRelic>();
@@ -302,11 +302,9 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	}
 	
 	private float calculateScrollBound() {
-		int rows = 0;
-		for (int i = 0; i < this.sortedRelics.size(); i++) {
-			rows += 3 + this.sortedRelics.get(i).size() / 10;
-		}
-		return START_Y + rows * SPACE;
+		int rows0 = (this.autoSort ? this.sortedRelics.stream() : Stream.of(this.relics))
+				.mapToInt(l -> l.size() / 10 + 3).sum();
+		return Math.max(START_Y, rows0 * SPACE);
 	}
 	
 	private void clear() {
@@ -506,7 +504,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 				this.scrollY - 0.0F * Settings.scale - SPACE * this.row, 99999.0F, 0.0F, Settings.CREAM_COLOR);
 		this.row += 1;
 		list.stream().peek(r -> r.isSeen = true).peek(r -> setPosition(r, list)).forEach(r -> render(sb, r));
-		this.row += list.size() / 10;
+		this.row += (list.size() - 1) / 10;
 	}
 	
 	public void scrolledUsingBar(float newPercent) {
