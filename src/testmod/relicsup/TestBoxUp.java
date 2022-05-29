@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
@@ -42,6 +43,10 @@ public class TestBoxUp extends AbstractUpgradedRelic implements ClickableRelic {
 			this.beginLongPulse();
 		}
 		return tmp;
+	}
+	
+	public String getUpdatedDescription() {
+		return DESCRIPTIONS[0] + DESCRIPTIONS[Loader.isModLoaded("RelicUpgradeLib") ? 2 : 1];
 	}
 	
 	public TestBoxUp() {
