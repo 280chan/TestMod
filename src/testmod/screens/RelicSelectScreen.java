@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 
 /**
  * @author 彼君不触
- * @version 5/28/2022
+ * @version 5/29/2022
  * @since 8/29/2018
  */
 public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSubscriber, ScrollBarListener {
@@ -39,11 +39,12 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	private static final float X = 1670.0F * Settings.scale;
 	private static final float Y = 500.0F * Settings.scale;
 	private static final float TEXT_X = 1400.0F * Settings.scale;
-	private static final float SPACE_Y = 58.0F * Settings.scale;
+	private static final float MAIN_Y = Settings.HEIGHT - 300.0F * Settings.scale;
 	
 	private static final float SPACE = 80.0F * Settings.scale;
+	private static final float HALF_SPACE = SPACE / 2;
 	private static final float START_X = 600.0F * Settings.scale;
-	private static final float START_Y = Settings.HEIGHT - 300.0F * Settings.scale;
+	private static final float START_Y = Settings.HEIGHT - 150.0F * Settings.scale;
 	private float scrollY = START_Y;
 	private float targetY = this.scrollY;
 	private float scrollLowerBound = 1000.0F * Settings.scale;
@@ -305,14 +306,14 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	}
 	
 	private float calculateScrollBound() {
-		int rows0 = (this.autoSort ? this.sortedRelics.stream() : Stream.of(this.relics))
-				.mapToInt(l -> l.size() / 10 + 3).sum();
-		this.allowScroll = Settings.HEIGHT < rows0 * SPACE;
+		int rows = (this.autoSort ? this.sortedRelics.stream() : Stream.of(this.relics))
+				.mapToInt(l -> (l.size() + 19) / 10).sum();
+		this.allowScroll = MAIN_Y < rows * SPACE;
 		if (this.allowScroll && this.scrollBar == null)
 			this.scrollBar = new ScrollBar(this);
 		else if (!this.allowScroll)
 			this.scrollBar = null;
-		return Math.max(Settings.HEIGHT, rows0 * SPACE);
+		return this.allowScroll ? rows * SPACE : Settings.HEIGHT / 2f + rows * HALF_SPACE;
 	}
 	
 	private void clear() {
@@ -387,7 +388,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 			sb.setColor(c2);
 			FontHelper.renderFontLeftTopAligned(sb, FontHelper.panelNameFont, screen.bottomDesc,
 					TEXT_X - 50.0F * Settings.scale,
-					Y - SPACE_Y * 0.0F + 113.0F * Settings.scale - DungeonMapScreen.offsetY / 50.0F, c);
+					Y + 113.0F * Settings.scale - DungeonMapScreen.offsetY / 50.0F, c);
 		}
 	}
 	
@@ -469,7 +470,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	}
 
 	private void render(SpriteBatch sb) {
-		this.row = -1;
+		this.row = 0;
 		if (this.autoSort)
 			this.renderLists(sb);
 		else
@@ -482,7 +483,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	private void setPosition(AbstractRelic r, ArrayList<AbstractRelic> list) {
 		int i = list.indexOf(r);
 		r.currentX = START_X + SPACE * (i % 10);
-		r.currentY = ((this.allowScroll ? this.scrollY : Settings.HEIGHT) - SPACE * (i / 10 + this.row));
+		r.currentY = ((this.allowScroll ? this.scrollY : this.scrollUpperBound) - SPACE * (i / 10 + this.row));
 	}
 	
 	private Color getColor(AbstractRelic r) {
@@ -504,8 +505,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	}
 	
 	private void renderList(SpriteBatch sb, String msg, String desc, ArrayList<AbstractRelic> list) {
-		this.row += 2;
-		float y = this.allowScroll ? this.scrollY : Settings.HEIGHT;
+		float y = this.allowScroll ? this.scrollY : this.scrollUpperBound;
 		FontHelper.renderSmartText(sb, FontHelper.buttonLabelFont, msg, START_X - 50.0F * Settings.scale,
 				y + 4.0F * Settings.scale - SPACE * this.row, 99999.0F, 0.0F, Settings.GOLD_COLOR);
 		FontHelper.renderSmartText(sb, FontHelper.cardDescFont_N, desc,
@@ -514,7 +514,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 				y - SPACE * this.row, 99999.0F, 0.0F, Settings.CREAM_COLOR);
 		this.row += 1;
 		list.stream().peek(r -> r.isSeen = true).peek(r -> setPosition(r, list)).forEach(r -> render(sb, r));
-		this.row += (list.size() - 1) / 10;
+		this.row += (list.size() + 9) / 10;
 	}
 	
 	public void scrolledUsingBar(float newPercent) {
