@@ -72,7 +72,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 5/29/2022
+ * @version 5/30/2022
  * @since 6/17/2018
  */
 
@@ -602,6 +602,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(PhasePocketWatch.SAVE_NAME, "0");
 		DEFAULT.setProperty(Encyclopedia.SAVE_NAME, "0");
 		DEFAULT.setProperty(ManifoldPotion.POTION_ID, "");
+
+		if (Loader.isModLoaded("RelicUpgradeLib")) {
+			Stream.of(AllUpgradeRelic.MultiKey.SAVE_NAME).forEach(s -> DEFAULT.setProperty(s, "0"));
+		}
 		
 		/*DEFAULT.setProperty(Mahjong.SAVE_KANG, "0");
 		DEFAULT.setProperty(Mahjong.SAVE_TURN, "0");
@@ -626,6 +630,14 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		if (config == null)
 			this.initSavingConfig();
 		SUB_MOD.forEach(TestMod::editSubModStartGame);
+
+		if (Loader.isModLoaded("RelicUpgradeLib")) {
+			if (CardCrawlGame.loadingSave) {
+				AllUpgradeRelic.MultiKey.load();
+			} else {
+				AllUpgradeRelic.MultiKey.reset();
+			}
+		}
 		
 		if (p().relics.stream().anyMatch(r -> r instanceof PortableAltar))
 			PortableAltar.load(getInt(PortableAltar.SAVE_NAME));
