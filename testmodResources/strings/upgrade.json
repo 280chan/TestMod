@@ -248,8 +248,10 @@
 	
 	"testmod-upgrade-DragonStarHat":{
 		"TEXT": [
+			"5",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	
@@ -558,7 +560,7 @@
 	"testmod-upgrade-DominatorOfWeakness":{
 		"TEXT": [
 			"0",
-			"0"
+			"150"
 		]
 	},
 	

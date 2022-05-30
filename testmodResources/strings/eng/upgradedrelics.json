@@ -220,9 +220,9 @@
 	},
 	
 	"testmod-DragonStarHatUp":{
-		"NAME": "The Dragon Star Hat",
+		"NAME": "The Dragon Star Hat+",
 		"FLAVOR": "并没有在偷懒。",
-		"DESCRIPTIONS":["Whenever you Rest, increase #yCharge #yCapacity by #b1. Whenever you enter a Rest Site, get fully charged. Whenever you enter a Rest Site, start next few combat with #yCharge amount of #yStrength and reduce it by #b1. ", "NL Current #Capacity is #b", ", you will start next combat with #b", " #yStrength. "]
+		"DESCRIPTIONS":["Upon pickup, set counter to #yCharge #yCapacity of #yThe #yDragon #yStar #yHat. Whenever you Rest, increase counter by #b1 and obtain #rRuby #rKey. Start combats with counter amount of #yStrength.", " NL Start combats with #b", " #yStrength."]
 	},
 	
 	"testmod-SaigiyounoYouUp":{
@@ -472,9 +472,9 @@
 	},
 	
 	"testmod-DominatorOfWeaknessUp":{
-		"NAME": "Dominator of Weakness",
+		"NAME": "Dominator of Weakness+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":[" #yVulnerable and #yWeakened no longer only affect once on enemies, instead it will affect its amount times."]
+		"DESCRIPTIONS":[" #yVulnerable and #yWeakened no longer only affect once on enemies, instead it will affect its amount times. (both multiplies up)"]
 	},
 	
 	"testmod-ShadowAmuletUp":{
