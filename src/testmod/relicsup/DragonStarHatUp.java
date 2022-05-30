@@ -31,11 +31,12 @@ public class DragonStarHatUp extends AbstractUpgradedRelic {
 	}
 	
 	public void atPreBattle() {
-		if (this.isActive)
-			this.att(apply(p(), new StrengthPower(p(), relicStream(DragonStarHat.class).mapToInt(this::count).sum())));
 		if (this.counter > 0) {
 			this.show();
 			this.att(apply(p(), new StrengthPower(p(), this.counter)));
+			if (!this.isActive || relicStream(DragonStarHat.class).count() == 0)
+				return;
+			this.att(apply(p(), new StrengthPower(p(), relicStream(DragonStarHat.class).mapToInt(this::count).sum())));
 		}
     }
 	
