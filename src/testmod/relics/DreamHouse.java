@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.relics.Lantern;
 
 import testmod.actions.DreamHousePurgeCardAction;
 import testmod.mymod.TestMod;
+import testmod.relicsup.DreamHouseUp;
 
 public class DreamHouse extends AbstractTestRelic {
 	private static final ArrayList<DreamHousePurgeCardAction> QUEUE = new ArrayList<DreamHousePurgeCardAction>();
@@ -21,7 +22,7 @@ public class DreamHouse extends AbstractTestRelic {
 	}
 	
 	public void onObtainCard(AbstractCard card) {
-		if (card.rarity != CardRarity.COMMON) {
+		if (this.isActive && card.rarity != CardRarity.COMMON && this.relicStream(DreamHouseUp.class).count() == 0) {
 			QUEUE.add(new DreamHousePurgeCardAction(card));
 		}
 	}
@@ -46,7 +47,7 @@ public class DreamHouse extends AbstractTestRelic {
 	
 	public void update() {
 		super.update();
-		if (!QUEUE.isEmpty()) {
+		if (this.isActive && !QUEUE.isEmpty()) {
 			DreamHousePurgeCardAction action = QUEUE.get(0);
 			if (!action.isDone) {
 				action.update();

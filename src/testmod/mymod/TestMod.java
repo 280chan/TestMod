@@ -63,6 +63,7 @@ import testmod.patches.SwFPatch;
 import testmod.potions.*;
 import testmod.powers.*;
 import testmod.relics.*;
+import testmod.relicsup.AbstractUpgradedRelic;
 import testmod.relicsup.AllUpgradeRelic;
 import testmod.relicsup.AscensionHeartUp;
 import testmod.relicsup.TestBoxUp;
