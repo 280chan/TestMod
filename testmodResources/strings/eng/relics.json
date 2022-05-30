@@ -473,7 +473,7 @@
 	"testmod-DominatorOfWeakness":{
 		"NAME": "Dominator of Weakness",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":[" #yVulnerable and #yWeakened no longer only affect once on enemies, instead it will affect its amount times."]
+		"DESCRIPTIONS":[" #yVulnerable and #yWeakened no longer only affect once on enemies, instead it will affect its amount times. ( #yVulnerable adds up, #yWeakened multiplies up)"]
 	},
 	
 	"testmod-ShadowAmulet":{

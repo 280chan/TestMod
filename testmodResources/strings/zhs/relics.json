@@ -509,7 +509,7 @@
 	"testmod-DominatorOfWeakness":{
 		"NAME": "弱小之支配者",
 		"FLAVOR": "痛打落水狗。",
-		"DESCRIPTIONS":["敌人身上的 #y易伤 、 #y虚弱 不再只生效一次，而是生效其 #y层数 次(乘算)。"]
+		"DESCRIPTIONS":["敌人身上的 #y易伤 、 #y虚弱 不再只生效一次，而是生效其 #y层数 次( #y易伤 加算 #y虚弱 乘算)。"]
 	},
 	
 	"testmod-ShadowAmulet":{
