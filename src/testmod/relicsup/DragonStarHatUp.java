@@ -1,6 +1,5 @@
 package testmod.relicsup;
 
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -53,8 +52,8 @@ public class DragonStarHatUp extends AbstractUpgradedRelic {
 	public void onRest() {
 		if (this.isActive) {
 		    this.relicStream(DragonStarHatUp.class).forEach(this::incrementCounter);
-		    AbstractDungeon.topLevelEffects.add(new ObtainKeyEffect(ObtainKeyEffect.KeyColor.RED));
 		}
+	    AbstractDungeon.topLevelEffects.add(new ObtainKeyEffect(ObtainKeyEffect.KeyColor.RED));
 	    flash();
 	    this.stopPulse();
     }
@@ -68,9 +67,5 @@ public class DragonStarHatUp extends AbstractUpgradedRelic {
 			return;
 		this.stopPulse();
     }
-	
-	public boolean canSpawn() {
-		return Settings.isEndless || AbstractDungeon.actNum < 2;
-	}
 	
 }
