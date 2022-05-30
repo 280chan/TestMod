@@ -43,7 +43,7 @@ public class DominatorOfWeaknessPatch {
 		public static SpireReturn<Float> Insert(VulnerablePower p, float damage, DamageType type) {
 			if (!hasRelic() || p.amount < 2 || p.owner.isPlayer)
 				return SpireReturn.Continue();
-			return SpireReturn.Return((float) finalRate(hasFrog(p) ? 0.75 : 0.5, p.amount));
+			return SpireReturn.Return((float) finalRate(hasFrog(p) ? 0.75 : 0.5, p.amount) * damage);
 		}
 	}
 	
