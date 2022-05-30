@@ -34,7 +34,7 @@ public class DominatorOfWeaknessPatch {
 	}
 	
 	private static double finalRate(double bonus, int powerAmount) {
-		return Math.pow(1 + bonus, powerAmount * amount1()) * (1 + powerAmount * amount());
+		return Math.pow(1 + bonus, powerAmount * amount1()) * (1 + bonus * powerAmount * amount());
 	}
 	
 	@SpirePatch(clz = VulnerablePower.class, method = "atDamageReceive")
