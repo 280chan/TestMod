@@ -21,13 +21,14 @@ import javassist.CannotCompileException;
 import javassist.CtBehavior;
 import testmod.mymod.TestMod;
 import testmod.powers.AbstractTestPower;
+import testmod.relicsup.EncyclopediaUp;
 
 public class Encyclopedia extends AbstractTestRelic {
 	public static final String SAVE_NAME = "Encyclopedia";
-	private static final HashMap<AbstractMonster, Integer> CURR = new HashMap<AbstractMonster, Integer>();
-	private static final HashMap<String, Integer> SEEN = new HashMap<String, Integer>();
-	private static boolean start = false;
-	private static boolean victory = false;
+	public static final HashMap<AbstractMonster, Integer> CURR = new HashMap<AbstractMonster, Integer>();
+	public static final HashMap<String, Integer> SEEN = new HashMap<String, Integer>();
+	public static boolean start = false;
+	public static boolean victory = false;
 	
 	public static void clear() {
 		SEEN.clear();
@@ -82,7 +83,7 @@ public class Encyclopedia extends AbstractTestRelic {
 	}
 	
 	public void atPreBattle() {
-		if (!this.isActive)
+		if (!this.isActive || this.relicStream(EncyclopediaUp.class).count() > 0)
 			return;
 		CURR.clear();
 		if (AbstractDungeon.getMonsters() != null && AbstractDungeon.getMonsters().monsters != null)
@@ -92,7 +93,7 @@ public class Encyclopedia extends AbstractTestRelic {
 	
 	public void update() {
 		super.update();
-		if (!this.isActive || !start || !this.inCombat())
+		if (!this.isActive || !start || !this.inCombat() || this.relicStream(EncyclopediaUp.class).count() > 0)
 			return;
 		if (AbstractDungeon.getMonsters() != null && AbstractDungeon.getMonsters().monsters != null) {
 			AbstractDungeon.getMonsters().monsters.stream().filter(not(CURR::containsKey)).forEach(this::put);
@@ -100,7 +101,7 @@ public class Encyclopedia extends AbstractTestRelic {
 	}
 	
 	public void onVictory() {
-		if (!this.isActive)
+		if (!this.isActive || this.relicStream(EncyclopediaUp.class).count() > 0)
 			return;
 		CURR.keySet().forEach(this::add);
 		CURR.clear();
@@ -136,7 +137,8 @@ public class Encyclopedia extends AbstractTestRelic {
 		}
 
 		public void updateDescription() {
-			this.description = desc(0) + owner.name + desc(1) + (single() ? amount : (dmgRate(100f) - 100)) + desc(2);
+			this.description = desc(0) + owner.name + desc(1) + (single() ? amount + "" : (dmgRate(100f) - 100))
+					+ desc(2);
 		}
 		
 		private float dmgRate(float input) {

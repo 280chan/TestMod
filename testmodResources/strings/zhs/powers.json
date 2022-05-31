@@ -114,6 +114,14 @@
 			" %。"
 		]
 	},
+	"testmod-EncyclopediaPowerUp":{
+		"NAME":"百科全书+",
+		"DESCRIPTIONS":[
+			" #y",
+			" 受到的伤害增加 #b",
+			" %。"
+		]
+	},
 	"testmod-EnhanceArmermentPower":{
 		"NAME":"完全支配",
 		"DESCRIPTIONS":[

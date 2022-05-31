@@ -114,6 +114,14 @@
 			" % more damage."
 		]
 	},
+	"testmod-EncyclopediaPowerUp":{
+		"NAME":"Encyclopedia+",
+		"DESCRIPTIONS":[
+			" #y",
+			" receives #b",
+			" % more damage."
+		]
+	},
 	"testmod-EnhanceArmermentPower": {
 		"NAME": "Enhance Armerment",
 		"DESCRIPTIONS": [

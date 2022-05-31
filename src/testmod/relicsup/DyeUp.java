@@ -1,25 +1,36 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
-public class Dye extends AbstractTestRelic implements ClickableRelic {
-	public static final UIStrings UI = MISC.uiString();
+import testmod.relics.Dye;
+
+public class DyeUp extends AbstractUpgradedRelic implements ClickableRelic {
+	private static final UIStrings UI = Dye.UI;
 	private boolean used = false;
+	private static final ArrayList<AbstractCard> COPY = new ArrayList<AbstractCard>();
 	
-	public Dye() {
-		super(RelicTier.RARE, LandingSound.MAGICAL, GOD);
+	public DyeUp() {
+		super(RelicTier.RARE, LandingSound.MAGICAL);
+	}
+	
+	public void onUseCard(final AbstractCard c, final UseCardAction action) {
+		if (this.isActive && COPY.contains(c)) {
+			p().gainGold((int) this.relicStream(DyeUp.class).count());
+		}
 	}
 	
 	public void atPreBattle() {
 		this.used = false;
+		COPY.clear();
 		this.togglePulse(true);
     }
 	
@@ -43,6 +54,7 @@ public class Dye extends AbstractTestRelic implements ClickableRelic {
 	
 	public void onVictory() {
 		this.togglePulse(false);
+		COPY.clear();
 	}
 	
 	@Override
@@ -67,6 +79,7 @@ public class Dye extends AbstractTestRelic implements ClickableRelic {
 	private void changeCards(CardGroup g, AbstractCard c) {
 		ArrayList<AbstractCard> old = g.group;
 		g.group = g.group.stream().map(a -> c.makeStatEquivalentCopy()).collect(this.toArrayList());
+		COPY.addAll(g.group);
 		old.clear();
 	}
 

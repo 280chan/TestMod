@@ -609,7 +609,7 @@
 	"testmod-upgrade-Dye":{
 		"TEXT": [
 			"0",
-			"0"
+			"50"
 		]
 	},
 	
@@ -706,7 +706,7 @@
 	
 	"testmod-upgrade-Encyclopedia":{
 		"TEXT": [
-			"0",
+			"5",
 			"0"
 		]
 	},

@@ -520,9 +520,9 @@
 	},
 	
 	"testmod-DyeUp":{
-		"NAME": "染料",
+		"NAME": "染料+",
 		"FLAVOR": "“请勿将其用于染布料以外的场合。”——商人",
-		"DESCRIPTIONS":["每场战斗有一次机会，回合内右击本遗物，从手牌中选一张牌，将弃牌堆和抽牌堆的所有牌替换为该牌的复制。"]
+		"DESCRIPTIONS":["每场战斗有一次机会，回合内右击本遗物，从手牌中选一张牌，将弃牌堆和抽牌堆的所有牌替换为该牌的复制。每当你打出本遗物复制的牌，获得 #b1 #y金币 。"]
 	},
 	
 	"testmod-GreedyDevilUp":{
@@ -604,9 +604,9 @@
 	},
 	
 	"testmod-EncyclopediaUp":{
-		"NAME": "百科全书",
+		"NAME": "百科全书+",
 		"FLAVOR": "洞悉一切。",
-		"DESCRIPTIONS":["每见过一个敌人一次，对本局游戏后续见到相同敌人造成伤害增加 #b50% 。"]
+		"DESCRIPTIONS":["每见过一个敌人一次，对本局游戏后续见到相同敌人造成伤害增加 #b100% 。"]
 	},
 	
 	"testmod-GoldenContractUp":{
