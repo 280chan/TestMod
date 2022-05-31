@@ -261,6 +261,11 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 	public void update() {
 		super.update();
 		updateChangeCard();
+		if (current != null && AbstractDungeon.getCurrRoom().rewards.size() > 1) {
+			AbstractDungeon.getCurrRoom().rewards.remove(current);
+			AbstractDungeon.getCurrRoom().rewards.add(current);
+			current = null;
+		}
 	}
 	
 	private boolean checkNumCards() {
@@ -268,8 +273,11 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 				.apply(3) > (ModHelper.isModEnabled("Binary") ? 1 : 0);
 	}
 	
+	private static RewardItem current = null;
+	
 	private static void addEliteReward() {
-		AbstractDungeon.getCurrRoom().rewards.add(new RewardItem(null, RewardType.EMERALD_KEY));
+		if (!AbstractDungeon.currMapNode.hasEmeraldKey)
+			AbstractDungeon.getCurrRoom().rewards.add(current = new RewardItem(null, RewardType.EMERALD_KEY));
 		eliteSwarm = true;
 	}
 	

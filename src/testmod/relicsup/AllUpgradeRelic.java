@@ -21,6 +21,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.rooms.CampfireUI;
 import com.megacrit.cardcrawl.saveAndContinue.SaveAndContinue;
 import com.megacrit.cardcrawl.saveAndContinue.SaveFile;
+import com.megacrit.cardcrawl.screens.DoorUnlockScreen;
 import com.megacrit.cardcrawl.screens.SingleRelicViewPopup;
 import com.megacrit.cardcrawl.ui.campfire.AbstractCampfireOption;
 import com.megacrit.cardcrawl.ui.campfire.RecallOption;
@@ -35,8 +36,9 @@ import relicupgradelib.arch.*;
 import relicupgradelib.ui.RelicUpgradePopup;
 import testmod.mymod.TestMod;
 import testmod.relics.*;
+import testmod.utils.MiscMethods;
 
-public class AllUpgradeRelic {
+public class AllUpgradeRelic implements MiscMethods {
 	
 	private static class Register {
 		private static Proxy p;
@@ -119,6 +121,10 @@ public class AllUpgradeRelic {
 					KeyColor k = ReflectionHacks.getPrivate(c, ObtainKeyEffect.class, "keyColor");
 					if (k.ordinal() < 3)
 						KEY[k.ordinal()]++;
+					if (k.ordinal() == 1 && MISC.relicStream(AscensionHeartUp.class).count() > 0) {
+						int d = AbstractDungeon.currMapNode.hasEmeraldKey ? 0 : -1;
+						KEY[1] += MISC.relicStream(AscensionHeartUp.class).count() + d;
+					}
 					TestMod.info("获得了钥匙:" + (k.ordinal() == 0 ? "R" : (k.ordinal() == 1 ? "G" : "B")));
 				}
 			}
@@ -143,6 +149,19 @@ public class AllUpgradeRelic {
 					Matcher finalMatcher = new Matcher.MethodCallMatcher(SingleRelicViewPopup.class, "close");
 					return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 				}
+			}
+		}
+		
+		@SpirePatch(cls = "relicupgradelib.arch.EndingLogic$removeKeysPatches", method = "Insert", optional = true)
+		public static class EndingLogicPatch {
+			@SpirePostfixPatch
+			public static void Postfix(DoorUnlockScreen _inst) {
+				if (KEY[0] > 0)
+					Settings.hasRubyKey = --KEY[0] > 0;
+				if (KEY[1] > 0)
+					Settings.hasEmeraldKey = --KEY[1] > 0;
+				if (KEY[2] > 0)
+					Settings.hasSapphireKey = --KEY[2] > 0;
 			}
 		}
 		
