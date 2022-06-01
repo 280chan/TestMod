@@ -14,8 +14,8 @@ public class CasingShieldUp extends AbstractUpgradedRelic {
 	}
 	
 	public void atTurnStart() {
-		this.stopPulse();
-		this.counter /= 2;
+		if ((this.counter /= 2) <= 0)
+			this.stopPulse();
 	}
 	
 	public void onVictory() {
