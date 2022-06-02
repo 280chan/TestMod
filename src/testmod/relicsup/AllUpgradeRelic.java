@@ -56,6 +56,7 @@ public class AllUpgradeRelic implements MiscMethods {
 		String original = r.getClass().getSimpleName();
 		AbstractUpgradedRelic up = upgrade(original);
 		if (up != null) {
+			up.isSeen = true;
 			Register.init(r);
 			UIStrings tmp = CardCrawlGame.languagePack.getUIString(UIID(original));
 			for (int i = 0; i < tmp.TEXT.length; i += 2) {

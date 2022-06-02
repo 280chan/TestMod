@@ -1,4 +1,4 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.function.Supplier;
 
@@ -9,9 +9,9 @@ import com.megacrit.cardcrawl.cards.AbstractCard.CardTarget;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import testmod.relicsup.EqualTreatmentUp;
+import testmod.relics.EqualTreatment;
 
-public class EqualTreatment extends AbstractTestRelic {
+public class EqualTreatmentUp extends AbstractUpgradedRelic {
 	private static Color color = null;
 
 	public static Color setColorIfNull(Supplier<Color> c) {
@@ -22,10 +22,10 @@ public class EqualTreatment extends AbstractTestRelic {
 	
 	private void initColor() {
 		if (color == null)
-			color = EqualTreatmentUp.setColorIfNull(this::initGlowColor);
+			color = EqualTreatment.setColorIfNull(this::initGlowColor);
 	}
 	
-	public EqualTreatment() {
+	public EqualTreatmentUp() {
 		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
@@ -36,10 +36,8 @@ public class EqualTreatment extends AbstractTestRelic {
 	private void changeState(boolean state) {
 		if (state) {
 			this.beginLongPulse();
-			this.counter = -2;
 		} else {
 			this.stopPulse();
-			this.counter = -1;
 		}
 	}
 	
@@ -48,7 +46,7 @@ public class EqualTreatment extends AbstractTestRelic {
 	}
 	
 	private boolean checkTarget(AbstractCard c) {
-		return (c.target == CardTarget.ENEMY || c.target == CardTarget.SELF_AND_ENEMY) && this.counter == -2;
+		return c.target == CardTarget.ENEMY || c.target == CardTarget.SELF_AND_ENEMY;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -56,7 +54,6 @@ public class EqualTreatment extends AbstractTestRelic {
 		if (checkTarget(c)) {
 			AbstractDungeon.getMonsters().monsters.stream().filter(this::alive).filter(not(action.target::equals))
 					.forEach(combine(c::calculateCardDamage, m -> c.use(p(), m)));
-			this.changeState(false);
 			this.show();
 		}
 	}

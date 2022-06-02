@@ -57,8 +57,10 @@
 	
 	"testmod-upgrade-EnergyCheck":{
 		"TEXT": [
+			"7",
 			"0",
-			"0"
+			"0",
+			"999"
 		]
 	},
 	
@@ -403,8 +405,10 @@
 	
 	"testmod-upgrade-EqualTreatment":{
 		"TEXT": [
+			"5",
 			"0",
-			"0"
+			"0",
+			"400"
 		]
 	},
 	
