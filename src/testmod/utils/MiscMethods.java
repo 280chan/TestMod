@@ -3,6 +3,7 @@ package testmod.utils;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
+import java.util.stream.IntStream.Builder;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.RandomXS128;
@@ -996,4 +997,10 @@ public interface MiscMethods {
 		return reverse(s.collect(toArrayList())).stream();
 	}
 	
+	default IntStream streamOf(int... list) {
+		Builder b = IntStream.builder();
+		for (int i : list)
+			b.accept(i);
+		return b.build();
+	}
 }
