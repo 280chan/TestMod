@@ -19,6 +19,7 @@ public class EvilDagger extends AbstractTestRelic {
 	private ArrayList<AbstractMonster> killed = new ArrayList<AbstractMonster>();
 	private AbstractCard c;
 	private static final Color COLOR = Color.SCARLET.cpy();
+	private static com.megacrit.cardcrawl.random.Random rng;
 	
 	public EvilDagger() {
 		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
@@ -58,9 +59,11 @@ public class EvilDagger extends AbstractTestRelic {
 	}
 	
 	public void onUseCard(AbstractCard c, UseCardAction a) {
+		if (!this.isActive)
+			return;
 		this.stupidDevToBot(() -> {
 			if (!killed.isEmpty() && c.equals(this.c)) {
-				killed.forEach(m -> doSth(c, m));
+				this.relicStream(EvilDagger.class).forEach(r -> killed.forEach(m -> doSth(c, m)));
 				show();
 				c.superFlash(COLOR);
 			}
@@ -69,6 +72,8 @@ public class EvilDagger extends AbstractTestRelic {
 	}
 	
 	public void atPreBattle() {
+		if (!this.isActive)
+			return;
 		ArrayList<AbstractCard> list = this.combatCards().filter(c -> c.type == CardType.ATTACK).collect(toArrayList());
 		if (!list.isEmpty())
 			this.c = TestMod.randomItem(list, AbstractDungeon.cardRandomRng);
@@ -82,7 +87,7 @@ public class EvilDagger extends AbstractTestRelic {
     }
 	
 	public void onMonsterDeath(final AbstractMonster m) {
-		if (!m.hasPower("Minion") && (m.isDead || m.isDying)) {
+		if (this.isActive && !m.hasPower("Minion") && (m.isDead || m.isDying)) {
 			this.killed.add(m);
 		}
     }
@@ -95,8 +100,10 @@ public class EvilDagger extends AbstractTestRelic {
 	}
 	
 	private void updateHandGlow() {
-		if (p().hand.group.stream().anyMatch(
-				c -> c.equals(this.c) && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster()))) {
+		if (rng == null)
+			rng = MISC.copyRNG(AbstractDungeon.monsterRng);
+		if (p().hand.group.stream().anyMatch(c -> c.equals(this.c) && c.hasEnoughEnergy()
+				&& c.cardPlayable(AbstractDungeon.getMonsters().getRandomMonster(null, true, rng)))) {
 			this.addToGlowChangerList(this.c, COLOR);
 			this.beginLongPulse();
 		} else if (this.c != null) {
