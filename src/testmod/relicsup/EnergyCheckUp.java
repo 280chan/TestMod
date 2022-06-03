@@ -1,5 +1,7 @@
 package testmod.relicsup;
 
+import java.util.stream.IntStream;
+
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
@@ -17,7 +19,7 @@ public class EnergyCheckUp extends AbstractUpgradedRelic implements ClickableRel
 	
 	private static int key() {
 		if (Loader.isModLoaded("RelicUpgradeLib")) {
-			return MISC.streamOf(AllUpgradeRelic.MultiKey.KEY).sum() + 1;
+			return IntStream.of(AllUpgradeRelic.MultiKey.KEY).sum() + 1;
 		}
 		int i = 1;
 		if (Settings.hasRubyKey)
