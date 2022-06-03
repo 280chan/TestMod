@@ -246,7 +246,7 @@
 	"testmod-DreamHouseUp":{
 		"NAME": "Dream House+",
 		"FLAVOR": "简单，粗暴，直接。",
-		"DESCRIPTIONS":["Gain [E] at the start of each turn. You can no longer obtain cards with #yCurse or #yRare #yRarity. Whenever this relic refutes obtaining a card, gain a random #ygem #ykey, and gain [E] and draw #b1 card next turn."]
+		"DESCRIPTIONS":["Gain [E] at the start of each turn. You can no longer obtain #yCurse or cards with #yRare #yRarity. Whenever this relic refutes obtaining a card, gain a random #ygem #ykey, and gain [E] and draw #b1 card next turn."]
 	},
 	
 	"testmod-CrystalShieldUp":{

@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.ObtainKeyEffect;
 import testmod.actions.DreamHousePurgeCardAction;
@@ -26,12 +27,12 @@ public class DreamHouseUp extends AbstractUpgradedRelic {
 	}
 	
 	public void onObtainCard(AbstractCard card) {
-		if (card.rarity == CardRarity.CURSE || card.rarity == CardRarity.RARE) {
+		if (card.type == CardType.CURSE || card.rarity == CardRarity.CURSE || card.rarity == CardRarity.RARE) {
 			if (this.isActive)
 				QUEUE.add(new DreamHousePurgeCardAction(card));
 			this.counter++;
 			Collections.shuffle(COLOR, new Random(AbstractDungeon.miscRng.randomLong()));
-		    AbstractDungeon.topLevelEffects.add(new ObtainKeyEffect(COLOR.get(0)));
+			AbstractDungeon.topLevelEffectsQueue.add(new ObtainKeyEffect(COLOR.get(0)));
 		}
 	}
 	
