@@ -3,8 +3,6 @@ package testmod.utils;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
-import java.util.stream.IntStream.Builder;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.RandomXS128;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
@@ -34,7 +32,6 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
-
 import basemod.BaseMod;
 import basemod.Pair;
 import basemod.ReflectionHacks;
@@ -521,6 +518,8 @@ public interface MiscMethods {
 		private static final ArrayList<AbstractCard> UPDATE_LIST = new ArrayList<AbstractCard>();
 		private static final ArrayList<Integer> USED_COLOR = new ArrayList<Integer>();
 		private static final ArrayList<AbstractCard> HARD_GLOW_LOCK = new ArrayList<AbstractCard>();
+		private static final int DURATION = 10;
+		private static int phase = 0;
 
 		private static void initialize() {
 			Stream.of(Color.GOLD, new Color(0.0F, 1.0F, 0.0F, 0.25F), Color.PINK, Color.SKY, Color.PURPLE,
@@ -552,14 +551,14 @@ public interface MiscMethods {
 					HARD_GLOW_LOCK.remove(c);
 			} else {
 				ArrayList<Color> tmp = GLOW_COLORS.get(c);
-				if (tmp.size() == 2) {
+				if (tmp.size() == 2 && tmp.get(1).equals(color)) {
 					c.glowColor = tmp.get(0).cpy();
+					tmp.clear();
 					GLOW_COLORS.remove(c);
 					UPDATE_LIST.remove(c);
 					if (HARD_GLOW_LOCK.contains(c))
 						HARD_GLOW_LOCK.remove(c);
-					return;
-				} else {
+				} else if (tmp.size() > 2) {
 					tmp.remove(color);
 				}
 			}
@@ -615,7 +614,17 @@ public interface MiscMethods {
 	}
 	
 	default void updateGlow() {
-		CardGlowChanger.updateGlow();
+		if (CardGlowChanger.phase++ == CardGlowChanger.DURATION) {
+			CardGlowChanger.phase = 0;
+			CardGlowChanger.updateGlow();
+		}
+	}
+	
+	default void resetGlow() {
+		CardGlowChanger.UPDATE_LIST.clear();
+		CardGlowChanger.HARD_GLOW_LOCK.clear();
+		CardGlowChanger.GLOW_COLORS.values().forEach(l -> l.clear());
+		CardGlowChanger.GLOW_COLORS.clear();
 	}
 	
 	default void addToGlowChangerList(AbstractCard c, Color color) {
@@ -978,15 +987,6 @@ public interface MiscMethods {
 		return amount > 1 ? amount : 1;
 	}
 	
-	static class ComparatorBuilder<T> {
-		static ComparatorBuilder<?> current;
-		ArrayList<T> l = new ArrayList<T>();
-		
-		public void add(T t) {
-			l.add(0, t);
-		}
-	}
-	
 	default <T> ArrayList<T> reverse(ArrayList<T> l) {
 		ArrayList<T> tmp = new ArrayList<T>();
 		l.forEach(a -> tmp.add(0, a));
@@ -995,12 +995,5 @@ public interface MiscMethods {
 	
 	default <T> Stream<T> reverse(Stream<T> s) {
 		return reverse(s.collect(toArrayList())).stream();
-	}
-	
-	default IntStream streamOf(int... list) {
-		Builder b = IntStream.builder();
-		for (int i : list)
-			b.accept(i);
-		return b.build();
 	}
 }
