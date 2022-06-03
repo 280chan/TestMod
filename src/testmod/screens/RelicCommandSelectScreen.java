@@ -61,9 +61,10 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 	}
 	
 	private void doSth(AbstractRelic r) {
-		if (command instanceof RelicAdd)
+		if (command instanceof RelicAdd) {
 			AbstractDungeon.getCurrRoom().spawnRelicAndObtain((Settings.WIDTH / 2), (Settings.HEIGHT / 2), r);
-		else if (command instanceof RelicRemove) {
+			r.isSeen = true;
+		} else if (command instanceof RelicRemove) {
 			r.onUnequip();
 			p().relics.remove(r);
 			p().reorganizeRelics();
