@@ -682,8 +682,10 @@
 	
 	"testmod-upgrade-EvilDagger":{
 		"TEXT": [
+			"5",
 			"0",
-			"0"
+			"0",
+			"400"
 		]
 	},
 	

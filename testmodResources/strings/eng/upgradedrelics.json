@@ -574,9 +574,9 @@
 	},
 	
 	"testmod-EvilDaggerUp":{
-		"NAME": "Evil Dagger",
+		"NAME": "Evil Dagger+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each combat, an Attack card of yours is attached. Whenever that Attack card kills a non-minion enemy, cause extra effect of one of #yFeed, #yLesson #yLearned and #yHand #yof #yGreed.", "Attached to #y", "."]
+		"DESCRIPTIONS":["At the start of each combat, #b1 Attack card of yours is attached. Whenever that Attack card kills a non-minion enemy, cause extra effect of #yFeed, #yLesson #yLearned and #yHand #yof #yGreed. Whenever you end a combat without trigger this relic, increase attach amount by #b1.", " Attached to #y", "."]
 	},
 	
 	"testmod-Match3Up":{
