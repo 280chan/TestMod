@@ -74,7 +74,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 6/1/2022
+ * @version 6/2/2022
  * @since 6/17/2018
  */
 
@@ -191,6 +191,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	@Override
 	public void receivePostBattle(AbstractRoom r) {
 		SUB_MOD.forEach(new RoomTrigger(r)::postTrigger);
+		this.resetGlow();
 	}
 	
 	public static void info(Object s) {
