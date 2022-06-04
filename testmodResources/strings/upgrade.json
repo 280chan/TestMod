@@ -779,8 +779,10 @@
 	
 	"testmod-upgrade-Extravagant":{
 		"TEXT": [
+			"7",
 			"0",
-			"0"
+			"0",
+			"999"
 		]
 	}
 }

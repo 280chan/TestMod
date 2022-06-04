@@ -4,13 +4,10 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import basemod.BaseMod;
 import testmod.mymod.TestMod;
+import testmod.utils.HandSizeCounterUpdater;
 
-public class HyperplasticTissue extends AbstractTestRelic {
+public class HyperplasticTissue extends AbstractTestRelic implements HandSizeCounterUpdater {
 	private int delta = 0;
-	
-	public static void updateCounter() {
-		MISC.relicStream(HyperplasticTissue.class).forEach(r -> r.counter = BaseMod.MAX_HAND_SIZE);
-	}
 	
 	public HyperplasticTissue() {
 		super(RelicTier.COMMON, LandingSound.SOLID);
@@ -18,15 +15,15 @@ public class HyperplasticTissue extends AbstractTestRelic {
 	
 	public void onCardDraw(AbstractCard c) {
 		if (c.type == CardType.STATUS || c.type == CardType.CURSE) {
-			this.counter = ++BaseMod.MAX_HAND_SIZE;
+			BaseMod.MAX_HAND_SIZE++;
 			this.delta++;
-			Extravagant.updateCounter();
+			this.updateHandSize();
 		}
     }
 	
 	public void onEquip() {
-		this.counter = ++BaseMod.MAX_HAND_SIZE;
-		Extravagant.updateCounter();
+		BaseMod.MAX_HAND_SIZE++;
+		this.updateHandSize();
 		this.delta = 0;
 		TestMod.setActivity(this);
 		if (this.inCombat() && this.isActive) {
@@ -36,16 +33,17 @@ public class HyperplasticTissue extends AbstractTestRelic {
 	
 	public void onUnequip() {
 		BaseMod.MAX_HAND_SIZE -= this.delta + 1;
-		Extravagant.updateCounter();
+		this.updateHandSize();
     }
 	
 	public void atPreBattle() {
 		this.delta = 0;
-		this.counter = BaseMod.MAX_HAND_SIZE;
+		this.updateHandSize();
     }
 	
 	public void onVictory() {
-		this.counter = (BaseMod.MAX_HAND_SIZE -= this.delta);
+		BaseMod.MAX_HAND_SIZE -= this.delta;
+		this.updateHandSize();
 		this.delta = 0;
     }
 

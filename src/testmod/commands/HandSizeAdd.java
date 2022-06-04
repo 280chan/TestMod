@@ -1,19 +1,16 @@
 package testmod.commands;
 
 import java.util.ArrayList;
-
 import basemod.BaseMod;
-import testmod.relics.Extravagant;
-import testmod.relics.HyperplasticTissue;
+import testmod.utils.HandSizeCounterUpdater;
 
-public class HandSizeAdd extends TestCommand {
+public class HandSizeAdd extends TestCommand implements HandSizeCounterUpdater {
 	
 	public void execute(String[] tokens, int depth) {
 		try {
 			int i = Integer.parseInt(tokens[2]);
 			BaseMod.MAX_HAND_SIZE += i;
-			HyperplasticTissue.updateCounter();
-			Extravagant.updateCounter();
+			this.updateHandSize();
 		} catch (Exception e) {
 			HandSize.cmdHelp();
 		}

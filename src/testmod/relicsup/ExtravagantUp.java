@@ -1,4 +1,4 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.function.Consumer;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
@@ -8,16 +8,16 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import basemod.BaseMod;
 import testmod.utils.HandSizeCounterUpdater;
 
-public class Extravagant extends AbstractTestRelic implements ClickableRelic, HandSizeCounterUpdater {
+public class ExtravagantUp extends AbstractUpgradedRelic implements ClickableRelic, HandSizeCounterUpdater {
 	private static int delta = 0;
 	private boolean playerTurn = false;
 	
-	public Extravagant() {
+	public ExtravagantUp() {
 		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	private void updateAllPulse() {
-		this.relicStream(Extravagant.class).forEach(r -> r.up(false));
+		this.relicStream(ExtravagantUp.class).forEach(r -> r.up(false));
 	}
 	
 	private void up(boolean stop) {
@@ -38,10 +38,9 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic, Ha
 	}
 	
 	public void atPreBattle() {
-		if (this.isActive) {
+		if (this.isActive)
 			delta = 0;
-			this.updateHandSize();
-		}
+		this.counter = BaseMod.MAX_HAND_SIZE;
     }
 	
 	public void atTurnStart() {
@@ -57,7 +56,7 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic, Ha
 		if (delta > 0) {
 			BaseMod.MAX_HAND_SIZE += delta;
 			delta = 0;
-			this.updateHandSize();
+			updateHandSize();
 		}
     }
 	
@@ -80,15 +79,13 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic, Ha
 	public void onRightClick() {
 		if (this.inCombat() && this.playerTurn && BaseMod.MAX_HAND_SIZE > 0 && !p().hand.group.isEmpty()) {
 			this.show();
-			int tmp = Math.max(1, BaseMod.MAX_HAND_SIZE / 2);
-			delta += tmp;
-			BaseMod.MAX_HAND_SIZE -= tmp;
-			this.updateHandSize();
+			delta++;
+			BaseMod.MAX_HAND_SIZE--;
+			updateHandSize();
 			this.updateAllPulse();
-			if ((tmp = Math.min(p().energy.energyMaster, p().hand.group.size())) > 0) {
-				reverse(p().hand.group).forEach(play(tmp));
-				p().hand.group.clear();
-			}
+			int tmp = p().hand.group.size();
+			reverse(p().hand.group).forEach(play(tmp));
+			p().hand.group.clear();
 		}
 	}
 
