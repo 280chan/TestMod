@@ -20,13 +20,23 @@ public abstract class AbstractChristmasCard extends CustomCard {
 			CardTarget target) {
 		super(ID_PREFIX + id, name, IMG, cost, description, type, CardColor.COLORLESS, CardRarity.SPECIAL, target);
 	}
+	
+	private static AbstractCard applyGiftDamaged(AbstractCard c) {
+		if (MiscMethods.MISC.inCombat() && GiftDamagedPower.hasThis())
+			GiftDamagedPower.getThis().onCardDraw(c);
+		return c;
+	}
 
 	public AbstractCard makeCopy() {
-		AbstractCard tmp = super.makeCopy();
-		if (MiscMethods.MISC.inCombat() && GiftDamagedPower.hasThis()) {
-			GiftDamagedPower.getThis().onCardDraw(tmp);
-		}
-		return tmp;
+		return applyGiftDamaged(super.makeCopy());
+	}
+	
+	public AbstractCard makeStatEquivalentCopy() {
+		return applyGiftDamaged(super.makeStatEquivalentCopy());
+	}
+	
+	public AbstractCard makeSameInstanceOf() {
+		return applyGiftDamaged(super.makeSameInstanceOf());
 	}
 	
 }
