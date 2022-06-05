@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.ShopRoom;
 
 import testmod.mymod.TestMod;
+import testmod.relicsup.FaithUp;
 
 public class Faith extends AbstractTestRelic {
 	public static final String ID = "Faith";
@@ -61,7 +62,8 @@ public class Faith extends AbstractTestRelic {
 		TestMod.setActivity(this);
 		if (!this.isActive)
 			return;
-		if (AbstractDungeon.floorNum > 0 && AbstractDungeon.getCurrRoom() instanceof ShopRoom) {
+		if (AbstractDungeon.floorNum > 0 && AbstractDungeon.getCurrRoom() instanceof ShopRoom
+				&& this.relicStream(FaithUp.class).count() == 0) {
 			this.gainGold(AbstractDungeon.player);
 		}
 	}
@@ -116,8 +118,6 @@ public class Faith extends AbstractTestRelic {
 	}
 	
 	public void justEnteredRoom(final AbstractRoom room) {
-		if (!this.isActive)
-			return;
 		this.save();
 		AbstractPlayer p = AbstractDungeon.player;
 		if (this.gained) {
@@ -125,6 +125,8 @@ public class Faith extends AbstractTestRelic {
 			p.gold = this.preGold;
 			p.displayGold = this.preGold;
 		}
+		if (!this.isActive || this.relicStream(FaithUp.class).count() > 0)
+			return;
 		if (room instanceof ShopRoom) {
 			this.gainGoldCheck(p, room);
 		} else {

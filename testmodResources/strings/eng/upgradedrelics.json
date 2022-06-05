@@ -100,9 +100,9 @@
 	},
 	
 	"testmod-FaithUp":{
-		"NAME": "Faith",
+		"NAME": "Faith+",
 		"FLAVOR": "七美德终于做完了。",
-		"DESCRIPTIONS":["Whenever you enter a shop, gain a huge amount of #ygold which will be removed when leaving this shop. After purchasing the first product in this shop, reset your #ygold back to what it was before gaining the huge amount of #ygold. When entering next shop, lose the amount of gold of this product's price, if your #ygold is insufficient, set your #ygold to #b0 and receive a damage of the maximum between #b25% of current HP and #b10% of the amount of overdraft, (at least #b1), the overdraft will remain for next shop."]
+		"DESCRIPTIONS":["Whenever you enter a shop, gain #ygold equals to price of the most expensive item in shop, increase counter by same amount. Whenever you enter a non-shop room, lose #b4% counter of #ygold and reduce same amount of counter, receive damage for insufficient part. Gain #b2% counter of #yStrength at the start of each combat."]
 	},
 	
 	"testmod-AssaultLearningUp":{
