@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.RandomXS128;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.*;
@@ -29,6 +30,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.ui.buttons.EndTurnButton;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
@@ -733,6 +735,29 @@ public interface MiscMethods {
 	
 	default <T> Consumer<T> combine(Consumer<T>... actions) {
 		return Stream.of(actions).reduce(t -> {}, Consumer::andThen);
+	}
+	
+	static class TMPEffect extends AbstractGameEffect {
+		private Lambda[] f;
+		public TMPEffect(Lambda... f) {
+			this.f = f;
+			this.color = Color.BLACK.cpy();
+		}
+		public void update() {
+			super.update();
+			this.isDone = true;
+			Stream.of(this.f).forEach(Lambda::run);
+		}
+		@Override
+		public void dispose() {
+		}
+		@Override
+		public void render(SpriteBatch arg0) {
+		}
+	}
+
+	default void addTmpEffect(Lambda... lambda) {
+		AbstractDungeon.topLevelEffectsQueue.add(new TMPEffect(lambda));
 	}
 	
 	public static interface Lambda extends Runnable {}
