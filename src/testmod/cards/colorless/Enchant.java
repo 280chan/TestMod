@@ -35,7 +35,6 @@ public class Enchant extends AbstractTestCard {
 				});
 			} else if (tmp.size() == 1) {
 				affect(tmp.getTopCard());
-				return;
 			}
     	});
     }
