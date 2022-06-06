@@ -418,9 +418,9 @@
 	},
 	
 	"testmod-FanaticismUp":{
-		"NAME": "Fanaticism",
+		"NAME": "Fanaticism+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] , #yWrath: gain [E] . At the end of each turn, #yWrath: exit #yWrath. Otherwise, enter #yWrath. Whenever you lose hp, for each point you lose, gain #b1% hp absorb, #yWrath: gain double.", " NL Current hp absorb: #b", "%"]
+		"DESCRIPTIONS":["When you are in any #ystance, deal double #yAttack damage. At the start of each turn, gain [E] , #yWrath: gain [E] ; #yCalm: enter #yDivinity. At the end of each turn, #yWrath: enter #yCalm. Otherwise, if not in #yCalm: enter #yWrath. Whenever you lose hp, for each point you lose, gain #b1% hp absorb, #yWrath: gain triple.", " NL Current hp absorb: #b", "%"]
 	},
 	
 	"testmod-TurbochargingSystemUp":{
