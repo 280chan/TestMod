@@ -85,6 +85,7 @@ public class EvilDaggerUp extends AbstractUpgradedRelic {
 		if (!this.isActive)
 			return;
 		used = false;
+		CARDS.clear();
 		ArrayList<AbstractCard> list = this.combatCards().filter(c -> c.type == CardType.ATTACK).collect(toArrayList());
 		if (!list.isEmpty()) {
 			Collections.shuffle(list, new Random(AbstractDungeon.cardRandomRng.randomLong()));
@@ -109,9 +110,7 @@ public class EvilDaggerUp extends AbstractUpgradedRelic {
     }
 	
 	public void onRefreshHand() {
-		if (!this.isActive)
-			return;
-		if (this.inCombat())
+		if (this.isActive && this.inCombat())
 			this.updateHandGlow();
 	}
 	
