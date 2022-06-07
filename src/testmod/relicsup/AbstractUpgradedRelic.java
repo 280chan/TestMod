@@ -15,7 +15,6 @@ public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
 	
 	private AbstractUpgradedRelic(String id, RelicTier tier, LandingSound sfx) {
 		super(TestMod.makeID(id), TestMod.relicIMGPath(removePostfixForIMG(id)), tier, sfx);
-		this.isSeen = true;
 	}
 	
 	public AbstractUpgradedRelic(RelicTier tier, LandingSound sfx) {
