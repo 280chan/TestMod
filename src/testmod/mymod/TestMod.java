@@ -74,7 +74,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 6/5/2022
+ * @version 6/6/2022
  * @since 6/17/2018
  */
 
@@ -317,12 +317,17 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				.collect(toArrayList());
 		
 		MY_RELICS.forEach(AbstractTestRelic::addToMap);
-		if (Loader.isModLoaded("RelicUpgradeLib"))
+		if (Loader.isModLoaded("RelicUpgradeLib")) {
 			MY_RELICS.forEach(AllUpgradeRelic::add);
+		} else {
+			MY_RELICS.stream().map(r -> r.upgrade()).filter(r -> r != null).forEach(UP_RELICS::add);
+		}
+		UP_RELICS.stream().forEach(AbstractTestRelic::addToMap);
 	}
 
 	public static ArrayList<AbstractRelic> RELICS = new ArrayList<AbstractRelic>();
 	public static ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
+	public static ArrayList<AbstractUpgradedRelic> UP_RELICS = new ArrayList<AbstractUpgradedRelic>();
 	
 	private void loadStrings(Class<?> c) {
 		String s = c.getSimpleName().toLowerCase();
@@ -534,6 +539,10 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		invoke(r, false);
 	}
 	
+	private static Stream<AbstractTestRelic> allRelics() {
+		return Stream.concat(MY_RELICS.stream(), UP_RELICS.stream());
+	}
+	
 	@Override
 	public void receivePostUpdate() {
 		SUB_MOD.forEach(TestMod::editSubModPostUpdate);
@@ -545,8 +554,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			}
 
 			this.relicStream().peek(TestMod::setActivity).forEach(TestMod::setShow);
-			MY_RELICS.stream().filter(AbstractTestRelic::tryEquip).forEach(this::invokeEquip);
-			MY_RELICS.stream().filter(AbstractTestRelic::tryUnequip).forEach(this::invokeUnequip);
+			allRelics().filter(AbstractTestRelic::tryEquip).forEach(this::invokeEquip);
+			allRelics().filter(AbstractTestRelic::tryUnequip).forEach(this::invokeUnequip);
 			this.relicStream().forEach(AbstractTestRelic::postUpdate);
 			
 			if (AbstractDungeon.currMapNode != null) {
@@ -794,6 +803,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		addEvents();
 		addPotions();
 		
+		UP_RELICS.forEach(this::markAsSeen);
 		if (checkHash(CardCrawlGame.playerName, "1023dba2e158f257fba87f85d932b1df69c1989dc87c14389787a681f056cc5e")) {
 			unlockAll();
 			TestCommand.add("test", Test.class);

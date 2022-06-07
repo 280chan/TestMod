@@ -328,9 +328,9 @@
 	},
 	
 	"testmod-FatalChainUp":{
-		"NAME": "致命连锁",
+		"NAME": "致命连锁+",
 		"FLAVOR": "Die! Die! Die!",
-		"DESCRIPTIONS":["每当你杀死敌人时，对所有敌人造成击杀溢出伤害的 #b2.718 倍的伤害。"]
+		"DESCRIPTIONS":["每当你杀死敌人时，对所有敌人造成击杀溢出伤害的 #b3.142 倍的伤害。每当你在战斗中失去生命时，对所有敌人造成失去生命数值的 #b3.142 倍的伤害。"]
 	},
 	
 	"testmod-CyclicPeriaptUp":{

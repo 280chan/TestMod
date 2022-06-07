@@ -328,9 +328,9 @@
 	},
 	
 	"testmod-FatalChainUp":{
-		"NAME": "Fatal Chain",
+		"NAME": "Fatal Chain+",
 		"FLAVOR": "Die! Die! Die!",
-		"DESCRIPTIONS":["Whenever you kills an enemy, deal a damage of #b271.8% of the overkill of the fatal damage to ALL enemies."]
+		"DESCRIPTIONS":["Whenever you kills an enemy, deal a damage of #b314.2% of the overkill of the fatal damage to ALL enemies. Whenever you lose HP in combat, deal a damage of #b314.2% of the HP loss to ALL enemies."]
 	},
 	
 	"testmod-CyclicPeriaptUp":{
