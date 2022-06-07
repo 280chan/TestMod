@@ -142,6 +142,7 @@ public interface MiscMethods {
 			UnlockTracker.markRelicAsSeen(r.relicId);
 			TestMod.info("成功解锁了未见过的 " + r.name);
 		}
+		r.isSeen = true;
 	}
 	
 	default void markAsSeen(AbstractCard c) {
@@ -149,6 +150,7 @@ public interface MiscMethods {
 			UnlockTracker.markCardAsSeen(c.cardID);
 			TestMod.info("成功解锁了未见过的 " + c.name);
 		}
+		c.isSeen = true;
 	}
 	
 	default CardGroup getSource(AbstractCard c) {
