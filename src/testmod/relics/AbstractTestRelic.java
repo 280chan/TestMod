@@ -9,7 +9,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import basemod.abstracts.CustomRelic;
 import testmod.mymod.TestMod;
@@ -53,8 +52,8 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 			if (_return instanceof AbstractUpgradedRelic)
 				return _return;
 			if (key.length() > 10 && key.endsWith("Up") && "testmod-".equals(key.substring(0, 8))) {
-				AbstractUpgradedRelic tmp = ((AbstractTestRelic) RelicLibrary
-						.getRelic(key.substring(0, key.length() - 2))).upgrade();
+				AbstractUpgradedRelic tmp = TestMod.UP_RELICS.stream().filter(r -> r.relicId.equals(key)).findFirst()
+						.orElse(null);
 				return tmp == null ? _return : tmp;
 			}
 			return _return;
