@@ -45,7 +45,13 @@ public class Enchant extends AbstractTestCard {
     
     private void affect(AbstractCard c) {
     	this.addTmpActionToTop(() -> {
-    		c.magicNumber *= this.magicNumber;
+    		if (c instanceof PowerStrike) {
+    			c.magicNumber += 10;
+        		c.magicNumber *= this.magicNumber;
+        		c.magicNumber -= 10;
+    		} else {
+        		c.magicNumber *= this.magicNumber;
+    		}
     		c.baseMagicNumber = c.magicNumber;
     		c.upgradedMagicNumber = true;
     		c.exhaustOnUseOnce = true;
