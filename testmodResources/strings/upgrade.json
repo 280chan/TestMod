@@ -115,7 +115,7 @@
 	
 	"testmod-upgrade-Fortitude":{
 		"TEXT": [
-			"0",
+			"3",
 			"0"
 		]
 	},
@@ -751,8 +751,10 @@
 	
 	"testmod-upgrade-FissionDevice":{
 		"TEXT": [
+			"5",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	

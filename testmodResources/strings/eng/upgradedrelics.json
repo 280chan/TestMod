@@ -72,9 +72,9 @@
 	},
 	
 	"testmod-FortitudeUp":{
-		"NAME": "Fortitude",
+		"NAME": "Fortitude+",
 		"FLAVOR": "“勇敢不在于能够蔑视危险，而在于认请危险、战胜危险。” —— 布勒森东",
-		"DESCRIPTIONS":["If you end your turn without #yBlock, gain #b3 #yStrength. "]
+		"DESCRIPTIONS":["If you end your turn having #yBlock, gain #b1 #yStrength. Or else if you have positive #yStrength, double your #yStrength. Otherwise gain #b3 #yStrength."]
 	},
 	
 	"testmod-CharityUp":{
@@ -628,9 +628,9 @@
 	},
 	
 	"testmod-FissionDeviceUp":{
-		"NAME": "Fission Device",
+		"NAME": "Fission Device+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Once per turn, right click on this relic to choose a card from your hand which has #yCost greater than #b1, remove it from current combat, but add its #yCost copies with all values #b1 / #yCost of original to your hand, remainder become an extra #b0 #yCost copy. All copies exhaust when use. NL "]
+		"DESCRIPTIONS":["Once every turn, right click on this relic to choose a card from your hand which has #yCost greater than #b0, remove it from current combat, but add its #yCost copies with all values #b1 / #yCost of original to your hand, remainder become an extra #b0 #yCost copy, add an extra #b0 #yCost copy of original if no remainder. All copies are free to use once and ethereal, and play once more when you play."]
 	},
 	
 	"testmod-AbnormalityKillerUp":{

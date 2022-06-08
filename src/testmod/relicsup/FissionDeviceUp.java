@@ -1,36 +1,50 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 
-public class FissionDevice extends AbstractTestRelic implements ClickableRelic {
+public class FissionDeviceUp extends AbstractUpgradedRelic implements ClickableRelic {
 	private boolean playerTurn = false;
+	private static final ArrayList<AbstractCard> LIST = new ArrayList<AbstractCard>();
 	
-	public FissionDevice() {
+	public FissionDeviceUp() {
 		super(RelicTier.COMMON, LandingSound.CLINK);
 	}
 	
+	public void onUseCard(AbstractCard c, UseCardAction a) {
+		if (LIST.contains(c)) {
+			this.playAgain(c, a.target instanceof AbstractMonster ? (AbstractMonster) a.target : null);
+			this.show();
+		}
+	}
+	
+	private long amount() {
+		return this.relicStream(FissionDeviceUp.class).count();
+	}
+	
 	private boolean check(AbstractCard c) {
-		return c.cost > -1 && c.costForTurn > 1 && !c.freeToPlayOnce;
+		return c.cost > -1 && c.costForTurn > 0 && !c.freeToPlayOnce;
 	}
 	
 	private AbstractCard devide(AbstractCard c) {
 		AbstractCard r = c.makeStatEquivalentCopy();
-		r.baseBlock = c.baseBlock == -1 ? -1 : c.baseBlock / c.costForTurn;
-		r.baseDamage = c.baseDamage == -1 ? -1 : c.baseDamage / c.costForTurn;
-		r.baseMagicNumber = c.baseMagicNumber == -1 ? -1 : c.baseMagicNumber / c.costForTurn;
-		r.magicNumber = c.magicNumber == -1 ? -1 : c.magicNumber / c.costForTurn;
+		long a = amount();
+		r.baseBlock = c.baseBlock == -1 ? -1 : (int) (a * c.baseBlock / c.costForTurn);
+		r.baseDamage = c.baseDamage == -1 ? -1 : (int) (a * c.baseDamage / c.costForTurn);
+		r.baseMagicNumber = c.baseMagicNumber == -1 ? -1 : (int) (a * c.baseMagicNumber / c.costForTurn);
+		r.magicNumber = c.magicNumber == -1 ? -1 : (int) (a * c.magicNumber / c.costForTurn);
 		if (r.cost != 1)
 			r.isCostModified = true;
 		r.setCostForTurn(r.cost = 1);
-		r.exhaust = r.exhaustOnUseOnce = true;
 		return r;
 	}
 	
@@ -38,27 +52,39 @@ public class FissionDevice extends AbstractTestRelic implements ClickableRelic {
 		return input == -1 || input == 0;
 	}
 	
+	private AbstractCard free(AbstractCard c) {
+		AbstractCard copy = c.makeStatEquivalentCopy();
+		long a = amount();
+		copy.baseBlock *= a;
+		copy.baseDamage *= a;
+		copy.baseMagicNumber *= a;
+		copy.magicNumber *= a;
+		if (copy.cost != 0)
+			copy.isCostModified = true;
+		copy.setCostForTurn(copy.cost = 0);
+		return copy;
+	}
+	
 	private AbstractCard remainder(AbstractCard c) {
 		AbstractCard r = c.makeStatEquivalentCopy();
-		r.baseBlock = c.baseBlock == -1 ? -1 : c.baseBlock % c.costForTurn;
-		r.baseDamage = c.baseDamage == -1 ? -1 : c.baseDamage % c.costForTurn;
-		r.baseMagicNumber = c.baseMagicNumber == -1 ? -1 : c.baseMagicNumber % c.costForTurn;
-		r.magicNumber = c.magicNumber == -1 ? -1 : c.magicNumber % c.costForTurn;
+		long a = amount();
+		r.baseBlock = c.baseBlock == -1 ? -1 : (int) (a * c.baseBlock % c.costForTurn);
+		r.baseDamage = c.baseDamage == -1 ? -1 : (int) (a * c.baseDamage % c.costForTurn);
+		r.baseMagicNumber = c.baseMagicNumber == -1 ? -1 : (int) (a * c.baseMagicNumber % c.costForTurn);
+		r.magicNumber = c.magicNumber == -1 ? -1 : (int) (a * c.magicNumber % c.costForTurn);
 		if (r.cost != 0)
 			r.isCostModified = true;
 		r.setCostForTurn(r.cost = 0);
-		r.exhaust = r.exhaustOnUseOnce = true;
-		return Stream.of(r.baseBlock, r.baseDamage, r.baseMagicNumber, r.magicNumber).allMatch(this::not) ? null : r;
+		return Stream.of(r.baseBlock, r.baseDamage, r.baseMagicNumber, r.magicNumber).allMatch(this::not) ? free(c) : r;
 	}
 	
 	private ArrayList<AbstractCard> split(AbstractCard c) {
 		ArrayList<AbstractCard> tmp = new ArrayList<AbstractCard>();
 		for (int i = 0; i < c.costForTurn; i++)
 			tmp.add(this.devide(c));
-		AbstractCard r = this.remainder(c);
-		if (r != null) {
-			tmp.add(r);
-		}
+		tmp.add(this.remainder(c));
+		tmp.forEach(a -> a.freeToPlayOnce = a.isEthereal = true);
+		LIST.addAll(tmp);
 		return tmp;
 	}
 	
@@ -82,6 +108,8 @@ public class FissionDevice extends AbstractTestRelic implements ClickableRelic {
 	public void onVictory() {
 		this.playerTurn = false;
 		this.stopPulse();
+		if (this.isActive)
+			LIST.clear();
     }
 	
 	public void onRefreshHand() {
