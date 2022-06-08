@@ -2,18 +2,16 @@ package testmod.screens;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-
 import basemod.BaseMod;
+import basemod.patches.whatmod.WhatMod;
 import testmod.commands.RelicAdd;
 import testmod.commands.RelicRemove;
 import testmod.commands.TestCommand;
 import testmod.mymod.TestMod;
-import testmod.relics.AbstractTestRelic;
 import testmod.relicsup.AbstractUpgradedRelic;
 import testmod.utils.MiscMethods;
 
@@ -39,19 +37,9 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 		((command instanceof RelicAdd) ? BaseMod.listAllRelicIDs().stream().filter(RelicLibrary::isARelic)
 				.map(RelicLibrary::getRelic).map(r -> r.makeCopy()).collect(toArrayList()) : copyList(p().relics))
 						.forEach(this.relics::add);
-		if (command instanceof RelicAdd)
-			TestMod.MY_RELICS.stream().map(this::upgrade).filter(r -> r != null).forEach(this.relics::add);
-	}
-	
-	private String up(AbstractRelic r) {
-		return "testmod.relicsup." + r.getClass().getSimpleName() + "Up";
-	}
-	
-	private AbstractRelic upgrade(AbstractRelic r) {
-		try {
-			return (AbstractRelic) Class.forName(up(r)).newInstance();
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			return null;
+		if (command instanceof RelicAdd) {
+			this.relics.addAll(TestMod.UP_RELICS);
+			this.relics.sort((a, b) -> a.tier.compareTo(b.tier));
 		}
 	}
 	
@@ -86,28 +74,31 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 
 	@Override
 	protected String categoryOf(AbstractRelic r) {
-		String postfix = r instanceof AbstractTestRelic ? "test" : "";
 		if (r instanceof AbstractUpgradedRelic)
 			return "升级";
+		String mod = WhatMod.findModName(r.getClass());
+		if (mod != null && !"Unknown".equals(mod) && command instanceof RelicAdd) {
+			return mod;
+		}
 		switch(r.tier) {
 		case BOSS:
-			return "Boss" + postfix;
+			return "Boss";
 		case COMMON:
-			return "普通" + postfix;
+			return "普通";
 		case DEPRECATED:
-			return "废弃" + postfix;
+			return "废弃";
 		case RARE:
-			return "稀有" + postfix;
+			return "稀有";
 		case SHOP:
-			return "商店" + postfix;
+			return "商店";
 		case SPECIAL:
-			return "事件" + postfix;
+			return "事件";
 		case STARTER:
-			return "初始" + postfix;
+			return "初始";
 		case UNCOMMON:
-			return "罕见" + postfix;
+			return "罕见";
 		}
-		return "未知" + postfix;
+		return "未知";
 	}
 
 	@Override
@@ -116,27 +107,22 @@ public class RelicCommandSelectScreen extends RelicSelectScreen implements MiscM
 		case "升级":
 			return "升级后的test遗物。";
 		case "Boss":
-		case "Bosstest":
 			return "只在Boss宝箱中出现的遗物。";
 		case "普通":
-		case "普通test":
 			return "很容易找到的弱小遗物。";
 		case "稀有":
-		case "稀有test":
 			return "极为少见的独特且强大的遗物。";
 		case "商店":
-		case "商店test":
 			return "只能从商人处购买到的遗物。";
 		case "事件":
-		case "事件test":
 			return "只能通过事件获得的遗物。";
 		case "初始":
-		case "初始test":
 			return "角色初始携带的遗物。";
 		case "罕见":
-		case "罕见test":
 			return "比普通遗物更强大也更少见的遗物。";
+		case "未知":
+			return "未知稀有度的遗物。";
 		}
-		return "未知稀有度的遗物。";
+		return "来自[" + category + "]中的遗物";
 	}
 }

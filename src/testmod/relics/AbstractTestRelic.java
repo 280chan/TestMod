@@ -60,6 +60,10 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 		}
 	}
 	
+	public boolean canUpgrade() {
+		return TestMod.UP_RELICS.stream().anyMatch(r -> (this.relicId + "Up").equals(r.relicId));
+	}
+	
 	public AbstractUpgradedRelic upgrade() {
 		try {
 			return (AbstractUpgradedRelic) Class.forName("testmod.relicsup." + this.getClass().getSimpleName() + "Up")
