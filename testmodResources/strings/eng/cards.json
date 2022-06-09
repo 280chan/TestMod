@@ -241,7 +241,7 @@
 	},
 	"testmod-PowerStrike": {
 		"NAME": "Power Strike",
-		"DESCRIPTION": "Ethereal. Reduce all enemies' HP to its logarithm, the base number is 1.5. Apply the number of enemies Intangible to all enemies. Can be Upgraded any number of time. Exhaust.",
+		"DESCRIPTION": "Ethereal. Reduce all enemies' HP to its logarithm, the base number is 1.1. Apply the number of enemies Intangible to all enemies. Can be Upgraded any number of time. Exhaust.",
 		"EXTENDED_DESCRIPTION": [
 			"Ethereal. Reduce all enemies' HP to its logarithm, the base number is ",
 			". Apply the number of enemies Intangible to all enemies. Can be Upgraded any number of time. Exhaust."
