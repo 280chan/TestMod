@@ -12,7 +12,8 @@ public class GatherUp extends AbstractUpgradedRelic implements ClickableRelic {
 	
 	public static void trigger() {
 		pause = false;
-		MISC.relicStream(GatherUp.class).forEach(r -> r.beginLongPulse());
+		if (Gather.valid())
+			MISC.relicStream(GatherUp.class).forEach(r -> r.beginLongPulse());
 	}
 	
 	public void onEquip() {
