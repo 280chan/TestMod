@@ -1,6 +1,8 @@
 package testmod.relicsup;
 
 import java.util.ArrayList;
+import java.util.stream.IntStream;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
@@ -94,6 +96,10 @@ public class AllUpgradeRelic implements MiscMethods {
 	
 	public static boolean canUpgrade(AbstractRelic r) {
 		return ProxyManager.getProxyByRelic(r) != null;
+	}
+	
+	public static int keyCount() {
+		return IntStream.of(MultiKey.KEY).sum();
 	}
 	
 	public static class MultiKey {
