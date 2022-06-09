@@ -2,9 +2,9 @@ package testmod.relics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.function.Consumer;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
+import testmod.relicsup.GatherUp;
 import testmod.screens.GatherSelectScreen;
 
 public class Gather extends AbstractTestRelic {
@@ -21,25 +21,19 @@ public class Gather extends AbstractTestRelic {
 		return MISC.replicaRelicStream().mapToInt(r -> f(r)).distinct().count() < MISC.p().relics.size();
 	}
 	
-	public void openScreen() {
+	public static void openScreen(boolean upgrade) {
 		HashMap<Integer, Integer> tmp = new HashMap<Integer, Integer>();
-		Consumer<Integer> c = n -> {
-			if (tmp.containsKey(n))
-				tmp.replace(n, tmp.get(n) + 1);
-			else
-				tmp.put(n, 1);
-		};
-		replicaRelicStream().forEach(r -> c.accept(f(r)));
-		ArrayList<AbstractRelic> l = replicaRelicStream().filter(r -> tmp.get(f(r)) > 1).collect(toArrayList());
+		MISC.replicaRelicStream().forEach(r -> tmp.compute(f(r), (a, b) -> b == null ? 1 : b + 1));
+		ArrayList<AbstractRelic> l = MISC.replicaRelicStream().filter(r -> tmp.get(f(r)) > 1).collect(MISC.toArrayList());
 		tmp.clear();
-		new GatherSelectScreen(l, l.stream().mapToInt(r -> f(r)).distinct().count() > 1, "").open();
+		new GatherSelectScreen(l, l.stream().mapToInt(r -> f(r)).distinct().count() > 1, upgrade).open();
 	}
 	
-	
 	public void atPreBattle() {
-		if (this.isActive && valid()) {
-			openScreen();
+		if (this.isActive && this.relicStream(GatherUp.class).count() == 0 && valid()) {
+			openScreen(false);
 			this.flash();
 		}
     }
+
 }

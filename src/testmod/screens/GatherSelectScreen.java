@@ -15,18 +15,21 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import basemod.BaseMod;
 import testmod.mymod.TestMod;
+import testmod.relics.AbstractTestRelic;
 import testmod.relics.Gather;
+import testmod.relicsup.GatherUp;
 import testmod.utils.MiscMethods;
 
 public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods {
 	private static final UIStrings UI = MISC.uiString();
-	
 	private static HashMap<AbstractRelic, AbstractRelic> map = new HashMap<AbstractRelic, AbstractRelic>();
+	private boolean upgrade = false;
 	
-	public GatherSelectScreen(ArrayList<AbstractRelic> list, boolean autoSort, String bDesc) {
+	public GatherSelectScreen(ArrayList<AbstractRelic> list, boolean autoSort, boolean upgrade) {
 		super(copyList(list), true, autoSort);
-		this.setDescription(bDesc, "", UI.TEXT[0]);
+		this.setDescription("", "", UI.TEXT[0]);
 		this.renderAmount = true;
+		this.upgrade = upgrade;
 	}
 	
 	private static ArrayList<AbstractRelic> copyList(ArrayList<AbstractRelic> list) {
@@ -44,9 +47,9 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 			remove(p().getRelic(tmp.relicId));
 			print("移除失败");
 		}
-		rewards(this.selectedRelic).stream().peek(TestMod::removeFromPool).forEach(r -> r.instantObtain());
+		rewards(this.selectedRelic).stream().map(r -> tryUp(r).makeCopy()).forEach(r -> r.instantObtain());
 		p().reorganizeRelics();
-		int n = (int) this.relicStream(Gather.class).count();
+		int n = (int) (this.relicStream(Gather.class).count() + this.relicStream(GatherUp.class).count());
 		if (n >= AbstractDungeon.getMonsters().monsters.stream().filter(m -> !(m.isDead || m.isDying)).count()) {
 			this.addTmpActionToTop(GatherSelectScreen::winCombat);
 			AbstractDungeon.getMonsters().monsters.stream().map(InstantKillAction::new).forEach(this::att);
@@ -58,6 +61,12 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 		}
 		map.clear();
 		AbstractDungeon.topPanel.adjustRelicHbs();
+		GatherUp.trigger();
+	}
+	
+	private AbstractRelic tryUp(AbstractRelic r) {
+		return (this.upgrade && r instanceof AbstractTestRelic && ((AbstractTestRelic) r).canUpgrade())
+				? ((AbstractTestRelic) r).upgrade() : r;
 	}
 
 	private void remove(AbstractRelic r) {
@@ -72,6 +81,7 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 	protected void afterCanceled() {
 		p().reorganizeRelics();
 		map.clear();
+		GatherUp.trigger();
 	}
 	
 	private RelicTier t(AbstractRelic r) {
@@ -84,18 +94,18 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 	}
 	
 	private ArrayList<AbstractRelic> rewards(AbstractRelic r) {
-		int n = (int) this.relicStream(Gather.class).count();
-		ArrayList<String> tmp = relicPool(t(r)).stream().filter(id -> valid(id, r)).collect(toArrayList());
-		if (n > tmp.size()) {
+		int n = (int) (this.relicStream(Gather.class).count() + this.relicStream(GatherUp.class).count());
+		ArrayList<String> l = relicPool(t(r)).stream().filter(id -> valid(id, r)).collect(toArrayList());
+		if (n > l.size()) {
 			ArrayList<String> all = BaseMod.listAllRelicIDs().stream()
 					.filter(id -> RelicLibrary.getRelic(id).tier == t(r) && valid(id, r)).collect(toArrayList());
 			Collections.shuffle(all, new Random(AbstractDungeon.relicRng.randomLong()));
-			all.stream().limit(n - tmp.size()).forEach(tmp::add);
+			all.stream().limit(n - l.size()).forEach(l::add);
 			all.clear();
-			return tmp.stream().map(RelicLibrary::getRelic).map(a -> a.makeCopy()).collect(toArrayList());
+			return l.stream().map(RelicLibrary::getRelic).peek(TestMod::removeFromPool).collect(toArrayList());
 		} else {
-			Collections.shuffle(tmp, new Random(AbstractDungeon.relicRng.randomLong()));
-			return tmp.stream().limit(n).map(RelicLibrary::getRelic).map(a -> a.makeCopy()).collect(toArrayList());
+			Collections.shuffle(l, new Random(AbstractDungeon.relicRng.randomLong()));
+			return l.stream().limit(n).map(RelicLibrary::getRelic).peek(TestMod::removeFromPool).collect(toArrayList());
 		}
 	}
 	
