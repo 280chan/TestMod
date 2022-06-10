@@ -538,9 +538,9 @@
 	},
 	
 	"testmod-GiantKillerUp":{
-		"NAME": "Giant Killer",
+		"NAME": "Giant Killer+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Enemies have more #yMax #yHP than you, for each #b1% higher, receive #b1% more damage."]
+		"DESCRIPTIONS":["Enemies have more #yMax #yHP than your #yHP, for each #b1% higher, receive #b1% more damage. Enemies have less #yHP than your #yMax #yHP, for each #b1% higher, receive #b1% more damage."]
 	},
 	
 	"testmod-TwinklingStarUp":{

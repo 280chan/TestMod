@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import testmod.relics.GiantKiller;
 
 public class GiantKillerPower extends AbstractTestPower implements InvisiblePower {
-	public static final String POWER_ID = "GiantKillerPower";
 	
 	public GiantKillerPower(AbstractCreature owner) {
 		this.owner = owner;
@@ -28,12 +27,12 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
 	}
-	
+
 	private float finalDamage(float input, Consumer<GiantKiller> show) {
-		return chain(relicStream(GiantKiller.class).peek(show).map(r -> get(this::damage))).apply(input);
+		return relicStream(GiantKiller.class).peek(show).map(r -> get(this::dmg)).reduce(t(), this::chain).apply(input);
 	}
 	
-	private float damage(float input) {
+	private float dmg(float input) {
 		float tmp = input / p().maxHealth * this.owner.maxHealth;
 		return tmp > Integer.MAX_VALUE || tmp < 0 ? Integer.MAX_VALUE : tmp;
 	}

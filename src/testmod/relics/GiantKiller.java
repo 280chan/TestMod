@@ -3,6 +3,7 @@ package testmod.relics;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
+import testmod.mymod.TestMod;
 import testmod.powers.GiantKillerPower;
 
 public class GiantKiller extends AbstractTestRelic {
@@ -17,23 +18,24 @@ public class GiantKiller extends AbstractTestRelic {
 	}
 	
 	private void tryApplyDebuff() {
-		if (this.isActive && hasEnemies())
-			AbstractDungeon.getMonsters().monsters.stream().forEach(GiantKiller::addIfNotHave);
+		if (this.isActive && hasEnemies() && count() > 0)
+			AbstractDungeon.getMonsters().monsters.stream().filter(this::notHave).forEach(this::addThis);
 	}
 	
-	public static boolean notHave(AbstractCreature m) {
+	private boolean notHave(AbstractCreature m) {
 		return m.powers.stream().noneMatch(p -> p instanceof GiantKillerPower);
 	}
 	
-	public static void addThis(AbstractCreature m) {
+	private void addThis(AbstractCreature m) {
 		m.powers.add(new GiantKillerPower(m));
 	}
-	
-	public static void addIfNotHave(AbstractCreature m) {
-		if (notHave(m) && count() > 0)
-			addThis(m);
-	}
 
+	public void onEquip() {
+		TestMod.setActivity(this);
+		if (this.isActive && this.inCombat())
+			this.atPreBattle();
+	}
+	
 	public void atPreBattle() {
 		tryApplyDebuff();
 		this.counter = -2;

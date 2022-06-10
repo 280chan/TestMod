@@ -544,9 +544,9 @@
 	},
 	
 	"testmod-GiantKillerUp":{
-		"NAME": "巨人杀手",
+		"NAME": "巨人杀手+",
 		"FLAVOR": "越是巨大，弱点越是明显。",
-		"DESCRIPTIONS":["如果敌人的最大生命值高于你，每高 #b1% ，其受到的伤害增加 #b1% 。"]
+		"DESCRIPTIONS":["如果敌人的最大生命值高于你的当前生命，每高 #b1% ，其受到的伤害增加 #b1% 。如果你的最大生命值高于敌人的当前生命，每高 #b1% ，其受到的伤害增加 #b1% 。"]
 	},
 	
 	"testmod-TwinklingStarUp":{
