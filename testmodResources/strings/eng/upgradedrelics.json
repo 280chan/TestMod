@@ -534,7 +534,7 @@
 	"testmod-GlassSoulUp":{
 		"NAME": "Glass Soul+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you get a relic, record it into list when you enter #rnext #rroom. Whenever you win a combat without losing hp, gain #b1 count. Outside combat you can right click this relic to choose a relic from list, use #b1 count or #b10% its price to get it again. If it is #yUpgradable #yTest relic, get upgraded version."]
+		"DESCRIPTIONS":["Whenever you get a relic, record it into list when you enter #rnext #rroom. Whenever you win a combat without losing hp, gain #b1 count. Outside combat you can right click this relic to choose a relic from list, use #b1 count or #b10% its price to get it again, for each the relic you have, price increase by #b10% and 1. If it is #yUpgradable #yTest relic, get upgraded version."]
 	},
 	
 	"testmod-GiantKillerUp":{
