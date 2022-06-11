@@ -1,5 +1,7 @@
 package testmod.screens;
 
+import java.util.ArrayList;
+
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -9,22 +11,34 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.shop.ShopScreen;
 import com.megacrit.cardcrawl.vfx.SpeechBubble;
 
+import testmod.relics.AbstractTestRelic;
 import testmod.relics.GlassSoul;
+import testmod.relicsup.GlassSoulUp;
 import testmod.utils.MiscMethods;
 
 public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMethods {
 	private static final UIStrings UI = MISC.uiString();
-	private GlassSoul gs;
+	private ArrayList<String> list;
+	private AbstractRelic r;
 	
-	public GlassSoulSelectScreen(String bDesc, GlassSoul r) {
+	public GlassSoulSelectScreen(ArrayList<String> relics, AbstractRelic r) {
 		super(null, true, true);
-		this.gs = r;
-		this.setDescription(bDesc, r.name, UI.TEXT[0]);
+		this.list = relics;
+		this.r = r;
+		this.setDescription("", r.name, UI.TEXT[0]);
 	}
 
 	@Override
 	protected void addRelics() {
-		this.gs.relics.stream().map(RelicLibrary::getRelic).map(r -> r.makeCopy()).forEach(this.relics::add);
+		this.list.stream().map(RelicLibrary::getRelic).map(this::tryUp).forEach(this.relics::add);
+	}
+	
+	private AbstractRelic tryUp(AbstractRelic r) {
+		if (this.r instanceof GlassSoulUp && r instanceof AbstractTestRelic && ((AbstractTestRelic) r).canUpgrade()) {
+			return ((AbstractTestRelic) r).upgrade().makeCopy();
+		} else {
+			return r.makeCopy();
+		}
 	}
 
 	public static void playCantBuySfx() {
@@ -44,10 +58,14 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 		print(tmp);
 	}
 	
+	public static int amount(AbstractRelic r) {
+		return (int) Math.max(MISC.p().relics.stream().filter(a -> a.relicId.equals(r.relicId)).count(), 1);
+	}
+	
 	@Override
 	protected void afterSelected() {
-		if (this.gs.counter >= gs.streamOf(this.selectedRelic.relicId).count()) {
-			this.gs.counter -= gs.streamOf(this.selectedRelic.relicId).count();
+		if (this.r.counter >= counterRate() * amount(this.selectedRelic)) {
+			this.r.counter -= counterRate() * amount(this.selectedRelic);
 		} else if (p().gold < price(this.selectedRelic)) {
 			playCantBuySfx();
 			createCantBuyMsg();
@@ -56,7 +74,7 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 		} else {
 			p().loseGold(price(this.selectedRelic));
 		}
-		this.gs.relics.remove(this.selectedRelic.relicId);
+		this.list.remove(this.selectedRelic.relicId);
 		if (AbstractDungeon.currMapNode == null) {
 			this.selectedRelic.instantObtain();
 		} else {
@@ -68,17 +86,22 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 	@Override
 	protected void afterCanceled() {
 	}
+	
+	private int counterRate() {
+		return this.r instanceof GlassSoul ? GlassSoul.COUNTER_RATE : GlassSoulUp.COUNTER_RATE;
+	}
+	
+	private int priceRate() {
+		return this.r instanceof GlassSoul ? GlassSoul.PRICE_RATE : GlassSoulUp.PRICE_RATE;
+	}
 
 	private int price(AbstractRelic r) {
-		return Math.max(r.getPrice() * (int) (gs.streamOf(r.relicId).count()) / GlassSoul.PRICE_RATE, 10);
+		return Math.max(r.getPrice() * amount(r) / priceRate(), 10);
 	}
 	
 	@Override
 	protected String categoryOf(AbstractRelic r) {
-		if (gs.counter >= gs.streamOf(r.relicId).count()) {
-			return gs.streamOf(r.relicId).count() + "";
-		}
-		return price(r) + "g";
+		return this.r.counter >= counterRate() * amount(r) ? amount(r) + "" : price(r) + "g";
 	}
 
 	@Override

@@ -533,7 +533,7 @@
 	"testmod-GlassSoul":{
 		"NAME": "Glass Soul",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you get a relic, record it into list when you enter #rnext #rroom. Whenever you win a combat without losing hp, gain #b1 count. Outside combat you can right click this relic to choose a relic from list, for each same relic you have, use #b1 count or #b10% its price to get it again."]
+		"DESCRIPTIONS":["Whenever you get a relic, record it into list when you enter #rnext #rroom. Whenever you win a combat without losing hp, gain #b1 count. Outside combat you can right click this relic to choose a relic from list, use #b3 count or #b50% its price to get it again."]
 	},
 	
 	"testmod-GiantKiller":{
