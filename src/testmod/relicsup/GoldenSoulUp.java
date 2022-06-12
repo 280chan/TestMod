@@ -1,14 +1,13 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 
-public class GoldenSoul extends AbstractRevivalRelicToModifyDamage {
+public class GoldenSoulUp extends AbstractUpgradedRevivalRelic {
 	public static final int RATE = 10;
 	
-	public GoldenSoul() {
+	public GoldenSoulUp() {
 		super(RelicTier.BOSS, LandingSound.CLINK);
-		this.setTestTier(BAD);
 		this.counter = 0;
 	}
 	
@@ -25,19 +24,22 @@ public class GoldenSoul extends AbstractRevivalRelicToModifyDamage {
 	}
 	
 	public void onEquip() {
-		p().decreaseMaxHealth(p().maxHealth - Math.max(p().maxHealth / 4, 1));
+		if (p().gold > 0) {
+			p().increaseMaxHp(p().gold, true);
+			p().loseGold(p().gold);
+		}
     }
 	
 	public int onLoseHpLast(int damage) {
 		if (damage >= p().currentHealth) {
-			if (damage > p().gold) {
-				damage -= p().gold;
+			if (damage > 2 * p().gold) {
+				damage -= 2 * p().gold;
 				if (p().gold > 0)
 					this.count();
 				p().loseGold(p().gold);
 				return damage;
 			}
-			p().loseGold(damage);
+			p().loseGold((damage + 1) / 2);
 			this.count();
 			return 0;
 		}
@@ -46,16 +48,16 @@ public class GoldenSoul extends AbstractRevivalRelicToModifyDamage {
 	
 	@Override
 	protected int damageModifyCheck(AbstractPlayer p, DamageInfo info, int originalDamage) {
-		if (p.gold < originalDamage) {
+		if (p.gold * 2 < originalDamage) {
 			if (p.gold > 0) {
-				originalDamage -= p.gold;
+				originalDamage -= 2 * p.gold;
 				this.count();
 				p.loseGold(p.gold);
 			}
 			return originalDamage;
 		} else {
 			this.count();
-			p.loseGold(originalDamage);
+			p.loseGold((originalDamage + 1) / 2);
 			return 0;
 		}
 	}

@@ -442,9 +442,9 @@
 	},
 	
 	"testmod-GoldenSoulUp":{
-		"NAME": "Golden Soul",
+		"NAME": "Golden Soul+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Upon pickup, lose #b75% of your #yMaximum #yhp. Whenever receive a fatal damage, instead of losing hp, lose same amount of #yGold, if you don't have enough #yGold, lose all and take rest of damage. For each fatal damage this relic blocks, you gain #b10% more gold in future.", " Gold rate: #b", "% "]
+		"DESCRIPTIONS":["Upon pickup, lose all #Gold, increase your #yMaximum #yhp by same amount. Whenever receive a fatal damage, instead of losing hp, lose half damage amount of #yGold, if you don't have enough #yGold, lose all and take double #yGold less damage. For each fatal damage this relic blocks, you gain #b10% more gold in future.", " Gold rate: #b", "% "]
 	},
 	
 	"testmod-RandomTestUp":{
@@ -604,9 +604,9 @@
 	},
 	
 	"testmod-GoldenContractUp":{
-		"NAME": "Golden Contract",
+		"NAME": "Golden Contract+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["You gain #b50% less #yGold, each time you gain #yGold, you gain #b10% less #yGold in future. Your base Attack damage is increased by amount of your #yGold, whenever you play an Attack card, lose #b5% #yGold (at least #b1 ).", " NL Current #yGold rate: NL #b", "% "]
+		"DESCRIPTIONS":["Each time you gain #yGold, you gain #b0.1% more #yGold in future. Your base Attack damage is increased by amount of your #yGold, whenever you play an Attack card, lose #b1% #yGold (at least #b1 ).", " NL Current #yGold rate: NL #b", "% "]
 	},
 	
 	"testmod-ConjureBladeUp":{

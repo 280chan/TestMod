@@ -1021,6 +1021,15 @@ public interface MiscMethods {
 	}
 	
 	default <T> Stream<T> reverse(Stream<T> s) {
-		return reverse(s.collect(toArrayList())).stream();
+		return s.map(StreamReverser::flatReverse).reduce(Stream.empty(), StreamReverser::reverseReducer);
+	}
+	
+	static class StreamReverser {
+		public static <T> Stream<T> flatReverse(T t) {
+			return Stream.of(t);
+		}
+		public static <T> Stream<T> reverseReducer(Stream<T> a, Stream<T> b) {
+			return Stream.concat(b, a);
+		}
 	}
 }

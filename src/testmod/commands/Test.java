@@ -25,14 +25,9 @@ public class Test extends TestCommand {
 			cmdHelp();
 			return;
 		}
-		p().hand.group.forEach(c -> {
-			c.retain = true;
-			c.isEthereal = true;
-		});
+		TestMod.info("升级遗物数量: " + TestMod.UP_RELICS.size());
 		/*p().masterDeck.group.clear();
 		TestMod.CARDS.stream().map(c -> c.makeCopy()).forEach(p().masterDeck.group::add);*/
-		
-		
 	}
 
 	private static void cmdHelp() {

@@ -862,7 +862,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 	@Override
 	public int receiveMapHPChange(int amount) {
-		return chain(relicStream().map(r -> r.maxHPChanger())).apply(amount * 1f).intValue();
+		float tmp = this.relicStream().map(r -> r.maxHPChanger()).reduce(t(), this::chain).apply(amount * 1f);
+		return tmp < 0 ? (int) tmp : Math.max(0, (int) Math.min(2147480000 - p().maxHealth, tmp));
 	}
 
 	@Override

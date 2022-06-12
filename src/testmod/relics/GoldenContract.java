@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 
 import testmod.powers.AbstractTestPower;
+import testmod.relicsup.GoldenContractUp;
 
 import com.megacrit.cardcrawl.cards.DamageInfo;
 
@@ -30,7 +31,7 @@ public class GoldenContract extends AbstractTestRelic {
 	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction a) {
-		if (c.type == CardType.ATTACK) {
+		if (c.type == CardType.ATTACK && this.relicStream(GoldenContractUp.class).count() == 0) {
 			if (p().gold > 0)
 				this.stupidDevToBot(() -> p().loseGold(p().gold < 20 ? 1 : p().gold / 20));
 			this.show();
@@ -43,10 +44,11 @@ public class GoldenContract extends AbstractTestRelic {
     }
 	
 	public double gainGold(double amount) {
-		return 0.5 * (amount > 0 ? amount * Math.pow(0.9, updateCounter()) : amount);
+		return this.relicStream(GoldenContractUp.class).count() > 0 ? amount
+				: 0.5 * (amount > 0 ? amount * Math.pow(0.9, updateCounter()) : amount);
 	}
 	
-	private class GoldenContractPower extends AbstractTestPower implements InvisiblePower {
+	public static class GoldenContractPower extends AbstractTestPower implements InvisiblePower {
 		public GoldenContractPower() {
 			this.owner = p();
 			this.type = PowerType.BUFF;
@@ -59,7 +61,7 @@ public class GoldenContract extends AbstractTestRelic {
 		}
 
 		private int count() {
-			return (int) relicStream(GoldenContract.class).count();
+			return (int) (relicStream(GoldenContract.class).count() + relicStream(GoldenContractUp.class).count());
 		}
 		
 		public float atDamageGive(float damage, DamageInfo.DamageType type) {

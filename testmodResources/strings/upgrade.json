@@ -528,7 +528,11 @@
 	
 	"testmod-upgrade-GoldenSoul":{
 		"TEXT": [
+			"1",
 			"0",
+			"2",
+			"0",
+			"4",
 			"0"
 		]
 	},
@@ -721,7 +725,11 @@
 	
 	"testmod-upgrade-GoldenContract":{
 		"TEXT": [
+			"1",
 			"0",
+			"2",
+			"0",
+			"4",
 			"0"
 		]
 	},
