@@ -56,7 +56,8 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 	
 	public void update(int slot) {
 		super.update(slot);
-		if (!this.removed && AbstractDungeon.getMonsters().monsters.stream().anyMatch(this::needUpdate))
+		if (!this.removed && this.inCombat() && this.hasEnemies()
+				&& AbstractDungeon.getMonsters().monsters.stream().anyMatch(this::needUpdate))
 			this.stackPower(0);
 	}
 	
