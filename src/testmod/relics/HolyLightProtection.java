@@ -32,7 +32,7 @@ public class HolyLightProtection extends AbstractTestRelic {
 	}
 	
 	private void addPower() {
-		if (this.isActive && this.counter == -3) {
+		if (this.isActive && this.counter == -3 && this.inCombat() && this.hasEnemies()) {
 			checkPulse = false;
 			m().monsters.stream().filter(m -> !m.isDeadOrEscaped()).filter(not(list::contains)).filter(this::notHas)
 					.peek(this::f).forEach(m -> m.powers.add(new HolyLightProtectionPower(m)));
