@@ -460,9 +460,9 @@
 	},
 	
 	"testmod-GremlinBalanceUp":{
-		"NAME": "Gremlin Balance",
+		"NAME": "Gremlin Balance+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At start of each turn, gain [E] for each enemy has no more hp than you, draw #b1 card for each enemy has no less hp than you."]
+		"DESCRIPTIONS":["At start of each turn, gain [E] for each enemy has no more hp than your max hp, draw #b1 card for each enemy has no less max hp than your hp. Whenever this relic gives you energy or draw card, gain equal amount of max hp."]
 	},
 	
 	"testmod-RetroFilterUp":{
@@ -520,9 +520,9 @@
 	},
 	
 	"testmod-GreedyDevilUp":{
-		"NAME": "Greedy Devil",
+		"NAME": "Greedy Devil+",
 		"FLAVOR": "它在你的肩头飞行着，渴求着过量的献血。",
-		"DESCRIPTIONS":["Whenever you kill an enemy, gain same amount of #yGold as the overkill of the fatal damage. At most #b100 #yGold at a time."]
+		"DESCRIPTIONS":["Whenever you kill an enemy, gain same amount of #yGold as the fatal damage, gain same amount of #yMax #yHP as the overkill of the fatal damage. At most #b10% current #yMax #yHP at a time."]
 	},
 	
 	"testmod-ResonanceStoneUp":{

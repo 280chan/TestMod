@@ -553,7 +553,7 @@
 	
 	"testmod-upgrade-GremlinBalance":{
 		"TEXT": [
-			"0",
+			"5",
 			"0"
 		]
 	},
@@ -623,8 +623,10 @@
 	
 	"testmod-upgrade-GreedyDevil":{
 		"TEXT": [
+			"6",
 			"0",
-			"0"
+			"0",
+			"400"
 		]
 	},
 	
