@@ -2,6 +2,7 @@ package testmod.screens;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -19,6 +20,7 @@ import halloweenMod.relics.EventCelebration_Halloween;
 import testmod.mymod.TestMod;
 import testmod.relics.AbstractTestRelic;
 import testmod.relics.TestBox;
+import testmod.relicsup.AbstractUpgradedRelic;
 import testmod.relicsup.AllUpgradeRelic;
 import testmod.relicsup.TestBoxUp;
 import testmod.utils.MiscMethods;
@@ -27,6 +29,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	public static final String[] ILLEGAL = { TestMod.makeID("TestBox") };
 	private Random rng;
 	private boolean boxUp = false;
+	private HashMap<String, AbstractRelic> original = new HashMap<String, AbstractRelic>();
 	
 	public TestBoxRelicSelectScreen(String bDesc, String title, String desc, Random rng, boolean up) {
 		super(true, bDesc, title, desc);
@@ -85,12 +88,17 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	
 	private void addAndMarkAsSeen(AbstractRelic r) {
 		this.markAsSeen(r);
+		AbstractRelic tmp;
 		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.canUpgrade(r) && r.tier != RelicTier.BOSS
 				&& this.rollUpgrade()) {
-			this.relics.add(AllUpgradeRelic.getUpgrade(r));
+			tmp = AllUpgradeRelic.getUpgrade(r);
+			original.put(tmp.relicId, r);
+			this.relics.add(tmp);
 			return;
 		} else if (valid() && ((AbstractTestRelic) r).canUpgrade() && r.tier != RelicTier.BOSS && this.rollUpgrade()) {
-			this.relics.add(((AbstractTestRelic) r).upgrade());
+			tmp = ((AbstractTestRelic) r).upgrade();
+			original.put(tmp.relicId, r);
+			this.relics.add(tmp);
 			return;
 		}
 		this.relics.add(r);
@@ -118,6 +126,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		p().relics.remove(
 				(this.boxUp ? relicStream(TestBoxUp.class) : relicStream(TestBox.class)).findFirst().orElse(null));
 		p().reorganizeRelics();
+		original.clear();
 	}
 	
 	@Override
@@ -125,7 +134,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		AbstractRelic tmp = this.selectedRelic.makeCopy();
 		AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, tmp);
 		tmp.onEquip();
-		TestMod.removeFromPool(tmp);
+		TestMod.removeFromPool(tmp instanceof AbstractUpgradedRelic ? original.get(tmp.relicId) : tmp);
 		this.completeSelection();
 	}
 
