@@ -34,16 +34,11 @@ public class GiantKillerUp extends AbstractUpgradedRelic {
 
 	public void atPreBattle() {
 		tryApplyDebuff();
-		this.counter = -2;
     }
-	
-	public void onVictory() {
-		this.counter = -1;
-	}
 
 	public void update() {
 		super.update();
-		if (this.counter == -2)
+		if (this.isActive && this.inCombat())
 			tryApplyDebuff();
 	}
 
@@ -54,7 +49,6 @@ public class GiantKillerUp extends AbstractUpgradedRelic {
 			updateDescription();
 			this.type = PowerType.DEBUFF;
 			this.priority = -10000;
-			this.addMap(p -> new GiantKillerPowerUp(p.owner));
 		}
 
 		public void updateDescription() {
@@ -75,7 +69,7 @@ public class GiantKillerUp extends AbstractUpgradedRelic {
 
 		private float g(float input) {
 			float tmp = input * rate(p(), this.owner) * rate(this.owner, p());
-			return tmp > Integer.MAX_VALUE || tmp < 0 ? Integer.MAX_VALUE : tmp;
+			return tmp > Integer.MAX_VALUE || tmp < -1 ? Integer.MAX_VALUE : tmp;
 		}
 		
 		private boolean check() {
@@ -88,7 +82,7 @@ public class GiantKillerUp extends AbstractUpgradedRelic {
 		}
 
 		public int onAttacked(DamageInfo info, int dmg) {
-			if ((p().currentHealth < 1 || this.owner.currentHealth < 1) && dmg > 0)
+			if ((p().currentHealth < 1 || this.owner.currentHealth < 1) && dmg > 0 && count() > 0)
 				return Integer.MAX_VALUE;
 			return dmg > 0 && check() && info.type != DamageType.NORMAL ? (int) finalDamage(dmg, r -> r.show()) : dmg;
 		}
