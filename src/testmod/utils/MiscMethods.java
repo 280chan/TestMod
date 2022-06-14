@@ -421,6 +421,8 @@ public interface MiscMethods {
 		c.purgeOnUse = true;
 		if (m != null)
 			c.calculateCardDamage(m);
+		else
+			c.applyPowers();
         att(new NewQueueCardAction(c, m, true, true));
         this.print("添加队列了:" + c.name);
 	}

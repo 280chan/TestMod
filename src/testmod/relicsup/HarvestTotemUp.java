@@ -19,11 +19,11 @@ public class HarvestTotemUp extends AbstractUpgradedRelic {
     }
 	
 	public int onPlayerHeal(int amount) {
-		return amount > 0 ? Math.max(0, Math.min(3 * amount, Integer.MAX_VALUE - p().currentHealth)) : 0;
+		return amount > 0 ? Math.max(0, Math.min(2 * amount, Integer.MAX_VALUE - p().currentHealth)) : 0;
     }
 	
 	public float preChangeMaxHP(float amount) {
-		return amount >= 0 ? 3 * amount : -amount;
+		return amount >= 0 ? 2 * amount : amount;
 	}
 
 	public static int count() {

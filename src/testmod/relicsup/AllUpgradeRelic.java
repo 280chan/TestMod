@@ -127,11 +127,12 @@ public class AllUpgradeRelic implements MiscMethods {
 			public static void Postfix(ObtainKeyEffect c) {
 				if (c.isDone) {
 					KeyColor k = ReflectionHacks.getPrivate(c, ObtainKeyEffect.class, "keyColor");
+					long rate = MISC.relicStream(HarvestTotemUp.class).count() + 1;
 					if (k.ordinal() < 3)
-						KEY[k.ordinal()]++;
+						KEY[k.ordinal()] += rate;
 					if (k.ordinal() == 1 && MISC.relicStream(AscensionHeartUp.class).count() > 0) {
 						int d = AbstractDungeon.currMapNode.hasEmeraldKey ? 0 : -1;
-						KEY[1] += MISC.relicStream(AscensionHeartUp.class).count() + d;
+						KEY[1] += rate * (MISC.relicStream(AscensionHeartUp.class).count() + d);
 					}
 					TestMod.info("获得了钥匙:" + (k.ordinal() == 0 ? "R" : (k.ordinal() == 1 ? "G" : "B")));
 				}
