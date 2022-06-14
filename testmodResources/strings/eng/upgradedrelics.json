@@ -268,9 +268,9 @@
 	},
 	
 	"testmod-HarvestTotemUp":{
-		"NAME": "The Harvest Totem",
+		"NAME": "The Harvest Totem+",
 		"FLAVOR": "尖塔住民祈求丰收的象征，仿佛能给尖塔带来生命力。",
-		"DESCRIPTIONS":["Upon pickup, doubles your Max HP. Your Max HP increase and healing are doubled. normal enemies have #b110% Max HP, elites have #b120% Max HP, #yBosses have #b150% Max HP."]
+		"DESCRIPTIONS":["Upon pickup, increase your Max HP by your current Max HP. Your Max HP increase and healing are tripled. When your Max HP is higher than enemy, for each #b1% higher, it receive #b1% more damage."]
 	},
 	
 	"testmod-BatchProcessingSystemUp":{

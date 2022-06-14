@@ -22,7 +22,7 @@ public class HarvestTotem extends AbstractTestRelic {
 	
 	public void onEquip() {
 		this.init = true;
-		p().increaseMaxHp(p().maxHealth, false);
+		p().increaseMaxHp(Math.max(1, p().maxHealth), false);
 		this.init = false;
     }
 	
@@ -71,8 +71,8 @@ public class HarvestTotem extends AbstractTestRelic {
 		}
 	}
 	
-	public int onPlayerHeal(int healAmount) {
-		return this.init ? healAmount : 2 * healAmount;
+	public int onPlayerHeal(int amount) {
+		return this.init ? amount : Math.max(0, Math.min(2 * amount, Integer.MAX_VALUE - p().currentHealth));
     }
 	
 	public void atTurnStart() {
@@ -83,8 +83,8 @@ public class HarvestTotem extends AbstractTestRelic {
 		this.counter = -1;
     }
 	
-	public float preChangeMaxHP(float amount) {
-		return (amount > 0 && !this.init) ? 2 * amount : amount;
+	public float preChangeMaxHP(float a) {
+		return (a > 0 && !this.init) ? Math.max(0, Math.min(2 * a, Integer.MAX_VALUE - p().maxHealth)) : a;
 	}
 	
 	public boolean canSpawn() {
