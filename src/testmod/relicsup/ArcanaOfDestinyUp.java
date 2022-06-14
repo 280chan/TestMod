@@ -19,7 +19,7 @@ public class ArcanaOfDestinyUp extends AbstractUpgradedRelic {
 	
 	private void tryApplyDebuff() {
 		if (hasEnemies())
-			AbstractDungeon.getMonsters().monsters.stream().filter(not(ArcanaOfDestinyUpPower::needThis))
+			AbstractDungeon.getMonsters().monsters.stream().filter(ArcanaOfDestinyUpPower::needThis)
 					.forEach(ArcanaOfDestinyUpPower::addThis);
 	}
 	
@@ -92,7 +92,7 @@ public class ArcanaOfDestinyUp extends AbstractUpgradedRelic {
 		}
 		
 		private <T> UnaryOperator<T> repeat(UnaryOperator<T> f) {
-			return chain(relicStream(ArcanaOfDestinyUp.class).map(r -> f));
+			return relicStream(ArcanaOfDestinyUp.class).map(r -> f).reduce(t(), this::chain);
 		}
 		
 		public float atDamageGive(float damage, DamageType type) {
