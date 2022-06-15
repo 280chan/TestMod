@@ -15,6 +15,8 @@ public class StomachOfGluttonous extends AbstractTestRelic {
 		if (m.type == EnemyType.ELITE || m.type == EnemyType.BOSS) {
 			this.atb(new HealAction(p(), p(), p().maxHealth));
 			this.counter += (p().currentHealth * 100.0 / p().maxHealth);
+		} else if (p().maxHealth > 9) {
+			this.atb(new HealAction(p(), p(), p().maxHealth / 10));
 		}
     }
 	
