@@ -1,15 +1,15 @@
 package testmod.cards.colorless;
 
-import testmod.cards.AbstractUpdatableCard;
+import basemod.patches.com.megacrit.cardcrawl.cards.AbstractCard.MultiCardPreview;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.CardStrings;
-
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import testmod.cards.AbstractUpdatableCard;
 
 public class CardIndex extends AbstractUpdatableCard {
     public static final String ID = "CardIndex";
@@ -44,6 +44,11 @@ public class CardIndex extends AbstractUpdatableCard {
 					AbstractDungeon.gridSelectScreen.open(g, size, true, info);
 					this.addTmpActionToTop(() -> {
 						if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
+							AbstractDungeon.gridSelectScreen.selectedCards.forEach(this::removeCard);
+							AbstractCard[] arr = new AbstractCard[this.cards.size()];
+							for (int i = 0; i < arr.length; i++)
+								arr[i] = this.cards.get(i);
+							MultiCardPreview.add(this, arr);
 							AbstractDungeon.gridSelectScreen.selectedCards.clear();
 						} else {
 							this.removeCard(null);
