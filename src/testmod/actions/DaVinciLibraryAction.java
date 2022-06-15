@@ -53,7 +53,7 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 	}
 
 	private void checkEggs(AbstractCard c) {
-		AbstractPlayer p = AbstractDungeon.player;
+		AbstractPlayer p = p();
 		boolean hasEgg = (c.type == CardType.ATTACK && p.hasRelic("Molten Egg 2"))
 				|| (c.type == CardType.POWER && p.hasRelic("Frozen Egg 2"))
 				|| (c.type == CardType.SKILL && p.hasRelic("Toxic Egg 2"));
@@ -76,12 +76,12 @@ public class DaVinciLibraryAction extends AbstractGameAction implements MiscMeth
 				&& !AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
 			AbstractCard c = AbstractDungeon.gridSelectScreen.selectedCards.get(0);
 			TestMod.info("选择了" + c.name);
-			AbstractDungeon.player.relics.forEach(r -> r.onObtainCard(c));
+			p().relics.forEach(r -> r.onObtainCard(c));
 			c.shrink();
-			CardGroup group = AbstractDungeon.player.masterDeck;
+			CardGroup group = p().masterDeck;
 			group.addToTop(c);
 			this.addHoarderCard(group, c);
-			AbstractDungeon.player.relics.forEach(AbstractRelic::onMasterDeckChange);
+			p().relics.forEach(AbstractRelic::onMasterDeckChange);
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
 			this.isDone = true;
 			TestMod.info("已获得" + c.name);

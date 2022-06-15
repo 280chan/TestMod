@@ -124,9 +124,9 @@
 	},
 	
 	"testmod-HeartOfDaVinciUp":{
-		"NAME": "Heart Of Da Vinci",
+		"NAME": "Heart Of Da Vinci+",
 		"FLAVOR": "你现在感觉到你仿佛能接受所有恩惠。",
-		"DESCRIPTIONS":["Other character's relics are now obtainable. NL Whenever you pickup another character's relic, choose and add #b1 of #b20 of that character's cards to your deck."]
+		"DESCRIPTIONS":["Other character's relics are now obtainable. Gain #b1 Orb slot. NL Whenever you pickup another character's relic, if it is upgradable, upgrade it, otherwise choose and add #b1 of #b20 of that character's cards to your deck."]
 	},
 	
 	"testmod-IncinerationGeneratorUp":{
