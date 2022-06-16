@@ -430,9 +430,9 @@
 	},
 	
 	"testmod-HeartOfStrikeUp":{
-		"NAME": "Heart of Strike",
+		"NAME": "Heart of Strike+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["All your #yStrike cards deal #b2 times damage, whenever you #yExhaust a #yStrike card, increase #b1 times of damage this combat.", " NL #yStrike cards deal #b", " times damage."]
+		"DESCRIPTIONS":["At the start of each combat, add an extra #yStrike tag to all your cards. All your #yStrike cards deal #b2 times damage, whenever you #yExhaust a #yStrike card, increase #b1 times of damage this combat.", " NL #yStrike cards deal #b", " times damage."]
 	},
 	
 	"testmod-RainbowHikingShoesUp":{

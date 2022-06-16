@@ -1,4 +1,4 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -6,11 +6,11 @@ import com.megacrit.cardcrawl.cards.AbstractCard.CardTags;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import testmod.powers.AbstractTestPower;
 
-public class HeartOfStrike extends AbstractTestRelic {
+public class HeartOfStrikeUp extends AbstractUpgradedRelic {
 	
-	private HeartOfStrikePower hosp;
+	private HeartOfStrikePowerUp hosp;
 	
-	public HeartOfStrike() {
+	public HeartOfStrikeUp() {
 		super(RelicTier.UNCOMMON, LandingSound.HEAVY);
 		this.counter = 2;
 	}
@@ -21,12 +21,13 @@ public class HeartOfStrike extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		this.counter = 2;
-		this.p().powers.add(hosp = new HeartOfStrikePower());
+		this.p().powers.add(hosp = new HeartOfStrikePowerUp());
+		this.combatCards().forEach(c -> c.tags.add(CardTags.STRIKE));
 	}
 	
 	public void onExhaust(AbstractCard c) {
 		if (c.hasTag(CardTags.STRIKE)) {
-			this.counter++;
+			this.counter += c.tags.stream().filter(CardTags.STRIKE::equals).count();
 			this.updateDescription();
 		}
 	}
@@ -48,14 +49,19 @@ public class HeartOfStrike extends AbstractTestRelic {
 		}
 	}
 	
-	private class HeartOfStrikePower extends AbstractTestPower implements InvisiblePower {
-		public HeartOfStrikePower() {
+	private class HeartOfStrikePowerUp extends AbstractTestPower implements InvisiblePower {
+		public HeartOfStrikePowerUp() {
 			this.owner = p();
-			this.addMapWithSkip(p -> (hosp = new HeartOfStrikePower()));
+			this.addMapWithSkip(p -> (hosp = new HeartOfStrikePowerUp()));
+		}
+		
+		private float dmg(float damage) {
+			return damage * counter;
 		}
 		
 		public float atDamageFinalGive(float damage, DamageType type, AbstractCard c) {
-			return c.hasTag(CardTags.STRIKE) ? damage * counter : damage;
+			return c.tags.stream().filter(CardTags.STRIKE::equals).map(t -> get(this::dmg)).reduce(t(), this::chain)
+					.apply(damage);
 		}
 	}
 
