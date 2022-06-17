@@ -143,8 +143,10 @@ public class Nyarlathotep extends AbstractTestRelic {
     }
 	
 	public void onManualDiscard() {
-		this.triggerExhaustFor(p().discardPile.getTopCard());
-		this.show();
+		if (!p().discardPile.isEmpty()) {
+			this.triggerExhaustFor(p().discardPile.getTopCard());
+			this.show();
+		}
     }
 	
 }
