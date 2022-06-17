@@ -687,8 +687,10 @@
 	
 	"testmod-upgrade-HolyLightProtection":{
 		"TEXT": [
+			"2",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	

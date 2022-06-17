@@ -568,9 +568,9 @@
 	},
 	
 	"testmod-HolyLightProtectionUp":{
-		"NAME": "Holy Light Protection",
+		"NAME": "Holy Light Protection+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["If multiple enemies appeared in a combat, only the first two can cause damage on you."]
+		"DESCRIPTIONS":["If multiple enemies appeared in a combat, only the first two can cause damage on you. Damage you receive from the first is reduced to #b1/3, damage you receive from the second is reduced to #b2/3."]
 	},
 	
 	"testmod-EvilDaggerUp":{

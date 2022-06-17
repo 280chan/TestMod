@@ -574,9 +574,9 @@
 	},
 	
 	"testmod-HolyLightProtectionUp":{
-		"NAME": "圣光守护",
+		"NAME": "圣光守护+",
 		"FLAVOR": "没有人能够在这道光面前保持高傲。",
-		"DESCRIPTIONS":["若一场战斗出现过多个敌人，只有前两个敌人会对你造成伤害。"]
+		"DESCRIPTIONS":["若一场战斗出现过多个敌人，只有前两个敌人会对你造成伤害，且你受到第一个敌人的伤害降低 #b1/3 ，你受到第二个敌人的伤害降低 #b2/3 。"]
 	},
 	
 	"testmod-EvilDaggerUp":{
