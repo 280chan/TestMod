@@ -88,7 +88,7 @@
 		"FLAVOR": "“希望是坚韧的拐杖，忍耐是旅行袋，携带它们，人可以登上永恒之旅。” —— 罗素",
 		"DESCRIPTIONS":[
 			"Whenever you receive unblocked #yattack damage, you have a probablity of #b",
-			"% to be fully healed and make all enemies die. Whenever you don't have any cards in your hand, you have a probablity of #b6.18% to choose copies of a maximum of #b10 cards in your deck to put into your hand. Whenever receive #yattack damage without active, the probablity will be increased by a flat #b0.618% till it actives.",
+			"% to be fully healed and make all enemies die. Whenever you don't have any cards in your hand, right click this relic, you have a probablity of #b6.18% to choose copies of a maximum of #b10 cards in your deck to put into your hand, can only click once until your hand change. Whenever receive #yattack damage without active, the probablity will be increased by a flat #b0.618% till it actives.",
 			"Whenever you receive unblocked #yattack damage, you have a probablity of #b0.618% to be fully healed and make all enemies die. Whenever you don't have any cards in your hand, you have a probablity of #b6.18% to choose copies of a maximum of #b10 cards in your deck to put into your hand. Whenever receive #yattack damage without active, the probablity will be increased by a flat #b0.618% till it actives."
 		]
 	},
