@@ -1,7 +1,6 @@
 package testmod.relics;
 
 import com.megacrit.cardcrawl.actions.common.ExhaustAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class IncinerationGenerator extends AbstractTestRelic {
 	
@@ -18,7 +17,7 @@ public class IncinerationGenerator extends AbstractTestRelic {
     }
 	
 	public void atTurnStartPostDraw() {
-		this.addToBot(new ExhaustAction(AbstractDungeon.player, AbstractDungeon.player, 1, false));
+		this.addToBot(new ExhaustAction(p(), p(), 1, false));
 	}
 	
 }

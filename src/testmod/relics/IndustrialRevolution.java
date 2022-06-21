@@ -1,13 +1,16 @@
 package testmod.relics;
 
 import java.util.ArrayList;
+
+import com.evacipated.cardcrawl.mod.stslib.relics.OnReceivePowerRelic;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-
-import testmod.powers.IndustrialRevolutionPower;
+import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.powers.AbstractPower.PowerType;
 import testmod.powers.InorganicPower;
 
-public class IndustrialRevolution extends AbstractTestRelic {
+public class IndustrialRevolution extends AbstractTestRelic implements OnReceivePowerRelic {
 	
 	public static final ArrayList<AbstractMonster> LIST = new ArrayList<AbstractMonster>();
 	
@@ -19,7 +22,6 @@ public class IndustrialRevolution extends AbstractTestRelic {
 		if (!isActive)
 			return;
 		LIST.clear();
-		p().powers.add(new IndustrialRevolutionPower(p()));
 		if (!this.hasEnemies())
 			return;
 		AbstractDungeon.getMonsters().monsters.stream()
@@ -29,8 +31,6 @@ public class IndustrialRevolution extends AbstractTestRelic {
 	
 
 	private void tryAdd() {
-		if (!IndustrialRevolutionPower.hasThis(p()))
-			this.addPower(new IndustrialRevolutionPower(p()));
 		if (!this.hasEnemies())
 			return;
 		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
@@ -56,5 +56,10 @@ public class IndustrialRevolution extends AbstractTestRelic {
 			return;
 		tryAdd();
     }
+
+	@Override
+	public boolean onReceivePower(AbstractPower p, AbstractCreature s) {
+		return !(LIST.contains(s) && p.type == PowerType.DEBUFF);
+	}
 	
 }
