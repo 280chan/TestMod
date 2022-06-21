@@ -35,7 +35,7 @@ public class DemonSummonUp extends AbstractUpgradedRelic {
     }
 	
 	private void modify(DexterityPower p) {
-		p.stackPower(p.amount / 2 - p.amount);
+		this.att(apply(p(), new DexterityPower(p(), p.amount / 2 - p.amount)));
 	}
 	
 	private int cal() {
