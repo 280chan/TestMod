@@ -2,6 +2,8 @@ package testmod.relicsup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -19,25 +21,7 @@ public class GreedyDevilUp extends AbstractUpgradedRelic {
 	public void onAttack(final DamageInfo info, final int damageAmount, final AbstractCreature target) {
 		if (damageAmount > 0 && !target.isPlayer) {
 			this.INFO_MAP.put(info, target);
-			AbstractTestPower p = new AbstractTestPower(this.relicId) {
-			    public int onAttacked(final DamageInfo i, final int damage) {
-			    	if (INFO_MAP.containsKey(i)) {
-						int dmg = damage - target.currentHealth;
-						if (dmg >= 0) {
-							if (dmg > 0)
-								p().increaseMaxHp(Math.min(dmg, Math.max(1, p().maxHealth / 10)), true);
-							if (damage > 0)
-								p().gainGold(damage);
-							GreedyDevilUp.this.flash();
-						}
-						INFO_MAP.remove(i, target);
-						TO_REMOVE.add(this);
-					}
-					return damage;
-			    }
-			};
-			p.owner = target;
-			target.powers.add(p);
+			target.powers.add(new GreedyDevilPowerUp(target));
 		}
     }
 	
@@ -52,6 +36,29 @@ public class GreedyDevilUp extends AbstractUpgradedRelic {
 			return;
 		this.TO_REMOVE.stream().forEach(p -> p.owner.powers.remove(p));
 		this.TO_REMOVE.clear();
+	}
+	
+	public class GreedyDevilPowerUp extends AbstractTestPower implements InvisiblePower {
+		private GreedyDevilPowerUp(AbstractCreature target) {
+			super("GreedyDevilUp");
+			this.owner = target;
+		}
+		
+		public int onAttacked(final DamageInfo i, final int damage) {
+	    	if (INFO_MAP.containsKey(i)) {
+				int dmg = damage - this.owner.currentHealth;
+				if (dmg >= 0) {
+					if (dmg > 0)
+						p().increaseMaxHp(Math.min(dmg, Math.max(1, p().maxHealth / 10)), true);
+					if (damage > 0)
+						p().gainGold(damage);
+					GreedyDevilUp.this.flash();
+				}
+				INFO_MAP.remove(i, this.owner);
+				TO_REMOVE.add(this);
+			}
+			return damage;
+	    }
 	}
 
 }

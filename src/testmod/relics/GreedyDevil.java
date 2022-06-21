@@ -2,6 +2,8 @@ package testmod.relics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
@@ -21,22 +23,7 @@ public class GreedyDevil extends AbstractTestRelic {
 	public void onAttack(final DamageInfo info, final int damageAmount, final AbstractCreature target) {
 		if (damageAmount > 0 && !target.isPlayer) {
 			this.INFO_MAP.put(info, target);
-			AbstractTestPower p = new AbstractTestPower(this.relicId) {
-			    public int onAttacked(final DamageInfo i, final int damage) {
-			    	if (INFO_MAP.containsKey(i)) {
-						int dmg = damage - target.currentHealth;
-						if (dmg > 0) {
-							p().gainGold(Math.min(dmg, 100));
-							GreedyDevil.this.flash();
-						}
-						INFO_MAP.remove(i, target);
-						TO_REMOVE.add(this);
-					}
-					return damage;
-			    }
-			};
-			p.owner = target;
-			target.powers.add(p);
+			target.powers.add(new GreedyDevilPower(target));
 		}
     }
 	
@@ -55,6 +42,26 @@ public class GreedyDevil extends AbstractTestRelic {
 	
 	public boolean canSpawn() {
 		return Settings.isEndless || AbstractDungeon.actNum < 3;
+	}
+	
+	public class GreedyDevilPower extends AbstractTestPower implements InvisiblePower {
+		private GreedyDevilPower(AbstractCreature target) {
+			super("GreedyDevil");
+			this.owner = target;
+		}
+		
+		public int onAttacked(final DamageInfo i, final int damage) {
+			if (INFO_MAP.containsKey(i)) {
+				int dmg = damage - this.owner.currentHealth;
+				if (dmg > 0) {
+					p().gainGold(Math.min(dmg, 100));
+					GreedyDevil.this.flash();
+				}
+				INFO_MAP.remove(i, this.owner);
+				TO_REMOVE.add(this);
+			}
+			return damage;
+	    }
 	}
 
 }
