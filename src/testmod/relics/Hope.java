@@ -194,8 +194,6 @@ public class Hope extends AbstractTestRelic implements ClickableRelic {
 		boolean result = false;
 		boolean hp = rng.equals(HPRng);
 		if (hp) {
-			if (this.isLocalTesting())
-				return true;
 			result = rng.random(RANGEHP) < RATE + this.counter * DELTA;
 			if (!result) {
 				this.counter++;

@@ -43,17 +43,13 @@ public class HopeUp extends AbstractUpgradedRelic implements ClickableRelic {
 		boolean result = false;
 		boolean hp = rng.equals(HPRng);
 		if (hp) {
-			if (this.isLocalTesting())
-				return true;
 			result = rng.random(Hope.RANGEHP) < Hope.RATE + this.counter * Hope.DELTA;
-			if (!result) {
+			if (!result)
 				this.counter++;
-			} else {
+			else
 				this.counter /= 2;
-			}
-		} else {
+		} else
 			result = rng.random(Hope.RANGECARD) < RATECARD;
-		}
 		this.updateDescription();
 		return result;
 	}
@@ -70,6 +66,11 @@ public class HopeUp extends AbstractUpgradedRelic implements ClickableRelic {
 	
 	public void onPlayerEndTurn() {
 		this.canDraw = false;
+		this.stopPulse();
+	}
+	
+	public void onVictory() {
+		this.stopPulse();
 	}
 
 	public void onRefreshHand() {
