@@ -45,6 +45,8 @@ import testmod.actions.AbstractXCostAction;
 import testmod.mymod.TestMod;
 import testmod.powers.AbstractTestPower;
 import testmod.relics.AbstractTestRelic;
+import testmod.relics.Prudence;
+import testmod.relics.StringDisintegrator;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public interface MiscMethods {
@@ -171,11 +173,11 @@ public interface MiscMethods {
 	}
 	
 	default boolean hasPrudence() {
-		return p().hasRelic(TestMod.makeID("Prudence"));
+		return p().relics.stream().anyMatch(r -> r instanceof Prudence);
 	}
 	
 	default boolean hasStringDisintegrator() {
-		return p().hasRelic(TestMod.makeID("StringDisintegrator"));
+		return p().relics.stream().anyMatch(r -> r instanceof StringDisintegrator);
 	}
 	
 	default void addHoarderCard(CardGroup g, AbstractCard c) {
