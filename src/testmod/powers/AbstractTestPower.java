@@ -40,6 +40,10 @@ public abstract class AbstractTestPower extends AbstractPower implements MiscMet
 		this.name = (this instanceof InvisiblePower) ? "" : name();
 	}
 	
+	public void updateDescription() {
+		 this.description = desc(0);
+	}
+	
 	protected void setRegion(String region) {
 		this.img = null;
 		this.loadRegion(region);
