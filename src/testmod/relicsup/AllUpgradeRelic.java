@@ -3,6 +3,7 @@ package testmod.relicsup;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
@@ -16,6 +17,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
@@ -220,15 +222,47 @@ public class AllUpgradeRelic implements MiscMethods {
 			private static final float y = Settings.HEIGHT - 40.0F * Settings.scale;
 			private static final float[] dx = { -15F, 0F, 15F };
 			private static final float[] dy = { 0F, 20F, 0F };
+			private static final float ICON_Y = ReflectionHacks.getPrivateStatic(TopPanel.class, "ICON_Y");
 			
 			@SpireInsertPatch(locator = Locator.class)
 			public static void Insert(TopPanel p, SpriteBatch sb) {
 				if (Loader.isModLoaded("RelicUpgradeLib")) {
+					if (Settings.isEndless) {
+						if (Settings.hasRubyKey || Settings.hasEmeraldKey || Settings.hasSapphireKey)
+							draw(0, sb);
+						if (Settings.hasRubyKey)
+							draw(1, sb);
+						if (Settings.hasEmeraldKey)
+							draw(2, sb);
+						if (Settings.hasSapphireKey)
+							draw(3, sb);
+					}
 					for (int i = 0; i < 3; i++)
-						if (KEY[i] > 1)
-							FontHelper.renderSmartText(sb, FontHelper.powerAmountFont, KEY[i] + "",
-									x + dx[i] * Settings.scale, y + dy[i] * Settings.scale, Settings.GOLD_COLOR);
+						drawAmount(i, sb);
 				}
+			}
+			
+			private static void drawAmount(int i, SpriteBatch sb) {
+				if (KEY[i] > 1)
+					FontHelper.renderSmartText(sb, FontHelper.powerAmountFont, KEY[i] + "", x + dx[i] * Settings.scale,
+							y + dy[i] * Settings.scale, Settings.GOLD_COLOR);
+			}
+			
+			private static Texture mode(int mode) {
+				switch (mode) {
+				case 0:
+					return ImageMaster.KEY_SLOTS_ICON;
+				case 1:
+					return ImageMaster.RUBY_KEY;
+				case 2:
+					return ImageMaster.EMERALD_KEY;
+				}
+				return ImageMaster.SAPPHIRE_KEY;
+			}
+			
+			private static void draw(int mode, SpriteBatch sb) {
+				sb.draw(mode(mode), -32.0F + 46.0F * Settings.scale, ICON_Y - 32.0F + 29.0F * Settings.scale, 32.0F,
+						32.0F, 64.0F, 64.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 64, 64, false, false);
 			}
 			
 			private static class Locator extends SpireInsertLocator {
