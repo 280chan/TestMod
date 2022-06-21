@@ -29,8 +29,14 @@ public class DemonSummonUp extends AbstractUpgradedRelic {
 		this.counter++;
 		this.att(this.apply(this.p(), DemonSummon.demon(p(), this.counter, this.counter)));
 		this.addTmpActionToBot(() -> att(apply(p(), new DexterityPower(p(), cal()))));
+		this.addTmpActionToBot(() -> p().powers.stream().filter(p -> p instanceof DexterityPower)
+				.map(p -> (DexterityPower) p).forEach(this::modify));
 		this.show();
     }
+	
+	private void modify(DexterityPower p) {
+		p.stackPower(p.amount / 2 - p.amount);
+	}
 	
 	private int cal() {
 		return (int) p().powers.stream().filter(p -> p.type == PowerType.BUFF && !(p instanceof InvisiblePower)).count();
