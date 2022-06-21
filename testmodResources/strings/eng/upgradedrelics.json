@@ -130,15 +130,15 @@
 	},
 	
 	"testmod-IncinerationGeneratorUp":{
-		"NAME": "Incineration Generator",
+		"NAME": "Incineration Generator+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn: gain [E] , #yExhaust a card."]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . Whenever you #yExhaust a card, gain [E] . For each turn, you can right click this relic to #yExhaust a card once."]
 	},
 	
 	"testmod-IndustrialRevolutionUp":{
-		"NAME": "Industrial Revolution",
+		"NAME": "Industrial Revolution+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Enemies that had #yArtifact, will not be able to give positive effects to themselves, nor negative effects to player."]
+		"DESCRIPTIONS":["At the start of each turn, if all enemies have #yArtifact, gain [E] . Enemies that had #yArtifact, will not be able to receive positive effects, nor give negative effects to player. Right click this relic to give all enemies #b1 #yArtifact."]
 	},
 	
 	"testmod-AscensionHeartUp":{
@@ -484,9 +484,9 @@
 	},
 	
 	"testmod-HyperplasticTissueUp":{
-		"NAME": "Hyperplastic Tissue",
+		"NAME": "Hyperplastic Tissue+",
 		"FLAVOR": "杀不死你的，都会让你更加强大。",
-		"DESCRIPTIONS":["Increase maximum hand size by #b1 for rest of the run. Whenever you draw a #yStatus or #yCurse card, increase maximum hand size by #b1 for rest of the combat."]
+		"DESCRIPTIONS":["Increase maximum hand size by #b2 for rest of the run. Whenever you draw a #yStatus or #yCurse card, increase maximum hand size by #b2 for rest of the combat. Whenever this relic increase maximum hand size or at end of your turn, deal a damage equals to maximum hand size randomly distributed to all enemies."]
 	},
 	
 	"testmod-TraineeEconomistUp":{
@@ -642,7 +642,7 @@
 	"testmod-DemonSummonUp":{
 		"NAME": "Demon Summon+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn, for each kind of buff you have, gain #b1 #yDexterity. At the first turn each combat, gain #b1 #yDemon #yForm, for each turn starts after first turn, gain #bTurn #bCount #yDemon #ySummon of tier #bTurn #bCount. Tier #bn #yDemon #ySummon gives you its amount #yDemon #ySummon of tier one lower, tier #b2 #yDemon #ySummon gives you #yDemon #yForm instead of #yDemon #ySummon."]
+		"DESCRIPTIONS":["At the start of each turn, for each kind of buff you have, gain #b1 #yDexterity. At the start of each turn, halves your #yDexterity. At the first turn each combat, gain #b1 #yDemon #yForm, for each turn starts after first turn, gain #bTurn #bCount #yDemon #ySummon of tier #bTurn #bCount. Tier #bn #yDemon #ySummon gives you its amount #yDemon #ySummon of tier one lower, tier #b2 #yDemon #ySummon gives you #yDemon #yForm instead of #yDemon #ySummon."]
 	},
 	
 	"testmod-ReverseUp":{

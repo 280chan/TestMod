@@ -184,14 +184,14 @@
 	
 	"testmod-upgrade-IncinerationGenerator":{
 		"TEXT": [
-			"0",
+			"1",
 			"0"
 		]
 	},
 	
 	"testmod-upgrade-IndustrialRevolution":{
 		"TEXT": [
-			"0",
+			"1",
 			"0"
 		]
 	},
@@ -587,8 +587,10 @@
 	
 	"testmod-upgrade-HyperplasticTissue":{
 		"TEXT": [
+			"1",
 			"0",
-			"0"
+			"0",
+			"100"
 		]
 	},
 	
@@ -787,7 +789,7 @@
 	
 	"testmod-upgrade-DemonSummon":{
 		"TEXT": [
-			"5",
+			"7",
 			"0"
 		]
 	},
