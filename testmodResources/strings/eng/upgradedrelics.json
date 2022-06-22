@@ -42,9 +42,9 @@
 	},
 	
 	"testmod-InfectionSourceUp":{
-		"NAME": "Infection Source",
+		"NAME": "Infection Source+",
 		"FLAVOR": "你感到自己变得虚弱了，但同时变得能操纵病毒。",
-		"DESCRIPTIONS":["Your attack damage is decreased by #r50%. All enemies that attacked by you will gain same amount of #yPoison as the damage amount they should receive, however they will only lose #b1 HP from your attack."]
+		"DESCRIPTIONS":["Whenever an enemy receives damage of #yAttack or #yThorn type, it will gain same amount of #yPoison as the damage."]
 	},
 	
 	"testmod-OneHitWonderUp":{

@@ -80,8 +80,10 @@
 	
 	"testmod-upgrade-InfectionSource":{
 		"TEXT": [
+			"5",
 			"0",
-			"0"
+			"0",
+			"200"
 		]
 	},
 	

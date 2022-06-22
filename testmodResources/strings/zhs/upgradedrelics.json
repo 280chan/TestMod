@@ -42,9 +42,9 @@
 	},
 	
 	"testmod-InfectionSourceUp":{
-		"NAME": "传染源",
+		"NAME": "传染源+",
 		"FLAVOR": "你感到自己变得虚弱了，但同时变得能操纵病毒。",
-		"DESCRIPTIONS":["你的攻击伤害降低 #r50% 。被攻击的敌人会获得与攻击伤害相同点数层的 #y中毒 ，但只会受到 #b1 点攻击伤害。"]
+		"DESCRIPTIONS":["被 #y攻击 或 #y荆棘 类型伤害击中的敌人会获得与伤害相同点数层的 #y中毒 。"]
 	},
 	
 	"testmod-OneHitWonderUp":{
