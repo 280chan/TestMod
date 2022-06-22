@@ -147,11 +147,11 @@ public class AllUpgradeRelic implements MiscMethods {
 			public static void Insert(RelicUpgradePopup rup) {
 				Proxy p = ReflectionHacks.getPrivate(rup, RelicUpgradePopup.class, "currentProxy");
 				int i = ReflectionHacks.getPrivate(rup, RelicUpgradePopup.class, "index");
-				if (((UpgradeBranch) p.braches.get(i - 1)).gemred && KEY[0] > 0)
+				if (p.braches.get(i - 1).gemred && KEY[0] > 0)
 					Settings.hasRubyKey = --KEY[0] > 0;
-				if (((UpgradeBranch) p.braches.get(i - 1)).gemgreen && KEY[1] > 0)
+				if (p.braches.get(i - 1).gemgreen && KEY[1] > 0)
 					Settings.hasEmeraldKey = --KEY[1] > 0;
-				if (((UpgradeBranch) p.braches.get(i - 1)).gemblue && KEY[2] > 0)
+				if (p.braches.get(i - 1).gemblue && KEY[2] > 0)
 					Settings.hasSapphireKey = --KEY[2] > 0;
 			}
 			
@@ -228,8 +228,7 @@ public class AllUpgradeRelic implements MiscMethods {
 			public static void Insert(TopPanel p, SpriteBatch sb) {
 				if (Loader.isModLoaded("RelicUpgradeLib")) {
 					if (Settings.isEndless) {
-						if (Settings.hasRubyKey || Settings.hasEmeraldKey || Settings.hasSapphireKey)
-							draw(0, sb);
+						draw(0, sb);
 						if (Settings.hasRubyKey)
 							draw(1, sb);
 						if (Settings.hasEmeraldKey)
