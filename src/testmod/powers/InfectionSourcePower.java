@@ -13,13 +13,13 @@ public class InfectionSourcePower extends AbstractTestPower implements Invisible
 		return owner.powers.stream().anyMatch(p ->  p instanceof InfectionSourcePower);
 	}
 	
-	public InfectionSourcePower(AbstractCreature owner) {
-		this.owner = owner;
+	public InfectionSourcePower() {
+		this.owner = p();
 		this.amount = -1;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
 		this.priority = PRIORITY;
-		this.addMap(p -> new InfectionSourcePower(p.owner));
+		this.addMap(p -> new InfectionSourcePower());
 	}
 	
 	public void updateDescription() {
