@@ -191,7 +191,7 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	    initializeTips();
 	}
 	
-	protected void updateDescription() {
+	public void updateDescription() {
 		updateDescription(p().chosenClass);
 	}
 	

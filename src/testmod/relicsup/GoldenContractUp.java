@@ -4,8 +4,9 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import testmod.relics.GoldenContract.GoldenContractPower;
+import testmod.utils.CounterKeeper;
 
-public class GoldenContractUp extends AbstractUpgradedRelic {
+public class GoldenContractUp extends AbstractUpgradedRelic implements CounterKeeper {
 	
 	public GoldenContractUp() {
 		super(RelicTier.BOSS, LandingSound.HEAVY);

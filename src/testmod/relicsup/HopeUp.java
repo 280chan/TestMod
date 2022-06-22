@@ -9,8 +9,9 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import testmod.actions.HopeAction;
 import testmod.mymod.TestMod;
 import testmod.relics.Hope;
+import testmod.utils.CounterKeeper;
 
-public class HopeUp extends AbstractUpgradedRelic implements ClickableRelic {
+public class HopeUp extends AbstractUpgradedRelic implements ClickableRelic, CounterKeeper {
 	public static Random HPRng = new Random();
 	public static Random cardRng = new Random();
 	private static final int RATECARD = 1000;

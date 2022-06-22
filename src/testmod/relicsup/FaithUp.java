@@ -13,8 +13,9 @@ import com.megacrit.cardcrawl.shop.*;
 import basemod.ReflectionHacks;
 import testmod.mymod.TestMod;
 import testmod.relics.Faith;
+import testmod.utils.CounterKeeper;
 
-public class FaithUp extends AbstractUpgradedRelic {
+public class FaithUp extends AbstractUpgradedRelic implements CounterKeeper {
 	
 	public FaithUp() {
 		super(RelicTier.SHOP, LandingSound.CLINK);

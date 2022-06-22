@@ -20,6 +20,7 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.rooms.CampfireUI;
@@ -40,6 +41,7 @@ import relicupgradelib.arch.*;
 import relicupgradelib.ui.RelicUpgradePopup;
 import testmod.mymod.TestMod;
 import testmod.relics.*;
+import testmod.utils.CounterKeeper;
 import testmod.utils.MiscMethods;
 
 public class AllUpgradeRelic implements MiscMethods {
@@ -104,6 +106,10 @@ public class AllUpgradeRelic implements MiscMethods {
 		return IntStream.of(MultiKey.KEY).sum();
 	}
 	
+	public static void setCurrent(AbstractUpgradedRelic r) {
+		MultiKey.RelicUpgradePopupPatch.current = r;
+	}
+	
 	public static class MultiKey {
 		public static final String[] SAVE_NAME = { "MultiKey0", "MultiKey1", "MultiKey2" };
 		public static final int[] KEY = { 0, 0, 0 };
@@ -147,17 +153,34 @@ public class AllUpgradeRelic implements MiscMethods {
 			public static void Insert(RelicUpgradePopup rup) {
 				Proxy p = ReflectionHacks.getPrivate(rup, RelicUpgradePopup.class, "currentProxy");
 				int i = ReflectionHacks.getPrivate(rup, RelicUpgradePopup.class, "index");
-				if (p.braches.get(i - 1).gemred && KEY[0] > 0)
+				if (((UpgradeBranch) p.braches.get(i - 1)).gemred && KEY[0] > 0)
 					Settings.hasRubyKey = --KEY[0] > 0;
-				if (p.braches.get(i - 1).gemgreen && KEY[1] > 0)
+				if (((UpgradeBranch) p.braches.get(i - 1)).gemgreen && KEY[1] > 0)
 					Settings.hasEmeraldKey = --KEY[1] > 0;
-				if (p.braches.get(i - 1).gemblue && KEY[2] > 0)
+				if (((UpgradeBranch) p.braches.get(i - 1)).gemblue && KEY[2] > 0)
 					Settings.hasSapphireKey = --KEY[2] > 0;
 			}
 			
 			private static class Locator extends SpireInsertLocator {
 				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
 					Matcher finalMatcher = new Matcher.MethodCallMatcher(SingleRelicViewPopup.class, "close");
+					return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+				}
+			}
+			
+			private static AbstractUpgradedRelic current;
+			
+			@SpireInsertPatch(locator = Locator1.class)
+			public static void Insert1(RelicUpgradePopup rup) {
+				if (current != null && current.tier != RelicTier.BOSS && current instanceof CounterKeeper) {
+					((CounterKeeper) current).run(RelicUpgradePopup.replacedRelic, current);
+				}
+				current = null;
+			}
+			
+			private static class Locator1 extends SpireInsertLocator {
+				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+					Matcher finalMatcher = new Matcher.FieldAccessMatcher(UpgradeBranch.class, "gemred");
 					return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 				}
 			}
@@ -228,7 +251,8 @@ public class AllUpgradeRelic implements MiscMethods {
 			public static void Insert(TopPanel p, SpriteBatch sb) {
 				if (Loader.isModLoaded("RelicUpgradeLib")) {
 					if (Settings.isEndless) {
-						draw(0, sb);
+						if (Settings.hasRubyKey || Settings.hasEmeraldKey || Settings.hasSapphireKey)
+							draw(0, sb);
 						if (Settings.hasRubyKey)
 							draw(1, sb);
 						if (Settings.hasEmeraldKey)

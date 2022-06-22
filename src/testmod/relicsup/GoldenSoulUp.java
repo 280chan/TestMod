@@ -3,7 +3,9 @@ package testmod.relicsup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 
-public class GoldenSoulUp extends AbstractUpgradedRevivalRelic {
+import testmod.utils.CounterKeeper;
+
+public class GoldenSoulUp extends AbstractUpgradedRevivalRelic implements CounterKeeper {
 	public static final int RATE = 10;
 	
 	public GoldenSoulUp() {

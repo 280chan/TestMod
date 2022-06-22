@@ -8,9 +8,10 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import testmod.mymod.TestMod;
 import testmod.relics.GlassSoul;
 import testmod.screens.GlassSoulSelectScreen;
+import testmod.utils.CounterKeeper;
 import testmod.utils.GetRelicTrigger;
 
-public class GlassSoulUp extends AbstractUpgradedRelic implements GetRelicTrigger, ClickableRelic {
+public class GlassSoulUp extends AbstractUpgradedRelic implements GetRelicTrigger, ClickableRelic, CounterKeeper {
 	public static final int PRICE_RATE = 10, COUNTER_RATE = 1;
 	public static ArrayList<String> relics = GlassSoul.relics, tmpRelics = GlassSoul.tmpRelics;
 	private boolean damaged = false;
