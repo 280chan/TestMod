@@ -8,6 +8,7 @@ import testmod.mymod.TestMod;
 import testmod.relics.AbstractTestRelic;
 
 public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
+	protected int upgradeTimes = 1;
 
 	private static String removePostfixForIMG(String id) {
 		return id.endsWith("Up") ? id.substring(0, id.length() - 2) : id;
@@ -19,6 +20,11 @@ public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
 	
 	public AbstractUpgradedRelic(RelicTier tier, LandingSound sfx) {
 		this(shortID(getRelicClass()), tier, sfx);
+	}
+	
+	public AbstractUpgradedRelic(RelicTier tier, LandingSound sfx, int upgradeTimes) {
+		this(tier, sfx);
+		this.upgradeTimes = upgradeTimes;
 	}
 	
 	public void bossObtainLogic() {
