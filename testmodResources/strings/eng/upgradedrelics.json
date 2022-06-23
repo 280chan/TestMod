@@ -352,9 +352,9 @@
 	},
 	
 	"testmod-InjuryResistanceUp":{
-		"NAME": "Injury Resistance",
+		"NAME": "Injury Resistance+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you lose HP, ALL future final HP loss would reduced by #b1. NL When you completely block a HP loss through this relic, reset the reduction back to #b0. "]
+		"DESCRIPTIONS":["Whenever you lose HP, ALL future final HP loss would reduced by #b1. NL When you completely block a HP loss through this relic, set the reduction to half."]
 	},
 	
 	"testmod-DéjàvuUp":{

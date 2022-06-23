@@ -358,9 +358,9 @@
 	},
 	
 	"testmod-InjuryResistanceUp":{
-		"NAME": "抗性护符",
+		"NAME": "抗性护符+",
 		"FLAVOR": "我还能坚持更久。",
-		"DESCRIPTIONS":["每当受到伤害后，接下来受到的伤害的最终数值都将降低 #b1 。 NL 当通过此遗物完全格挡一次伤害后，数值重置。"]
+		"DESCRIPTIONS":["每当受到伤害后，接下来受到的伤害的最终数值都将降低 #b1 。 NL 当通过此遗物完全格挡一次伤害后，数值减半。"]
 	},
 	
 	"testmod-DéjàvuUp":{
