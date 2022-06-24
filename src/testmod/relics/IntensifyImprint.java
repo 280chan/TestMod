@@ -1,8 +1,6 @@
 package testmod.relics;
 
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
-
 import testmod.powers.IntensifyImprintPower;
 
 public class IntensifyImprint extends AbstractTestRelic {
@@ -32,7 +30,7 @@ public class IntensifyImprint extends AbstractTestRelic {
 	
 	public void incrementCounter() {
 		this.counter++;
-		this.updateDescription(null);
+		this.updateDescription();
 		this.show();
 	}
 	
@@ -52,7 +50,7 @@ public class IntensifyImprint extends AbstractTestRelic {
 		super.update();
 		if (this.counter < 0 || !this.hasEnemies())
 			return;
-		if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT)
+		if (this.inCombat())
 			AbstractDungeon.getMonsters().monsters.stream().filter(not(IntensifyImprintPower::hasThis))
 					.forEach(m -> m.powers.add(new IntensifyImprintPower(m)));
 	}
