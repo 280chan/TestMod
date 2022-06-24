@@ -207,6 +207,10 @@ public class AllUpgradeRelic implements MiscMethods {
 			}
 		}
 		
+		private static boolean valid(boolean red) {
+			return (Settings.isFinalActAvailable && (red || Settings.hasSapphireKey)) || Settings.isEndless;
+		}
+		
 		@SpirePatch(clz = CampfireUI.class, method = "initializeButtons")
 		public static class KeepRecallOptionPatch {
 			@SpirePostfixPatch
@@ -214,7 +218,7 @@ public class AllUpgradeRelic implements MiscMethods {
 				if (!Loader.isModLoaded("RelicUpgradeLib"))
 					return;
 				ArrayList<AbstractCampfireOption> l = ReflectionHacks.getPrivate(ui, CampfireUI.class, "buttons");
-				if (Settings.isFinalActAvailable && l.stream().noneMatch(o -> o instanceof RecallOption)) {
+				if (valid(true) && l.stream().noneMatch(o -> o instanceof RecallOption)) {
 					l.add(new RecallOption());
 					AbstractDungeon.getCurrRoom().phase = RoomPhase.INCOMPLETE;
 				}
@@ -225,7 +229,7 @@ public class AllUpgradeRelic implements MiscMethods {
 		public static class KeepSapphireKeyPatch {
 			@SpireInsertPatch(locator = Locator.class)
 			public static void Insert(AbstractChest ui, boolean bossChest) {
-				if (Loader.isModLoaded("RelicUpgradeLib") && Settings.isFinalActAvailable && Settings.hasSapphireKey) {
+				if (Loader.isModLoaded("RelicUpgradeLib") && valid(false)) {
 					AbstractDungeon.getCurrRoom().addSapphireKey(AbstractDungeon.getCurrRoom().rewards
 							.get(AbstractDungeon.getCurrRoom().rewards.size() - 1));
 				}
