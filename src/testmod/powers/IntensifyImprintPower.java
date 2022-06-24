@@ -1,11 +1,14 @@
 package testmod.powers;
 
+import java.util.stream.Stream;
+
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
+import testmod.relics.AbstractTestRelic;
 import testmod.relics.IntensifyImprint;
+import testmod.relicsup.IntensifyImprintUp;
 
 public class IntensifyImprintPower extends AbstractTestPower implements InvisiblePower {
 	private static final int PRIORITY = 999999;
@@ -29,10 +32,24 @@ public class IntensifyImprintPower extends AbstractTestPower implements Invisibl
 		this.fontScale = 8.0f;
 	}
 	
+	private Stream<AbstractTestRelic> stream() {
+		return Stream.concat(this.relicStream(IntensifyImprint.class), this.relicStream(IntensifyImprintUp.class));
+	}
+	
+	public void incrementCounter(AbstractTestRelic r) {
+		r.counter++;
+		r.updateDescription();
+		r.show();
+	}
+	
+	private boolean up() {
+		return this.relicStream(IntensifyImprintUp.class).count() > 0;
+	}
+	
     public int onAttacked(final DamageInfo info, int damage) {
-    	if ((info.owner == null || info.owner == AbstractDungeon.player) && (damage > 0)) {
-			damage += this.relicStream(IntensifyImprint.class).mapToInt(r -> r.counter).sum();
-			this.relicStream(IntensifyImprint.class).forEach(r -> r.incrementCounter());
+    	if (up() || ((info.owner == null || info.owner.isPlayer) && (damage > 0))) {
+			damage += stream().mapToInt(r -> r.counter).sum();
+			stream().forEach(this::incrementCounter);
 		}
 		return damage;
     }

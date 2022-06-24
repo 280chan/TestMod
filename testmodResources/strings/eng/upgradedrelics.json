@@ -310,9 +310,9 @@
 	},
 	
 	"testmod-IntensifyImprintUp":{
-		"NAME": "Intensify Imprint",
+		"NAME": "Intensify Imprint+",
 		"FLAVOR": "你还能坚持到什么时候呢？",
-		"DESCRIPTIONS":["Whenever you cause an unblocked damage to enemies, your final damage to enemies will be increased by #b1 till next turn starts.", "Until next turn starts, Your final damage to enemies is increased by #b", ". "]
+		"DESCRIPTIONS":["Whenever an enemy receives damage, all enemies receive #b1 more future damage. At the start of each turn, halves counter.", "Enemies receive #b", " more damage."]
 	},
 	
 	"testmod-KeyOfTheVoidUp":{
