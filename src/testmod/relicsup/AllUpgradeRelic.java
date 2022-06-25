@@ -75,6 +75,17 @@ public class AllUpgradeRelic implements MiscMethods {
 				boolean blue = key / 4 == 1;
 				Register.set(up, red, green, blue, gold);
 			}
+			if ("IWantAll".equals(original)) {
+				Register.init(up);
+				for (int i = 0; i < tmp.TEXT.length; i += 2) {
+					int key = Integer.parseInt(tmp.TEXT[i]);
+					int gold = Integer.parseInt(tmp.TEXT[i + 1]);
+					boolean red = key % 2 == 1;
+					boolean green = (key % 4) / 2 == 1;
+					boolean blue = key / 4 == 1;
+					Register.set(up, red, green, blue, gold);
+				}
+			}
 		}
 	}
 	

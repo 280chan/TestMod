@@ -67,6 +67,7 @@ import testmod.relics.*;
 import testmod.relicsup.AbstractUpgradedRelic;
 import testmod.relicsup.AllUpgradeRelic;
 import testmod.relicsup.AscensionHeartUp;
+import testmod.relicsup.IWantAllUp;
 import testmod.relicsup.TestBoxUp;
 import testmod.screens.RelicSelectScreen;
 import testmod.utils.*;
@@ -74,7 +75,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 6/24/2022
+ * @version 6/25/2022
  * @since 6/17/2018
  */
 
@@ -302,7 +303,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new CrystalShield(), new Alchemist(), new StringDisintegrator(), new HarvestTotem(), new Fanaticism(),
 				new Antiphasic(), new IntensifyImprint(), new KeyOfTheVoid(), new ThousandKnives(), new GiantKiller(),
 				new PhasePocketWatch(), new MagicalMallet(), new EvilDagger(), new TimeTraveler(), new Nyarlathotep(),
-				new VentureCapital(), new LifeArmor(), new HeartOfStrike(), new Iteration(), new TemporaryBarricade(),
+				new VentureCapital(), new LifeArmor(), new HeartOfStrike(), new Recursion(), new TemporaryBarricade(),
 				new TheFather(), new TwinklingStar(), new GlassSoul(), new Laevatain(), new Match3(), new Brilliant(), 
 				new BalancedPeriapt(), new ConjureBlade(), new PortablePortal(), new Encyclopedia(), new SpireNexus(),
 				new Gather(), new FissionDevice(), new DemonSummon(), new HolyLightProtection(), new GoldenContract(),
@@ -687,6 +688,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		AscensionHeartUp.load(getInt(AscensionHeartUp.SAVE_SIZE));
 		TemporaryBarricade.pulseLoader();
 		IWantAll.loadVictory();
+		IWantAllUp.loadVictory();
 		GlassSoul.load(getStringList(GlassSoul.ID));
 		Metronome.load();
 		PhasePocketWatch.load(getInt(PhasePocketWatch.SAVE_NAME));

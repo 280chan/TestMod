@@ -298,9 +298,9 @@
 	},
 	
 	"testmod-IWantAllUp":{
-		"NAME": "I Want All",
+		"NAME": "I Want All+",
 		"FLAVOR": "小孩子才做选择；而我，全都要！",
-		"DESCRIPTIONS":["You have #b10 chances to right click on this relic at the combat reward screen, to make a copy of the card reward.", "This relic has been used up."]
+		"DESCRIPTIONS":["This relic can be upgraded any number of times. Upon pickup, gain #b10 more count. You can right click this relic when in map view screen to switch right click effect of this relic. Right click at the combat reward screen to trigger corresponding effect. NL Effect ", ": effect 0 is used up.", ": Consume #b1 count, duplicate current card reward.", ": Use #ySinging #yBowl for all card rewards.", ": Pick number #b", " card for all card rewards."]
 	},
 	
 	"testmod-AntiphasicUp":{
