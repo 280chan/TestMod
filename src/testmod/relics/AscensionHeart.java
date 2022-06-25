@@ -257,7 +257,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	}
 	
 	private boolean checkNumCards() {
-		return p().relics.stream().map(r -> get(r::changeNumberOfCardsInReward)).reduce(a -> a, this::chain)
+		return p().relics.stream().map(r -> get(r::changeNumberOfCardsInReward)).reduce(t(), this::chain)
 				.apply(3) > (ModHelper.isModEnabled("Binary") ? 1 : 0);
 	}
 	
