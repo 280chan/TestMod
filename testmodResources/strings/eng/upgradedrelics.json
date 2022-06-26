@@ -66,9 +66,9 @@
 	},
 	
 	"testmod-JusticeUp":{
-		"NAME": "Justice",
+		"NAME": "Justice+",
 		"FLAVOR": "“有多少邪恶，就有多少正义。”",
-		"DESCRIPTIONS":["Whenever gain a negative effect, gain #b1 #yStrength. "]
+		"DESCRIPTIONS":["This relic can be upgraded any number of times, each time increase #yStrength gain of this relic by #b2. Whenever gain a negative effect, gain #yStrength according to upgrade times.", "This relic can be upgraded any number of times, each time increase #yStrength gain of this relic by #b2. Whenever gain a negative effect, gain #b", " #yStrength."]
 	},
 	
 	"testmod-FortitudeUp":{
