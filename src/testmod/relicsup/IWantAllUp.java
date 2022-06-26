@@ -18,8 +18,9 @@ import com.megacrit.cardcrawl.vfx.FastCardObtainEffect;
 
 import testmod.potions.EscapePotion;
 import testmod.utils.CounterKeeper;
+import testmod.utils.InfiniteUpgradeRelic;
 
-public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic, CounterKeeper {
+public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic, CounterKeeper, InfiniteUpgradeRelic {
 	public static final int COUNT = 10;
 	
 	private boolean victory = false;
