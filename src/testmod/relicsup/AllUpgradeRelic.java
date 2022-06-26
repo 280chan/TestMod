@@ -42,6 +42,7 @@ import relicupgradelib.ui.RelicUpgradePopup;
 import testmod.mymod.TestMod;
 import testmod.relics.*;
 import testmod.utils.CounterKeeper;
+import testmod.utils.InfiniteUpgradeRelic;
 import testmod.utils.MiscMethods;
 
 public class AllUpgradeRelic implements MiscMethods {
@@ -75,7 +76,7 @@ public class AllUpgradeRelic implements MiscMethods {
 				boolean blue = key / 4 == 1;
 				Register.set(up, red, green, blue, gold);
 			}
-			if ("IWantAll".equals(original)) {
+			if (up instanceof InfiniteUpgradeRelic) {
 				Register.init(up);
 				for (int i = 0; i < tmp.TEXT.length; i += 2) {
 					int key = Integer.parseInt(tmp.TEXT[i]);
