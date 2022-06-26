@@ -14,7 +14,7 @@ public class Justice extends AbstractTestRelic implements OnReceivePowerRelic {
 
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature source) {
-		if (p.type == PowerType.DEBUFF)
+		if (this.isActive && p.type == PowerType.DEBUFF)
 			relicStream(Justice.class).peek(r -> r.show()).forEach(r -> att(apply(p(), new StrengthPower(p(), 1))));
 		return true;
 	}
