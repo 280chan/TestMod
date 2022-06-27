@@ -83,8 +83,8 @@
 		"DESCRIPTIONS":["Whenever you gain #ygold, gain #b1 less, increase your Max HP by #b3 instead. Whenever you gain #ygold, gain #b1% more future #ygold."]
 	},
 	
-	"testmod-Hope":{
-		"NAME": "Hope",
+	"testmod-HopeUp":{
+		"NAME": "Hope+",
 		"FLAVOR": "“希望是坚韧的拐杖，忍耐是旅行袋，携带它们，人可以登上永恒之旅。” —— 罗素",
 		"DESCRIPTIONS":[
 			"Whenever you receive damage (including blocked), you have a probability of #b",

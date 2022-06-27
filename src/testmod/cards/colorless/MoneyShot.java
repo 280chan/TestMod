@@ -35,7 +35,7 @@ public class MoneyShot extends AbstractTestCard {
 		this.addTmpActionToBot(() -> create(p.gold).forEach(gold -> m(a).filter(this::alive).forEach(m -> {
 			this.baseDamage += gold;
 			this.calculateCardDamage(m);
-			m.damage(new DamageInfo(m, this.damage));
+			m.damage(new DamageInfo(p, this.damage));
 			if ((m.isDying || m.currentHealth <= 0) && !m.halfDead && !m.hasPower("Minion"))
 				p.gainGold(this.damage);
 			this.baseDamage = this.misc;
