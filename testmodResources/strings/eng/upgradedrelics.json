@@ -202,9 +202,9 @@
 	},
 	
 	"testmod-LaevatainUp":{
-		"NAME": "Laevatain",
+		"NAME": "Laevatain+",
 		"FLAVOR": "“KA(兰)KA(兰)A(露)！” ——北凉",
-		"DESCRIPTIONS":["Upon pickup, obtain #b3 random #yCurse. At the start of each combat, gain #b3 #yStrength. Every #b3 turns, for each #yCurse in your deck, gain #b1 #yStrength. "]
+		"DESCRIPTIONS":["Upon pickup, obtain #b3 random #yCurse. At the start of each combat, for each #yCurse in your deck, gain #b1 #yStrength, at least #b3. Every #b3 turns, double your #yStrength, if you have negative #yStrength, turn it postive. "]
 	},
 	
 	"testmod-TimeTravelerUp":{
@@ -316,9 +316,9 @@
 	},
 	
 	"testmod-KeyOfTheVoidUp":{
-		"NAME": "The Key Of The Void",
+		"NAME": "The Key Of The Void+",
 		"FLAVOR": "虚空是这个世界的终极答案。",
-		"DESCRIPTIONS":["At the end of combat, for each other #yBoss relic you have, remove #b1 card from your deck.", "Choose to remove ", " card(s) from your deck."]
+		"DESCRIPTIONS":["Once each room, you can right click this relic outside combat, to choose at most #b1 card to remove from your deck and gain random #ygem #ykey equals to #yBoss relic you have.", "Choose at most 1 card to remove from your deck."]
 	},
 	
 	"testmod-ThousandKnivesUp":{

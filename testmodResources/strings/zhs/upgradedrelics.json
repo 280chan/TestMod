@@ -202,9 +202,9 @@
 	},
 	
 	"testmod-LaevatainUp":{
-		"NAME": "萊瓦汀",
+		"NAME": "萊瓦汀+",
 		"FLAVOR": "“KA(兰)KA(兰)A(露)！” ——北凉",
-		"DESCRIPTIONS":["拾取时获得三张随机 #y诅咒 。战斗开始时获得 #b3 点 #y力量 。每 #b3 回合获得你牌组中诅咒牌数量点 #y力量 。"]
+		"DESCRIPTIONS":["战斗开始时获得你牌组中诅咒牌数量点 #y力量 ，至少 #b3 点。每 #b3 回合将你的 #y力量 翻倍，如果其数值为负，则将其数值变为绝对值。"]
 	},
 	
 	"testmod-TimeTravelerUp":{
@@ -316,9 +316,9 @@
 	},
 	
 	"testmod-KeyOfTheVoidUp":{
-		"NAME": "虚空之匙",
+		"NAME": "虚空之匙+",
 		"FLAVOR": "虚空是这个世界的终极答案。",
-		"DESCRIPTIONS":["每场战斗结束时，你每有 #b1 件其他 #yBoss 遗物，从牌组中选择 #b1 张牌将其移除。", "选择", "张牌移除。"]
+		"DESCRIPTIONS":["每层楼限一次，你可以在战斗外右击本遗物，选择从牌组中移除最多 #b1 张牌并获得 #yBoss 遗物数量个随机 #y宝石钥匙 。", "选择最多1张牌移除。"]
 	},
 	
 	"testmod-ThousandKnivesUp":{
