@@ -32,6 +32,7 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
+import com.megacrit.cardcrawl.vfx.ObtainKeyEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 import basemod.BaseMod;
@@ -1035,5 +1036,24 @@ public interface MiscMethods {
 		public static <T> Stream<T> reverseReducer(Stream<T> a, Stream<T> b) {
 			return Stream.concat(b, a);
 		}
+	}
+	
+	static class RandomKey {
+		private static final ArrayList<ObtainKeyEffect.KeyColor> COLOR = new ArrayList<ObtainKeyEffect.KeyColor>();
+		
+		public static void nextKey(Random rng) {
+			if (COLOR.isEmpty())
+				Stream.of(ObtainKeyEffect.KeyColor.values()).forEach(COLOR::add);
+			Collections.shuffle(COLOR, new java.util.Random(rng.randomLong()));
+			AbstractDungeon.topLevelEffectsQueue.add(new ObtainKeyEffect(COLOR.get(0)));
+		}
+	}
+	
+	default void addRandomKey(Random rng) {
+		RandomKey.nextKey(rng);
+	}
+	
+	default void addRandomKey() {
+		RandomKey.nextKey(AbstractDungeon.miscRng);
 	}
 }

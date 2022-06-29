@@ -1,25 +1,16 @@
 package testmod.relicsup;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.stream.Stream;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.vfx.ObtainKeyEffect;
 import testmod.actions.DreamHousePurgeCardAction;
 
 public class DreamHouseUp extends AbstractUpgradedRelic {
 	private static final ArrayList<DreamHousePurgeCardAction> QUEUE = new ArrayList<DreamHousePurgeCardAction>();
-	private static final ArrayList<ObtainKeyEffect.KeyColor> COLOR = new ArrayList<ObtainKeyEffect.KeyColor>();
 	
-	static {
-		Stream.of(ObtainKeyEffect.KeyColor.values()).forEach(COLOR::add);
-	}
 	
 	public DreamHouseUp() {
 		super(RelicTier.BOSS, LandingSound.HEAVY);
@@ -31,8 +22,7 @@ public class DreamHouseUp extends AbstractUpgradedRelic {
 			if (this.isActive)
 				QUEUE.add(new DreamHousePurgeCardAction(card));
 			this.counter++;
-			Collections.shuffle(COLOR, new Random(AbstractDungeon.miscRng.randomLong()));
-			AbstractDungeon.topLevelEffectsQueue.add(new ObtainKeyEffect(COLOR.get(0)));
+			this.addRandomKey();
 		}
 	}
 	
