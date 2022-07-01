@@ -1,7 +1,6 @@
 package testmod.relicsup;
 
 import com.evacipated.cardcrawl.modthespire.Loader;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.FloatyEffect;
 
@@ -44,13 +43,6 @@ public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
 		this.flash();
 		FloatyEffect fe = ReflectionHacks.getPrivateInherited(this, getClass(), "f_effect");
 		fe.x = fe.y = 0.0F;
-	}
-	
-	public void instantObtain(AbstractPlayer p, int slot, boolean callOnEquip) {
-		super.instantObtain(p, slot, callOnEquip);
-		if (this instanceof CounterKeeper && this.hasStack("relicupgradelib.ui.RelicUpgradePopup", "replaceRelic")) {
-			AllUpgradeRelic.setCurrent(this);
-		}
 	}
 
 }

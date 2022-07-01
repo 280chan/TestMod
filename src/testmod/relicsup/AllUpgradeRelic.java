@@ -51,7 +51,14 @@ public class AllUpgradeRelic implements MiscMethods {
 		private static Proxy p;
 		private static void set(AbstractTestRelic r, boolean red, boolean green, boolean blue,
 				int gold) {
-			p.addBranch(new UpgradeBranch(r, null, red, green, blue, gold));
+			set(r, red, green, blue, gold, null);
+		}
+		private static void set(AbstractTestRelic r, boolean red, boolean green, boolean blue,
+				int gold, CounterKeeper f) {
+			UpgradeBranch b = new UpgradeBranch(r, null, red, green, blue, gold);
+			if (f != null)
+				b.addFuncAfterObtained((a, u) -> f.run(a, (AbstractUpgradedRelic) u));
+			p.addBranch(b);
 			ProxyManager.register(p);
 		}
 		private static void init(AbstractTestRelic r) {
@@ -74,7 +81,11 @@ public class AllUpgradeRelic implements MiscMethods {
 				boolean red = key % 2 == 1;
 				boolean green = (key % 4) / 2 == 1;
 				boolean blue = key / 4 == 1;
-				Register.set(up, red, green, blue, gold);
+				if (up instanceof CounterKeeper && up.tier != RelicTier.BOSS) {
+					Register.set(up, red, green, blue, gold, (CounterKeeper) up);
+				} else {
+					Register.set(up, red, green, blue, gold);
+				}
 			}
 			if (up instanceof InfiniteUpgradeRelic) {
 				Register.init(up);
@@ -84,7 +95,11 @@ public class AllUpgradeRelic implements MiscMethods {
 					boolean red = key % 2 == 1;
 					boolean green = (key % 4) / 2 == 1;
 					boolean blue = key / 4 == 1;
-					Register.set(up, red, green, blue, gold);
+					if (up instanceof CounterKeeper && up.tier != RelicTier.BOSS) {
+						Register.set(up, red, green, blue, gold, (CounterKeeper) up);
+					} else {
+						Register.set(up, red, green, blue, gold);
+					}
 				}
 			}
 		}
@@ -116,10 +131,6 @@ public class AllUpgradeRelic implements MiscMethods {
 	
 	public static int keyCount() {
 		return IntStream.of(MultiKey.KEY).sum();
-	}
-	
-	public static void setCurrent(AbstractUpgradedRelic r) {
-		MultiKey.RelicUpgradePopupPatch.current = r;
 	}
 	
 	public static class MultiKey {
@@ -176,23 +187,6 @@ public class AllUpgradeRelic implements MiscMethods {
 			private static class Locator extends SpireInsertLocator {
 				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
 					Matcher finalMatcher = new Matcher.MethodCallMatcher(SingleRelicViewPopup.class, "close");
-					return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
-				}
-			}
-			
-			private static AbstractUpgradedRelic current;
-			
-			@SpireInsertPatch(locator = Locator1.class)
-			public static void Insert1(RelicUpgradePopup rup) {
-				if (current != null && current.tier != RelicTier.BOSS && current instanceof CounterKeeper) {
-					((CounterKeeper) current).run(RelicUpgradePopup.replacedRelic, current);
-				}
-				current = null;
-			}
-			
-			private static class Locator1 extends SpireInsertLocator {
-				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
-					Matcher finalMatcher = new Matcher.FieldAccessMatcher(UpgradeBranch.class, "gemred");
 					return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 				}
 			}
