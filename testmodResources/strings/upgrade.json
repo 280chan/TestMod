@@ -233,7 +233,7 @@
 	"testmod-upgrade-MagicalMallet":{
 		"TEXT": [
 			"0",
-			"0"
+			"50"
 		]
 	},
 	
@@ -470,7 +470,7 @@
 	"testmod-upgrade-LifeArmor":{
 		"TEXT": [
 			"0",
-			"0"
+			"100"
 		]
 	},
 	

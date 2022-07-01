@@ -1,32 +1,32 @@
-package testmod.relics;
+package testmod.relicsup;
 
+import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
-public class LifeArmor extends AbstractTestRelic {
+public class LifeArmorUp extends AbstractUpgradedRelic {
 
-	public LifeArmor() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL, BAD);
+	public LifeArmorUp() {
+		super(RelicTier.COMMON, LandingSound.MAGICAL);
 	}
 	
 	public void atPreBattle() {
-		this.counter = 0;
 		this.beginLongPulse();
 	}
 	
 	public void onEquip() {
 		if (this.inCombat())
 			this.atPreBattle();
+		this.counter = 0;
 	}
 	
 	public void onLoseHp(int amount) {
-		if (!this.inCombat() || this.counter < 0)
+		if (!this.inCombat())
 			return;
-		p().addBlock(amount + this.counter);
+		this.att(new AddTemporaryHPAction(p(), p(), amount + this.counter));
 		this.counter++;
 	}
 	
 	public void onVictory() {
-		this.counter = -1;
 		this.stopPulse();
 	}
 	

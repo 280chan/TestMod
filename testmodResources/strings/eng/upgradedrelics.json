@@ -196,9 +196,9 @@
 	},
 	
 	"testmod-MagicalMalletUp":{
-		"NAME": "Magical Mallet",
+		"NAME": "Magical Mallet+",
 		"FLAVOR": "上面的文字被人抹去了",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] . At the start of each turn, record the maximum and minimum cost of your hand, make all cards with these two costs in your hand switch to the other cost for the turn. Once each combat, you can right click this relic to active the effect."]
+		"DESCRIPTIONS":["At the start of each turn, record the maximum and minimum cost of your hand, if different, make all cards with the max in your hand lower to the min for the combat, meanwhile make a random card with the min in your hand increase #b1 for the turn. Once each combat, you can right click this relic to decrease all hand cost by #b1 for the turn."]
 	},
 	
 	"testmod-LaevatainUp":{
@@ -378,7 +378,7 @@
 	"testmod-LifeArmorUp":{
 		"NAME": "Life Armor",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you lose HP in combat, gain same amount of #yBlock, and increase future #yBlock gain through this relic by #b1 for this combat."]
+		"DESCRIPTIONS":["Whenever you lose HP in combat, gain same amount of #ytemporary_hp, and increase future #ytemporary_hp gain through this relic by #b1."]
 	},
 	
 	"testmod-CasingShieldUp":{

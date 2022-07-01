@@ -413,7 +413,7 @@
 	"testmod-LifeArmor":{
 		"NAME": "自我防御系统",
 		"FLAVOR": "亡羊补牢，为时未晚。",
-		"DESCRIPTIONS":["在战斗中失去生命后，立即获得其数值的 #y格挡 ，每失去一次，下次额外获得 #b1 点。"]
+		"DESCRIPTIONS":["在战斗中失去生命后，立即获得其数值的 #y格挡 ，每失去一次，在本场战斗后续触发时额外获得 #b1 点。"]
 	},
 	
 	"testmod-CasingShield":{
