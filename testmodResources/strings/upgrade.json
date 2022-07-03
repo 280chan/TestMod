@@ -686,8 +686,10 @@
 	
 	"testmod-upgrade-Metronome":{
 		"TEXT": [
+			"5",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	

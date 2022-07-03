@@ -102,7 +102,6 @@ public class Metronome extends AbstractTestRelic {
 		this.act();
 		if (this.isActive) {
 			save(setList(getList()));
-			this.updateDescription();
 		}
     }
 	

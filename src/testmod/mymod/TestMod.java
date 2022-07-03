@@ -68,6 +68,7 @@ import testmod.relicsup.AbstractUpgradedRelic;
 import testmod.relicsup.AllUpgradeRelic;
 import testmod.relicsup.AscensionHeartUp;
 import testmod.relicsup.IWantAllUp;
+import testmod.relicsup.MetronomeUp;
 import testmod.relicsup.TestBoxUp;
 import testmod.screens.RelicSelectScreen;
 import testmod.utils.*;
@@ -75,7 +76,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 7/2/2022
+ * @version 7/3/2022
  * @since 6/17/2018
  */
 
@@ -611,6 +612,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(AscensionHeartUp.SAVE_SIZE, "0");
 		DEFAULT.setProperty(GlassSoul.ID, "0");
 		DEFAULT.setProperty(Metronome.ID, "0");
+		DEFAULT.setProperty(MetronomeUp.ID, "0");
 		DEFAULT.setProperty(PhasePocketWatch.SAVE_NAME, "0");
 		DEFAULT.setProperty(Encyclopedia.SAVE_NAME, "0");
 		DEFAULT.setProperty(ManifoldPotion.POTION_ID, "");
@@ -690,6 +692,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		IWantAllUp.loadVictory();
 		GlassSoul.load(getStringList(GlassSoul.ID));
 		Metronome.load();
+		MetronomeUp.load();
 		PhasePocketWatch.load(getInt(PhasePocketWatch.SAVE_NAME));
 		Encyclopedia.load();
 		ManifoldPotion.load();
