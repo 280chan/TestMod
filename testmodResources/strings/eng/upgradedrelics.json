@@ -216,7 +216,7 @@
 	"testmod-MaizeUp":{
 		"NAME": "The Maize",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["When you play #b5 #ySkill during your turn, gain #b1 #yIntangible. "]
+		"DESCRIPTIONS":["Whenever you play #b5 #ySkill or #yPower, gain #b1 #yIntangible. Whenever you play #b50 #ySkill or #yPower, obtain a random #ygem #ykey."]
 	},
 	
 	"testmod-DragonStarHatUp":{
@@ -246,7 +246,7 @@
 	"testmod-DreamHouseUp":{
 		"NAME": "Dream House+",
 		"FLAVOR": "简单，粗暴，直接。",
-		"DESCRIPTIONS":["Gain [E] at the start of each turn. You can no longer obtain #yCurse or cards with #yRare #yRarity. Whenever this relic refutes obtaining a card, gain a random #ygem #ykey, and gain [E] and draw #b1 card next turn."]
+		"DESCRIPTIONS":["Gain [E] at the start of each turn. You can no longer obtain #yCurse or cards with #yRare #yRarity. Whenever this relic refutes obtaining a card, obtain a random #ygem #ykey, and gain [E] and draw #b1 card next turn."]
 	},
 	
 	"testmod-CrystalShieldUp":{
@@ -318,7 +318,7 @@
 	"testmod-KeyOfTheVoidUp":{
 		"NAME": "The Key Of The Void+",
 		"FLAVOR": "虚空是这个世界的终极答案。",
-		"DESCRIPTIONS":["Once each room, you can right click this relic outside combat, to choose at most #b1 card to remove from your deck and gain random #ygem #ykey equals to #yBoss relic you have.", "Choose at most 1 card to remove from your deck."]
+		"DESCRIPTIONS":["Once each room, you can right click this relic outside combat, to choose at most #b1 card to remove from your deck and obtain random #ygem #ykey equals to #yBoss relic you have.", "Choose at most 1 card to remove from your deck."]
 	},
 	
 	"testmod-ThousandKnivesUp":{
@@ -580,9 +580,9 @@
 	},
 	
 	"testmod-Match3Up":{
-		"NAME": "Match 3",
+		"NAME": "Match 3+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn after drawing cards, if you have multiple of #b3 relics, gain [E] , or else draw #b1 card; if you have multiple of #b3 cards in draw pile, gain [E] , or else draw #b1 card."]
+		"DESCRIPTIONS":["Lose [E] at the start of each turn. At the start of each turn after drawing cards, for each following item is multiple of #b3, gain [E] , or else draw #b1 card; HP, gold, relics, draw pile, hand, discard pile."]
 	},
 	
 	"testmod-PhasePocketWatchUp":{

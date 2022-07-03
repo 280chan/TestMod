@@ -19,10 +19,10 @@ public class Nyarlathotep extends AbstractTestRelic {
 	public static final String ID = "Nyarlathotep";
 
 	private static final String[] CARD_IDs = { "Force Field" };
-	private static final String[] POWER_IDs = { "Amplify", "Heatsink", "Storm", "Curiosity",
-			TestMod.makeID("PlagueActPower"), "Recycle_Bin_Power", "reliquary:StormPlus" };
-	private static final String[] RELIC_IDs = { "Bird Faced Urn", "Mummified Hand", "OrangePellets", "SynthV:C4",
-			"paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots", "Clover",
+	private static final String[] POWER_IDs = { "testmod-PlagueActPower", "Amplify", "Heatsink", "Storm", "Curiosity",
+			"Recycle_Bin_Power", "reliquary:StormPlus" };
+	private static final String[] RELIC_IDs = { "testmod-MaizeUp", "Bird Faced Urn", "Mummified Hand", "OrangePellets",
+			"SynthV:C4", "paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots", "Clover",
 			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",
 			"DemoExt:GalacticMedalOfValor", "SynthV:MejaisSoulstealer", "youkari:Boundary_crack",
 			"BirthdayGift-Icosahedron", "RU OrangePellets", "RU Bronze Scales", "RU Bird Faced Urn",

@@ -9,10 +9,6 @@ public class Match3 extends AbstractTestRelic {
 		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-	
 	private void act(int size) {
 		this.show();
 		this.addToBot(size % 3 == 0 ? new GainEnergyAction(1) : new DrawCardAction(1));

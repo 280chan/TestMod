@@ -214,9 +214,9 @@
 	},
 	
 	"testmod-MaizeUp":{
-		"NAME": "麻薯",
+		"NAME": "麻薯+",
 		"FLAVOR": "即使在荒疫之后，这种小吃在地精之间仍然很流行。",
-		"DESCRIPTIONS":["你在同一回合内打出 #b5 张 #y技能牌 时，获得 #b1 层 #y无实体 。"]
+		"DESCRIPTIONS":["每当你打出 #b5 张 #y技能牌 或 #y能力牌 ，获得 #b1 层 #y无实体 。每当你打出 #b50 张 #y技能牌 或 #y能力牌 ，获得 #b1 个随机 #y宝石钥匙 。"]
 	},
 	
 	"testmod-DragonStarHatUp":{
@@ -586,9 +586,9 @@
 	},
 	
 	"testmod-Match3Up":{
-		"NAME": "三消",
+		"NAME": "三消+",
 		"FLAVOR": "消消乐~",
-		"DESCRIPTIONS":["每回合开始抽牌后： NL 若你的遗物数量为 #b3 的倍数，获得 [E] ，否则抽 #b1 张牌； NL 若你的抽牌堆的牌数为 #b3 的倍数，获得 [E] ，否则抽 #b1 张牌。"]
+		"DESCRIPTIONS":["每回合开始减少 [E] 。每回合开始抽牌后，若你的生命、金币、遗物、抽牌堆、手牌、弃牌堆每有一个为 #b3 的倍数，获得 [E] ，否则抽 #b1 张牌。"]
 	},
 	
 	"testmod-PhasePocketWatchUp":{

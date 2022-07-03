@@ -1,36 +1,38 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 
-public class Maize extends AbstractTestRelic {
+public class MaizeUp extends AbstractUpgradedRelic {
+	boolean key = true;
 	
-	public Maize() {
+	public MaizeUp() {
 		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 
-	public void atTurnStart() {
+	public void onEquip() {
 		this.counter = 0;
-		this.stopPulse();
+	}
+	
+	public void atPreBattle() {
+		key = true;
 	}
 
 	public void onUseCard(AbstractCard card, UseCardAction action) {
-		if (card.type == AbstractCard.CardType.SKILL) {
-			if (++this.counter == 5) {
-				this.counter = 0;
+		if (card.type == AbstractCard.CardType.SKILL || card.type == AbstractCard.CardType.POWER) {
+			if ((++this.counter % 5) == 0) {
 				this.show();
 				this.stopPulse();
 				this.atb(apply(p(), new IntangiblePlayerPower(p(), 1)));
-			} else if (this.counter == 4) {
+			} else if (this.counter % 5 == 4) {
 				this.beginLongPulse();
 			}
+			if (this.counter % 50 == 0 && key) {
+				key = false;
+				this.addRandomKey();
+			}
 		}
-	}
-
-	public void onVictory() {
-		this.counter = -1;
-		this.stopPulse();
 	}
 
 }
