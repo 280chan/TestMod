@@ -552,7 +552,7 @@
 	"testmod-MetronomeUp":{
 		"NAME": "Metronome+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["When your first #bn cards played in a combat has same type as last combat, gain #bn #yMax #yHP.", " Types in last combat"]
+		"DESCRIPTIONS":["When your first #bn cards played in a combat has same type as last combat, gain #bn #yMax #yHP.", " Types in last combat", "#yAttack", "#gSkill", "#bPower", "#rStatus", "#rCurse"]
 	},
 	
 	"testmod-GatherUp":{

@@ -80,12 +80,6 @@ public class Metronome extends AbstractTestRelic {
 		}
     }
 	
-	public void onUnequip() {
-		this.cards.clear();
-		if (this.isActive)
-			save(cards);
-    }
-	
 	public void atPreBattle() {
 		if (!this.isActive)
 			return;

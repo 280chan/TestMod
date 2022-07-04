@@ -29,11 +29,12 @@ public class MetronomeUp extends AbstractUpgradedRelic implements CounterKeeper 
 	public void run(AbstractRelic r, AbstractUpgradedRelic u) {
 		((Metronome) r).cards.stream().map(id -> CardLibrary.getCard(id)).filter(c -> c != null).map(c -> c.type)
 				.forEach(((MetronomeUp) u).cards::add);
+		save(((MetronomeUp) u).cards);
 		u.updateDescription();
 	}
 
-	private String getName(CardType id) {
-		return id.name();
+	private String getName(CardType t) {
+		return t.ordinal() < 5 ? DESCRIPTIONS[t.ordinal() + 2] : t.name();
 	}
 	
 	private void act() {
@@ -88,7 +89,6 @@ public class MetronomeUp extends AbstractUpgradedRelic implements CounterKeeper 
 	public void onEquip() {
 		TestMod.setActivity(this);
 		if (this.isActive) {
-			save(cards);
 			if (inCombat()) {
 				this.counter = -1;
 			}
