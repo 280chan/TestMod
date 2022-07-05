@@ -568,9 +568,9 @@
 	},
 	
 	"testmod-MistCoreUp":{
-		"NAME": "迷雾核心",
+		"NAME": "迷雾核心+",
 		"FLAVOR": "在迷雾之中，你很难看清出路。",
-		"DESCRIPTIONS":["将每幕第一层以外的普通战斗房改为 #y？ 房间。每当你进入 #y？ 房间，增加 #b1 最大生命，否则减少 #b1 最大生命。"]
+		"DESCRIPTIONS":["将每幕第一层以外的普通战斗房改为 #y？ 房间，然后对每个 #y？ 房间有 #b10% 概率将其变为 #y宝箱 房间。每当你进入 #y？ 房间，增加 #b5% 最大生命，至少 #b1 点。"]
 	},
 	
 	"testmod-HolyLightProtectionUp":{

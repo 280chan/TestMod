@@ -702,8 +702,10 @@
 	
 	"testmod-upgrade-MistCore":{
 		"TEXT": [
+			"6",
 			"0",
-			"0"
+			"0",
+			"400"
 		]
 	},
 	

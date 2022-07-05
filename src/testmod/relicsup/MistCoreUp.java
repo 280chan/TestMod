@@ -1,38 +1,52 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.modthespire.Loader;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.map.MapRoomNode;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.EventRoom;
-import com.megacrit.cardcrawl.rooms.MonsterRoom;
+import com.megacrit.cardcrawl.rooms.TreasureRoom;
 
 import testmod.mymod.TestMod;
 import testmod.patches.MistCorePatch;
+import testmod.relics.MistCore;
 
-public class MistCore extends AbstractTestRelic {
+public class MistCoreUp extends AbstractUpgradedRelic {
+	public static Random rng;
 	
-	public MistCore() {
+	public MistCoreUp() {
 		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
-		if (room instanceof EventRoom)
-			p().increaseMaxHp(1, true);
-		else
-			p().decreaseMaxHealth(1);
-		this.flash();
+		if (room instanceof EventRoom) {
+			p().increaseMaxHp(Math.max(1, p().maxHealth / 20), true);
+			this.flash();
+		}
     }
+	
+	public static AbstractRoom getRoom() {
+		if (rng == null)
+			rng = new Random(Settings.seed - AbstractDungeon.actNum);
+		return rng.nextDouble() < 0.1 ? new TreasureRoom() : new EventRoom();
+	}
+	
+	public static void setTreasureRoom(MapRoomNode n) {
+		if (rng.nextDouble() < 0.1)
+			n.room = new TreasureRoom();
+	}
 	
 	public static void changeRoom(MapRoomNode n) {
 		n.room = new EventRoom();
 	}
 	
 	public static boolean checkRoom(AbstractRoom r) {
-		return r.getClass().isAssignableFrom(MonsterRoom.class);
+		return r instanceof EventRoom;
 	}
 	
 	private static Stream<MapRoomNode> stream(ArrayList<ArrayList<MapRoomNode>> map, boolean exclude) {
@@ -41,19 +55,22 @@ public class MistCore extends AbstractTestRelic {
 	}
 	
 	public static void changeRooms(ArrayList<ArrayList<MapRoomNode>> map, boolean exclude) {
-		stream(map, exclude).filter(n -> n.room == null || checkRoom(n.room)).forEach(MistCore::changeRoom);
+		rng = new Random(Settings.seed - AbstractDungeon.actNum);
+		stream(map, exclude).filter(n -> n.room == null || MistCore.checkRoom(n.room)).forEach(MistCoreUp::changeRoom);
+		stream(map, exclude).filter(n -> n.room == null || checkRoom(n.room)).forEach(MistCoreUp::setTreasureRoom);
 	}
 	
 	public static void changeMultiplayerRooms(ArrayList<ArrayList<MapRoomNode>> map, boolean exclude) {
 		if (!Loader.isModLoaded("chronoMods"))
 			return;
-		stream(map, exclude).forEach(MistCorePatch::modify);
+		stream(map, exclude).forEach(MistCorePatch::modifyUp);
 	}
 	
 	public void onEquip() {
 		TestMod.setActivity(this);
 		if (!this.isActive || AbstractDungeon.map == null || Loader.isModLoaded("FoggyMod"))
 			return;
+		rng = null;
 		changeRooms(AbstractDungeon.map, AbstractDungeon.currMapNode != null);
 		changeMultiplayerRooms(AbstractDungeon.map, AbstractDungeon.currMapNode != null);
 	}

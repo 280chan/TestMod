@@ -562,9 +562,9 @@
 	},
 	
 	"testmod-MistCoreUp":{
-		"NAME": "Mist Core",
+		"NAME": "Mist Core+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Change ALL normal combat rooms into #y? room, except the first room in Each Act. Whenever enters #y? room, gain #b1 #yMax #yHP, otherwise lose #b1 #yMax #yHP."]
+		"DESCRIPTIONS":["Change ALL normal combat rooms into #y? room, except the first room in Each Act, then for each #y? room, #b10% chance change to #ytreasure room. Whenever you enter #y? room, gain #b5% #yMax #yHP, at least #b1."]
 	},
 	
 	"testmod-HolyLightProtectionUp":{

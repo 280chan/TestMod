@@ -563,7 +563,7 @@
 	"testmod-MistCore":{
 		"NAME": "Mist Core",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Change ALL normal combat rooms into #y? room, except the first room in Each Act. Whenever enters #y? room, gain #b1 #yMax #yHP, otherwise lose #b1 #yMax #yHP."]
+		"DESCRIPTIONS":["Change ALL normal combat rooms into #y? room, except the first room in Each Act. Whenever you enter #y? room, gain #b1 #yMax #yHP, otherwise lose #b1 #yMax #yHP."]
 	},
 	
 	"testmod-HolyLightProtection":{
