@@ -1,7 +1,6 @@
 package testmod.relics;
 
 import java.util.function.Supplier;
-
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
@@ -13,9 +12,7 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-
 import testmod.relicsup.DeterminationOfClimberUp;
 
 public class DeterminationOfClimber extends AbstractTestRelic {
@@ -83,7 +80,7 @@ public class DeterminationOfClimber extends AbstractTestRelic {
 			return;
 		this.stopPulse();
 		colorRegister(color).addRelic(this).addPredicate(c -> this.getValue(c) > this.counter && this.counter != -1
-				&& c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())).updateHand();
+				&& c.hasEnoughEnergy() && c.cardPlayable(this.randomMonster())).updateHand();
 	}
 
 	public void onVictory() {

@@ -3,13 +3,10 @@ package testmod.relics;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.function.Supplier;
-
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
-
 import testmod.relicsup.CyclicPeriaptUp;
 
 public class CyclicPeriapt extends AbstractTestRelic {
@@ -51,9 +48,8 @@ public class CyclicPeriapt extends AbstractTestRelic {
 		if (!this.inCombat())
 			return;
 		this.stopPulse();
-		colorRegister(color).addRelic(this)
-				.addPredicate(c -> (c.exhaust || c.exhaustOnUseOnce) && !this.used.contains(c.uuid)
-						&& c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster()))
+		colorRegister(color).addRelic(this).addPredicate(c -> (c.exhaust || c.exhaustOnUseOnce)
+				&& !this.used.contains(c.uuid) && c.hasEnoughEnergy() && c.cardPlayable(this.randomMonster()))
 				.updateHand();
 	}
 	

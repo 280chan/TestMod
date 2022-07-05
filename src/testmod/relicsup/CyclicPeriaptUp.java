@@ -6,11 +6,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import testmod.relics.CyclicPeriapt;
 
 public class CyclicPeriaptUp extends AbstractUpgradedRelic implements ClickableRelic {
-	
 	private static Color color = null;
 	private boolean active = true;
 
@@ -53,7 +51,7 @@ public class CyclicPeriaptUp extends AbstractUpgradedRelic implements ClickableR
 		if (!this.inCombat())
 			return;
 		colorRegister(color).addPredicate(c -> (c.exhaust || c.exhaustOnUseOnce) && c.hasEnoughEnergy()
-				&& c.cardPlayable(AbstractDungeon.getRandomMonster())).updateHand();
+				&& c.cardPlayable(this.randomMonster())).updateHand();
 	}
 	
 	public void atPreBattle() {

@@ -1,13 +1,10 @@
 package testmod.relicsup;
 
 import java.util.function.Supplier;
-
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-
 import testmod.relics.BatchProcessingSystem;
 
 public class BatchProcessingSystemUp extends AbstractUpgradedRelic {
@@ -53,7 +50,7 @@ public class BatchProcessingSystemUp extends AbstractUpgradedRelic {
 			return;
 		this.stopPulse();
 		colorRegister(color).addRelic(this).addPredicate(c -> this.check(c) && c.hasEnoughEnergy()
-						&& c.cardPlayable(AbstractDungeon.getRandomMonster())).updateHand();
+						&& c.cardPlayable(this.randomMonster())).updateHand();
 	}
 	
 	public void onEquip() {

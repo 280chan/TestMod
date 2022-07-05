@@ -1,12 +1,9 @@
 package testmod.relicsup;
 
 import java.util.function.Supplier;
-
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-
 import testmod.relics.Acrobat;
 
 public class AcrobatUp extends AbstractUpgradedRelic {
@@ -62,7 +59,7 @@ public class AcrobatUp extends AbstractUpgradedRelic {
 				state = 1;
 			else
 				state = -1;
-			if (this.state * state < 0 && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
+			if (this.state * state < 0 && c.hasEnoughEnergy() && c.cardPlayable(this.randomMonster())) {
 				if (this.isActive)
 					this.addToGlowChangerList(c, color);
 				active = true;

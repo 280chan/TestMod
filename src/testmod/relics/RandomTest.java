@@ -62,8 +62,7 @@ public class RandomTest extends AbstractTestRelic {
 		if (!this.inCombat())
 			return;
 		for (AbstractCard c : p().hand.group) {
-			if (c.color == CardColor.COLORLESS && c.hasEnoughEnergy()
-					&& c.cardPlayable(AbstractDungeon.getRandomMonster())) {
+			if (c.color == CardColor.COLORLESS && c.hasEnoughEnergy() && c.cardPlayable(this.randomMonster())) {
 				this.addToGlowChangerList(c, color);
 				active = true;
 			} else

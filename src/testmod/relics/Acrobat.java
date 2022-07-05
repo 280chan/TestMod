@@ -59,7 +59,7 @@ public class Acrobat extends AbstractTestRelic {
 				state = 1;
 			else
 				state = -1;
-			if (this.state * state < 0 && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())) {
+			if (this.state * state < 0 && c.hasEnoughEnergy() && c.cardPlayable(this.randomMonster())) {
 				if (this.isActive)
 					this.addToGlowChangerList(c, color);
 				active = true;

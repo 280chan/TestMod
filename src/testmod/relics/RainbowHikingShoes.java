@@ -5,10 +5,8 @@ import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class RainbowHikingShoes extends AbstractTestRelic {
-	public static final String ID = "RainbowHikingShoes";
 	private CardRarity lastRarity = null;
 	private static Color color = null;
 	
@@ -36,8 +34,7 @@ public class RainbowHikingShoes extends AbstractTestRelic {
 		if (!this.inCombat() || this.lastRarity == null)
 			return;
 		for (AbstractCard c : p().hand.group) {
-			if (c.rarity != this.lastRarity && c.hasEnoughEnergy()
-					&& c.cardPlayable(AbstractDungeon.getRandomMonster())) {
+			if (c.rarity != this.lastRarity && c.hasEnoughEnergy() && c.cardPlayable(this.randomMonster())) {
 				this.addToGlowChangerList(c, color);
 				active = true;
 			} else

@@ -17,6 +17,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -30,6 +31,7 @@ import testmod.relics.DeterminationOfClimber;
 public class DeterminationOfClimberUp extends AbstractUpgradedRelic {
 	private static Color color = null;
 	public static RewardItem TMP;
+	private static Random rng;
 
 	public static Color setColorIfNull(Supplier<Color> c) {
 		if (color == null)
@@ -80,8 +82,11 @@ public class DeterminationOfClimberUp extends AbstractUpgradedRelic {
 		if (!this.inCombat())
 			return;
 		this.stopPulse();
-		colorRegister(color).addRelic(this).addPredicate(c -> this.getValue(c) > this.counter && this.counter != -1
-				&& c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster())).updateHand();
+		if (rng == null)
+			rng = this.copyRNG(AbstractDungeon.monsterRng);
+		colorRegister(color).addRelic(this).addPredicate(c -> this.getValue(c) > this.counter && this.counter != -1 &&
+				c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getMonsters().getRandomMonster(null, true, rng)))
+				.updateHand();
 	}
 
 	public void onVictory() {

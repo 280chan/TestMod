@@ -25,17 +25,16 @@ public class ThousandKnives extends AbstractTestRelic {
 	}
 	
 	private boolean checkGlow(AbstractCard c) {
-		return checkCard(c) && c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getRandomMonster());
+		return checkCard(c) && c.hasEnoughEnergy() && c.cardPlayable(this.randomMonster());
 	}
 	
 	private void updateHandGlow() {
 		ColorRegister cr = new ColorRegister(color);
-		if (AbstractDungeon.player.hand.group.stream().anyMatch(this::checkGlow))
+		if (p().hand.group.stream().anyMatch(this::checkGlow))
 			this.beginLongPulse();
 		else
 			this.stopPulse();
-		this.streamIfElse(AbstractDungeon.player.hand.group.stream(), this::checkGlow, cr::addToGlowChangerList,
-				cr::removeFromGlowList);
+		this.streamIfElse(p().hand.group.stream(), this::checkGlow, cr::addToGlowChangerList, cr::removeFromGlowList);
 	}
 	
 	public void onVictory() {

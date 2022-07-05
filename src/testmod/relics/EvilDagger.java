@@ -19,7 +19,6 @@ public class EvilDagger extends AbstractTestRelic {
 	private ArrayList<AbstractMonster> killed = new ArrayList<AbstractMonster>();
 	private AbstractCard c;
 	private static final Color COLOR = Color.SCARLET.cpy();
-	private static com.megacrit.cardcrawl.random.Random rng;
 	
 	public EvilDagger() {
 		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
@@ -100,10 +99,8 @@ public class EvilDagger extends AbstractTestRelic {
 	}
 	
 	private void updateHandGlow() {
-		if (rng == null)
-			rng = MISC.copyRNG(AbstractDungeon.monsterRng);
 		if (p().hand.group.stream().anyMatch(c -> c.equals(this.c) && c.hasEnoughEnergy()
-				&& c.cardPlayable(AbstractDungeon.getMonsters().getRandomMonster(null, true, rng)))) {
+				&& c.cardPlayable(this.randomMonster()))) {
 			this.addToGlowChangerList(this.c, COLOR);
 			this.beginLongPulse();
 		} else if (this.c != null) {

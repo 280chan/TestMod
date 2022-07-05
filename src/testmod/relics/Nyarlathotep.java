@@ -21,12 +21,12 @@ public class Nyarlathotep extends AbstractTestRelic {
 	private static final String[] CARD_IDs = { "Force Field" };
 	private static final String[] POWER_IDs = { "testmod-PlagueActPower", "Amplify", "Heatsink", "Storm", "Curiosity",
 			"Recycle_Bin_Power", "reliquary:StormPlus" };
-	private static final String[] RELIC_IDs = { "testmod-MaizeUp", "Bird Faced Urn", "Mummified Hand", "OrangePellets",
-			"SynthV:C4", "paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots", "Clover",
-			"Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter",
-			"DemoExt:GalacticMedalOfValor", "SynthV:MejaisSoulstealer", "youkari:Boundary_crack",
-			"BirthdayGift-Icosahedron", "RU OrangePellets", "RU Bronze Scales", "RU Bird Faced Urn",
-			"Kaltsit_LearningSimulationPower", "Steelbody" };
+	private static final String[] RELIC_IDs = { "testmod-MaizeUp", "testmod-MuramasaUp", "Bird Faced Urn",
+			"Mummified Hand", "OrangePellets", "SynthV:C4", "paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky",
+			"Dota2Spire:ArcaneBoots", "Clover", "Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence",
+			"Dota2Spire:AghanimScepter", "DemoExt:GalacticMedalOfValor", "SynthV:MejaisSoulstealer",
+			"youkari:Boundary_crack", "BirthdayGift-Icosahedron", "RU OrangePellets", "RU Bronze Scales",
+			"RU Bird Faced Urn", "Kaltsit_LearningSimulationPower", "Steelbody" };
 	private static final String[] RELIC_ON_PLAY_IDs = { "reliquary:IridiumChain" };
 	private static final ArrayList<String> CARD_LIST = new ArrayList<String>();
 	private static final ArrayList<String> POWER_LIST = new ArrayList<String>();
