@@ -1056,4 +1056,92 @@ public interface MiscMethods {
 	default void addRandomKey() {
 		RandomKey.nextKey(AbstractDungeon.miscRng);
 	}
+	
+	default AbstractMonster randomMonster() {
+		return AbstractDungeon.getMonsters().getRandomMonster(null, true, this.copyRNG(AbstractDungeon.monsterRng));
+	}
+	
+	public static class Prime {
+    	private static final ArrayList<Integer> PRIME = new ArrayList<Integer>();
+
+    	public static void clear() {
+    		PRIME.clear();
+    	}
+    	
+    	static int find(int n) {
+    		if (n < 3)
+    			return n + 1;
+    		if (PRIME.size() == 0) {
+    			PRIME.add(2);
+    			PRIME.add(3);
+    		}
+    		for (int x = PRIME.get(PRIME.size() - 1); PRIME.size() < n;)
+    			addIfIsPrime(x += 2);
+    		return PRIME.get(n - 1);
+    	}
+
+    	private static void addIfIsPrime(int x) {
+    		for (int i = 1; PRIME.get(i) <= (int) Math.sqrt(x) && i < PRIME.size(); i++)
+    			if (x % PRIME.get(i) == 0)
+    				return;
+    		PRIME.add(x);
+    	}
+
+    	private static int indexOf(int start, int num) {
+    		int size = PRIME.size();
+    		if (size > 0 && PRIME.get(size - 1) >= num) {
+    			for (int i = start; i < size; i++)
+    				if (PRIME.get(i) == num)
+    					return i + 1;
+    			return -1;
+    		}
+    		if (size > 10000000)
+    			find(10509756);
+    		else if (size > 1000000)
+    			find(size + 15000);
+    		else if (size > 100000)
+    			find(size + 1000);
+    		else
+    			find(Math.max(size * 2, 10000));
+    		return indexOf(size, num);
+    	}
+
+    	public static int indexOf(int num) {
+    		return indexOf(0, num);
+    	}
+
+    	public static boolean isPrime(int num) {
+    		if (num < 2)
+    			return false;
+    		if (PRIME.size() < 100)
+    			find(100);
+    		for (int i = 0; PRIME.get(i) <= (int) Math.sqrt(num) && i < PRIME.size(); i++)
+    			if (num % PRIME.get(i) == 0)
+    				return false;
+    		int preSize = PRIME.size();
+    		if (PRIME.get(PRIME.size() - 1) <= (int) Math.sqrt(num)) {
+    			indexOf((int) Math.sqrt(num));
+        		for (int i = preSize; PRIME.get(i) <= (int) Math.sqrt(num) && i < PRIME.size(); i++)
+        			if (num % PRIME.get(i) == 0)
+        				return false;
+    		}
+    		return true;
+    	}
+    	
+    	public static ArrayList<Integer> primeFactorOf(int num) {
+    		if (num < 2 || isPrime(num)) {
+        		ArrayList<Integer> tmp = new ArrayList<Integer>();
+    			tmp.add(num);
+    			return tmp;
+    		}
+    		for (int i = 0, current = 2;; i++, current = PRIME.get(i))
+    			if (num % current == 0)
+    				return combine(current, primeFactorOf(num / current));
+    	}
+    	
+    	private static ArrayList<Integer> combine(int a, ArrayList<Integer> b){
+    		b.add(a);
+    		return b;
+    	}
+    }
 }
