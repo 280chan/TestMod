@@ -112,9 +112,9 @@
 	},
 	
 	"testmod-MuramasaUp":{
-		"NAME": "Muramasa",
+		"NAME": "Muramasa+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever the number of drawing and playing of #b0 cost attacks sum up to #b2, draw #b1 card."]
+		"DESCRIPTIONS":["In combat, whenever the number of drawing and playing of #b0 cost attacks and powers sum up to an even number, draw #b1 card, whenever sum up to a prime number, gain [E] ."]
 	},
 	
 	"testmod-D_4Up":{
@@ -238,9 +238,9 @@
 	},
 	
 	"testmod-MotorcycleUp":{
-		"NAME": "The Motorcycle",
+		"NAME": "The Motorcycle+",
 		"FLAVOR": "人生不能重来。",
-		"DESCRIPTIONS":["When you are in the first turn of Non-Boss combat, you may right click on this relic to escape. NL (Disabled for one combat after #ySL) "]
+		"DESCRIPTIONS":["When you are in Non-Boss combat, you may right click on this relic during your turn to escape and gain amount of enemies squared times #b10 #ygold."]
 	},
 	
 	"testmod-DreamHouseUp":{

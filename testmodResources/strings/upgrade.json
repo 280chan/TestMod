@@ -166,7 +166,7 @@
 	"testmod-upgrade-Muramasa":{
 		"TEXT": [
 			"0",
-			"0"
+			"300"
 		]
 	},
 	
@@ -286,7 +286,7 @@
 	"testmod-upgrade-Motorcycle":{
 		"TEXT": [
 			"0",
-			"0"
+			"200"
 		]
 	},
 	

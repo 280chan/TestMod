@@ -112,9 +112,9 @@
 	},
 	
 	"testmod-MuramasaUp":{
-		"NAME": "妖刀村正",
+		"NAME": "妖刀村正+",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["每当你抽到或打出 #b0 耗能的攻击牌次数合计为 #b2 时，抽 #b1 张牌。"]
+		"DESCRIPTIONS":["每当你在一场战斗中抽到或打出 #b0 耗能的攻击或能力牌次数合计为偶数时，抽 #b1 张牌，为质数时，获得 [E] 。"]
 	},
 	
 	"testmod-D_4Up":{
@@ -238,9 +238,9 @@
 	},
 	
 	"testmod-MotorcycleUp":{
-		"NAME": "阿弥陀佛",
+		"NAME": "阿弥陀佛+",
 		"FLAVOR": "人生不能重来。",
-		"DESCRIPTIONS":["非Boss战斗中第一回合可以右击该遗物逃跑。 NL ( #ySL 后本场战斗失效)"]
+		"DESCRIPTIONS":["非Boss战斗中你的回合内可以右击该遗物逃跑，并获得敌人数量平方乘 #b10 #y金币 。"]
 	},
 	
 	"testmod-DreamHouseUp":{

@@ -1,16 +1,15 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.function.Supplier;
-
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
+import testmod.relics.Muramasa;
 
-import testmod.relicsup.MuramasaUp;
-
-public class Muramasa extends AbstractTestRelic {
+public class MuramasaUp extends AbstractUpgradedRelic {
 	private static Color color = null;
 	
 	public static Color setColorIfNull(Supplier<Color> c) {
@@ -21,22 +20,31 @@ public class Muramasa extends AbstractTestRelic {
 	
 	private void initColor() {
 		if (color == null)
-			color = MuramasaUp.setColorIfNull(this::initGlowColor);
+			color = Muramasa.setColorIfNull(this::initGlowColor);
 	}
 	
-	public Muramasa() {
+	public MuramasaUp() {
 		super(RelicTier.RARE, LandingSound.CLINK);
+	}
+	
+	public void atPreBattle() {
 		this.counter = 0;
 	}
 	
 	private void tryDo(AbstractCard c) {
-		if (c.type == CardType.ATTACK && (c.costForTurn == 0 || c.freeToPlayOnce)) {
+		if ((c.type == CardType.ATTACK || c.type == CardType.POWER) && (c.costForTurn == 0 || c.freeToPlayOnce)) {
 			counter++;
-			if (counter == 2) {
-				counter = 0;
-				this.show();
-				this.addToBot(new DrawCardAction(p(), 1));
+			boolean tmp = false;
+			if (counter % 2 == 0) {
+				tmp = true;
+				this.atb(new DrawCardAction(p(), 1));
 			}
+			if (Prime.isPrime(counter)) {
+				tmp = true;
+				this.atb(new GainEnergyAction(1));
+			}
+			if (tmp)
+				this.show();
 		}
 	}
 	
@@ -65,13 +73,14 @@ public class Muramasa extends AbstractTestRelic {
 			} else
 				this.removeFromGlowList(c, color);
 		}
-		if (active && this.counter == 1)
+		if (active && (this.counter % 2 == 1 || Prime.isPrime(this.counter + 1)))
 			this.beginLongPulse();
 		else
 			this.stopPulse();
 	}
 	
 	public void onVictory() {
+		this.counter = -1;
 		this.stopPulse();
 	}
 }
