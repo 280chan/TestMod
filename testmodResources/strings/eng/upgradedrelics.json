@@ -286,9 +286,9 @@
 	},
 	
 	"testmod-NegativeEmotionEnhancerUp":{
-		"NAME": "The Negative Emotion Enhancer",
+		"NAME": "The Negative Emotion Enhancer+",
 		"FLAVOR": "Collect, sort, transform.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] , gain #yFragile, #yWeak, #yVulnerable in order. Whenever an enemy dies, heal #b1 HP. At the end of combat, increase your Max HP by #b1. "]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] , for each debuff you have, gain [E] and draw #b1 card, your full energy amount of debuff is counted at most. Whenever an enemy dies, for each debuff it has, heal #b1 HP, heal at least #b1 HP. At the end of combat, for each debuff you have, increase your Max HP by #b1, increase at least #b1."]
 	},
 	
 	"testmod-BrilliantUp":{
