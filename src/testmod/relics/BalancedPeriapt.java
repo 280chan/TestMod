@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 
 import testmod.relicsup.BalancedPeriaptUp;
+import testmod.relicsup.NineUp;
 
 public class BalancedPeriapt extends AbstractTestRelic {
 	
@@ -17,6 +18,8 @@ public class BalancedPeriapt extends AbstractTestRelic {
 	
 	public float preChangeMaxHP(float amount) {
 		if (!this.isActive || p().isDead || p().isDying || relicStream(BalancedPeriaptUp.class).count() > 0)
+			return amount;
+		if (NineUp.acting)
 			return amount;
 		if (amount < 0) {
 			p().damage(new DamageInfo(p(), (int)(-amount), DamageType.HP_LOSS));

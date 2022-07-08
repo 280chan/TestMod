@@ -232,9 +232,9 @@
 	},
 	
 	"testmod-NineUp":{
-		"NAME": "(9)",
+		"NAME": "(9)+",
 		"FLAVOR": "这样你还GG，那你就是个BAKA！",
-		"DESCRIPTIONS":["Whenever you would die, lose #b9 Max HP, and reduce the damage to #b1. This Max HP reduction will not be affected."]
+		"DESCRIPTIONS":["Whenever you receive a damage is multiple of #b9 or contains a digit #b9 or equals to your current HP, reduce it to #b0. Whenever you receive fatal damage, lose #b9 Max HP, and reduce it to #b1, if you have more than #b9 Max HP, reduce to #b0 instead. This Max HP reduction will not be affected by #yBalanced #yPeriapt."]
 	},
 	
 	"testmod-MotorcycleUp":{
