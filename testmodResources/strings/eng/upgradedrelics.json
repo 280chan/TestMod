@@ -184,9 +184,9 @@
 	},
 	
 	"testmod-NyarlathotepUp":{
-		"NAME": "Nyarlathotep",
+		"NAME": "Nyarlathotep+",
 		"FLAVOR": "玩牌类游戏的时候可以无限制的变出Joker，因此立于不败之地。",
-		"DESCRIPTIONS":["All the cards you played, will also be treated as being #yExhausted, being #yDiscarded and a #yPower. Whenever a card is #yExhausted or #yDiscarded, it will also be treated as the other one."]
+		"DESCRIPTIONS":["All the cards you played, will also be treated as being #yExhausted, being #yDiscarded and a #yPower, twice. Whenever a card is #yExhausted or #yDiscarded, it will also be treated as the other one, twice."]
 	},
 	
 	"testmod-BalancedPeriaptUp":{

@@ -218,8 +218,10 @@
 	
 	"testmod-upgrade-Nyarlathotep":{
 		"TEXT": [
+			"4",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	

@@ -1,4 +1,4 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -14,70 +14,33 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import testmod.mymod.TestMod;
 import testmod.patches.SwFPatch;
-import testmod.relicsup.NyarlathotepUp;
+import testmod.relics.Nyarlathotep;
 
-public class Nyarlathotep extends AbstractTestRelic {
-
-	public static final String[] CARD_IDs = { "Force Field" };
-	public static final String[] POWER_IDs = { "testmod-PlagueActPower", "Amplify", "Heatsink", "Storm", "Curiosity",
-			"Recycle_Bin_Power", "reliquary:StormPlus" };
-	public static final String[] RELIC_IDs = { "testmod-MaizeUp", "testmod-MuramasaUp", "Bird Faced Urn",
-			"Mummified Hand", "OrangePellets", "SynthV:C4", "paleoftheancients:SoulOfTheDefect", "Replay:Rubber Ducky",
-			"Dota2Spire:ArcaneBoots", "Clover", "Dota2Spire:EtherealBlade", "Dota2Spire:OrchidMalevolence",
-			"Dota2Spire:AghanimScepter", "DemoExt:GalacticMedalOfValor", "SynthV:MejaisSoulstealer",
-			"youkari:Boundary_crack", "BirthdayGift-Icosahedron", "RU OrangePellets", "RU Bronze Scales",
-			"RU Bird Faced Urn", "Kaltsit_LearningSimulationPower", "Steelbody" };
-	public static final String[] RELIC_ON_PLAY_IDs = { "reliquary:IridiumChain" };
-	public static final ArrayList<String> CARD_LIST = new ArrayList<String>();
-	public static final ArrayList<String> POWER_LIST = new ArrayList<String>();
-	public static final ArrayList<String> RELIC_LIST = new ArrayList<String>();
-	
-	private static void addToList(ArrayList<String> target, String id) {
-		if (!target.contains(id))
-			target.add(id);
-	}
-	
-	public static void addCardList(ArrayList<String> list) {
-		CARD_LIST.addAll(list);
-	}
-	
-	public static void addCardList(String... list) {
-		Stream.of(list).forEach(s -> addToList(CARD_LIST, s));
-	}
-	
-	public static void addPowerList(ArrayList<String> list) {
-		POWER_LIST.addAll(list);
-	}
-	
-	public static void addPowerList(String... list) {
-		Stream.of(list).forEach(s -> addToList(POWER_LIST, s));
-	}
-	
-	public static void addRelicList(ArrayList<String> list) {
-		RELIC_LIST.addAll(list);
-	}
-	
-	public static void addRelicList(String... list) {
-		Stream.of(list).forEach(s -> addToList(RELIC_LIST, s));
-	}
+public class NyarlathotepUp extends AbstractUpgradedRelic {
+	private static final String[] CARD_IDs = Nyarlathotep.CARD_IDs;
+	private static final String[] POWER_IDs = Nyarlathotep.POWER_IDs;
+	private static final String[] RELIC_IDs = Nyarlathotep.RELIC_IDs;
+	private static final String[] RELIC_ON_PLAY_IDs = Nyarlathotep.RELIC_ON_PLAY_IDs;
+	private static final ArrayList<String> CARD_LIST = Nyarlathotep.CARD_LIST;
+	private static final ArrayList<String> POWER_LIST = Nyarlathotep.POWER_LIST;
+	private static final ArrayList<String> RELIC_LIST = Nyarlathotep.RELIC_LIST;
 	
 	private boolean valid(AbstractCard c) {
 		return Stream.of(CARD_IDs).anyMatch(c.cardID::equals) || CARD_LIST.stream().anyMatch(c.cardID::equals);
 	}
 	
-	public Nyarlathotep() {
+	public NyarlathotepUp() {
 		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 	
 	public void onEquip() {
 		TestMod.setActivity(this);
-		if (this.isActive && this.inCombat()) {
+		if (this.isActive && this.inCombat() && p().relics.stream().noneMatch(r -> r instanceof Nyarlathotep))
 			SwFPatch.BingoExhaustPatch.exhaust = 0;
-		}
 	}
 	
 	public void atPreBattle() {
-		if (this.isActive)
+		if (this.isActive && p().relics.stream().noneMatch(r -> r instanceof Nyarlathotep))
 			SwFPatch.BingoExhaustPatch.exhaust = 0;
 	}
 	
@@ -86,14 +49,16 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
-		this.triggerExhaustFor(c);
-		this.triggerDiscardFor(c);
-		this.triggerUsePowerCard(c, action);
+		for (int i = 0; i < 2; i++) {
+			this.triggerExhaustFor(c);
+			this.triggerDiscardFor(c);
+			this.triggerUsePowerCard(c, action);
+		}
 		this.show();
 	}
 	
 	private void triggerExhaustFor(AbstractCard c) {
-		p().relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onExhaust(c));
+		p().relics.stream().filter(not(NyarlathotepUp::isThis)).forEach(r -> r.onExhaust(c));
 		p().powers.forEach(p -> p.onExhaust(c));
 		c.triggerOnExhaust();
 		SwFPatch.BingoExhaustPatch.exhaust(true);
@@ -105,7 +70,7 @@ public class Nyarlathotep extends AbstractTestRelic {
 		if (AbstractDungeon.actionManager.turnHasEnded)
 			return;
 		p().updateCardsOnDiscard();
-		p().relics.stream().filter(not(Nyarlathotep::isThis)).forEach(r -> r.onManualDiscard());
+		p().relics.stream().filter(not(NyarlathotepUp::isThis)).forEach(r -> r.onManualDiscard());
 	}
 	
 	private String checkID(Object i) {
@@ -134,13 +99,18 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	public void onExhaust(final AbstractCard c) {
-		this.triggerDiscardFor(c);
+		for (int i = 0; i < 2; i++) {
+			this.triggerDiscardFor(c);
+		}
 		this.show();
     }
 	
 	public void onManualDiscard() {
 		if (!p().discardPile.isEmpty()) {
-			this.triggerExhaustFor(p().discardPile.getTopCard());
+			AbstractCard c = p().discardPile.getTopCard();
+			for (int i = 0; i < 2; i++) {
+				this.triggerExhaustFor(c);
+			}
 			this.show();
 		}
     }
