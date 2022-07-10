@@ -1,15 +1,15 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
-import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
+import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 
-public class ObsoleteBoomerang extends AbstractTestRelic {
+public class ObsoleteBoomerangUp extends AbstractUpgradedRelic {
+	private int turn = 0;
 	
-	public ObsoleteBoomerang() {
+	public ObsoleteBoomerangUp() {
 		super(RelicTier.RARE, LandingSound.MAGICAL);
 	}
 
@@ -23,20 +23,23 @@ public class ObsoleteBoomerang extends AbstractTestRelic {
 		} else {
 			effect = AttackEffect.BLUNT_HEAVY;
 		}
-		this.atb(new DamageRandomEnemyAction(new DamageInfo(p(), counter, DamageType.THORNS), effect));
+		this.atb(new DamageAllEnemiesAction(p(), this.counter, DamageType.THORNS, effect));
 		this.show();
 	}
 	
 	public void atPreBattle() {
+		this.turn = 0;
 		this.counter = 0;
 	}
 
 	public void atTurnStart() {
-		this.counter = 0;
+		this.turn++;
+		this.counter = Math.min(this.turn - 1, this.counter / 4);
 	}
 	
 	public void onVictory() {
-		this.counter = 0;
+		this.turn = 0;
+		this.counter = -1;
 	}
 	
 }

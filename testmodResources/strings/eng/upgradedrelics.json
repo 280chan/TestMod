@@ -1,8 +1,8 @@
 {
 	"testmod-ObsoleteBoomerangUp":{
-		"NAME": "Obsolete Boomerang",
+		"NAME": "Obsolete Boomerang+",
 		"FLAVOR": "你越是使用这个回旋镖，你越会沉迷于其中。",
-		"DESCRIPTIONS":["Whenever playing a card, deal a damage of the amount of cards played this turn to random enemy."]
+		"DESCRIPTIONS":["At the start of each turn, reduce counter to #b1/4 of previous value, at most turn number #b-1. Whenever playing a card, increase counter by #b1, deal a damage of counter to All enemies."]
 	},
 	
 	"testmod-BlackFramedGlassesUp":{

@@ -1,8 +1,8 @@
 {
 	"testmod-ObsoleteBoomerangUp":{
-		"NAME": "老旧的回旋镖",
+		"NAME": "老旧的回旋镖+",
 		"FLAVOR": "你越是使用这个回旋镖，你越会沉迷于其中。",
-		"DESCRIPTIONS":["你在你的回合中每打出一张牌，对随机敌人造成你在该回合已打出的牌数的伤害。"]
+		"DESCRIPTIONS":["每回合开始，将计数降为前一回合的 #b1/4 ，最多为回合数 #b-1 。你在你的回合中每打出一张牌，计数加 #b1 ，然后对所有敌人造成计数点伤害。"]
 	},
 	
 	"testmod-BlackFramedGlassesUp":{
