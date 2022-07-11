@@ -972,7 +972,7 @@ public interface MiscMethods {
 	}
 	
 	default Stream<StackTraceElement> stackTrace() {
-		return Stream.of(new Exception().getStackTrace());
+		return Stream.of(Thread.currentThread().getStackTrace());
 	}
 	
 	default boolean hasStack(String className, String methodName) {
@@ -980,9 +980,8 @@ public interface MiscMethods {
 	}
 	
 	default String bottomClassNameExcept(Class<?>... sample) {
-		return stackTrace().map(i -> i.getClassName()).filter(s -> Stream
-				.concat(Stream.of(MiscMethods.class), Stream.of(sample)).noneMatch(a -> s.equals(a.getCanonicalName())))
-				.findFirst().get();
+		return stackTrace().map(i -> i.getClassName()).filter(s -> Stream.concat(Stream.of(MiscMethods.class,
+				Thread.class), Stream.of(sample)).noneMatch(a -> s.equals(a.getCanonicalName()))).findFirst().get();
 	}
 	
 	default <T> Class<T> bottomClassExcept(Class<?>... exception) {
