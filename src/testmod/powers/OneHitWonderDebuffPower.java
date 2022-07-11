@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 
 import testmod.relics.OneHitWonder;
+import testmod.relicsup.OneHitWonderUp;
 
 public class OneHitWonderDebuffPower extends AbstractTestPower implements InvisiblePower {
 	
@@ -30,23 +31,31 @@ public class OneHitWonderDebuffPower extends AbstractTestPower implements Invisi
 	}
 	
 	private boolean checkPlayerHealth() {
-		return p().currentHealth == 1;
+		return countUp() == 0 ? p().currentHealth == 1 : p().currentHealth % 10 == 1;
 	}
 	
-	private float f(float multiplier, float input) {
-		return (float) (Math.pow(multiplier, this.relicStream(OneHitWonder.class).count()) * input);
+	private long count() {
+		return this.relicStream(OneHitWonder.class).count();
+	}
+	
+	private long countUp() {
+		return this.relicStream(OneHitWonderUp.class).count();
+	}
+	
+	private float f(float multiplier, float multiplier1, float input) {
+		return (float) (Math.pow(multiplier, count()) * Math.pow(multiplier1, countUp()) * input);
 	}
 	
 	public int onAttacked(DamageInfo info, int damage) {
-		return checkPlayerHealth() && info.type != DamageType.NORMAL ? (int) f(1.5f, damage) : damage;
+		return checkPlayerHealth() && info.type != DamageType.NORMAL ? (int) f(1.5f, 3f, damage) : damage;
 	}
 	
 	public float atDamageFinalGive(float damage, DamageType type) {
-		return checkPlayerHealth() ? f(0.5f, damage) : damage;
+		return checkPlayerHealth() ? f(0.5f, 0.25f, damage) : damage;
 	}
     
 	public float atDamageFinalReceive(float damage, DamageType type) {
-		return checkPlayerHealth() && type == DamageType.NORMAL ? f(1.5f, damage) : damage;
+		return checkPlayerHealth() && type == DamageType.NORMAL ? f(1.5f, 3f, damage) : damage;
 	}
     
 }

@@ -48,9 +48,9 @@
 	},
 	
 	"testmod-OneHitWonderUp":{
-		"NAME": "One Hit Wonder",
+		"NAME": "One Hit Wonder+",
 		"FLAVOR": "你已知晓死亡。",
-		"DESCRIPTIONS":["Whenever your HP is #b1: your attack has half chance cause non-Boss target to die; Boss enemies' damage is decreased by #b50%, Boss enemies receive #b50% more attack damage and unblocked non-attack damage."]
+		"DESCRIPTIONS":["Whenever the last digit of your HP is #b1: your attack has #b75% chance cause non-Boss target to die; Boss enemies' damage is decreased by #b75%, Boss enemies receive #b200% more attack damage and unblocked non-attack damage."]
 	},
 	
 	"testmod-RecursionUp":{

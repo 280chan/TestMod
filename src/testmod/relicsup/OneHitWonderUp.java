@@ -1,4 +1,4 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.ArrayList;
 
@@ -13,17 +13,18 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import testmod.mymod.TestMod;
 import testmod.powers.OneHitWonderDebuffPower;
+import testmod.relics.OneHitWonder;
 
-public class OneHitWonder extends AbstractTestRelic {
+public class OneHitWonderUp extends AbstractUpgradedRelic {
 	
-	public static ArrayList<AbstractMonster> queue = new ArrayList<AbstractMonster>();
+	private static ArrayList<AbstractMonster> queue = OneHitWonder.queue;
 	
 	private boolean getRoll() {
-		return AbstractDungeon.cardRandomRng.randomBoolean();
+		return AbstractDungeon.cardRandomRng.randomBoolean(0.75f);
 	}
 	
-	public OneHitWonder() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL, BAD);
+	public OneHitWonderUp() {
+		super(RelicTier.COMMON, LandingSound.MAGICAL);
 	}
 	
 	public void atPreBattle() {
@@ -103,7 +104,7 @@ public class OneHitWonder extends AbstractTestRelic {
 	}
 	
 	private boolean isActive() {
-		return p().currentHealth == 1;
+		return p().currentHealth % 10 == 1;
 	}
 	
 }

@@ -48,9 +48,9 @@
 	},
 	
 	"testmod-OneHitWonderUp":{
-		"NAME": "一血传奇",
+		"NAME": "一血传奇+",
 		"FLAVOR": "你已知晓死亡。",
-		"DESCRIPTIONS":["当你的生命值为 #b1 时：攻击有一半几率可以直接杀死被击中的非Boss敌人；Boss敌人造成的伤害降低 #b50% ，受到的攻击伤害和未被格挡的其余伤害增加 #b50% 。"]
+		"DESCRIPTIONS":["当你的生命值个位数为 #b1 时：攻击有 #b75% 几率可以直接杀死被击中的非 #yBoss 敌人； #yBoss 敌人造成的伤害降低 #b75% ，受到的攻击伤害和未被格挡的其余伤害增加 #b200% 。"]
 	},
 	
 	"testmod-RecursionUp":{
