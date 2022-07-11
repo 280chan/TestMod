@@ -25,6 +25,11 @@ public class GlassSoulUp extends AbstractUpgradedRelic implements GetRelicTrigge
 		TestMod.setActivity(this);
 		if (!this.isActive)
 			this.counter = -1;
+		else if (!this.hasStack("relicupgradelib.ui.RelicUpgradePopup", "replaceRelic")) {
+			relics.clear();
+			GlassSoul.save();
+			tmpRelics.clear();
+		}
     }
 	
 	public void onEnterRoom(AbstractRoom r) {
