@@ -50,7 +50,7 @@
 	"testmod-OneHitWonderUp":{
 		"NAME": "One Hit Wonder+",
 		"FLAVOR": "你已知晓死亡。",
-		"DESCRIPTIONS":["Whenever the last digit of your HP is #b1: your attack has #b75% chance cause non-Boss target to die; Boss enemies' damage is decreased by #b75%, Boss enemies receive #b200% more attack damage and unblocked non-attack damage."]
+		"DESCRIPTIONS":["Whenever your HP is less than #b10: your attack has #b75% chance cause non-Boss target to die; Boss enemies' damage is decreased by #b75%, Boss enemies receive #b200% more attack damage and unblocked non-attack damage."]
 	},
 	
 	"testmod-RecursionUp":{
@@ -586,9 +586,9 @@
 	},
 	
 	"testmod-PhasePocketWatchUp":{
-		"NAME": "Phase Pocket Watch",
+		"NAME": "Phase Pocket Watch+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["You no longer lose HP during enemy turn, instead increase relic counter. At the start of your turn, choose from Lose #r2 HP [ #bcounter/2 ] times and Lose [ #rcounter/2 ] HP #b2 times. You can right click this relic during your turn or outside combat to switch between #yChoose #yEverytime and #yAlways #y2xn and #yAlways #ynx2 .", " NL Current mode: ", "#yChoose #yEverytime ", "#yAlways #y2xn ", "#yAlways #ynx2 "]
+		"DESCRIPTIONS":["You no longer lose HP during enemy turn, instead increase relic counter. At the start of your turn, choose from Lose #r2 HP [ #bcounter/2-1 ] times and Lose [ #rcounter/2-1 ] HP #b2 times. You can right click this relic during your turn or outside combat to switch between #yChoose #yEverytime and #yAlways #y2x(n-1) and #yAlways #y(n-1)x2 .", " NL Current mode: ", "#yChoose #yEverytime ", "#yAlways #y2x(n-1) ", "#yAlways #y(n-1)x2 "]
 	},
 	
 	"testmod-StomachOfGluttonousUp":{

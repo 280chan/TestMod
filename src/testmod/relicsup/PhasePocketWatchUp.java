@@ -1,4 +1,4 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.stream.Stream;
 
@@ -14,10 +14,9 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import testmod.cards.AbstractTestCard;
 import testmod.mymod.TestMod;
 import testmod.powers.AbstractTestPower;
-import testmod.relicsup.PhasePocketWatchUp;
+import testmod.relics.PhasePocketWatch;
 
-public class PhasePocketWatch extends AbstractTestRelic implements ClickableRelic {
-	public static final String SAVE_NAME = "PhasePocketWatch";
+public class PhasePocketWatchUp extends AbstractUpgradedRelic implements ClickableRelic {
 	private boolean enemyTurn = false;
 	private static int mode = 0;
 	
@@ -26,18 +25,17 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 	}
 	
 	private static void save() {
-		TestMod.save(SAVE_NAME, mode);
+		TestMod.save(PhasePocketWatch.SAVE_NAME, mode);
 	}
 	
 	public void onEquip() {
 		TestMod.setActivity(this);
 		if (this.isActive) {
-			mode = 0;
-			save();
+			load(TestMod.getInt(PhasePocketWatch.SAVE_NAME));
 		}
 	}
 	
-	public PhasePocketWatch() {
+	public PhasePocketWatchUp() {
 		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
@@ -46,25 +44,25 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 	}
 	
 	public void atPreBattle() {
-		if (!this.isActive || this.relicStream(PhasePocketWatchUp.class).count() > 0)
+		if (!this.isActive)
 			return;
 		this.counter = 0;
-		p().powers.add(new PhasePocketWatchPower());
+		p().powers.add(new PhasePocketWatchPowerUp());
     }
 	
 	public void atTurnStart() {
 		enemyTurn = false;
-		if (this.counter < 2)
+		if (this.counter < 4)
 			return;
 		if (mode == 0) {
 			this.addTmpActionToBot(() -> {
 				InputHelper.moveCursorToNeutralPosition();
-				atb(new ChooseOneAction(Stream.of(1, 2).map(i -> new PhasePocketWatchOptionCard(i, this.counter / 2))
-						.collect(toArrayList())));
+				atb(new ChooseOneAction(Stream.of(1, 2)
+						.map(i -> new PhasePocketWatchOptionCardUp(i, this.counter / 2 - 1)).collect(toArrayList())));
 			});
 		} else {
-			int dmg = mode == 1 ? 2 : this.counter / 2;
-			int size = mode == 1 ? this.counter / 2 : 2;
+			int dmg = mode == 1 ? 2 : this.counter / 2 - 1;
+			int size = mode == 1 ? this.counter / 2 - 1: 2;
 			this.getIdenticalList(dmg, size).forEach(i -> this.atb(new LoseHPAction(p(), p(), i)));
 			this.counter = 0;
 		}
@@ -79,14 +77,12 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 		this.enemyTurn = false;
     }
 	
-	private class PhasePocketWatchPower extends AbstractTestPower implements InvisiblePower {
-		public PhasePocketWatchPower() {
+	private class PhasePocketWatchPowerUp extends AbstractTestPower implements InvisiblePower {
+		public PhasePocketWatchPowerUp() {
 			this.owner = p();
-			this.addMapWithSkip(p -> new PhasePocketWatchPower());
+			this.addMapWithSkip(p -> new PhasePocketWatchPowerUp());
 		}
 		public int onLoseHp(int damage) {
-			if (p().hasPower(TestMod.makeID("PhasePocketWatchPowerUp")))
-				return damage;
 			if (enemyTurn && damage > 0) {
 				show();
 				counter += damage;
@@ -95,10 +91,10 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 		}
 	}
 
-	private class PhasePocketWatchOptionCard extends AbstractTestCard {
-		private static final String thisID = "PhasePocketWatchOptionCard";
+	private class PhasePocketWatchOptionCardUp extends AbstractTestCard {
+		private static final String thisID = "PhasePocketWatch+OptionCard";
 
-		public PhasePocketWatchOptionCard(int choice, int dmg) {
+		public PhasePocketWatchOptionCardUp(int choice, int dmg) {
 			super(thisID, Strings(thisID).NAME + Strings(thisID).EXTENDED_DESCRIPTION[choice + 2], -2, "",
 					CardType.STATUS, CardRarity.COMMON, CardTarget.NONE);
 			this.magicNumber = this.baseMagicNumber = dmg;
@@ -119,13 +115,13 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 			counter = 0;
 		}
 		public AbstractCard makeCopy() {
-			return new PhasePocketWatchOptionCard(this.misc, this.baseMagicNumber);
+			return new PhasePocketWatchOptionCardUp(this.misc, this.baseMagicNumber);
 		}
 	}
 	
 	@Override
 	public void onRightClick() {
-		if (this.isActive && !enemyTurn && this.relicStream(PhasePocketWatchUp.class).count() == 0) {
+		if (this.isActive && !enemyTurn) {
 			mode++;
 			mode %= 3;
 			save();

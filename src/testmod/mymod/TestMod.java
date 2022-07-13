@@ -69,6 +69,7 @@ import testmod.relicsup.AllUpgradeRelic;
 import testmod.relicsup.AscensionHeartUp;
 import testmod.relicsup.IWantAllUp;
 import testmod.relicsup.MetronomeUp;
+import testmod.relicsup.PhasePocketWatchUp;
 import testmod.relicsup.TestBoxUp;
 import testmod.screens.RelicSelectScreen;
 import testmod.utils.*;
@@ -76,7 +77,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 7/11/2022
+ * @version 7/12/2022
  * @since 6/17/2018
  */
 
@@ -694,6 +695,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		Metronome.load();
 		MetronomeUp.load();
 		PhasePocketWatch.load(getInt(PhasePocketWatch.SAVE_NAME));
+		PhasePocketWatchUp.load(getInt(PhasePocketWatch.SAVE_NAME));
 		Encyclopedia.load();
 		ManifoldPotion.load();
 	}

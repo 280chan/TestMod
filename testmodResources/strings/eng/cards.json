@@ -225,6 +225,17 @@
 			"nx2"
 		]
 	},
+	"testmod-PhasePocketWatch+OptionCard": {
+		"NAME": "Phase Pocket Watch+ - ",
+		"DESCRIPTION": "",
+		"EXTENDED_DESCRIPTION": [
+			"Lose ",
+			" HP ",
+			" times",
+			"2x(n-1)",
+			"(n-1)x2"
+		]
+	},
 	"testmod-Plague": {
 		"NAME": "Plague",
 		"DESCRIPTION": "At start of each turn, apply X Poison, Constricted and Choked to random enemy. Whenever you play a Power card, make all enemies' Poison and Constricted affect !M! time. Ethereal.",

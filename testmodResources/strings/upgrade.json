@@ -746,8 +746,10 @@
 	
 	"testmod-upgrade-PhasePocketWatch":{
 		"TEXT": [
+			"1",
 			"0",
-			"0"
+			"0",
+			"100"
 		]
 	},
 	
