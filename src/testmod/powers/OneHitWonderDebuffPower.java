@@ -31,7 +31,7 @@ public class OneHitWonderDebuffPower extends AbstractTestPower implements Invisi
 	}
 	
 	private boolean checkPlayerHealth() {
-		return countUp() == 0 ? p().currentHealth == 1 : p().currentHealth % 10 == 1;
+		return countUp() == 0 ? p().currentHealth == 1 : p().currentHealth < 10;
 	}
 	
 	private long count() {

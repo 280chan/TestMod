@@ -104,7 +104,7 @@ public class OneHitWonderUp extends AbstractUpgradedRelic {
 	}
 	
 	private boolean isActive() {
-		return p().currentHealth % 10 == 1;
+		return p().currentHealth < 10;
 	}
 	
 }
