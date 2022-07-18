@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -23,6 +24,7 @@ import testmod.utils.InfiniteUpgradeRelic;
 public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic, CounterKeeper, InfiniteUpgradeRelic {
 	public static final int COUNT = 10;
 	
+	private static final boolean REME = Loader.isModLoaded("REMEMod");
 	private boolean victory = false;
 	private static int mode = 0;
 	
@@ -36,17 +38,27 @@ public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic,
 		((IWantAllUp) u).victory = true;
 	}
 	
+	public void onEquip() {
+		if (!this.hasStack("relicupgradelib.ui.RelicUpgradePopup", "replaceRelic")) {
+			this.counter = COUNT;
+			this.updateDescription();
+			this.victory = !this.inCombat();
+		}
+	}
+	
 	public String getUpdatedDescription() {
 		if (!this.isObtained)
 			return DESCRIPTIONS[0] + 0 + DESCRIPTIONS[2];
-		return DESCRIPTIONS[0] + mode + (mode > 1 ? DESCRIPTIONS[4] + (mode - 1) + DESCRIPTIONS[5]
-				: (DESCRIPTIONS[mode == 1 ? 3 : (this.counter == -2 ? 1 : 2)]));
+		int tmp = 1 + remeWantAll();
+		return DESCRIPTIONS[0] + mode + (mode > tmp ? DESCRIPTIONS[5] + (mode - tmp) + DESCRIPTIONS[6]
+				: (DESCRIPTIONS[mode > 0 ? 2 + mode : (this.counter == -2 ? 1 : 2)]));
 	}
 	
 	public void onVictory() {
-		if (this.counter > 0)
+		if (this.counter > 0) {
 			this.togglePulse(this, victory = true);
-		mode = 0;
+			mode = 0;
+		}
 		this.updateDescription();
     }
 	
@@ -86,6 +98,10 @@ public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic,
 		return p().relics.stream().map(r -> get(r::changeNumberOfCardsInReward)).reduce(t(), this::chain).apply(3);
 	}
 	
+	private int remeWantAll() {
+		return REME && p().hasRelic("REME_IWantAll") ? 1 : 0;
+	}
+	
 	@Override
 	public void onRightClick() {
 		if (AbstractDungeon.screen == CurrentScreen.MAP) {
@@ -95,12 +111,12 @@ public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic,
 			}
 			if (AbstractDungeon.combatRewardScreen != null && list() != null) {
 				int size = card().map(r -> r.cards.size()).filter(s -> s != 0).findFirst().orElse(cardNum());
-				mode %= 2 + size;
+				mode %= 2 + size + remeWantAll();
 			}
 			this.updateDescription();
 		} else if (this.victory && checkReward()) {
 			int size = card().map(r -> r.cards.size()).filter(s -> s != 0).findFirst().orElse(cardNum());
-			mode %= 2 + size;
+			mode %= 2 + size + remeWantAll();
 			this.updateDescription();
 			if (mode == 0) {
 				addReward();
@@ -116,16 +132,32 @@ public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic,
 					card().collect(toArrayList()).forEach(this::sing);
 				}
 			} else {
-				card().collect(toArrayList()).forEach(this::pick);
+				if (remeWantAll() == 1 && mode == 2) {
+					p().getRelic("REME_IWantAll").flash();
+					CardCrawlGame.sound.playA("SINGING_BOWL", MathUtils.random(-0.2F, 0.1F));
+					card().collect(toArrayList()).forEach(this::reme);
+				} else {
+					mode -= remeWantAll() + 2;
+					card().collect(toArrayList()).forEach(this::pick);
+					mode += remeWantAll() + 2;
+				}
 				AbstractDungeon.combatRewardScreen.positionRewards();
 				if (list().isEmpty()) {
 					AbstractDungeon.combatRewardScreen.hasTakenAll = true;
 					AbstractDungeon.overlayMenu.proceedButton.show();
 				}
-			}
+			} 
 			if (mode != 0 || counter == -2)
 				this.togglePulse(this, victory = false);
 		}
+	}
+	
+	private void reme(RewardItem r) {
+		r.cards.forEach(c -> AbstractDungeon.effectsQueue.add(new FastCardObtainEffect(c, c.current_x, c.current_y)));
+		if (r.cards.size() > 0) {
+			p().increaseMaxHp(r.cards.size(), true);
+		}
+		list().remove(r);
 	}
 	
 	private void sing(RewardItem r) {
@@ -134,7 +166,7 @@ public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic,
 	}
 	
 	private void pick(RewardItem r) {
-		AbstractCard c = r.cards.get(mode - 2);
+		AbstractCard c = r.cards.get(mode);
 		recordMetrics(c, r.cards);
 		AbstractDungeon.effectsQueue.add(new FastCardObtainEffect(c, c.current_x, c.current_y));
 		list().remove(r);
