@@ -77,7 +77,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 7/12/2022
+ * @version 7/17/2022
  * @since 6/17/2018
  */
 
@@ -453,6 +453,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				r.onEquip();
 			}
 			ManifoldPotion.clear();
+			PortableAltar.reset();
 		}
 	}
 	

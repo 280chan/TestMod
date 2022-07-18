@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
 
 public class RainbowHikingShoes extends AbstractTestRelic {
 	private CardRarity lastRarity = null;
-	private static Color color = null;
+	public static Color color = null;
 	
 	public RainbowHikingShoes() {
 		super(RelicTier.RARE, LandingSound.CLINK);
@@ -19,7 +19,8 @@ public class RainbowHikingShoes extends AbstractTestRelic {
 			this.lastRarity = c.rarity;
 		} else if (this.lastRarity != c.rarity) {
 			this.lastRarity = c.rarity;
-			this.addToBot(new DrawCardAction(1));
+			this.atb(new DrawCardAction(1));
+			this.show();
 		}
 	}
 	

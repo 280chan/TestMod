@@ -9,25 +9,25 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import testmod.mymod.TestMod;
+import testmod.relicsup.AbstractUpgradedRelic;
 
 public class PortableAltar extends AbstractTestRelic {
 	public static final String SAVE_NAME = "maxHPLost";
 	
-	private static int maxHPLost;
+	public static int maxHPLost;
 	private int turn = -1;
 	
 	public static void load(int loadValue) {
 		maxHPLost = loadValue;
 	}
 	
-	private void saveMaxHPLost() {
+	private static void saveMaxHPLost() {
 		TestMod.save(SAVE_NAME, maxHPLost);
 	}
 	
-	public void reset() {
-		this.counter = 0;
+	public static void reset() {
 		maxHPLost = 0;
-		this.saveMaxHPLost();
+		saveMaxHPLost();
 	}
 	
 	private void updateCounter() {
@@ -39,17 +39,19 @@ public class PortableAltar extends AbstractTestRelic {
 	}
 	
 	private void updateMaxHPLost(int preMaxHP, int toLose) {
+		int actual = p().maxHealth - preMaxHP;
 		if (preMaxHP <= toLose) {
 			toLose = preMaxHP - 1;
 		}
+		toLose = Math.max(toLose, actual);
 		maxHPLost += toLose;
 		updateCounter();
 		TestMod.info("最大生命累计降低:" + maxHPLost + ", 当前计数:" + counter);
 	}
 	
 	public void loseMaxHP(int toLose) {
-		int tempMaxHP = AbstractDungeon.player.maxHealth;
-		AbstractDungeon.player.decreaseMaxHealth(toLose);
+		int tempMaxHP = p().maxHealth;
+		p().decreaseMaxHealth(toLose);
 		updateMaxHPLost(tempMaxHP, toLose);
 	}
 	
@@ -57,21 +59,20 @@ public class PortableAltar extends AbstractTestRelic {
 		super(RelicTier.BOSS, LandingSound.HEAVY, BAD);
 	}
 	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-	
 	public void onEquip() {
 		TestMod.setActivity(this);
 		if (!isActive)
 			return;
-		this.reset();
+		this.counter = 0;
+		reset();
 	}
 	
 	public void onUnequip() {
 		if (!isActive)
 			return;
-		p().increaseMaxHp(maxHPLost, true);
+		if (!this.hasStack(AbstractUpgradedRelic.class.getCanonicalName(), "bossObtainLogic")) {
+			p().increaseMaxHp(maxHPLost, true);
+		}
     }
 	
 	public void atBattleStart() {
@@ -80,9 +81,9 @@ public class PortableAltar extends AbstractTestRelic {
 		this.turn = 0;
 		if (counter > 0) {
 			this.show();
-			this.addToTop(apply(p(), new StrengthPower(p(), counter)));
-			this.addToTop(apply(p(), new DexterityPower(p(), counter)));
-			this.addToTop(apply(p(), new PlatedArmorPower(p(), counter)));
+			this.att(apply(p(), new StrengthPower(p(), counter)));
+			this.att(apply(p(), new DexterityPower(p(), counter)));
+			this.att(apply(p(), new PlatedArmorPower(p(), counter)));
 		}
 	}
 	
@@ -95,13 +96,13 @@ public class PortableAltar extends AbstractTestRelic {
 			return;
 		}
 		this.show();
-		this.addToTop(new LoseHPAction(p(), p(), 1));
+		this.att(new LoseHPAction(p(), p(), 1));
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (!isActive)
 			return;
-		this.saveMaxHPLost();
+		saveMaxHPLost();
 		this.show();
 		this.loseMaxHP(1);
 		this.turn = -1;

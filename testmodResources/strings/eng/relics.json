@@ -20,7 +20,7 @@
 	"testmod-PortableAltar":{
 		"NAME": "Portable Altar",
 		"FLAVOR": "这个祭坛给予了你强大的能力，但也贪婪地吞噬着你的生命。",
-		"DESCRIPTIONS":["At the start of each turn, lose #r1 HP. Whenever you climb a floor, lose #r1 Max HP. For every #b5 Max HP lost through this relic: At the start of each combat, gain #b1 #yStrength,  #yDexterity and #yPlated Armor; you will not lose HP from this relic in the first #b1 turn of each combat."]
+		"DESCRIPTIONS":["At the start of each turn, lose #r1 HP. Whenever you climb a floor, lose #r1 Max HP. For every #b5 Max HP lost through this relic: At the start of each combat, gain #b1 #yStrength, #yDexterity and #yPlated #yArmor; you will not lose HP from this relic in the first #b1 turn of each combat."]
 	},
 	
 	"testmod-EnergyCheck":{

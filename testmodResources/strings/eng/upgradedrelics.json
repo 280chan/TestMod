@@ -18,9 +18,9 @@
 	},
 	
 	"testmod-PortableAltarUp":{
-		"NAME": "Portable Altar",
+		"NAME": "Portable Altar+",
 		"FLAVOR": "这个祭坛给予了你强大的能力，但也贪婪地吞噬着你的生命。",
-		"DESCRIPTIONS":["At the start of each turn, lose #r1 HP. Whenever you climb a floor, lose #r1 Max HP. For every #b5 Max HP lost through this relic: At the start of each combat, gain #b1 #yStrength,  #yDexterity and #yPlated Armor; you will not lose HP from this relic in the first #b1 turn of each combat."]
+		"DESCRIPTIONS":["Whenever you climb a floor, lose #r1 Max HP. For every #b2 Max HP lost through this relic: increase #b10% Max HP gain; At the start of each combat, gain #b1 #yStrength, #yDexterity and #yPlated #yArmor. Right click during combat, lose #r1 Max HP. Otherwise right click to use #b2 counter, increase #b2 Max HP and gain a random #ygem #ykey."]
 	},
 	
 	"testmod-EnergyCheckUp":{
@@ -94,9 +94,9 @@
 	},
 	
 	"testmod-PrudenceUp":{
-		"NAME": "Prudence",
+		"NAME": "Prudence+",
 		"FLAVOR": "有bug也不是什么重要的问题吧。",
-		"DESCRIPTIONS":["If you have sufficient energy, you can play all the cards that wouldn't be allowed to play. If it is #yStatus or #yCurse, #yExhaust it."]
+		"DESCRIPTIONS":["If you have sufficient energy, you can play all the cards that wouldn't be allowed to play. If it is #yStatus or #yCurse, #yExhaust it. In each combat, every card can be played without sufficient energy once. You no longer lose HP because of #yBlue #yCandle."]
 	},
 	
 	"testmod-FaithUp":{
@@ -300,7 +300,7 @@
 	"testmod-IWantAllUp":{
 		"NAME": "I Want All+",
 		"FLAVOR": "小孩子才做选择；而我，全都要！",
-		"DESCRIPTIONS":["This relic can be upgraded any number of times. Upon pickup, gain #b10 more count. You can right click this relic when in map view screen to switch right click effect of this relic. Right click at the combat reward screen to trigger corresponding effect. NL Effect ", ": effect 0 is used up.", ": Consume #b1 count, duplicate current card reward.", ": Use #ySinging #yBowl for all card rewards.", ": Pick number #b", " card for all card rewards."]
+		"DESCRIPTIONS":["This relic can be upgraded any number of times. Upon pickup, gain #b10 more count. You can right click this relic when in map view screen to switch right click effect of this relic. Right click at the combat reward screen to trigger corresponding effect. NL Effect ", ": effect 0 is used up.", ": Consume #b1 count, duplicate current card reward.", ": Use #ySinging #yBowl for all card rewards.", ": Use #yREME #yI #yWant #yAll for all card rewards.", ": Pick number #b", " card for all card rewards."]
 	},
 	
 	"testmod-AntiphasicUp":{
@@ -436,9 +436,9 @@
 	},
 	
 	"testmod-RainbowHikingShoesUp":{
-		"NAME": "Rainbow Hiking Shoes",
+		"NAME": "Rainbow Hiking Shoes+",
 		"FLAVOR": "The shoes shine light with changing color when walking.",
-		"DESCRIPTIONS":["Whenever cards with different rarity played in a row, draw #b1 card."]
+		"DESCRIPTIONS":["Whenever you play a card has different rarity or type from last card, draw #b1 card."]
 	},
 	
 	"testmod-GoldenSoulUp":{

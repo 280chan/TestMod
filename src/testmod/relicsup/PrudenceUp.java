@@ -1,6 +1,7 @@
-package testmod.relics;
+package testmod.relicsup;
 
-import com.badlogic.gdx.graphics.Color;
+import java.util.ArrayList;
+
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
@@ -8,18 +9,20 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
-public class Prudence extends AbstractTestRelic {
-	public static Color color = null;
+import testmod.relics.Prudence;
+
+public class PrudenceUp extends AbstractUpgradedRelic {
+	public static final ArrayList<AbstractCard> CARDS = new ArrayList<AbstractCard>();
 	
-	public Prudence() {
+	public PrudenceUp() {
 		super(RelicTier.BOSS, LandingSound.MAGICAL);
 	}
 	
 	public void onRefreshHand() {
 		if (!this.isActive)
 			return;
-		if (color == null)
-			color = this.initGlowColor();
+		if (Prudence.color == null)
+			Prudence.color = this.initGlowColor();
 		if (this.inCombat())
 			this.updateHandGlow();
 	}
@@ -27,17 +30,21 @@ public class Prudence extends AbstractTestRelic {
 	private void updateHandGlow() {
 		boolean active = false;
 		for (AbstractCard c : p().hand.group) {
-			if (EnergyPanel.totalCount >= c.costForTurn && this.calCanPlay(c)) {
-				this.addToGlowChangerList(c, color);
+			if ((EnergyPanel.totalCount >= c.costForTurn || !CARDS.contains(c)) && this.calCanPlay(c)) {
+				this.addToGlowChangerList(c, Prudence.color);
 				this.addHardLockGlow(c);
 				active = true;
 			} else
-				this.removeFromGlowList(c, color);
+				this.removeFromGlowList(c, Prudence.color);
 		}
 		if (active)
 			this.beginLongPulse();
 		else
 			this.stopPulse();
+	}
+	
+	public void atPreBattle() {
+		CARDS.clear();
 	}
 	
 	public void onVictory() {
@@ -55,7 +62,13 @@ public class Prudence extends AbstractTestRelic {
 	public void onUseCard(AbstractCard c, UseCardAction a) {
 		if (c.type == CardType.CURSE || c.type == CardType.STATUS)
 			a.exhaustCard = true;
-		if (calCanPlay(c))
+		boolean flag = calCanPlay(c);
+		if (!CARDS.contains(c) && c.costForTurn > EnergyPanel.totalCount && !c.freeToPlay() && !c.isInAutoplay
+				&& !(p().hasPower("Corruption") && c.type == AbstractCard.CardType.SKILL)) {
+			flag = true;
+			CARDS.add(c);
+		}
+		if (flag)
 			this.show();
 	}
 	

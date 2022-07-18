@@ -52,8 +52,10 @@
 	
 	"testmod-upgrade-PortableAltar":{
 		"TEXT": [
+			"7",
 			"0",
-			"0"
+			"0",
+			"999"
 		]
 	},
 	
@@ -553,8 +555,10 @@
 	
 	"testmod-upgrade-RainbowHikingShoes":{
 		"TEXT": [
+			"2",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	
