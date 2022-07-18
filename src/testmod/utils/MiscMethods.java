@@ -584,6 +584,9 @@ public interface MiscMethods {
 		}
 		
 		private static void updateGlow() {
+			UPDATE_LIST.stream().filter(c -> !MISC.p().hand.group.contains(c)).forEach(GLOW_COLORS::remove);
+			UPDATE_LIST.removeIf(c -> !MISC.p().hand.group.contains(c));
+			HARD_GLOW_LOCK.removeIf(c -> !MISC.p().hand.group.contains(c));
 			for (AbstractCard c : UPDATE_LIST) {
 				ArrayList<Color> list = GLOW_COLORS.get(c);
 				for (int i = 0; i < list.size(); i++) {
