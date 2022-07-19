@@ -454,9 +454,9 @@
 	},
 	
 	"testmod-RandomTestUp":{
-		"NAME": "随机测试",
+		"NAME": "随机测试+",
 		"FLAVOR": "警告：请勿将此遗物用于debug。",
-		"DESCRIPTIONS":["战斗开始时，将一张随机 #yTest 牌加入手牌。每当你打出无色牌，随机手牌耗能在本回合降低 #b1 。"]
+		"DESCRIPTIONS":["战斗开始时，将一张 #y升级 后的随机 #yTest 牌加入手牌。每回合开始，将手牌中一张随机牌的颜色改为无色。每当你打出无色牌，随机手牌的耗能在打出前降为 #b0 。"]
 	},
 	
 	"testmod-TemporaryBarricadeUp":{

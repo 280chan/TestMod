@@ -448,9 +448,9 @@
 	},
 	
 	"testmod-RandomTestUp":{
-		"NAME": "Random Test",
+		"NAME": "Random Test+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each combat, add a random #yTest card to your hand. Whenever you play a #yColorless card, a random card in your hand costs #b1 less for the turn."]
+		"DESCRIPTIONS":["At the start of each combat, add a random #yUpgraded #yTest card to your hand. At the start of each turn, change color of a random card in your hand to #yColorless. Whenever you play a #yColorless card, a random card in your hand costs #b0 until it is played."]
 	},
 	
 	"testmod-TemporaryBarricadeUp":{

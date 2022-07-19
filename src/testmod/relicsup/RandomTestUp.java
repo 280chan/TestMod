@@ -1,7 +1,6 @@
-package testmod.relics;
+package testmod.relicsup;
 
 import java.util.ArrayList;
-import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -9,11 +8,11 @@ import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import testmod.mymod.TestMod;
+import testmod.relics.RandomTest;
 
-public class RandomTest extends AbstractTestRelic {
-	public static Color color = null;
+public class RandomTestUp extends AbstractUpgradedRelic {
 	
-	public RandomTest() {
+	public RandomTestUp() {
 		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 	}
 	
@@ -24,33 +23,47 @@ public class RandomTest extends AbstractTestRelic {
 					ArrayList<AbstractCard> list = p().hand.group.stream()
 							.filter(c -> c.cost > -1 && c.costForTurn != 0 && !c.freeToPlayOnce).collect(toArrayList());
 					reduceRandom(list.isEmpty() ? p().hand.group : list);
-				    this.show();
 				}
 			});
 		}
 	}
 	
-	private static void reduceRandom(ArrayList<AbstractCard> list) {
-		reduceCost(list.size() == 1 ? list.get(0) : randomFrom(list));
+	private void reduceRandom(ArrayList<AbstractCard> list) {
+		superFlash(list.size() == 1 ? list.get(0) : randomFrom(list)).freeToPlayOnce = true;
 	}
 	
-	private static void reduceCost(AbstractCard c) {
-		c.setCostForTurn(Math.max(c.costForTurn - 1, 0));
-	}
-	
-	private static AbstractCard randomFrom(ArrayList<AbstractCard> list) {
+	private AbstractCard randomFrom(ArrayList<AbstractCard> list) {
 		return list.get(AbstractDungeon.cardRandomRng.random(list.size() - 1));
+	}
+	
+	private AbstractCard superFlash(AbstractCard c) {
+		c.superFlash();
+	    this.show();
+		return c;
 	}
 	
 	public void atPreBattle() {
 		AbstractCard c = randomFrom(TestMod.CARDS).makeCopy();
+		c.upgrade();
 	    this.atb(new MakeTempCardInHandAction(c));
 	    this.show();
     }
 	
+	public void atTurnStartPostDraw() {
+		this.addTmpActionToBot(() -> {
+			if (!p().hand.group.isEmpty()) {
+				ArrayList<AbstractCard> list = p().hand.group.stream().filter(c -> c.color != CardColor.COLORLESS)
+						.collect(toArrayList());
+				if (!list.isEmpty()) {
+					superFlash(randomFrom(list)).color = CardColor.COLORLESS;
+				}
+			}
+		});
+	}
+	
 	public void onRefreshHand() {
-		if (color == null)
-			color = this.initGlowColor();
+		if (RandomTest.color == null)
+			RandomTest.color = this.initGlowColor();
 		this.updateHandGlow();
 	}
 	
@@ -60,10 +73,10 @@ public class RandomTest extends AbstractTestRelic {
 			return;
 		for (AbstractCard c : p().hand.group) {
 			if (c.color == CardColor.COLORLESS && c.hasEnoughEnergy() && c.cardPlayable(this.randomMonster())) {
-				this.addToGlowChangerList(c, color);
+				this.addToGlowChangerList(c, RandomTest.color);
 				active = true;
 			} else
-				this.removeFromGlowList(c, color);
+				this.removeFromGlowList(c, RandomTest.color);
 		}
 		if (active)
 			this.beginLongPulse();

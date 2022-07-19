@@ -575,8 +575,10 @@
 	
 	"testmod-upgrade-RandomTest":{
 		"TEXT": [
+			"4",
 			"0",
-			"0"
+			"0",
+			"200"
 		]
 	},
 	
