@@ -178,9 +178,9 @@
 	},
 	
 	"testmod-RealStoneCalenderUp":{
-		"NAME": "The Real Stone Calender",
+		"NAME": "The Real Stone Calender+",
 		"FLAVOR": "最强遗物——历石",
-		"DESCRIPTIONS":["At the end of each turn, deal the number of turn squared damage to ALL enemies. Reset turn counter for damage every #b7 turns."]
+		"DESCRIPTIONS":["At the start and end of each turn, deal AOE damage which's total damage of the number of turn cubed shared by ALL enemies, at least the number of turn squared each enemy."]
 	},
 	
 	"testmod-NyarlathotepUp":{

@@ -217,8 +217,10 @@
 	
 	"testmod-upgrade-RealStoneCalender":{
 		"TEXT": [
+			"5",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	

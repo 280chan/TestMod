@@ -178,9 +178,9 @@
 	},
 	
 	"testmod-RealStoneCalenderUp":{
-		"NAME": "真正的历石",
+		"NAME": "真正的历石+",
 		"FLAVOR": "最强遗物——历石",
-		"DESCRIPTIONS":["每回合结束，对所有敌人造成回合数的平方的伤害。每 #b7 回合重置计算伤害的回合数。"]
+		"DESCRIPTIONS":["每回合开始与结束，所有敌人均摊回合数的立方的伤害，每个敌人至少回合数的平方的伤害。"]
 	},
 	
 	"testmod-NyarlathotepUp":{
