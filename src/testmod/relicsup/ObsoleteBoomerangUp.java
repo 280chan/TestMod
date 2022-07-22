@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 
 public class ObsoleteBoomerangUp extends AbstractUpgradedRelic {
@@ -23,7 +24,7 @@ public class ObsoleteBoomerangUp extends AbstractUpgradedRelic {
 		} else {
 			effect = AttackEffect.BLUNT_HEAVY;
 		}
-		this.atb(new DamageAllEnemiesAction(p(), this.counter, DamageType.THORNS, effect));
+		atb(new DamageAllEnemiesAction(p(), DamageInfo.createDamageMatrix(counter, true), DamageType.THORNS, effect));
 		this.show();
 	}
 	
