@@ -1,16 +1,13 @@
 package testmod.commands;
 
 import java.util.ArrayList;
-import basemod.BaseMod;
-import testmod.utils.HandSizeCounterUpdater;
+import testmod.utils.MiscMethods;
 
-public class HandSizeAdd extends TestCommand implements HandSizeCounterUpdater {
+public class HandSizeAdd extends TestCommand implements MiscMethods {
 	
 	public void execute(String[] tokens, int depth) {
 		try {
-			int i = Integer.parseInt(tokens[2]);
-			BaseMod.MAX_HAND_SIZE += i;
-			this.updateHandSize();
+			this.updateHandSize(Integer.parseInt(tokens[2]));
 		} catch (Exception e) {
 			HandSize.cmdHelp();
 		}

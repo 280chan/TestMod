@@ -2,7 +2,6 @@ package testmod.relics;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
-import basemod.BaseMod;
 import testmod.mymod.TestMod;
 import testmod.utils.HandSizeCounterUpdater;
 
@@ -15,15 +14,13 @@ public class HyperplasticTissue extends AbstractTestRelic implements HandSizeCou
 	
 	public void onCardDraw(AbstractCard c) {
 		if (c.type == CardType.STATUS || c.type == CardType.CURSE) {
-			BaseMod.MAX_HAND_SIZE++;
+			this.updateHandSize(1);
 			this.delta++;
-			this.updateHandSize();
 		}
     }
 	
 	public void onEquip() {
-		BaseMod.MAX_HAND_SIZE++;
-		this.updateHandSize();
+		this.updateHandSize(1);
 		this.delta = 0;
 		TestMod.setActivity(this);
 		if (this.inCombat() && this.isActive) {
@@ -32,18 +29,16 @@ public class HyperplasticTissue extends AbstractTestRelic implements HandSizeCou
     }
 	
 	public void onUnequip() {
-		BaseMod.MAX_HAND_SIZE -= this.delta + 1;
-		this.updateHandSize();
+		this.updateHandSize(-(this.delta + 1));
     }
 	
 	public void atPreBattle() {
 		this.delta = 0;
-		this.updateHandSize();
+		this.updateHandSize(0);
     }
 	
 	public void onVictory() {
-		BaseMod.MAX_HAND_SIZE -= this.delta;
-		this.updateHandSize();
+		this.updateHandSize(-this.delta);
 		this.delta = 0;
     }
 

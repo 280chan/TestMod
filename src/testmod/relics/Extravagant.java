@@ -40,7 +40,7 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic, Ha
 	public void atPreBattle() {
 		if (this.isActive) {
 			delta = 0;
-			this.updateHandSize();
+			this.updateHandSize(0);
 		}
     }
 	
@@ -55,9 +55,8 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic, Ha
 	public void onVictory() {
 		this.up(true);
 		if (delta > 0) {
-			BaseMod.MAX_HAND_SIZE += delta;
+			this.updateHandSize(delta);
 			delta = 0;
-			this.updateHandSize();
 		}
     }
 	
@@ -82,8 +81,7 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic, Ha
 			this.show();
 			int tmp = Math.max(1, BaseMod.MAX_HAND_SIZE / 2);
 			delta += tmp;
-			BaseMod.MAX_HAND_SIZE -= tmp;
-			this.updateHandSize();
+			this.updateHandSize(-tmp);
 			this.updateAllPulse();
 			if ((tmp = Math.min(p().energy.energyMaster, p().hand.group.size())) > 0) {
 				reverse(p().hand.group).forEach(play(tmp));

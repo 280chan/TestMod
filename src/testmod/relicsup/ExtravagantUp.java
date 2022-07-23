@@ -54,9 +54,8 @@ public class ExtravagantUp extends AbstractUpgradedRelic implements ClickableRel
 	public void onVictory() {
 		this.up(true);
 		if (delta > 0) {
-			BaseMod.MAX_HAND_SIZE += delta;
+			updateHandSize(delta);
 			delta = 0;
-			updateHandSize();
 		}
     }
 	
@@ -80,8 +79,7 @@ public class ExtravagantUp extends AbstractUpgradedRelic implements ClickableRel
 		if (this.inCombat() && this.playerTurn && BaseMod.MAX_HAND_SIZE > 0 && !p().hand.group.isEmpty()) {
 			this.show();
 			delta++;
-			BaseMod.MAX_HAND_SIZE--;
-			updateHandSize();
+			updateHandSize(-1);
 			this.updateAllPulse();
 			int tmp = p().hand.group.size();
 			reverse(p().hand.group).forEach(play(tmp));

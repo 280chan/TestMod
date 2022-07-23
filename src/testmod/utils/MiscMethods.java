@@ -891,9 +891,9 @@ public interface MiscMethods {
 	}
 	
 	default Stream<AbstractTestRelic> relicStream() {
-		Stream.Builder b = Stream.builder();
-		p().relics.stream().filter(r -> r instanceof AbstractTestRelic).forEach(b::add);
-		return b.build().map(r -> (AbstractTestRelic) r);
+		Stream.Builder<AbstractTestRelic> b = Stream.builder();
+		p().relics.stream().filter(r -> r instanceof AbstractTestRelic).map(r -> (AbstractTestRelic) r).forEach(b::add);
+		return b.build();
 	}
 	
 	default <T extends AbstractTestRelic> Stream<T> relicStream(Class<T> sample) {
@@ -1061,6 +1061,11 @@ public interface MiscMethods {
 	
 	default AbstractMonster randomMonster() {
 		return AbstractDungeon.getMonsters().getRandomMonster(null, true, this.copyRNG(AbstractDungeon.monsterRng));
+	}
+	
+	default void updateHandSize(int delta) {
+		BaseMod.MAX_HAND_SIZE += delta;
+		relicStream().filter(r -> r instanceof HandSizeCounterUpdater).forEach(r -> r.counter = BaseMod.MAX_HAND_SIZE);
 	}
 	
 	public static class Prime {
