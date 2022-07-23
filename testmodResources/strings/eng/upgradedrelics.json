@@ -20,7 +20,7 @@
 	"testmod-PortableAltarUp":{
 		"NAME": "Portable Altar+",
 		"FLAVOR": "这个祭坛给予了你强大的能力，但也贪婪地吞噬着你的生命。",
-		"DESCRIPTIONS":["Whenever you climb a floor, lose #r1 Max HP. For every #b2 Max HP lost through this relic: increase #b10% Max HP gain; At the start of each combat, gain #b1 #yStrength, #yDexterity and #yPlated #yArmor. Right click during combat, lose #r1 Max HP. Otherwise right click to use #b2 counter, increase #b2 Max HP and gain a random #ygem #ykey."]
+		"DESCRIPTIONS":["Whenever you climb a floor, lose #r1 Max HP. For every #b2 Max HP lost through this relic: increase #b10% Max HP gain; At the start of each combat, gain #b1 #yStrength, #yDexterity and #yPlated #yArmor. Right click during combat, lose #r1 Max HP. Otherwise right click to use half your counter, increase same amount of Max HP and gain a random #ygem #ykey."]
 	},
 	
 	"testmod-EnergyCheckUp":{
@@ -54,9 +54,9 @@
 	},
 	
 	"testmod-RecursionUp":{
-		"NAME": "Recursion",
+		"NAME": "Recursion+",
 		"FLAVOR": "“人理解迭代，神理解递归 。” —— 彼得杜奇",
-		"DESCRIPTIONS":["Draw #b5 additional cards on the first turn of each combat. For rest of turns, draw #b1 fewer card than the previous turn. Reset the progress every #b10 turns."]
+		"DESCRIPTIONS":["Increase maximum hand size by #b10 for rest of the run. Draw #b10 additional cards on the first turn of each combat. For rest of turns, draw #b1 fewer card than the previous turn. Reset the progress every #b10 turns."]
 	},
 	
 	"testmod-TemperanceUp":{
