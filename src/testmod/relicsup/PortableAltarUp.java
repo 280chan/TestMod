@@ -66,10 +66,11 @@ public class PortableAltarUp extends AbstractUpgradedRelic implements ClickableR
 			this.show();
 			this.loseMaxHP(1);
 		} else if (this.counter > 1) {
-			this.counter -= 2;
+			int tmp = this.counter / 2;
+			this.counter -= tmp;
 			this.addRandomKey();
 			this.show();
-			p().increaseMaxHp(2, true);
+			p().increaseMaxHp(tmp, true);
 		}
 	}
 	
