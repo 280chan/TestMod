@@ -221,7 +221,7 @@ public class AllUpgradeRelic implements MiscMethods {
 		public static class KeepRecallOptionPatch {
 			@SpirePostfixPatch
 			public static void Postfix(CampfireUI ui) {
-				if (!Loader.isModLoaded("RelicUpgradeLib"))
+				if (Loader.isModLoaded("chronoMods") || !Loader.isModLoaded("RelicUpgradeLib"))
 					return;
 				ArrayList<AbstractCampfireOption> l = ReflectionHacks.getPrivate(ui, CampfireUI.class, "buttons");
 				if (valid(true) && l.stream().noneMatch(o -> o instanceof RecallOption)) {
@@ -235,7 +235,7 @@ public class AllUpgradeRelic implements MiscMethods {
 		public static class KeepSapphireKeyPatch {
 			@SpireInsertPatch(locator = Locator.class)
 			public static void Insert(AbstractChest ui, boolean bossChest) {
-				if (Loader.isModLoaded("RelicUpgradeLib") && valid(false)) {
+				if (!Loader.isModLoaded("chronoMods") && Loader.isModLoaded("RelicUpgradeLib") && valid(false)) {
 					AbstractDungeon.getCurrRoom().addSapphireKey(AbstractDungeon.getCurrRoom().rewards
 							.get(AbstractDungeon.getCurrRoom().rewards.size() - 1));
 				}
