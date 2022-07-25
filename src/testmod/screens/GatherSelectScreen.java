@@ -15,7 +15,6 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import basemod.BaseMod;
 import testmod.mymod.TestMod;
-import testmod.relics.AbstractTestRelic;
 import testmod.relics.Gather;
 import testmod.relicsup.GatherUp;
 import testmod.utils.MiscMethods;
@@ -47,7 +46,7 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 			remove(p().getRelic(tmp.relicId));
 			print("移除失败");
 		}
-		rewards(this.selectedRelic).stream().map(r -> tryUp(r).makeCopy()).forEach(r -> r.instantObtain());
+		rewards(this.selectedRelic).stream().map(this::tryUp).forEach(r -> r.instantObtain());
 		p().reorganizeRelics();
 		int n = (int) (this.relicStream(Gather.class).count() + this.relicStream(GatherUp.class).count());
 		if (n >= AbstractDungeon.getMonsters().monsters.stream().filter(m -> !(m.isDead || m.isDying)).count()) {
@@ -65,8 +64,7 @@ public class GatherSelectScreen extends RelicSelectScreen implements MiscMethods
 	}
 	
 	private AbstractRelic tryUp(AbstractRelic r) {
-		return (this.upgrade && r instanceof AbstractTestRelic && ((AbstractTestRelic) r).canUpgrade())
-				? ((AbstractTestRelic) r).upgrade() : r;
+		return this.upgrade ? this.tryUpgrade(r.makeCopy()) : r.makeCopy();
 	}
 
 	private void remove(AbstractRelic r) {

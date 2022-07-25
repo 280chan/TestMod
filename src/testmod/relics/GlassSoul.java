@@ -65,7 +65,7 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 	
 	private boolean canBuy(String id) {
 		AbstractRelic r = RelicLibrary.getRelic(id);
-		int a = GlassSoulSelectScreen.amount(r);
+		int a = GlassSoulSelectScreen.amountRate(r);
 		return (p().gold >= r.getPrice() * a / PRICE_RATE && p().gold > 9) || this.counter >= COUNTER_RATE * a;
 	}
 	

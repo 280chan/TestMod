@@ -25,7 +25,6 @@ import com.megacrit.cardcrawl.rooms.TreasureRoom;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import testmod.relics.AaSapphireKey;
-import testmod.relics.AbstractTestRelic;
 import testmod.relics.DeterminationOfClimber;
 
 public class DeterminationOfClimberUp extends AbstractUpgradedRelic {
@@ -93,19 +92,11 @@ public class DeterminationOfClimberUp extends AbstractUpgradedRelic {
 		this.stopPulse();
 	}
 	
-	private AbstractTestRelic tryUp(AbstractTestRelic r) {
-		AbstractTestRelic t = null;
-		if (r != null)
-			t = r.upgrade();
-		return t == null ? r : t;
-	}
-	
 	public void onChestOpenAfter(boolean boss) {
 		AbstractRoom r;
 		if (!boss && AbstractDungeon.currMapNode != null && ((r = AbstractDungeon.getCurrRoom()) != null)
 				&& r instanceof TreasureRoom) {
-			r.rewards.stream().filter(a -> a.type == RewardType.RELIC && a.relic instanceof AbstractTestRelic)
-					.forEach(a -> a.relic = tryUp((AbstractTestRelic) a.relic));
+			r.rewards.stream().filter(a -> a.type == RewardType.RELIC).forEach(a -> a.relic = this.tryUpgrade(a.relic));
 			
 			RewardItem i = new RewardItem(TMP == null ? TMP = new RewardItem() : TMP, RewardType.SAPPHIRE_KEY);
 			RewardItem j = new RewardItem(i, RewardType.SAPPHIRE_KEY);

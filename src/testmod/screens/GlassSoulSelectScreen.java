@@ -11,7 +11,6 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.shop.ShopScreen;
 import com.megacrit.cardcrawl.vfx.SpeechBubble;
 
-import testmod.relics.AbstractTestRelic;
 import testmod.relics.GlassSoul;
 import testmod.relicsup.GlassSoulUp;
 import testmod.utils.MiscMethods;
@@ -30,15 +29,7 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 
 	@Override
 	protected void addRelics() {
-		this.list.stream().map(RelicLibrary::getRelic).map(this::tryUp).forEach(this.relics::add);
-	}
-	
-	private AbstractRelic tryUp(AbstractRelic r) {
-		if (this.r instanceof GlassSoulUp && r instanceof AbstractTestRelic && ((AbstractTestRelic) r).canUpgrade()) {
-			return ((AbstractTestRelic) r).upgrade().makeCopy();
-		} else {
-			return r.makeCopy();
-		}
+		this.list.stream().map(RelicLibrary::getRelic).map(r -> tryUpgrade(r.makeCopy())).forEach(this.relics::add);
 	}
 
 	public static void playCantBuySfx() {
@@ -58,14 +49,15 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 		print(tmp);
 	}
 	
-	public static int amount(AbstractRelic r) {
-		return (int) Math.max(MISC.p().relics.stream().filter(a -> a.relicId.equals(r.relicId)).count(), 1);
+	public static int amountRate(AbstractRelic r) {
+		return (MISC.canUpgrade(r) || MISC.upgraded(r) ? 2 : 1)
+				* (int) Math.max(MISC.p().relics.stream().filter(a -> a.relicId.equals(r.relicId)).count(), 1);
 	}
 	
 	@Override
 	protected void afterSelected() {
-		if (this.r.counter >= counterRate() * amount(this.selectedRelic)) {
-			this.r.counter -= counterRate() * amount(this.selectedRelic);
+		if (this.r.counter >= counterRate() * amountRate(this.selectedRelic)) {
+			this.r.counter -= counterRate() * amountRate(this.selectedRelic);
 		} else if (p().gold < price(this.selectedRelic)) {
 			playCantBuySfx();
 			createCantBuyMsg();
@@ -96,12 +88,12 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 	}
 
 	private int price(AbstractRelic r) {
-		return Math.max(r.getPrice() * amount(r) / priceRate(), 10);
+		return Math.max(r.getPrice() * amountRate(r) / priceRate(), 10);
 	}
 	
 	@Override
 	protected String categoryOf(AbstractRelic r) {
-		return this.r.counter >= counterRate() * amount(r) ? amount(r) + "" : price(r) + "g";
+		return this.r.counter >= counterRate() * amountRate(r) ? amountRate(r) + "" : price(r) + "g";
 	}
 
 	@Override

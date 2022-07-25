@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Stream;
 
-import com.evacipated.cardcrawl.modthespire.Loader;
+import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
@@ -27,12 +27,11 @@ import testmod.relics.HeartOfDaVinci;
 import testmod.utils.GetRelicTrigger;
 import testmod.utils.MiscMethods;
 
-public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMethods, GetRelicTrigger {
+public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMethods, GetRelicTrigger, ClickableRelic {
 	private static final ArrayList<AbstractRelic> ADDED = new ArrayList<AbstractRelic>();
 	private static final ArrayList<AbstractRelic> COPY = new ArrayList<AbstractRelic>();
 	private static HashMap<CardColor, HashMap<String, AbstractRelic>> map;
 	private static DaVinciLibraryAction action;
-	private static int actionInQueue = 0;
 	private static CardColor color = null;
 	
 	public HeartOfDaVinciUp() {
@@ -92,15 +91,7 @@ public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMetho
 	public void postUpdate() {
 		if (this.isActive && action != null) {
 			if (action.isDone) {
-				if (actionInQueue > 0) {
-					initAction(color);
-					actionInQueue--;
-					TestMod.info("开始新一轮选牌");
-				} else {
-					action = null;
-					color = null;
-					TestMod.info("结束选牌");
-				}
+				action = null;
 			} else {
 				action.update();
 			}
@@ -158,6 +149,7 @@ public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMetho
 		if (this.isActive && this.relicStream(HeartOfDaVinci.class).count() == 0)
 			this.addAllCharacterRelics();
 		p().masterMaxOrbs += 1;
+		this.counter = 0;
     }
 	
 	public void onUnequip() {
@@ -169,6 +161,10 @@ public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMetho
 		action = new DaVinciLibraryAction(this.cards(c), AbstractDungeon.screen);
 	}
 	
+	private Stream<HeartOfDaVinciUp> stream() {
+		return this.relicStream(HeartOfDaVinciUp.class);
+	}
+	
 	@Override
 	public void receiveRelicGet(AbstractRelic r) {
 		if (!this.isActive || COPY.remove(r))
@@ -177,33 +173,34 @@ public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMetho
 			map = HeartOfDaVinci.map == null ? BaseMod.getAllCustomRelics() : HeartOfDaVinci.map;
 		String name = this.name + ": ";
 		TestMod.info(name + "获得遗物");
-		CardColor c = getColor(r);
-		if (c == null) {
-			TestMod.info(name + "非角色限定遗物");
-			return;
-		}
-		if (c != getColor()) {
+		if (r.tier != RelicTier.BOSS && this.canUpgrade(r)) {
 			this.addTmpEffect(() -> {
 				int i = p().relics.indexOf(r);
-				AbstractRelic copy = Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.canUpgrade(r)
-						? AllUpgradeRelic.getUpgrade(r).makeCopy() : null;
-				if (i != -1 && copy != null) {
+				if (i != -1) {
 					TestMod.info(name + r.name + "可升级，进行升级");
 					r.onUnequip();
-					COPY.add(copy);
-					p().relics.set(i, copy);
-					copy.onEquip();
+					AbstractRelic u = this.tryUpgrade(r);
+					COPY.add(u);
+					p().relics.set(i, u);
+					u.onEquip();
 					p().reorganizeRelics();
-				} else {
-					TestMod.info(name + "准备开始大图书馆");
-					initAction(color = c);
-					actionInQueue = (int) this.relicStream(HeartOfDaVinciUp.class).peek(a -> a.flash()).count() - 1;
-					TestMod.info("队列：" + actionInQueue);
 				}
-				this.show();
 			});
-		} else {
-			TestMod.info(name + "角色本身遗物");
+		}
+		CardColor c = getColor(r);
+		if (c != null && c != getColor()) {
+			color = c;
+			stream().forEach(h -> h.counter++);
+		}
+	}
+
+	@Override
+	public void onRightClick() {
+		if (!this.inCombat() && stream().anyMatch(r -> r.counter > 0) && color != null) {
+			(this.counter > 0 ? this : stream().filter(r -> r.counter > 0).findFirst().get()).counter--;
+			TestMod.info(name + "准备开始大图书馆");
+			initAction(color);
+			this.show();
 		}
 	}
 	

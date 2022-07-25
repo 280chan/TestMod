@@ -26,9 +26,11 @@ public class GlassSoulUp extends AbstractUpgradedRelic implements GetRelicTrigge
 		if (!this.isActive)
 			this.counter = -1;
 		else if (!this.hasStack("relicupgradelib.ui.RelicUpgradePopup", "replaceRelic")) {
-			relics.clear();
-			GlassSoul.save();
-			tmpRelics.clear();
+			if (this.relicStream(GlassSoul.class).count() == 0) {
+				relics.clear();
+				GlassSoul.save();
+				tmpRelics.clear();
+			}
 		}
     }
 	
@@ -58,7 +60,7 @@ public class GlassSoulUp extends AbstractUpgradedRelic implements GetRelicTrigge
 	
 	private boolean canBuy(String id) {
 		AbstractRelic r = RelicLibrary.getRelic(id);
-		int a = GlassSoulSelectScreen.amount(r);
+		int a = GlassSoulSelectScreen.amountRate(r);
 		return (p().gold >= r.getPrice() * a / PRICE_RATE && p().gold > 9) || this.counter >= COUNTER_RATE * a;
 	}
 	
