@@ -77,8 +77,10 @@
 	
 	"testmod-upgrade-Register":{
 		"TEXT": [
+			"4",
 			"0",
-			"0"
+			"0",
+			"150"
 		]
 	},
 	
@@ -187,10 +189,10 @@
 	
 	"testmod-upgrade-HeartOfDaVinci":{
 		"TEXT": [
-			"1",
+			"7",
 			"0",
 			"0",
-			"50"
+			"999"
 		]
 	},
 	

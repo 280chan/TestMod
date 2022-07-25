@@ -36,9 +36,9 @@
 	},
 	
 	"testmod-RegisterUp":{
-		"NAME": "Register",
+		"NAME": "Register+",
 		"FLAVOR": "关机前自动保存，启动时自动读取。",
-		"DESCRIPTIONS":["All the powers that were greater than #b1 at the end of a combat will be saved, you will gain #b1 of each of these powers at the start of next combat. ( #ySL will cause losing saved powers)"]
+		"DESCRIPTIONS":["All the buffs at the end of a combat will be saved, you will gain half (at least #b1) of these powers at the start of next combat. ( #ySL in combat will half values again, exiting game will cause losing saved powers)"]
 	},
 	
 	"testmod-InfectionSourceUp":{
@@ -126,7 +126,7 @@
 	"testmod-HeartOfDaVinciUp":{
 		"NAME": "Heart Of Da Vinci+",
 		"FLAVOR": "你现在感觉到你仿佛能接受所有恩惠。",
-		"DESCRIPTIONS":["Other character's relics are now obtainable. Gain #b1 Orb slot. NL Whenever you pickup another character's relic, if it is upgradable, upgrade it, otherwise choose and add #b1 of #b20 of that character's cards to your deck."]
+		"DESCRIPTIONS":["Other character's relics are now obtainable. Gain #b1 Orb slot. NL Whenever you pickup a non-Boss #yUpgradable relic, upgrade it. Whenever you pickup another character's relic, gain #b1 count, right click on this relic outside combat to use #b1 count, choose and add #b1 of #b20 of latest corresponding character's cards to your deck."]
 	},
 	
 	"testmod-IncinerationGeneratorUp":{
@@ -366,7 +366,7 @@
 	"testmod-DeterminationOfClimberUp":{
 		"NAME": "The Determination Of Climber+",
 		"FLAVOR": "然而某些登山者总是喜欢原地踏步。",
-		"DESCRIPTIONS":["Whenever you play a card cost more than the previous one, for each more cost, gain [E] , heal #b1, draw #b1, deal #b1 damage to ALL enemies, gain #b1 #ygold. #yNon-Boss Chest now has an extra #bSapphire #bKey, if the chest contains #yTest relic that can be upgraded, upgrade it."]
+		"DESCRIPTIONS":["Whenever you play a card cost more than the previous one, for each more cost, gain [E] , heal #b1, draw #b1, deal #b1 damage to ALL enemies, gain #b1 #ygold. #yNon-Boss Chest now has an extra #bSapphire #bKey, if the chest contains an #yUpgradable relic, upgrade it."]
 	},
 	
 	"testmod-BloodSacrificeSpiritualizationUp":{
@@ -534,7 +534,7 @@
 	"testmod-GlassSoulUp":{
 		"NAME": "Glass Soul+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you get a relic, record it into list when you enter #rnext #rroom. Whenever you win a combat without losing hp, gain #b1 count. Outside combat you can right click this relic to choose a relic from list, use #b1 count or #b10% its price to get it again, for each the relic you have, price increase by #b10% and 1. If it is #yUpgradable #yTest relic, get upgraded version."]
+		"DESCRIPTIONS":["Whenever you get a relic, record it into list when you enter #rnext #rroom. Whenever you win a combat without losing hp, gain #b1 count. Outside combat you can right click this relic to choose a relic from list, use #b1 count or #b10% its price to get it again, for each the relic you have, price increase by #b10% and 1. If it is #yUpgradable relic, get upgraded version. Upgraded relics cost twice as usual."]
 	},
 	
 	"testmod-GiantKillerUp":{
@@ -558,7 +558,7 @@
 	"testmod-GatherUp":{
 		"NAME": "Gather+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":[" #yRight #yClick during combat, if you have two relics with same length description, you can choose to select one of them to convert to a same-tier relic and kill a random enemy, if the new relic is an #yUpgradable #yTestmod relic, gain upgraded version of it."]
+		"DESCRIPTIONS":[" #yRight #yClick during combat, if you have two relics with same length description, you can choose to select one of them to convert to a same-tier relic and kill a random enemy, if the new relic is an #yUpgradable relic, upgrade it."]
 	},
 	
 	"testmod-MistCoreUp":{
