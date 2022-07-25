@@ -16,6 +16,7 @@ import testmod.utils.MiscMethods;
 
 public class ChangeGainGoldAmountPatch implements MiscMethods {
 	private static final int MAX = 2000000000;
+	private static final UnaryOperator<Double> T = MISC.t();
 	
 	@SpirePatch(clz = AbstractPlayer.class, method = "gainGold")
 	public static class AbstractPlayerPatch {
@@ -23,38 +24,26 @@ public class ChangeGainGoldAmountPatch implements MiscMethods {
 		public static void Insert(AbstractPlayer player, @ByRef int[] amount) {
 			double input = amount[0];
 			ArrayList<UnaryOperator<Double>> list = new ArrayList<UnaryOperator<Double>>();
-			if (hasEnemy()) {
-				list.add(MISC.chain(AbstractDungeon.getMonsters().monsters.stream().map(c -> operator(c))));
+			if (MISC.hasEnemies()) {
+				list.add(AbstractDungeon.getMonsters().monsters.stream().map(c -> operator(c)).reduce(T, MISC::chain));
 			}
 			list.add(operator(player));
 			list.add(operator(player.relics));
-			input = MISC.chain(list.stream()).apply(input);
+			input = list.stream().reduce(T, MISC::chain).apply(input);
 			if (input < 0)
 				input = 0;
 			amount[0] = input + player.gold > MAX ? (player.gold <= 0 ? MAX : MAX - player.gold) : (int) (input + 0.01);
+			list.clear();
 		}
 	}
 	
 	private static UnaryOperator<Double> operator(AbstractCreature c) {
-		return MISC.chain(c.powers.stream().filter(o -> o instanceof MiscMethods)
-				.map(o -> MISC.get(((MiscMethods) o)::gainGold)));
+		return operator(c.powers);
 	}
 	
-	private static UnaryOperator<Double> operator(ArrayList<? extends Object> list) {
-		return MISC.chain(list.stream().filter(o -> o instanceof MiscMethods)
-				.map(o -> MISC.get(((MiscMethods) o)::gainGold)));
-	}
-	
-	private static boolean hasEnemy() {
-		if (AbstractDungeon.currMapNode == null)
-			return false;
-		if (AbstractDungeon.getCurrRoom() == null)
-			return false;
-		if (AbstractDungeon.getCurrRoom().monsters == null)
-			return false;
-		if (AbstractDungeon.getCurrRoom().monsters.monsters == null)
-			return false;
-		return true;
+	private static UnaryOperator<Double> operator(ArrayList<?> list) {
+		return list.stream().filter(o -> o instanceof MiscMethods).map(o -> MISC.get(((MiscMethods) o)::gainGold))
+				.reduce(T, MISC::chain);
 	}
 	
 	@SpirePatch(clz = TopPanel.class, method = "updateGold")
