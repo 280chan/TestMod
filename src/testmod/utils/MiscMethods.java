@@ -6,6 +6,7 @@ import java.util.stream.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.RandomXS128;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.*;
 import com.megacrit.cardcrawl.actions.common.*;
@@ -48,6 +49,8 @@ import testmod.powers.AbstractTestPower;
 import testmod.relics.AbstractTestRelic;
 import testmod.relics.Prudence;
 import testmod.relics.StringDisintegrator;
+import testmod.relicsup.AbstractUpgradedRelic;
+import testmod.relicsup.AllUpgradeRelic;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public interface MiscMethods {
@@ -1061,6 +1064,26 @@ public interface MiscMethods {
 	
 	default AbstractMonster randomMonster() {
 		return AbstractDungeon.getMonsters().getRandomMonster(null, true, this.copyRNG(AbstractDungeon.monsterRng));
+	}
+	
+	default boolean upgraded(AbstractRelic r) {
+		if (Loader.isModLoaded("RelicUpgradeLib"))
+			return AllUpgradeRelic.isUpgraded(r);
+		return r instanceof AbstractUpgradedRelic;
+	}
+	
+	default boolean canUpgrade(AbstractRelic r) {
+		if (Loader.isModLoaded("RelicUpgradeLib"))
+			return AllUpgradeRelic.upgradable(r);
+		return r instanceof AbstractTestRelic && ((AbstractTestRelic) r).canUpgrade();
+	}
+	
+	default AbstractRelic tryUpgrade(AbstractRelic r) {
+		if (Loader.isModLoaded("RelicUpgradeLib"))
+			return AllUpgradeRelic.getUpgrade(r).makeCopy();
+		if (r instanceof AbstractTestRelic && ((AbstractTestRelic) r).canUpgrade())
+			return ((AbstractTestRelic) r).upgrade();
+		return r;
 	}
 	
 	default void updateHandSize(int delta) {
