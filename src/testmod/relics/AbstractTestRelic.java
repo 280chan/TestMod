@@ -14,6 +14,7 @@ import basemod.abstracts.CustomRelic;
 import testmod.mymod.TestMod;
 import testmod.relicsup.AbstractUpgradedRelic;
 import testmod.relicsup.AbstractUpgradedRevivalRelic;
+import testmod.utils.InfiniteUpgradeRelic;
 import testmod.utils.MiscMethods;
 
 public abstract class AbstractTestRelic extends CustomRelic implements MiscMethods {
@@ -61,10 +62,13 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	}
 	
 	public boolean canUpgrade() {
-		return TestMod.UP_RELICS.stream().anyMatch(r -> (this.relicId + "Up").equals(r.relicId));
+		return this instanceof InfiniteUpgradeRelic
+				|| TestMod.UP_RELICS.stream().anyMatch(r -> (this.relicId + "Up").equals(r.relicId));
 	}
 	
 	public AbstractUpgradedRelic upgrade() {
+		if (this instanceof InfiniteUpgradeRelic)
+			return (AbstractUpgradedRelic) this.makeCopy();
 		try {
 			return (AbstractUpgradedRelic) Class.forName("testmod.relicsup." + this.getClass().getSimpleName() + "Up")
 					.newInstance();

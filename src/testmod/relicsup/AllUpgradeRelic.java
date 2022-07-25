@@ -19,11 +19,15 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.map.MapRoomNode;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
+import com.megacrit.cardcrawl.rewards.RewardItem;
+import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.rooms.CampfireUI;
+import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import com.megacrit.cardcrawl.saveAndContinue.SaveAndContinue;
 import com.megacrit.cardcrawl.saveAndContinue.SaveFile;
 import com.megacrit.cardcrawl.screens.DoorUnlockScreen;
@@ -125,8 +129,12 @@ public class AllUpgradeRelic implements MiscMethods {
 		return ProxyManager.getProxyByRelic(r).braches.get(0).relic;
 	}
 	
-	public static boolean canUpgrade(AbstractRelic r) {
+	public static boolean upgradable(AbstractRelic r) {
 		return ProxyManager.getProxyByRelic(r) != null;
+	}
+	
+	public static boolean isUpgraded(AbstractRelic r) {
+		return ProxyManager.upgradeRelics.containsKey(r.relicId);
 	}
 	
 	public static int keyCount() {
@@ -221,7 +229,8 @@ public class AllUpgradeRelic implements MiscMethods {
 		public static class KeepRecallOptionPatch {
 			@SpirePostfixPatch
 			public static void Postfix(CampfireUI ui) {
-				if (Loader.isModLoaded("chronoMods") || !Loader.isModLoaded("RelicUpgradeLib"))
+				if (Loader.isModLoaded("chronoMods") || !Loader.isModLoaded("RelicUpgradeLib")
+						|| MISC.p().hasRelic("RU Singing Bowl"))
 					return;
 				ArrayList<AbstractCampfireOption> l = ReflectionHacks.getPrivate(ui, CampfireUI.class, "buttons");
 				if (valid(true) && l.stream().noneMatch(o -> o instanceof RecallOption)) {
@@ -235,7 +244,8 @@ public class AllUpgradeRelic implements MiscMethods {
 		public static class KeepSapphireKeyPatch {
 			@SpireInsertPatch(locator = Locator.class)
 			public static void Insert(AbstractChest ui, boolean bossChest) {
-				if (!Loader.isModLoaded("chronoMods") && Loader.isModLoaded("RelicUpgradeLib") && valid(false)) {
+				if (!Loader.isModLoaded("chronoMods") && Loader.isModLoaded("RelicUpgradeLib") && valid(false)
+						&& !MISC.p().hasRelic("RU Singing Bowl")) {
 					AbstractDungeon.getCurrRoom().addSapphireKey(AbstractDungeon.getCurrRoom().rewards
 							.get(AbstractDungeon.getCurrRoom().rewards.size() - 1));
 				}
@@ -245,6 +255,33 @@ public class AllUpgradeRelic implements MiscMethods {
 				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
 					Matcher finalMatcher = new Matcher.FieldAccessMatcher(Settings.class, "hasSapphireKey");
 					return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+				}
+			}
+		}
+
+		@SpirePatch(clz = AbstractDungeon.class, method = "setEmeraldElite")
+		public static class KeepEmeraldKeyPatch {
+			@SpirePostfixPatch
+			public static void Postfix() {
+				if (Settings.isFinalActAvailable && Settings.hasEmeraldKey && !Loader.isModLoaded("chronoMods")
+						&& !MISC.p().hasRelic("RU Singing Bowl")) {
+					ArrayList<MapRoomNode> nodes = AbstractDungeon.map.stream().flatMap(r -> r.stream())
+							.filter(n -> n.room instanceof MonsterRoomElite).collect(MISC.toArrayList());
+					MapRoomNode n = nodes.get(AbstractDungeon.mapRng.random(0, nodes.size() - 1));
+					n.hasEmeraldKey = true;
+					nodes.clear();
+				}
+			}
+		}
+
+		@SpirePatch(clz = MonsterRoomElite.class, method = "addEmeraldKey")
+		public static class KeepEmeraldKeyPatch2 {
+			@SpirePostfixPatch
+			public static void PostFix(MonsterRoomElite r) {
+				if (Settings.isFinalActAvailable && Settings.hasEmeraldKey && !Loader.isModLoaded("chronoMods")
+						&& !MISC.p().hasRelic("RU Singing Bowl") && !r.rewards.isEmpty()
+						&& AbstractDungeon.getCurrMapNode().hasEmeraldKey) {
+					r.rewards.add(new RewardItem(r.rewards.get(r.rewards.size() - 1), RewardType.EMERALD_KEY));
 				}
 			}
 		}
