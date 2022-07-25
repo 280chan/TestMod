@@ -50,7 +50,7 @@
 	"testmod-Register":{
 		"NAME": "锁存器",
 		"FLAVOR": "关机前自动保存，启动时自动读取。",
-		"DESCRIPTIONS":["你在战斗结束时拥有的超过 #b1 层的状态会在下一场战斗开始再次获得 #b1 层。( #ySL 后会失去储存的数据)"]
+		"DESCRIPTIONS":["你在战斗结束时拥有的超过 #b1 层的状态会在下一场战斗开始再次获得 #b1 层。(退出游戏后会失去储存的数据)"]
 	},
 	
 	"testmod-InfectionSource":{

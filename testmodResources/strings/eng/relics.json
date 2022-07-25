@@ -38,7 +38,7 @@
 	"testmod-Register":{
 		"NAME": "Register",
 		"FLAVOR": "关机前自动保存，启动时自动读取。",
-		"DESCRIPTIONS":["All the powers that were greater than #b1 at the end of a combat will be saved, you will gain #b1 of each of these powers at the start of next combat. ( #ySL will cause losing saved powers)"]
+		"DESCRIPTIONS":["All the powers that were greater than #b1 at the end of a combat will be saved, you will gain #b1 of each of these powers at the start of next combat. (Exiting game will cause losing saved powers)"]
 	},
 	
 	"testmod-InfectionSource":{
