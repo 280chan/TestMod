@@ -89,7 +89,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	private void addAndMarkAsSeen(AbstractRelic r) {
 		this.markAsSeen(r);
 		AbstractRelic tmp;
-		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.canUpgrade(r) && r.tier != RelicTier.BOSS
+		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.upgradable(r) && r.tier != RelicTier.BOSS
 				&& this.rollUpgrade()) {
 			tmp = AllUpgradeRelic.getUpgrade(r);
 			original.put(tmp.relicId, r);
