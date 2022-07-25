@@ -4,10 +4,8 @@ import com.evacipated.cardcrawl.mod.stslib.relics.OnReceivePowerRelic;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
-
 import testmod.utils.CounterKeeper;
 import testmod.utils.InfiniteUpgradeRelic;
-
 import com.megacrit.cardcrawl.powers.AbstractPower.PowerType;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
@@ -20,6 +18,13 @@ public class JusticeUp extends AbstractUpgradedRelic implements OnReceivePowerRe
 	public void run(AbstractRelic r, AbstractUpgradedRelic u) {
 		u.counter = r instanceof AbstractUpgradedRelic ? r.counter + 2 : 3;
 		u.updateDescription();
+	}
+	
+	public void onEquip() {
+		if (!this.hasStack("relicupgradelib.ui.RelicUpgradePopup", "replaceRelic")) {
+			this.counter = 3;
+			this.updateDescription();
+		}
 	}
 	
 	public String getUpdatedDescription() {

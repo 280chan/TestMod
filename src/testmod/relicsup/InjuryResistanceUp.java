@@ -14,7 +14,9 @@ public class InjuryResistanceUp extends AbstractUpgradedRelic implements Counter
 	}
 	
 	public void onEquip() {
-		this.counter = 0;
+		if (!this.hasStack("relicupgradelib.ui.RelicUpgradePopup", "replaceRelic")) {
+			this.counter = 0;
+		}
 	}
 	
 	private void addPower() {
