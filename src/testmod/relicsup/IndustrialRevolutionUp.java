@@ -1,6 +1,7 @@
 package testmod.relicsup;
 
 import java.util.ArrayList;
+
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.OnReceivePowerPower;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.evacipated.cardcrawl.mod.stslib.relics.OnReceivePowerRelic;
@@ -12,6 +13,7 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.AbstractPower.PowerType;
 import com.megacrit.cardcrawl.powers.ArtifactPower;
 import testmod.powers.AbstractTestPower;
+import testmod.powers.InorganicPower;
 
 public class IndustrialRevolutionUp extends AbstractUpgradedRelic implements ClickableRelic, OnReceivePowerRelic {
 	public static final ArrayList<AbstractMonster> LIST = new ArrayList<AbstractMonster>();
@@ -100,7 +102,7 @@ public class IndustrialRevolutionUp extends AbstractUpgradedRelic implements Cli
 		}
 		
 		public void updateDescription() {
-			 this.description = desc(0) + this.owner.name + desc(1);
+			 this.description = desc(0);
 		}
 		
 		public void stackPower(int stackAmount) {
@@ -109,7 +111,7 @@ public class IndustrialRevolutionUp extends AbstractUpgradedRelic implements Cli
 		
 		@Override
 		public boolean onReceivePower(AbstractPower p, AbstractCreature t, AbstractCreature s) {
-			return !(check(s) && t.equals(this.owner) && p.type == PowerType.BUFF) || p.ID.equals("Mode Shift");
+			return !(check(s) && t.equals(this.owner) && p.type == PowerType.BUFF) || InorganicPower.isException(p);
 		}
 	    
 	}

@@ -184,6 +184,7 @@ public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMetho
 					p().relics.set(i, u);
 					u.onEquip();
 					p().reorganizeRelics();
+					this.show();
 				}
 			});
 		}

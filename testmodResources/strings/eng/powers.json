@@ -152,6 +152,12 @@
 			" positive effects. Can not give player negative effects."
 		]
 	},
+	"testmod-InorganicPower": {
+		"NAME": "Inorganic",
+		"DESCRIPTIONS": [
+			"Can not receive positive effects. Can not give player negative effects."
+		]
+	},
 	"testmod-LibrarianPower": {
 		"NAME": "Librarian",
 		"DESCRIPTIONS": [

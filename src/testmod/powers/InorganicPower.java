@@ -1,5 +1,7 @@
 package testmod.powers;
 
+import java.util.stream.Stream;
+
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.OnReceivePowerPower;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -7,6 +9,11 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import testmod.relics.IndustrialRevolution;
 
 public class InorganicPower extends AbstractTestPower implements OnReceivePowerPower {
+	public static final String[] EXCEPTION = { "Mode Shift", "Stasis" };
+	
+	public static boolean isException(AbstractPower p) {
+		return Stream.of(EXCEPTION).anyMatch(p.ID::equals);
+	}
 	
 	private static boolean check(AbstractCreature m) {
 		return IndustrialRevolution.LIST.contains(m);
@@ -35,7 +42,7 @@ public class InorganicPower extends AbstractTestPower implements OnReceivePowerP
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature t, AbstractCreature s) {
 		return !(check(s) && t.equals(this.owner) && s.equals(this.owner) && p.type == PowerType.BUFF)
-				|| p.ID.equals("Mode Shift");
+				|| isException(p);
 	}
     
 }

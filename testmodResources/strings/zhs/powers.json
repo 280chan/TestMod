@@ -152,6 +152,12 @@
 			" 增益状态，无法给玩家负面状态。"
 		]
 	},
+	"testmod-InorganicPowerUp":{
+		"NAME":"无机物+",
+		"DESCRIPTIONS":[
+			"无法获得增益状态，无法给玩家负面状态。"
+		]
+	},
 	"testmod-LibrarianPower":{
 		"NAME":"图书管理员",
 		"DESCRIPTIONS":[
