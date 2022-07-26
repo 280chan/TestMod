@@ -526,9 +526,9 @@
 	},
 	
 	"testmod-ResonanceStoneUp":{
-		"NAME": "Resonance Stone",
+		"NAME": "Resonance Stone+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you #yUpgrade a card in your deck, #yUpgrade all cards with same name in your deck which are #yUpgradable. Whenever a card is #Upgraded by this relic, gain #b1 #yGold and max health, each active increase future effect by #b1."]
+		"DESCRIPTIONS":["Whenever you #yUpgrade a card in your deck, #yUpgrade all cards with same name in your deck which are #yUpgradable. Whenever a card is #Upgraded by this relic, gain #b1 #yGold and max health, each active increase future effect by #b1. Whenever you upgrade a non-Boss relic through normal way, upgrade a random #yUpgradable relic with same rarity."]
 	},
 	
 	"testmod-GlassSoulUp":{
