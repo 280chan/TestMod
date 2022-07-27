@@ -1079,7 +1079,7 @@ public interface MiscMethods {
 	}
 	
 	default AbstractRelic tryUpgrade(AbstractRelic r) {
-		if (Loader.isModLoaded("RelicUpgradeLib"))
+		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.upgradable(r))
 			return AllUpgradeRelic.getUpgrade(r).makeCopy();
 		if (r instanceof AbstractTestRelic && ((AbstractTestRelic) r).canUpgrade())
 			return ((AbstractTestRelic) r).upgrade();
