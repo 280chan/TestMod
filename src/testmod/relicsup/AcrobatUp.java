@@ -8,7 +8,7 @@ import testmod.relics.Acrobat;
 
 public class AcrobatUp extends AbstractUpgradedRelic {
 	public static Color color = null;
-	public int state = 0;
+	private boolean increasing = false, inited = false;
 	
 	public static Color setColorIfNull(Supplier<Color> c) {
 		if (color == null)
@@ -22,22 +22,20 @@ public class AcrobatUp extends AbstractUpgradedRelic {
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
 		int index = 1 + p().hand.group.indexOf(c);
-		int state = 0;
-		if (this.counter == -1)
-			this.counter = index;
-		else
-			state = this.counter <= index ? 1 : -1;
-		this.counter = index;
-		if (this.state * state < 0) {
+		if (this.inited && (this.increasing ^ this.counter <= index)) {
 			p().gainGold(1);
 			this.show();
 		}
+		if (this.counter != -1 && !this.inited) {
+			this.inited = true;
+		}
+		this.increasing = this.counter <= index;
+		this.counter = index;
 		if (index == 1 || index == p().hand.group.size()) {
 			p().gainGold(1);
 			this.show();
 		}
 		this.updateHandGlow();
-		this.state = state;
     }
 	
 	public void onRefreshHand() {
@@ -48,18 +46,11 @@ public class AcrobatUp extends AbstractUpgradedRelic {
 	
 	private void updateHandGlow() {
 		boolean active = false;
-		if (!this.inCombat())
+		if (!this.inCombat() || !this.inited)
 			return;
 		for (AbstractCard c : p().hand.group) {
 			int index = 1 + p().hand.group.indexOf(c);
-			int state = 0;
-			if (this.counter == -1)
-				return;
-			else if (this.counter <= index)
-				state = 1;
-			else
-				state = -1;
-			if (this.state * state < 0 && c.hasEnoughEnergy() && c.cardPlayable(this.randomMonster())) {
+			if ((increasing ^ counter <= index) && c.hasEnoughEnergy() && c.cardPlayable(randomMonster())) {
 				if (this.isActive)
 					this.addToGlowChangerList(c, color);
 				active = true;
@@ -74,11 +65,13 @@ public class AcrobatUp extends AbstractUpgradedRelic {
 
 	public void atPreBattle() {
 		this.counter = -1;
+		this.inited = false;
     }
 
 	public void onVictory() {
 		this.stopPulse();
 		this.counter = -1;
+		this.inited = false;
 	}
 
 }

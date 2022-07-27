@@ -1,4 +1,3 @@
-
 package testmod.cards.colorless;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -7,17 +6,26 @@ import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
-
-import testmod.cards.AbstractTestCard;
-
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
+import basemod.abstracts.CustomSavable;
+import testmod.cards.AbstractTestCard;
 
-public class HandmadeProducts extends AbstractTestCard {
+public class HandmadeProducts extends AbstractTestCard implements CustomSavable<Integer> {
     private static final int BASE_DMG = 0;
     private static final int BASE_MGC = 1;
     private static final int DELTA_COST = 1;
 
+	@Override
+	public void onLoad(Integer savedCost) {
+		this.upgradeBaseCost(savedCost == null ? this.cost : savedCost);
+	}
+
+	@Override
+	public Integer onSave() {
+		return this.cost;
+	}
+    
     public HandmadeProducts() {
         super(0, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
         this.baseDamage = BASE_DMG;

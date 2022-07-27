@@ -50,7 +50,7 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 	}
 	
 	public static int amountRate(AbstractRelic r) {
-		return (MISC.canUpgrade(r) || MISC.upgraded(r) ? 2 : 1)
+		return (MISC.relicStream(GlassSoulUp.class).count() == 0 || !(MISC.canUpgrade(r) || MISC.upgraded(r)) ? 1 : 2)
 				* (int) Math.max(MISC.p().relics.stream().filter(a -> a.relicId.equals(r.relicId)).count(), 1);
 	}
 	
