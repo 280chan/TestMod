@@ -653,8 +653,10 @@
 	
 	"testmod-upgrade-Restrained":{
 		"TEXT": [
+			"4",
 			"0",
-			"0"
+			"0",
+			"200"
 		]
 	},
 	

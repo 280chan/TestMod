@@ -508,9 +508,9 @@
 	},
 	
 	"testmod-RestrainedUp":{
-		"NAME": "Restrained",
+		"NAME": "Restrained+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] . You cannot play #yPower #yCard at first turn of each combat."]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . For each combat, you can no longer play non #yPower #yCard at the first turn if you play a #yPower #yCard. Whenever you use a #yPower #yCard, change type of a random #yPower #yCard to #ySkill."]
 	},
 	
 	"testmod-DyeUp":{

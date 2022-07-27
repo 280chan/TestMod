@@ -30,6 +30,6 @@ public class Restrained extends AbstractTestRelic {
 	}
 	
 	public boolean canPlay(AbstractCard c) {
-		return this.hasPrudence() || this.counter > 1 || c.type != CardType.POWER;
+		return this.counter > 1 || c.type != CardType.POWER;
 	}
 }
