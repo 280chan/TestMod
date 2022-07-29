@@ -466,9 +466,9 @@
 	},
 	
 	"testmod-RetroFilterUp":{
-		"NAME": "Retro Filter",
+		"NAME": "Retro Filter+",
 		"FLAVOR": "这个阴间滤镜能让商人视灰色如粪土…这家伙这么精明是怎么被骗过去的？",
-		"DESCRIPTIONS":["Price of #yColorless cards in shop is reduced from #b120% of normal card price to #b60%, for each normal card you have decrease an extra #b1%. Whenever you play a #yColorless card, gain #b1 #yGold."]
+		"DESCRIPTIONS":["Price of #yColorless cards in shop is reduced to #b0, price of other cards in shop is reduced to #b60%, for each #yColorless card you have decrease an extra #b1%. Whenever you play a #yColorless card, for each #yColorless card you have, gain #b1 #yGold."]
 	},
 	
 	"testmod-DominatorOfWeaknessUp":{

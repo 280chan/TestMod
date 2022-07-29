@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.shop.ShopScreen;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
 import testmod.relics.RetroFilter;
+import testmod.relicsup.RetroFilterUp;
 
 public class RetroFilterPatch {
 	@SpirePatch(clz = ShopScreen.class, method = "purchaseCard")
@@ -21,6 +22,7 @@ public class RetroFilterPatch {
 		@SpireInsertPatch(locator = Locator.class, localvars = { "c" })
 		public static void Insert(ShopScreen ss, AbstractCard hoveredCard, AbstractCard c) {
 			RetroFilter.getThis().forEach(r -> r.onPreviewObtainCard(c));
+			RetroFilterUp.getThis().forEach(r -> r.onPreviewObtainCard(c));
 		}
 		
 		private static class Locator extends SpireInsertLocator {
