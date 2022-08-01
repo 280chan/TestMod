@@ -9,6 +9,8 @@ import com.megacrit.cardcrawl.powers.AbstractPower.PowerType;
 
 import com.megacrit.cardcrawl.powers.WraithFormPower;
 
+import testmod.relicsup.ReverseUp;
+
 public class Reverse extends AbstractTestRelic implements OnReceivePowerRelic {
 	
 	public Reverse() {
@@ -17,6 +19,8 @@ public class Reverse extends AbstractTestRelic implements OnReceivePowerRelic {
 
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature source) {
+		if (ReverseUp.b() > 0)
+			return true;
 		if (this.isActive && p.amount < 0 && (p.canGoNegative || p.amount != -1)) {
 			int delta = (int) (-p.amount * relicStream(Reverse.class).peek(r -> r.show()).count());
 			p.stackPower(delta - p.amount);
@@ -30,8 +34,11 @@ public class Reverse extends AbstractTestRelic implements OnReceivePowerRelic {
 	
 	@Override
 	public int onReceivePowerStacks(AbstractPower p, AbstractCreature source, int amount) {
-		return (this.isActive && p.amount < 0 && (p.canGoNegative || p.amount != -1))
-				? (int) (-p.amount * relicStream(Reverse.class).count()) : amount;
+		if (ReverseUp.b() > 0)
+			return amount;
+		if (amount < 0 && (p.canGoNegative || amount != -1))
+			amount = -amount;
+		return this.isActive && amount < 0 && (p.canGoNegative || amount != -1) ? ReverseUp.a() * amount : amount;
 	}
 	
 	@SpirePatch(clz = WraithFormPower.class, method = "stackPower")

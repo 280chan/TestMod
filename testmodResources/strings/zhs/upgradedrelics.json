@@ -652,9 +652,9 @@
 	},
 	
 	"testmod-ReverseUp":{
-		"NAME": "生死逆转",
+		"NAME": "生死逆转+",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["每当你获得 #y层数 为 #r负 的状态，将其 #y层数 变为其 #g绝对值 。"]
+		"DESCRIPTIONS":["每当你获得 #y层数 为 #r负 的状态，将其 #y层数 变为其 #g绝对值 。 NL 每当你获得增益状态，将其 #y层数 翻倍。 NL 每幕有 #b1 次机会 #g复活 。"]
 	},
 	
 	"testmod-ExtravagantUp":{

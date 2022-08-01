@@ -846,8 +846,10 @@
 	
 	"testmod-upgrade-Reverse":{
 		"TEXT": [
+			"3",
 			"0",
-			"0"
+			"0",
+			"500"
 		]
 	},
 	
