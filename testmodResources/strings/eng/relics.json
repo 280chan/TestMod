@@ -68,7 +68,7 @@
 	"testmod-Justice":{
 		"NAME": "Justice",
 		"FLAVOR": "“有多少邪恶，就有多少正义。”",
-		"DESCRIPTIONS":["Whenever gain a negative effect, gain #b1 #yStrength. "]
+		"DESCRIPTIONS":["Whenever gain a negative effect, gain #b1 #yStrength.", " NL This relic can be upgraded any number of times."]
 	},
 	
 	"testmod-Fortitude":{
@@ -299,7 +299,7 @@
 	"testmod-IWantAll":{
 		"NAME": "I Want All",
 		"FLAVOR": "小孩子才做选择；而我，全都要！",
-		"DESCRIPTIONS":["You have #b10 chances to right click on this relic at the combat reward screen, to make a copy of the card reward.", "This relic has been used up."]
+		"DESCRIPTIONS":["You have #b10 chances to right click on this relic at the combat reward screen, to make a copy of the card reward.", "This relic has been used up.", " NL This relic can be upgraded any number of times."]
 	},
 	
 	"testmod-Antiphasic":{

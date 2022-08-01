@@ -1,10 +1,10 @@
 package testmod.relics;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
@@ -20,6 +20,11 @@ public class IWantAll extends AbstractTestRelic implements ClickableRelic {
 	public IWantAll() {
 		super(RelicTier.SHOP, LandingSound.MAGICAL);
 		this.counter = COUNT;
+	}
+	
+	public String getUpdatedDescription() {
+		return DESCRIPTIONS[isObtained && counter == -2 ? 1 : 0]
+				+ (Loader.isModLoaded("RelicUpgradeLib") ? DESCRIPTIONS[2] : "");
 	}
 	
 	public void onVictory() {
@@ -64,10 +69,7 @@ public class IWantAll extends AbstractTestRelic implements ClickableRelic {
 			if (this.counter == 0) {
 				this.togglePulse(this, victory = false);
 				this.counter = -2;
-				this.description = this.DESCRIPTIONS[1];
-				this.tips.clear();
-		        this.tips.add(new PowerTip(this.name, this.description));
-		        initializeTips();
+				this.updateDescription();
 			}
 		}
 	}

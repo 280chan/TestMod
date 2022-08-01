@@ -1,6 +1,7 @@
 package testmod.relics;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.OnReceivePowerRelic;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
@@ -10,6 +11,10 @@ public class Justice extends AbstractTestRelic implements OnReceivePowerRelic {
 	
 	public Justice() {
 		super(RelicTier.UNCOMMON, LandingSound.SOLID);
+	}
+	
+	public String getUpdatedDescription() {
+		return DESCRIPTIONS[0] + (Loader.isModLoaded("RelicUpgradeLib") ? DESCRIPTIONS[1] : "");
 	}
 
 	@Override
