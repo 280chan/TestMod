@@ -1,6 +1,7 @@
 package testmod.relicsup;
 
 import com.evacipated.cardcrawl.modthespire.Loader;
+import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.FloatyEffect;
 
@@ -12,6 +13,13 @@ import testmod.utils.CounterKeeper;
 public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
 	protected int upgradeTimes = 1;
 
+	public void show() {
+		flash();
+		if (show && !TestMod.relicIMGPath(TestMod.unMakeID(removePostfixForIMG(this.relicId)))
+				.equals(TestMod.relicIMGPath("relic1")))
+		    this.atb(new RelicAboveCreatureAction(p(), this));
+	}
+	
 	private static String removePostfixForIMG(String id) {
 		return id.endsWith("Up") ? id.substring(0, id.length() - 2) : id;
 	}
