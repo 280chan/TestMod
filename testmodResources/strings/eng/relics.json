@@ -479,7 +479,7 @@
 	"testmod-ShadowAmulet":{
 		"NAME": "Shadow Amulet",
 		"FLAVOR": "你失去的那些一切，都会悄无声息的守护着你。",
-		"DESCRIPTIONS":["Whenever you lose #bn #yBlock, you gain #b1 #yBlock when turn ends for the following #bn turns.", "Following #yBlock gain when your turn end:"]
+		"DESCRIPTIONS":["Whenever you lose #bn #yBlock, you gain #b1 #yBlock when turn ends for the following #bn turns.", " NL Following #yBlock gain when your turn end: NL "]
 	},
 	
 	"testmod-HyperplasticTissue":{

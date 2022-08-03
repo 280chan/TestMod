@@ -515,7 +515,7 @@
 	"testmod-ShadowAmulet":{
 		"NAME": "暗影护符",
 		"FLAVOR": "你失去的那些一切，都会悄无声息的守护着你。",
-		"DESCRIPTIONS":["每当你通过任何方式失去 #bn 点 #y格挡 ，在接下来的 #bn 次回合结束时，获得 #b1 点 #y格挡 。", "之后的每次回合结束时获得 #y格挡 数量依次为："]
+		"DESCRIPTIONS":["每当你通过任何方式失去 #bn 点 #y格挡 ，在接下来的 #bn 次回合结束时，获得 #b1 点 #y格挡 。", " NL 之后的每次回合结束时获得 #y格挡 数量依次为： NL "]
 	},
 	
 	"testmod-HyperplasticTissue":{
