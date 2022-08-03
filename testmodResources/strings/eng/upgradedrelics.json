@@ -226,9 +226,9 @@
 	},
 	
 	"testmod-SaigiyounoYouUp":{
-		"NAME": "Saigiyou no You",
+		"NAME": "Saigiyou no You+",
 		"FLAVOR": "邪恶又优雅的不祥之物",
-		"DESCRIPTIONS":["Whenever you cause unblocked damage to enemies, heal #b1 HP."]
+		"DESCRIPTIONS":["Whenever you cause unblocked damage to enemies, if the damage, your HP and target's HP are all Primes, kill the enemy."]
 	},
 	
 	"testmod-NineUp":{
@@ -478,9 +478,9 @@
 	},
 	
 	"testmod-ShadowAmuletUp":{
-		"NAME": "Shadow Amulet",
+		"NAME": "Shadow Amulet+",
 		"FLAVOR": "你失去的那些一切，都会悄无声息的守护着你。",
-		"DESCRIPTIONS":["Whenever you lose #bn #yBlock, you gain #b1 #yBlock when turn ends for the following #bn turns.", "Following #yBlock gain when your turn end:"]
+		"DESCRIPTIONS":["Whenever you lose #bn #yBlock, you gain increasing #yBlock when turn ends until sum reaches #bn. At the end of combat, gain #yGold of the next #yBlock to gain, at most #b100.", " NL Following #yBlock gain when your turn end: NL "]
 	},
 	
 	"testmod-HyperplasticTissueUp":{

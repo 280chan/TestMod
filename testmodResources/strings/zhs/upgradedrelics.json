@@ -226,9 +226,9 @@
 	},
 	
 	"testmod-SaigiyounoYouUp":{
-		"NAME": "西行妖",
+		"NAME": "西行妖+",
 		"FLAVOR": "邪恶又优雅的不祥之物",
-		"DESCRIPTIONS":["每当你对敌方造成伤害时，回复 #b1 点生命。"]
+		"DESCRIPTIONS":["每当你对敌方造成伤害时，若该次伤害数值、你的生命、目标生命均为质数时，斩杀目标。"]
 	},
 	
 	"testmod-NineUp":{
@@ -484,9 +484,9 @@
 	},
 	
 	"testmod-ShadowAmuletUp":{
-		"NAME": "暗影护符",
+		"NAME": "暗影护符+",
 		"FLAVOR": "你失去的那些一切，都会悄无声息的守护着你。",
-		"DESCRIPTIONS":["每当你通过任何方式失去 #bn 点 #y格挡 ，在接下来的 #bn 次回合结束时，获得 #b1 点 #y格挡 。", "之后的每次回合结束时获得 #y格挡 数量依次为："]
+		"DESCRIPTIONS":["每当你通过任何方式失去 #bn 点 #y格挡 ，在接下来的每回合结束获得由 #b1 开始递增的 #y格挡 ，直至总和不低于 #bn 。战斗结束时，获得下一次将获得的 #y格挡 数值的 #y金币 ，最多 #b100 。", " NL 之后的每次回合结束时获得 #y格挡 数量依次为： NL "]
 	},
 	
 	"testmod-HyperplasticTissueUp":{

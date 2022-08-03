@@ -5,14 +5,17 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 
 import testmod.relics.ShadowAmulet;
+import testmod.relicsup.ShadowAmuletUp;
 
 public class ShadowAmuletPatch {
 	@SpirePatch(clz = AbstractCreature.class, method = "loseBlock", paramtypes = {"int", "boolean"})
 	public static class AbstractCreaturePatch {
 		@SpireInsertPatch(rloc = 3)
 		public static void Insert(AbstractCreature c, int amount, boolean noAnimation) {
-			if (c.isPlayer)
+			if (c.isPlayer) {
 				ShadowAmulet.onLoseBlock(Math.min(amount, c.currentBlock));
+				ShadowAmuletUp.onLoseBlock(Math.min(amount, c.currentBlock));
+			}
 		}
 	}
 }

@@ -285,7 +285,7 @@
 	
 	"testmod-upgrade-SaigiyounoYou":{
 		"TEXT": [
-			"0",
+			"7",
 			"0"
 		]
 	},
@@ -620,8 +620,10 @@
 	
 	"testmod-upgrade-ShadowAmulet":{
 		"TEXT": [
+			"4",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	
