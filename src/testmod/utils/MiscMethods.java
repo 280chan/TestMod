@@ -1101,7 +1101,7 @@ public interface MiscMethods {
     	static int find(int n) {
     		if (n < 3)
     			return n + 1;
-    		if (PRIME.size() == 0) {
+    		if (PRIME.isEmpty()) {
     			PRIME.add(2);
     			PRIME.add(3);
     		}
@@ -1145,6 +1145,8 @@ public interface MiscMethods {
     			return false;
     		if (PRIME.size() < 100)
     			find(100);
+    		if (PRIME.contains(num))
+    			return true;
     		for (int i = 0; PRIME.get(i) <= (int) Math.sqrt(num) && i < PRIME.size(); i++)
     			if (num % PRIME.get(i) == 0)
     				return false;
