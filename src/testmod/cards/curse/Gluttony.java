@@ -5,7 +5,6 @@ import testmod.cards.AbstractTestCurseCard;
 import testmod.relics.Sins;
 
 import com.megacrit.cardcrawl.cards.*;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
 public class Gluttony extends AbstractTestCurseCard {
@@ -22,7 +21,7 @@ public class Gluttony extends AbstractTestCurseCard {
     }
     
     public void onRemoveFromMasterDeck() {
-		AbstractDungeon.player.decreaseMaxHealth(AbstractDungeon.player.maxHealth * this.magicNumber / 100);
+		p().decreaseMaxHealth((int) (p().maxHealth * 1.0 * this.magicNumber / 100));
     }
     
     public AbstractCard makeCopy() {
