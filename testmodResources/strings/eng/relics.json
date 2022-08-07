@@ -29,7 +29,7 @@
 		"DESCRIPTIONS":["Right click this relic to advance energy next turn. If the amount of energy your advanced surpass your default energy each turn, for nth energy surpassed, lose #rn HP."]
 	},
 	
-	"testmod-SevenDeadlySins":{
+	"testmod-Sins":{
 		"NAME": "Seven Deadly Sins",
 		"FLAVOR": "原罪是人类的本性。",
 		"DESCRIPTIONS":["Upon pickup, if not having, obtain #yDu-Vu #yDoll, #yDarkstone #yPeriapt, #yBlue #yCandle, #rCurses #rof #rSins. Whenever defeating Boss with each kind of #rSins, you may choose to obtain an extra Boss relic."]
