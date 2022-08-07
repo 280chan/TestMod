@@ -27,12 +27,11 @@ import testmod.cards.curse.Lust;
 import testmod.cards.curse.Sloth;
 import testmod.cards.curse.Wrath;
 import testmod.mymod.TestMod;
+import testmod.relicsup.SinsUp;
 import testmod.screens.BossRelicSelectScreen;
-import testmod.utils.MiscMethods;
 
-public class Sins extends AbstractTestRelic implements MiscMethods {
+public class Sins extends AbstractTestRelic {
 	private static final UIStrings UI = MISC.uiString();
-	public static final String ID = "SevenDeadlySins";
 	
 	public static final AbstractCard[] SINS = { new Pride(), new Lust(), new Wrath(), new Sloth(), new Envy(),
 			new Greed(), new Gluttony() };
@@ -152,7 +151,7 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
 	
 	public void onEquip() {
 		TestMod.setActivity(this);
-		if (!isActive)
+		if (!isActive || this.relicStream(SinsUp.class).count() > 0)
 			return;
 		this.setTryEquip(true);
 		this.checkChangeMaxHP();
@@ -177,10 +176,6 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
 				i--;
 				TestMod.info("七原罪: 移除" + c.name);
 			}
-		}
-		for (AbstractRelic r : RELICS) {
-			AbstractDungeon.player.loseRelic(r.relicId);
-			TestMod.info("七原罪: 移除" + r.name);
 		}
 	}
 	
@@ -227,7 +222,7 @@ public class Sins extends AbstractTestRelic implements MiscMethods {
 	public static boolean isObtained() {
 		if (CardCrawlGame.mode != GameMode.GAMEPLAY && CardCrawlGame.mode != GameMode.DUNGEON_TRANSITION)
 			return true;
-		return AbstractDungeon.player.hasRelic(TestMod.makeID(ID));
+		return AbstractDungeon.player.hasRelic(TestMod.makeID("Sins"));
 	}
 	
 	public static AbstractCard copyCurse() {

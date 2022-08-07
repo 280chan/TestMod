@@ -19,6 +19,7 @@ import com.megacrit.cardcrawl.localization.EventStrings;
 import basemod.BaseMod;
 import basemod.eventUtil.EventUtils;
 import testmod.relics.SpireNexus;
+import testmod.relicsup.SpireNexusUp;
 
 public class SpireNexusEvent extends AbstractTestEvent {
 	private static final HashMap<String, Supplier<Boolean>> EVENTS = new HashMap<String, Supplier<Boolean>>();
@@ -26,22 +27,25 @@ public class SpireNexusEvent extends AbstractTestEvent {
 	
 	public SpireNexusEvent() {
 		super();
-		if (!SpireNexus.skipEffect)
+		if (!SpireNexus.skipEffect) {
 			this.relicStream(SpireNexus.class).forEach(r -> r.flash());
+			this.relicStream(SpireNexusUp.class).forEach(r -> r.flash());
+		}
 	}
 	
 	@Override
 	protected void intro() {
+		int size = this.relicStream(SpireNexusUp.class).count() == 0 ? 3 : 5;
 		this.imageEventText.updateBodyText(desc()[0]);
 		this.imageEventText.removeDialogOption(0);
 		tmp = Stream.of(AbstractDungeon.shrineList, AbstractDungeon.specialOneTimeEventList, AbstractDungeon.eventList)
 				.flatMap(l -> l.stream()).filter(SpireNexusEvent::canEventSpawn).collect(toArrayList());
 		Collections.shuffle(tmp, new Random(this.copyRNG(AbstractDungeon.eventRng).randomLong()));
-		ArrayList<String> ids = tmp.stream().limit(3).collect(toArrayList());
+		ArrayList<String> ids = tmp.stream().limit(size).collect(toArrayList());
 		tmp.clear();
 		tmp = ids;
 		tmp.forEach(s -> this.imageEventText.setDialogOption(this.getNameFor(s)));
-		if (tmp.size() < 3)
+		if (tmp.size() < size)
 			imageEventText.setDialogOption(option()[1], true);
 		if (tmp.isEmpty())
 			imageEventText.setDialogOption(option()[2]);

@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.EventRoom;
 
 import testmod.events.SpireNexusEvent;
+import testmod.relicsup.SpireNexusUp;
 
 public class SpireNexus extends AbstractTestRelic implements ClickableRelic {
 	public static boolean skipEffect = false;
@@ -65,8 +66,12 @@ public class SpireNexus extends AbstractTestRelic implements ClickableRelic {
 	public static class GenerateEventPatch {
 		@SpirePrefixPatch
 		public static SpireReturn<AbstractEvent> Prefix(Random rng) {
-			return skipEffect || MISC.relicStream(SpireNexus.class).count() == 0 ? SpireReturn.Continue()
-					: SpireReturn.Return(new SpireNexusEvent());
+			boolean flag = skipEffect;
+			if (flag) {
+				MISC.relicStream(SpireNexusUp.class).forEach(r -> MISC.addRandomKey());
+			}
+			int c = (int) (MISC.relicStream(SpireNexusUp.class).count() + MISC.relicStream(SpireNexus.class).count());
+			return flag || c == 0 ? SpireReturn.Continue() : SpireReturn.Return(new SpireNexusEvent());
 		}
 	}
 }

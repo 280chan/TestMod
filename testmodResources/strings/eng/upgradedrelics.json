@@ -29,10 +29,10 @@
 		"DESCRIPTIONS":["Right click this relic to advance energy next turn. For each #yCrystal #yKey you have, energy from next turn will pay back #b1 more energy you loaned. When you win a combat, lose HP equals to the amount of energy you haven't paid back, if it exceeds your current HP, you don't lose HP, instead lose #r10% max HP and gain an extra [E] every turn."]
 	},
 	
-	"testmod-SevenDeadlySinsUp":{
-		"NAME": "Seven Deadly Sins",
+	"testmod-SinsUp":{
+		"NAME": "Seven Deadly Sins+",
 		"FLAVOR": "原罪是人类的本性。",
-		"DESCRIPTIONS":["Upon pickup, if not having, obtain #yDu-Vu #yDoll, #yDarkstone #yPeriapt, #yBlue #yCandle, #rCurses #rof #rSins. Whenever defeating Boss with each kind of #rSins, you may choose to obtain an extra Boss relic."]
+		"DESCRIPTIONS":["Upon pickup, obtain #gCharity, #gFaith, #gFortitude, #gHope, #gJustice, #gPrudence, #gTemperance. For each kind of #rSins you have, upgrade one of the 7 relics."]
 	},
 	
 	"testmod-RegisterUp":{
@@ -622,9 +622,9 @@
 	},
 	
 	"testmod-SpireNexusUp":{
-		"NAME": "Spire Nexus",
+		"NAME": "Spire Nexus+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["When you encounter random #yEvent, choose from #b3 #yEvents instead. Outside combat, right click on this relic to toggle it on and off."]
+		"DESCRIPTIONS":["When you encounter random #yEvent, choose from #b5 #yEvents instead. Outside combat, right click on this relic to toggle it on and off, when you encounter event with this relic toggled off, gain a random #ygem #ykey."]
 	},
 	
 	"testmod-FissionDeviceUp":{

@@ -70,7 +70,7 @@
 	
 	"testmod-upgrade-Sins":{
 		"TEXT": [
-			"0",
+			"7",
 			"0"
 		]
 	},
@@ -818,8 +818,10 @@
 	
 	"testmod-upgrade-SpireNexus":{
 		"TEXT": [
+			"6",
 			"0",
-			"0"
+			"0",
+			"500"
 		]
 	},
 	
