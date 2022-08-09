@@ -52,7 +52,7 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 		public static AbstractRelic Postfix(AbstractRelic _return, String key) {
 			if (_return instanceof AbstractUpgradedRelic)
 				return _return;
-			if (key.length() > 10 && key.endsWith("Up") && "testmod-".equals(key.substring(0, 8))) {
+			if (key != null && key.length() > 10 && key.endsWith("Up") && "testmod-".equals(key.substring(0, 8))) {
 				AbstractUpgradedRelic tmp = TestMod.UP_RELICS.stream().filter(r -> r.relicId.equals(key)).findFirst()
 						.orElse(null);
 				return tmp == null ? _return : tmp;
