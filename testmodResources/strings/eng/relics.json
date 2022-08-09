@@ -593,7 +593,7 @@
 	"testmod-StomachOfGluttonous":{
 		"NAME": "Stomach Of Gluttonous",
 		"FLAVOR": "这个是我改动后的最终版。这个改动可以在打三柱这种精英时回多次血。\n——Little Wolf影幽",
-		"DESCRIPTIONS":["Whenever you kill a normal enemy, heal #b10%. Whenever you kill an enemy that is #yElite or #yBoss, gain current hp / max hp #ycount , and fully heal. Whenever you increase max hp, increase #ycount % more."]
+		"DESCRIPTIONS":["Whenever you kill a normal enemy, heal #b10%. Whenever you kill an enemy that is #yElite or #yBoss, gain 100 * current hp / max hp #ycount , and fully heal. Whenever you increase max hp, increase #ycount % more."]
 	},
 	
 	"testmod-Encyclopedia":{
