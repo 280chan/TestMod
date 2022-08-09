@@ -262,9 +262,9 @@
 	},
 	
 	"testmod-StringDisintegratorUp":{
-		"NAME": "字符粉碎机",
+		"NAME": "字符粉碎机+",
 		"FLAVOR": "这台机器上没有任何文字，但你不知为何能理解它的用途。",
-		"DESCRIPTIONS":["每回合开始获得 [E] 。你在战斗中无法再看见所有牌的文字。"]
+		"DESCRIPTIONS":["每回合开始获得 [E] 。你在战斗中无法再看见你打出过的牌的文字，牌的耗能与卡牌类型不再不可见。每当你打出文字不可见的牌，获得 #b1 #y金币 与 #y计数 ，每当计数为 #b50 的倍数时，获得 #b1 个随机的 #y宝石钥匙 。"]
 	},
 	
 	"testmod-HarvestTotemUp":{
@@ -598,9 +598,9 @@
 	},
 	
 	"testmod-StomachOfGluttonousUp":{
-		"NAME": "饕餮的胃袋",
+		"NAME": "饕餮的胃袋+",
 		"FLAVOR": "这个是我改动后的最终版。这个改动可以在打三柱这种精英时回多次血。\n——Little Wolf影幽",
-		"DESCRIPTIONS":["每当击败 #y精英 或 #yBoss 敌人时，增加当前生命百分比的 #y计数 并恢复所有生命值。每当你增加最大生命值，额外增加 #y计数 %。"]
+		"DESCRIPTIONS":["每当击败普通敌人时，恢复 #b10% 生命值。每当击败 #y精英 或 #yBoss 敌人时，增加当前生命百分比的 #y计数 并恢复所有生命值。每当你增加最大生命值，额外增加 #y计数 %。你造成的攻击伤害提高 #y计数 %。"]
 	},
 	
 	"testmod-EncyclopediaUp":{

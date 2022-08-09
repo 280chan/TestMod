@@ -6,22 +6,36 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 import basemod.ReflectionHacks;
 import testmod.mymod.TestMod;
+import testmod.relics.StringDisintegrator;
+import testmod.relicsup.StringDisintegratorUp;
 import testmod.utils.MiscMethods;
 
 @SuppressWarnings("rawtypes")
 public class StringDisintegratorPatch implements MiscMethods {
 
+	private static AbstractCard card(SingleCardViewPopup scvp) {
+		return ReflectionHacks.getPrivate(scvp, SingleCardViewPopup.class, "card");
+	}
+	
+	private static SpireReturn checkUp(AbstractCard c, SpireReturn ret) {
+		return !hasUp() || StringDisintegratorUp.CARDS.contains(c) ? ret : SpireReturn.Continue();
+	}
+	
+	private static SpireReturn costType(SpireReturn ret) {
+		return hasUp() ? SpireReturn.Continue() : ret;
+	}
+	
+	private static boolean hasUp() {
+		return MISC.p().relics.stream().anyMatch(r -> r instanceof StringDisintegratorUp);
+	}
+	
 	private static boolean checkRelic() {
-		if (MISC.hasStringDisintegrator())
-			return true;
-		return false;
+		return hasUp() || MISC.p().relics.stream().anyMatch(r -> r instanceof StringDisintegrator);
 	}
 	
 	private static boolean check() {
@@ -45,7 +59,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	public static class RenderCostPatch {
 		@SpireInsertPatch(rloc = 32)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return setReturn();
+			return costType(setReturn());
 		}
 	}
 	
@@ -53,7 +67,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	public static class RenderTypePatch {
 		@SpirePrefixPatch
 		public static SpireReturn Prefix(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return setReturn();
+			return costType(setReturn());
 		}
 	}
 	
@@ -61,7 +75,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	public static class RenderTitlePatch {
 		@SpirePrefixPatch
 		public static SpireReturn Prefix(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return setReturn();
+			return checkUp(card(scvp), setReturn());
 		}
 	}
 	
@@ -69,7 +83,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	public static class RenderDescriptionCNPatch {
 		@SpirePrefixPatch
 		public static SpireReturn Prefix(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return setReturn();
+			return checkUp(card(scvp), setReturn());
 		}
 	}
 
@@ -77,7 +91,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	public static class RenderDescriptionPatch {
 		@SpirePrefixPatch
 		public static SpireReturn Prefix(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return setReturn();
+			return checkUp(card(scvp), setReturn());
 		}
 	}
 	
@@ -85,31 +99,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	public static class RenderTipsPatch {
 		@SpirePrefixPatch
 		public static SpireReturn Prefix(SingleCardViewPopup scvp, SpriteBatch sb) {
-			return setReturn();
-		}
-	}
-
-	@SpirePatch(clz = CardGroup.class, method = "render")
-	public static class RenderPatch {
-		@SpirePrefixPatch
-		public static SpireReturn Prefix(CardGroup g, SpriteBatch sb) {
-			return setReturn(() -> g.group.stream().forEach(c -> renderRewardCard(c, sb)));
-		}
-	}
-
-	@SpirePatch(clz = CardGroup.class, method = "renderExceptOneCard")
-	public static class renderExceptOneCardPatch {
-		@SpirePrefixPatch
-		public static SpireReturn Prefix(CardGroup g, SpriteBatch sb, AbstractCard c) {
-			return setReturn(() -> g.group.stream().filter(a -> !a.equals(c)).forEach(a -> renderRewardCard(a, sb)));
-		}
-	}
-	
-	@SpirePatch(clz = CardRewardScreen.class, method = "renderCardReward")
-	public static class RenderCardRewardPatch {
-		@SpireInsertPatch(rloc = 38)
-		public static SpireReturn Insert(CardRewardScreen crs, SpriteBatch sb) {
-			return setReturn(() -> crs.rewardGroup.stream().forEach(c -> renderRewardCard(c, sb)));
+			return checkUp(card(scvp), setReturn());
 		}
 	}
 	
@@ -117,40 +107,9 @@ public class StringDisintegratorPatch implements MiscMethods {
 		ReflectionHacks.privateMethod(AbstractCard.class, name, SpriteBatch.class).invoke(c, sb);
 	}
 	
-	private static void methodInvokeWithHovered(String name, AbstractCard c, SpriteBatch sb) {
-		methodInvokeWithSelected(name, c, sb, ReflectionHacks.getPrivate(c, AbstractCard.class, "hovered"));
-	}
-	
 	private static void methodInvokeWithSelected(String name, AbstractCard c, SpriteBatch sb, boolean selected) {
 		ReflectionHacks.privateMethod(AbstractCard.class, name, SpriteBatch.class, boolean.class, boolean.class)
 				.invoke(c, sb, selected, false);
-	}
-	
-	private static void renderRewardCard(AbstractCard c, SpriteBatch sb) {
-		if (Settings.hideCards)
-			return;
-		if (c.flashVfx != null)
-			c.flashVfx.render(sb);
-		
-		boolean isOnScreen = c.current_y >= -200.0F * Settings.scale
-				&& c.current_y <= (float) Settings.HEIGHT + 200.0F * Settings.scale;
-		if (!isOnScreen) {
-			return;
-		}
-		try {
-			if (!c.isFlipped) {
-				ReflectionHacks.privateMethod(AbstractCard.class, "updateGlow").invoke(c);
-				methodInvoke("renderGlow", c, sb);
-				methodInvokeWithHovered("renderImage", c, sb);
-				methodInvoke("renderTint", c, sb);
-				methodInvoke("renderEnergy", c, sb);
-			} else {
-				methodInvokeWithHovered("renderBack", c, sb);
-			}
-		} catch (SecurityException | IllegalArgumentException e) {
-			e.printStackTrace();
-		}
-		c.hb.render(sb);
 	}
 	
 	private static void renderRewardCard(AbstractCard c, SpriteBatch sb, boolean selected) {
@@ -169,6 +128,8 @@ public class StringDisintegratorPatch implements MiscMethods {
 				ReflectionHacks.privateMethod(AbstractCard.class, "updateGlow").invoke(c);
 				methodInvoke("renderGlow", c, sb);
 				methodInvokeWithSelected("renderImage", c, sb, selected);
+				if (hasUp())
+					methodInvoke("renderType", c, sb);
 				methodInvoke("renderTint", c, sb);
 				methodInvoke("renderEnergy", c, sb);
 			} else {
@@ -184,7 +145,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	public static class RenderEnergyPatch {
 		@SpirePrefixPatch
 		public static SpireReturn Prefix(AbstractCard c) {
-			return setReturn("", null);
+			return costType(setReturn("", null));
 		}
 	}
 	
@@ -192,7 +153,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	public static class renderCardPatch {
 		@SpirePrefixPatch
 		public static SpireReturn Prefix(AbstractCard c, SpriteBatch sb, boolean hovered, boolean selected) {
-			return setReturn(() -> renderRewardCard(c, sb, selected));
+			return checkUp(c, setReturn(() -> renderRewardCard(c, sb, selected)));
 		}
 	}
 	
@@ -200,7 +161,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	public static class renderCardTipPatch {
 		@SpirePrefixPatch
 		public static SpireReturn Prefix(AbstractCard c, SpriteBatch sb) {
-			return setReturn();
+			return checkUp(c, setReturn());
 		}
 	}
 

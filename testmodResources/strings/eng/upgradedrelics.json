@@ -262,9 +262,9 @@
 	},
 	
 	"testmod-StringDisintegratorUp":{
-		"NAME": "String Disintegrator",
+		"NAME": "String Disintegrator+",
 		"FLAVOR": "这台机器上没有任何文字，但你不知为何能理解它的用途。",
-		"DESCRIPTIONS":["Gain [E] at the start of each turn. Cards will be #rTEXTLESS during combat."]
+		"DESCRIPTIONS":["Gain [E] at the start of each turn. Cards will be #rTEXTLESS during combat after being played, cost and type are no longer invisible. Whenever you play a #rTEXTLESS card, gain #b1 #ygold and #ycount, whenever #ycount is multiple of #b50, obtain a random #ygem #ykey."]
 	},
 	
 	"testmod-HarvestTotemUp":{
@@ -592,9 +592,9 @@
 	},
 	
 	"testmod-StomachOfGluttonousUp":{
-		"NAME": "Stomach Of Gluttonous",
+		"NAME": "Stomach Of Gluttonous+",
 		"FLAVOR": "这个是我改动后的最终版。这个改动可以在打三柱这种精英时回多次血。\n——Little Wolf影幽",
-		"DESCRIPTIONS":["Whenever you kill an enemy that is #yElite or #yBoss, gain current hp / max hp #ycount , and fully heal. Whenever you increase max hp, increase #ycount % more."]
+		"DESCRIPTIONS":["Whenever you kill a normal enemy, heal #b10%. Whenever you kill an enemy that is #yElite or #yBoss, gain 100 * current hp / max hp #ycount , and fully heal. Whenever you increase max hp, increase #ycount % more. You deal #ycount % more #yAttack damage."]
 	},
 	
 	"testmod-EncyclopediaUp":{

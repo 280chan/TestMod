@@ -76,7 +76,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 8/7/2022
+ * @version 8/9/2022
  * @since 6/17/2018
  */
 
@@ -564,13 +564,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
 					PerfectCombo.TO_UPDATE.stream().filter(p().hand::contains)
 							.filter(c -> c.magicNumber < c.countUpgrades() + c.misc).forEach(c -> c.applyPowers());
-					Stream<AbstractUpdatableCard> s = AbstractUpdatableCard.TO_UPDATE.stream()
-							.filter(p().hand::contains)
-							.peek(c -> c.preApplyPowers(p(), AbstractDungeon.getMonsters().hoveredMonster));
-					if (!this.hasStringDisintegrator())
-						s.forEach(c -> c.applyPowers());
-					else
-						s.close();
+					AbstractUpdatableCard.TO_UPDATE.stream().filter(p().hand::contains)
+							.peek(c -> c.preApplyPowers(p(), AbstractDungeon.getMonsters().hoveredMonster))
+							.forEach(c -> c.applyPowers());
 					AbstractUpdatableCard.TO_UPDATE.stream().filter(not(p().hand::contains))
 							.forEach(c -> c.resetDescription());
 				} else {

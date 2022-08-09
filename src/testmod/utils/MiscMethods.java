@@ -180,10 +180,6 @@ public interface MiscMethods {
 		return p().relics.stream().anyMatch(r -> r instanceof Prudence);
 	}
 	
-	default boolean hasStringDisintegrator() {
-		return p().relics.stream().anyMatch(r -> r instanceof StringDisintegrator);
-	}
-	
 	default void addHoarderCard(CardGroup g, AbstractCard c) {
 		if (ModHelper.isModEnabled("Hoarder")) {
 			addExtraCard(g, c, 2);
