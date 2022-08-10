@@ -60,9 +60,9 @@
 	},
 	
 	"testmod-TemperanceUp":{
-		"NAME": "Temperance",
+		"NAME": "Temperance+",
 		"FLAVOR": "“节制是最好的医术。” —— 博恩",
-		"DESCRIPTIONS":["Whenever you add #b3 cards to your deck, you may remove #b1 card from your deck."]
+		"DESCRIPTIONS":["Whenever you add a card to your deck, gain #b1 count and increase your max HP by count number. Right click this relic outside combat, you may lose #b1 count and remove #b1 card from your deck."]
 	},
 	
 	"testmod-JusticeUp":{

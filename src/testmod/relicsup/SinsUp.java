@@ -32,15 +32,11 @@ public class SinsUp extends AbstractUpgradedRelic {
 				.filter(s -> p().masterDeck.group.stream().anyMatch(c -> c.cardID.equals(s.cardID))).count();
 		ArrayList<AbstractTestRelic> l = Stream.of(RELICS).collect(toArrayList());
 		if (a == 7) {
-			l.replaceAll(r -> r.canUpgrade() ? r.upgrade() : r);
+			l.replaceAll(r -> r.upgrade());
 		} else if (a > 0) {
-			ArrayList<AbstractTestRelic> tmp = l.stream().filter(r -> r.canUpgrade()).collect(toArrayList());
-			if (a < tmp.size()) {
-				Collections.shuffle(tmp, new Random(AbstractDungeon.miscRng.randomLong()));
-				tmp.stream().limit(a).forEach(r -> l.set(l.indexOf(r), r.upgrade()));
-			} else {
-				l.replaceAll(r -> r.canUpgrade() ? r.upgrade() : r);
-			}
+			ArrayList<AbstractTestRelic> tmp = l.stream().collect(toArrayList());
+			Collections.shuffle(tmp, new Random(AbstractDungeon.miscRng.randomLong()));
+			tmp.stream().limit(a).forEach(r -> l.set(l.indexOf(r), r.upgrade()));
 			tmp.clear();
 		}
 		this.addTmpEffect(() -> l.forEach(r -> TestMod.obtain(p(), r, true)));

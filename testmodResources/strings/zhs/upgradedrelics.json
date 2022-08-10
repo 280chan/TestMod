@@ -60,9 +60,9 @@
 	},
 	
 	"testmod-TemperanceUp":{
-		"NAME": "节制",
+		"NAME": "节制+",
 		"FLAVOR": "“节制是最好的医术。” —— 博恩",
-		"DESCRIPTIONS":["每当你在牌组中增加 #b3 张牌，有一次选择移除 #b1 张牌的机会。"]
+		"DESCRIPTIONS":["每当你在牌组中增加 #b1 张牌，获得 #b1 计数与计数点最大生命。战斗外右击本遗物，可以选择失去 #b1 计数并移除 #b1 张牌。"]
 	},
 	
 	"testmod-JusticeUp":{
