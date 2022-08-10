@@ -31,7 +31,7 @@ public class StringDisintegratorPatch implements MiscMethods {
 	}
 	
 	private static boolean hasUp() {
-		return MISC.p().relics.stream().anyMatch(r -> r instanceof StringDisintegratorUp);
+		return MISC.p() != null && MISC.p().relics.stream().anyMatch(r -> r instanceof StringDisintegratorUp);
 	}
 	
 	private static boolean checkRelic() {
