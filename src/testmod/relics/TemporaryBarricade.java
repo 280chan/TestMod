@@ -7,6 +7,8 @@ import com.megacrit.cardcrawl.powers.BarricadePower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
+import testmod.relicsup.TemporaryBarricadeUp;
+
 public class TemporaryBarricade extends AbstractTestRelic implements ClickableRelic {
 	
 	public TemporaryBarricade() {
@@ -17,11 +19,11 @@ public class TemporaryBarricade extends AbstractTestRelic implements ClickableRe
 		if (this.active()) {
 			this.flash();
 			this.stopPulse();
-			this.addToBot(apply(p(), new BarricadePower(p())));
+			this.atb(apply(p(), new BarricadePower(p())));
 		}
     }
 	
-	private static int f(int x) {
+	public static int f(int x) {
 		return (x > 1) ? (int) Math.pow(Math.log(x), 2.5) : 0;
 	}
 	
@@ -29,8 +31,8 @@ public class TemporaryBarricade extends AbstractTestRelic implements ClickableRe
 		this.addTmpActionToBot(() -> {
 			int x = p().currentBlock;
 			if (x > 0)
-				this.addToTop(new GainEnergyAction(1));
-			if (this.active()) {
+				this.att(new GainEnergyAction(1));
+			if (this.active() && this.relicStream(TemporaryBarricadeUp.class).count() == 0) {
 				int newx = f(x);
 				if (newx < x) {
 					p().loseBlock(x - newx);

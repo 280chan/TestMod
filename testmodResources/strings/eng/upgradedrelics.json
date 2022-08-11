@@ -454,9 +454,9 @@
 	},
 	
 	"testmod-TemporaryBarricadeUp":{
-		"NAME": "Temporary Barricade",
+		"NAME": "Temporary Barricade+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At start of each turn, if you have #yBlock, gain [E] . Right click this relic to toggle. When active: Gain #yBarricade at start of each combat. At start of each turn, reduce your #yBlock to its natural logarithm raised to power of #b2.5 ."]
+		"DESCRIPTIONS":["At start of each turn, gain [E] , if you have #yBlock, gain [E] . Gain #yBarricade at start of each combat. At start of each turn, reduce your #yBlock to its natural logarithm raised to power of #b2.5 and gain same amount of #ytemporary_hp as #Block loss."]
 	},
 	
 	"testmod-GremlinBalanceUp":{
