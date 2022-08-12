@@ -74,9 +74,9 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 				.filter(r -> !r.isSeen).map(r -> (AbstractTestRelic) r).collect(toArrayList());
 		return l.size() == 0 ? null : TestMod.randomItem(l, this.rng);
 	}
-	
-	private boolean rollUpgrade() {
-		return this.boxUp/* && this.rng.nextDouble() < 0.05*/;
+
+	private boolean rollUpgrade(AbstractRelic r) {
+		return this.boxUp && rng.nextDouble() < (r.tier == RelicTier.BOSS || r.tier == RelicTier.SPECIAL ? 0.05 : 0.5);
 	}
 	
 	private boolean valid() {
@@ -89,13 +89,12 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	private void addAndMarkAsSeen(AbstractRelic r) {
 		this.markAsSeen(r);
 		AbstractRelic tmp;
-		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.upgradable(r) && r.tier != RelicTier.BOSS
-				&& this.rollUpgrade()) {
+		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.upgradable(r) && this.rollUpgrade(r)) {
 			tmp = AllUpgradeRelic.getUpgrade(r);
 			original.put(tmp.relicId, r);
 			this.relics.add(tmp);
 			return;
-		} else if (valid() && ((AbstractTestRelic) r).canUpgrade() && r.tier != RelicTier.BOSS && this.rollUpgrade()) {
+		} else if (valid() && ((AbstractTestRelic) r).canUpgrade() && this.rollUpgrade(r)) {
 			tmp = ((AbstractTestRelic) r).upgrade();
 			original.put(tmp.relicId, r);
 			this.relics.add(tmp);
