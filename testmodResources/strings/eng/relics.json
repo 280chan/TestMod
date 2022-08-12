@@ -413,7 +413,7 @@
 	"testmod-TheFather":{
 		"NAME": "The Father",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you an enemy are being damage by an amount of a prime number, deal a damage of the ordinal number of that prime number to all other enemy. Whenever you an enemy are being damage by an amount of a composite number, deal damage of the ordinal number of all prime factors to the enemy. Whenever this relic cause a damage, add #b1 to its counter, whenever it reaches a prime number, gain #b1 gold."]
+		"DESCRIPTIONS":["Whenever an enemy is being damaged by an amount of a prime number, deal a damage of the ordinal number of that prime number to all other enemy. Whenever an enemy is being damaged by an amount of a composite number, deal damage of the ordinal numbers of all prime factors to the enemy. (Damages caused by this relic are excluded). Whenever this relic cause a damage, add #b1 to its counter, whenever it reaches a prime number, gain #b1 #ygold."]
 	},
 	
 	"testmod-Fanaticism":{
