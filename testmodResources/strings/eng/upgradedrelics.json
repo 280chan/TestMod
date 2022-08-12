@@ -390,7 +390,7 @@
 	"testmod-TestBoxUp":{
 		"NAME": "Test Box+",
 		"FLAVOR": "My present.",
-		"DESCRIPTIONS":["Upon pickup, lose all gold. Right click on this relic to active, select a reward from #b5 to get, for both relic reward and card rewards. Relic reward will be upgraded if possible. #rThis #rrelic #rcan #rONLY #ractive #ronce. #rThis #rrelic #rcan #rONLY #rbe #rused #rat #rfloor #r0. ", " NL #gSubscribe #yRelicUpgradeLib #gto #gupgrade #grelic.", " NL upgrading #yBoss relic would not affect immediately, but it replace #yBoss chest."]
+		"DESCRIPTIONS":["Upon pickup, lose all gold. Right click on this relic to active, select a reward from #b5 to get, for both relic reward and card rewards. Relic reward may be upgraded if possible. #rThis #rrelic #rcan #rONLY #ractive #ronce. #rThis #rrelic #rcan #rONLY #rbe #rused #rat #rfloor #r0. ", " NL #gSubscribe #yRelicUpgradeLib #gto #gupgrade #grelic.", " NL upgrading #yBoss relic would not affect immediately, but it replace #yBoss chest."]
 	},
 	
 	"testmod-AcrobatUp":{
@@ -412,9 +412,9 @@
 	},
 	
 	"testmod-TheFatherUp":{
-		"NAME": "The Father",
+		"NAME": "The Father+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you an enemy are being damage by an amount of a prime number, deal a damage of the ordinal number of that prime number to all other enemy. Whenever you an enemy are being damage by an amount of a composite number, deal damage of the ordinal number of all prime factors to the enemy. Whenever this relic cause a damage, add #b1 to its counter, whenever it reaches a prime number, gain #b1 gold."]
+		"DESCRIPTIONS":["Whenever an enemy is being damaged by an amount of a prime number, deal a damage of the ordinal number of that prime number to all other enemy. Whenever an enemy is being damaged by an amount of a composite number, deal damage of the ordinal numbers of all prime factors to the enemy. Whenever this relic cause a damage, add #b1 to its counter. Whenever it reaches a prime number, gain #ygold of the ordinal number of that prime number. Whenever it reaches a composite number which has prime number of prime factors, gain #ygold of the largest prime factor."]
 	},
 	
 	"testmod-FanaticismUp":{
