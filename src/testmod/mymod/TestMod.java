@@ -70,13 +70,14 @@ import testmod.relicsup.IWantAllUp;
 import testmod.relicsup.MetronomeUp;
 import testmod.relicsup.PhasePocketWatchUp;
 import testmod.relicsup.TestBoxUp;
+import testmod.relicsup.TimeTravelerUp;
 import testmod.screens.RelicSelectScreen;
 import testmod.utils.*;
 import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 8/12/2022
+ * @version 8/14/2022
  * @since 6/17/2018
  */
 
@@ -597,10 +598,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public static final Properties DEFAULT = new Properties();
 	public static SpireConfig config = null;
 	
-	private void initSavingConfig() {
+	public static void initSavingConfig() {
 		DEFAULT.setProperty(PortableAltar.SAVE_NAME, "0");
 		DEFAULT.setProperty(Sins.SAVE_NAME, "0");
 		DEFAULT.setProperty(TimeTraveler.SAVE_NAME, "100");
+		DEFAULT.setProperty(TimeTravelerUp.SAVE_NAME, "1");
 		// DEFAULT.setProperty("recorded", "false");
 		DEFAULT.setProperty(DragonStarHat.SAVE_NAME, "0");
 		DEFAULT.setProperty(Faith.SAVE_NAME, "false");
@@ -639,7 +641,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	@Override
 	public void receiveStartGame() {
 		if (config == null)
-			this.initSavingConfig();
+			initSavingConfig();
 		SUB_MOD.forEach(TestMod::editSubModStartGame);
 
 		if (Loader.isModLoaded("RelicUpgradeLib")) {

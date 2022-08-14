@@ -420,8 +420,10 @@
 	
 	"testmod-upgrade-ThousandKnives":{
 		"TEXT": [
+			"1",
 			"0",
-			"0"
+			"0",
+			"100"
 		]
 	},
 	

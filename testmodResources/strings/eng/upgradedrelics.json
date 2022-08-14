@@ -208,9 +208,9 @@
 	},
 	
 	"testmod-TimeTravelerUp":{
-		"NAME": "The Time Traveler",
+		"NAME": "The Time Traveler+",
 		"FLAVOR": "El Psy Congroo",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] . You have #b100 (Max) #ySAN by default. Whenever #ySL will decrease your #ySAN by #r50%, at the end of combat, gain #b5 #ySAN, gain #b10 #ySAN when you Rest. Whenever you end combat with less than #b20 #ySAN, lose #r10 Max HP. Whenever you start a turn with less than #b10 #ySAN, lose #r1 HP."]
+		"DESCRIPTIONS":["Upon pickup, gain #b100 count, and count no longer has limit. At the start of each turn, if you have #b100 count, gain [E] and draw #b1 card, for each time you have enough count for doubling demand, gain an extra [E] and draw #b1 more card. Whenever #ySL will increase your count by #b1, whenever you kill an enemy, gain #b10, #b50, #b100 count depending on its type, gain #b30% current count whenever you Rest."]
 	},
 	
 	"testmod-MaizeUp":{
@@ -264,7 +264,7 @@
 	"testmod-StringDisintegratorUp":{
 		"NAME": "String Disintegrator+",
 		"FLAVOR": "这台机器上没有任何文字，但你不知为何能理解它的用途。",
-		"DESCRIPTIONS":["Gain [E] at the start of each turn. Cards will be #rTEXTLESS during combat after being played, cost and type are no longer invisible. Whenever you play a #rTEXTLESS card, gain #b1 #ygold and #ycount, whenever #ycount is multiple of #b50, obtain a random #ygem #ykey."]
+		"DESCRIPTIONS":["Gain [E] at the start of each turn. Cards will be #rTEXTLESS during combat after being played, cost and type are no longer invisible. Whenever you play a #rTEXTLESS card, gain [E] and #b1 #ycount, whenever #ycount is multiple of #b10, obtain a random #ygem #ykey."]
 	},
 	
 	"testmod-HarvestTotemUp":{
@@ -322,9 +322,9 @@
 	},
 	
 	"testmod-ThousandKnivesUp":{
-		"NAME": "Thousand Knives",
+		"NAME": "Thousand Knives+",
 		"FLAVOR": "不要停下来啊。",
-		"DESCRIPTIONS":["Whenever you draw a #b0 cost #yAttack, add a copy to your hand. Whenever you play a #b0 cost #yAttack, add a copy to your discard pile, and for each #b0 cost #yAttack in your hand, gain #b1 #yBlock. "]
+		"DESCRIPTIONS":["Whenever you draw a #b0 cost #yAttack, record it and gain #b1 #ygold. Whenever you play a #b0 cost #yAttack, record it, and for each #b0 cost #yAttack in your hand, gain #b1 #yBlock. Once each turn, right click this relic, to choose any amount of recorded cards, add copy to hand and remove them from record.", "Choose any amount of cards, add copy to hand."]
 	},
 	
 	"testmod-FatalChainUp":{
