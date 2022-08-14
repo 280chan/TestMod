@@ -36,6 +36,7 @@ public class TimeTraveler extends AbstractTestRelic {
 	
 	private static void loadGame() {
 		relic = AbstractDungeon.player.getRelic(TestMod.makeID("TimeTraveler"));
+		saveLater = false;
 		if (relic != null) {
 			relic.counter = san = san * (100 - SL_SAN_LOSS_PERCENT) / 100;
 			save(san);
@@ -54,7 +55,7 @@ public class TimeTraveler extends AbstractTestRelic {
 		if (!this.isActive)
 			return;
 		if (this.counter < SAN_TO_LOSE_MAX_HP)
-			AbstractDungeon.player.decreaseMaxHealth(MAX_HP_LOSS);
+			p().decreaseMaxHealth(MAX_HP_LOSS);
 	}
 	
 	private void tryChangeSan(int amount) {
@@ -71,11 +72,11 @@ public class TimeTraveler extends AbstractTestRelic {
 		if (!this.isActive)
 			return;
 		if (this.counter < SAN_TO_LOSE_HP_TURN_START)
-			this.addToTop(new LoseHPAction(AbstractDungeon.player, AbstractDungeon.player, 1));
+			this.att(new LoseHPAction(p(), p(), 1));
 	}
 	
 	public void onEquip() {
-		AbstractDungeon.player.energy.energyMaster++;
+		this.addEnergy();
 		TestMod.setActivity(this);
 		if (!this.isActive)
 			return;
@@ -84,26 +85,31 @@ public class TimeTraveler extends AbstractTestRelic {
     }
 	
 	public void onUnequip() {
-		AbstractDungeon.player.energy.energyMaster--;
+		this.reduceEnergy();
 		if (!this.isActive)
 			return;
-		relic = null;
+		relic = this.relicStream(TimeTraveler.class).filter(r -> !r.isActive).findFirst().orElse(null);
+		if (relic != null)
+			relic.counter = this.counter;
     }
 	
 	public void onVictory() {
 		this.tryDecreaseMaxHP();
 		this.tryChangeSan(VICTORY_SAN);
-		save(this.counter);
+		if (this.isActive)
+			save(this.counter);
     }
 	
 	public void onRest() {
+		if (!this.isActive)
+			return;
 		this.tryChangeSan(REST_SAN);
 		saveLater = true;
 		saveRest = this.counter;
     }
 
 	public void onEnterRoom(final AbstractRoom room) {
-		if (saveLater) {
+		if (this.isActive && saveLater) {
 			save(saveRest);
 			saveLater = false;
 		}
