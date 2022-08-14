@@ -6,7 +6,6 @@ import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class ThousandKnives extends AbstractTestRelic {
@@ -42,24 +41,24 @@ public class ThousandKnives extends AbstractTestRelic {
 	}
 	
 	private boolean checkCard(AbstractCard c) {
-		return (c.costForTurn == 0 || c.freeToPlayOnce) && !c.isInAutoplay && c.type == CardType.ATTACK;
+		return (c.costForTurn == 0 || c.freeToPlay()) && !c.isInAutoplay && c.type == CardType.ATTACK;
 	}
 	
 	private int countCards() {
-		return (int) AbstractDungeon.player.hand.group.stream().filter(this::checkCard).count();
+		return (int) p().hand.group.stream().filter(this::checkCard).count();
 	}
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
 		if (checkCard(c)) {
-			this.addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, countCards(), true));
-			this.addToBot(new MakeTempCardInDiscardAction(c.makeStatEquivalentCopy(), 1));
+			this.atb(new GainBlockAction(p(), p(), countCards(), true));
+			this.atb(new MakeTempCardInDiscardAction(c.makeStatEquivalentCopy(), 1));
 			this.show();
 		}
 	}
 	
 	public void onCardDraw(final AbstractCard c) {
 		if (checkCard(c)) {
-			this.addToTop(new MakeTempCardInHandAction(c.makeStatEquivalentCopy()));
+			this.att(new MakeTempCardInHandAction(c.makeStatEquivalentCopy()));
 			this.show();
 		}
     }
