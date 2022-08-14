@@ -48,7 +48,6 @@ import testmod.mymod.TestMod;
 import testmod.powers.AbstractTestPower;
 import testmod.relics.AbstractTestRelic;
 import testmod.relics.Prudence;
-import testmod.relics.StringDisintegrator;
 import testmod.relicsup.AbstractUpgradedRelic;
 import testmod.relicsup.AllUpgradeRelic;
 
@@ -1115,14 +1114,18 @@ public interface MiscMethods {
 
     	private static int indexOf(int start, int num) {
     		int size = PRIME.size();
+    		if (num < 2 || num > 2147483629)
+    			return -1;
     		if (size > 0 && PRIME.get(size - 1) >= num) {
     			for (int i = start; i < size; i++)
     				if (PRIME.get(i) == num)
     					return i + 1;
     			return -1;
     		}
-    		if (size > 10000000)
-    			find(10509756);
+    		if (size > 100000000)
+    			find(105097564);
+    		else if (size > 10000000)
+    			find(size + 200000);
     		else if (size > 1000000)
     			find(size + 15000);
     		else if (size > 100000)
@@ -1143,7 +1146,7 @@ public interface MiscMethods {
     			find(100);
     		if (PRIME.contains(num))
     			return true;
-    		for (int i = 0; PRIME.get(i) <= (int) Math.sqrt(num) && i < PRIME.size(); i++)
+    		for (int i = 0; i < PRIME.size() && PRIME.get(i) <= (int) Math.sqrt(num); i++)
     			if (num % PRIME.get(i) == 0)
     				return false;
     		int preSize = PRIME.size();
