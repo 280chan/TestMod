@@ -300,6 +300,9 @@ public class AllUpgradeRelic implements MiscMethods {
 			@SpireInsertPatch(locator = Locator.class)
 			public static void Insert(TopPanel p, SpriteBatch sb) {
 				if (Loader.isModLoaded("RelicUpgradeLib")) {
+					Settings.hasRubyKey = KEY[0] > 0;
+					Settings.hasEmeraldKey = KEY[1] > 0;
+					Settings.hasSapphireKey = KEY[2] > 0;
 					if (Settings.isEndless) {
 						if (Settings.hasRubyKey || Settings.hasEmeraldKey || Settings.hasSapphireKey)
 							draw(0, sb);
