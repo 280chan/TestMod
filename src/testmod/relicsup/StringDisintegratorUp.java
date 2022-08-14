@@ -2,8 +2,11 @@ package testmod.relicsup;
 
 import java.util.ArrayList;
 
+import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+
+import testmod.mymod.TestMod;
 
 public class StringDisintegratorUp extends AbstractUpgradedRelic {
 	public static ArrayList<AbstractCard> CARDS = new ArrayList<AbstractCard>();
@@ -15,7 +18,8 @@ public class StringDisintegratorUp extends AbstractUpgradedRelic {
 	
 	public void onEquip() {
 		this.addEnergy();
-		if (!this.isActive && this.inCombat()) {
+		TestMod.setActivity(this);
+		if (this.isActive && this.inCombat()) {
 			CARDS.clear();
 		}
     }
@@ -31,8 +35,8 @@ public class StringDisintegratorUp extends AbstractUpgradedRelic {
 	public void onUseCard(AbstractCard c, UseCardAction a) {
 		if (CARDS.contains(c)) {
 			this.counter++;
-			p().gainGold(1);
-			if (this.counter % 50 == 0)
+			this.atb(new GainEnergyAction(1));
+			if (this.counter % 10 == 0)
 				this.addRandomKey();
 		} else {
 			CARDS.add(c);
