@@ -25,10 +25,7 @@ public class TwinklingStar extends AbstractTestRelic {
 	}
 	
 	private int f() {
-		if (this.counter > (31 * STEP - 1)) {
-			return 2000000000;
-		}
-		return this.getIdenticalList(2, this.counter / STEP).stream().reduce(1, (a, b) -> a * b);
+		return this.counter > (31 * STEP - 1) ? 2000000000 : 1 << (this.counter / STEP);
 	}
 	
 	public void act() {
@@ -38,7 +35,7 @@ public class TwinklingStar extends AbstractTestRelic {
 				this.beginLongPulse();
 			} else if (this.counter % STEP == 0) {
 				this.stopPulse();
-				this.updateDescription(p().chosenClass);
+				this.updateDescription();
 			}
 			this.flash();
 			this.atb(new TwinklingStarDamageAction(new DamageAllEnemiesAction(null,
