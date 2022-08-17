@@ -14,10 +14,6 @@ public class Metronome extends AbstractTestRelic {
 	public static final String ID = "Metronome";
 	public ArrayList<String> cards = new ArrayList<String>();
 	
-	public Metronome() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public String getUpdatedDescription() {
 		return this.cards == null || this.cards.size() == 0 ? DESCRIPTIONS[0]
 				: DESCRIPTIONS[0] + cards.stream().map(this::getName).reduce(DESCRIPTIONS[1], (a, b) -> a + ", " + b);

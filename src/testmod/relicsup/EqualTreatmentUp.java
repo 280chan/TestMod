@@ -25,10 +25,6 @@ public class EqualTreatmentUp extends AbstractUpgradedRelic {
 			color = EqualTreatment.setColorIfNull(this::initGlowColor);
 	}
 	
-	public EqualTreatmentUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void atTurnStart() {
 		this.changeState(true);
 	}

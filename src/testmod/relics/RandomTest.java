@@ -13,16 +13,12 @@ import testmod.mymod.TestMod;
 public class RandomTest extends AbstractTestRelic {
 	public static Color color = null;
 	
-	public RandomTest() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public void onUseCard(AbstractCard card, UseCardAction action) {
 		if (card.color == CardColor.COLORLESS) {
 			this.addTmpActionToBot(() -> {
 				if (!p().hand.group.isEmpty()) {
 					ArrayList<AbstractCard> list = p().hand.group.stream()
-							.filter(c -> c.cost > -1 && c.costForTurn != 0 && !c.freeToPlayOnce).collect(toArrayList());
+							.filter(c -> c.cost > -1 && c.costForTurn != 0 && !c.freeToPlay()).collect(toArrayList());
 					reduceRandom(list.isEmpty() ? p().hand.group : list);
 				    this.show();
 				}

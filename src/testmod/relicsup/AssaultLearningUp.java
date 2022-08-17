@@ -6,10 +6,6 @@ import java.util.stream.Stream;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
 public class AssaultLearningUp extends AbstractUpgradedRelic {
-
-	public AssaultLearningUp() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL);
-	}
 	
 	private void addCardFromList(ArrayList<AbstractCard> list, ArrayList<AbstractCard> source) {
 		AbstractCard t = source.stream().filter(c -> c.canUpgrade()).findFirst().orElse(null);

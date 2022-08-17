@@ -23,16 +23,12 @@ public class MuramasaUp extends AbstractUpgradedRelic {
 			color = Muramasa.setColorIfNull(this::initGlowColor);
 	}
 	
-	public MuramasaUp() {
-		super(RelicTier.RARE, LandingSound.CLINK);
-	}
-	
 	public void atPreBattle() {
 		this.counter = 0;
 	}
 	
 	private void tryDo(AbstractCard c) {
-		if ((c.type == CardType.ATTACK || c.type == CardType.POWER) && (c.costForTurn == 0 || c.freeToPlayOnce)) {
+		if ((c.type == CardType.ATTACK || c.type == CardType.POWER) && (c.costForTurn == 0 || c.freeToPlay())) {
 			counter++;
 			boolean tmp = false;
 			if (counter % 2 == 0) {
@@ -66,7 +62,7 @@ public class MuramasaUp extends AbstractUpgradedRelic {
 		if (!this.inCombat())
 			return;
 		for (AbstractCard c : p().hand.group) {
-			if (c.type == CardType.ATTACK && (c.costForTurn == 0 || c.freeToPlayOnce) && c.hasEnoughEnergy()
+			if (c.type == CardType.ATTACK && (c.costForTurn == 0 || c.freeToPlay()) && c.hasEnoughEnergy()
 					&& c.cardPlayable(this.randomMonster())) {
 				this.addToGlowChangerList(c, color);
 				active = true;

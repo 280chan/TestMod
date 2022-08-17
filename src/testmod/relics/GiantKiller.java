@@ -7,11 +7,6 @@ import testmod.mymod.TestMod;
 import testmod.powers.GiantKillerPower;
 
 public class GiantKiller extends AbstractTestRelic {
-	
-	public GiantKiller() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-		this.counter = -1;
-	}
 
 	public static int count() {
 		return (int) MISC.relicStream(GiantKiller.class).count();

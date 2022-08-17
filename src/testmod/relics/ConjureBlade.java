@@ -16,10 +16,6 @@ import testmod.powers.AbstractTestPower;
 public class ConjureBlade extends AbstractTestRelic {
 	private static final HashMap<AbstractCard, Integer> BONUS = new HashMap<AbstractCard, Integer>();
 	
-	public ConjureBlade() {
-		super(RelicTier.COMMON, LandingSound.FLAT);
-	}
-	
 	public void atPreBattle() {
 		BONUS.clear();
 		if (this.isActive && p().powers.stream().noneMatch(p -> p instanceof ConjureBladePower))
@@ -75,7 +71,7 @@ public class ConjureBlade extends AbstractTestRelic {
 		}
 		
 		private int cost(AbstractCard c) {
-			return c.freeToPlayOnce || c.cost == -2 ? 0 : (c.cost == -1 ? EnergyPanel.totalCount : c.costForTurn);
+			return c.freeToPlay() || c.cost == -2 ? 0 : (c.cost == -1 ? EnergyPanel.totalCount : c.costForTurn);
 		}
 		
 		private int bonus(AbstractCard c) {

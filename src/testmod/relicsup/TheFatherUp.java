@@ -11,12 +11,8 @@ public class TheFatherUp extends AbstractUpgradedRelic implements TheFatherCount
 	private static boolean canUpdate = false;
 	private static int numberOfMonsters = 0;
 	
-	public TheFatherUp() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-		this.counter = 0;
-	}
-	
 	public void onEquip() {
+		this.counter = 0;
 		TestMod.setActivity(this);
 		if (this.isActive && this.inCombat()) {
 			this.atPreBattle();

@@ -68,7 +68,6 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	}
 	
 	public AscensionHeart() {
-		super(RelicTier.SPECIAL, LandingSound.HEAVY);
 		if (DESCRIPTIONS.length == 28)
 			desc27 = DESCRIPTIONS[27];
 	}

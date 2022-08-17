@@ -50,7 +50,6 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 	}
 	
 	public TestBox() {
-		super(RelicTier.SPECIAL, LandingSound.MAGICAL);
 		this.setDuration(300).addRightClickActions(null, () -> {
 			if (this.checkFoolsDay()) {
 				this.relic();

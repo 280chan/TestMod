@@ -13,19 +13,18 @@ import com.megacrit.cardcrawl.shop.ShopScreen;
 import com.megacrit.cardcrawl.shop.StorePotion;
 import com.megacrit.cardcrawl.shop.StoreRelic;
 
-public class TraineeEconomist extends AbstractTestRelic {
-	private static final int DELTA_BONUS = 5;
-	private static final int DELTA_PRICE = 5;
-	private static final double PERCENTAGE = 100.0;
-	private boolean used = false;
-	
-	public TraineeEconomist() {
-		super(RelicTier.RARE, LandingSound.SOLID);
-	}
+import testmod.relicsup.TraineeEconomistUp;
+import testmod.utils.Economist;
+
+public class TraineeEconomist extends AbstractTestRelic implements Economist {
+	public static final int DELTA_BONUS = 5;
+	public static final int DELTA_PRICE = 5;
+	public static final double PERCENTAGE = 100.0;
+	private static boolean used = false;
 	
 	public String getUpdatedDescription() {
 		return (this.counter < 1) ? DESCRIPTIONS[0]
-				: DESCRIPTIONS[0] + DESCRIPTIONS[1] + goldRatePercent() + DESCRIPTIONS[2] + toPercent(this.priceRate())
+				: DESCRIPTIONS[0] + DESCRIPTIONS[1] + goldRatePercent() + DESCRIPTIONS[2] + toPercent(this.rate())
 						+ DESCRIPTIONS[3];
 	}
 
@@ -41,7 +40,8 @@ public class TraineeEconomist extends AbstractTestRelic {
 		return 1 + DELTA_BONUS * this.counter / PERCENTAGE;
 	}
 	
-	private float priceRate() {
+	@Override
+	public float rate() {
 		return priceRate(this.counter);
 	}
 	
@@ -50,8 +50,8 @@ public class TraineeEconomist extends AbstractTestRelic {
 	}
 	
 	private static float totalRate() {
-		int c = MISC.relicStream(TraineeEconomist.class).mapToInt(a -> a.counter).sum();
-		return c == 0 ? 1f : priceRate(c);
+		return MISC.p().relics.stream().filter(r -> r instanceof Economist).map(r -> ((Economist) r).rate()).reduce(1f,
+				(a, b) -> a * b);
 	}
 	
 	public void onEquip() {
@@ -60,7 +60,7 @@ public class TraineeEconomist extends AbstractTestRelic {
 	
 	public void onMonsterDeath(AbstractMonster m) {
 		this.counter += m.type.ordinal() + 1;
-		this.updateDescription(p().chosenClass);
+		this.updateDescription();
     }
 	
 	public double gainGold(double amount) {
@@ -68,8 +68,8 @@ public class TraineeEconomist extends AbstractTestRelic {
 		return amount * gainGoldRate();
 	}
 	
-	private void addDiscount() {
-		AbstractDungeon.shopScreen.applyDiscount(this.priceRate(), true);
+	public static void addDiscount(float rate) {
+		AbstractDungeon.shopScreen.applyDiscount(rate, true);
 	}
 	/*public void onPreviewObtainCard(AbstractCard c) {
 		System.out.println("生成卡牌降价前" + c.name + c.price);
@@ -107,45 +107,41 @@ public class TraineeEconomist extends AbstractTestRelic {
 	public static class HeartShopRoomPatch {
 		@SpirePostfixPatch
 		public static void Postfix(Object __instance) {
-			if (MISC.relicStream(TraineeEconomist.class).count() > 0) {
-				AbstractDungeon.shopScreen.applyDiscount(totalRate(), true);
-				MISC.relicStream(TraineeEconomist.class).forEach(r -> {
-					r.flash();
-					r.beginLongPulse();
-					r.used = true;
-				});
-			}
+			addDiscount(MISC.p().relics.stream().filter(r -> r instanceof Economist).peek(r -> {
+				r.flash();
+				r.beginLongPulse();
+			}).map(r -> ((Economist) r).rate()).reduce(1f, (a, b) -> a * b));
 		}
 	}
 
 	public void update() {
 		super.update();
-		if (!this.isObtained)
+		if (!this.isObtained || !this.isActive)
 			return;
-		if (AbstractDungeon.currMapNode != null && !this.used) {
+		if (AbstractDungeon.currMapNode != null && !used && this.relicStream(TraineeEconomistUp.class).count() == 0) {
 			if (AbstractDungeon.getCurrRoom() instanceof ShopRoom) {
 				if (!checkDFshop(AbstractDungeon.getCurrRoom())) {
-					this.beginLongPulse();
-					this.addDiscount();
-					this.used = true;
+					addDiscount(this.relicStream(TraineeEconomist.class).peek(r -> r.beginLongPulse())
+							.map(r -> r.rate()).reduce(1f, (a, b) -> a * b));
+					used = true;
 				}
 			}
 		}
 	}
 	
 	public void onEnterRoom(AbstractRoom r) {
-		this.used = false;
+		used = false;
 		if (r instanceof ShopRoom) {
 			if (!checkDFshop(r)) {
 				this.flash();
+				this.beginLongPulse();
 			}
-			this.beginLongPulse();
 		} else {
 			this.stopPulse();
 		}
 	}
 	
-	private static boolean checkDFshop(AbstractRoom r) {
+	public static boolean checkDFshop(AbstractRoom r) {
 		return "downfall.rooms.HeartShopRoom".equals(r.getClass().getName());
 	}
 

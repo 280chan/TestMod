@@ -9,10 +9,6 @@ import testmod.powers.AbstractTestPower;
 
 public class DemonSummon extends AbstractTestRelic {
 	
-	public DemonSummon() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		if (this.inCombat())
 			this.counter = GameActionManager.turn;

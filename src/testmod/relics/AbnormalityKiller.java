@@ -13,10 +13,6 @@ import testmod.powers.AbstractTestPower;
 public class AbnormalityKiller extends AbstractTestRelic {
 	private static final double RATE = 0.25;
 	
-	public AbnormalityKiller() {
-		super(RelicTier.RARE, LandingSound.CLINK);
-	}
-	
 	private void tryAdd() {
 		if (this.hasEnemies()) {
 			AbstractDungeon.getMonsters().monsters.stream()

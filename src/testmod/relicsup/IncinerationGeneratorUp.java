@@ -7,10 +7,6 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 
 public class IncinerationGeneratorUp extends AbstractUpgradedRelic implements ClickableRelic {
 	
-	public IncinerationGeneratorUp() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
 	public void onEquip() {
 		this.addEnergy();
     }

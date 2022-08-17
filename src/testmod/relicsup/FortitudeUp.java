@@ -8,10 +8,6 @@ import testmod.relics.Fortitude;
 
 public class FortitudeUp extends AbstractUpgradedRelic {
 	
-	public FortitudeUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public void onPlayerEndTurn() {
 		if (p().currentBlock == 0) {
 			if (this.isActive) {

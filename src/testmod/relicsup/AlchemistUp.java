@@ -28,10 +28,6 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 	private static AlchemistUp current = null;
 	private boolean timePotionUsed = false;
 	
-	public AlchemistUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		if (!TestMod.addPotionSlotMultiplayer()) {
 			p().potionSlots++;

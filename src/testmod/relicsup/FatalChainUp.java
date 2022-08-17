@@ -11,10 +11,6 @@ import testmod.relics.FatalChain;
 public class FatalChainUp extends AbstractUpgradedRelic {
 	private static final HashMap<DamageInfo, AbstractCreature> MAP = FatalChain.MAP;
 	private static final ArrayList<FatalChainCheckDamagePower> TO_REMOVE = FatalChain.TO_REMOVE;
-	
-	public FatalChainUp() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-	}
 
 	public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
 		if (this.isActive && damageAmount > 0 && !target.isPlayer) {

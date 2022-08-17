@@ -9,10 +9,6 @@ import testmod.screens.GatherSelectScreen;
 
 public class Gather extends AbstractTestRelic {
 	
-	public Gather() {
-		super(RelicTier.RARE, LandingSound.MAGICAL, GOD);
-	}
-	
 	public static int f(AbstractRelic r) {
 		return r.description.length();
 	}

@@ -14,10 +14,6 @@ import testmod.relics.Prudence;
 public class PrudenceUp extends AbstractUpgradedRelic {
 	public static final ArrayList<AbstractCard> CARDS = new ArrayList<AbstractCard>();
 	
-	public PrudenceUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	public void onRefreshHand() {
 		if (!this.isActive)
 			return;
@@ -93,7 +89,7 @@ public class PrudenceUp extends AbstractUpgradedRelic {
 			return false;
 		} else if (p().hasPower("Entangled") && c.type == CardType.ATTACK) {
 			return false;
-		} else if (c.freeToPlayOnce) {
+		} else if (c.freeToPlay()) {
 			return true;
 		}
 		if (p().relics.stream().anyMatch(r -> !r.canPlay(c)) || p().blights.stream().anyMatch(b -> !b.canPlay(c))

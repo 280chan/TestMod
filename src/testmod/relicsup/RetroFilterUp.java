@@ -18,10 +18,6 @@ public class RetroFilterUp extends AbstractUpgradedRelic {
 		return MISC.relicStream(RetroFilterUp.class);
 	}
 	
-	public RetroFilterUp() {
-		super(RelicTier.COMMON, LandingSound.CLINK);
-	}
-	
 	private boolean check(AbstractCard c) {
 		return c.color == CardColor.COLORLESS;
 	}

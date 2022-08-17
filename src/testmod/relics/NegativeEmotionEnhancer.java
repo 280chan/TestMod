@@ -6,10 +6,6 @@ import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
 
 public class NegativeEmotionEnhancer extends AbstractTestRelic {
-	
-	public NegativeEmotionEnhancer() {
-		super(RelicTier.BOSS, LandingSound.HEAVY, BAD);
-	}
 
 	public void onEquip() {
 		this.addEnergy();
@@ -30,13 +26,13 @@ public class NegativeEmotionEnhancer extends AbstractTestRelic {
 	public void atTurnStart() {
 		switch (turn()) {
 		case 1:
-			this.addToBot(apply(p(), new FrailPower(p(), 1, false)));
+			this.atb(apply(p(), new FrailPower(p(), 1, false)));
 			break;
 		case 2:
-			this.addToBot(apply(p(), new WeakPower(p(), 1, false)));
+			this.atb(apply(p(), new WeakPower(p(), 1, false)));
 			break;
 		case 0:
-			this.addToBot(apply(p(), new VulnerablePower(p(), 1, false)));
+			this.atb(apply(p(), new VulnerablePower(p(), 1, false)));
 			break;
 		}
     }

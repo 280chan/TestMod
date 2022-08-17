@@ -11,10 +11,6 @@ public class RainbowHikingShoesUp extends AbstractUpgradedRelic {
 	private CardRarity lastRarity = null;
 	private CardType lastType = null;
 	
-	public RainbowHikingShoesUp() {
-		super(RelicTier.RARE, LandingSound.CLINK);
-	}
-	
 	public void onUseCard(AbstractCard c, UseCardAction action) {
 		if (this.lastType == null || this.lastRarity == null) {
 			this.lastType = c.type;

@@ -10,10 +10,6 @@ import com.megacrit.cardcrawl.powers.PoisonPower;
 import testmod.powers.AbstractTestPower;
 
 public class InfectionSourceUp extends AbstractUpgradedRelic {
-	
-	public InfectionSourceUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
 
 	public void atPreBattle() {
 		if (this.isActive && this.hasEnemies())

@@ -16,10 +16,6 @@ public class GreedyDevil extends AbstractTestRelic {
 	private final HashMap<DamageInfo, AbstractCreature> INFO_MAP = new HashMap<DamageInfo, AbstractCreature>();
 	private final ArrayList<AbstractPower> TO_REMOVE = new ArrayList<AbstractPower>();
 	
-	public GreedyDevil() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onAttack(final DamageInfo info, final int damageAmount, final AbstractCreature target) {
 		if (damageAmount > 0 && !target.isPlayer) {
 			this.INFO_MAP.put(info, target);

@@ -18,10 +18,6 @@ public class DyeUp extends AbstractUpgradedRelic implements ClickableRelic {
 	private boolean used = false;
 	private static final ArrayList<AbstractCard> COPY = new ArrayList<AbstractCard>();
 	
-	public DyeUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
 		if (this.isActive && COPY.contains(c)) {
 			p().gainGold((int) this.relicStream(DyeUp.class).count());

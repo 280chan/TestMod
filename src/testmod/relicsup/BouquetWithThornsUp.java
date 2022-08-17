@@ -7,14 +7,10 @@ import com.megacrit.cardcrawl.powers.ThornsPower;
 
 public class BouquetWithThornsUp extends AbstractUpgradedRelic {
 	
-	public BouquetWithThornsUp() {
-		super(RelicTier.RARE, LandingSound.CLINK);
-	}
-	
 	private void increaseThorns(int amount) {
 		if (amount > 0) {
 			this.flash();
-			this.addToTop(apply(p(), new ThornsPower(p(), amount)));
+			this.att(apply(p(), new ThornsPower(p(), amount)));
 		}
 	}
 	

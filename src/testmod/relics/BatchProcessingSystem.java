@@ -21,12 +21,8 @@ public class BatchProcessingSystem extends AbstractTestRelic {
 			color = BatchProcessingSystemUp.setColorIfNull(this::initGlowColor);
 	}
 	
-	public BatchProcessingSystem() {
-		super(RelicTier.BOSS, LandingSound.SOLID);
-	}
-	
 	private boolean check(AbstractCard c) {
-		return this.counter == c.costForTurn || (c.freeToPlayOnce && this.counter == 0);
+		return this.counter == c.costForTurn || (c.freeToPlay() && this.counter == 0);
 	}
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
@@ -36,7 +32,7 @@ public class BatchProcessingSystem extends AbstractTestRelic {
 			this.show();
 			this.addToBot(new GainEnergyAction(1));
 		}
-		this.counter = c.freeToPlayOnce ? 0 : Math.max(c.costForTurn, 0);
+		this.counter = c.freeToPlay() ? 0 : Math.max(c.costForTurn, 0);
 		this.updateHandGlow();
 	}
 	

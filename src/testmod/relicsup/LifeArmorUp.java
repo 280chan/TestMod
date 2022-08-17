@@ -4,10 +4,6 @@ import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 public class LifeArmorUp extends AbstractUpgradedRelic {
-
-	public LifeArmorUp() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL);
-	}
 	
 	public void atPreBattle() {
 		this.beginLongPulse();

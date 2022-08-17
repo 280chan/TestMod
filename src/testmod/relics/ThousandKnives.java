@@ -9,12 +9,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class ThousandKnives extends AbstractTestRelic {
-	
 	private static Color color = null;
-	
-	public ThousandKnives() {
-		super(RelicTier.RARE, LandingSound.SOLID);
-	}
 	
 	public void onRefreshHand() {
 		if (color == null)

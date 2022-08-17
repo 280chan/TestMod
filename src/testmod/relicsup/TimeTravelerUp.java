@@ -44,10 +44,6 @@ public class TimeTravelerUp extends AbstractUpgradedRelic implements CounterKeep
 		return this.counter;
 	}
 	
-	public TimeTravelerUp() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
 	public void atTurnStart() {
 		int i = 0;
 		while (this.counter >> i >= SAN_TO_GAIN_ENERGY) {

@@ -7,10 +7,6 @@ import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 
 public class Match3Up extends AbstractUpgradedRelic {
 	
-	public Match3Up() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		this.reduceEnergy();
 	}

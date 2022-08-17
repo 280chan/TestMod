@@ -7,10 +7,6 @@ import testmod.relicsup.FortitudeUp;
 
 public class Fortitude extends AbstractTestRelic {
 	
-	public Fortitude() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public void onPlayerEndTurn() {
 		if (p().currentBlock == 0 && this.relicStream(FortitudeUp.class).count() == 0)
 			act();

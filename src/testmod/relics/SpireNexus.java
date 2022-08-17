@@ -17,10 +17,6 @@ import testmod.relicsup.SpireNexusUp;
 public class SpireNexus extends AbstractTestRelic implements ClickableRelic {
 	public static boolean skipEffect = false;
 	
-	public SpireNexus() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		if (!this.inCombat())
 			this.changePulse();

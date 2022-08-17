@@ -11,16 +11,11 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.TextAboveCreatureEffect;
 
 public class HarvestTotem extends AbstractTestRelic {
-	
 	private static final ArrayList<AbstractCreature> DONE = new ArrayList<AbstractCreature>();
 	private boolean init = false;
 	
-	public HarvestTotem() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL, BAD);
-		this.counter = -2;
-	}
-	
 	public void onEquip() {
+		this.counter = -2;
 		this.init = true;
 		p().increaseMaxHp(Math.max(1, p().maxHealth), false);
 		this.init = false;

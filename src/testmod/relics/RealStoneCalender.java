@@ -7,10 +7,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 
 public class RealStoneCalender extends AbstractTestRelic {
 	
-	public RealStoneCalender() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-	}
-	
 	public void atBattleStart() {
 		this.counter = 0;
     }

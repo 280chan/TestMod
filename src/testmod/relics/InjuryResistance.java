@@ -8,10 +8,6 @@ import testmod.powers.AbstractTestPower;
 
 public class InjuryResistance extends AbstractTestRelic {
 	
-	public InjuryResistance() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL, BAD);
-	}
-	
 	public void onEquip() {
 		this.counter = 0;
 	}

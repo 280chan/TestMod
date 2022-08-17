@@ -29,10 +29,6 @@ public class NyarlathotepUp extends AbstractUpgradedRelic {
 		return Stream.of(CARD_IDs).anyMatch(c.cardID::equals) || CARD_LIST.stream().anyMatch(c.cardID::equals);
 	}
 	
-	public NyarlathotepUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		TestMod.setActivity(this);
 		if (this.isActive && this.inCombat() && p().relics.stream().noneMatch(r -> r instanceof Nyarlathotep))

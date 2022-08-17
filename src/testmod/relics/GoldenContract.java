@@ -13,7 +13,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 public class GoldenContract extends AbstractTestRelic {
 	
 	public GoldenContract() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
 		this.counter = 0;
 	}
 	

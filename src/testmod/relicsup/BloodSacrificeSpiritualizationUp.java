@@ -17,10 +17,6 @@ import testmod.relics.BloodSacrificeSpiritualization;
 public class BloodSacrificeSpiritualizationUp extends AbstractUpgradedRelic {
 	private static final UIStrings UI = BloodSacrificeSpiritualization.UI;
 	
-	public BloodSacrificeSpiritualizationUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	private void play(AbstractCard c, boolean purge) {
 		c.purgeOnUse = purge;
         att(new NewQueueCardAction(c, true, false, true));

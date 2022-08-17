@@ -19,7 +19,6 @@ public class HopeUp extends AbstractUpgradedRelic implements ClickableRelic, Cou
 	private boolean canDraw;
 	
 	public HopeUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 		this.counter = 0;
 	}
 	

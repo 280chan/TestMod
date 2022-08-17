@@ -28,10 +28,6 @@ public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic,
 	private boolean victory = false;
 	private static int mode = 0;
 	
-	public IWantAllUp() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL);
-	}
-	
 	public void run(AbstractRelic r, AbstractUpgradedRelic u) {
 		u.counter = Math.max(0, r.counter) + COUNT;
 		u.updateDescription();

@@ -14,11 +14,6 @@ public class HolyLightProtection extends AbstractTestRelic {
 	private ArrayList<AbstractMonster> list = new ArrayList<AbstractMonster>();
 	private boolean checkPulse = false;
 	
-	public HolyLightProtection() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-		this.counter = -1;
-	}
-	
 	public boolean notHas(AbstractCreature m) {
 		return m.powers.stream().noneMatch(p -> p instanceof HolyLightProtectionPower);
 	}

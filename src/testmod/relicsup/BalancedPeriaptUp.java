@@ -2,10 +2,6 @@ package testmod.relicsup;
 
 public class BalancedPeriaptUp extends AbstractUpgradedRelic {
 	
-	public BalancedPeriaptUp() {
-		super(RelicTier.UNCOMMON, LandingSound.FLAT);
-	}
-	
 	private float modify(float input) {
 		return input * 2;
 	}

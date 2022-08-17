@@ -8,10 +8,6 @@ import testmod.relics.DemonSummon;
 
 public class DemonSummonUp extends AbstractUpgradedRelic {
 	
-	public DemonSummonUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		if (this.inCombat())
 			this.counter = GameActionManager.turn;

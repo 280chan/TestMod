@@ -9,17 +9,13 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class Brilliant extends AbstractTestRelic {
 	
-	public Brilliant() {
-		super(RelicTier.RARE, LandingSound.SOLID);
-	}
-	
 	private static int damageFunction(int gold) {
 		return (int) (Math.cbrt(gold) * Math.cbrt(gold) / 2);
 	}
 	
 	private void applyDamage() {
 		int[] dmg = DamageInfo.createDamageMatrix(damageFunction(p().gold), true);
-		this.addToBot(new DamageAllEnemiesAction(null, dmg, DamageType.THORNS, AttackEffect.BLUNT_LIGHT));
+		this.atb(new DamageAllEnemiesAction(null, dmg, DamageType.THORNS, AttackEffect.BLUNT_LIGHT));
 	}
 	
 	public void atBattleStart() {

@@ -2,10 +2,6 @@ package testmod.relics;
 
 public class Recursion extends AbstractTestRelic {
 	
-	public Recursion() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	private int relicAmount() {
 		return (int) this.relicStream(Recursion.class).count();
 	}

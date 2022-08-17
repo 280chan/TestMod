@@ -6,10 +6,6 @@ import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 
 public class MaizeUp extends AbstractUpgradedRelic {
 	boolean key = true;
-	
-	public MaizeUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
 
 	public void onEquip() {
 		this.counter = 0;

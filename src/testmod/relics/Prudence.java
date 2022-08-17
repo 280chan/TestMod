@@ -11,10 +11,6 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 public class Prudence extends AbstractTestRelic {
 	public static Color color = null;
 	
-	public Prudence() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	public void onRefreshHand() {
 		if (!this.isActive)
 			return;
@@ -80,7 +76,7 @@ public class Prudence extends AbstractTestRelic {
 			return false;
 		} else if (p().hasPower("Entangled") && c.type == CardType.ATTACK) {
 			return false;
-		} else if (c.freeToPlayOnce) {
+		} else if (c.freeToPlay()) {
 			return true;
 		}
 		if (p().relics.stream().anyMatch(r -> !r.canPlay(c)) || p().blights.stream().anyMatch(b -> !b.canPlay(c))

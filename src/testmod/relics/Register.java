@@ -27,10 +27,6 @@ public class Register extends AbstractTestRelic {
 		REDUCED.clear();
 	}
 	
-	public Register() {
-		super(RelicTier.SHOP, LandingSound.CLINK, BAD);
-	}
-	
 	private void updateInfo() {
 		clear();
 		POWERS.addAll(p().powers);

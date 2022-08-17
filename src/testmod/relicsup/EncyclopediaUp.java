@@ -15,10 +15,6 @@ public class EncyclopediaUp extends AbstractUpgradedRelic {
 	private static final HashMap<AbstractMonster, Integer> CURR = Encyclopedia.CURR;
 	private static final HashMap<String, Integer> SEEN = Encyclopedia.SEEN;
 	
-	public EncyclopediaUp() {
-		super(RelicTier.RARE, LandingSound.SOLID);
-	}
-	
 	private void put(AbstractMonster m) {
 		int c = (int) CURR.keySet().stream().filter(a -> a.id.equals(m.id)).count();
 		CURR.put(m, c);

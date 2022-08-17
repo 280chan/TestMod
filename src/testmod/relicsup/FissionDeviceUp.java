@@ -16,10 +16,6 @@ public class FissionDeviceUp extends AbstractUpgradedRelic implements ClickableR
 	private boolean playerTurn = false;
 	private static final ArrayList<AbstractCard> LIST = new ArrayList<AbstractCard>();
 	
-	public FissionDeviceUp() {
-		super(RelicTier.COMMON, LandingSound.CLINK);
-	}
-	
 	public void onUseCard(AbstractCard c, UseCardAction a) {
 		if (LIST.contains(c)) {
 			this.playAgain(c, a.target instanceof AbstractMonster ? (AbstractMonster) a.target : null);
@@ -32,7 +28,7 @@ public class FissionDeviceUp extends AbstractUpgradedRelic implements ClickableR
 	}
 	
 	private boolean check(AbstractCard c) {
-		return c.cost > -1 && c.costForTurn > 0 && !c.freeToPlayOnce;
+		return c.cost > -1 && c.costForTurn > 0 && !c.freeToPlay();
 	}
 	
 	private AbstractCard devide(AbstractCard c) {

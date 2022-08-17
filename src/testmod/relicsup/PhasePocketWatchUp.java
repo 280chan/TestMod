@@ -35,10 +35,6 @@ public class PhasePocketWatchUp extends AbstractUpgradedRelic implements Clickab
 		}
 	}
 	
-	public PhasePocketWatchUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public String getUpdatedDescription() {
 		return p() == null ? DESCRIPTIONS[0] : (DESCRIPTIONS[0] + DESCRIPTIONS[1] + DESCRIPTIONS[mode + 2]);
 	}

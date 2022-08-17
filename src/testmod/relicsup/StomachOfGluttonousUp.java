@@ -10,7 +10,6 @@ import testmod.utils.CounterKeeper;
 public class StomachOfGluttonousUp extends AbstractUpgradedRelic implements CounterKeeper {
 	
 	public StomachOfGluttonousUp() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
 		this.counter = 0;
 	}
 	

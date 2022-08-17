@@ -10,10 +10,6 @@ import testmod.powers.AbstractTestPower;
 
 public class HarvestTotemUp extends AbstractUpgradedRelic {
 	
-	public HarvestTotemUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		p().increaseMaxHp(Math.max(1, p().maxHealth), false);
     }

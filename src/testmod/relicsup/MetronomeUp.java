@@ -17,10 +17,6 @@ public class MetronomeUp extends AbstractUpgradedRelic implements CounterKeeper 
 	public static final String ID = "MetronomeUp";
 	public ArrayList<CardType> cards = new ArrayList<CardType>();
 	
-	public MetronomeUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public String getUpdatedDescription() {
 		return this.cards == null || this.cards.size() == 0 ? DESCRIPTIONS[0]
 				: DESCRIPTIONS[0] + cards.stream().map(this::getName).reduce(DESCRIPTIONS[1], (a, b) -> a + ", " + b);

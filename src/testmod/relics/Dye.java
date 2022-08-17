@@ -14,10 +14,6 @@ public class Dye extends AbstractTestRelic implements ClickableRelic {
 	public static final UIStrings UI = MISC.uiString();
 	private boolean used = false;
 	
-	public Dye() {
-		super(RelicTier.RARE, LandingSound.MAGICAL, GOD);
-	}
-	
 	public void atPreBattle() {
 		this.used = false;
 		this.togglePulse(true);

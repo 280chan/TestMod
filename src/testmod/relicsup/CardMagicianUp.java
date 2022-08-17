@@ -13,10 +13,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class CardMagicianUp extends AbstractUpgradedRelic {
 	private static final HashMap<AbstractCard, Integer> CARD = new HashMap<AbstractCard, Integer>();
-	
-	public CardMagicianUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
 
 	public void onEquip() {
 		this.addEnergy();
@@ -69,8 +65,8 @@ public class CardMagicianUp extends AbstractUpgradedRelic {
 	
 	public void atTurnStart() {
 	    if (!p().discardPile.isEmpty())
-	    	this.addToBot(new EmptyDeckShuffleAction());
-	    this.addToBot(new ShuffleAction(p().drawPile));
+	    	this.atb(new EmptyDeckShuffleAction());
+	    this.atb(new ShuffleAction(p().drawPile));
     }
 	
 }

@@ -7,10 +7,6 @@ import testmod.relicsup.CharityUp;
 
 public class Charity extends AbstractTestRelic {
 	
-	public Charity() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL);
-	}
-	
 	public double gainGold(double amount) {
 		this.show();
 		if (!this.isActive || this.relicStream(CharityUp.class).count() > 0)

@@ -4,10 +4,6 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 
 public class Restrained extends AbstractTestRelic {
-	
-	public Restrained() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL, BAD);
-	}
 
 	public void onEquip() {
 		this.addEnergy();

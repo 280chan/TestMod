@@ -7,10 +7,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class GremlinBalance extends AbstractTestRelic {
 	
-	public GremlinBalance() {
-		super(RelicTier.BOSS, LandingSound.CLINK);
-	}
-	
 	public void atTurnStart() {
 		int e = 0, c = 0, hp = p().currentHealth;
 		for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {

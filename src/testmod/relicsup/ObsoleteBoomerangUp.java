@@ -9,10 +9,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 
 public class ObsoleteBoomerangUp extends AbstractUpgradedRelic {
 	private int turn = 0;
-	
-	public ObsoleteBoomerangUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
 
 	public void onUseCard(final AbstractCard targetCard, final UseCardAction useCardAction) {
 		counter++;

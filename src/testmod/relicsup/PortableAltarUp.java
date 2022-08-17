@@ -24,10 +24,6 @@ public class PortableAltarUp extends AbstractUpgradedRelic implements ClickableR
 		updateMaxHPLost(tempMaxHP, toLose);
 	}
 	
-	public PortableAltarUp() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
 	public void onEquip() {
 		this.counter = Math.max(0, PortableAltar.maxHPLost);
 	}

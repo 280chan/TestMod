@@ -15,14 +15,9 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import testmod.mymod.TestMod;
 
 public class EvilDagger extends AbstractTestRelic {
-	
 	private ArrayList<AbstractMonster> killed = new ArrayList<AbstractMonster>();
 	private AbstractCard c;
 	private static final Color COLOR = Color.SCARLET.cpy();
-	
-	public EvilDagger() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
 	
 	public String getUpdatedDescription() {
 		if (this.inCombat()) {

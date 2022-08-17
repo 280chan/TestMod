@@ -9,10 +9,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class BlackFramedGlassesUp extends AbstractUpgradedRevivalRelic {
 	
-	public BlackFramedGlassesUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void atTurnStart() {
 		this.addTmpActionToBot(() -> {
 			int amount = AbstractDungeon.getMonsters().monsters.size();

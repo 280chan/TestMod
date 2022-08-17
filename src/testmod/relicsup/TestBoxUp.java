@@ -48,11 +48,6 @@ public class TestBoxUp extends AbstractUpgradedRelic implements ClickableRelic {
 	public String getUpdatedDescription() {
 		return DESCRIPTIONS[0] + DESCRIPTIONS[Loader.isModLoaded("RelicUpgradeLib") ? 2 : 1];
 	}
-	
-	public TestBoxUp() {
-		super(RelicTier.SPECIAL, LandingSound.MAGICAL);
-		this.counter = -1;
-	}
 
 	public void onEquip() {
 		this.counter = -1;

@@ -18,10 +18,6 @@ import testmod.powers.InorganicPower;
 public class IndustrialRevolutionUp extends AbstractUpgradedRelic implements ClickableRelic, OnReceivePowerRelic {
 	public static final ArrayList<AbstractMonster> LIST = new ArrayList<AbstractMonster>();
 	
-	public IndustrialRevolutionUp() {
-		super(RelicTier.COMMON, LandingSound.FLAT);
-	}
-	
 	public void onVictory() {
 		if (!isActive)
 			return;

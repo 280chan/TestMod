@@ -13,10 +13,6 @@ import testmod.mymod.TestMod;
 public class MagicalMalletUp extends AbstractUpgradedRelic implements ClickableRelic {
 	private boolean playerTurn = false, used = false;
 	
-	public MagicalMalletUp() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL);
-	}
-	
 	public void atPreBattle() {
 		used = false;
     }

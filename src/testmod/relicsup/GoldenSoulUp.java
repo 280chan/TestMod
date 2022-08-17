@@ -8,11 +8,6 @@ import testmod.utils.CounterKeeper;
 public class GoldenSoulUp extends AbstractUpgradedRevivalRelic implements CounterKeeper {
 	public static final int RATE = 10;
 	
-	public GoldenSoulUp() {
-		super(RelicTier.BOSS, LandingSound.CLINK);
-		this.counter = 0;
-	}
-	
 	public String getUpdatedDescription() {
 		if (this.counter > 0) {
 			return DESCRIPTIONS[0] + DESCRIPTIONS[1] + (this.counter * RATE + 100) + DESCRIPTIONS[2];
@@ -26,6 +21,7 @@ public class GoldenSoulUp extends AbstractUpgradedRevivalRelic implements Counte
 	}
 	
 	public void onEquip() {
+		this.counter = 0;
 		if (p().gold > 0) {
 			p().increaseMaxHp(p().gold, true);
 			p().loseGold(p().gold);

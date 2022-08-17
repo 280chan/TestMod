@@ -23,6 +23,11 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	private static final HashMap<String, Texture> IMG = new HashMap<String, Texture>();
 	private static final HashMap<Class<? extends AbstractTestRelic>, String> IDS = 
 			new HashMap<Class<? extends AbstractTestRelic>, String>();
+	private static final HashMap<Class<? extends AbstractTestRelic>, RelicTier> TIERS = 
+			new HashMap<Class<? extends AbstractTestRelic>, RelicTier>();
+	private static final HashMap<Class<? extends AbstractTestRelic>, LandingSound> SFXS = 
+			new HashMap<Class<? extends AbstractTestRelic>, LandingSound>();
+
 	public boolean isActive = false;
 	public boolean show = true;
 	public TestTier testTier = TestTier.NORMAL;
@@ -135,6 +140,24 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	
 	protected static boolean isUpgraded() {
 		return getRelicClass().isAssignableFrom(AbstractUpgradedRelic.class);
+	}
+	
+	protected static <T extends AbstractTestRelic> LandingSound sfx(Class<T> c) {
+		SFXS.putIfAbsent(c, LandingSound.valueOf(MISC.uiString(shortID(c) + "Stat").TEXT[1]));
+		return SFXS.get(c);
+	}
+	
+	protected static <T extends AbstractTestRelic> RelicTier tier(Class<T> c) {
+		TIERS.putIfAbsent(c, RelicTier.valueOf(MISC.uiString(shortID(c) + "Stat").TEXT[0]));
+		return TIERS.get(c);
+	}
+
+	public AbstractTestRelic() {
+		this(getRelicClass());
+	}
+
+	private <T extends AbstractTestRelic> AbstractTestRelic(Class<T> c) {
+		this(shortID(c), tier(c), sfx(c));
 	}
 	
 	public AbstractTestRelic(RelicTier tier, LandingSound sfx) {

@@ -72,7 +72,6 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 	}
 	
 	public AscensionHeartUp() {
-		super(RelicTier.SPECIAL, LandingSound.HEAVY);
 		if (DESCRIPTIONS.length >= 28)
 			desc27 = DESCRIPTIONS[27];
 	}

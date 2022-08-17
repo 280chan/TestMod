@@ -37,10 +37,6 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 		}
 	}
 	
-	public PhasePocketWatch() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public String getUpdatedDescription() {
 		return p() == null ? DESCRIPTIONS[0] : (DESCRIPTIONS[0] + DESCRIPTIONS[1] + DESCRIPTIONS[mode + 2]);
 	}

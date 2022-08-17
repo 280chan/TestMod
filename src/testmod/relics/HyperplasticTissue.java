@@ -8,10 +8,6 @@ import testmod.utils.HandSizeCounterUpdater;
 public class HyperplasticTissue extends AbstractTestRelic implements HandSizeCounterUpdater {
 	private int delta = 0;
 	
-	public HyperplasticTissue() {
-		super(RelicTier.COMMON, LandingSound.SOLID);
-	}
-	
 	public void onCardDraw(AbstractCard c) {
 		if (c.type == CardType.STATUS || c.type == CardType.CURSE) {
 			this.updateHandSize(1);

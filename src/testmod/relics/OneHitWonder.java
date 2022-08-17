@@ -15,15 +15,10 @@ import testmod.mymod.TestMod;
 import testmod.powers.OneHitWonderDebuffPower;
 
 public class OneHitWonder extends AbstractTestRelic {
-	
 	public static ArrayList<AbstractMonster> queue = new ArrayList<AbstractMonster>();
 	
 	private boolean getRoll() {
 		return AbstractDungeon.cardRandomRng.randomBoolean();
-	}
-	
-	public OneHitWonder() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL, BAD);
 	}
 	
 	public void atPreBattle() {

@@ -9,10 +9,6 @@ import testmod.relicsup.BlackFramedGlassesUp;
 
 public class BlackFramedGlasses extends AbstractRevivalRelicToModifyDamage {
 	
-	public BlackFramedGlasses() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void atTurnStart() {
 		show();
 		p().heal(1);

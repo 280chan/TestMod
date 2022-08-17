@@ -11,10 +11,6 @@ import testmod.relicsup.TemporaryBarricadeUp;
 
 public class TemporaryBarricade extends AbstractTestRelic implements ClickableRelic {
 	
-	public TemporaryBarricade() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
 	public void atPreBattle() {
 		if (this.active()) {
 			this.flash();

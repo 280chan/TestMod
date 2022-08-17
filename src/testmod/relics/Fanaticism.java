@@ -10,10 +10,6 @@ import testmod.relicsup.FanaticismUp;
 
 public class Fanaticism extends AbstractTestRelic {
 	
-	public Fanaticism() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
 	public String getUpdatedDescription() {
 		return this.counter < 0 ? DESCRIPTIONS[0] : DESCRIPTIONS[0] + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2];
 	}

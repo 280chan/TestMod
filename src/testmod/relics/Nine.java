@@ -5,11 +5,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 
 public class Nine extends AbstractRevivalRelicToModifyDamage {
 	
-	public Nine() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL);
-		this.setTestTier(BAD);
-	}
-	
 	public int onAttacked(final DamageInfo info, final int damage) {
 		if (damage >= p().currentHealth) {
 			p().maxHealth -= 9;

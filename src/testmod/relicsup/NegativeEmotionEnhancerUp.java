@@ -8,10 +8,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower.PowerType;
 
 public class NegativeEmotionEnhancerUp extends AbstractUpgradedRelic {
-	
-	public NegativeEmotionEnhancerUp() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-	}
 
 	public void onEquip() {
 		this.addEnergy();

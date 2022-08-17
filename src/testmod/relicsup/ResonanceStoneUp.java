@@ -17,7 +17,6 @@ public class ResonanceStoneUp extends AbstractUpgradedRelic implements CounterKe
 	boolean init = true;
 	
 	public ResonanceStoneUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 		this.counter = 1;
 	}
 	

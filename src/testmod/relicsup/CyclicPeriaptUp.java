@@ -23,10 +23,6 @@ public class CyclicPeriaptUp extends AbstractUpgradedRelic implements ClickableR
 			color = CyclicPeriapt.setColorIfNull(this::initGlowColor);
 	}
 	
-	public CyclicPeriaptUp() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		if (this.inCombat()) {
 			this.atPreBattle();

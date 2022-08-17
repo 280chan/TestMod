@@ -12,10 +12,6 @@ public class FatalChain extends AbstractTestRelic {
 	public static final HashMap<DamageInfo, AbstractCreature> MAP = new HashMap<DamageInfo, AbstractCreature>();
 	public static final ArrayList<FatalChainCheckDamagePower> TO_REMOVE = new ArrayList<FatalChainCheckDamagePower>();
 	
-	public FatalChain() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-	}
-	
 	private boolean check() {
 		return this.isActive && this.relicStream(FatalChainUp.class).count() == 0;
 	}

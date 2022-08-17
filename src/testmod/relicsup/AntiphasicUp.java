@@ -4,10 +4,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 
 public class AntiphasicUp extends AbstractUpgradedRelic {
 	
-	public AntiphasicUp() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL);
-	}
-	
 	public int onAttacked(final DamageInfo info, final int damage) {
 		if (damage >= p().maxHealth / 10.0 && (damage != p().maxHealth || damage != 1)) {
 	    	p().increaseMaxHp(5, true);

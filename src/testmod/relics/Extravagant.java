@@ -12,10 +12,6 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic, Ha
 	private static int delta = 0;
 	private boolean playerTurn = false;
 	
-	public Extravagant() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	private void updateAllPulse() {
 		this.relicStream(Extravagant.class).forEach(r -> r.up(false));
 	}

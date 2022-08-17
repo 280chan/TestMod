@@ -17,10 +17,6 @@ import testmod.relicsup.DreamHouseUp;
 public class DreamHouse extends AbstractTestRelic {
 	private static final ArrayList<DreamHousePurgeCardAction> QUEUE = new ArrayList<DreamHousePurgeCardAction>();
 	
-	public DreamHouse() {
-		super(RelicTier.BOSS, LandingSound.HEAVY, BAD);
-	}
-	
 	public void onObtainCard(AbstractCard card) {
 		if (this.isActive && card.rarity != CardRarity.COMMON && this.relicStream(DreamHouseUp.class).count() == 0) {
 			QUEUE.add(new DreamHousePurgeCardAction(card));

@@ -11,12 +11,10 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import basemod.Pair;
 
 public class ResonanceStone extends AbstractTestRelic {
-	
 	private static HashMap<AbstractCard, Integer> previous = new HashMap<AbstractCard, Integer>();
 	boolean init = true;
 	
 	public ResonanceStone() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 		this.counter = 1;
 	}
 	

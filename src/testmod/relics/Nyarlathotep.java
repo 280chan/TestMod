@@ -65,10 +65,6 @@ public class Nyarlathotep extends AbstractTestRelic {
 		return Stream.of(CARD_IDs).anyMatch(c.cardID::equals) || CARD_LIST.stream().anyMatch(c.cardID::equals);
 	}
 	
-	public Nyarlathotep() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		TestMod.setActivity(this);
 		if (this.isActive && this.inCombat()) {

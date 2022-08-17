@@ -13,12 +13,8 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 public class FissionDevice extends AbstractTestRelic implements ClickableRelic {
 	private boolean playerTurn = false;
 	
-	public FissionDevice() {
-		super(RelicTier.COMMON, LandingSound.CLINK);
-	}
-	
 	private boolean check(AbstractCard c) {
-		return c.cost > -1 && c.costForTurn > 1 && !c.freeToPlayOnce;
+		return c.cost > -1 && c.costForTurn > 1 && !c.freeToPlay();
 	}
 	
 	private AbstractCard devide(AbstractCard c) {

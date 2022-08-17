@@ -8,10 +8,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class RealStoneCalenderUp extends AbstractUpgradedRelic {
 	
-	public RealStoneCalenderUp() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-	}
-	
 	public void atBattleStart() {
 		this.counter = 0;
     }

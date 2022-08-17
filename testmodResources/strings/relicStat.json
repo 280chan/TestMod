@@ -1,0 +1,742 @@
+{
+	"testmod-ObsoleteBoomerangStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-BlackFramedGlassesStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-BouquetWithThornsStat": {
+		"TEXT": [
+			"RARE",
+			"CLINK"
+		]
+	},
+
+	"testmod-IWantAllStat": {
+		"TEXT": [
+			"SHOP",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-PortableAltarStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-SinsStat": {
+		"TEXT": [
+			"SPECIAL",
+			"HEAVY"
+		]
+	},
+
+	"testmod-RegisterStat": {
+		"TEXT": [
+			"SHOP",
+			"CLINK"
+		]
+	},
+
+	"testmod-EnergyCheckStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-TestBoxStat": {
+		"TEXT": [
+			"SPECIAL",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-CasingShieldStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-OneHitWonderStat": {
+		"TEXT": [
+			"COMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-RandomTestStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-TemperanceStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-JusticeStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"SOLID"
+		]
+	},
+
+	"testmod-FortitudeStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-CharityStat": {
+		"TEXT": [
+			"SHOP",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-GoldenSoulStat": {
+		"TEXT": [
+			"BOSS",
+			"CLINK"
+		]
+	},
+
+	"testmod-DyeStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-AssaultLearningStat": {
+		"TEXT": [
+			"COMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-HeartOfDaVinciStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-IncinerationGeneratorStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-IndustrialRevolutionStat": {
+		"TEXT": [
+			"COMMON",
+			"FLAT"
+		]
+	},
+
+	"testmod-AscensionHeartStat": {
+		"TEXT": [
+			"SPECIAL",
+			"HEAVY"
+		]
+	},
+
+	"testmod-RealStoneCalenderStat": {
+		"TEXT": [
+			"RARE",
+			"HEAVY"
+		]
+	},
+
+	"testmod-PrudenceStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-HopeStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-MaizeStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-DragonStarHatStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"FLAT"
+		]
+	},
+
+	"testmod-SaigiyounoYouStat": {
+		"TEXT": [
+			"BOSS",
+			"CLINK"
+		]
+	},
+
+	"testmod-MotorcycleStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-DreamHouseStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-NineStat": {
+		"TEXT": [
+			"SHOP",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-BatchProcessingSystemStat": {
+		"TEXT": [
+			"BOSS",
+			"SOLID"
+		]
+	},
+
+	"testmod-CardMagicianStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-NegativeEmotionEnhancerStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-InfectionSourceStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-FatalChainStat": {
+		"TEXT": [
+			"RARE",
+			"HEAVY"
+		]
+	},
+
+	"testmod-VoidShardStat": {
+		"TEXT": [
+			"BOSS",
+			"SOLID"
+		]
+	},
+
+	"testmod-CyclicPeriaptStat": {
+		"TEXT": [
+			"SHOP",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-EqualTreatmentStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-ConstraintPeriaptStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-BloodSacrificeSpiritualizationStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-AcrobatStat": {
+		"TEXT": [
+			"COMMON",
+			"CLINK"
+		]
+	},
+
+	"testmod-ArcanaOfDestinyStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"SOLID"
+		]
+	},
+
+	"testmod-TurbochargingSystemStat": {
+		"TEXT": [
+			"COMMON",
+			"HEAVY"
+		]
+	},
+
+	"testmod-GremlinBalanceStat": {
+		"TEXT": [
+			"BOSS",
+			"CLINK"
+		]
+	},
+
+	"testmod-RestrainedStat": {
+		"TEXT": [
+			"SHOP",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-FaithStat": {
+		"TEXT": [
+			"SHOP",
+			"CLINK"
+		]
+	},
+
+	"testmod-HyperplasticTissueStat": {
+		"TEXT": [
+			"COMMON",
+			"SOLID"
+		]
+	},
+
+	"testmod-TraineeEconomistStat": {
+		"TEXT": [
+			"RARE",
+			"SOLID"
+		]
+	},
+
+	"testmod-InjuryResistanceStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-DeterminationOfClimberStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-DéjàvuStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-MuramasaStat": {
+		"TEXT": [
+			"RARE",
+			"CLINK"
+		]
+	},
+
+	"testmod-GreedyDevilStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-RainbowHikingShoesStat": {
+		"TEXT": [
+			"RARE",
+			"CLINK"
+		]
+	},
+
+	"testmod-DominatorOfWeaknessStat": {
+		"TEXT": [
+			"RARE",
+			"HEAVY"
+		]
+	},
+
+	"testmod-D_4Stat": {
+		"TEXT": [
+			"SPECIAL",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-ShadowAmuletStat": {
+		"TEXT": [
+			"RARE",
+			"SOLID"
+		]
+	},
+
+	"testmod-RetroFilterStat": {
+		"TEXT": [
+			"COMMON",
+			"CLINK"
+		]
+	},
+
+	"testmod-CrystalShieldStat": {
+		"TEXT": [
+			"RARE",
+			"CLINK"
+		]
+	},
+
+	"testmod-AlchemistStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-StringDisintegratorStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-HarvestTotemStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-FanaticismStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-AntiphasicStat": {
+		"TEXT": [
+			"COMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-IntensifyImprintStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-KeyOfTheVoidStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-ThousandKnivesStat": {
+		"TEXT": [
+			"RARE",
+			"SOLID"
+		]
+	},
+
+	"testmod-GiantKillerStat": {
+		"TEXT": [
+			"RARE",
+			"HEAVY"
+		]
+	},
+
+	"testmod-PhasePocketWatchStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-MagicalMalletStat": {
+		"TEXT": [
+			"SHOP",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-EvilDaggerStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-TimeTravelerStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-NyarlathotepStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-VentureCapitalStat": {
+		"TEXT": [
+			"RARE",
+			"CLINK"
+		]
+	},
+
+	"testmod-LifeArmorStat": {
+		"TEXT": [
+			"COMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-HeartOfStrikeStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"HEAVY"
+		]
+	},
+
+	"testmod-RecursionStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-TemporaryBarricadeStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-TheFatherStat": {
+		"TEXT": [
+			"RARE",
+			"HEAVY"
+		]
+	},
+
+	"testmod-TwinklingStarStat": {
+		"TEXT": [
+			"COMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-GlassSoulStat": {
+		"TEXT": [
+			"SPECIAL",
+			"CLINK"
+		]
+	},
+
+	"testmod-LaevatainStat": {
+		"TEXT": [
+			"RARE",
+			"HEAVY"
+		]
+	},
+
+	"testmod-Match3Stat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-BrilliantStat": {
+		"TEXT": [
+			"RARE",
+			"SOLID"
+		]
+	},
+
+	"testmod-BalancedPeriaptStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"FLAT"
+		]
+	},
+
+	"testmod-ConjureBladeStat": {
+		"TEXT": [
+			"COMMON",
+			"FLAT"
+		]
+	},
+
+	"testmod-PortablePortalStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-EncyclopediaStat": {
+		"TEXT": [
+			"RARE",
+			"SOLID"
+		]
+	},
+
+	"testmod-SpireNexusStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-GatherStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-FissionDeviceStat": {
+		"TEXT": [
+			"COMMON",
+			"CLINK"
+		]
+	},
+
+	"testmod-DemonSummonStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-HolyLightProtectionStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-GoldenContractStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-StomachOfGluttonousStat": {
+		"TEXT": [
+			"BOSS",
+			"HEAVY"
+		]
+	},
+
+	"testmod-AbnormalityKillerStat": {
+		"TEXT": [
+			"RARE",
+			"CLINK"
+		]
+	},
+
+	"testmod-MetronomeStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-ResonanceStoneStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-ReverseStat": {
+		"TEXT": [
+			"UNCOMMON",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-ExtravagantStat": {
+		"TEXT": [
+			"BOSS",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-MistCoreStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+	"HalloweenModHalloweenStat": {
+		"TEXT": [
+			"SPECIAL",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-ChristmasGiftStat": {
+		"TEXT": [
+			"SPECIAL",
+			"MAGICAL"
+		]
+	},
+
+	"testmod-GiftOfSatanStat": {
+		"TEXT": [
+			"SPECIAL",
+			"HEAVY"
+		]
+	}
+}

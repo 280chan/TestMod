@@ -18,7 +18,6 @@ public class IWantAll extends AbstractTestRelic implements ClickableRelic {
 	private boolean victory = false;
 	
 	public IWantAll() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL);
 		this.counter = COUNT;
 	}
 	

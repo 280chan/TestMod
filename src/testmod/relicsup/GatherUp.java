@@ -6,10 +6,6 @@ import testmod.relics.Gather;
 public class GatherUp extends AbstractUpgradedRelic implements ClickableRelic {
 	public static boolean pause = false;
 	
-	public GatherUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public static void trigger() {
 		pause = false;
 		if (Gather.valid())

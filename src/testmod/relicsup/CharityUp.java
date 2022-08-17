@@ -5,7 +5,6 @@ import testmod.relics.Charity;
 public class CharityUp extends AbstractUpgradedRelic {
 	
 	public CharityUp() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL);
 		this.counter = 0;
 	}
 	

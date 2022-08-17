@@ -16,10 +16,6 @@ public class AcrobatUp extends AbstractUpgradedRelic {
 		return color;
 	}
 	
-	public AcrobatUp() {
-		super(RelicTier.COMMON, LandingSound.CLINK);
-	}
-	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
 		int index = 1 + p().hand.group.indexOf(c);
 		if (this.inited && (this.increasing ^ this.counter <= index)) {

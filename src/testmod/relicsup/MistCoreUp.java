@@ -19,10 +19,6 @@ import testmod.relics.MistCore;
 public class MistCoreUp extends AbstractUpgradedRelic {
 	public static Random rng;
 	
-	public MistCoreUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (room instanceof EventRoom) {
 			p().increaseMaxHp(Math.max(1, p().maxHealth / 20), true);

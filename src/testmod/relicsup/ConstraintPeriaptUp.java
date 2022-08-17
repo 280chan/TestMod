@@ -10,14 +10,10 @@ import com.megacrit.cardcrawl.cards.status.Burn;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class ConstraintPeriaptUp extends AbstractUpgradedRelic {
-
-	public ConstraintPeriaptUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
 	
 	public void atPreBattle() {
 		this.counter = 1;
-		this.addToBot(new MakeTempCardInDrawPileAction(new Burn(), 1, true, true));
+		this.atb(new MakeTempCardInDrawPileAction(new Burn(), 1, true, true));
 	}
 	
 	public void onRefreshHand() {

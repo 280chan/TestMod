@@ -8,14 +8,9 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import testmod.actions.DéjàvuAction;
 
 public class Déjàvu extends AbstractTestRelic {
-	
 	private ArrayList<AbstractCard> list = new ArrayList<AbstractCard>();
 	private boolean active = false;
 	private boolean endTurn = false;
-	
-	public Déjàvu() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
 	
 	public void setState(boolean active) {
 		this.active = active;

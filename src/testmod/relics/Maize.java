@@ -5,10 +5,6 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 
 public class Maize extends AbstractTestRelic {
-	
-	public Maize() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
 
 	public void atTurnStart() {
 		this.counter = 0;

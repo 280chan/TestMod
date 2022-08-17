@@ -39,10 +39,6 @@ public class D_4 extends AbstractTestRelic {
 		}
 	}
 	
-	public D_4() {
-		super(RelicTier.SPECIAL, LandingSound.MAGICAL);
-	}
-	
 	public String getUpdatedDescription() {
 		return this.isObtained && this.inCombat() ? DESCRIPTIONS[1] + nextSituation : DESCRIPTIONS[0];
 	}

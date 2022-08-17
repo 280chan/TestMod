@@ -54,10 +54,6 @@ public class Encyclopedia extends AbstractTestRelic {
 		}
 	}
 	
-	public Encyclopedia() {
-		super(RelicTier.RARE, LandingSound.SOLID);
-	}
-	
 	public void onEquip() {
 		TestMod.setActivity(this);
 		if (this.isActive) {

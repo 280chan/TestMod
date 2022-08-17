@@ -12,10 +12,6 @@ import testmod.relics.Reverse;
 
 public class ReverseUp extends AbstractUpgradedRelic implements OnReceivePowerRelic, OnPlayerDeathRelic {
 	
-	public ReverseUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public static int a() {
 		return (int) MISC.relicStream(Reverse.class).count();
 	}

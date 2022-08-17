@@ -18,10 +18,6 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 public class Laevatain extends AbstractTestRelic {
 	public static final UIStrings UI = MISC.uiString();
 	
-	public Laevatain() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-	}
-	
 	public void onEquip() {
 		CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
 		for (int i = 0; i < 3; i++) {

@@ -12,10 +12,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class RestrainedUp extends AbstractUpgradedRelic {
 	private boolean played = false;
-	
-	public RestrainedUp() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL);
-	}
 
 	public void onEquip() {
 		this.addEnergy();

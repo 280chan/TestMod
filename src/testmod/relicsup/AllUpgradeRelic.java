@@ -225,7 +225,8 @@ public class AllUpgradeRelic implements MiscMethods {
 		}
 		
 		private static boolean valid(boolean red) {
-			return (Settings.isFinalActAvailable && (red || Settings.hasSapphireKey)) || Settings.isEndless;
+			return (Settings.isFinalActAvailable && (red || Settings.hasSapphireKey))
+					|| (!Settings.isFinalActAvailable && Settings.isEndless);
 		}
 		
 		@SpirePatch(clz = CampfireUI.class, method = "initializeButtons")

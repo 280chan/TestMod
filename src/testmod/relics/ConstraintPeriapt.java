@@ -12,13 +12,9 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 public class ConstraintPeriapt extends AbstractTestRelic {
-
-	public ConstraintPeriapt() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
 	
 	public void atPreBattle() {
-		this.addToBot(new MakeTempCardInDrawPileAction(new Burn(), 1, true, true));
+		this.atb(new MakeTempCardInDrawPileAction(new Burn(), 1, true, true));
 	}
 	
 	public void onRefreshHand() {
@@ -29,20 +25,19 @@ public class ConstraintPeriapt extends AbstractTestRelic {
 	private void updateHandGlow() {
 		int preEnergy = EnergyPanel.totalCount;
 		this.stopPulse();
-		if (!AbstractDungeon.player.hand.group.stream().allMatch(c -> this.checkPlayable(AbstractDungeon.player, c)))
+		if (!p().hand.group.stream().allMatch(c -> this.checkPlayable(p(), c)))
 			this.beginLongPulse();
 		EnergyPanel.totalCount = preEnergy;
 	}
 	
 	public void onPlayerEndTurn() {
 		int preEnergy = EnergyPanel.totalCount;
-		AbstractPlayer p = AbstractDungeon.player;
-		int amount = (int) p.hand.group.stream().filter(c -> !this.checkPlayable(p, c)).count();
+		int amount = (int) p().hand.group.stream().filter(c -> !this.checkPlayable(p(), c)).count();
 		EnergyPanel.totalCount = preEnergy;
 		if (amount > 0)
-			p.heal(amount);
+			p().heal(amount);
 		for (int i = 0; i < amount; i++) {
-			this.addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(10, true), DamageType.THORNS,
+			this.atb(new DamageAllEnemiesAction(p(), DamageInfo.createDamageMatrix(10, true), DamageType.THORNS,
 					AttackEffect.FIRE));
 		}
     }

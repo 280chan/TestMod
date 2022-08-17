@@ -13,10 +13,6 @@ import testmod.powers.AbstractTestPower;
 
 public class ArcanaOfDestinyUp extends AbstractUpgradedRelic {
 	
-	public ArcanaOfDestinyUp() {
-		super(RelicTier.UNCOMMON, LandingSound.SOLID);
-	}
-	
 	private void tryApplyDebuff() {
 		if (hasEnemies())
 			AbstractDungeon.getMonsters().monsters.stream().filter(ArcanaOfDestinyUpPower::needThis)

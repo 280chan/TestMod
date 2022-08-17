@@ -18,11 +18,11 @@ public class SuperconductorPower extends AbstractTestPower {
 	}
     
 	public void onCardDraw(AbstractCard c) {
-		if (c.costForTurn > 0 && !c.freeToPlayOnce && this.amount > 0) {
+		if (c.costForTurn > 0 && !c.freeToPlay() && this.amount > 0) {
 			c.setCostForTurn(c.costForTurn - 1);
 			this.amount--;
 			if (this.amount == 0) {
-				this.addToBot(new RemoveSpecificPowerAction(owner, owner, this));
+				this.atb(new RemoveSpecificPowerAction(owner, owner, this));
 			} else {
 				this.updateDescription();
 			}

@@ -3,10 +3,6 @@ package testmod.relics;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
 public class AssaultLearning extends AbstractTestRelic {
-
-	public AssaultLearning() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL);
-	}
 	
 	public void atTurnStartPostDraw() {
 		this.addTmpActionToBot(() -> {

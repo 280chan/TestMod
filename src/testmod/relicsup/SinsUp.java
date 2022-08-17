@@ -22,10 +22,6 @@ public class SinsUp extends AbstractUpgradedRelic {
 	public static final AbstractCard[] SINS = Sins.SINS;
 	public static final AbstractTestRelic[] RELICS = { new Charity(), new Faith(), new Fortitude(), new Hope(),
 			new Justice(), new Prudence(), new Temperance() };
-    
-	public SinsUp() {
-		super(RelicTier.SPECIAL, LandingSound.HEAVY);
-	}
 	
 	public void onEquip() {
 		int a = (int) Stream.of(SINS)

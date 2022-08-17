@@ -10,10 +10,6 @@ public class RainbowHikingShoes extends AbstractTestRelic {
 	private CardRarity lastRarity = null;
 	public static Color color = null;
 	
-	public RainbowHikingShoes() {
-		super(RelicTier.RARE, LandingSound.CLINK);
-	}
-	
 	public void onUseCard(AbstractCard c, UseCardAction action) {
 		if (this.lastRarity == null) {
 			this.lastRarity = c.rarity;

@@ -26,10 +26,6 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	private static int index = -1;
 	private static Alchemist current = null;
 	
-	public Alchemist() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		if (!TestMod.addPotionSlotMultiplayer()) {
 			p().potionSlots++;

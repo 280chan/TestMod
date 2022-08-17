@@ -19,10 +19,6 @@ import testmod.relicsup.BloodSacrificeSpiritualizationUp;
 public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 	public static final UIStrings UI = MISC.uiString();
 	
-	public BloodSacrificeSpiritualization() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	private void play(AbstractCard c, boolean purge) {
 		c.purgeOnUse = purge;
         att(new NewQueueCardAction(c, true, false, true));

@@ -12,10 +12,6 @@ import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 public class Motorcycle extends AbstractTestRelic implements ClickableRelic {
 	private static int loadedFloor = 0;
 	
-	public Motorcycle() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL, BAD);
-	}
-	
 	public static void loadGame() {
 		loadedFloor = AbstractDungeon.floorNum;
 	}

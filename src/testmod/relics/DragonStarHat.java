@@ -29,10 +29,6 @@ public class DragonStarHat extends AbstractTestRelic {
 		TestMod.save(SAVE_NAME, 0);
 	}
 	
-	public DragonStarHat() {
-		super(RelicTier.UNCOMMON, LandingSound.FLAT, BAD);
-	}
-	
 	public String getUpdatedDescription() {
 		return this.isObtained ? this.DESCRIPTIONS[0] + this.DESCRIPTIONS[1] + maxValue + this.DESCRIPTIONS[2]
 				+ this.counter + this.DESCRIPTIONS[3] : this.DESCRIPTIONS[0];

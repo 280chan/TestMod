@@ -16,11 +16,6 @@ public class HolyLightProtectionUp extends AbstractUpgradedRelic {
 	private boolean checkPulse = false;
 	private static final float RATE = 1 / 3F;
 	
-	public HolyLightProtectionUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-		this.counter = -1;
-	}
-	
 	public boolean notHas(AbstractCreature m) {
 		return m.powers.stream().noneMatch(p -> p instanceof HolyLightProtectionPower);
 	}

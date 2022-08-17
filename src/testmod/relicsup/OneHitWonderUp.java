@@ -16,15 +16,10 @@ import testmod.powers.OneHitWonderDebuffPower;
 import testmod.relics.OneHitWonder;
 
 public class OneHitWonderUp extends AbstractUpgradedRelic {
-	
 	private static ArrayList<AbstractMonster> queue = OneHitWonder.queue;
 	
 	private boolean getRoll() {
 		return AbstractDungeon.cardRandomRng.randomBoolean(0.75f);
-	}
-	
-	public OneHitWonderUp() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL);
 	}
 	
 	public void atPreBattle() {

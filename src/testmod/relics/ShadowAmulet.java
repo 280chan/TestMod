@@ -10,10 +10,6 @@ public class ShadowAmulet extends AbstractTestRelic {
 		MISC.relicStream(ShadowAmulet.class).forEach(r -> r.loseblock(amount));
 	}
 	
-	public ShadowAmulet() {
-		super(RelicTier.RARE, LandingSound.SOLID);
-	}
-	
 	public String getUpdatedDescription() {
 		String temp = DESCRIPTIONS[0];
 		if (this.BLOCK_TO_GAIN != null && this.BLOCK_TO_GAIN.size() > 0) {

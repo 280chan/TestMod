@@ -24,6 +24,29 @@ public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
 		return id.endsWith("Up") ? id.substring(0, id.length() - 2) : id;
 	}
 	
+	@SuppressWarnings("unchecked")
+	private static <T extends AbstractUpgradedRelic> Class<? extends AbstractTestRelic> original(Class<T> c) {
+		try {
+			return (Class<? extends AbstractTestRelic>) Class
+					.forName("testmod.relics." + c.getSimpleName().substring(0, c.getSimpleName().length() - 2));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public AbstractUpgradedRelic() {
+		this(getRelicClass());
+	}
+	
+	private <T extends AbstractUpgradedRelic> AbstractUpgradedRelic(Class<T> c) {
+		this(c, original(c));
+	}
+
+	private <T extends AbstractUpgradedRelic, R extends AbstractTestRelic> AbstractUpgradedRelic(Class<T> c, Class<R> r) {
+		super(TestMod.makeID(shortID(c)), TestMod.relicIMGPath(shortID(r)), tier(r), sfx(r));
+	}
+	
 	private AbstractUpgradedRelic(String id, RelicTier tier, LandingSound sfx) {
 		super(TestMod.makeID(id), TestMod.relicIMGPath(removePostfixForIMG(id)), tier, sfx);
 	}

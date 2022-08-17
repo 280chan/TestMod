@@ -47,10 +47,6 @@ public class TimeTraveler extends AbstractTestRelic {
 		}
 	}
 	
-	public TimeTraveler() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
 	private void tryDecreaseMaxHP() {
 		if (!this.isActive)
 			return;

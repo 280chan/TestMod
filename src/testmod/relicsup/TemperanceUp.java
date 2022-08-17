@@ -21,7 +21,6 @@ public class TemperanceUp extends AbstractUpgradedRelic implements CounterKeeper
 	private static CurrentScreen pre;
 	
 	public TemperanceUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
 		this.counter = 0;
 	}
 	

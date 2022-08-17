@@ -10,10 +10,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import testmod.powers.AbstractTestPower;
 
 public class GiantKillerUp extends AbstractUpgradedRelic {
-	
-	public GiantKillerUp() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-	}
 
 	public static int count() {
 		return (int) MISC.relicStream(GiantKillerUp.class).count();

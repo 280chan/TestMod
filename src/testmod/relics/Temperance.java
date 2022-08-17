@@ -19,10 +19,6 @@ public class Temperance extends AbstractTestRelic {
 	private static RoomPhase phase;
 	private static CurrentScreen pre;
 	
-	public Temperance() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	public void onObtainCard(AbstractCard card) {
 		if (!isActive || this.relicStream(TemperanceUp.class).peek(r -> r.counter++).count() > 0)
 			return;

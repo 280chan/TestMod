@@ -9,7 +9,6 @@ import testmod.utils.CounterKeeper;
 public class GoldenContractUp extends AbstractUpgradedRelic implements CounterKeeper {
 	
 	public GoldenContractUp() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
 		this.counter = 0;
 	}
 	

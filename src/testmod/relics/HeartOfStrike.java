@@ -7,13 +7,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import testmod.powers.AbstractTestPower;
 
 public class HeartOfStrike extends AbstractTestRelic {
-	
 	private HeartOfStrikePower hosp;
-	
-	public HeartOfStrike() {
-		super(RelicTier.UNCOMMON, LandingSound.HEAVY);
-		this.counter = 2;
-	}
 	
 	public String getUpdatedDescription() {
 		return this.counter > 2 ? DESCRIPTIONS[0] + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2] : DESCRIPTIONS[0];
@@ -37,6 +31,7 @@ public class HeartOfStrike extends AbstractTestRelic {
 	}
 	
 	public void onEquip() {
+		this.counter = 2;
 		if (this.inCombat()) {
 			this.atPreBattle();
 		}

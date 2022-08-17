@@ -12,10 +12,6 @@ public class EnergyCheck extends AbstractTestRelic implements ClickableRelic {
 		return p().energy.energyMaster;
 	}
 	
-	public EnergyCheck() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	public void atPreBattle() {
 		this.counter = 0;
     }

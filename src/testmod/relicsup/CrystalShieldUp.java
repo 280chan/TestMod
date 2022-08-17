@@ -8,10 +8,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.powers.BlurPower;
 
 public class CrystalShieldUp extends AbstractUpgradedRelic {
-	
-	public CrystalShieldUp() {
-		super(RelicTier.RARE, LandingSound.CLINK);
-	}
 
 	public void atTurnStart() {
 		this.counter = -1;

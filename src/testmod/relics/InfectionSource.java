@@ -8,10 +8,6 @@ import testmod.powers.InfectionSourcePower;
 import testmod.relicsup.InfectionSourceUp;
 
 public class InfectionSource extends AbstractTestRelic {
-	
-	public InfectionSource() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL, BAD);
-	}
 
 	public void atBattleStart() {
 		if (this.isActive && this.relicStream(InfectionSourceUp.class).count() == 0) {

@@ -13,10 +13,6 @@ public class VoidShard extends AbstractTestRelic {
 		return DAMAGE_RATE;
 	}
 	
-	public VoidShard() {
-		super(RelicTier.BOSS, LandingSound.SOLID, BAD);
-	}
-	
 	public void onEquip() {
 		this.addEnergy();
     }

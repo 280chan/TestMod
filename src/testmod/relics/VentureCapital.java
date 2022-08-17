@@ -7,10 +7,6 @@ public class VentureCapital extends AbstractTestRelic {
 	private static final int LOSE_GOLD_AMOUNT = 1;
 	private static final double PERCENTAGE = 100.0;
 	
-	public VentureCapital() {
-		super(RelicTier.RARE, LandingSound.CLINK);
-	}
-	
 	public String getUpdatedDescription() {
 		return this.counter < 1 ? DESCRIPTIONS[0]
 				: DESCRIPTIONS[0] + DESCRIPTIONS[1] + goldRatePercent() + DESCRIPTIONS[2];

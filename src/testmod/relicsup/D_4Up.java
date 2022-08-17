@@ -23,13 +23,9 @@ public class D_4Up extends AbstractUpgradedRelic implements ClickableRelic {
 		CONSUMER.add((c, m, a) -> dualPlay(c, m));
 		CONSUMER.add((c, m, a) -> nightmare(c));
 	}
-
-	public D_4Up() {
-		super(RelicTier.SPECIAL, LandingSound.MAGICAL);
-		this.counter = 2;
-	}
 	
 	public void onEquip() {
+		this.counter = 2;
 		this.updateDescription();
 	}
 	
@@ -43,7 +39,7 @@ public class D_4Up extends AbstractUpgradedRelic implements ClickableRelic {
 	
 	private static void regain(AbstractCard c) {
 		int cost = c.costForTurn;
-		if (c.freeToPlayOnce || cost == -2)
+		if (c.freeToPlay() || cost == -2)
 			cost = 0;
 		else if (cost == -1)
 			cost = c.energyOnUse;

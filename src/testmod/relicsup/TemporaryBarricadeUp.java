@@ -8,10 +8,6 @@ import testmod.relics.TemporaryBarricade;
 
 public class TemporaryBarricadeUp extends AbstractUpgradedRelic {
 	
-	public TemporaryBarricadeUp() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
 	public void onEquip() {
 		this.addEnergy();
 	}

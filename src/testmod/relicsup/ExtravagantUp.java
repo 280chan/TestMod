@@ -12,10 +12,6 @@ public class ExtravagantUp extends AbstractUpgradedRelic implements ClickableRel
 	private static int delta = 0;
 	private boolean playerTurn = false;
 	
-	public ExtravagantUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	private void updateAllPulse() {
 		this.relicStream(ExtravagantUp.class).forEach(r -> r.up(false));
 	}

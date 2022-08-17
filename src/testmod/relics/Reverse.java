@@ -12,10 +12,6 @@ import com.megacrit.cardcrawl.powers.WraithFormPower;
 import testmod.relicsup.ReverseUp;
 
 public class Reverse extends AbstractTestRelic implements OnReceivePowerRelic {
-	
-	public Reverse() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
 
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature source) {

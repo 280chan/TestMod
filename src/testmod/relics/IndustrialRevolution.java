@@ -11,12 +11,7 @@ import com.megacrit.cardcrawl.powers.AbstractPower.PowerType;
 import testmod.powers.InorganicPower;
 
 public class IndustrialRevolution extends AbstractTestRelic implements OnReceivePowerRelic {
-	
 	public static final ArrayList<AbstractMonster> LIST = new ArrayList<AbstractMonster>();
-	
-	public IndustrialRevolution() {
-		super(RelicTier.COMMON, LandingSound.FLAT, BAD);
-	}
 	
 	public void atPreBattle() {
 		if (!isActive)

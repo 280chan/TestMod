@@ -2,10 +2,6 @@ package testmod.relicsup;
 
 public class RecursionUp extends AbstractUpgradedRelic {
 	
-	public RecursionUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		this.updateHandSize(10);
 		if (this.inCombat()) {

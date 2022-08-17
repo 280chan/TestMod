@@ -11,12 +11,8 @@ import testmod.mymod.TestMod;
 public class StringDisintegratorUp extends AbstractUpgradedRelic {
 	public static ArrayList<AbstractCard> CARDS = new ArrayList<AbstractCard>();
 	
-	public StringDisintegratorUp() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-		this.counter = 0;
-	}
-	
 	public void onEquip() {
+		this.counter = 0;
 		this.addEnergy();
 		TestMod.setActivity(this);
 		if (this.isActive && this.inCombat()) {

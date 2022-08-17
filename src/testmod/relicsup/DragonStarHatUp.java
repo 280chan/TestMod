@@ -10,10 +10,6 @@ import testmod.relics.DragonStarHat;
 
 public class DragonStarHatUp extends AbstractUpgradedRelic {
 	
-	public DragonStarHatUp() {
-		super(RelicTier.UNCOMMON, LandingSound.FLAT);
-	}
-	
 	public String getUpdatedDescription() {
 		return this.isObtained ? this.DESCRIPTIONS[0] + this.DESCRIPTIONS[1] + this.counter + this.DESCRIPTIONS[2]
 				: this.DESCRIPTIONS[0];

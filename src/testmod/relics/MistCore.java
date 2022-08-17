@@ -15,10 +15,6 @@ import testmod.patches.MistCorePatch;
 
 public class MistCore extends AbstractTestRelic {
 	
-	public MistCore() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (room instanceof EventRoom)
 			p().increaseMaxHp(1, true);

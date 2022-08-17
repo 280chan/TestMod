@@ -14,10 +14,6 @@ public class RegisterUp extends AbstractUpgradedRelic{
 		POWERS.clear();
 	}
 	
-	public RegisterUp() {
-		super(RelicTier.SHOP, LandingSound.CLINK);
-	}
-	
 	private void updateInfo() {
 		clear();
 		POWERS.addAll(p().powers);

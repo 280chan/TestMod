@@ -9,10 +9,6 @@ import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 
 public class MotorcycleUp extends AbstractUpgradedRelic implements ClickableRelic {
 	
-	public MotorcycleUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public void atPreBattle() {
 		if (!checkBoss())
 			this.beginLongPulse();

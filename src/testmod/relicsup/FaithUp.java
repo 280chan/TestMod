@@ -17,15 +17,6 @@ import testmod.utils.CounterKeeper;
 
 public class FaithUp extends AbstractUpgradedRelic implements CounterKeeper {
 	
-	public FaithUp() {
-		super(RelicTier.SHOP, LandingSound.CLINK);
-		this.counter = 0;
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-	
 	public void atPreBattle() {
 		if (this.isActive) {
 			int tmp = this.counter * relicCount();
@@ -36,6 +27,7 @@ public class FaithUp extends AbstractUpgradedRelic implements CounterKeeper {
 	
 	public void onEquip() {
 		TestMod.setActivity(this);
+		this.counter = 0;
 		if (!this.isActive)
 			return;
 		if (AbstractDungeon.floorNum > 0 && AbstractDungeon.getCurrRoom() instanceof ShopRoom) {

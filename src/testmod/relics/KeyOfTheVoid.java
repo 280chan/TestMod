@@ -17,7 +17,6 @@ public class KeyOfTheVoid extends AbstractTestRelic {
 	private boolean finished = false;
 	
 	public KeyOfTheVoid() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL, BAD);
 		this.counter = -2;
 	}
 	

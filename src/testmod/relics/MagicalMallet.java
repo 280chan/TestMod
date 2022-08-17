@@ -11,10 +11,6 @@ import testmod.mymod.TestMod;
 public class MagicalMallet extends AbstractTestRelic implements ClickableRelic {
 	private boolean playerTurn = false, used = false;
 	
-	public MagicalMallet() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL, BAD);
-	}
-	
 	public void onEquip() {
 		this.addEnergy();
     }

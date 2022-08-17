@@ -24,7 +24,6 @@ public class EvilDaggerUp extends AbstractUpgradedRelic {
 	private static com.megacrit.cardcrawl.random.Random rng;
 	
 	public EvilDaggerUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 		this.counter = 1;
 	}
 	

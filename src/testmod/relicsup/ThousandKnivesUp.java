@@ -16,10 +16,6 @@ public class ThousandKnivesUp extends AbstractUpgradedRelic implements Clickable
 	private static Color color = null;
 	private ArrayList<AbstractCard> list = new ArrayList<AbstractCard>();
 	
-	public ThousandKnivesUp() {
-		super(RelicTier.RARE, LandingSound.SOLID);
-	}
-	
 	public void onRefreshHand() {
 		if (color == null)
 			color = this.initGlowColor();

@@ -43,10 +43,6 @@ public class DeterminationOfClimberUp extends AbstractUpgradedRelic {
 			color = DeterminationOfClimber.setColorIfNull(this::initGlowColor);
 	}
 	
-	public DeterminationOfClimberUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	public void act(int count) {
 		this.atb(new GainEnergyAction(count));
 		this.atb(new HealAction(p(), p(), count));
@@ -58,7 +54,7 @@ public class DeterminationOfClimberUp extends AbstractUpgradedRelic {
 	}
 	
 	private int getValue(AbstractCard c) {
-		return (c.freeToPlayOnce || c.cost == -2) ? 0 : (c.cost == -1 ? EnergyPanel.totalCount : c.costForTurn);
+		return (c.freeToPlay() || c.cost == -2) ? 0 : (c.cost == -1 ? EnergyPanel.totalCount : c.costForTurn);
 	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {

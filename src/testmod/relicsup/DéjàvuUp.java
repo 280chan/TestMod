@@ -8,14 +8,9 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import testmod.actions.DéjàvuAction;
 
 public class DéjàvuUp extends AbstractUpgradedRelic {
-	
 	private ArrayList<AbstractCard> list = new ArrayList<AbstractCard>();
 	private boolean active = false;
 	private boolean endTurn = false;
-	
-	public DéjàvuUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
 	
 	public void setState(boolean active) {
 		this.active = active;
@@ -37,7 +32,7 @@ public class DéjàvuUp extends AbstractUpgradedRelic {
 	public void atTurnStart() {
 		this.endTurn = false;
 		if (this.active && !this.list.isEmpty()) {
-			this.addToBot(new DéjàvuAction(this.list, this));
+			this.atb(new DéjàvuAction(this.list, this));
 		} else {
 			this.list.clear();
 			this.setState(false);

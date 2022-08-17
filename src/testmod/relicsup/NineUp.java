@@ -4,12 +4,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 
 public class NineUp extends AbstractUpgradedRevivalRelic {
-	
 	public static boolean acting = false;
-	
-	public NineUp() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL);
-	}
 	
 	private boolean check9(int damage) {
 		if (damage % 9 == 0)

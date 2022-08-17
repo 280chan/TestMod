@@ -14,11 +14,6 @@ import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 public class KeyOfTheVoidUp extends AbstractUpgradedRelic implements ClickableRelic {
 	private boolean cardSelected = true;
 	
-	public KeyOfTheVoidUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-		this.counter = -2;
-	}
-	
 	public void onVictory() {
 		this.counter = -1;
 		this.beginLongPulse();
@@ -33,6 +28,7 @@ public class KeyOfTheVoidUp extends AbstractUpgradedRelic implements ClickableRe
 	}
 	
 	public void onEquip() {
+		this.counter = -2;
 		this.onVictory();
 	}
 	

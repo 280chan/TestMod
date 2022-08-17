@@ -34,10 +34,6 @@ public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMetho
 	private static DaVinciLibraryAction action;
 	private static CardColor color = null;
 	
-	public HeartOfDaVinciUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public static void clear() {
 		action = null;
 	}

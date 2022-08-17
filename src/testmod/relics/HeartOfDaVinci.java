@@ -33,10 +33,6 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 	private static int actionInQueue = 0;
 	private static CardColor color = null;
 	
-	public HeartOfDaVinci() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public static void clear() {
 		action = null;
 	}

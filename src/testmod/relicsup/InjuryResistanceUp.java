@@ -9,10 +9,6 @@ import testmod.utils.CounterKeeper;
 
 public class InjuryResistanceUp extends AbstractUpgradedRelic implements CounterKeeper {
 	
-	public InjuryResistanceUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		if (!this.hasStack("relicupgradelib.ui.RelicUpgradePopup", "replaceRelic")) {
 			this.counter = 0;

@@ -4,10 +4,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 public class CasingShield extends AbstractTestRelic {
-	
-	public CasingShield() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
 
 	public void atPreBattle() {
 		this.counter = 0;

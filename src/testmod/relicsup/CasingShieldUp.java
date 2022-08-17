@@ -4,10 +4,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 public class CasingShieldUp extends AbstractUpgradedRelic {
-	
-	public CasingShieldUp() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
-	}
 
 	public void atPreBattle() {
 		this.counter = 0;

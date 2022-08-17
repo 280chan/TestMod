@@ -15,12 +15,8 @@ import com.megacrit.cardcrawl.vfx.FadeWipeParticle;
 public class PortablePortal extends AbstractTestRelic {
 	private static boolean acting = false;
 	
-	public PortablePortal() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-		this.counter = -2;
-	}
-	
 	public void onEquip() {
+		this.counter = -2;
 		this.addEnergy();
     }
 	

@@ -16,13 +16,9 @@ public class GlassSoulUp extends AbstractUpgradedRelic implements GetRelicTrigge
 	public static ArrayList<String> relics = GlassSoul.relics, tmpRelics = GlassSoul.tmpRelics;
 	private boolean damaged = false;
 	
-	public GlassSoulUp() {
-		super(RelicTier.SPECIAL, LandingSound.CLINK);
-		this.counter = 0;
-	}
-	
 	public void onEquip() {
 		TestMod.setActivity(this);
+		this.counter = 0;
 		if (!this.isActive)
 			this.counter = -1;
 		else if (!this.hasStack("relicupgradelib.ui.RelicUpgradePopup", "replaceRelic")) {

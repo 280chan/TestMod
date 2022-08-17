@@ -2,15 +2,9 @@ package testmod.relics;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.BlurPower;
 
 public class CrystalShield extends AbstractTestRelic {
-	
-	public CrystalShield() {
-		super(RelicTier.RARE, LandingSound.CLINK);
-	}
 
 	public void atTurnStart() {
 		this.counter = -1;
@@ -19,8 +13,7 @@ public class CrystalShield extends AbstractTestRelic {
 	
 	public void onPlayerEndTurn() {
 		if (this.counter == -2) {
-			AbstractPlayer p = AbstractDungeon.player;
-			this.addToBot(new ApplyPowerAction(p, p, new BlurPower(p, 1), 1));
+			this.atb(new ApplyPowerAction(p(), p(), new BlurPower(p(), 1), 1));
 			this.stopPulse();
 		} else {
 			this.counter = -2;

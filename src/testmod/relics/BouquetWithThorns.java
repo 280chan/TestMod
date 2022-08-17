@@ -6,10 +6,6 @@ import com.megacrit.cardcrawl.powers.ThornsPower;
 
 public class BouquetWithThorns extends AbstractTestRelic {
 	
-	public BouquetWithThorns() {
-		super(RelicTier.RARE, LandingSound.CLINK);
-	}
-	
 	private void increaseThorns(int amount) {
 		if (amount > 0) {
 			this.flash();

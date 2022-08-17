@@ -11,13 +11,9 @@ public class TheFather extends AbstractTestRelic implements TheFatherCounter {
 	private static boolean canUpdate = false;
 	private static int numberOfMonsters = 0;
 	
-	public TheFather() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-		this.counter = 0;
-	}
-	
 	public void onEquip() {
 		TestMod.setActivity(this);
+		this.counter = 0;
 		if (this.isActive && this.inCombat() && this.relicStream(TheFatherUp.class).count() == 0) {
 			this.atPreBattle();
 			this.atBattleStart();

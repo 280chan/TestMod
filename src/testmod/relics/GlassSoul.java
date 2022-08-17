@@ -16,11 +16,6 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 	public static ArrayList<String> relics = new ArrayList<String>(), tmpRelics = new ArrayList<String>();
 	private boolean damaged = false;
 	
-	public GlassSoul() {
-		super(RelicTier.SPECIAL, LandingSound.CLINK);
-		this.counter = 0;
-	}
-	
 	public static void load(ArrayList<String> list) {
 		relics.clear();
 		relics.addAll(list);
@@ -33,6 +28,7 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 	
 	public void onEquip() {
 		TestMod.setActivity(this);
+		this.counter = 0;
 		if (this.isActive && this.relicStream(GlassSoulUp.class).count() == 0)
 			save();
 		else

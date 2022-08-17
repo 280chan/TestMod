@@ -29,10 +29,6 @@ public class EnergyCheckUp extends AbstractUpgradedRelic implements ClickableRel
 		return i;
 	}
 	
-	public EnergyCheckUp() {
-		super(RelicTier.BOSS, LandingSound.MAGICAL);
-	}
-	
 	public void atPreBattle() {
 		this.counter = 0;
     }

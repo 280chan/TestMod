@@ -11,10 +11,6 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 public class JusticeUp extends AbstractUpgradedRelic implements OnReceivePowerRelic, CounterKeeper, InfiniteUpgradeRelic {
 	
-	public JusticeUp() {
-		super(RelicTier.UNCOMMON, LandingSound.SOLID);
-	}
-	
 	public void run(AbstractRelic r, AbstractUpgradedRelic u) {
 		u.counter = r instanceof AbstractUpgradedRelic ? r.counter + 2 : 3;
 		u.updateDescription();

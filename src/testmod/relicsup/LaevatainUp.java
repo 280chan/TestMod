@@ -10,10 +10,6 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 
 public class LaevatainUp extends AbstractUpgradedRelic {
 	
-	public LaevatainUp() {
-		super(RelicTier.RARE, LandingSound.HEAVY);
-	}
-	
 	public void atPreBattle() {
 		this.counter = 0;
 		this.show();

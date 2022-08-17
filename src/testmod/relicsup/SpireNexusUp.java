@@ -8,10 +8,6 @@ import testmod.relics.SpireNexus;
 
 public class SpireNexusUp extends AbstractUpgradedRelic implements ClickableRelic {
 	
-	public SpireNexusUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public void onEquip() {
 		if (!this.inCombat())
 			this.changePulse();

@@ -3,10 +3,6 @@ package testmod.relics;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 public class LifeArmor extends AbstractTestRelic {
-
-	public LifeArmor() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL, BAD);
-	}
 	
 	public void atPreBattle() {
 		this.counter = 0;

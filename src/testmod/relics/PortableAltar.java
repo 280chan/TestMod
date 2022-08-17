@@ -55,10 +55,6 @@ public class PortableAltar extends AbstractTestRelic {
 		updateMaxHPLost(tempMaxHP, toLose);
 	}
 	
-	public PortableAltar() {
-		super(RelicTier.BOSS, LandingSound.HEAVY, BAD);
-	}
-	
 	public void onEquip() {
 		TestMod.setActivity(this);
 		if (!isActive)

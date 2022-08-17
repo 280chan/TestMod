@@ -21,12 +21,8 @@ public class BatchProcessingSystemUp extends AbstractUpgradedRelic {
 			color = BatchProcessingSystem.setColorIfNull(this::initGlowColor);
 	}
 	
-	public BatchProcessingSystemUp() {
-		super(RelicTier.BOSS, LandingSound.SOLID);
-	}
-	
 	private boolean check(AbstractCard c) {
-		return this.counter == c.costForTurn || (c.freeToPlayOnce && this.counter == 0);
+		return this.counter == c.costForTurn || (c.freeToPlay() && this.counter == 0);
 	}
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
@@ -34,9 +30,9 @@ public class BatchProcessingSystemUp extends AbstractUpgradedRelic {
 			return;
 		if (this.check(c)) {
 			this.show();
-			this.addToBot(new GainEnergyAction(Math.max(1, c.freeToPlayOnce ? 0 : c.costForTurn)));
+			this.atb(new GainEnergyAction(Math.max(1, c.freeToPlay() ? 0 : c.costForTurn)));
 		}
-		this.counter = c.freeToPlayOnce ? 0 : Math.max(c.costForTurn, 0);
+		this.counter = c.freeToPlay() ? 0 : Math.max(c.costForTurn, 0);
 		this.updateHandGlow();
 	}
 	

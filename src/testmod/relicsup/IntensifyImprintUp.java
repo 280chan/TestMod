@@ -5,10 +5,6 @@ import testmod.powers.IntensifyImprintPower;
 
 public class IntensifyImprintUp extends AbstractUpgradedRelic {
 	
-	public IntensifyImprintUp() {
-		super(RelicTier.RARE, LandingSound.MAGICAL);
-	}
-	
 	public String getUpdatedDescription() {
 		return this.counter < 0 ? DESCRIPTIONS[0]
 				: DESCRIPTIONS[0] + " NL " + DESCRIPTIONS[1] + this.counter + DESCRIPTIONS[2];

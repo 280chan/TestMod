@@ -4,10 +4,6 @@ import com.megacrit.cardcrawl.actions.common.ExhaustAction;
 
 public class IncinerationGenerator extends AbstractTestRelic {
 	
-	public IncinerationGenerator() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-	}
-	
 	public void onEquip() {
 		this.addEnergy();
     }
@@ -17,7 +13,7 @@ public class IncinerationGenerator extends AbstractTestRelic {
     }
 	
 	public void atTurnStartPostDraw() {
-		this.addToBot(new ExhaustAction(p(), p(), 1, false));
+		this.atb(new ExhaustAction(p(), p(), 1, false));
 	}
 	
 }

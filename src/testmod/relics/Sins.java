@@ -57,14 +57,6 @@ public class Sins extends AbstractTestRelic {
     private void save() {
     	TestMod.save(SAVE_NAME, preMaxHP);
     }
-    
-	public Sins() {
-		super(RelicTier.SPECIAL, LandingSound.HEAVY, BAD);
-	}
-	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
 	
 	private boolean checkFull() {
 		return Stream.of(SINS).allMatch(this::has);

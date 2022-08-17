@@ -17,17 +17,13 @@ public class RetroFilter extends AbstractTestRelic {
 		return MISC.relicStream(RetroFilter.class);
 	}
 	
-	public RetroFilter() {
-		super(RelicTier.COMMON, LandingSound.CLINK);
-	}
-	
 	private boolean check(AbstractCard c) {
 		return c.color != CardColor.COLORLESS;
 	}
 	
 	public void onUseCard(AbstractCard c, UseCardAction action) {
 		if (!check(c)) {
-			this.addToBot(new GainGoldAction(1));
+			this.atb(new GainGoldAction(1));
 		}
 	}
 	

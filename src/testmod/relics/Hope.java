@@ -43,7 +43,6 @@ public class Hope extends AbstractTestRelic implements ClickableRelic {
 	private boolean canDraw;
 	
 	public Hope() {
-		super(RelicTier.UNCOMMON, LandingSound.MAGICAL);
 		this.counter = 0;
 	}
 	

@@ -26,10 +26,6 @@ public class CyclicPeriapt extends AbstractTestRelic {
 			color = CyclicPeriaptUp.setColorIfNull(this::initGlowColor);
 	}
 	
-	public CyclicPeriapt() {
-		super(RelicTier.SHOP, LandingSound.MAGICAL, BAD);
-	}
-	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
 		if (!c.purgeOnUse && !this.used.contains(c.uuid) && action.exhaustCard) {
 			this.used.add(c.uuid);

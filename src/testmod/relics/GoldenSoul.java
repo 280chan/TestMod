@@ -6,12 +6,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 public class GoldenSoul extends AbstractRevivalRelicToModifyDamage {
 	public static final int RATE = 10;
 	
-	public GoldenSoul() {
-		super(RelicTier.BOSS, LandingSound.CLINK);
-		this.setTestTier(BAD);
-		this.counter = 0;
-	}
-	
 	public String getUpdatedDescription() {
 		if (this.counter > 0) {
 			return DESCRIPTIONS[0] + DESCRIPTIONS[1] + (this.counter * RATE + 100) + DESCRIPTIONS[2];
@@ -25,6 +19,7 @@ public class GoldenSoul extends AbstractRevivalRelicToModifyDamage {
 	}
 	
 	public void onEquip() {
+		this.counter = 0;
 		p().decreaseMaxHealth(p().maxHealth - Math.max(p().maxHealth / 4, 1));
     }
 	

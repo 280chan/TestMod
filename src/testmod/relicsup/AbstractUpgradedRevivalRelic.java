@@ -5,13 +5,8 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 
 public abstract class AbstractUpgradedRevivalRelic extends AbstractUpgradedRelic implements OnPlayerDeathRelic {
-
 	protected int previousFuckHp = -1;
 	protected boolean deathTriggered = false;
-	
-	public AbstractUpgradedRevivalRelic(RelicTier tier, LandingSound sfx) {
-		super(tier, sfx);
-	}
 	
 	protected abstract int damageModifyCheck(AbstractPlayer p, DamageInfo info, int originalDamage);
 

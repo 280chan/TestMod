@@ -11,12 +11,6 @@ import testmod.actions.DreamHousePurgeCardAction;
 public class DreamHouseUp extends AbstractUpgradedRelic {
 	private static final ArrayList<DreamHousePurgeCardAction> QUEUE = new ArrayList<DreamHousePurgeCardAction>();
 	
-	
-	public DreamHouseUp() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
-		this.counter = 0;
-	}
-	
 	public void onObtainCard(AbstractCard card) {
 		if (card.type == CardType.CURSE || card.rarity == CardRarity.CURSE || card.rarity == CardRarity.RARE) {
 			if (this.isActive)
@@ -36,6 +30,7 @@ public class DreamHouseUp extends AbstractUpgradedRelic {
 	}
 	
 	public void onEquip() {
+		this.counter = 0;
 		this.addEnergy();
     }
 	

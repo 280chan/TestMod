@@ -20,10 +20,6 @@ public class Acrobat extends AbstractTestRelic {
 		return color;
 	}
 	
-	public Acrobat() {
-		super(RelicTier.COMMON, LandingSound.CLINK, BAD);
-	}
-	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
 		int index = 1 + p().hand.group.indexOf(c);
 		if (this.inited && (this.increasing ^ this.counter <= index)) {

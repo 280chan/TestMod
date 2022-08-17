@@ -7,7 +7,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 public class StomachOfGluttonous extends AbstractTestRelic {
 	
 	public StomachOfGluttonous() {
-		super(RelicTier.BOSS, LandingSound.HEAVY);
 		this.counter = 0;
 	}
 	

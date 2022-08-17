@@ -11,7 +11,6 @@ public class TwinklingStar extends AbstractTestRelic {
 	private static boolean lock = false;
 	
 	public TwinklingStar() {
-		super(RelicTier.COMMON, LandingSound.MAGICAL);
 		this.counter = 0;
 	}
 	
