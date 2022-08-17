@@ -490,9 +490,9 @@
 	},
 	
 	"testmod-TraineeEconomistUp":{
-		"NAME": "Trainee Economist",
+		"NAME": "Trainee Economist+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever you kill an enemy, your future #yGold gain increase by #b5% (add), shops prices decrease by #b5% (multiply). Killing #yElites and #yBoss enemy would be counted as #b2 and #b3 enemies respectively. ( #yGold amount will not change in rewards)", " NL Current #yGold multiplier: #b", "% NL Current price multiplier: #b", "%"]
+		"DESCRIPTIONS":["Whenever you kill an enemy, your future #yGold gain increase by #b5% (multiply), shops prices decrease by #b5% (multiply). Killing #yElites and #yBoss enemy would be counted as #b2 and #b3 enemies respectively. NL Right click in combat, let the non-Boss enemy which has least maximum HP to escape, lose #b10 x its maximum HP #yGold. Right click outside combat, lose all #yGold (at least #b1000), gain #b1 count and a random #ygem #ykey.", " NL Current #yGold multiplier: #b", "% NL Current price multiplier: #b", "%"]
 	},
 	
 	"testmod-VentureCapitalUp":{
