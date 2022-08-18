@@ -424,9 +424,9 @@
 	},
 	
 	"testmod-TurbochargingSystemUp":{
-		"NAME": "Turbocharging System",
+		"NAME": "Turbocharging System+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Increase base damage of all your cards by amount of its cost."]
+		"DESCRIPTIONS":["Increase base damage of all your cards by its cost cubed (at least #b1)."]
 	},
 	
 	"testmod-HeartOfStrikeUp":{
@@ -544,9 +544,9 @@
 	},
 	
 	"testmod-TwinklingStarUp":{
-		"NAME": "Twinkling Star",
+		"NAME": "Twinkling Star+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever an relic other than Twinkling Star flashes, damages #yAll #yEnemies by #b", ". For every #b128 effects, doubles the damage. Next doubling at #b", " "]
+		"DESCRIPTIONS":["Whenever an relic other than Twinkling Star flashes, damages #yAll #yEnemies by #b", ". For every #b200 effects, doubles the damage and gain a random #ygem #ykey."]
 	},
 	
 	"testmod-MetronomeUp":{

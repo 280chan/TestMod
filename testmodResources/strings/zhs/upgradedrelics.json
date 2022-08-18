@@ -430,9 +430,9 @@
 	},
 	
 	"testmod-TurbochargingSystemUp":{
-		"NAME": "涡轮增压系统",
+		"NAME": "涡轮增压系统+",
 		"FLAVOR": "速度感的基础。",
-		"DESCRIPTIONS":["你的所有牌的基础攻击，均增加其耗能点。"]
+		"DESCRIPTIONS":["你的所有牌的基础攻击，均增加其耗能的立方点(至少 #b1 )。"]
 	},
 	
 	"testmod-HeartOfStrikeUp":{
@@ -550,9 +550,9 @@
 	},
 	
 	"testmod-TwinklingStarUp":{
-		"NAME": "闪烁的星",
+		"NAME": "闪烁的星+",
 		"FLAVOR": "数星星啦~",
-		"DESCRIPTIONS":["每当一个其他遗物闪烁时，对所有敌人造成 #b", " 点伤害。每累计触发 #b128 次，伤害翻倍。到达 #b", " 次时翻倍"]
+		"DESCRIPTIONS":["每当一个其他遗物闪烁时，对所有敌人造成 #b", " 点伤害。每累计触发 #b200 次，获得 #b1 个随机的 #y宝石钥匙 并将伤害翻倍。"]
 	},
 	
 	"testmod-MetronomeUp":{
