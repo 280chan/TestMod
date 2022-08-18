@@ -581,7 +581,7 @@
 	"testmod-TwinklingStar":{
 		"NAME": "闪烁的星",
 		"FLAVOR": "数星星啦~",
-		"DESCRIPTIONS":["每当一个其他遗物闪烁时，对所有敌人造成 #b", " 点伤害。每累计触发 #b128 次，伤害翻倍。到达 #b", " 次时翻倍"]
+		"DESCRIPTIONS":["每当一个其他遗物闪烁时，对所有敌人造成 #b", " 点伤害。每累计触发 #b100 次，伤害增加 #b1 。"]
 	},
 	
 	"testmod-Metronome":{

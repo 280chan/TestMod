@@ -1,14 +1,15 @@
 package testmod.relics;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 
-public class TwinklingStar extends AbstractTestRelic {
-	public static final int STEP = 128;
-	private static boolean lock = false;
+import testmod.utils.Star;
+
+public class TwinklingStar extends AbstractTestRelic implements Star {
+	public static final int STEP = 100;
+	public static boolean lock = false;
 	
 	public TwinklingStar() {
 		this.counter = 0;
@@ -20,11 +21,11 @@ public class TwinklingStar extends AbstractTestRelic {
 	}
 	
 	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0] + f() + DESCRIPTIONS[1] + (counter - (counter % STEP) + STEP) + DESCRIPTIONS[2];
+		return DESCRIPTIONS[0] + f() + DESCRIPTIONS[1];
 	}
 	
 	private int f() {
-		return this.counter > (31 * STEP - 1) ? 2000000000 : 1 << (this.counter / STEP);
+		return this.counter / STEP + 1;
 	}
 	
 	public void act() {
@@ -37,17 +38,23 @@ public class TwinklingStar extends AbstractTestRelic {
 				this.updateDescription();
 			}
 			this.flash();
-			this.atb(new TwinklingStarDamageAction(new DamageAllEnemiesAction(null,
-					DamageInfo.createDamageMatrix(f(), true), DamageType.THORNS, AttackEffect.LIGHTNING, true)));
+			this.atb(new TwinklingStarDamageAction(f()));
 		}
 	}
 	
-	private static class TwinklingStarDamageAction extends AbstractGameAction {
+	public static class TwinklingStarDamageAction extends AbstractGameAction {
 		DamageAllEnemiesAction a;
-		private TwinklingStarDamageAction(DamageAllEnemiesAction a) {
+
+		public TwinklingStarDamageAction(int dmg) {
+			this(new DamageAllEnemiesAction(null, DamageInfo.createDamageMatrix(dmg, true), DamageType.THORNS,
+					AttackEffect.LIGHTNING, true));
+		}
+		
+		public TwinklingStarDamageAction(DamageAllEnemiesAction a) {
 			this.a = a;
 			this.actionType = ActionType.DAMAGE;
 		}
+		
 		@Override
 		public void update() {
 			if (lock = !(this.isDone = a.isDone || !MISC.hasEnemies())) {
