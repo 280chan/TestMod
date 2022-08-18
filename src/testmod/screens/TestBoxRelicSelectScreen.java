@@ -108,7 +108,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		AbstractTestRelic pri = this.priority();
 		ArrayList<AbstractRelic> l = new ArrayList<AbstractRelic>();
 		ArrayList<AbstractRelic> result = new ArrayList<AbstractRelic>();
-		l.addAll(pri == null || this.boxUp ? TestMod.RELICS : TestMod.BAD_RELICS);
+		l.addAll(TestMod.RELICS);
 		l.removeIf(this::checkIllegal);
 		if (pri != null) {
 			l.removeIf(pri::sameAs);
