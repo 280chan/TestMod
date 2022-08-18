@@ -35,7 +35,7 @@ public class Sins extends AbstractTestRelic {
 	
 	public static final AbstractCard[] SINS = { new Pride(), new Lust(), new Wrath(), new Sloth(), new Envy(),
 			new Greed(), new Gluttony() };
-	public static final AbstractRelic[] RELICS = {new DuVuDoll(), new DarkstonePeriapt(), new BlueCandle()};
+	public static final AbstractRelic[] RELICS = { new DuVuDoll(), new DarkstonePeriapt(), new BlueCandle() };
 	
 	public static final String SAVE_NAME = "preMaxHP";
 	
