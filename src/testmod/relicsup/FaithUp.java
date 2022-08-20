@@ -56,20 +56,28 @@ public class FaithUp extends AbstractUpgradedRelic implements CounterKeeper {
 		});
 	}
 	
+	private void act() {
+		int tmp = Math.max(1, this.counter / 25);
+		if (p().gold < tmp) {
+			p().damage(new DamageInfo(null, tmp - p().gold, DamageType.THORNS));
+			p().loseGold(p().gold);
+		} else {
+			p().loseGold(tmp);
+		}
+		this.counter -= tmp;
+	}
+	
 	public void justEnteredRoom(final AbstractRoom room) {
 		if (this.isActive) {
 			if (room instanceof ShopRoom) {
 				this.gainGold();
 			} else if (this.counter > 0) {
 				this.addTmpEffect(() -> {
-					int tmp = Math.max(1, this.counter / 25);
-					if (p().gold < tmp) {
-						p().damage(new DamageInfo(null, tmp - p().gold, DamageType.THORNS));
-						p().loseGold(p().gold);
+					if (this.inCombat()) {
+						this.addTmpActionToTop(() -> act());
 					} else {
-						p().loseGold(tmp);
+						act();
 					}
-					this.counter -= tmp;
 				});
 			}
 		}
