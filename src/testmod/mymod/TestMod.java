@@ -77,7 +77,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 8/18/2022
+ * @version 8/20/2022
  * @since 6/17/2018
  */
 
@@ -590,7 +590,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	public static void setShow(AbstractTestRelic r) {
-		r.show = AbstractDungeon.player.relics.size() < 26;
+		r.show = AbstractDungeon.player.relics.size() < 26 && MISC.inCombat();
 	}
 	
 	public static void setActivity(AbstractTestRelic relic) {

@@ -498,13 +498,13 @@
 	"testmod-VentureCapitalUp":{
 		"NAME": "Venture Capital",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Upon pick up, lose #All #yGold. Whenever you gain #yGold, lose #b1 #yGold. For each #b1 #yGold you lose, increase future #yGold gain by #b1% (add). ( #yGold amount will not change in rewards)", " NL Current #yGold multiplier: #b", "%"]
+		"DESCRIPTIONS":["For each time you lose #yGold except from this relic, increase future #yGold gain by #b1% (add). Right click this relic, lose #All #yGold and for each #b1 #yGold you lose, increase future #yGold gain by #b1% (add), if lose at least #b1000, increase #b1000 less but gain a random #ygem #ykey instead.", " NL Current #yGold multiplier: #b", "%"]
 	},
 	
 	"testmod-VoidShardUp":{
-		"NAME": "Void Shard",
+		"NAME": "Void Shard+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] . You receive #r200% damage outside combats."]
+		"DESCRIPTIONS":["At the start of each turn, gain [E] . Right click to spend #b10 #yGold, reduce damage you receive by #b6%, increase future cost by #b10.", " NL Current damage rate: #b", "%"]
 	},
 	
 	"testmod-RestrainedUp":{

@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 public class VentureCapital extends AbstractTestRelic {
 	private static final int LOSE_GOLD_AMOUNT = 1;
-	private static final double PERCENTAGE = 100.0;
+	public static final double PERCENTAGE = 100.0;
 	
 	public String getUpdatedDescription() {
 		return this.counter < 1 ? DESCRIPTIONS[0]
@@ -29,7 +29,7 @@ public class VentureCapital extends AbstractTestRelic {
 	
 	private void increaseCounter(int gold) {
 		this.counter += gold;
-		this.updateDescription(p().chosenClass);
+		this.updateDescription();
 	}
 	
 	public double gainGold(double amount) {

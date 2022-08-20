@@ -768,6 +768,10 @@ public interface MiscMethods {
 		AbstractDungeon.topLevelEffectsQueue.add(new TMPEffect(lambda));
 	}
 	
+	default void addLowLevelEffect(Lambda... lambda) {
+		AbstractDungeon.effectsQueue.add(new TMPEffect(lambda));
+	}
+	
 	public static interface Lambda extends Runnable {}
 	
 	default void addTmpActionToTop(Lambda... lambda) {

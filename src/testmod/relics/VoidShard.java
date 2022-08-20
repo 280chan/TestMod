@@ -1,16 +1,19 @@
 package testmod.relics;
 
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-
 import testmod.powers.VoidShardEventDamagePower;
+import testmod.powers.VoidShardEventDamagePower.Shard;
 
-public class VoidShard extends AbstractTestRelic {
+public class VoidShard extends AbstractTestRelic implements Shard {
 	private static final double DAMAGE_RATE = 2;
 	private VoidShardEventDamagePower p;
-	
+
 	public double damageRate() {
-		this.flash();
-		return DAMAGE_RATE;
+		if (!this.inCombat()) {
+			this.flash();
+			return DAMAGE_RATE;
+		}
+		return 1;
 	}
 	
 	public void onEquip() {
@@ -22,14 +25,12 @@ public class VoidShard extends AbstractTestRelic {
     }
 
 	public void atPreBattle() {
-		if (VoidShardEventDamagePower.hasThis()) {
-			VoidShardEventDamagePower.getThis().forEach(this::removePower);
-		}
+		VoidShardEventDamagePower.getThis().stream().filter(v -> v.vs instanceof VoidShard).forEach(this::removePower);
 		p = null;
     }
 
 	public void onVictory() {
-		this.addPower(p = new VoidShardEventDamagePower(p(), this));
+		this.addPower(p = new VoidShardEventDamagePower(this));
     }
 
 	public void onEnterRoom(final AbstractRoom room) {
