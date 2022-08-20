@@ -152,7 +152,7 @@
 			" positive effects. Can not give player negative effects."
 		]
 	},
-	"testmod-InorganicPower": {
+	"testmod-InorganicPowerUp": {
 		"NAME": "Inorganic",
 		"DESCRIPTIONS": [
 			"Can not receive positive effects. Can not give player negative effects."
