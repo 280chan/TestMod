@@ -7,6 +7,8 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import testmod.mymod.TestMod;
+
 public class BrilliantUp extends AbstractUpgradedRelic {
 	
 	private static int damageFunction(int gold) {
@@ -35,6 +37,12 @@ public class BrilliantUp extends AbstractUpgradedRelic {
 		int tmp = Math.max(100, p().gold / 10);
 		if (this.isActive)
 			p().gainGold(this.relicStream(BrilliantUp.class).mapToInt(r -> r.updateCounter(tmp)).sum());
+	}
+	
+	public void onEquip() {
+		TestMod.setActivity(this);
+		if (this.isActive && this.inCombat())
+			this.gainTempGold();
 	}
 	
 	public void atPreBattle() {
