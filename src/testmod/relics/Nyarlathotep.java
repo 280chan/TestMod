@@ -22,10 +22,10 @@ public class Nyarlathotep extends AbstractTestRelic {
 	public static final String[] POWER_IDs = { "testmod-PlagueActPower", "Amplify", "Heatsink", "Storm", "Curiosity",
 			"Recycle_Bin_Power", "reliquary:StormPlus" };
 	public static final String[] RELIC_IDs = { "testmod-MaizeUp", "testmod-MuramasaUp", "testmod-RestrainedUp",
-			"Bird Faced Urn", "Mummified Hand", "OrangePellets", "SynthV:C4", "paleoftheancients:SoulOfTheDefect",
+			"Bird Faced Urn", "Mummified Hand", "OrangePellets", "SynthVMod:C4", "paleoftheancients:SoulOfTheDefect",
 			"Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots", "Clover", "Dota2Spire:EtherealBlade",
 			"Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter", "DemoExt:GalacticMedalOfValor",
-			"SynthV:MejaisSoulstealer", "youkari:Boundary_crack", "BirthdayGift-Icosahedron", "RU OrangePellets",
+			"SynthVMod:MejaisSoulstealer", "youkari:Boundary_crack", "BirthdayGift-Icosahedron", "RU OrangePellets",
 			"RU Bronze Scales", "RU Bird Faced Urn", "Kaltsit_LearningSimulationPower", "Steelbody" };
 	public static final String[] RELIC_ON_PLAY_IDs = { "reliquary:IridiumChain" };
 	public static final ArrayList<String> CARD_LIST = new ArrayList<String>();
