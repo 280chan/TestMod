@@ -115,7 +115,7 @@ public class EvilDaggerUp extends AbstractUpgradedRelic {
 	
 	private boolean check(AbstractCard c) {
 		if (rng == null)
-			rng = MISC.copyRNG(AbstractDungeon.monsterRng);
+			rng = AbstractDungeon.monsterRng.copy();
 		return p().hand.group.contains(c) && c.hasEnoughEnergy()
 				&& c.cardPlayable(AbstractDungeon.getMonsters().getRandomMonster(null, true, rng));
 	}

@@ -55,8 +55,8 @@ public class HopeUp extends AbstractUpgradedRelic implements ClickableRelic, Cou
 	}
 	
 	public void atPreBattle() {
-		HPRng = this.copyRNG(AbstractDungeon.miscRng);
-		cardRng = this.copyRNG(AbstractDungeon.miscRng);
+		HPRng = AbstractDungeon.miscRng.copy();
+		cardRng = AbstractDungeon.miscRng.copy();
 		this.canDraw = false;
 	}
 

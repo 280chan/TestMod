@@ -207,8 +207,8 @@ public class Hope extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	public void atPreBattle() {
-		HPRng = this.copyRNG(AbstractDungeon.miscRng);
-		cardRng = this.copyRNG(AbstractDungeon.miscRng);
+		HPRng = AbstractDungeon.miscRng.copy();
+		cardRng = AbstractDungeon.miscRng.copy();
 		this.canDraw = false;
 	}
 

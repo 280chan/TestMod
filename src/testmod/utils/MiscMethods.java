@@ -5,7 +5,6 @@ import java.util.function.*;
 import java.util.stream.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.RandomXS128;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.*;
@@ -402,19 +401,6 @@ public interface MiscMethods {
 				}
 			}
 	    }
-	}
-	
-	static class RNGTools {
-		public static Random copyRNG(Random source) {
-			Random rng = new Random();
-			rng.random = new RandomXS128(source.random.getState(0), source.random.getState(1));
-			rng.counter = 0;
-			return rng;
-		}
-	}
-	
-	default Random copyRNG(Random source) {
-		return RNGTools.copyRNG(source);
 	}
 	
 	default void playAgain(AbstractCard card, AbstractMonster m) {
@@ -1062,7 +1048,7 @@ public interface MiscMethods {
 	}
 	
 	default AbstractMonster randomMonster() {
-		return AbstractDungeon.getMonsters().getRandomMonster(null, true, this.copyRNG(AbstractDungeon.monsterRng));
+		return AbstractDungeon.getMonsters().getRandomMonster(null, true, AbstractDungeon.monsterRng.copy());
 	}
 	
 	default boolean upgraded(AbstractRelic r) {

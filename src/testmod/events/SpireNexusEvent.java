@@ -40,7 +40,7 @@ public class SpireNexusEvent extends AbstractTestEvent {
 		this.imageEventText.removeDialogOption(0);
 		tmp = Stream.of(AbstractDungeon.shrineList, AbstractDungeon.specialOneTimeEventList, AbstractDungeon.eventList)
 				.flatMap(l -> l.stream()).filter(SpireNexusEvent::canEventSpawn).collect(toArrayList());
-		Collections.shuffle(tmp, new Random(this.copyRNG(AbstractDungeon.eventRng).randomLong()));
+		Collections.shuffle(tmp, new Random(AbstractDungeon.eventRng.copy().randomLong()));
 		ArrayList<String> ids = tmp.stream().limit(size).collect(toArrayList());
 		tmp.clear();
 		tmp = ids;

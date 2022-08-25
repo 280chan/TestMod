@@ -93,7 +93,7 @@ public class D_4 extends AbstractTestRelic {
 	public void atPreBattle() {
 		if (!isActive)
 			return;
-		this.rng = this.copyRNG(AbstractDungeon.miscRng);
+		this.rng = AbstractDungeon.miscRng.copy();
 		this.init();
     }
 	

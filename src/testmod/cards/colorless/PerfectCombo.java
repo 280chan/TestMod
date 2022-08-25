@@ -31,7 +31,7 @@ public class PerfectCombo extends AbstractEquivalentableCard {
 	private DamageInfo info;
 	
 	public static void setRng() {
-		rng = INSTANCE.copyRNG(AbstractDungeon.miscRng);
+		rng = AbstractDungeon.miscRng.copy();
 	}
 	
 	private boolean roll() {

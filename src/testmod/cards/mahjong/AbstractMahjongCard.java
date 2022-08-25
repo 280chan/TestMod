@@ -104,7 +104,7 @@ public abstract class AbstractMahjongCard extends AbstractTestCard implements Mi
 	}
 	
 	public static void setRng() {
-		rng = MISC.copyRNG(AbstractDungeon.cardRng);
+		rng = AbstractDungeon.cardRng.copy();
 	}
 	
 	public AbstractMahjongCard pureRandomMahjong() {

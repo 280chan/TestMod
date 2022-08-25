@@ -78,7 +78,7 @@ public class DeterminationOfClimberUp extends AbstractUpgradedRelic {
 			return;
 		this.stopPulse();
 		if (rng == null)
-			rng = this.copyRNG(AbstractDungeon.monsterRng);
+			rng = AbstractDungeon.monsterRng.copy();
 		colorRegister(color).addRelic(this).addPredicate(c -> this.getValue(c) > this.counter && this.counter != -1 &&
 				c.hasEnoughEnergy() && c.cardPlayable(AbstractDungeon.getMonsters().getRandomMonster(null, true, rng)))
 				.updateHand();
