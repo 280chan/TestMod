@@ -653,7 +653,7 @@
 	"testmod-PortablePortal":{
 		"NAME": "便携传送门",
 		"FLAVOR": "别磨叽了，开干吧！",
-		"DESCRIPTIONS":["每回合开始获得 [E] 。拾起后你进入第一个房间时将被传送至 #yBoss 房。"]
+		"DESCRIPTIONS":["限一次，在 #yBoss 房、 #yBoss 宝箱房与火堆以外的房间，战斗外右键本遗物，传送至 #yBoss 房。使用后每回合开始获得 [E] 。"]
 	},
 	
 	"testmod-SpireNexus":{

@@ -1,46 +1,66 @@
 package testmod.relics;
 
+import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.map.MapRoomNode;
-import com.megacrit.cardcrawl.neow.NeowRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.megacrit.cardcrawl.rooms.EmptyRoom;
+import com.megacrit.cardcrawl.rooms.MonsterRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
+import com.megacrit.cardcrawl.rooms.RestRoom;
 import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
 import com.megacrit.cardcrawl.rooms.TrueVictoryRoom;
 import com.megacrit.cardcrawl.rooms.VictoryRoom;
 import com.megacrit.cardcrawl.vfx.FadeWipeParticle;
 
-import testmod.relicsup.PortablePortalUp;
-
-public class PortablePortal extends AbstractTestRelic {
-	public static boolean acting = false;
+public class PortablePortal extends AbstractTestRelic implements ClickableRelic {
 	
 	public void onEquip() {
 		this.counter = -2;
-		this.addEnergy();
     }
 	
 	public void onUnequip() {
-		this.reduceEnergy();
+		if (this.counter == -3)
+			this.reduceEnergy();
     }
 	
-	public boolean canSpawn() {
-		return AbstractDungeon.floorNum > 0;
+	public void justEnteredRoom(AbstractRoom r) {
+		if (!(r instanceof MonsterRoom) && this.check(r))
+			this.beginLongPulse();
+		else
+			this.stopPulse();
 	}
 	
-	public void onEnterRoom(final AbstractRoom room) {
-		if (relicStream(PortablePortalUp.class).count() > 0 || room instanceof NeowRoom || room instanceof EmptyRoom
-				|| room instanceof TreasureRoomBoss || room instanceof VictoryRoom || room instanceof TrueVictoryRoom
-				|| room instanceof MonsterRoomBoss) {
-			return;
+	public void atPreBattle() {
+		this.stopPulse();
+	}
+	
+	public void onVictory() {
+		if (this.check())
+			this.beginLongPulse();
+	}
+	
+	private boolean check() {
+		return this.check(AbstractDungeon.currMapNode == null ? null : AbstractDungeon.getCurrRoom());
+	}
+	
+	private boolean check(AbstractRoom r) {
+		if (r instanceof TreasureRoomBoss || r instanceof VictoryRoom || r instanceof TrueVictoryRoom
+				|| r instanceof MonsterRoomBoss || r instanceof RestRoom) {
+			return false;
 		}
-		if (this.counter == -2 && !acting) {
+		return this.counter == -2;
+	}
+
+	@Override
+	public void onRightClick() {
+		AbstractRoom room = AbstractDungeon.currMapNode == null ? null: AbstractDungeon.getCurrRoom();
+		if (this.check(room) && !this.inCombat()) {
+			this.addEnergy();
 			this.counter = -3;
-			acting = true;
 			this.show();
-			room.phase = AbstractRoom.RoomPhase.COMPLETE;
+			if (room != null)
+				room.phase = AbstractRoom.RoomPhase.COMPLETE;
 			MapRoomNode node = new MapRoomNode(-1, 15);
 	        node.room = new MonsterRoomBoss();
 	        AbstractDungeon.nextRoom = node;
@@ -49,9 +69,7 @@ public class PortablePortal extends AbstractTestRelic {
 	        AbstractDungeon.pathY.add(Integer.valueOf(15));
 	        AbstractDungeon.topLevelEffects.add(new FadeWipeParticle());
 	        AbstractDungeon.nextRoomTransitionStart();
-		} else if (this.isActive && acting) {
-			acting = false;
 		}
-    }
+	}
 
 }

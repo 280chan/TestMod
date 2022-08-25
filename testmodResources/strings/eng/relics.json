@@ -617,7 +617,7 @@
 	"testmod-PortablePortal":{
 		"NAME": "Portable Portal",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] . When you enter the first room after pickup, you will teleport to #yBoss room."]
+		"DESCRIPTIONS":["At most once, right click this relic outside combat, in a room other than #yBoss room, #yBoss chest room and #yRest #ySite, teleport to #yBoss room. After you use the teleport, gain [E] at the start of each turn."]
 	},
 	
 	"testmod-SpireNexus":{

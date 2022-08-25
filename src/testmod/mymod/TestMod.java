@@ -710,7 +710,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		PhasePocketWatchUp.load(getInt(PhasePocketWatch.SAVE_NAME));
 		Encyclopedia.load();
 		ManifoldPotion.load();
-		PortablePortal.acting = false;
 		PortablePortalUp.load();
 	}
 	
