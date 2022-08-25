@@ -1,8 +1,11 @@
 package testmod.relicsup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -35,7 +38,24 @@ public class PortablePortalUp extends AbstractUpgradedRelic implements Clickable
 	
 	public void onEquip() {
 		this.addEnergy();
-		p().loseGold(Math.min(p().gold, 999));
+		if (Loader.isModLoaded("RelicUpgradeLib")) {
+			int k;
+			if ((k = AllUpgradeRelic.keyCount()) > 2) {
+				ArrayList<Integer> tmp = new ArrayList<Integer>();
+				for (int i = 0; i < 3; i++)
+					tmp.addAll(this.getIdenticalList(i, AllUpgradeRelic.MultiKey.KEY[i]));
+				Collections.shuffle(tmp, new Random(AbstractDungeon.miscRng.copy().randomLong()));
+				tmp.stream().limit(3).forEach(i -> AllUpgradeRelic.MultiKey.KEY[i]--);
+			} else {
+				double t;
+				if ((t = p().gold * 1.0 * (3 - k) / 3) >= 1) {
+					p().loseGold((int) Math.min(t, 999));
+				}
+				for (int i = 0; i < 3; i++)
+					AllUpgradeRelic.MultiKey.KEY[i] = 0;
+				Settings.hasRubyKey = Settings.hasEmeraldKey = Settings.hasSapphireKey = false;
+			}
+		}
     }
 	
 	public void onUnequip() {

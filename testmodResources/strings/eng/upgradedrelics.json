@@ -618,7 +618,7 @@
 	"testmod-PortablePortalUp":{
 		"NAME": "Portable Portal+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Upon pickup, lose all #yGold (at most #b999). At the start of each turn, gain [E] . Right click this relic out side combat, teleport to #yBoss room of last act (using this effect will cancel the #yBoss relic upgrading you reserved."]
+		"DESCRIPTIONS":["Upon pickup, lose #b3 random #ygem #ykey, for each #ygem #ykey missing, lose #b1/3 of your #yGold (at most #b999 total). At the start of each turn, gain [E] . Right click this relic out side combat, teleport to #yBoss room of last act (using this effect will cancel the #yBoss relic upgrading you reserved."]
 	},
 	
 	"testmod-SpireNexusUp":{
