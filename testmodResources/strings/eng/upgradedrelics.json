@@ -616,9 +616,9 @@
 	},
 	
 	"testmod-PortablePortalUp":{
-		"NAME": "Portable Portal",
+		"NAME": "Portable Portal+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn, gain [E] . When you enter the first room after pickup, you will teleport to #yBoss room."]
+		"DESCRIPTIONS":["Upon pickup, lose all #yGold (at most #b999). At the start of each turn, gain [E] . Right click this relic out side combat, teleport to #yBoss room of last act (using this effect will cancel the #yBoss relic upgrading you reserved."]
 	},
 	
 	"testmod-SpireNexusUp":{

@@ -69,6 +69,7 @@ import testmod.relicsup.AscensionHeartUp;
 import testmod.relicsup.IWantAllUp;
 import testmod.relicsup.MetronomeUp;
 import testmod.relicsup.PhasePocketWatchUp;
+import testmod.relicsup.PortablePortalUp;
 import testmod.relicsup.TestBoxUp;
 import testmod.relicsup.TimeTravelerUp;
 import testmod.screens.RelicSelectScreen;
@@ -85,7 +86,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditStringsSubscriber, StartGameSubscriber,
 		PreUpdateSubscriber, PostUpdateSubscriber, PostInitializeSubscriber, PostDungeonInitializeSubscriber,
 		OnStartBattleSubscriber, MaxHPChangeSubscriber, EditKeywordsSubscriber, PostBattleSubscriber, MiscMethods,
-		RelicGetSubscriber, PostCreateStartingRelicsSubscriber {
+		RelicGetSubscriber, PostCreateStartingRelicsSubscriber, StartActSubscriber {
 	public static final String MOD_ID = "testmod";
 	public static final String MOD_NAME = "TestMod";
 	public static final String SAVE_NAME = "TestMod";
@@ -437,7 +438,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			checkEnableConsoleMultiplayer();
 			
 			if (config == null)
-				this.initSavingConfig();
+				initSavingConfig();
 			SUB_MOD.forEach(TestMod::editSubModPostDungeonInit);
 			TheFatherPower.clear();
 			DragonStarHat.resetValue();
@@ -461,6 +462,13 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			ManifoldPotion.clear();
 			PortableAltar.reset();
 		}
+	}
+
+	@Override
+	public void receiveStartAct() {
+		if (AbstractDungeon.floorNum < 2)
+			PortablePortalUp.clear();
+		PortablePortalUp.next();
 	}
 	
 	public void unlockAll() {
@@ -621,6 +629,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(PhasePocketWatch.SAVE_NAME, "0");
 		DEFAULT.setProperty(Encyclopedia.SAVE_NAME, "0");
 		DEFAULT.setProperty(ManifoldPotion.POTION_ID, "");
+		DEFAULT.setProperty(PortablePortalUp.SAVE_NAME, "0");
 
 		if (Loader.isModLoaded("RelicUpgradeLib")) {
 			Stream.of(AllUpgradeRelic.MultiKey.SAVE_NAME).forEach(s -> DEFAULT.setProperty(s, "0"));
@@ -701,6 +710,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		PhasePocketWatchUp.load(getInt(PhasePocketWatch.SAVE_NAME));
 		Encyclopedia.load();
 		ManifoldPotion.load();
+		PortablePortal.acting = false;
+		PortablePortalUp.load();
 	}
 	
 	public static boolean hasSaveData(String key) {

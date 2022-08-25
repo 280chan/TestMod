@@ -622,9 +622,9 @@
 	},
 	
 	"testmod-PortablePortalUp":{
-		"NAME": "便携传送门",
+		"NAME": "便携传送门+",
 		"FLAVOR": "别磨叽了，开干吧！",
-		"DESCRIPTIONS":["每回合开始获得 [E] 。拾起后你进入第一个房间时将被传送至 #yBoss 房。"]
+		"DESCRIPTIONS":["拾起时，失去所有 #y金币 (最多失去 #b999 )。每回合开始获得 [E] 。在战斗外右键本遗物，传送至上一幕的 #yBoss 房(使用该效果会取消预约了的 #yBoss 遗物升级)。"]
 	},
 	
 	"testmod-SpireNexusUp":{

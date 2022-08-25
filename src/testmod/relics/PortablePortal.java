@@ -12,8 +12,10 @@ import com.megacrit.cardcrawl.rooms.TrueVictoryRoom;
 import com.megacrit.cardcrawl.rooms.VictoryRoom;
 import com.megacrit.cardcrawl.vfx.FadeWipeParticle;
 
+import testmod.relicsup.PortablePortalUp;
+
 public class PortablePortal extends AbstractTestRelic {
-	private static boolean acting = false;
+	public static boolean acting = false;
 	
 	public void onEquip() {
 		this.counter = -2;
@@ -29,8 +31,9 @@ public class PortablePortal extends AbstractTestRelic {
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
-		if (room instanceof MonsterRoomBoss || room instanceof TreasureRoomBoss || room instanceof VictoryRoom
-				|| room instanceof TrueVictoryRoom || room instanceof NeowRoom || room instanceof EmptyRoom) {
+		if (relicStream(PortablePortalUp.class).count() > 0 || room instanceof NeowRoom || room instanceof EmptyRoom
+				|| room instanceof TreasureRoomBoss || room instanceof VictoryRoom || room instanceof TrueVictoryRoom
+				|| room instanceof MonsterRoomBoss) {
 			return;
 		}
 		if (this.counter == -2 && !acting) {
