@@ -55,6 +55,15 @@ public class PortablePortalUp extends AbstractUpgradedRelic implements Clickable
 					AllUpgradeRelic.MultiKey.KEY[i] = 0;
 				Settings.hasRubyKey = Settings.hasEmeraldKey = Settings.hasSapphireKey = false;
 			}
+		} else {
+			int k = 0;
+			for (boolean b : new boolean[] { Settings.hasRubyKey, Settings.hasEmeraldKey, Settings.hasSapphireKey })
+				k += b ? 1 : 0;
+			double t;
+			if ((t = p().gold * 1.0 * (3 - k) / 3) >= 1) {
+				p().loseGold((int) Math.min(t, 999));
+			}
+			Settings.hasRubyKey = Settings.hasEmeraldKey = Settings.hasSapphireKey = false;
 		}
     }
 	
@@ -70,6 +79,12 @@ public class PortablePortalUp extends AbstractUpgradedRelic implements Clickable
 		if (DUNGEON_ID.size() > 1)
 			this.beginLongPulse();
 	}
+	
+	private static void completeRoom() {
+		AbstractRoom r = AbstractDungeon.currMapNode == null ? null: AbstractDungeon.getCurrRoom();
+		if (r != null)
+			r.phase = AbstractRoom.RoomPhase.COMPLETE;
+	}
 
 	@Override
 	public void onRightClick() {
@@ -79,7 +94,6 @@ public class PortablePortalUp extends AbstractUpgradedRelic implements Clickable
 			DUNGEON_ID.remove(0);
 			CardCrawlGame.nextDungeon = DUNGEON_ID.get(0);
 			AbstractDungeon.isDungeonBeaten = true;
-
 			CardCrawlGame.music.fadeOutBGM();
 			CardCrawlGame.music.fadeOutTempBGM();
 			AbstractDungeon.fadeOut();
@@ -87,22 +101,20 @@ public class PortablePortalUp extends AbstractUpgradedRelic implements Clickable
 			AbstractDungeon.actionManager.actions.clear();
 			AbstractDungeon.effectList.clear();
 			AbstractDungeon.effectsQueue.clear();
-			AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;
-			AbstractDungeon.id = DUNGEON_ID.get(0);
-			DUNGEON_ID.remove(0);
-			//AbstractDungeon.dungeonMapScreen.open(true);
-			
-			this.addLowLevelEffect(() -> {
+			completeRoom();
+			AbstractDungeon.id = DUNGEON_ID.remove(0);
+
+			this.addTmpEffect(() -> this.addTmpEffect(() -> {
 				this.show();
-				MapRoomNode node = new MapRoomNode(-1, 15);
-		        node.room = new MonsterRoomBoss();
-		        AbstractDungeon.nextRoom = node;
-		        CardCrawlGame.music.fadeOutTempBGM();
-		        AbstractDungeon.pathX.add(Integer.valueOf(1));
-		        AbstractDungeon.pathY.add(Integer.valueOf(15));
-		        AbstractDungeon.topLevelEffects.add(new FadeWipeParticle());
-		        AbstractDungeon.nextRoomTransitionStart();
-			});
+				completeRoom();
+				AbstractDungeon.nextRoom = new MapRoomNode(-1, 15);
+				AbstractDungeon.nextRoom.room = new MonsterRoomBoss();
+				CardCrawlGame.music.fadeOutTempBGM();
+				AbstractDungeon.pathX.add(Integer.valueOf(1));
+				AbstractDungeon.pathY.add(Integer.valueOf(15));
+				AbstractDungeon.topLevelEffectsQueue.add(new FadeWipeParticle());
+				AbstractDungeon.nextRoomTransitionStart();
+			}));
 		}
 	}
 
