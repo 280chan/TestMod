@@ -29,28 +29,24 @@ public class EventCelebration_Halloween extends AbstractTestRelic {
 		super(ID, IMG, RelicTier.SPECIAL, LandingSound.MAGICAL);
 	}
 	
-	public String getUpdatedDescription() {
-		return DESCRIPTIONS[0];
-	}
-	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
 		if (c.type == CardType.CURSE) {
-			this.addToBot(new MakeTempCardInHandAction(new Halloween()));
-			this.flash();
+			this.atb(new MakeTempCardInHandAction(new Halloween()));
+			this.show();
 		}
     }
 	
 	public void onEquip() {
-		this.setTryEquip(true);
+		this.addTmpEffect(() -> TestMod.obtain(p(), new BlueCandle(), false));
 		AbstractDungeon.uncommonRelicPool.remove(BlueCandle.ID);
 		AbstractDungeon.shopRelicPool.remove(PrismaticShard.ID);
 		HalloweenMod.savedFloorNum = -2;
 		HalloweenMod.changeState();
     }
 	
-	public static void equipAction() {
-		AbstractTestRelic.setTryEquip(EventCelebration_Halloween.class, false);
-		TestMod.obtain(AbstractDungeon.player, new BlueCandle(), false);
+	public void onUnequip() {
+		if (!p().hasRelic(PrismaticShard.ID) && !AbstractDungeon.shopRelicPool.contains(PrismaticShard.ID))
+			AbstractDungeon.shopRelicPool.add(PrismaticShard.ID);
 	}
 	
 }
