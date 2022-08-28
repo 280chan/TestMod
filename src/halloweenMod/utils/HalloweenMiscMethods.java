@@ -1,12 +1,12 @@
 package halloweenMod.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.badlogic.gdx.math.RandomXS128;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.cards.green.Nightmare;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -16,9 +16,10 @@ import com.megacrit.cardcrawl.monsters.beyond.OrbWalker;
 import com.megacrit.cardcrawl.powers.*;
 import com.megacrit.cardcrawl.powers.watcher.*;
 import com.megacrit.cardcrawl.random.Random;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
-
+import halloweenMod.cards.Halloween;
 import halloweenMod.mymod.HalloweenMod;
+import testmod.mymod.TestMod;
+import testmod.utils.MiscMethods;
 
 public interface HalloweenMiscMethods {
 	public static class ExtraCardAdder {
@@ -194,17 +195,12 @@ public interface HalloweenMiscMethods {
 	}
 	
 	public default int getRewardCardNum() {
-		int numCards = 3;
-		for (AbstractRelic r : AbstractDungeon.player.relics) {
-			numCards = r.changeNumberOfCardsInReward(numCards);
-		}
-		if (ModHelper.isModEnabled("Binary")) {
-			numCards--;
-		}
-		return Math.max(numCards, 0);
+		return MiscMethods.MISC.p().relics.stream().map(r -> MiscMethods.MISC.get(r::changeNumberOfCardsInReward))
+				.reduce(MiscMethods.MISC.t(), MiscMethods.MISC::chain).apply(3)
+				- (ModHelper.isModEnabled("Binary") ? 1 : 0);
 	}
 	
-	public default ArrayList<AbstractCard> getRewardCards() {
+	public default ArrayList<AbstractCard> getRewardCards(boolean up) {
 		ArrayList<AbstractCard> retVal = new ArrayList<AbstractCard>();
 		AbstractPlayer player = AbstractDungeon.player;
 		float cardUpgradedChance = 0.25f * (AbstractDungeon.actNum - 1);
@@ -213,34 +209,44 @@ public interface HalloweenMiscMethods {
 		if (cardUpgradedChance > 1)
 			cardUpgradedChance = 1;
 		int numCards = this.getRewardCardNum();
-		CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
-		g.group = HalloweenMod.CARDS;
-		g.shuffle(RNGTools.cardRNG);
-		for (int i = 0; i < numCards; i++) {
+		int sample = up ? 4 : 3;
+		for (int i = 0; i < sample; i++) {
 			if (i < 3) {
 				retVal.add(HalloweenMod.CARDS.get(i));
 			} else {
-				retVal.add(HalloweenMod.CARDS.get(RNGTools.cardRNG.random(2)));
+				retVal.add(new Halloween());
 			}
 		}
-		ArrayList<AbstractCard> retVal2 = new ArrayList<AbstractCard>();
-		for (AbstractCard c : retVal) {
-			retVal2.add(c.makeCopy());
+		Collections.shuffle(retVal, new java.util.Random(RNGTools.cardRNG.randomLong()));
+		ArrayList<AbstractCard> retVal0 = new ArrayList<AbstractCard>(retVal);
+		while (retVal.size() < numCards) {
+			retVal.add(TestMod.randomItem(retVal0, RNGTools.cardRNG));
 		}
-		for (AbstractCard c : retVal2) {
+		retVal0.clear();
+		if (retVal.size() > numCards) {
+			retVal0 = retVal.stream().limit(numCards).collect(MiscMethods.MISC.toArrayList());
+			retVal.clear();
+			retVal.addAll(retVal0);
+			retVal0.clear();
+		}
+		retVal0 = retVal.stream().map(c -> c.makeCopy()).collect(MiscMethods.MISC.toArrayList());
+		retVal.clear();
+		retVal.addAll(retVal0);
+		retVal0.clear();
+		for (AbstractCard c : retVal) {
 			if (!c.canUpgrade())
 				continue;
-			if ((RNGTools.cardRNG.randomBoolean(cardUpgradedChance))) {
-				c.upgrade();
-			} else if ((c.type == AbstractCard.CardType.ATTACK) && (player.hasRelic("Molten Egg 2"))) {
+			if ((c.type == AbstractCard.CardType.ATTACK) && (player.hasRelic("Molten Egg 2"))) {
 				c.upgrade();
 			} else if ((c.type == AbstractCard.CardType.SKILL) && (player.hasRelic("Toxic Egg 2"))) {
 				c.upgrade();
 			} else if ((c.type == AbstractCard.CardType.POWER) && (player.hasRelic("Frozen Egg 2"))) {
 				c.upgrade();
+			} else if ((RNGTools.cardRNG.randomBoolean(cardUpgradedChance))) {
+				c.upgrade();
 			}
 		}
-		return retVal2;
+		return retVal;
 	}
 	
 }
