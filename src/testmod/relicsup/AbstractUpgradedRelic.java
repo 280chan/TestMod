@@ -60,6 +60,10 @@ public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
 		this.upgradeTimes = upgradeTimes;
 	}
 	
+	public AbstractUpgradedRelic(String id, String path, RelicTier tier, LandingSound sfx) {
+		super(id, path, tier, sfx);
+	}
+	
 	public void bossObtainLogic() {
 		if (this.tier != RelicTier.BOSS)
 			return;

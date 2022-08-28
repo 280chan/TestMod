@@ -30,6 +30,8 @@ import halloweenMod.cards.*;
 import halloweenMod.relics.*;
 import halloweenMod.utils.HalloweenMiscMethods;
 import testmod.mymod.TestMod;
+import testmod.potions.EscapePotion;
+import testmod.relicsup.EventCelebration_HalloweenUp;
 
 /**
  * @author 彼君不触
@@ -85,7 +87,7 @@ public class HalloweenMod implements EditKeywordsSubscriber, EditRelicsSubscribe
 
 	@Override
 	public void receiveEditCards() {
-		AbstractCard[] card = {new Candy(), new Trick(), new GhostCostume(), new Halloween()};
+		AbstractCard[] card = { new Candy(), new Trick(), new GhostCostume(), new Halloween() };
 		for (AbstractCard c : card) {
 			BaseMod.addCard(c);
 			CARDS.add(c);
@@ -108,28 +110,49 @@ public class HalloweenMod implements EditKeywordsSubscriber, EditRelicsSubscribe
 		return EventCelebration_Halloween.hasThis();
 	}
 	
+	private static boolean checkUp() {
+		return EventCelebration_HalloweenUp.hasThis();
+	}
+	
 	private boolean checkCards() {
 		if (ModHelper.isModEnabled("Vintage") && (!(AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite))
 				&& (!(AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss))) {
 			return true;
 		}
-		return this.getRewardCardNum() == 0;
+		return this.getRewardCardNum() < 1;
 	}
 	
 	public static void changeState() {
 		postBattle = startGame = false;
 	}
 	
+	private RewardItem newItem(EventCelebration_HalloweenUp ech) {
+		RewardItem r = new RewardItem(new EscapePotion());
+		r.type = RewardType.CARD;
+		r.potion = null;
+		r.text = RewardItem.TEXT[2];
+		r.cards = this.getRewardCards(true);
+		ech.show();
+		return r;
+	}
+	
 	@Override
 	public void receivePostUpdate() {
 		// TODO Auto-generated method stub
 		AbstractPlayer p = AbstractDungeon.player;
-		if (p != null) {
-			if (check() && !checkCards() && (postBattle || startGame)) {
+		if (p != null && (postBattle || startGame) && !checkCards()) {
+			if (checkUp()) {
+				if (AbstractDungeon.combatRewardScreen.rewards.stream().anyMatch(r -> r.type == RewardType.CARD)) {
+					changeState();
+					EventCelebration_HalloweenUp.getThis().map(this::newItem)
+							.forEach(AbstractDungeon.combatRewardScreen.rewards::add);
+					AbstractDungeon.combatRewardScreen.positionRewards();
+				}
+			} else if (check()) {
 				for (RewardItem r : AbstractDungeon.combatRewardScreen.rewards) {
 					if (r.type == RewardType.CARD) {
 						TestMod.info("万圣：更改卡牌奖励");
-						r.cards = this.getRewardCards();
+						r.cards = this.getRewardCards(false);
 						EventCelebration_Halloween.getThis().show();
 						changeState();
 					}
@@ -141,7 +164,7 @@ public class HalloweenMod implements EditKeywordsSubscriber, EditRelicsSubscribe
 	@Override
 	public void receiveStartGame() {
 		this.setCardRNG(AbstractDungeon.cardRng);
-		if (check() && !checkCards()) {
+		if ((check() || checkUp()) && !checkCards()) {
 			TestMod.info("万圣：当前楼层: " + AbstractDungeon.floorNum);
 			TestMod.info("万圣：存储楼层: " + savedFloorNum);
 			if (savedFloorNum == -2 && AbstractDungeon.floorNum > 0) {
@@ -151,7 +174,8 @@ public class HalloweenMod implements EditKeywordsSubscriber, EditRelicsSubscribe
 				startGame = true;
 			}
 		} else {
-			TestMod.info(check() + "");
+			TestMod.info("是否持有万圣: " + check());
+			TestMod.info("是否持有万圣+: " + checkUp());
 		}
 	}
 
@@ -166,7 +190,7 @@ public class HalloweenMod implements EditKeywordsSubscriber, EditRelicsSubscribe
 	
 	@Override
 	public void receivePostBattle(AbstractRoom room) {
-		if (check() && !checkCards())
+		if ((check() || checkUp()) && !checkCards())
 			postBattle = true;
 		savedFloorNum = AbstractDungeon.floorNum;
 	}

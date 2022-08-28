@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.LandingSound;
 
 import basemod.ReflectionHacks;
+import halloweenMod.mymod.HalloweenMod;
 import testmod.cards.AbstractTestCard;
 import testmod.cards.colorless.SunMoon;
 import testmod.cards.colorless.WeaknessCounterattack;
@@ -28,7 +29,6 @@ public class Test extends TestCommand {
 			return;
 		}
 		TestMod.info("升级遗物数量: " + TestMod.UP_RELICS.size());
-		TestMod.info("当前actNum: " + AbstractDungeon.actNum);
 	}
 
 	private static void cmdHelp() {

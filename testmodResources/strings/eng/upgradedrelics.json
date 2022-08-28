@@ -655,5 +655,11 @@
 		"NAME": "Extravagant+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
 		"DESCRIPTIONS":["Right click on this relic during your turn, if your max hand size is not #b0, reduce it by #b1 for the combat, play all cards in your hand, the size of your hand times."]
+	},
+	
+	"testmod-HalloweenUp":{
+		"NAME": "Event celebration - Halloween+",
+		"FLAVOR": "Trick or Treat!",
+		"DESCRIPTIONS":["Enemies drop an additional card reward which contains only #yCandy, #yTrick, #yGhost #yCostume and #yHalloween. NL Whenever you draw a #rCurse or #rStatus, #yExhaust it and add a #yHalloween into your hand. NL Whenever you draw #yHalloween, upgrade it."]
 	}
 }

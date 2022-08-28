@@ -15,8 +15,10 @@
 
 	"testmod-upgrade-EventCelebration_Halloween":{
 		"TEXT": [
+			"4",
 			"0",
-			"0"
+			"0",
+			"300"
 		]
 	},
 	
