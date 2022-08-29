@@ -695,7 +695,7 @@
 	"testmod-PatchyPatch":{
 		"NAME": "斑驳补丁",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["战斗中每当一个 #yPatch 被调用，对随机敌人造成 #b1 点伤害，每个 #yPatch 每回合只触发一次该效果。"]
+		"DESCRIPTIONS":["每场战斗中每当一个 #yPatch 首次被调用，获得 #b1 计数，每当计数为 #b2 的整数次幂，对随机敌人造成 #b1 点伤害。"]
 	},
 	
 	"testmod-AaSapphireKey":{

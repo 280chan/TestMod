@@ -14,19 +14,23 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatches;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatches2;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtBehavior;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.NotFoundException;
+import testmod.relics.PatchyPatch;
+import testmod.utils.MiscMethods;
 
 @SpirePatch(clz = com.megacrit.cardcrawl.core.CardCrawlGame.class, method = "render")
-public class PatchyPatchPatch {
+public class PatchyPatchPatch implements MiscMethods {
 	private static final String[] ANNOTATION = { SpirePatch.class.getName(), SpirePatches.class.getName(),
 			SpirePatch2.class.getName(), SpirePatches2.class.getName() };
-	private static final String SRC = "testmod.relics.PatchyPatch.patchAttack(", SRC1 = ");";
-
+	public static final String VAL = "testmodPatchyPatch";
+	
 	public static void Raw(CtBehavior ctBehavior) {
 		ClassPool pool = ctBehavior.getDeclaringClass().getClassPool();
 		Patcher.annotationDBMap.values().forEach(db -> {
@@ -46,21 +50,23 @@ public class PatchyPatchPatch {
 			patchClasses.stream().filter(cn -> cn != null).forEach(className -> {
 				try {
 					CtClass ctPatchClass = pool.get(className);
-					Stream.of(ctPatchClass.getDeclaredMethods()).filter(i -> isPatch(i)).peek(m -> {
+					CtClass relic = pool.get(PatchyPatch.class.getName());
+					Stream.of(ctPatchClass.getDeclaredMethods()).filter(i -> isPatch(i)).forEach(m -> {
 						try {
-							m.insertBefore(SRC + m.getLongName() + SRC1);
+							m.addLocalVariable(VAL, relic);
+							m.insertBefore("{if(" + CardCrawlGame.class.getName() + ".dungeon != null && " + 
+									AbstractDungeon.class.getName() + ".player != null) {" + VAL + " = (" + 
+									PatchyPatch.class.getName() +")" +  AbstractDungeon.class.getName() +
+									".player.getRelic(\"testmod-PatchyPatch\");if(" + VAL + " != null){" + VAL + 
+									".patchAttack(\"" + m.getLongName() + "\");}}}" );
 						} catch (CannotCompileException e) {
-							System.out.println("----------------------------------");
 							e.printStackTrace();
-							System.out.println("----------------------------------");
 						}
 					});
 				} catch (NotFoundException e1) {
 					e1.printStackTrace();
 				}
 			});
-
-			System.out.println("$count patches");
 		});
     }
 

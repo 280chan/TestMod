@@ -276,10 +276,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 	
 	private void initLatest() {
-		addLatest(new GreedyDevil(), new TemporaryBarricade(), new GoldenSoul(), new StomachOfGluttonous(),
-				new PhasePocketWatch());
-		BAD_RELICS = MY_RELICS.stream().filter(AbstractTestRelic::isBad).collect(toArrayList());
-		addLatest(new VirtualReality(), new WeaknessCounterattack(), new HandmadeProducts());
 	}
 
 	private static void addRelic(AbstractRelic r) {

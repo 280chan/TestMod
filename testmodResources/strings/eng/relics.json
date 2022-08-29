@@ -656,6 +656,12 @@
 		"DESCRIPTIONS":["Right click on this relic during your turn, if your max hand size is not #b0, reduce it by half for the combat, play all cards in your hand, the size of your hand times (at most max energy times)."]
 	},
 	
+	"testmod-PatchyPatch":{
+		"NAME": "Patchy Patch",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Whenever a #yPatch is called in combat first time, gain #b1 count, whenever count reaches integer power of #b2, deal #b1 damage to a random enemy."]
+	},
+	
 	"testmod-AaSapphireKey":{
 		"NAME": "Sapphire Key",
 		"FLAVOR": "",
