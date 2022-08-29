@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.*;
+import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.utility.*;
 import com.megacrit.cardcrawl.cards.*;
+import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -1049,6 +1051,16 @@ public interface MiscMethods {
 	
 	default AbstractMonster randomMonster() {
 		return AbstractDungeon.getMonsters().getRandomMonster(null, true, AbstractDungeon.monsterRng.copy());
+	}
+	
+	default DamageRandomEnemyAction randomDamage(int dmg, DamageType type) {
+		AttackEffect effect = AttackEffect.BLUNT_HEAVY;
+	    if (dmg < 6) {
+	      effect = AttackEffect.BLUNT_LIGHT;
+	    } else if (dmg < 10) {
+	      effect = AttackEffect.SMASH;
+	    }
+	    return new DamageRandomEnemyAction(new DamageInfo(p(), dmg, DamageType.THORNS), effect);
 	}
 	
 	default boolean upgraded(AbstractRelic r) {
