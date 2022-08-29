@@ -310,7 +310,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				new BalancedPeriapt(), new ConjureBlade(), new PortablePortal(), new Encyclopedia(), new SpireNexus(),
 				new Gather(), new FissionDevice(), new DemonSummon(), new HolyLightProtection(), new GoldenContract(),
 				new StomachOfGluttonous(), new AbnormalityKiller(), new Metronome(), new ResonanceStone(),
-				new Reverse(), new Extravagant())
+				new Reverse(), new Extravagant(), new PatchyPatch())
 				.collect(toArrayList());
 		if (!Loader.isModLoaded("FoggyMod"))
 			RELICS.add(new MistCore());

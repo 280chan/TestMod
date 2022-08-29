@@ -719,6 +719,14 @@
 			"MAGICAL"
 		]
 	},
+
+	"testmod-PatchyPatchStat": {
+		"TEXT": [
+			"RARE",
+			"MAGICAL"
+		]
+	},
+	
 	"HalloweenModHalloweenStat": {
 		"TEXT": [
 			"SPECIAL",

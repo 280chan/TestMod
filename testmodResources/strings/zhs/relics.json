@@ -692,6 +692,12 @@
 		"DESCRIPTIONS":["在你的回合内 #y右键 本遗物触发，如果你的 #y手牌上限 大于 #b0 ，将 #y手牌上限 在本场战斗内减少一半(最多减至0)，将手牌中所有牌对随机目标打出手牌数量次(最多能量上限次)并消耗。"]
 	},
 	
+	"testmod-PatchyPatch":{
+		"NAME": "斑驳补丁",
+		"FLAVOR": "这个人很懒，什么都没有写。",
+		"DESCRIPTIONS":["战斗中每当一个 #yPatch 被调用，对随机敌人造成 #b1 点伤害，每个 #yPatch 每回合只触发一次该效果。"]
+	},
+	
 	"testmod-AaSapphireKey":{
 		"NAME": "蓝宝石钥匙",
 		"FLAVOR": "",
