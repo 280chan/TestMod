@@ -41,6 +41,9 @@ public class PatchyPatch extends AbstractTestRelic {
 	}
 	
 	public void patchAttack(String patch) {
+		if (this.stackTrace().filter(e -> PatchyPatch.class.getCanonicalName().equals(e.getClassName())
+				&& "patchAttack".equals(e.getMethodName())).count() > 1)
+			return;
 		if (!this.isActive || !this.act || AbstractDungeon.player == null || !inCombat() || MAP.contains(patch)
 				|| relicStream(PatchyPatch.class).count() == 0)
 			return;

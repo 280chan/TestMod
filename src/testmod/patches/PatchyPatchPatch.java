@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.modthespire.Patcher;
@@ -30,6 +31,19 @@ public class PatchyPatchPatch implements MiscMethods {
 	private static final String[] ANNOTATION = { SpirePatch.class.getName(), SpirePatches.class.getName(),
 			SpirePatch2.class.getName(), SpirePatches2.class.getName() };
 	public static final String VAL = "testmodPatchyPatch";
+	public static final String CCG = CardCrawlGame.class.getName();
+	public static final String AD = AbstractDungeon.class.getName();
+	public static final String PP = PatchyPatch.class.getName();
+	@SuppressWarnings("rawtypes")
+	public static final Predicate CHECKER = a -> a instanceof PatchyPatch;
+	public static final String CK = "testmod.patches.PatchyPatchPatch.CHECKER";
+	
+	public static String get(String name) {
+		String tmp = "{if(" + CCG + ".dungeon != null && " + AD + ".player != null) {" + VAL + " = (" + PP + ")" + AD;
+		tmp += ".player.relics.stream().filter(" + CK + ").findFirst().orElse(null);if(" + VAL + " != null){" + VAL;
+		tmp += ".patchAttack(\"" + name + "\");}}}";
+		return tmp;
+	}
 	
 	public static void Raw(CtBehavior ctBehavior) {
 		ClassPool pool = ctBehavior.getDeclaringClass().getClassPool();
@@ -54,11 +68,7 @@ public class PatchyPatchPatch implements MiscMethods {
 					Stream.of(ctPatchClass.getDeclaredMethods()).filter(i -> isPatch(i)).forEach(m -> {
 						try {
 							m.addLocalVariable(VAL, relic);
-							m.insertBefore("{if(" + CardCrawlGame.class.getName() + ".dungeon != null && " + 
-									AbstractDungeon.class.getName() + ".player != null) {" + VAL + " = (" + 
-									PatchyPatch.class.getName() +")" +  AbstractDungeon.class.getName() +
-									".player.getRelic(\"testmod-PatchyPatch\");if(" + VAL + " != null){" + VAL + 
-									".patchAttack(\"" + m.getLongName() + "\");}}}" );
+							m.insertBefore(get(m.getLongName()));
 						} catch (CannotCompileException e) {
 							e.printStackTrace();
 						}
