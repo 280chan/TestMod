@@ -2,11 +2,12 @@ package testmod.relics;
 
 import java.util.ArrayList;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import testmod.mymod.TestMod;
+import testmod.relicsup.PatchyPatchUp;
+import testmod.utils.PatchyTrigger;
 
-public class PatchyPatch extends AbstractTestRelic {
-	private static ArrayList<String> MAP = new ArrayList<String>();
+public class PatchyPatch extends AbstractTestRelic implements PatchyTrigger {
+	public static ArrayList<String> MAP = new ArrayList<String>();
 	private boolean act = false;
 	
 	public void onEquip() {
@@ -18,7 +19,7 @@ public class PatchyPatch extends AbstractTestRelic {
 	}
 	
 	public void atPreBattle() {
-		if (!this.isActive)
+		if (!this.isActive || this.relicStream(PatchyPatchUp.class).count() > 0)
 			return;
 		this.counter = 0;
 		this.act = true;
@@ -39,13 +40,10 @@ public class PatchyPatch extends AbstractTestRelic {
 			return;
 		this.counter = -1;
 	}
-	
-	public void patchAttack(String patch) {
-		if (this.stackTrace().filter(e -> PatchyPatch.class.getCanonicalName().equals(e.getClassName())
-				&& "patchAttack".equals(e.getMethodName())).count() > 1)
-			return;
-		if (!this.isActive || !this.act || AbstractDungeon.player == null || !inCombat() || MAP.contains(patch)
-				|| relicStream(PatchyPatch.class).count() == 0)
+
+	@Override
+	public void realAttack(String patch) {
+		if (!this.isActive || !this.act || this.relicStream(PatchyPatchUp.class).count() > 0 || MAP.contains(patch))
 			return;
 		MAP.add(patch);
 		this.counter++;

@@ -661,5 +661,11 @@
 		"NAME": "Event celebration - Halloween+",
 		"FLAVOR": "Trick or Treat!",
 		"DESCRIPTIONS":["Enemies drop an additional card reward which contains only #yCandy, #yTrick, #yGhost #yCostume and #yHalloween. NL Whenever you draw a #rCurse or #rStatus, #yExhaust it and add a #yHalloween into your hand. NL Whenever you draw #yHalloween, upgrade it."]
+	},
+	
+	"testmod-PatchyPatchUp":{
+		"NAME": "Patchy Patch+",
+		"FLAVOR": "The author is lazy, nothing has been written.",
+		"DESCRIPTIONS":["Whenever a #yPatch is called in combat, gain #b1 count, whenever count reaches integer power of #b2, deal damage equals to enemy amount to ALL enemies."]
 	}
 }
