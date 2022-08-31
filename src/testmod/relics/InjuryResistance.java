@@ -32,7 +32,7 @@ public class InjuryResistance extends AbstractTestRelic {
 	}
 	
 	private boolean needThis() {
-		return p().powers.stream().anyMatch(p -> p instanceof InjuryResistancePower);
+		return p().powers.stream().noneMatch(p -> p instanceof InjuryResistancePower);
 	}
 	
 	public static class InjuryResistancePower extends AbstractTestPower implements InvisiblePower {
