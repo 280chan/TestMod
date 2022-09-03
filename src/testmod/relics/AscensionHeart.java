@@ -3,7 +3,6 @@ package testmod.relics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-
 import com.evacipated.cardcrawl.mod.stslib.relics.OnPlayerDeathRelic;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -23,6 +22,8 @@ import com.megacrit.cardcrawl.rooms.EventRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 
+import halloweenMod.cards.Halloween;
+import halloweenMod.mymod.HalloweenMod;
 import testmod.mymod.TestMod;
 import testmod.powers.DefenceDownPower;
 import testmod.powers.EventHalfDamagePower;
@@ -241,6 +242,9 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		if (!(this.isActive && eliteSwarm && checkNumCards() && AbstractDungeon.screen == CurrentScreen.COMBAT_REWARD))
 			return;
 		AbstractDungeon.combatRewardScreen.rewards.stream().filter(r -> r.type == RewardType.CARD).forEach(r -> {
+			if (r.cards.stream().allMatch(c -> c instanceof Halloween
+					|| HalloweenMod.CARDS.stream().anyMatch(s -> c.cardID.equals(s.cardID))))
+				return;
 			int size = r.cards.size();
 			r.cards = r.cards.stream().filter(c -> c.rarity == CardRarity.RARE).collect(toArrayList());
 			ArrayList<AbstractCard> pool = AbstractDungeon.srcRareCardPool.group.stream()
