@@ -26,6 +26,8 @@ import basemod.interfaces.RenderSubscriber;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.stream.Stream;
 
 /**
@@ -72,6 +74,8 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	private boolean anyNum = false;
 	private ArrayList<String> category = new ArrayList<String>();
 	private ArrayList<ArrayList<AbstractRelic>> sortedRelics = new ArrayList<ArrayList<AbstractRelic>>();
+	
+	private Comparator<ArrayList<AbstractRelic>> sorter;
 	
 	protected boolean renderAmount = false;
 	protected boolean rejectSelection = false;
@@ -281,6 +285,11 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 	 */
 	protected abstract String descriptionOfCategory(String category);
 	
+	protected RelicSelectScreen setSorter(Comparator<ArrayList<AbstractRelic>> s) {
+		this.sorter = s;
+		return this;
+	}
+	
 	/**
 	 * 当选择完指定数量的遗物后执行
 	 * 如果指定选择数量为1，不会执行，此方法可以留空
@@ -301,6 +310,11 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 				tmp.add(r);
 				this.sortedRelics.add(tmp);
 			}
+		}
+		if (this.sorter != null) {
+			Collections.sort(this.sortedRelics, this.sorter);
+			this.category.clear();
+			this.sortedRelics.forEach(l -> this.category.add(this.categoryOf(l.get(0))));
 		}
 		this.scrollUpperBound = this.calculateScrollBound();
 	}
