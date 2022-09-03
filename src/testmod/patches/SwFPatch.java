@@ -59,7 +59,7 @@ public class SwFPatch {
 			if (AbstractDungeon.player != null && AbstractDungeon.player.exhaustPile.size() + exhaust > 19) {
 				try {
 					ReflectionHacks.privateStaticMethod(Class.forName("chronoMods.bingo.SendBingoPatches"), "Bingo",
-							int.class).invoke(new Object[] {62});
+							int.class).invoke(new Object[] { 62 });
 					return SpireReturn.Return();
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
