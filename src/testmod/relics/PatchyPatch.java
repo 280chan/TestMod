@@ -48,7 +48,7 @@ public class PatchyPatch extends AbstractTestRelic implements PatchyTrigger {
 		MAP.add(patch);
 		this.counter++;
 		if (this.counter > 0 && (this.counter & (this.counter - 1)) == 0)
-			atb(randomDamage((int) relicStream(PatchyPatch.class).peek(r -> r.show()).count(), DamageType.THORNS));
+			atb(randomDamage((int) relicStream(PatchyPatch.class).peek(r -> r.show()).count(), DamageType.HP_LOSS));
 	}
 
 }

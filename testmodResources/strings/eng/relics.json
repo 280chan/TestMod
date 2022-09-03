@@ -659,7 +659,7 @@
 	"testmod-PatchyPatch":{
 		"NAME": "Patchy Patch",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever a #yPatch is called in combat first time, gain #b1 count, whenever count reaches integer power of #b2, deal #b1 damage to a random enemy."]
+		"DESCRIPTIONS":["Whenever a #yPatch is called in combat first time, gain #b1 count, whenever count reaches integer power of #b2, a random enemy lose #b1 HP."]
 	},
 	
 	"testmod-AaSapphireKey":{

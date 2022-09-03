@@ -41,9 +41,9 @@ public class PatchyPatchUp extends AbstractUpgradedRelic implements PatchyTrigge
 	}
 	
 	private int countAndShow() {
-		return (int) (p().relics.stream().filter(r -> r instanceof PatchyTrigger)
-				.peek(r -> ((AbstractTestRelic) r).show()).count() * (!this.hasEnemies() ? 1
-						: AbstractDungeon.getMonsters().monsters.stream().filter(m -> !m.isDeadOrEscaped()).count()));
+		return (int) p().relics.stream().filter(r -> r instanceof PatchyTrigger)
+				.peek(r -> ((AbstractTestRelic) r).show()).count()
+				* (!this.hasEnemies() ? 1 : AbstractDungeon.getMonsters().monsters.size());
 	}
 
 	@Override
@@ -51,9 +51,13 @@ public class PatchyPatchUp extends AbstractUpgradedRelic implements PatchyTrigge
 		if (!this.isActive || !this.act)
 			return;
 		this.counter++;
-		if (this.counter > 0 && (this.counter & (this.counter - 1)) == 0)
-			atb(new DamageAllEnemiesAction(p(), DamageInfo.createDamageMatrix(countAndShow(), true), DamageType.THORNS,
+		if (this.counter > 0 && (this.counter & (this.counter - 1)) == 0) {
+			int count = countAndShow();
+			int dmg = Math.max((int) (count * 1.0 * AbstractDungeon.getMonsters().monsters.stream()
+					.filter(m -> !m.isDeadOrEscaped()).mapToInt(m -> m.maxHealth).max().orElse(100) / 50), count);
+			atb(new DamageAllEnemiesAction(p(), DamageInfo.createDamageMatrix(dmg, true), DamageType.HP_LOSS,
 					AttackEffect.FIRE));
+		}
 	}
 
 }
