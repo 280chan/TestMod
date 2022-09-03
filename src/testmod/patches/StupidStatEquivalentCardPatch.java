@@ -7,8 +7,12 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.red.SearingBlow;
+
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
 import testmod.utils.MiscMethods;
@@ -45,6 +49,14 @@ public class StupidStatEquivalentCardPatch implements MiscMethods {
 				int[] tmp = LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 				return new int[] { tmp[0] };
 			}
+		}
+	}
+
+	@SpirePatch(clz = SearingBlow.class, method = "makeCopy")
+	public static class SearingBlowMakeCopyPatch {
+		@SpirePrefixPatch
+		public static SpireReturn<AbstractCard> Prefix(SearingBlow c) {
+			return SpireReturn.Return(new SearingBlow());
 		}
 	}
 	
