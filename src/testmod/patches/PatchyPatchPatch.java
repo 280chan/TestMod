@@ -17,6 +17,8 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
+
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtBehavior;
@@ -34,14 +36,16 @@ public class PatchyPatchPatch implements MiscMethods {
 	public static final String CCG = CardCrawlGame.class.getName();
 	public static final String AD = AbstractDungeon.class.getName();
 	public static final String PT = PatchyTrigger.class.getName();
+	public static final String RP = RoomPhase.class.getName();
 	@SuppressWarnings("rawtypes")
 	public static final Predicate CHECKER = a -> a instanceof PatchyTrigger;
 	public static final String CK = "testmod.patches.PatchyPatchPatch.CHECKER";
 	
 	public static String get(String name) {
-		String tmp = "{if(" + CCG + ".dungeon != null && " + AD + ".player != null) {" + VAL + " = (" + PT + ")" + AD;
-		tmp += ".player.relics.stream().filter(" + CK + ").findFirst().orElse(null);if(" + VAL + " != null){" + VAL;
-		tmp += ".patchAttack(\"" + name + "\");}}}";
+		String tmp = "{if(" + CCG + ".dungeon != null && " + AD + ".player != null && " + AD;
+		tmp += ".currMapNode != null && " + AD + ".currMapNode.room != null && " + AD + ".currMapNode.room.phase == ";
+		tmp += RP + ".COMBAT) {" + VAL + " = (" + PT + ")" + AD + ".player.relics.stream().filter(" + CK;
+		tmp += ").findFirst().orElse(null);if(" + VAL + " != null){" + VAL + ".patchAttack(\"" + name + "\");}}}";
 		return tmp;
 	}
 	
