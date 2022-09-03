@@ -3,7 +3,7 @@
 	"name": "TestMod",
 	"author_list": ["彼君不触"],
 	"description": "You may choose relic or card reward and then choose 1 from 3 of that type from this mod at start of each run. Require 'STSLib'. \n\n开局选择遗物或无色牌之后可以再进行一次对应的可放弃的3选1来获得初始奖励。试做了3个事件和5瓶药水。需要BaseMod和STSLib支持。",
-	"version": "5.9.68",
+	"version": "5.9.70",
 	"credits": "localization:\n彼君不触 280chan (Simplified Chinese)\nbrkfox (English)\n彼君不触 280chan (English)\n\nart:\n太极炒饭\nother artists\n\npart of flavor text:\ncyxw",
 	"dependencies": ["basemod", "stslib"],
 	"optional_dependencies": ["RelicUpgradeLib"]

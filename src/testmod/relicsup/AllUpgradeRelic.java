@@ -12,6 +12,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -198,7 +199,7 @@ public class AllUpgradeRelic implements MiscMethods {
 			private static class Locator extends SpireInsertLocator {
 				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
 					Matcher finalMatcher = new Matcher.MethodCallMatcher(SingleRelicViewPopup.class, "close");
-					return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+					return LineFinder.findAllInOrder(ctMethodToPatch, finalMatcher);
 				}
 			}
 		}
@@ -229,12 +230,41 @@ public class AllUpgradeRelic implements MiscMethods {
 					|| (!Settings.isFinalActAvailable && Settings.isEndless);
 		}
 		
+		@SuppressWarnings("rawtypes")
+		private static boolean checkCoop() {
+			try {
+				Object[] par = { "Coop" };
+				Class c = Class.forName("chronoMods.TogetherManager.enum");
+				Enum a = ReflectionHacks.privateStaticMethod(c, "valueOf", String.class).invoke(par);
+				Enum b = ReflectionHacks.getPrivateStatic(Class.forName("chronoMods.TogetherManager"), "gameMode");
+				return a == b;
+			} catch (ClassNotFoundException e) {
+				return false;
+			}
+		}
+		
+		@SuppressWarnings("rawtypes")
+		private static boolean swfKey(int type) {
+			if (Loader.isModLoaded("chronoMods") && checkCoop()) {
+				try {
+					Class c = Class.forName("chronoMods.coop.CoopKeySharing");
+					switch (type) {
+					case 0: return ReflectionHacks.privateStaticMethod(c, "redKeyNeeded").invoke();
+					case 1: return ReflectionHacks.privateStaticMethod(c, "greenKeyNeeded").invoke();
+					case 2: return ReflectionHacks.privateStaticMethod(c, "blueKeyNeeded").invoke();
+					}
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			return false;
+		}
+		
 		@SpirePatch(clz = CampfireUI.class, method = "initializeButtons")
 		public static class KeepRecallOptionPatch {
 			@SpirePostfixPatch
 			public static void Postfix(CampfireUI ui) {
-				if (Loader.isModLoaded("chronoMods") || !Loader.isModLoaded("RelicUpgradeLib")
-						|| MISC.p().hasRelic("RU Singing Bowl"))
+				if (swfKey(0) || !Loader.isModLoaded("RelicUpgradeLib") || MISC.p().hasRelic("RU Singing Bowl"))
 					return;
 				ArrayList<AbstractCampfireOption> l = ReflectionHacks.getPrivate(ui, CampfireUI.class, "buttons");
 				if (valid(true) && l.stream().noneMatch(o -> o instanceof RecallOption)) {
@@ -248,27 +278,47 @@ public class AllUpgradeRelic implements MiscMethods {
 		public static class KeepSapphireKeyPatch {
 			@SpireInsertPatch(locator = Locator.class)
 			public static void Insert(AbstractChest ui, boolean bossChest) {
-				if (!Loader.isModLoaded("chronoMods") && Loader.isModLoaded("RelicUpgradeLib") && valid(false)
-						&& !MISC.p().hasRelic("RU Singing Bowl")) {
+				if (swfKey(2) || !Loader.isModLoaded("RelicUpgradeLib") || MISC.p().hasRelic("RU Singing Bowl"))
+					return;
+				if (valid(false))
 					AbstractDungeon.getCurrRoom().addSapphireKey(AbstractDungeon.getCurrRoom().rewards
 							.get(AbstractDungeon.getCurrRoom().rewards.size() - 1));
-				}
 			}
 			
 			private static class Locator extends SpireInsertLocator {
 				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
 					Matcher finalMatcher = new Matcher.FieldAccessMatcher(Settings.class, "hasSapphireKey");
-					return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+					return LineFinder.findAllInOrder(ctMethodToPatch, finalMatcher);
 				}
 			}
+		}
+
+		@SpirePatch(cls = "chronoMods.coop.CoopKeySharing.updateGreenKeyReward", method = "Insert", optional = true)
+		public static class StupidSwfEmeraldKeyClaimPatch {
+			@SpireInsertPatch(locator = Locator.class)
+			public static SpireReturn<SpireReturn<Boolean>> Insert(RewardItem r) {
+				return Loader.isModLoaded("RelicUpgradeLib") ? SpireReturn.Return(SpireReturn.Continue())
+						: SpireReturn.Continue();
+			}
+			
+			private static class Locator extends SpireInsertLocator {
+				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+					Matcher finalMatcher = new Matcher.MethodCallMatcher(Texture.class, "dispose");
+					return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
+				}
+			}
+		}
+		
+		private static boolean checkEmerald() {
+			return Settings.isFinalActAvailable && Settings.hasEmeraldKey && !swfKey(1)
+					&& !MISC.p().hasRelic("RU Singing Bowl");
 		}
 
 		@SpirePatch(clz = AbstractDungeon.class, method = "setEmeraldElite")
 		public static class KeepEmeraldKeyPatch {
 			@SpirePostfixPatch
 			public static void Postfix() {
-				if (Settings.isFinalActAvailable && Settings.hasEmeraldKey && !Loader.isModLoaded("chronoMods")
-						&& !MISC.p().hasRelic("RU Singing Bowl")) {
+				if (checkEmerald()) {
 					ArrayList<MapRoomNode> nodes = AbstractDungeon.map.stream().flatMap(r -> r.stream())
 							.filter(n -> n.room instanceof MonsterRoomElite).collect(MISC.toArrayList());
 					MapRoomNode n = nodes.get(AbstractDungeon.mapRng.random(0, nodes.size() - 1));
@@ -282,11 +332,8 @@ public class AllUpgradeRelic implements MiscMethods {
 		public static class KeepEmeraldKeyPatch2 {
 			@SpirePostfixPatch
 			public static void PostFix(MonsterRoomElite r) {
-				if (Settings.isFinalActAvailable && Settings.hasEmeraldKey && !Loader.isModLoaded("chronoMods")
-						&& !MISC.p().hasRelic("RU Singing Bowl") && !r.rewards.isEmpty()
-						&& AbstractDungeon.getCurrMapNode().hasEmeraldKey) {
+				if (checkEmerald() && !r.rewards.isEmpty() && AbstractDungeon.getCurrMapNode().hasEmeraldKey)
 					r.rewards.add(new RewardItem(r.rewards.get(r.rewards.size() - 1), RewardType.EMERALD_KEY));
-				}
 			}
 		}
 		
@@ -345,7 +392,7 @@ public class AllUpgradeRelic implements MiscMethods {
 			private static class Locator extends SpireInsertLocator {
 				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
 					Matcher finalMatcher = new Matcher.FieldAccessMatcher(TopPanel.class, "name");
-					return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+					return LineFinder.findAllInOrder(ctMethodToPatch, finalMatcher);
 				}
 			}
 		}
