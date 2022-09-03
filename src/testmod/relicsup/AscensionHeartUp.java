@@ -28,6 +28,8 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
+import halloweenMod.cards.Halloween;
+import halloweenMod.mymod.HalloweenMod;
 import testmod.mymod.TestMod;
 import testmod.powers.AbstractTestPower;
 
@@ -248,6 +250,9 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 		if (!(this.isActive && eliteSwarm && checkNumCards() && AbstractDungeon.screen == CurrentScreen.COMBAT_REWARD))
 			return;
 		AbstractDungeon.combatRewardScreen.rewards.stream().filter(r -> r.type == RewardType.CARD).forEach(r -> {
+			if (r.cards.stream().allMatch(c -> c instanceof Halloween
+					|| HalloweenMod.CARDS.stream().anyMatch(s -> c.cardID.equals(s.cardID))))
+				return;
 			int size = r.cards.size();
 			r.cards = r.cards.stream().filter(c -> c.rarity == CardRarity.RARE).collect(toArrayList());
 			ArrayList<AbstractCard> pool = AbstractDungeon.srcRareCardPool.group.stream()
