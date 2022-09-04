@@ -10,8 +10,9 @@ import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.unique.ApotheosisAction;
 import com.megacrit.cardcrawl.actions.unique.ArmamentsAction;
 import halloweenMod.mymod.HalloweenMod;
+import testmod.utils.Festival;
 
-public class Candy extends AbstractCard {
+public class Candy extends AbstractCard implements Festival {
     public static final String ID = HalloweenMod.MOD_PREFIX + "Candy";
     public static final String IMG = "blue/power/creativeAi";
     private static CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);

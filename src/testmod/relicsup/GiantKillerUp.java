@@ -44,7 +44,7 @@ public class GiantKillerUp extends AbstractUpgradedRelic {
 			this.amount = -1;
 			updateDescription();
 			this.type = PowerType.DEBUFF;
-			this.priority = -10000;
+			this.priority = 10000;
 		}
 
 		public void updateDescription() {

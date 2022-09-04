@@ -14,9 +14,10 @@ import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.*;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import halloweenMod.mymod.HalloweenMod;
+import testmod.utils.Festival;
 import halloweenMod.actions.TrickAction;
 
-public class Trick extends AbstractCard {
+public class Trick extends AbstractCard implements Festival {
     public static final String ID = HalloweenMod.MOD_PREFIX + "Trick";
     public static final String IMG = "green/attack/daggerSpray";
     private static CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);

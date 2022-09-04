@@ -6,9 +6,10 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 
 import basemod.abstracts.CustomCard;
 import christmasMod.powers.GiftDamagedPower;
+import testmod.utils.Festival;
 import testmod.utils.MiscMethods;
 
-public abstract class AbstractChristmasCard extends CustomCard {
+public abstract class AbstractChristmasCard extends CustomCard implements Festival {
 	public static final String ID_PREFIX = "christmas-";
     public static final String IMG = "christmasResources/images/relic0.png";
 	

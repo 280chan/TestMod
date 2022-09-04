@@ -16,7 +16,7 @@ public class GiantKillerPower extends AbstractTestPower implements InvisiblePowe
 		this.amount = -1;
 		updateDescription();
 		this.type = PowerType.DEBUFF;
-		this.priority = -10000;
+		this.priority = 10000;
 		this.addMap(p -> new GiantKillerPower(p.owner));
 	}
 	

@@ -22,11 +22,10 @@ import com.megacrit.cardcrawl.rooms.EventRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 
-import halloweenMod.cards.Halloween;
-import halloweenMod.mymod.HalloweenMod;
 import testmod.mymod.TestMod;
 import testmod.powers.DefenceDownPower;
 import testmod.powers.EventHalfDamagePower;
+import testmod.utils.Festival;
 
 public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRelic {
 	public static final String SAVE_SIZE = "AHRevivedpeak";
@@ -242,8 +241,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		if (!(this.isActive && eliteSwarm && checkNumCards() && AbstractDungeon.screen == CurrentScreen.COMBAT_REWARD))
 			return;
 		AbstractDungeon.combatRewardScreen.rewards.stream().filter(r -> r.type == RewardType.CARD).forEach(r -> {
-			if (r.cards.stream().allMatch(c -> c instanceof Halloween
-					|| HalloweenMod.CARDS.stream().anyMatch(s -> c.cardID.equals(s.cardID))))
+			if (r.cards.stream().allMatch(c -> c instanceof Festival))
 				return;
 			int size = r.cards.size();
 			r.cards = r.cards.stream().filter(c -> c.rarity == CardRarity.RARE).collect(toArrayList());

@@ -43,7 +43,7 @@ public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
 		this(c, original(c));
 	}
 
-	private <T extends AbstractUpgradedRelic, R extends AbstractTestRelic> AbstractUpgradedRelic(Class<T> c, Class<R> r) {
+	protected <T extends AbstractUpgradedRelic, R extends AbstractTestRelic> AbstractUpgradedRelic(Class<T> c, Class<R> r) {
 		super(TestMod.makeID(shortID(c)), TestMod.relicIMGPath(shortID(r)), tier(r), sfx(r));
 	}
 	

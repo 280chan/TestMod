@@ -10,8 +10,9 @@ import com.megacrit.cardcrawl.actions.common.*;
 import halloweenMod.mymod.HalloweenMod;
 import halloweenMod.powers.GhostCostumePower;
 import halloweenMod.utils.HalloweenMiscMethods;
+import testmod.utils.Festival;
 
-public class GhostCostume extends AbstractCard implements HalloweenMiscMethods {
+public class GhostCostume extends AbstractCard implements Festival, HalloweenMiscMethods {
     public static final String ID = HalloweenMod.MOD_PREFIX + "GhostCostume";
     public static final String IMG = "blue/power/creativeAi";
     private static CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);

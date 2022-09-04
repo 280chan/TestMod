@@ -11,8 +11,9 @@ import com.megacrit.cardcrawl.powers.DexterityPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import halloweenMod.mymod.HalloweenMod;
+import testmod.utils.Festival;
 
-public class Halloween extends AbstractCard {
+public class Halloween extends AbstractCard implements Festival {
 	public static final String ID = HalloweenMod.MOD_PREFIX + "Halloween";
 	public static final String IMG = "green/skill/hide";
 	private static CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);

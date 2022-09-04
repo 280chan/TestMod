@@ -32,10 +32,10 @@ public class PlaguePower extends AbstractTestPower {
     
 	private void effect() {
 		boolean acted = false;
-		for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+		for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
 			if (m.hasPower(PoisonPower.POWER_ID)) {
 				for (int i = 0; i < this.amount; i++)
-					this.addToTop(new PlaguePoisonActAction(this.owner, m.getPower(PoisonPower.POWER_ID)));
+					this.att(new PlaguePoisonActAction(this.owner, m.getPower(PoisonPower.POWER_ID)));
 				acted = true;
 			}
 		}

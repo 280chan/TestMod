@@ -33,8 +33,8 @@ public class Arrangement extends AbstractTestCard {
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpXCostActionToBot(this, a -> {
-			this.addToTop(new ArrangementUpgradingAction(p, a));
-			this.addToTop(new DrawCardAction(p, a));
+			this.att(new ArrangementUpgradingAction(p, a));
+			this.att(new DrawCardAction(p, a));
 			if (this.upgraded) {
 				for (int i = 0; i < a; i++) {
 					this.damage(p, m);
@@ -50,11 +50,11 @@ public class Arrangement extends AbstractTestCard {
 	}
 	
 	private void damage(AbstractPlayer p, AbstractMonster m) {
-		this.addToTop(new DamageAction(m, new DamageInfo(p, this.damage, this.damageType), AttackEffect.BLUNT_LIGHT));
+		this.att(new DamageAction(m, new DamageInfo(p, this.damage, this.damageType), AttackEffect.BLUNT_LIGHT));
 	}
 	
 	private void block(AbstractPlayer p) {
-		this.addToTop(new GainBlockAction(p, p, this.block, true));
+		this.att(new GainBlockAction(p, p, this.block, true));
 	}
 	
 	private UnaryOperator<Float> blo(AbstractPower p) {

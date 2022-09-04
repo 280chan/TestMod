@@ -1,46 +1,44 @@
-package christmasMod.relics;
+package testmod.relicsup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ModHelper;
 import com.megacrit.cardcrawl.potions.PoisonPotion;
-import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 import christmasMod.mymod.ChristmasMod;
-import christmasMod.utils.ChristmasMiscMethods;
-import testmod.relics.AbstractTestRelic;
+import christmasMod.relics.GiftOfSatan;
 
-public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMethods, ClickableRelic {
-	public static final String ID = "GiftOfSatan";
-	public static final String DESCRIPTION = "每回合开始将 #b1 张随机的灾厄加入手牌。每有一个单位的当前生命以若干个 #b6 结尾，额外加入 #b6 的个数张。当有单位受到单次伤害以若干个 #b6 结尾，也将其个数张随机的灾厄加入手牌。第 #b6 回合开始，你将获得升级后的灾厄，打出灾厄时将其 #y消耗 。战斗结束时右击此遗物，有 #b25% 几率有机会获得一次额外的灾厄选牌。";
+public class GiftOfSatanUp extends AbstractUpgradedRelic implements ClickableRelic {
 	
 	private boolean victory = false;
 	
-	public GiftOfSatan() {
-		super(ID, RelicTier.SPECIAL, LandingSound.HEAVY);
+	public GiftOfSatanUp() {
+		super(GiftOfSatanUp.class, GiftOfSatan.class);
 	}
 	
 	private static int checkNum(int input) {
-		if (input % 10 == 6)
-			return 1 + checkNum(input / 10);
-		else
+		if (input < 1)
 			return 0;
+		return (input % 10 == 6 ? 1 : 0) + checkNum(input / 10);
 	}
 	
 	private void addRandomDisaster(int num) {
 		for (int i = 0; i < num; i++)
-			this.atb(new MakeTempCardInHandAction(ChristmasMod.randomDisaster(this.counter >= 6)));
+			this.atb(new MakeTempCardInHandAction(ChristmasMod.randomDisaster(true)));
 	}
 	
 	private void toggleState(boolean victory) {
@@ -53,19 +51,19 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 	}
 	
 	public void onVictory() {
-		if (this.counter > 0)
-			this.toggleState(true);
-    }
+		this.toggleState(true);
+		this.counter = -1;
+	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (this.victory) {
 			this.toggleState(false);
 		}
-    }
+	}
 
 	public int getRewardCardNum() {
 		int numCards = 3;
-		for (AbstractRelic r : AbstractDungeon.player.relics) {
+		for (AbstractRelic r : p().relics) {
 			numCards = r.changeNumberOfCardsInReward(numCards);
 		}
 		if (ModHelper.isModEnabled("Binary")) {
@@ -77,32 +75,25 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 	private ArrayList<AbstractCard> randomReward() {
 		ArrayList<AbstractCard> retVal = new ArrayList<AbstractCard>();
 		retVal.addAll(ChristmasMod.DISASTERS);
-		AbstractPlayer player = AbstractDungeon.player;
-		float cardUpgradedChance = 0.25f * (AbstractDungeon.actNum - 1);
-		if (AbstractDungeon.ascensionLevel >= 12)
-			cardUpgradedChance /= 2f;
-		if (cardUpgradedChance > 1)
-			cardUpgradedChance = 1;
-	    int numCards = this.getRewardCardNum();
-	    ArrayList<AbstractCard> retVal2 = new ArrayList<AbstractCard>();
-	    while (retVal2.size() < numCards) {
-	    	if (retVal.isEmpty())
-	    		retVal.addAll(ChristmasMod.DISASTERS);
-	    	retVal2.add(retVal.remove((int) (this.cardRng() * retVal.size())).makeCopy());
-	    }
-	    Random r = AbstractDungeon.cardRng.copy();
-		for (AbstractCard c : retVal2) {
-			if ((c.type == AbstractCard.CardType.ATTACK) && (player.hasRelic("Molten Egg 2"))) {
-				c.upgrade();
-			} else if ((c.type == AbstractCard.CardType.SKILL) && (player.hasRelic("Toxic Egg 2"))) {
-				c.upgrade();
-			} else if ((c.type == AbstractCard.CardType.POWER) && (player.hasRelic("Frozen Egg 2"))) {
-				c.upgrade();
-			} else if (r.randomBoolean(cardUpgradedChance)) {
-				c.upgrade();
-			}
+		int numCards = this.getRewardCardNum();
+		ArrayList<AbstractCard> retVal2 = new ArrayList<AbstractCard>();
+		Random rng = new Random(AbstractDungeon.cardRng.copy().randomLong());
+		Collections.shuffle(retVal, rng);
+		if (retVal.size() > numCards) {
+			retVal.stream().limit(numCards).forEach(retVal2::add);
+			retVal.clear();
+			retVal.addAll(retVal2);
+			retVal2.clear();
 		}
-	    return retVal2;
+		while (retVal.size() < numCards) {
+			retVal2.addAll(ChristmasMod.DISASTERS);
+			Collections.shuffle(retVal2, rng);
+			retVal2.stream().limit(numCards - retVal.size()).forEach(retVal::add);
+			retVal2.clear();
+		}
+		retVal.stream().map(c -> c.makeCopy()).peek(retVal2::add).filter(c -> c.canUpgrade()).forEach(c -> c.upgrade());
+		retVal.clear();
+		return retVal2;
 	}
 	
 	private void addReward() {
@@ -119,10 +110,8 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 	public void onRightClick() {
 		if (this.victory) {
 			this.toggleState(false);
-			if (this.cardRng() < 0.25f) {
-				this.addReward();
-				this.flash();
-			}
+			this.addReward();
+			this.flash();
 		}
 	}
 	
@@ -131,13 +120,10 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 	}
 	
 	public void atTurnStart() {
-		this.counter++;
-		if (this.counter == 6)
-			this.beginLongPulse();
 		int extra = AbstractDungeon.getMonsters().monsters.stream().mapToInt(m -> checkNum(m.currentHealth)).sum()
 				+ checkNum(p().currentHealth);
 		addRandomDisaster(extra + 1);
-    }
+	}
 	
 	public int onAttackedMonster(DamageInfo info, int damage) {
 		addRandomDisaster(checkNum(damage));
@@ -153,8 +139,17 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 	}
 	
 	public void onUseCard(AbstractCard c, UseCardAction action) {
-		if (isDisaster(c) && this.counter >= 6) {
+		if (isDisaster(c)) {
+			this.counter++;
 			action.exhaustCard = true;
+			if (this.counter == 6)
+				this.beginLongPulse();
+			if (this.counter > 5) {
+				if (c.freeToPlay() || c.isInAutoplay || c.cost < -1 || (c.cost == -1 && EnergyPanel.totalCount < 1)
+						|| c.costForTurn == 0)
+					return;
+				this.atb(new GainEnergyAction(c.cost == -1 ? EnergyPanel.totalCount : c.costForTurn));
+			}
 		}
 	}
 	

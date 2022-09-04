@@ -663,6 +663,18 @@
 		"DESCRIPTIONS":["Enemies drop an additional card reward which contains only #yCandy, #yTrick, #yGhost #yCostume and #yHalloween. NL Whenever you draw a #rCurse or #rStatus, #yExhaust it and add a #yHalloween into your hand. NL Whenever you draw #yHalloween, upgrade it."]
 	},
 	
+	"testmod-ChristmasGift":{
+		"NAME": "Christmas Gift",
+		"FLAVOR": "Merry Christmas",
+		"DESCRIPTIONS":["At start of each turn, add a random #yChristmas #yGift into your hand. Whenever you #yExhaust a card, heal #b1."]
+	},
+	
+	"testmod-GiftOfSatan":{
+		"NAME": "Gift Box of Satan+",
+		"FLAVOR": "Merry Christmas",
+		"DESCRIPTIONS":["At start of each turn, add a random #yUpgraded #yDisaster into your hand. If someone's hp contains #b6, for each #b6, add an extra #yUpgraded #yDisaster. Whenever someone recieving damage amount contains #b6, for each #b6, add a random #yUpgraded #yDisaster into your hand. Whenever you play a #yDisaster, #yExhaust it, start from #b6th #yDisaster you play, regain its cost. At end of combats, right click this relic to gain an #yUpgraded #yDisaster reward."]
+	},
+	
 	"testmod-PatchyPatchUp":{
 		"NAME": "Patchy Patch+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
