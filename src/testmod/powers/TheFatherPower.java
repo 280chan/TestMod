@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import testmod.relics.TwinklingStar;
 import testmod.relicsup.TheFatherUp;
 
 public class TheFatherPower extends AbstractTestPower implements InvisiblePower {
@@ -72,6 +73,7 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 			}
 			this.atb(a);
 			this.addTmpActionToBot(r::count);
+			TwinklingStar.addTheFatherAction();
 		});
 	}
 	
