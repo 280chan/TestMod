@@ -54,7 +54,7 @@ public class PatchyPatchUp extends AbstractUpgradedRelic implements PatchyTrigge
 		if (this.counter > 0 && (this.counter & (this.counter - 1)) == 0) {
 			int count = countAndShow();
 			int dmg = Math.max((int) (count * 1.0 * AbstractDungeon.getMonsters().monsters.stream()
-					.filter(m -> !m.isDeadOrEscaped()).mapToInt(m -> m.maxHealth).max().orElse(100) / 50), count);
+					.filter(m -> !m.isDeadOrEscaped()).mapToInt(m -> m.maxHealth).max().orElse(100) / 100), count);
 			atb(new DamageAllEnemiesAction(p(), DamageInfo.createDamageMatrix(dmg, true), DamageType.HP_LOSS,
 					AttackEffect.FIRE));
 		}

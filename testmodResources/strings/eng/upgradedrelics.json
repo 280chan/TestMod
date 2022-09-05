@@ -678,6 +678,6 @@
 	"testmod-PatchyPatchUp":{
 		"NAME": "Patchy Patch+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Whenever a #yPatch is called in combat, gain #b1 count, whenever count reaches integer power of #b2, deal damage equals to #b2% of maximum maxHP (at least #b1) * enemy amount to ALL enemies."]
+		"DESCRIPTIONS":["Whenever a #yPatch is called in combat, gain #b1 count, whenever count reaches integer power of #b2, deal damage equals to #b1% of maximum maxHP (at least #b1) * enemy amount to ALL enemies."]
 	}
 }
