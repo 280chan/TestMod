@@ -1,6 +1,8 @@
 package testmod.relicsup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -310,19 +312,21 @@ public class AllUpgradeRelic implements MiscMethods {
 		}
 		
 		private static boolean checkEmerald() {
-			return Settings.isFinalActAvailable && Settings.hasEmeraldKey && !swfKey(1)
-					&& !MISC.p().hasRelic("RU Singing Bowl");
+			return Settings.isFinalActAvailable && Loader.isModLoaded("RelicUpgradeLib") && Settings.hasEmeraldKey
+					&& !swfKey(1) && !MISC.p().hasRelic("RU Singing Bowl");
 		}
 
 		@SpirePatch(clz = AbstractDungeon.class, method = "setEmeraldElite")
 		public static class KeepEmeraldKeyPatch {
 			@SpirePostfixPatch
 			public static void Postfix() {
-				if (checkEmerald()) {
+				if (Settings.isFinalActAvailable && Loader.isModLoaded("RelicUpgradeLib") && !swfKey(1)) {
 					ArrayList<MapRoomNode> nodes = AbstractDungeon.map.stream().flatMap(r -> r.stream())
 							.filter(n -> n.room instanceof MonsterRoomElite).collect(MISC.toArrayList());
-					MapRoomNode n = nodes.get(AbstractDungeon.mapRng.random(0, nodes.size() - 1));
-					n.hasEmeraldKey = true;
+					int had = (int) nodes.stream().filter(n -> n.hasEmeraldKey).count();
+					Collections.shuffle(nodes, new Random(AbstractDungeon.mapRng.copy().randomLong()));
+					nodes.stream().filter(n -> !n.hasEmeraldKey).limit(AbstractDungeon.actNum - had)
+							.forEach(n -> n.hasEmeraldKey = true);
 					nodes.clear();
 				}
 			}
