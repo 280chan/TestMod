@@ -6,14 +6,20 @@ import java.util.Random;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.evacipated.cardcrawl.modthespire.Loader;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.dungeons.TheBeyond;
 import com.megacrit.cardcrawl.map.MapRoomNode;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.rooms.EmptyRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.vfx.FadeWipeParticle;
 
+import basemod.ReflectionHacks;
 import testmod.mymod.TestMod;
 
 public class PortablePortalUp extends AbstractUpgradedRelic implements ClickableRelic {
@@ -93,7 +99,7 @@ public class PortablePortalUp extends AbstractUpgradedRelic implements Clickable
 			p().movePosition(Settings.WIDTH * 0.25F, AbstractDungeon.floorY);
 			DUNGEON_ID.remove(0);
 			CardCrawlGame.nextDungeon = DUNGEON_ID.get(0);
-			AbstractDungeon.isDungeonBeaten = true;
+			AbstractDungeon.isDungeonBeaten = PendingBossUpgradePatch.using = true;
 			CardCrawlGame.music.fadeOutBGM();
 			CardCrawlGame.music.fadeOutTempBGM();
 			AbstractDungeon.fadeOut();
@@ -115,6 +121,33 @@ public class PortablePortalUp extends AbstractUpgradedRelic implements Clickable
 				AbstractDungeon.topLevelEffectsQueue.add(new FadeWipeParticle());
 				AbstractDungeon.nextRoomTransitionStart();
 			}));
+			
+			if (Loader.isModLoaded("actlikeit")) {
+				try {
+					Class<?> cls = Class.forName("actlikeit.savefields.BehindTheScenesActNum");
+					int act = ReflectionHacks.privateStaticMethod(cls, "getActNum").invoke();
+					ReflectionHacks.privateStaticMethod(cls, "setActNum", int.class).invoke(new Object[] { act - 2 });
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SpirePatch(clz = TheBeyond.class, method = "<ctor>", paramtypez = { AbstractPlayer.class, ArrayList.class })
+	public static class PortablePortalUpPatch {
+		public static void Postfix(TheBeyond i, AbstractPlayer p, ArrayList<String> theList) {
+		    AbstractDungeon.currMapNode = new MapRoomNode(0, -1);
+		    AbstractDungeon.currMapNode.room = new EmptyRoom();
+		}
+	}
+
+	@SpirePatch(cls = "relicupgradelib.RelicUpgradeLib", method = "receiveStartAct", optional = true)
+	public static class PendingBossUpgradePatch {
+		public static boolean using = false;
+		
+		public static SpireReturn<Void> Prefix(Object i) {
+			return using && !(using = false) ? SpireReturn.Return() : SpireReturn.Continue();
 		}
 	}
 
