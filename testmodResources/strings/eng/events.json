@@ -66,6 +66,26 @@
 		"[Locked] Need event",
 		"[Leave]"
 	]
+},
+
+"testmod-GoblinJeweler": {
+	"NAME": "Goblin Jeweler",
+	"DESCRIPTIONS": [
+		"You walk through buildings, noticing a chic shop. NL Getting closer, the shop was full of #yjewelry. NL The owner appears to be a #pgoblin, But its luxurious clothes and shops show you its #y~great~ #y~value~ .",
+		"\"Can I take a look?\" You asked politely. NL Before the owner replies, your eyes are drawn to the colorful jewelry. NL \"It's okay to take a look, but guests who can't pay are not welcome here.\"",
+		"Although it took a lot, it is really worth the money. NL \"Thanks for shop with us!\" NL When you turned to leave, you heard the owner's happy voice.",
+		"You are not satisfied with the commodity, and you are scolded by the shop owner after shaking your head: NL “ #rIf #ryou #rdon't #rbuy, #rgo #rsomewhere #relse! ” NL You were scolded out of the shop."
+	],
+	"OPTIONS": [
+		"[Continue] Talk to the owner",
+		"#gGain #gRuby #gKey #rLose ",
+		"#gGain #gEmerald #gKey #rLose ",
+		"#gGain #gSapphire #gKey #rLose ",
+		" #rgold",
+		"[Purchase] ",
+		"[Locked] ",
+		"[Leave]"
+	]
 }
 
 }
