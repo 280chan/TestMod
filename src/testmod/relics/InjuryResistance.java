@@ -72,6 +72,7 @@ public class InjuryResistance extends AbstractTestRelic {
 					r.show();
 				damage -= r.counter++;
 				if (damage <= 0) {
+					r.counter = 0;
 					break;
 				}
 			}
