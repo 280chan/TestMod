@@ -325,7 +325,7 @@ public class AllUpgradeRelic implements MiscMethods {
 							.filter(n -> n.room instanceof MonsterRoomElite).collect(MISC.toArrayList());
 					int had = (int) nodes.stream().filter(n -> n.hasEmeraldKey).count();
 					Collections.shuffle(nodes, new Random(AbstractDungeon.mapRng.copy().randomLong()));
-					nodes.stream().filter(n -> !n.hasEmeraldKey).limit(AbstractDungeon.actNum - had)
+					nodes.stream().filter(n -> !n.hasEmeraldKey).limit(Math.min(3, AbstractDungeon.actNum) - had)
 							.forEach(n -> n.hasEmeraldKey = true);
 					nodes.clear();
 				}
