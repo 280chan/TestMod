@@ -78,7 +78,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 9/4/2022
+ * @version 9/8/2022
  * @since 6/17/2018
  */
 
@@ -462,7 +462,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 
 	@Override
 	public void receiveStartAct() {
-		if (AbstractDungeon.floorNum < 2)
+		if (AbstractDungeon.floorNum < 1)
 			PortablePortalUp.clear();
 		PortablePortalUp.next();
 	}
@@ -796,6 +796,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private static void addEvents() {
 		Stream.of(BoxForYourself.class, PlateOfNloth.class, MysteryExchangeTable.class)
 				.forEach(AbstractTestEvent::addEvent);
+		if (Loader.isModLoaded("RelicUpgradeLib")) {
+			AbstractTestEvent.addEvent(GoblinJeweler.class);
+		}
 	}
 
 	private static void addPotions() {

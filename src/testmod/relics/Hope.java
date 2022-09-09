@@ -29,6 +29,7 @@ import com.megacrit.cardcrawl.saveAndContinue.SaveFile.SaveType;
 import com.megacrit.cardcrawl.vfx.GameSavedEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
+import basemod.ReflectionHacks;
 import testmod.actions.HopeAction;
 import testmod.mymod.TestMod;
 
@@ -65,10 +66,7 @@ public class Hope extends AbstractTestRelic implements ClickableRelic {
     		if (m instanceof AwakenedOne || m instanceof Darkling) {
     			r.cannotLose = false;
     		}
-    		if (!m.id.equals("paleoftheancients:Reimu")) {
-    			TestMod.info("希望:尝试秒杀" + m.name);
-    			m.die();
-    		} else {
+    		if ("paleoftheancients:Reimu".equals(m.id)) {
     			TestMod.info("希望:尝试跳过秒杀先古境地灵梦，尝试添加其对应遗物...");
     			Class<? extends AbstractDungeon> c = CardCrawlGame.dungeon.getClass();
 				try {
@@ -78,6 +76,20 @@ public class Hope extends AbstractTestRelic implements ClickableRelic {
 						| IllegalArgumentException | InvocationTargetException e) {
 					e.printStackTrace();
 				}
+    		} else if ("VUPShionMod:PlagaAMundo".equals(m.id) || "VUPShionMod:PlagaAMundoMinion".equals(m.id)) {
+    			TestMod.info("希望:尝试跳过秒杀紫音深空孽障，尝试解锁通关记录...");
+    			m.useFastShakeAnimation(5.0F);
+    			CardCrawlGame.screenShake.rumble(4.0F);
+    			ReflectionHacks.privateMethod(AbstractMonster.class, "onBossVictoryLogic").invoke(m);
+    			try {
+    				Class<?> scp = Class.forName("VUPShionMod.patches.SpecialCombatPatches");
+    				ReflectionHacks.privateStaticMethod(scp, "victoryFightSpecialBoss").invoke();
+				} catch (ClassNotFoundException e) {
+					TestMod.info("失败");
+				}
+    		} else {
+    			TestMod.info("希望:尝试秒杀" + m.name);
+    			m.die();
     		}
     		if (!m.isDying && !m.hasPower("Minion")) {
     			r.cannotLose = false;
