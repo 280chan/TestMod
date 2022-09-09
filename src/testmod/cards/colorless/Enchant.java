@@ -54,7 +54,6 @@ public class Enchant extends AbstractTestCard {
     		}
     		c.baseMagicNumber = c.magicNumber;
     		c.upgradedMagicNumber = true;
-    		c.exhaustOnUseOnce = true;
     		c.initializeDescription();
     	});
     }
