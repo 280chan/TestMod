@@ -1,5 +1,6 @@
 package christmasMod.powers;
 
+import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -56,9 +57,9 @@ public class GiftDamagedPower extends AbstractTestPower {
 	
 	public void onCardDraw(AbstractCard c) {
 		if (c.type == CardType.STATUS) {
-			p().hand.moveToExhaustPile(c);
+			this.att(new ExhaustSpecificCardAction(c, p().hand, true));
 			for (int i = 0; i < this.amount; i++)
-				this.addToBot(new MakeTempCardInHandAction(ChristmasMod.randomGift(false)));
+				this.atb(new MakeTempCardInHandAction(ChristmasMod.randomGift(false)));
 		} else if (check(c))
 			modify(c);
 	}

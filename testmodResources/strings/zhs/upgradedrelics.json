@@ -570,7 +570,7 @@
 	"testmod-MistCoreUp":{
 		"NAME": "迷雾核心+",
 		"FLAVOR": "在迷雾之中，你很难看清出路。",
-		"DESCRIPTIONS":["将每幕第一层以外的普通战斗房改为 #y？ 房间，然后对每个 #y？ 房间有 #b10% 概率将其变为 #y宝箱 房间。每当你进入 #y？ 房间，增加 #b5% 最大生命，至少 #b1 点。"]
+		"DESCRIPTIONS":["将每阶段第一层以外的普通战斗房改为 #y？ 房间，然后对每个 #y？ 房间有 #b10% 概率将其变为 #y宝箱 房间。每当你进入 #y？ 房间，增加 #b5% 最大生命，至少 #b1 点。"]
 	},
 	
 	"testmod-HolyLightProtectionUp":{
@@ -624,7 +624,7 @@
 	"testmod-PortablePortalUp":{
 		"NAME": "便携传送门+",
 		"FLAVOR": "别磨叽了，开干吧！",
-		"DESCRIPTIONS":["拾起时，失去 #b3 个随机 #y宝石钥匙 ，每缺少 #b1 个，失去 #b1/3 #y金币 (总计最多失去 #b999 )。每回合开始获得 [E] 。在战斗外右键本遗物，传送至上一阶段的 #yBoss 房(使用该效果会取消预约了的 #yBoss 遗物升级)。"]
+		"DESCRIPTIONS":["拾起时，失去 #b3 个随机 #y宝石钥匙 ，每缺少 #b1 个，失去 #b1/3 #y金币 (总计最多失去 #b999 )。每回合开始获得 [E] 。在战斗外右键本遗物，传送至上一阶段的 #yBoss 房。"]
 	},
 	
 	"testmod-SpireNexusUp":{
@@ -654,7 +654,7 @@
 	"testmod-ReverseUp":{
 		"NAME": "生死逆转+",
 		"FLAVOR": "这个人很懒，什么都没有写。",
-		"DESCRIPTIONS":["每当你获得 #y层数 为 #r负 的状态，将其 #y层数 变为其 #g绝对值 。 NL 每当你获得增益状态，将其 #y层数 翻倍。 NL 每幕有 #b1 次机会 #g复活 。"]
+		"DESCRIPTIONS":["每当你获得 #y层数 为 #r负 的状态，将其 #y层数 变为其 #g绝对值 。 NL 每当你获得增益状态，将其 #y层数 翻倍。 NL 每阶段有 #b1 次机会 #g复活 。"]
 	},
 	
 	"testmod-ExtravagantUp":{
@@ -670,9 +670,9 @@
 	},
 	
 	"testmod-ChristmasGiftUp":{
-		"NAME": "圣诞礼物",
+		"NAME": "圣诞礼物+",
 		"FLAVOR": "圣诞快乐",
-		"DESCRIPTIONS":["每回合开始将一张随机的 #y圣诞礼物 加入手牌。每 #y消耗 一张牌恢复 #b1 点生命值。"]
+		"DESCRIPTIONS":["每回合开始将一张随机的 #y升级 后的 #y圣诞礼物 加入手牌。每 #y消耗 一张牌恢复其耗能点生命值(至少 #b1 点)。每当你累计恢复 #b2 的整数幂 * #b25 点生命，获得 #b1 个随机 #y宝石钥匙 。"]
 	},
 	
 	"testmod-GiftOfSatanUp":{

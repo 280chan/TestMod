@@ -9,7 +9,7 @@
 	"testmod-upgrade-ChristmasGift":{
 		"TEXT": [
 			"0",
-			"0"
+			"100"
 		]
 	},
 
@@ -477,10 +477,10 @@
 	
 	"testmod-upgrade-DeterminationOfClimber":{
 		"TEXT": [
-			"7",
+			"5",
 			"0",
 			"0",
-			"999"
+			"500"
 		]
 	},
 	

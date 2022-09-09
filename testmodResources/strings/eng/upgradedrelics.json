@@ -618,7 +618,7 @@
 	"testmod-PortablePortalUp":{
 		"NAME": "Portable Portal+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["Upon pickup, lose #b3 random #ygem #ykey, for each #ygem #ykey missing, lose #b1/3 of your #yGold (at most #b999 total). At the start of each turn, gain [E] . Right click this relic out side combat, teleport to #yBoss room of last act (using this effect will cancel the #yBoss relic upgrading you reserved."]
+		"DESCRIPTIONS":["Upon pickup, lose #b3 random #ygem #ykey, for each #ygem #ykey missing, lose #b1/3 of your #yGold (at most #b999 total). At the start of each turn, gain [E] . Right click this relic out side combat, teleport to #yBoss room of last act."]
 	},
 	
 	"testmod-SpireNexusUp":{
@@ -663,13 +663,13 @@
 		"DESCRIPTIONS":["Enemies drop an additional card reward which contains only #yCandy, #yTrick, #yGhost #yCostume and #yHalloween. NL Whenever you draw a #rCurse or #rStatus, #yExhaust it and add a #yHalloween into your hand. NL Whenever you draw #yHalloween, upgrade it."]
 	},
 	
-	"testmod-ChristmasGift":{
-		"NAME": "Christmas Gift",
+	"testmod-ChristmasGiftUp":{
+		"NAME": "Christmas Gift+",
 		"FLAVOR": "Merry Christmas",
-		"DESCRIPTIONS":["At start of each turn, add a random #yChristmas #yGift into your hand. Whenever you #yExhaust a card, heal #b1."]
+		"DESCRIPTIONS":["At start of each turn, add a random #yUpgraded #yChristmas #yGift into your hand. Whenever you #yExhaust a card, heal its cost (at least #b1). Whenever the total number you heal reaches integer power of #b2 multiple of #b25, gain a random #ygem #ykey."]
 	},
 	
-	"testmod-GiftOfSatan":{
+	"testmod-GiftOfSatanUp":{
 		"NAME": "Gift Box of Satan+",
 		"FLAVOR": "Merry Christmas",
 		"DESCRIPTIONS":["At start of each turn, add a random #yUpgraded #yDisaster into your hand. If someone's hp contains #b6, for each #b6, add an extra #yUpgraded #yDisaster. Whenever someone recieving damage amount contains #b6, for each #b6, add a random #yUpgraded #yDisaster into your hand. Whenever you play a #yDisaster, #yExhaust it, start from #b6th #yDisaster you play, regain its cost. At end of combats, right click this relic to gain an #yUpgraded #yDisaster reward."]

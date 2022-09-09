@@ -6,12 +6,6 @@ import christmasMod.mymod.ChristmasMod;
 import testmod.relics.AbstractTestRelic;
 
 public class ChristmasGift extends AbstractTestRelic {
-	public static final String ID = "ChristmasGift";
-	public static final String DESCRIPTION = "每回合开始将一张随机的圣诞礼物加入手牌。每 消耗 一张牌恢复 #b1 点生命值。";
-	
-	public ChristmasGift() {
-		super(ID, RelicTier.SPECIAL, LandingSound.MAGICAL);
-	}
 	
 	public void onExhaust(final AbstractCard card) {
 		p().heal(1);
@@ -19,7 +13,7 @@ public class ChristmasGift extends AbstractTestRelic {
     }
 	
 	public void atTurnStart() {
-		this.addToBot(new MakeTempCardInHandAction(ChristmasMod.randomGift(false)));
+		this.atb(new MakeTempCardInHandAction(ChristmasMod.randomGift(false)));
     }
 	
 }
