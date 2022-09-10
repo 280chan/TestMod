@@ -221,12 +221,20 @@ public interface MiscMethods {
 		TurnSkipper.updateThis();
 	}
 	
+	default void turnSkipperReset() {
+		TurnSkipper.reset();
+	}
+	
 	static class TurnSkipper {
 		private static boolean startEndingTurn = false;
 	    private static boolean endTurnQueued = false;
 	    private static boolean startMonsterTurn = false;
 		private static boolean startNextTurn = false;
 
+		private static void reset() {
+			startEndingTurn = endTurnQueued = startMonsterTurn = startNextTurn = false;
+		}
+		
 		private static boolean inProgress() {
 			return startEndingTurn || endTurnQueued || startMonsterTurn || startNextTurn;
 		}
@@ -332,8 +340,7 @@ public interface MiscMethods {
 			addToBot(new ClearCardQueueAction());
 			addToBot(new DiscardAtEndOfTurnAction());
 			
-			Stream.of(p.drawPile, p.discardPile, p.hand).flatMap(g -> g.group.stream())
-					.forEach(c -> c.resetAttributes());
+			MISC.combatCards().forEach(c -> c.resetAttributes());
 			if (p.hoveredCard != null)
 				p.hoveredCard.resetAttributes();
 

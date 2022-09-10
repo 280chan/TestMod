@@ -78,7 +78,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 9/8/2022
+ * @version 9/10/2022
  * @since 6/17/2018
  */
 
@@ -196,6 +196,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public void receivePostBattle(AbstractRoom r) {
 		SUB_MOD.forEach(new RoomTrigger(r)::postTrigger);
 		this.resetGlow();
+		this.turnSkipperReset();
 	}
 	
 	public static void info(Object s) {
@@ -707,6 +708,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		Encyclopedia.load();
 		ManifoldPotion.load();
 		PortablePortalUp.load();
+		PatchyTrigger.load();
 	}
 	
 	public static boolean hasSaveData(String key) {
@@ -797,7 +799,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		Stream.of(BoxForYourself.class, PlateOfNloth.class, MysteryExchangeTable.class)
 				.forEach(AbstractTestEvent::addEvent);
 		if (Loader.isModLoaded("RelicUpgradeLib")) {
-			AbstractTestEvent.addEvent(GoblinJeweler.class);
+			AbstractTestEvent.addEvent(GoblinJeweler.class, () -> MISC.p().gold >= GoblinJeweler.minGold());
 		}
 	}
 
