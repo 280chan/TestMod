@@ -14,6 +14,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -28,6 +29,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rewards.RewardItem.RewardType;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.rooms.CampfireUI;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
@@ -276,21 +278,47 @@ public class AllUpgradeRelic implements MiscMethods {
 			}
 		}
 		
+		public static boolean sapphireAdded = false;
+		public static boolean mySapphireAdded = false;
+		
 		@SpirePatch(clz = AbstractChest.class, method = "open")
 		public static class KeepSapphireKeyPatch {
 			@SpireInsertPatch(locator = Locator.class)
 			public static void Insert(AbstractChest ui, boolean bossChest) {
-				if (swfKey(2) || !Loader.isModLoaded("RelicUpgradeLib") || MISC.p().hasRelic("RU Singing Bowl"))
+				if ((sapphireAdded && !(sapphireAdded = false)) || !Loader.isModLoaded("RelicUpgradeLib")
+						|| MISC.p().hasRelic("RU Singing Bowl"))
 					return;
-				if (valid(false))
+				if (valid(false)) {
+					mySapphireAdded = true;
 					AbstractDungeon.getCurrRoom().addSapphireKey(AbstractDungeon.getCurrRoom().rewards
 							.get(AbstractDungeon.getCurrRoom().rewards.size() - 1));
+				}
 			}
 			
 			private static class Locator extends SpireInsertLocator {
 				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
 					Matcher finalMatcher = new Matcher.FieldAccessMatcher(Settings.class, "hasSapphireKey");
 					return LineFinder.findAllInOrder(ctMethodToPatch, finalMatcher);
+				}
+			}
+		}
+
+		@SpirePatch(cls = "chronoMods.coop.CoopKeySharing.enableBlueKeyChest", method = "Insert", optional = true)
+		public static class StupidSwfSapphireKeyPatch {
+			@SpirePrefixPatch
+			public static SpireReturn<Void> Prefix() {
+				return mySapphireAdded && !(mySapphireAdded = false) ? SpireReturn.Return() : SpireReturn.Continue();
+			}
+			
+			@SpireInsertPatch(locator = Locator.class)
+			public static void Insert(RewardItem r) {
+				sapphireAdded = true;
+			}
+			
+			private static class Locator extends SpireInsertLocator {
+				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+					Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractRoom.class, "addSapphireKey");
+					return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
 				}
 			}
 		}
@@ -325,7 +353,8 @@ public class AllUpgradeRelic implements MiscMethods {
 							.filter(n -> n.room instanceof MonsterRoomElite).collect(MISC.toArrayList());
 					int had = (int) nodes.stream().filter(n -> n.hasEmeraldKey).count();
 					Collections.shuffle(nodes, new Random(AbstractDungeon.mapRng.copy().randomLong()));
-					nodes.stream().filter(n -> !n.hasEmeraldKey).limit(Math.min(3, AbstractDungeon.actNum) - had)
+					int num = Math.min(3, AbstractDungeon.actNum - had);
+					nodes.stream().filter(n -> !n.hasEmeraldKey).limit(Math.max(0, num))
 							.forEach(n -> n.hasEmeraldKey = true);
 					nodes.clear();
 				}
