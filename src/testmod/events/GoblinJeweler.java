@@ -19,6 +19,10 @@ public class GoblinJeweler extends AbstractTestEvent {
 		return price(type, 0);
 	}
 	
+	public static int minGold() {
+		return MISC.getNaturalNumberList(3).stream().mapToInt(i -> price(i)).min().orElse(100);
+	}
+	
 	private void updateOption(int current) {
 		for (int i = 0; i < 3; i++) {
 			int price = i == current ? price(i, (int) (MISC.relicStream(HarvestTotemUp.class).count() + 1)) : price(i);

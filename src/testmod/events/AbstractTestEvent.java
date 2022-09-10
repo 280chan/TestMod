@@ -4,6 +4,8 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.events.AbstractImageEvent;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import basemod.BaseMod;
+import basemod.eventUtil.AddEventParams.Builder;
+import basemod.eventUtil.util.Condition;
 import testmod.mymod.TestMod;
 import testmod.utils.MiscMethods;
 
@@ -69,6 +71,10 @@ public abstract class AbstractTestEvent extends AbstractImageEvent implements Mi
 	
 	private static String getID() {
 		return TestMod.makeID(MiscMethods.getIDWithoutLog(getEventClass()));
+	}
+
+	public static <T extends AbstractTestEvent> void addEvent(Class<T> c, Condition spawn) {
+		BaseMod.addEvent(new Builder(TestMod.makeID(MiscMethods.getIDWithoutLog(c)), c).spawnCondition(spawn).create());
 	}
 	
 	public static <T extends AbstractTestEvent> void addEvent(Class<T> c) {
