@@ -16,11 +16,20 @@ public class PatchyPatch extends AbstractTestRelic implements PatchyTrigger {
 			MAP.clear();
 			this.act = true;
 		}
+		if (this.isActive) {
+			LIST.add(this);
+		}
+	}
+	
+	public void onUnequip() {
+		if (this.isActive)
+			PatchyTrigger.load();
 	}
 	
 	public void atPreBattle() {
 		if (!this.isActive || this.relicStream(PatchyPatchUp.class).count() > 0)
 			return;
+		PatchyTrigger.load();
 		this.counter = 0;
 		this.act = true;
 		MAP.clear();

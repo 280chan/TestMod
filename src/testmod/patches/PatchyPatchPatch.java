@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.modthespire.Patcher;
@@ -32,20 +31,16 @@ import testmod.utils.PatchyTrigger;
 public class PatchyPatchPatch implements MiscMethods {
 	private static final String[] ANNOTATION = { SpirePatch.class.getName(), SpirePatches.class.getName(),
 			SpirePatch2.class.getName(), SpirePatches2.class.getName() };
-	public static final String VAL = "testmodPatchyPatch";
 	public static final String CCG = CardCrawlGame.class.getName();
 	public static final String AD = AbstractDungeon.class.getName();
-	public static final String PT = PatchyTrigger.class.getName();
 	public static final String RP = RoomPhase.class.getName();
-	@SuppressWarnings("rawtypes")
-	public static final Predicate CHECKER = a -> a instanceof PatchyTrigger;
-	public static final String CK = "testmod.patches.PatchyPatchPatch.CHECKER";
+	public static final String PT = PatchyTrigger.class.getName() + ".PT";
+	public static final String VALID = PatchyTrigger.class.getName() + ".valid()";
 	
 	public static String get(String name) {
 		String tmp = "{if(" + CCG + ".dungeon != null && " + AD + ".player != null && " + AD;
 		tmp += ".currMapNode != null && " + AD + ".currMapNode.room != null && " + AD + ".currMapNode.room.phase == ";
-		tmp += RP + ".COMBAT) {" + VAL + " = (" + PT + ")" + AD + ".player.relics.stream().filter(" + CK;
-		tmp += ").findFirst().orElse(null);if(" + VAL + " != null){" + VAL + ".patchAttack(\"" + name + "\");}}}";
+		tmp += RP + ".COMBAT && " + VALID + "){" + PT + ".patchAttack(\"" + name + "\");}}";
 		return tmp;
 	}
 	
@@ -68,10 +63,8 @@ public class PatchyPatchPatch implements MiscMethods {
 			patchClasses.stream().filter(cn -> cn != null).forEach(className -> {
 				try {
 					CtClass ctPatchClass = pool.get(className);
-					CtClass relic = pool.get(PT);
 					Stream.of(ctPatchClass.getDeclaredMethods()).filter(i -> isPatch(i)).forEach(m -> {
 						try {
-							m.addLocalVariable(VAL, relic);
 							m.insertBefore(get(m.getLongName()));
 						} catch (CannotCompileException e) {
 							e.printStackTrace();

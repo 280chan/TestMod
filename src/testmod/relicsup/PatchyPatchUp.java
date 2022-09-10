@@ -17,11 +17,20 @@ public class PatchyPatchUp extends AbstractUpgradedRelic implements PatchyTrigge
 		if (this.inCombat() && this.isActive) {
 			this.act = true;
 		}
+		if (this.isActive) {
+			LIST.add(this);
+		}
+	}
+	
+	public void onUnequip() {
+		if (this.isActive)
+			PatchyTrigger.load();
 	}
 	
 	public void atPreBattle() {
 		if (!this.isActive)
 			return;
+		PatchyTrigger.load();
 		this.counter = 0;
 		this.act = true;
 	}
