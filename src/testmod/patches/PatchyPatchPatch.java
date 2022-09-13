@@ -1,11 +1,13 @@
 package testmod.patches;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.Patcher;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
@@ -36,6 +38,13 @@ public class PatchyPatchPatch implements MiscMethods {
 	public static final String RP = RoomPhase.class.getName();
 	public static final String PT = PatchyTrigger.class.getName() + ".PT";
 	public static final String VALID = PatchyTrigger.class.getName() + ".valid()";
+	private static final ArrayList<URL> JAR_URL = new ArrayList<URL>();
+	private static final String[] EXCEPTION_MOD_ID = { "force-key", "widepotions" };
+	
+	static {
+		Stream.of(Loader.MODINFOS).filter(i -> Stream.of(EXCEPTION_MOD_ID).anyMatch(i.ID::equals))
+				.forEach(i -> JAR_URL.add(i.jarURL));
+	}
 	
 	public static String get(String name) {
 		String tmp = "{if(" + CCG + ".dungeon != null && " + AD + ".player != null && " + AD;
@@ -46,8 +55,8 @@ public class PatchyPatchPatch implements MiscMethods {
 	
 	public static void Raw(CtBehavior ctBehavior) {
 		ClassPool pool = ctBehavior.getDeclaringClass().getClassPool();
-		Patcher.annotationDBMap.values().forEach(db -> {
-			if (db == null)
+		Patcher.annotationDBMap.forEach((key, db) -> {
+			if (JAR_URL.stream().anyMatch(key::equals) || db == null)
 				return;
 			ArrayList<String> patchClasses = new ArrayList<String>();
 			
@@ -60,7 +69,7 @@ public class PatchyPatchPatch implements MiscMethods {
 				}
 			});
 			
-			patchClasses.stream().filter(cn -> cn != null).forEach(className -> {
+			patchClasses.stream().distinct().filter(cn -> cn != null).forEach(className -> {
 				try {
 					CtClass ctPatchClass = pool.get(className);
 					Stream.of(ctPatchClass.getDeclaredMethods()).filter(i -> isPatch(i)).forEach(m -> {
