@@ -36,20 +36,21 @@ public class PatchyPatchPatch implements MiscMethods {
 	public static final String CCG = CardCrawlGame.class.getName();
 	public static final String AD = AbstractDungeon.class.getName();
 	public static final String RP = RoomPhase.class.getName();
-	public static final String PT = PatchyTrigger.class.getName() + ".PT";
-	public static final String VALID = PatchyTrigger.class.getName() + ".valid()";
+	public static final String PT = PatchyTrigger.class.getName();
 	private static final ArrayList<URL> JAR_URL = new ArrayList<URL>();
 	private static final String[] EXCEPTION_MOD_ID = { "force-key", "widepotions" };
 	
 	static {
-		Stream.of(Loader.MODINFOS).filter(i -> Stream.of(EXCEPTION_MOD_ID).anyMatch(i.ID::equals))
-				.forEach(i -> JAR_URL.add(i.jarURL));
+		if (Loader.MODINFOS != null)
+			Stream.of(Loader.MODINFOS)
+					.filter(i -> i != null && i.ID != null && Stream.of(EXCEPTION_MOD_ID).anyMatch(i.ID::equals))
+					.forEach(i -> JAR_URL.add(i.jarURL));
 	}
 	
 	public static String get(String name) {
 		String tmp = "{if(" + CCG + ".dungeon != null && " + AD + ".player != null && " + AD;
 		tmp += ".currMapNode != null && " + AD + ".currMapNode.room != null && " + AD + ".currMapNode.room.phase == ";
-		tmp += RP + ".COMBAT && " + VALID + "){" + PT + ".patchAttack(\"" + name + "\");}}";
+		tmp += RP + ".COMBAT && " + PT + ".valid()){" + PT + ".patchAttack(\"" + name + "\");}}";
 		return tmp;
 	}
 	
