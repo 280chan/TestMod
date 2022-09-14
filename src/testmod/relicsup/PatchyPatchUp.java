@@ -1,15 +1,18 @@
 package testmod.relicsup;
 
+import java.util.ArrayList;
+import java.util.stream.Stream;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import testmod.mymod.TestMod;
-import testmod.relics.AbstractTestRelic;
+import testmod.relics.PatchyPatch;
 import testmod.utils.PatchyTrigger;
 
 public class PatchyPatchUp extends AbstractUpgradedRelic implements PatchyTrigger {
+	public static final ArrayList<PatchyPatchUp> RELICS = new ArrayList<PatchyPatchUp>();
 	private boolean act = false;
 	
 	public void onEquip() {
@@ -20,11 +23,13 @@ public class PatchyPatchUp extends AbstractUpgradedRelic implements PatchyTrigge
 		if (this.isActive) {
 			CURRENT[0] = this;
 		}
+		RELICS.add(this);
 	}
 	
 	public void onUnequip() {
 		if (this.isActive)
 			PatchyTrigger.load();
+		RELICS.remove(this);
 	}
 	
 	public void atPreBattle() {
@@ -50,8 +55,7 @@ public class PatchyPatchUp extends AbstractUpgradedRelic implements PatchyTrigge
 	}
 	
 	private int countAndShow() {
-		return (int) p().relics.stream().filter(r -> r instanceof PatchyTrigger)
-				.peek(r -> ((AbstractTestRelic) r).show()).count()
+		return (int) Stream.concat(PatchyPatch.RELICS.stream(), RELICS.stream()).peek(r -> r.show()).count()
 				* (!this.hasEnemies() ? 1 : AbstractDungeon.getMonsters().monsters.size());
 	}
 

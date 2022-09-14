@@ -8,6 +8,7 @@ import testmod.utils.PatchyTrigger;
 
 public class PatchyPatch extends AbstractTestRelic implements PatchyTrigger {
 	public static ArrayList<String> MAP = new ArrayList<String>();
+	public static final ArrayList<PatchyPatch> RELICS = new ArrayList<PatchyPatch>();
 	private boolean act = false;
 	
 	public void onEquip() {
@@ -19,11 +20,13 @@ public class PatchyPatch extends AbstractTestRelic implements PatchyTrigger {
 		if (this.isActive && !(CURRENT[0] instanceof PatchyPatchUp)) {
 			CURRENT[0] = this;
 		}
+		RELICS.add(this);
 	}
 	
 	public void onUnequip() {
 		if (this.isActive)
 			PatchyTrigger.load();
+		RELICS.remove(this);
 	}
 	
 	public void atPreBattle() {
@@ -52,12 +55,12 @@ public class PatchyPatch extends AbstractTestRelic implements PatchyTrigger {
 
 	@Override
 	public void realAttack(String patch) {
-		if (!this.isActive || !this.act || this.relicStream(PatchyPatchUp.class).count() > 0 || MAP.contains(patch))
+		if (!this.isActive || !this.act || MAP.contains(patch))
 			return;
 		MAP.add(patch);
 		this.counter++;
 		if (this.counter > 0 && (this.counter & (this.counter - 1)) == 0)
-			atb(randomDamage((int) relicStream(PatchyPatch.class).peek(r -> r.show()).count(), DamageType.HP_LOSS));
+			atb(randomDamage((int) RELICS.stream().peek(r -> r.show()).count(), DamageType.HP_LOSS));
 	}
 
 }

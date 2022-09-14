@@ -1,6 +1,9 @@
 package testmod.utils;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
+
+import testmod.relics.PatchyPatch;
 import testmod.relicsup.PatchyPatchUp;
 
 public interface PatchyTrigger {
@@ -11,10 +14,14 @@ public interface PatchyTrigger {
 	}
 	
 	public static void load() {
-		CURRENT[0] = get().findFirst().orElse(null);
-		if (CURRENT[0] instanceof PatchyPatchUp)
-			return;
-		CURRENT[0] = get().filter(r -> r instanceof PatchyPatchUp).findFirst().orElse(CURRENT[0]);
+		PatchyPatchUp.RELICS.clear();
+		PatchyPatch.RELICS.clear();
+		ArrayList<PatchyTrigger> l = get().collect(MiscMethods.MISC.toArrayList());
+		l.stream().filter(r -> r instanceof PatchyPatchUp).forEach(r -> PatchyPatchUp.RELICS.add((PatchyPatchUp) r));
+		l.stream().filter(r -> r instanceof PatchyPatch).forEach(r -> PatchyPatch.RELICS.add((PatchyPatch) r));
+		l.clear();
+		CURRENT[0] = (PatchyPatchUp.RELICS.isEmpty() ? PatchyPatch.RELICS : PatchyPatchUp.RELICS).stream().findFirst()
+				.orElse(null);
 	}
 	
 	public static boolean valid() {
