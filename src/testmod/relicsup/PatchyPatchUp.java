@@ -18,7 +18,7 @@ public class PatchyPatchUp extends AbstractUpgradedRelic implements PatchyTrigge
 			this.act = true;
 		}
 		if (this.isActive) {
-			LIST.add(this);
+			CURRENT[0] = this;
 		}
 	}
 	

@@ -16,8 +16,8 @@ public class PatchyPatch extends AbstractTestRelic implements PatchyTrigger {
 			MAP.clear();
 			this.act = true;
 		}
-		if (this.isActive) {
-			LIST.add(this);
+		if (this.isActive && !(CURRENT[0] instanceof PatchyPatchUp)) {
+			CURRENT[0] = this;
 		}
 	}
 	

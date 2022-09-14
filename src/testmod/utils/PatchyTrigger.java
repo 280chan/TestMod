@@ -1,35 +1,31 @@
 package testmod.utils;
 
-import java.util.ArrayList;
-
-import testmod.relics.AbstractTestRelic;
+import java.util.stream.Stream;
+import testmod.relicsup.PatchyPatchUp;
 
 public interface PatchyTrigger {
-	public static final ArrayList<PatchyTrigger> LIST = new ArrayList<PatchyTrigger>();
-	public static final PatchyTrigger PT = new PatchyTrigger() {
-		@Override
-		public void realAttack(String patch) {
-		}
-	};
+	public static final PatchyTrigger[] CURRENT = new PatchyTrigger[1];
+	
+	public static Stream<PatchyTrigger> get() {
+		return MiscMethods.MISC.p().relics.stream().filter(r -> r instanceof PatchyTrigger).map(r -> (PatchyTrigger) r);
+	}
 	
 	public static void load() {
-		LIST.clear();
-		MiscMethods.MISC.p().relics.stream().filter(r -> r instanceof PatchyTrigger && ((AbstractTestRelic) r).isActive)
-				.forEach(r -> LIST.add((PatchyTrigger) r));
+		CURRENT[0] = get().findFirst().orElse(null);
+		if (CURRENT[0] instanceof PatchyPatchUp)
+			return;
+		CURRENT[0] = get().filter(r -> r instanceof PatchyPatchUp).findFirst().orElse(CURRENT[0]);
 	}
 	
 	public static boolean valid() {
-		return !LIST.isEmpty();
+		return CURRENT[0] != null;
 	}
 	
-	default void patchAttack(String patch) {
+	public static void patchAttack(String patch) {
 		if (MiscMethods.MISC.stackTrace().filter(e -> PatchyTrigger.class.getCanonicalName().equals(e.getClassName())
 				&& "patchAttack".equals(e.getMethodName())).count() > 1)
 			return;
-		if (MiscMethods.MISC.p() == null || !MiscMethods.MISC.inCombat()
-				|| MiscMethods.MISC.p().relics.stream().filter(r -> r instanceof PatchyTrigger).count() == 0)
-			return;
-		LIST.forEach(r -> r.realAttack(patch));
+		CURRENT[0].realAttack(patch);
 	}
 	
 	void realAttack(String patch);
