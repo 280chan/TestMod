@@ -1,13 +1,9 @@
 package testmod.patches;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
-
-import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.Patcher;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
@@ -37,15 +33,6 @@ public class PatchyPatchPatch implements MiscMethods {
 	public static final String AD = AbstractDungeon.class.getName();
 	public static final String RP = RoomPhase.class.getName();
 	public static final String PT = PatchyTrigger.class.getName();
-	private static final ArrayList<URL> JAR_URL = new ArrayList<URL>();
-	private static final String[] EXCEPTION_MOD_ID = { "force-key", "widepotions" };
-	
-	static {
-		if (Loader.MODINFOS != null)
-			Stream.of(Loader.MODINFOS)
-					.filter(i -> i != null && i.ID != null && Stream.of(EXCEPTION_MOD_ID).anyMatch(i.ID::equals))
-					.forEach(i -> JAR_URL.add(i.jarURL));
-	}
 	
 	public static String get(String name) {
 		String tmp = "{if(" + CCG + ".dungeon != null && " + AD + ".player != null && " + AD;
@@ -57,7 +44,7 @@ public class PatchyPatchPatch implements MiscMethods {
 	public static void Raw(CtBehavior ctBehavior) {
 		ClassPool pool = ctBehavior.getDeclaringClass().getClassPool();
 		Patcher.annotationDBMap.forEach((key, db) -> {
-			if (JAR_URL.stream().anyMatch(key::equals) || db == null)
+			if (db == null)
 				return;
 			ArrayList<String> patchClasses = new ArrayList<String>();
 			
@@ -73,14 +60,18 @@ public class PatchyPatchPatch implements MiscMethods {
 			patchClasses.stream().distinct().filter(cn -> cn != null).forEach(className -> {
 				try {
 					CtClass ctPatchClass = pool.get(className);
-					Stream.of(ctPatchClass.getDeclaredMethods()).filter(i -> isPatch(i)).forEach(m -> {
+					if (ctPatchClass.getAnnotations() != null && Arrays.stream(ctPatchClass.getAnnotations())
+							.anyMatch(a -> a.toString().contains("kotlin"))) {
+						return;
+					}
+					Arrays.stream(ctPatchClass.getDeclaredMethods()).filter(i -> isPatch(i)).forEach(m -> {
 						try {
 							m.insertBefore(get(m.getLongName()));
 						} catch (CannotCompileException e) {
 							e.printStackTrace();
 						}
 					});
-				} catch (NotFoundException e1) {
+				} catch (NotFoundException | ClassNotFoundException e1) {
 					e1.printStackTrace();
 				}
 			});
