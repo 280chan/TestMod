@@ -20,6 +20,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
+import basemod.patches.com.megacrit.cardcrawl.cards.AbstractCard.MultiCardPreview;
 import testmod.mymod.TestMod;
 import testmod.screens.TestBoxRelicSelectScreen;
 import testmod.utils.AdvanceClickableRelic;
@@ -68,8 +69,8 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		super.update();
 		if (!this.invalidFloor() && !cardSelected) {
 			if (AbstractDungeon.gridSelectScreen.selectedCards.size() == 1) {
-				AbstractDungeon.effectList
-						.add(new ShowCardAndObtainEffect(AbstractDungeon.gridSelectScreen.selectedCards.get(0),
+				AbstractDungeon.effectList.add(
+						new ShowCardAndObtainEffect(AbstractDungeon.gridSelectScreen.selectedCards.get(0).makeCopy(),
 								Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
 			} else if (AbstractDungeon.screen != pre) {
 				return;
@@ -77,6 +78,14 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 			remove = cardSelected = true;
 			AbstractDungeon.getCurrRoom().phase = phase;
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
+			AbstractDungeon.gridSelectScreen.targetGroup.group.forEach(c -> {
+				if (MultiCardPreview.multiCardPreview.get(c) != null) {
+					MultiCardPreview.clear(c);
+				} else {
+					c.cardsToPreview = null;
+				}
+			});
+			AbstractDungeon.gridSelectScreen.targetGroup.group.clear();
 		}
 	}
 	
@@ -118,14 +127,29 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		AbstractDungeon.getCurrRoom().phase = RoomPhase.INCOMPLETE;
 		this.cardSelected = false;
 		CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
-		g.group = TestMod.CARDS.stream().collect(this.toArrayList());
+		g.group = TestMod.CARDS.stream().map(c -> c.makeCopy()).collect(this.toArrayList());
 		Collections.shuffle(g.group, this.rng);
 		AbstractCard c = this.priority();
 		Predicate<AbstractCard> p = a -> c == null || !a.cardID.equals(c.cardID);
-		g.group = g.group.stream().filter(p).limit(c != null ? 4 : 5).collect(this.toArrayList());
+		g.group = g.group.stream().filter(p).limit(c != null ? 2 : 3).collect(this.toArrayList());
 		if (c != null)
 			g.group.add(0, c);
 		g.group.forEach(this::markAsSeen);
+		g.group.forEach(a -> {
+			ArrayList<AbstractCard> tmp = MultiCardPreview.multiCardPreview.get(a);
+			if (tmp != null && !tmp.isEmpty()) {
+				tmp.add(0, a.makeCopy());
+				tmp.get(0).upgrade();
+			} else if (a.cardsToPreview == null) {
+				a.cardsToPreview = a.makeCopy();
+				a.cardsToPreview.upgrade();
+			} else {
+				AbstractCard pre = a.makeCopy();
+				pre.upgrade();
+				MultiCardPreview.add(a, pre, a.cardsToPreview);
+				a.cardsToPreview = null;
+			}
+		});
 		AbstractDungeon.gridSelectScreen.open(g, 1, this.checkFoolsDay() ? UI.TEXT[1] : UI.TEXT[4], false, false, true,
 				false);
 		AbstractDungeon.overlayMenu.cancelButton.show(UI.TEXT[5]);
