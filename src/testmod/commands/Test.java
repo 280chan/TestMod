@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.powers.watcher.NoSkillsPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.LandingSound;
 
@@ -28,7 +29,7 @@ public class Test extends TestCommand {
 			cmdHelp();
 			return;
 		}
-		TestMod.info("升级遗物数量: " + TestMod.UP_RELICS.size());
+		p().powers.add(new NoSkillsPower(p()));
 	}
 
 	private static void cmdHelp() {

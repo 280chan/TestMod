@@ -34,7 +34,7 @@ public class PrudencePatch {
 	}
 	
 	public static boolean canPlay(AbstractCard c) {
-		return (hasRelic() && hasEnoughEnergy(c)) || (hasUp() && !PrudenceUp.CARDS.contains(c));
+		return (hasRelic() && hasEnoughEnergy(c)) || (hasUp() && (hasEnoughEnergy(c) || !PrudenceUp.CARDS.contains(c)));
 	}
 	
 	private static boolean hasEnoughEnergy(AbstractCard c) {
