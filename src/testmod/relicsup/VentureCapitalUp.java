@@ -8,6 +8,10 @@ public class VentureCapitalUp extends AbstractUpgradedRelic implements CounterKe
 	private boolean lock = false;
 	private static final int LIMIT = 1999999900;
 	
+	public static boolean lock() {
+		return MISC.relicStream(VentureCapitalUp.class).anyMatch(r -> r.lock);
+	}
+	
 	public String getUpdatedDescription() {
 		return this.counter < 1 ? DESCRIPTIONS[0]
 				: DESCRIPTIONS[0] + DESCRIPTIONS[1] + goldRatePercent() + DESCRIPTIONS[2];

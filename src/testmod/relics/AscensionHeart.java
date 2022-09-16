@@ -25,13 +25,14 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import testmod.mymod.TestMod;
 import testmod.powers.DefenceDownPower;
 import testmod.powers.EventHalfDamagePower;
+import testmod.relicsup.VentureCapitalUp;
 import testmod.utils.Festival;
 
 public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRelic {
 	public static final String SAVE_SIZE = "AHRevivedpeak";
 	private static final String SAVE_NAME = "AHRevived";
 	private boolean revived = false;
-	private static boolean looping = false;
+	public static boolean looping = false;
 	private static String desc27 = " Ethereal.";
 	private static int offset = 0;
 	private static int peak = 0;
@@ -154,7 +155,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	}
 	
 	public void onSpendGold() {
-		if (this.isActive && checkLevel(16) && !looping) {
+		if (this.isActive && checkLevel(16) && !looping && !VentureCapitalUp.lock()) {
 			looping = true;
 			p().gainGold((int) (10 * relicStream(AscensionHeart.class).count()));
 		}

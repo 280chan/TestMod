@@ -30,13 +30,13 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import testmod.mymod.TestMod;
 import testmod.powers.AbstractTestPower;
+import testmod.relics.AscensionHeart;
 import testmod.utils.Festival;
 
 public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerDeathRelic {
 	public static final String SAVE_SIZE = "AHUpRevivedpeak";
 	private static final String SAVE_NAME = "AHUpRevived";
 	private boolean revived = false;
-	private static boolean looping = false;
 	private static String desc27 = " Ethereal.";
 	private static int offset = 0;
 	private static int peak = 0;
@@ -161,11 +161,11 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 	}
 	
 	public void onSpendGold() {
-		if (this.isActive && checkLevel(16) && !looping) {
-			looping = true;
+		if (this.isActive && checkLevel(16) && !AscensionHeart.looping && !VentureCapitalUp.lock()) {
+			AscensionHeart.looping = true;
 			p().gainGold((int) (10 * relicStream(AscensionHeartUp.class).count()));
 		}
-		looping = false;
+		AscensionHeart.looping = false;
 	}
 	
 	public void onEquip() {
