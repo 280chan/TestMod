@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
-
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
@@ -78,13 +75,7 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 			remove = cardSelected = true;
 			AbstractDungeon.getCurrRoom().phase = phase;
 			AbstractDungeon.gridSelectScreen.selectedCards.clear();
-			AbstractDungeon.gridSelectScreen.targetGroup.group.forEach(c -> {
-				if (MultiCardPreview.multiCardPreview.get(c) != null) {
-					MultiCardPreview.clear(c);
-				} else {
-					c.cardsToPreview = null;
-				}
-			});
+			AbstractDungeon.gridSelectScreen.targetGroup.group.forEach(TestBox::removePreview);
 			AbstractDungeon.gridSelectScreen.targetGroup.group.clear();
 		}
 	}
@@ -114,6 +105,30 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		this.counter = -2;
 	}
 	
+	public static void removePreview(AbstractCard c) {
+		if (MultiCardPreview.multiCardPreview.get(c) != null) {
+			MultiCardPreview.clear(c);
+		} else {
+			c.cardsToPreview = null;
+		}
+	}
+	
+	public static void createPreview(AbstractCard c) {
+		ArrayList<AbstractCard> tmp = MultiCardPreview.multiCardPreview.get(c);
+		if (tmp != null && !tmp.isEmpty()) {
+			tmp.add(0, c.makeCopy());
+			tmp.get(0).upgrade();
+		} else if (c.cardsToPreview == null) {
+			c.cardsToPreview = c.makeCopy();
+			c.cardsToPreview.upgrade();
+		} else {
+			AbstractCard pre = c.makeCopy();
+			pre.upgrade();
+			MultiCardPreview.add(c, pre, c.cardsToPreview);
+			c.cardsToPreview = null;
+		}
+	}
+	
 	private void card() {
 		if (this.counter == -2 || this.invalidFloor())
 			return;
@@ -135,21 +150,7 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 		if (c != null)
 			g.group.add(0, c);
 		g.group.forEach(this::markAsSeen);
-		g.group.forEach(a -> {
-			ArrayList<AbstractCard> tmp = MultiCardPreview.multiCardPreview.get(a);
-			if (tmp != null && !tmp.isEmpty()) {
-				tmp.add(0, a.makeCopy());
-				tmp.get(0).upgrade();
-			} else if (a.cardsToPreview == null) {
-				a.cardsToPreview = a.makeCopy();
-				a.cardsToPreview.upgrade();
-			} else {
-				AbstractCard pre = a.makeCopy();
-				pre.upgrade();
-				MultiCardPreview.add(a, pre, a.cardsToPreview);
-				a.cardsToPreview = null;
-			}
-		});
+		g.group.forEach(TestBox::createPreview);
 		AbstractDungeon.gridSelectScreen.open(g, 1, this.checkFoolsDay() ? UI.TEXT[1] : UI.TEXT[4], false, false, true,
 				false);
 		AbstractDungeon.overlayMenu.cancelButton.show(UI.TEXT[5]);
@@ -167,7 +168,7 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 	
 	private AbstractCard priority() {
 		if (!Settings.seedSet) {
-			if (Stream.of("1023dba2e158f257fba87f85d932b1df69c1989dc87c14389787a681f056cc5e",
+			/*if (Stream.of("1023dba2e158f257fba87f85d932b1df69c1989dc87c14389787a681f056cc5e",
 						"c870968e2499df3ec4a1e386c21f19628af4cef6e5aaa8aa6da2071ab1fba5e4",
 						"a4e624d686e03ed2767c0abd85c14426b0b1157d2ce81d27bb4fe4f6f01d688a",
 						"342840f6340d15691f4be1c0e0157fb0983992c4f436c18267d41dbe6bb74a2")
@@ -175,10 +176,10 @@ public class TestBox extends AbstractTestRelic implements AdvanceClickableRelic<
 				Object o = TestMod.checkLatest(false);
 				if (o != null)
 					return (AbstractCard) o;
-			}
+			}*/
 			ArrayList<AbstractCard> l = TestMod.CARDS.stream().map(c -> CardLibrary.getCard(c.cardID))
 					.filter(c -> !c.isSeen).map(c -> (AbstractCard) c).collect(toArrayList());
-			return l.size() == 0 ? null : TestMod.randomItem(l, this.rng);
+			return Loader.isModLoaded("chronoMods") || l.size() == 0 ? null : TestMod.randomItem(l, this.rng);
 		}
 		return null;
 	}

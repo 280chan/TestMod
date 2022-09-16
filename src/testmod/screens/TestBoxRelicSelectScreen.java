@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.modthespire.Loader;
@@ -50,7 +49,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 		// TODO 圣诞
 		if (month == 12 && date > 20)
 			return (AbstractTestRelic) ChristmasMod.randomRelic();
-		Predicate<String> check = s -> TestMod.checkHash(CardCrawlGame.playerName, s);
+		/*Predicate<String> check = s -> TestMod.checkHash(CardCrawlGame.playerName, s);
 		if (!Settings.seedSet) {
 			if (Stream.of("1023dba2e158f257fba87f85d932b1df69c1989dc87c14389787a681f056cc5e",
 						"c870968e2499df3ec4a1e386c21f19628af4cef6e5aaa8aa6da2071ab1fba5e4",
@@ -69,10 +68,10 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 			Object o = TestMod.checkLatest(true);
 			if (o != null)
 				return (AbstractTestRelic) o;
-		}
+		}*/
 		ArrayList<AbstractTestRelic> l = TestMod.RELICS.stream().map(r -> RelicLibrary.getRelic(r.relicId))
 				.filter(r -> !r.isSeen).map(r -> (AbstractTestRelic) r).collect(toArrayList());
-		return l.size() == 0 ? null : TestMod.randomItem(l, this.rng);
+		return Loader.isModLoaded("chronoMods") || l.size() == 0 ? null : TestMod.randomItem(l, this.rng);
 	}
 
 	private boolean rollUpgrade(AbstractRelic r) {
@@ -89,12 +88,12 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	private void addAndMarkAsSeen(AbstractRelic r) {
 		this.markAsSeen(r);
 		AbstractRelic tmp;
-		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.upgradable(r) && this.rollUpgrade(r)) {
+		if (Loader.isModLoaded("RelicUpgradeLib") && this.rollUpgrade(r)) {
 			tmp = AllUpgradeRelic.getUpgrade(r);
 			original.put(tmp.relicId, r);
 			this.relics.add(tmp);
 			return;
-		} else if (valid() && ((AbstractTestRelic) r).canUpgrade() && this.rollUpgrade(r)) {
+		} else if (valid() && this.rollUpgrade(r)) {
 			tmp = ((AbstractTestRelic) r).upgrade();
 			original.put(tmp.relicId, r);
 			this.relics.add(tmp);
