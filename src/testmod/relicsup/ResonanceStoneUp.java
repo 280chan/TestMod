@@ -11,9 +11,10 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import basemod.Pair;
 import testmod.utils.CounterKeeper;
+import testmod.utils.ResonanceTrigger;
 
-public class ResonanceStoneUp extends AbstractUpgradedRelic implements CounterKeeper {
-	private static HashMap<AbstractCard, Integer> previous = new HashMap<AbstractCard, Integer>();
+public class ResonanceStoneUp extends AbstractUpgradedRelic implements ResonanceTrigger, CounterKeeper {
+	public static HashMap<AbstractCard, Integer> previous = new HashMap<AbstractCard, Integer>();
 	boolean init = true;
 	
 	public ResonanceStoneUp() {
@@ -38,13 +39,13 @@ public class ResonanceStoneUp extends AbstractUpgradedRelic implements CounterKe
 		} else {
 			ArrayList<Pair<AbstractCard, Integer>> upgradeTimes = previous.entrySet().stream().filter(e -> delta(e) > 0)
 					.map(split(e -> e.getKey(), this::delta)).collect(toArrayList());
-			
-			this.relicStream(ResonanceStoneUp.class).forEach(r -> r.doSth(upgradeTimes));
+
+			stream().forEach(r -> r.doSth(upgradeTimes));
 			previous.entrySet().stream().filter(e -> delta(e) > 0).forEach(e -> e.setValue(e.getKey().timesUpgraded));
 		}
 	}
 	
-	private void doSth(ArrayList<Pair<AbstractCard, Integer>> upgradeTimes) {
+	public void doSth(ArrayList<Pair<AbstractCard, Integer>> upgradeTimes) {
 		int tmp = this.counter;
 		upgradeTimes.forEach(consumer(this::upgrade));
 		if (this.counter <= tmp)

@@ -9,9 +9,11 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import basemod.Pair;
+import testmod.relicsup.ResonanceStoneUp;
+import testmod.utils.ResonanceTrigger;
 
-public class ResonanceStone extends AbstractTestRelic {
-	private static HashMap<AbstractCard, Integer> previous = new HashMap<AbstractCard, Integer>();
+public class ResonanceStone extends AbstractTestRelic implements ResonanceTrigger {
+	private static HashMap<AbstractCard, Integer> previous = ResonanceStoneUp.previous;
 	boolean init = true;
 	
 	public ResonanceStone() {
@@ -19,7 +21,7 @@ public class ResonanceStone extends AbstractTestRelic {
 	}
 	
 	public void onMasterDeckChange() {
-		if (!this.isActive)
+		if (!this.isActive || this.relicStream(ResonanceStoneUp.class).count() > 0)
 			return;
 		previous.keySet().retainAll(p().masterDeck.group);
 		p().masterDeck.group.forEach(c -> previous.putIfAbsent(c, c.timesUpgraded));
@@ -27,7 +29,8 @@ public class ResonanceStone extends AbstractTestRelic {
 	
 	public void update() {
 		super.update();
-		if (!this.isActive || !this.isObtained || p() == null || p().masterDeck == null)
+		if (!this.isActive || !this.isObtained || p() == null || p().masterDeck == null
+				|| this.relicStream(ResonanceStoneUp.class).count() > 0)
 			return;
 		if (init) {
 			previous.clear();
@@ -36,13 +39,12 @@ public class ResonanceStone extends AbstractTestRelic {
 		} else {
 			ArrayList<Pair<AbstractCard, Integer>> upgradeTimes = previous.entrySet().stream().filter(e -> delta(e) > 0)
 					.map(split(e -> e.getKey(), this::delta)).collect(toArrayList());
-			
-			this.relicStream(ResonanceStone.class).forEach(r -> r.doSth(upgradeTimes));
+			stream().forEach(r -> r.doSth(upgradeTimes));
 			previous.entrySet().stream().filter(e -> delta(e) > 0).forEach(e -> e.setValue(e.getKey().timesUpgraded));
 		}
 	}
 	
-	private void doSth(ArrayList<Pair<AbstractCard, Integer>> upgradeTimes) {
+	public void doSth(ArrayList<Pair<AbstractCard, Integer>> upgradeTimes) {
 		int tmp = this.counter;
 		upgradeTimes.forEach(consumer(this::upgrade));
 		if (this.counter <= tmp)
