@@ -9,10 +9,12 @@ import java.util.stream.Stream;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.watcher.NoSkillsPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.LandingSound;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 
 import basemod.ReflectionHacks;
 import halloweenMod.mymod.HalloweenMod;
@@ -29,7 +31,19 @@ public class Test extends TestCommand {
 			cmdHelp();
 			return;
 		}
-		p().powers.add(new NoSkillsPower(p()));
+		
+		print("chronoMods.bingo.SendBingoPatches.bingoExhaust");
+		print("chronoMods.bingo.SendBingoPatches$bingoExhaust");
+	}
+	
+	private static void print(String cls) {
+		try {
+			Class<?> c = Class.forName(cls);
+			ReflectionHacks.privateStaticMethod(c, "Postfix", AbstractDungeon.class)
+					.invoke(new Object[] { CardCrawlGame.dungeon });
+		} catch (ClassNotFoundException e) {
+			TestMod.info("找不到类" + cls);
+		}
 	}
 
 	private static void cmdHelp() {

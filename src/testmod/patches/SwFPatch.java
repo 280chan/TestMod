@@ -49,7 +49,7 @@ public class SwFPatch {
 		}
 	}
 	
-	@SpirePatch(cls = "chronoMods.bingo.SendBingoPatches.bingoExhaust", method = "Postfix", optional = true)
+	@SpirePatch(cls = "chronoMods.bingo.SendBingoPatches$bingoExhaust", method = "Postfix", optional = true)
 	public static class BingoExhaustPatch {
 		public static int exhaust = 0;
 		

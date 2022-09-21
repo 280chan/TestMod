@@ -303,15 +303,15 @@ public class AllUpgradeRelic implements MiscMethods {
 			}
 		}
 
-		@SpirePatch(cls = "chronoMods.coop.CoopKeySharing.enableBlueKeyChest", method = "Insert", optional = true)
+		@SpirePatch(cls = "chronoMods.coop.CoopKeySharing$enableBlueKeyChest", method = "Insert", optional = true)
 		public static class StupidSwfSapphireKeyPatch {
 			@SpirePrefixPatch
-			public static SpireReturn<Void> Prefix() {
+			public static SpireReturn<Void> Prefix(AbstractChest r, boolean bossChest) {
 				return mySapphireAdded && !(mySapphireAdded = false) ? SpireReturn.Return() : SpireReturn.Continue();
 			}
 			
 			@SpireInsertPatch(locator = Locator.class)
-			public static void Insert(RewardItem r) {
+			public static void Insert(AbstractChest r, boolean bossChest) {
 				sapphireAdded = true;
 			}
 			
@@ -323,7 +323,7 @@ public class AllUpgradeRelic implements MiscMethods {
 			}
 		}
 
-		@SpirePatch(cls = "chronoMods.coop.CoopKeySharing.updateGreenKeyReward", method = "Insert", optional = true)
+		@SpirePatch(cls = "chronoMods.coop.CoopKeySharing$updateGreenKeyReward", method = "Insert", optional = true)
 		public static class StupidSwfEmeraldKeyClaimPatch {
 			@SpireInsertPatch(locator = Locator.class)
 			public static SpireReturn<SpireReturn<Boolean>> Insert(RewardItem r) {
