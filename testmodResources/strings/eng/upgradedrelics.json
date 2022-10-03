@@ -642,7 +642,7 @@
 	"testmod-DemonSummonUp":{
 		"NAME": "Demon Summon+",
 		"FLAVOR": "The author is lazy, nothing has been written.",
-		"DESCRIPTIONS":["At the start of each turn, for each kind of buff you have, gain #b1 #yDexterity. At the start of each turn, halves your #yDexterity. At the first turn each combat, gain #b1 #yDemon #yForm, for each turn starts after first turn, gain #bTurn #bCount #yDemon #ySummon of tier #bTurn #bCount. Tier #bn #yDemon #ySummon gives you its amount #yDemon #ySummon of tier one lower, tier #b2 #yDemon #ySummon gives you #yDemon #yForm instead of #yDemon #ySummon."]
+		"DESCRIPTIONS":["For each combat, whenever you gain a #gBuff or #rDebuff for the first time, gain #b1 #yDexterity. At the first turn each combat, gain #b1 #yDemon #yForm, for each turn starts after first turn, gain #bTurn #bCount #yDemon #ySummon of tier #bTurn #bCount. Tier #bn #yDemon #ySummon gives you its amount #yDemon #ySummon of tier one lower, tier #b2 #yDemon #ySummon gives you #yDemon #yForm instead of #yDemon #ySummon."]
 	},
 	
 	"testmod-ReverseUp":{
