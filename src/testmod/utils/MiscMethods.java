@@ -1043,8 +1043,7 @@ public interface MiscMethods {
 		public static void nextKey(Random rng) {
 			if (COLOR.isEmpty())
 				Stream.of(ObtainKeyEffect.KeyColor.values()).forEach(COLOR::add);
-			Collections.shuffle(COLOR, new java.util.Random(rng.randomLong()));
-			AbstractDungeon.topLevelEffectsQueue.add(new ObtainKeyEffect(COLOR.get(0)));
+			AbstractDungeon.topLevelEffectsQueue.add(new ObtainKeyEffect(TestMod.randomItem(COLOR, rng)));
 		}
 	}
 	
