@@ -88,7 +88,7 @@ public class PhasePocketWatchUp extends AbstractUpgradedRelic implements Clickab
 	}
 
 	private class PhasePocketWatchOptionCardUp extends AbstractTestCard {
-		private static final String thisID = "PhasePocketWatch+OptionCard";
+		private static final String thisID = "PhasePocketWatchOptionCardUp";
 
 		public PhasePocketWatchOptionCardUp(int choice, int dmg) {
 			super(thisID, Strings(thisID).NAME + Strings(thisID).EXTENDED_DESCRIPTION[choice + 2], -2, "",
