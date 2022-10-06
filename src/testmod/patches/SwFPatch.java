@@ -13,7 +13,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import basemod.DevConsole;
@@ -75,9 +74,8 @@ public class SwFPatch {
 		
 		private static class Locator extends SpireInsertLocator {
 			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
-				Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractPlayer.class, "player");
-				int[] raw = LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
-				return new int[] { raw[0] };
+				Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractDungeon.class, "player");
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 			}
 		}
 	}
