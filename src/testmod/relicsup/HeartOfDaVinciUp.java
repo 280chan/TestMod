@@ -9,6 +9,8 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.evacipated.cardcrawl.modthespire.Loader;
+import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
@@ -21,6 +23,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import basemod.BaseMod;
+import basemod.ReflectionHacks;
 import testmod.actions.DaVinciLibraryAction;
 import testmod.mymod.TestMod;
 import testmod.relics.HeartOfDaVinci;
@@ -64,6 +67,14 @@ public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMetho
 		Stream.of(RelicLibrary.redList, RelicLibrary.greenList, RelicLibrary.blueList, RelicLibrary.whiteList)
 				.forEach(ADDED::addAll);
 		(map = BaseMod.getAllCustomRelics()).values().stream().map(HashMap::values).forEach(ADDED::addAll);
+		if (Loader.isModLoaded("RelicFilterMod")) {
+			try {
+				SpireConfig cfg = ReflectionHacks.getPrivateStatic(Class.forName("mymod.RelicFilterMod"), "config");
+				ADDED.removeIf(r -> cfg.getBool(r.relicId));
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 		ADDED.forEach(this::addToRelicPool);
 	}
 	
