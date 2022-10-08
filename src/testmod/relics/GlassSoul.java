@@ -69,9 +69,12 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 	}
 	
 	public void onUnequip() {
-		if (this.isActive && this.relicStream(GlassSoulUp.class).count() == 0) {
-			RELICS.clear();
-			this.relicStream(GlassSoul.class).filter(r -> !r.isActive).limit(1).forEach(r -> r.counter = counter);
+		if (this.relicStream(GlassSoulUp.class).count() == 0
+				&& !this.hasStack("relicupgradelib.ui.RelicUpgradePopup", "replaceRelic")) {
+			if (this.relicStream(GlassSoul.class).count() == 1)
+				RELICS.clear();
+			else if (this.isActive)
+				this.relicStream(GlassSoul.class).filter(r -> !r.isActive).limit(1).forEach(r -> r.counter = counter);
 		}
     }
 	

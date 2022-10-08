@@ -16,6 +16,11 @@ public class GlassSoulUp extends AbstractUpgradedRelic
 	public static final int PRICE_RATE = 10, COUNTER_RATE = 1;
 	private boolean damaged = false;
 	
+	public void run(AbstractRelic r, AbstractUpgradedRelic u) {
+		CounterKeeper.super.run(r, u);
+		this.tryPulse(false);
+	}
+	
 	public void onEquip() {
 		TestMod.setActivity(this);
 		this.counter = 0;
@@ -48,6 +53,7 @@ public class GlassSoulUp extends AbstractUpgradedRelic
 
 	@Override
 	public void onRightClick() {
+		this.print(RELICS);
 		if (this.isActive && !RELICS.isEmpty() && !inCombat() && RELICS.stream().anyMatch(this::canBuy))
 			new GlassSoulSelectScreen(RELICS, this).open();
 		else
@@ -63,8 +69,10 @@ public class GlassSoulUp extends AbstractUpgradedRelic
 	public void onUnequip() {
 		if (!this.isActive)
 			return;
-		RELICS.clear();
-		this.relicStream(GlassSoulUp.class).filter(r -> !r.isActive).limit(1).forEach(r -> r.counter = counter);
+		if (this.relicStream().filter(r -> r instanceof GlassSoulPulser).count() == 1)
+			RELICS.clear();
+		if (this.relicStream(GlassSoulUp.class).count() > 1)
+			this.relicStream(GlassSoulUp.class).filter(r -> !r.isActive).limit(1).forEach(r -> r.counter = counter);
     }
 	
 	public void atPreBattle() {

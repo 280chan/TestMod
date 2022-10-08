@@ -1,6 +1,7 @@
 package testmod.screens;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -19,6 +20,7 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 	private static final UIStrings UI = MISC.uiString();
 	private ArrayList<String> list;
 	private AbstractRelic r;
+	private HashMap<AbstractRelic, String> original = new HashMap<AbstractRelic, String>();
 	
 	public GlassSoulSelectScreen(ArrayList<String> relics, AbstractRelic r) {
 		super(null, true, true);
@@ -29,7 +31,15 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 
 	@Override
 	protected void addRelics() {
-		this.list.stream().map(RelicLibrary::getRelic).map(r -> tryUpgrade(r.makeCopy())).forEach(this.relics::add);
+		if (this.r instanceof GlassSoulUp) {
+			this.list.stream().map(split(s -> tryUpgrade(RelicLibrary.getRelic(s).makeCopy()), t()))
+					.forEach(consumer((r, s) -> {
+						this.original.put(r, s);
+						this.relics.add(r);
+					}));
+		} else {
+			this.list.stream().map(RelicLibrary::getRelic).map(r -> r.makeCopy()).forEach(this.relics::add);
+		}
 	}
 
 	public static void playCantBuySfx() {
@@ -66,17 +76,20 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 		} else {
 			p().loseGold(price(this.selectedRelic));
 		}
-		this.list.remove(this.selectedRelic.relicId);
+		this.list.remove(this.r instanceof GlassSoulUp ? original.get(this.selectedRelic) : this.selectedRelic.relicId);
 		if (AbstractDungeon.currMapNode == null) {
 			this.selectedRelic.instantObtain();
 		} else {
 			AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2,
 					this.selectedRelic);
 		}
+		this.afterCanceled();
 	}
 
 	@Override
 	protected void afterCanceled() {
+		this.relics.clear();
+		this.original.clear();
 	}
 	
 	private int counterRate() {
@@ -93,7 +106,7 @@ public class GlassSoulSelectScreen extends RelicSelectScreen implements MiscMeth
 	
 	@Override
 	protected String categoryOf(AbstractRelic r) {
-		return this.r.counter >= counterRate() * amountRate(r) ? amountRate(r) + "" : price(r) + "g";
+		return this.r.counter >= counterRate() * amountRate(r) ? counterRate() * amountRate(r) + "" : price(r) + "g";
 	}
 
 	@Override
