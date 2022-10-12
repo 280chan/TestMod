@@ -72,13 +72,14 @@ import testmod.relicsup.PhasePocketWatchUp;
 import testmod.relicsup.PortablePortalUp;
 import testmod.relicsup.TestBoxUp;
 import testmod.relicsup.TimeTravelerUp;
+import testmod.relicsup.PortablePortalUp.SkipCoopBossBlightPatch;
 import testmod.screens.RelicSelectScreen;
 import testmod.utils.*;
 import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 10/7/2022
+ * @version 10/12/2022
  * @since 6/17/2018
  */
 
@@ -458,6 +459,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			}
 			ManifoldPotion.clear();
 			PortableAltar.reset();
+			PortablePortalUp.resetCoop();
 		}
 	}
 
