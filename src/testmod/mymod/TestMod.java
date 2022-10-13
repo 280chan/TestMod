@@ -79,7 +79,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 10/12/2022
+ * @version 10/13/2022
  * @since 6/17/2018
  */
 
@@ -588,8 +588,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 					AbstractUpdatableCard.TO_UPDATE.clear();
 				}
 			}
-
-			this.turnSkipperUpdate();
 			
 			BoxForYourself.updateThis();
 			SuperconductorNoEnergyPower.UpdateCurrentInstance();

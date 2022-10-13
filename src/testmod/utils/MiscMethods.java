@@ -6,7 +6,12 @@ import java.util.stream.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.Loader;
+import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
+import com.evacipated.cardcrawl.modthespire.lib.Matcher;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.actions.*;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.common.*;
@@ -17,33 +22,28 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.daily.mods.Careless;
-import com.megacrit.cardcrawl.daily.mods.ControlledChaos;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ModHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
-import com.megacrit.cardcrawl.ui.buttons.EndTurnButton;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
-import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.ObtainKeyEffect;
-import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
-import com.megacrit.cardcrawl.vfx.combat.TimeWarpTurnEndEffect;
 import basemod.BaseMod;
 import basemod.Pair;
 import basemod.ReflectionHacks;
 import javassist.CannotCompileException;
+import javassist.CtBehavior;
 import javassist.NotFoundException;
 import javassist.expr.ExprEditor;
 import javassist.expr.Instanceof;
+import javassist.expr.MethodCall;
 import testmod.actions.AbstractXCostAction;
 import testmod.mymod.TestMod;
 import testmod.powers.AbstractTestPower;
@@ -209,207 +209,44 @@ public interface MiscMethods {
 				.collect(toArrayList());
 	}
 	
-	default void turnSkipperStart() {
-    	TurnSkipper.start();
-    } 
+	default void turnSkipperReset() {
+		SkipMonsterIntentPatch.allow = true;
+	}
 	
-	default void turnSkipperStartByCard(AbstractCard c) {
-		TurnSkipper.startByCard(c);
+	default void skipMonsterIntent() {
+		this.addTmpActionToBot(() -> {
+			SkipMonsterIntentPatch.allow = false;
+			AbstractDungeon.actionManager.callEndTurnEarlySequence();
+		});
     }
 	
-	default void turnSkipperUpdate() {
-		TurnSkipper.updateThis();
-	}
-	
-	default void turnSkipperReset() {
-		TurnSkipper.reset();
-	}
-	
-	static class TurnSkipper {
-		private static boolean startEndingTurn = false;
-	    private static boolean endTurnQueued = false;
-	    private static boolean startMonsterTurn = false;
-		private static boolean startNextTurn = false;
-
-		private static void reset() {
-			startEndingTurn = endTurnQueued = startMonsterTurn = startNextTurn = false;
-		}
+	@SpirePatch(clz = GameActionManager.class, method = "getNextAction")
+	public static class SkipMonsterIntentPatch {
+		public static final String CLASS_NAME = SkipMonsterIntentPatch.class.getName();
+		public static boolean allow = true;
 		
-		private static boolean inProgress() {
-			return startEndingTurn || endTurnQueued || startMonsterTurn || startNextTurn;
-		}
-		
-	    public static void start() {
-	    	if (inProgress())
-				return;
-	    	MISC.addTmpActionToBot(() -> {
-				AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
-				AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
-				startEndingTurn = true;
-			});
-		}
-	    
-	    public static void startByCard(AbstractCard c) {
-	    	if (inProgress())
-	    		return;
-			start();
-			MISC.addTmpActionToBot(() -> {
-				if (!c.dontTriggerOnUseCard)
-					for (AbstractMonster monster : AbstractDungeon.getMonsters().monsters) {
-						boolean timecollector = false;
-						int tcIndex = -1;
-						for (AbstractPower p : monster.powers) {
-							if (p.ID.equals("Time Warp") && p.amount == 11) {
-								startByCardTimeWarpIssues(p);
-							}
-							if (p.ID.equals("ImpatiencePower") && p.amount == 14) {
-								p.amount = -1;
-							}
-							if (p.ID.equals("TimeCollector") && p.amount == 11) {
-								timecollector = true;
-								tcIndex = monster.powers.indexOf(p);
-							}
-						}
-						if (timecollector && tcIndex > -1) {
-							monster.powers.remove(tcIndex);
-						}
-					}
-			});
-	    }
-	    
-	    private static void startByCardTimeWarpIssues(AbstractPower p) {
-	    	p.amount = -1;
-			p.playApplyPowerSfx();
-			CardCrawlGame.sound.play("POWER_TIME_WARP", 0.05F);
-			AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GOLD, true));
-			AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
-			AbstractDungeon.getMonsters().monsters
-					.forEach(m -> addToBot(new ApplyPowerAction(m, m, new StrengthPower(m, 2), 2)));
-	    }
-	    
-	    private static void updateStartEndingTurn() {
-	    	if (!startEndingTurn)
-	    		return;
-	    	startEndingTurn = false;
-			AbstractDungeon.actionManager.cardQueue.stream().filter(i -> i.autoplayCard).forEach(i -> {
-				i.card.dontTriggerOnUseCard = true;
-				addToBot(new UseCardAction(i.card));
-			});
-	    	AbstractDungeon.actionManager.cardQueue.clear();
-	    	
-	    	MISC.p().limbo.group.forEach(c -> AbstractDungeon.effectList.add(new ExhaustCardEffect(c)));
-	    	
-	    	TestMod.info("limbo数量 = " + MISC.p().limbo.size());
-	    	MISC.p().limbo.group.clear();
-	    	MISC.p().releaseCard();
-	        // Start Ending Turn
-	        
-	        addToBot(new NewQueueCardAction());
-	        EndTurnButton etb = AbstractDungeon.overlayMenu.endTurnButton;
-	        etb.enabled = false;
-	        etb.isGlowing = false;
-	        etb.updateText(EndTurnButton.ENEMY_TURN_MSG);
-	        CardCrawlGame.sound.play("END_TURN");
-	        MISC.p().releaseCard();
-	        // EndTurnButton Effect
-	        
-	        endTurnQueued = true;
-	    }
-	    
-	    public static void updateThis() {
-	    	updateStartEndingTurn();
-	    	updateEndTurnQueued();
-			updateMonsterTurn();
-			updateStartNextTurn();
-	    }
-	    
-	    private static void updateEndTurnQueued() {
-	    	if (!AbstractDungeon.actionManager.actions.isEmpty())
-	        	return;
-			if (endTurnQueued && AbstractDungeon.actionManager.cardQueue.isEmpty()
-					&& !AbstractDungeon.actionManager.hasControl) {
-				endTurn();
-				endTurnQueued = false;
-			}
-	    }
-	    
-		private static void endTurn() {
-			AbstractPlayer p = MISC.p();
-			p.applyEndOfTurnTriggers();
-
-			addToBot(new ClearCardQueueAction());
-			addToBot(new DiscardAtEndOfTurnAction());
-			
-			MISC.combatCards().forEach(c -> c.resetAttributes());
-			if (p.hoveredCard != null)
-				p.hoveredCard.resetAttributes();
-
-			MISC.addTmpActionToBot(() -> {
-				addToBot(new EndTurnAction());
-				addToBot(new WaitAction(Settings.FAST_MODE ? 0.1F : 1.2F));
-				startMonsterTurn = true;
-			});
-		}
-	    
-	    private static void updateMonsterTurn() {
-	    	if (!AbstractDungeon.actionManager.actions.isEmpty())
-	        	return;
-	    	if (!startMonsterTurn)
-	    		return;
-	    	startMonsterTurn = false;
-			for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
-				if ((!m.isDying) && (!m.isEscaping)) {
-					if (!m.hasPower("Barricade"))
-						m.loseBlock();
-					m.applyStartOfTurnPowers();
-				}
-			}
-			startNextTurn = true;
-	    }
-	    
-	    @SuppressWarnings("deprecation")
-		private static void updateStartNextTurn() {
-	    	GameActionManager gam = AbstractDungeon.actionManager;
-	    	if (!gam.actions.isEmpty())
-	        	return;
-	    	if (!startNextTurn)
-	    		return;
-			if ((gam.turnHasEnded) && (!AbstractDungeon.getMonsters().areMonstersBasicallyDead())) {
-				startNextTurn = false;
-				AbstractDungeon.getCurrRoom().monsters.applyEndOfTurnPowers();
-				MISC.p().cardsPlayedThisTurn = 0;
-				gam.orbsChanneledThisTurn.clear();
-				if (ModHelper.isModEnabled("Careless"))
-					Careless.modAction();
-				if (ModHelper.isModEnabled("ControlledChaos")) {
-					ControlledChaos.modAction();
-					MISC.p().hand.applyPowers();
-				}
-				MISC.p().applyStartOfTurnRelics();
-				MISC.p().applyStartOfTurnPreDrawCards();
-				MISC.p().applyStartOfTurnCards();
-				MISC.p().applyStartOfTurnPowers();
-				MISC.p().applyStartOfTurnOrbs();
-				GameActionManager.turn++;
-				gam.turnHasEnded = false;
-				GameActionManager.totalDiscardedThisTurn = 0;
-				gam.cardsPlayedThisTurn.clear();
-				GameActionManager.damageReceivedThisTurn = 0;
-				if ((!MISC.p().hasPower("Barricade")) && (!MISC.p().hasPower("Blur"))) {
-					if (!MISC.p().hasRelic("Calipers")) {
-						MISC.p().loseBlock();
-					} else {
-						MISC.p().loseBlock(15);
+		public static ExprEditor Instrument() {
+			return new ExprEditor() {
+				public void edit(MethodCall mc) throws CannotCompileException {
+					if (mc.getClassName().equals(AbstractMonster.class.getName())
+							&& mc.getMethodName().equals("takeTurn")) {
+						mc.replace("if (" + CLASS_NAME + ".allow){$_ = $proceed($$);};");
 					}
 				}
-				if (!AbstractDungeon.getCurrRoom().isBattleOver) {
-					addToBot(new DrawCardAction(null, MISC.p().gameHandSize, true));
-					MISC.p().applyStartOfTurnPostDrawRelics();
-					MISC.p().applyStartOfTurnPostDrawPowers();
-					addToBot(new EnableEndTurnButtonAction());
-				}
+			};
+		}
+		
+		@SpireInsertPatch(locator = Locator.class)
+		public static void Insert(GameActionManager gam) {
+			allow = true;
+		}
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.NewExprMatcher(WaitAction.class);
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 			}
-	    }
+		}
 	}
 	
 	default void playAgain(AbstractCard card, AbstractMonster m) {

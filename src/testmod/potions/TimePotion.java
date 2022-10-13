@@ -22,7 +22,7 @@ public class TimePotion extends AbstractTestPotion implements MiscMethods {
 	}
 
 	public void use(AbstractCreature target) {
-		this.turnSkipperStart();
+		this.skipMonsterIntent();
 	}
 
 	public int getPotency(int ascensionLevel) {

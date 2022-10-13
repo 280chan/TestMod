@@ -13,7 +13,7 @@ public class EternalityOfKhronos extends AbstractTestCard {
     }
 
     public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.turnSkipperStartByCard(this);
+    	this.skipMonsterIntent();
     }
     
     public void upgrade() {

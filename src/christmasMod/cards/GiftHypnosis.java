@@ -29,7 +29,7 @@ public class GiftHypnosis extends AbstractChristmasCard implements MiscMethods {
     public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
 	    this.addToBot(new MakeTempCardInDiscardAction(new VoidCard(), this.magicNumber));
-		this.turnSkipperStartByCard(this);
+		this.skipMonsterIntent();
     }
 
     public void upgrade() {
