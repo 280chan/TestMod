@@ -10,6 +10,7 @@ import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
 import com.evacipated.cardcrawl.modthespire.lib.Matcher;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInstrumentPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.actions.*;
@@ -42,6 +43,7 @@ import javassist.CannotCompileException;
 import javassist.CtBehavior;
 import javassist.NotFoundException;
 import javassist.expr.ExprEditor;
+import javassist.expr.FieldAccess;
 import javassist.expr.Instanceof;
 import javassist.expr.MethodCall;
 import testmod.actions.AbstractXCostAction;
@@ -225,12 +227,25 @@ public interface MiscMethods {
 		public static final String CLASS_NAME = SkipMonsterIntentPatch.class.getName();
 		public static boolean allow = true;
 		
+		@SpireInstrumentPatch
 		public static ExprEditor Instrument() {
 			return new ExprEditor() {
 				public void edit(MethodCall mc) throws CannotCompileException {
 					if (mc.getClassName().equals(AbstractMonster.class.getName())
 							&& mc.getMethodName().equals("takeTurn")) {
-						mc.replace("if (" + CLASS_NAME + ".allow){$_ = $proceed($$);};");
+						mc.replace("if (" + CLASS_NAME + ".allow){$proceed($$);};");
+					}
+				}
+			};
+		}
+		
+		@SpireInstrumentPatch
+		public static ExprEditor Instrument1() {
+			return new ExprEditor() {
+				public void edit(FieldAccess fa) throws CannotCompileException {
+					if (fa.getClassName().equals(AbstractMonster.Intent.class.getName())
+							&& fa.getFieldName().equals("NONE")) {
+						fa.replace("$_ = " + CLASS_NAME + ".allow ? $proceed($$) : m.intent;");
 					}
 				}
 			};
