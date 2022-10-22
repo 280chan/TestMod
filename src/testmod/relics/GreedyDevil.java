@@ -21,7 +21,7 @@ public class GreedyDevil extends AbstractTestRelic {
 			this.INFO_MAP.put(info, target);
 			target.powers.add(new GreedyDevilPower(target));
 		}
-    }
+	}
 	
 	public void onVictory() {
 		this.INFO_MAP.clear();
@@ -57,7 +57,7 @@ public class GreedyDevil extends AbstractTestRelic {
 				TO_REMOVE.add(this);
 			}
 			return damage;
-	    }
+		}
 	}
 
 }

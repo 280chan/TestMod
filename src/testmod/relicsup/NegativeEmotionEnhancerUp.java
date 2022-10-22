@@ -11,11 +11,11 @@ public class NegativeEmotionEnhancerUp extends AbstractUpgradedRelic {
 
 	public void onEquip() {
 		this.addEnergy();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	private int countDebuff(AbstractCreature c) {
 		return (int) c.powers.stream().filter(p -> !(p instanceof InvisiblePower) && p.type == PowerType.DEBUFF).count();
@@ -27,7 +27,7 @@ public class NegativeEmotionEnhancerUp extends AbstractUpgradedRelic {
 			this.atb(new GainEnergyAction(e));
 			this.atb(new DrawCardAction(e));
 		}
-    }
+	}
 
 	public void onVictory() {
 		p().increaseMaxHp(Math.max(1, countDebuff(p())), true);

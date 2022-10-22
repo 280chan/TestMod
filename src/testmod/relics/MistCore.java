@@ -21,7 +21,7 @@ public class MistCore extends AbstractTestRelic {
 		else
 			p().decreaseMaxHealth(1);
 		this.flash();
-    }
+	}
 	
 	public static void changeRoom(MapRoomNode n) {
 		n.room = new EventRoom();

@@ -44,7 +44,7 @@ public class PhasePocketWatchUp extends AbstractUpgradedRelic implements Clickab
 			return;
 		this.counter = 0;
 		p().powers.add(new PhasePocketWatchPowerUp());
-    }
+	}
 	
 	public void atTurnStart() {
 		enemyTurn = false;
@@ -62,16 +62,16 @@ public class PhasePocketWatchUp extends AbstractUpgradedRelic implements Clickab
 			this.getIdenticalList(dmg, size).forEach(i -> this.atb(new LoseHPAction(p(), p(), i)));
 			this.counter = 0;
 		}
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		enemyTurn = true;
-    }
+	}
 	
 	public void onVictory() {
 		this.counter = -1;
 		this.enemyTurn = false;
-    }
+	}
 	
 	private class PhasePocketWatchPowerUp extends AbstractTestPower implements InvisiblePower {
 		public PhasePocketWatchPowerUp() {

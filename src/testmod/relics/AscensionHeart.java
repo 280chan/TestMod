@@ -136,7 +136,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 			p().hand.group.stream().filter(c -> c.type == CardType.STATUS).forEach(c -> c.exhaust = true);
 		else if (this.isActive && checkLevel(10))
 			p().hand.group.stream().filter(c -> c.type == CardType.CURSE).forEach(c -> c.exhaust = true);
-    }
+	}
 	
 	private void setEthereal(AbstractCard c) {
 		c.rawDescription += desc27;
@@ -165,7 +165,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 	public void onEquip() {
 		this.initCounter();
 		this.updateDescription(p().chosenClass);
-    }
+	}
 	
 	public void initCounter() {
 		this.counter = AbstractDungeon.ascensionLevel;
@@ -205,7 +205,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 				}
 			}
 		}
-    }
+	}
 	
 	public void atTurnStart() {
 		if (!this.isActive)
@@ -218,7 +218,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 			if (e > 2)
 				this.addToBot(new GainEnergyAction(e / 3));
 		}
-    }
+	}
 	
 	public void onVictory() {
 		AbstractRoom room = AbstractDungeon.getCurrRoom();
@@ -234,7 +234,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 			if (checkLevel(5))
 				p().increaseMaxHp(5, true);
 		}
-    }
+	}
 	
 	private static boolean eliteSwarm = false;
 	
@@ -294,7 +294,7 @@ public class AscensionHeart extends AbstractTestRelic implements OnPlayerDeathRe
 		if (eliteSwarm) {
 			stopEliteSwarm();
 		}
-    }
+	}
 	
 	public void onUsePotion() {
 		if (checkLevel(11))

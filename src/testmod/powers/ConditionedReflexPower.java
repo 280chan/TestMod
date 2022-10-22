@@ -25,7 +25,7 @@ public class ConditionedReflexPower extends AbstractTestPower {
 	}
 	
 	private void activate(AbstractPower p) {
-		Consumer<GainBlockAction> a = p.owner.isPlayer ? this::addToTop : this::addToBot;
+		Consumer<GainBlockAction> a = p.owner.isPlayer ? this::att : this::atb;
 		a.accept(new GainBlockAction(p.owner, p.owner, p.amount));
 		p.amount++;
 		p.updateDescription();
@@ -39,17 +39,17 @@ public class ConditionedReflexPower extends AbstractTestPower {
 			mp.flash();
 			this.getNaturalNumberList(this.activeAmount).forEach(a -> this.activate(mp));
 			this.activeAmount = 0;
-    		this.updateDescription();
+			this.updateDescription();
 		}
 	}
 	
-    public int onLoseHp(final int damage) {
-    	if (damage > 0) {
-    		this.addToTop(new ApplyPowerAction(owner, owner, new MalleablePower(owner, this.amount), this.amount));
-    		this.activeAmount++;
-    		this.updateDescription();
-    	}
-    	return damage;
-    }
-    
+	public int onLoseHp(final int damage) {
+		if (damage > 0) {
+			this.att(new ApplyPowerAction(owner, owner, new MalleablePower(owner, this.amount), this.amount));
+			this.activeAmount++;
+			this.updateDescription();
+		}
+		return damage;
+	}
+
 }

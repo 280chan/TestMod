@@ -49,5 +49,5 @@ public class RainbowHikingShoes extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		this.lastRarity = null;
-    }
+	}
 }

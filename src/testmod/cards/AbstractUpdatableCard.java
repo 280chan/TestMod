@@ -1,4 +1,3 @@
-
 package testmod.cards;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public abstract class AbstractUpdatableCard extends AbstractEquivalentableCard {
 	public AbstractUpdatableCard(String id, String name, int cost, String desc, CardType type, CardRarity rarity,
 			CardTarget target) {
 		super(id, name, cost, desc, type, rarity, target);
-        this.changeDescription(desc, true);
+		this.changeDescription(desc, true);
 	}
 
 	protected boolean isHovered() {

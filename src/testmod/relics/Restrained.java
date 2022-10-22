@@ -7,11 +7,11 @@ public class Restrained extends AbstractTestRelic {
 
 	public void onEquip() {
 		this.addEnergy();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 
 	public void atTurnStart() {
 		this.counter++;
@@ -19,7 +19,7 @@ public class Restrained extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		this.counter = 0;
-    }
+	}
 
 	public void onVictory() {
 		this.counter = -1;

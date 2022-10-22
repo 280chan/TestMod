@@ -18,11 +18,11 @@ public class Fanaticism extends AbstractTestRelic {
 		this.addEnergy();
 		if (this.inCombat())
 			this.atPreBattle();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	private void modifyCounterAndUpdate(int newValue) {
 		this.counter = newValue;
@@ -42,14 +42,14 @@ public class Fanaticism extends AbstractTestRelic {
 			this.atb(new GainEnergyAction(1));
 			this.flash();
 		}
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		if (this.isActive && this.relicStream(FanaticismUp.class).count() == 0) {
 			this.atb(new ChangeStanceAction("Wrath".equals(p().stance.ID) ? "Neutral" : "Wrath"));
 			this.flash();
 		}
-    }
+	}
 	
 	public void onLoseHp(int damage) {
 		this.modifyCounterAndUpdate(this.counter + ("Wrath".equals(p().stance.ID) ? 2 * damage : damage));

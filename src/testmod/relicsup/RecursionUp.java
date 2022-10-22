@@ -18,7 +18,7 @@ public class RecursionUp extends AbstractUpgradedRelic {
 	
 	public void atPreBattle() {
 		p().gameHandSize += this.counter = 10;
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		counter--;
@@ -26,6 +26,6 @@ public class RecursionUp extends AbstractUpgradedRelic {
 			counter = 10;
 		}
 		p().gameHandSize += counter == 10 ? 9 : -1;
-    }
+	}
 	
 }

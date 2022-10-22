@@ -26,7 +26,7 @@ public class InjuryResistanceUp extends AbstractUpgradedRelic implements Counter
 	
 	public void atPreBattle() {
 		this.addPower();
-    }
+	}
 	
 	private void counterPP() {
 		if (this.counter > 0)
@@ -61,13 +61,13 @@ public class InjuryResistanceUp extends AbstractUpgradedRelic implements Counter
 			return this.relicStream(InjuryResistanceUp.class);
 		}
 		
-	    public int onLoseHp(int damage) {
-	    	if (damage < 1)
-	    		return damage;
-	    	int tmp = stream().mapToInt(r -> r.counter).sum();
-	    	if (damage >= tmp) {
-	    		stream().forEach(r -> r.counterPP());
-	    		return damage - tmp;
+		public int onLoseHp(int damage) {
+			if (damage < 1)
+				return damage;
+			int tmp = stream().mapToInt(r -> r.counter).sum();
+			if (damage >= tmp) {
+				stream().forEach(r -> r.counterPP());
+				return damage - tmp;
 			}
 			ArrayList<InjuryResistanceUp> l = stream().sorted((a, b) -> a.counter - b.counter).collect(toArrayList());
 			boolean stop = false;
@@ -80,8 +80,7 @@ public class InjuryResistanceUp extends AbstractUpgradedRelic implements Counter
 				stop |= damage < 0;
 			}
 			l.clear();
-	        return 0;
-	    }
-	    
+			return 0;
+		}
 	}
 }

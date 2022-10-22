@@ -51,6 +51,6 @@ public class DemonSummonUp extends AbstractUpgradedRelic implements OnReceivePow
 		this.counter++;
 		this.att(this.apply(this.p(), DemonSummon.demon(p(), this.counter, this.counter)));
 		this.show();
-    }
+	}
 	
 }

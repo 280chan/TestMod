@@ -12,6 +12,6 @@ public class BalancedPeriaptUp extends AbstractUpgradedRelic {
 		if (amount < 0)
 			return Math.abs(amount);
 		return relicStream(BalancedPeriaptUp.class).map(r -> get(this::modify)).reduce(t(), this::chain).apply(amount);
-    }
+	}
 	
 }

@@ -60,7 +60,7 @@ public class Arrangement extends AbstractTestCard {
 	private UnaryOperator<Float> blo(AbstractPower p) {
 		return p::modifyBlock;
 	}
-    
+	
 	private UnaryOperator<Float> adm(AbstractRelic r) {
 		return f -> r.atDamageModify(f, this);
 	}
@@ -126,12 +126,12 @@ public class Arrangement extends AbstractTestCard {
 		this.damage = MathUtils.floor(tmp);
 	}
 
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upDesc();
-            this.upgradeBlock(1);
-            this.upgradeDamage(1);
-        }
-    }
+	public void upgrade() {
+		if (!this.upgraded) {
+			this.upgradeName();
+			this.upDesc();
+			this.upgradeBlock(1);
+			this.upgradeDamage(1);
+		}
+	}
 }

@@ -43,7 +43,7 @@ public class HolyLightProtection extends AbstractTestRelic {
 			this.counter = list.size() == 2 ? -3 : -2;
 			addPower();
 		}
-    }
+	}
 	
 	public void update() {
 		super.update();
@@ -59,11 +59,11 @@ public class HolyLightProtection extends AbstractTestRelic {
 		this.list.clear();
 		this.stopPulse();
 		this.checkPulse = false;
-    }
+	}
 	
 	public int onAttacked(final DamageInfo info, final int damageAmount) {
-        return (info.owner == null || info.owner.isPlayer || list.contains(info.owner)) ? damageAmount : 0;
-    }
+		return (info.owner == null || info.owner.isPlayer || list.contains(info.owner)) ? damageAmount : 0;
+	}
 	
 	public void onMonsterDeath(AbstractMonster m) {
 		if (!list.contains(m)

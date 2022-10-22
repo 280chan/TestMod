@@ -43,7 +43,7 @@ public class D_4Power extends AbstractTestPower {
 	
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
-        this.amount = -1;
+		this.amount = -1;
 	}
-    
+
 }

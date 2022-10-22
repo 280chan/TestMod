@@ -27,7 +27,7 @@ public class KeyOfTheVoid extends AbstractTestRelic {
 	public void onVictory() {
 		this.counter = -1;
 		this.victoryFloor = AbstractDungeon.floorNum;
-    }
+	}
 	
 	public void justEnteredRoom(final AbstractRoom room) {
 		if (this.victoryFloor == -1 && !(room instanceof TreasureRoom)) {

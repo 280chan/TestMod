@@ -32,12 +32,12 @@ public class HopeUp extends AbstractUpgradedRelic implements ClickableRelic, Cou
 	public int onAttacked(final DamageInfo info, final int damage) {
 		AbstractRoom r = AbstractDungeon.getCurrRoom();
 		if (r.phase == RoomPhase.COMBAT && roll(HPRng)) {
-        	show();
-        	Hope.act(r);
-        	return 0;
-        }
+			show();
+			Hope.act(r);
+			return 0;
+		}
 		return damage;
-    }
+	}
 	
 	private boolean roll(Random rng) {
 		boolean result = false;

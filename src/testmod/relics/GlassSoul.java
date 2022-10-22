@@ -36,7 +36,7 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 			TMP.clear();
 		} else
 			this.counter = -1;
-    }
+	}
 	
 	public void onEnterRoom(AbstractRoom r) {
 		if (this.isActive && !TMP.isEmpty() && this.relicStream(GlassSoulUp.class).count() == 0) {
@@ -76,12 +76,12 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 			else if (this.isActive)
 				this.relicStream(GlassSoul.class).filter(r -> !r.isActive).limit(1).forEach(r -> r.counter = counter);
 		}
-    }
+	}
 	
 	public void atPreBattle() {
 		this.damaged = false;
 		this.stopPulse();
-    }
+	}
 	
 	public void onLoseHp(int amount) {
 		this.damaged |= amount > 0;
@@ -93,5 +93,5 @@ public class GlassSoul extends AbstractTestRelic implements GetRelicTrigger, Cli
 				this.counter += this.relicStream(GlassSoul.class).count();
 			tryPulse(true);
 		}
-    }
+	}
 }

@@ -27,7 +27,7 @@ public class IntensifyImprintUp extends AbstractUpgradedRelic {
 	
 	public void atTurnStart() {
 		this.modifyCounter(this.counter / 2);
-    }
+	}
 	
 	public void update() {
 		super.update();

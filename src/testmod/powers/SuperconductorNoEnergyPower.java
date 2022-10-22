@@ -29,23 +29,23 @@ public class SuperconductorNoEnergyPower extends AbstractTestPower {
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
 	}
-    
-    public void atEndOfTurn(final boolean isPlayer) {
-    	this.addToBot(new RemoveSpecificPowerAction(owner, owner, this));
-    }
+	
+	public void atEndOfTurn(final boolean isPlayer) {
+		this.atb(new RemoveSpecificPowerAction(owner, owner, this));
+	}
 
-    public void checkEnergy() {
-    	if (EnergyPanel.totalCount > this.original) {
-    		EnergyPanel.totalCount = this.original;
-    	} else if (EnergyPanel.totalCount < this.original) {
-    		this.original = EnergyPanel.totalCount;
-    		this.checkZero();
-    	}
-    }
-    
-    private void checkZero() {
+	public void checkEnergy() {
+		if (EnergyPanel.totalCount > this.original) {
+			EnergyPanel.totalCount = this.original;
+		} else if (EnergyPanel.totalCount < this.original) {
+			this.original = EnergyPanel.totalCount;
+			this.checkZero();
+		}
+	}
+	
+	private void checkZero() {
 		if (this.original < 0)
 			this.original = 0;
-    }
-    
+	}
+
 }

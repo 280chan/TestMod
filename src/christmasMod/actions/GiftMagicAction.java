@@ -17,7 +17,7 @@ public class GiftMagicAction extends AbstractGameAction {
 	public void update() {
 		this.isDone = true;
 		for (int i = 0; i < AbstractDungeon.player.potionSlots; i++) {
-		    AbstractDungeon.actionManager.addToTop(new ObtainPotionAction(AbstractDungeon.returnRandomPotion(true)));
+			addToTop(new ObtainPotionAction(AbstractDungeon.returnRandomPotion(true)));
 		}
 	}
 

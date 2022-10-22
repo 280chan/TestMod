@@ -37,17 +37,17 @@ public class DéjàvuUp extends AbstractUpgradedRelic {
 			this.list.clear();
 			this.setState(false);
 		}
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.endTurn = true;
 		if (this.active && EnergyPanel.totalCount > 0)
 			this.setState(false);
-    }
+	}
 	
 	public void onVictory() {
 		this.setState(false);
 		this.list.clear();
-    }
+	}
 	
 }

@@ -68,10 +68,10 @@ public class DéjàvuAction extends AbstractGameAction {
 			p.hand.refreshHandLayout();
 			p.hand.applyPowers();
 		} else {
-		    p.discardPile.addToTop(c);
-		    if (!flag)
+			p.discardPile.addToTop(c);
+			if (!flag)
 				AbstractDungeon.player.createHandIsFullDialog();
-		    flag = true;
+			flag = true;
 		}
 	}
 	

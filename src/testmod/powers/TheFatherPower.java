@@ -24,7 +24,7 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	public static void reset() {
 		ACTION_MAP.values().forEach(l -> l.clear());
 		ACTION_MAP.clear();
-    	INFO.clear();
+		INFO.clear();
 	}
 	
 	public static boolean needThis(AbstractCreature owner) {
@@ -84,10 +84,10 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 		}
 	}
 	
-    public int onAttacked(final DamageInfo info, int damage) {
-    	if (INFO.remove(info) && this.noUp())
-    		return damage;
-    	if (Prime.isPrime(damage)) {
+	public int onAttacked(final DamageInfo info, int damage) {
+		if (INFO.remove(info) && this.noUp())
+			return damage;
+		if (Prime.isPrime(damage)) {
 			AbstractDungeon.getMonsters().monsters.stream().filter(m -> !(m.equals(this.owner) || m.isDeadOrEscaped()))
 					.forEach(m -> this.addDamageAction(m, Prime.indexOf(damage)));
 		} else if (damage > 3) {
@@ -95,13 +95,13 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 					.forEach(p -> this.addDamageAction((AbstractMonster) this.owner, Prime.indexOf(p)));
 		}
 		return damage;
-    }
-    
-    public void onDeath() {
-    	clearDamageActions((AbstractMonster) this.owner);
-    }
+	}
+	
+	public void onDeath() {
+		clearDamageActions((AbstractMonster) this.owner);
+	}
 
-    public static void clear() {
-    	Prime.clear();
-    }
+	public static void clear() {
+		Prime.clear();
+	}
 }

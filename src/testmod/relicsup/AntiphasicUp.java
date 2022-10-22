@@ -6,9 +6,9 @@ public class AntiphasicUp extends AbstractUpgradedRelic {
 	
 	public int onAttacked(final DamageInfo info, final int damage) {
 		if (damage >= p().maxHealth / 10.0 && (damage != p().maxHealth || damage != 1)) {
-	    	p().increaseMaxHp(5, true);
-    	}
+			p().increaseMaxHp(5, true);
+		}
 		return damage;
-    }
+	}
 
 }

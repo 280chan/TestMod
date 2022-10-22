@@ -10,7 +10,7 @@ public class RealStoneCalenderUp extends AbstractUpgradedRelic {
 	
 	public void atBattleStart() {
 		this.counter = 0;
-    }
+	}
 	
 	private void dealDamage() {
 		int size = (int) AbstractDungeon.getMonsters().monsters.stream().filter(m -> !m.isDeadOrEscaped()).count();
@@ -31,5 +31,5 @@ public class RealStoneCalenderUp extends AbstractUpgradedRelic {
 	
 	public void onVictory() {
 		this.counter = -1;
-    }
+	}
 }

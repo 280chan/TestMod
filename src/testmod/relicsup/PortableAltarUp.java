@@ -32,7 +32,7 @@ public class PortableAltarUp extends AbstractUpgradedRelic implements ClickableR
 		if (!isActive)
 			return;
 		p().increaseMaxHp(this.counter, true);
-    }
+	}
 	
 	public void atBattleStart() {
 		if (!isActive)
@@ -54,7 +54,7 @@ public class PortableAltarUp extends AbstractUpgradedRelic implements ClickableR
 			return;
 		this.show();
 		this.loseMaxHP(1);
-    }
+	}
 
 	@Override
 	public void onRightClick() {

@@ -48,13 +48,13 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 	public void onVictory() {
 		if (this.counter > 0)
 			this.toggleState(true);
-    }
+	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (this.victory) {
 			this.toggleState(false);
 		}
-    }
+	}
 
 	public int getRewardCardNum() {
 		int numCards = 3;
@@ -76,14 +76,14 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 			cardUpgradedChance /= 2f;
 		if (cardUpgradedChance > 1)
 			cardUpgradedChance = 1;
-	    int numCards = this.getRewardCardNum();
-	    ArrayList<AbstractCard> retVal2 = new ArrayList<AbstractCard>();
-	    while (retVal2.size() < numCards) {
-	    	if (retVal.isEmpty())
-	    		retVal.addAll(ChristmasMod.DISASTERS);
-	    	retVal2.add(retVal.remove((int) (this.cardRng() * retVal.size())).makeCopy());
-	    }
-	    Random r = AbstractDungeon.cardRng.copy();
+		int numCards = this.getRewardCardNum();
+		ArrayList<AbstractCard> retVal2 = new ArrayList<AbstractCard>();
+		while (retVal2.size() < numCards) {
+			if (retVal.isEmpty())
+				retVal.addAll(ChristmasMod.DISASTERS);
+			retVal2.add(retVal.remove((int) (this.cardRng() * retVal.size())).makeCopy());
+		}
+		Random r = AbstractDungeon.cardRng.copy();
 		for (AbstractCard c : retVal2) {
 			if ((c.type == AbstractCard.CardType.ATTACK) && (player.hasRelic("Molten Egg 2"))) {
 				c.upgrade();
@@ -95,7 +95,7 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 				c.upgrade();
 			}
 		}
-	    return retVal2;
+		return retVal2;
 	}
 	
 	private void addReward() {
@@ -130,7 +130,7 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 		int extra = AbstractDungeon.getMonsters().monsters.stream().mapToInt(m -> checkNum(m.currentHealth)).sum()
 				+ checkNum(p().currentHealth);
 		addRandomDisaster(extra + 1);
-    }
+	}
 	
 	public int onAttackedMonster(DamageInfo info, int damage) {
 		addRandomDisaster(checkNum(damage));

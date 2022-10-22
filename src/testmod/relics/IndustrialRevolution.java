@@ -22,7 +22,7 @@ public class IndustrialRevolution extends AbstractTestRelic implements OnReceive
 		AbstractDungeon.getMonsters().monsters.stream()
 				.filter(not(m -> m.isDead || m.isDying || m.halfDead || !m.hasPower("Artifact"))).peek(LIST::add)
 				.forEach(m -> m.powers.add(new InorganicPower(m)));
-    }
+	}
 	
 
 	private void tryAdd() {
@@ -44,13 +44,13 @@ public class IndustrialRevolution extends AbstractTestRelic implements OnReceive
 		if (!isActive)
 			return;
 		tryAdd();
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		if (!isActive)
 			return;
 		tryAdd();
-    }
+	}
 
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature s) {

@@ -75,7 +75,7 @@ public class PulseDistributorPower extends AbstractTestPower {
 	
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
-        this.amount = -1;
+		this.amount = -1;
 	}
 	
 	private boolean onCurrent = false;
@@ -100,7 +100,7 @@ public class PulseDistributorPower extends AbstractTestPower {
 		}
 	}
 	
-    public int onAttacked(final DamageInfo info, int damage) {
+	public int onAttacked(final DamageInfo info, int damage) {
 		if (info.type == DamageType.HP_LOSS)
 			return damage;
 		if (info.owner != null) {
@@ -110,39 +110,39 @@ public class PulseDistributorPower extends AbstractTestPower {
 				this.onCurrent = false;
 			damage = attacker.damage;
 		}
-        GameActionManager.damageReceivedThisTurn += damage;
-        GameActionManager.damageReceivedThisCombat += damage;
-        if (damage > 0)
-        	p().damagedThisCombat += 1;
-    	this.updateList(damage);
-    	return 0;
-    }
-    
-    private void updateList(int damage) {
-    	if (damage < 1)
-    		return;
+		GameActionManager.damageReceivedThisTurn += damage;
+		GameActionManager.damageReceivedThisCombat += damage;
+		if (damage > 0)
+			p().damagedThisCombat += 1;
+		this.updateList(damage);
+		return 0;
+	}
+	
+	private void updateList(int damage) {
+		if (damage < 1)
+			return;
 		TestMod.info(this.name + ":伤害前:" + DAMAGES);
-    	for (int i = 0; i < damage + this.magic; i++) {
-    		if (DAMAGES.size() == i) {
-    			DAMAGES.add(1);
-    		} else {
-    			DAMAGES.set(i, DAMAGES.get(i) + 1);
-    		}
-    	}
-    	TestMod.info(this.name + ":伤害后:" + DAMAGES);
-    }
-    
-    public void atEndOfRound() {
-    	if (!this.DAMAGES.isEmpty()) {
-    		TestMod.info(this.name + ":伤害前:" + DAMAGES);
-    		this.pretendAttack(DAMAGES.remove(0));
-    		TestMod.info(this.name + ":伤害后:" + DAMAGES);
-    		this.updateDescription();
+		for (int i = 0; i < damage + this.magic; i++) {
+			if (DAMAGES.size() == i) {
+				DAMAGES.add(1);
+			} else {
+				DAMAGES.set(i, DAMAGES.get(i) + 1);
+			}
 		}
-    }
+		TestMod.info(this.name + ":伤害后:" + DAMAGES);
+	}
+	
+	public void atEndOfRound() {
+		if (!this.DAMAGES.isEmpty()) {
+			TestMod.info(this.name + ":伤害前:" + DAMAGES);
+			this.pretendAttack(DAMAGES.remove(0));
+			TestMod.info(this.name + ":伤害后:" + DAMAGES);
+			this.updateDescription();
+		}
+	}
 
 	private void pretendAttack(int damage) {
 		p().damage(new DamageInfo(p(), damage, DamageType.HP_LOSS));
 	}
-    
+
 }

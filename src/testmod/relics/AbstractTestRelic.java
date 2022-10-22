@@ -185,7 +185,7 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 	public void show() {
 		flash();
 		if (show && !TestMod.relicIMGPath(TestMod.unMakeID(this.relicId)).equals(TestMod.relicIMGPath("relic1")))
-		    this.atb(new RelicAboveCreatureAction(p(), this));
+			this.atb(new RelicAboveCreatureAction(p(), this));
 	}
 	
 	public void postUpdate() {
@@ -214,8 +214,8 @@ public abstract class AbstractTestRelic extends CustomRelic implements MiscMetho
 
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
+		initializeTips();
 	}
 	
 	public void updateDescription() {

@@ -15,16 +15,16 @@ public class MagicalMalletUp extends AbstractUpgradedRelic implements ClickableR
 	
 	public void atPreBattle() {
 		used = false;
-    }
+	}
 	
 	public void atTurnStart() {
 		playerTurn = true;
 		this.togglePulse(this, !used);
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.togglePulse(this, playerTurn = false);
-    }
+	}
 	
 	private IntStream costs(ArrayList<AbstractCard> hand) {
 		return hand.stream().filter(c -> c.cost >= 0).mapToInt(c -> c.costForTurn);
@@ -46,7 +46,7 @@ public class MagicalMalletUp extends AbstractUpgradedRelic implements ClickableR
 			s.stream().limit(1).forEach(c -> c.setCostForTurn(c.costForTurn + 1));
 			this.show();
 		});
-    }
+	}
 
 	@Override
 	public void onRightClick() {

@@ -452,7 +452,7 @@ public abstract class RelicSelectScreen implements RenderSubscriber, PreUpdateSu
 		}
 		this.scrollY = MathHelper.scrollSnapLerpSpeed(this.scrollY, this.targetY);
 		this.resetScrolling();
-	    this.updateBarPosition();
+		this.updateBarPosition();
 	}
 	
 	private void resetScrolling() {

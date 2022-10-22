@@ -32,7 +32,7 @@ public class GiftDisturbAction extends AbstractGameAction {
 		this.isDone = true;
 		int x = EnergyPanel.totalCount;
 		if (this.energyOnUse != -1)
-		      x = this.energyOnUse;
+			  x = this.energyOnUse;
 		if (this.p.hasRelic("Chemical X")) {
 			x += 2;
 			this.p.getRelic("Chemical X").flash();
@@ -40,7 +40,7 @@ public class GiftDisturbAction extends AbstractGameAction {
 		if (this.upgraded)
 			x++;
 		if (!this.freeToPlayOnce)
-	        this.p.energy.use(EnergyPanel.totalCount);
+			this.p.energy.use(EnergyPanel.totalCount);
 		if (this.target.hasPower("Artifact"))
 			AbstractDungeon.actionManager.addToTop(new ApplyPowerAction(this.target, p, new WeakPower(target, 1, false), 1));
 		if (x > 1) {

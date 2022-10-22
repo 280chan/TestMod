@@ -16,7 +16,7 @@ public class Nine extends AbstractRevivalRelicToModifyDamage {
 			return 1;
 		}
 		return damage;
-    }
+	}
 
 	@Override
 	protected int damageModifyCheck(AbstractPlayer p, DamageInfo info, int originalDamage) {

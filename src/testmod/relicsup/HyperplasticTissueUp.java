@@ -24,7 +24,7 @@ public class HyperplasticTissueUp extends AbstractUpgradedRelic implements HandS
 			this.delta += 2;
 			this.dealDmg();
 		}
-    }
+	}
 	
 	public int[] dmg(int a) {
 		if (a == 0)
@@ -68,20 +68,20 @@ public class HyperplasticTissueUp extends AbstractUpgradedRelic implements HandS
 				this.atPreBattle();
 			this.dealDmg();
 		}
-    }
+	}
 	
 	public void onUnequip() {
 		this.updateHandSize(-(this.delta + 2));
-    }
+	}
 	
 	public void atPreBattle() {
 		this.delta = 0;
 		this.updateHandSize(0);
-    }
+	}
 	
 	public void onVictory() {
 		this.updateHandSize(-this.delta);
 		this.delta = 0;
-    }
+	}
 
 }

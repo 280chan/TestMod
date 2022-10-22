@@ -29,13 +29,13 @@ public class IWantAll extends AbstractTestRelic implements ClickableRelic {
 	public void onVictory() {
 		if (this.counter > 0)
 			this.togglePulse(this, victory = true);
-    }
+	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (this.victory) {
 			this.togglePulse(this, victory = false);
 		}
-    }
+	}
 	
 	private RewardItem newItem(RewardItem r) {
 		RewardItem item = new RewardItem(new EscapePotion());

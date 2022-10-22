@@ -52,11 +52,11 @@ public class CyclicPeriapt extends AbstractTestRelic {
 	public void atPreBattle() {
 		if (!this.used.isEmpty())
 			this.used.clear();
-    }
+	}
 	
 	public void onVictory() {
 		this.used.clear();
 		this.stopPulse();
-    }
+	}
 	
 }

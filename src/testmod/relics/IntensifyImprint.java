@@ -31,15 +31,15 @@ public class IntensifyImprint extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		this.resetCounter();
-    }
+	}
 	
 	public void atTurnStart() {
 		this.resetCounter();
-    }
+	}
 	
 	public void onVictory() {
 		this.stopCounter();
-    }
+	}
 	
 	public void update() {
 		super.update();

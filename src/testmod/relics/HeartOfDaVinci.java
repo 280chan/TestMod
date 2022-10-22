@@ -172,7 +172,7 @@ public class HeartOfDaVinci extends AbstractTestRelic implements MiscMethods, Ge
 			this.addAllCharacterRelics();
 			this.tryAddOrbSlot();
 		}
-    }
+	}
 	
 	public void onUnequip() {
 		if (this.relicStream(HeartOfDaVinci.class).count() == 1

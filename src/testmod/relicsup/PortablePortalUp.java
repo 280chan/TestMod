@@ -81,11 +81,11 @@ public class PortablePortalUp extends AbstractUpgradedRelic implements Clickable
 			}
 			Settings.hasRubyKey = Settings.hasEmeraldKey = Settings.hasSapphireKey = false;
 		}
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	public void atPreBattle() {
 		this.stopPulse();
@@ -155,8 +155,8 @@ public class PortablePortalUp extends AbstractUpgradedRelic implements Clickable
 	@SpirePatch(clz = TheBeyond.class, method = "<ctor>", paramtypez = { AbstractPlayer.class, ArrayList.class })
 	public static class PortablePortalUpPatch {
 		public static void Postfix(TheBeyond i, AbstractPlayer p, ArrayList<String> theList) {
-		    AbstractDungeon.currMapNode = new MapRoomNode(0, -1);
-		    AbstractDungeon.currMapNode.room = new EmptyRoom();
+			AbstractDungeon.currMapNode = new MapRoomNode(0, -1);
+			AbstractDungeon.currMapNode.room = new EmptyRoom();
 		}
 	}
 

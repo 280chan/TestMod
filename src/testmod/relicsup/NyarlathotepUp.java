@@ -61,8 +61,8 @@ public class NyarlathotepUp extends AbstractUpgradedRelic {
 	}
 	
 	private void triggerDiscardFor(AbstractCard c) {
-        c.triggerOnManualDiscard();
-        ++GameActionManager.totalDiscardedThisTurn;
+		c.triggerOnManualDiscard();
+		++GameActionManager.totalDiscardedThisTurn;
 		if (AbstractDungeon.actionManager.turnHasEnded)
 			return;
 		p().updateCardsOnDiscard();
@@ -99,7 +99,7 @@ public class NyarlathotepUp extends AbstractUpgradedRelic {
 			this.triggerDiscardFor(c);
 		}
 		this.show();
-    }
+	}
 	
 	public void onManualDiscard() {
 		if (!p().discardPile.isEmpty()) {
@@ -109,6 +109,6 @@ public class NyarlathotepUp extends AbstractUpgradedRelic {
 			}
 			this.show();
 		}
-    }
+	}
 	
 }

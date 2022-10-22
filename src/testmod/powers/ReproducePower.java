@@ -19,7 +19,7 @@ public class ReproducePower extends AbstractTestPower {
 	public void updateDescription() {
 		this.description = desc(0) + c.name + desc(1);
 	}
-    
+	
 	public void stackPower(int stackAmount) {
 		this.fontScale = 8.0f;
 	}
@@ -30,8 +30,8 @@ public class ReproducePower extends AbstractTestPower {
 				c.setCostForTurn(c.costForTurn + this.amount);
 			});
 			c.returnToHand = c.retain = c.selfRetain = true;
-    	}
-    }
+		}
+	}
 	
 	public void onRemove() {
 		this.c.retain = this.c.returnToHand = this.c.selfRetain = false;

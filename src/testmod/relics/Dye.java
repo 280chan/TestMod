@@ -17,7 +17,7 @@ public class Dye extends AbstractTestRelic implements ClickableRelic {
 	public void atPreBattle() {
 		this.used = false;
 		this.togglePulse(true);
-    }
+	}
 	
 	private void togglePulse(boolean flag) {
 		if (flag && !this.used) {
@@ -35,7 +35,7 @@ public class Dye extends AbstractTestRelic implements ClickableRelic {
 	
 	public void onPlayerEndTurn() {
 		this.togglePulse(false);
-    }
+	}
 	
 	public void onVictory() {
 		this.togglePulse(false);

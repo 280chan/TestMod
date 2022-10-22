@@ -12,11 +12,11 @@ public class HarvestTotemUp extends AbstractUpgradedRelic {
 	
 	public void onEquip() {
 		p().increaseMaxHp(Math.max(1, p().maxHealth), false);
-    }
+	}
 	
 	public int onPlayerHeal(int amount) {
 		return amount > 0 ? Math.max(0, Math.min(2 * amount, Integer.MAX_VALUE - p().currentHealth)) : 0;
-    }
+	}
 	
 	public float preChangeMaxHP(float amount) {
 		return amount >= 0 ? 2 * amount : amount;
@@ -41,7 +41,7 @@ public class HarvestTotemUp extends AbstractUpgradedRelic {
 
 	public void atPreBattle() {
 		tryApplyDebuff();
-    }
+	}
 	
 	public void update() {
 		super.update();

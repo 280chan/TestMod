@@ -45,7 +45,7 @@ public class Muramasa extends AbstractTestRelic {
 	
 	public void onCardDraw(final AbstractCard c) {
 		tryDo(c);
-    }
+	}
 	
 	public void onRefreshHand() {
 		this.initColor();

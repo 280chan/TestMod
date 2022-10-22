@@ -19,12 +19,12 @@ public class SelfRegulatingSystemPower extends AbstractTestPower implements OnRe
 		 this.description = desc(0) + this.amount + desc(1) + this.amount + desc(2);
 	}
 	
-    public void atStartOfTurn() {
-    	this.debuffed = false;
-    	this.buffed = false;
-    }
-    
-    private void applyPower(AbstractCreature t, AbstractPower p, int factor) {
+	public void atStartOfTurn() {
+		this.debuffed = false;
+		this.buffed = false;
+	}
+	
+	private void applyPower(AbstractCreature t, AbstractPower p, int factor) {
 		if (!t.hasPower(p.ID)) {
 			p.stackPower(factor);
 			p.updateDescription();
@@ -32,8 +32,8 @@ public class SelfRegulatingSystemPower extends AbstractTestPower implements OnRe
 			t.getPower(p.ID).stackPower(factor);
 			t.getPower(p.ID).updateDescription();
 		}
-    }
-    
+	}
+	
 	@Override
 	public boolean onReceivePower(AbstractPower p, AbstractCreature t, AbstractCreature source) {
 		if (t.equals(this.owner)) {

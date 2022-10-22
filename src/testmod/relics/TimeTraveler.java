@@ -78,7 +78,7 @@ public class TimeTraveler extends AbstractTestRelic {
 			return;
 		this.counter = 100;
 		relic = this;
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
@@ -87,14 +87,14 @@ public class TimeTraveler extends AbstractTestRelic {
 		relic = this.relicStream(TimeTraveler.class).filter(r -> !r.isActive).findFirst().orElse(null);
 		if (relic != null)
 			relic.counter = this.counter;
-    }
+	}
 	
 	public void onVictory() {
 		this.tryDecreaseMaxHP();
 		this.tryChangeSan(VICTORY_SAN);
 		if (this.isActive)
 			save(this.counter);
-    }
+	}
 	
 	public void onRest() {
 		if (!this.isActive)
@@ -102,12 +102,12 @@ public class TimeTraveler extends AbstractTestRelic {
 		this.tryChangeSan(REST_SAN);
 		saveLater = true;
 		saveRest = this.counter;
-    }
+	}
 
 	public void onEnterRoom(final AbstractRoom room) {
 		if (this.isActive && saveLater) {
 			save(saveRest);
 			saveLater = false;
 		}
-    }
+	}
 }

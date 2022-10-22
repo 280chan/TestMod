@@ -29,7 +29,7 @@ public class NineUp extends AbstractUpgradedRevivalRelic {
 			return pre > 9 || p().maxHealth > 9 ? 0 : 1;
 		}
 		return damage;
-    }
+	}
 
 	@Override
 	protected int damageModifyCheck(AbstractPlayer p, DamageInfo info, int originalDamage) {

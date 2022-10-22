@@ -32,7 +32,7 @@ public class AcrobatUp extends AbstractUpgradedRelic {
 			this.show();
 		}
 		this.updateHandGlow();
-    }
+	}
 	
 	public void onRefreshHand() {
 		if (color == null)
@@ -62,7 +62,7 @@ public class AcrobatUp extends AbstractUpgradedRelic {
 	public void atPreBattle() {
 		this.counter = -1;
 		this.inited = false;
-    }
+	}
 
 	public void onVictory() {
 		this.stopPulse();

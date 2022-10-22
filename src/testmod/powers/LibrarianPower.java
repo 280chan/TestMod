@@ -24,19 +24,19 @@ public class LibrarianPower extends AbstractTestPower {
 		 this.description = desc(0) + this.amount + desc(1) + this.c.name + desc(2);
 	}
 	
-    public void atStartOfTurn() {
-    	this.amount--;
-    	this.flashWithoutSound();
-    	if (this.amount == 0)
-    		this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-    	else
-        	this.updateDescription();
-    }
-    
-    public void onVictory() {
-    	this.flash();
-    	AbstractDungeon.effectList.add(new ShowCardAndObtainEffect(this.c.makeCopy(),
+	public void atStartOfTurn() {
+		this.amount--;
+		this.flashWithoutSound();
+		if (this.amount == 0)
+			this.att(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+		else
+			this.updateDescription();
+	}
+	
+	public void onVictory() {
+		this.flash();
+		AbstractDungeon.effectList.add(new ShowCardAndObtainEffect(this.c.makeCopy(),
 				Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
-    }
-    
+	}
+
 }

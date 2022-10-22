@@ -17,7 +17,7 @@ public class SpireNexusUp extends AbstractUpgradedRelic implements ClickableReli
 		if (!(room instanceof EventRoom)) {
 			this.stopPulse();
 		}
-    }
+	}
 
 	private void changePulse() {
 		if (SpireNexus.skipEffect)

@@ -46,12 +46,12 @@ public class IntensifyImprintPower extends AbstractTestPower implements Invisibl
 		return this.relicStream(IntensifyImprintUp.class).count() > 0;
 	}
 	
-    public int onAttacked(final DamageInfo info, int damage) {
-    	if (up() || ((info.owner == null || info.owner.isPlayer) && (damage > 0))) {
+	public int onAttacked(final DamageInfo info, int damage) {
+		if (up() || ((info.owner == null || info.owner.isPlayer) && (damage > 0))) {
 			damage += stream().mapToInt(r -> r.counter).sum();
 			stream().forEach(this::incrementCounter);
 		}
 		return damage;
-    }
+	}
 
 }

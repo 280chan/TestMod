@@ -24,7 +24,7 @@ public class BalancedPeriapt extends AbstractTestRelic {
 					.apply(amount).intValue());
 			this.show();
 		}
-    	return 0;
-    }
+		return 0;
+	}
 	
 }

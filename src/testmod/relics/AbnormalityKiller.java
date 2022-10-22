@@ -34,7 +34,7 @@ public class AbnormalityKiller extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		tryAdd();
-    }
+	}
 	
 	public void atTurnStart() {
 		tryAdd();

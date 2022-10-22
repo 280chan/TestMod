@@ -33,11 +33,11 @@ public class GiftInfinitePower extends AbstractTestPower {
 			 this.description += DESCRIPTIONS[2];
 		 this.description += DESCRIPTIONS[3];
 	}
-    
-    public void atStartOfTurn() {
-    	for (int i = 0; i < this.amount; i++) {
-    		this.addToTop(new MakeTempCardInHandAction(ChristmasMod.randomGift(this.upgraded)));
-    	}
+	
+	public void atStartOfTurn() {
+		for (int i = 0; i < this.amount; i++) {
+			this.addToTop(new MakeTempCardInHandAction(ChristmasMod.randomGift(this.upgraded)));
+		}
 	}
-    
+
 }

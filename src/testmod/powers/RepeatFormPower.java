@@ -22,8 +22,8 @@ public class RepeatFormPower extends AbstractTestPower {
 		this.description = desc(0) + this.amount + desc(1) + this.c.name + desc(2);
 	}
 	
-    public void atStartOfTurn() {
-    	this.addToBot(new MakeTempCardInHandAction(this.c.makeStatEquivalentCopy(), this.amount));
-    }
-    
+	public void atStartOfTurn() {
+		this.atb(new MakeTempCardInHandAction(this.c.makeStatEquivalentCopy(), this.amount));
+	}
+
 }

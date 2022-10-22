@@ -241,9 +241,9 @@ public class AnonymousCard extends AbstractTestCard {
 				lock("calculateCardDamage");
 			}
 		} else {
-	    	super.calculateCardDamage(m);
+			super.calculateCardDamage(m);
 		}
-    }
+	}
 	
 	// TODO 重写
 	

@@ -55,20 +55,20 @@ public class Hope extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	public static void act(AbstractRoom r) {
-    	MISC.p().currentHealth = MISC.p().maxHealth;
-    	MISC.p().healthBarUpdatedEvent();
-    	boolean fuckedUndead = false;
-    	for (AbstractMonster m : r.monsters.monsters) {
-    		if (m.isDeadOrEscaped())
-    			continue;
-    		m.currentHealth = 0;
-    		m.healthBarUpdatedEvent();
-    		if (m instanceof AwakenedOne || m instanceof Darkling) {
-    			r.cannotLose = false;
-    		}
-    		if ("paleoftheancients:Reimu".equals(m.id)) {
-    			TestMod.info("希望:尝试跳过秒杀先古境地灵梦，尝试添加其对应遗物...");
-    			Class<? extends AbstractDungeon> c = CardCrawlGame.dungeon.getClass();
+		MISC.p().currentHealth = MISC.p().maxHealth;
+		MISC.p().healthBarUpdatedEvent();
+		boolean fuckedUndead = false;
+		for (AbstractMonster m : r.monsters.monsters) {
+			if (m.isDeadOrEscaped())
+				continue;
+			m.currentHealth = 0;
+			m.healthBarUpdatedEvent();
+			if (m instanceof AwakenedOne || m instanceof Darkling) {
+				r.cannotLose = false;
+			}
+			if ("paleoftheancients:Reimu".equals(m.id)) {
+				TestMod.info("希望:尝试跳过秒杀先古境地灵梦，尝试添加其对应遗物...");
+				Class<? extends AbstractDungeon> c = CardCrawlGame.dungeon.getClass();
 				try {
 					c.getMethod("addRelicReward", String.class).invoke(null,
 							"paleoftheancients:SoulOfTheShrineMaiden");
@@ -76,30 +76,30 @@ public class Hope extends AbstractTestRelic implements ClickableRelic {
 						| IllegalArgumentException | InvocationTargetException e) {
 					e.printStackTrace();
 				}
-    		} else if ("VUPShionMod:PlagaAMundo".equals(m.id) || "VUPShionMod:PlagaAMundoMinion".equals(m.id)) {
-    			TestMod.info("希望:尝试跳过秒杀紫音深空孽障，尝试解锁通关记录...");
-    			m.useFastShakeAnimation(5.0F);
-    			CardCrawlGame.screenShake.rumble(4.0F);
-    			ReflectionHacks.privateMethod(AbstractMonster.class, "onBossVictoryLogic").invoke(m);
-    			try {
-    				Class<?> scp = Class.forName("VUPShionMod.patches.SpecialCombatPatches");
-    				ReflectionHacks.privateStaticMethod(scp, "victoryFightSpecialBoss").invoke();
+			} else if ("VUPShionMod:PlagaAMundo".equals(m.id) || "VUPShionMod:PlagaAMundoMinion".equals(m.id)) {
+				TestMod.info("希望:尝试跳过秒杀紫音深空孽障，尝试解锁通关记录...");
+				m.useFastShakeAnimation(5.0F);
+				CardCrawlGame.screenShake.rumble(4.0F);
+				ReflectionHacks.privateMethod(AbstractMonster.class, "onBossVictoryLogic").invoke(m);
+				try {
+					Class<?> scp = Class.forName("VUPShionMod.patches.SpecialCombatPatches");
+					ReflectionHacks.privateStaticMethod(scp, "victoryFightSpecialBoss").invoke();
 				} catch (ClassNotFoundException e) {
 					TestMod.info("失败");
 				}
-    		} else {
-    			TestMod.info("希望:尝试秒杀" + m.name);
-    			m.die();
-    		}
-    		if (!m.isDying && !m.hasPower("Minion")) {
-    			r.cannotLose = false;
-    			fuckedUndead = true;
-    		}
-    		if (m.currentBlock > 0) {
+			} else {
+				TestMod.info("希望:尝试秒杀" + m.name);
+				m.die();
+			}
+			if (!m.isDying && !m.hasPower("Minion")) {
+				r.cannotLose = false;
+				fuckedUndead = true;
+			}
+			if (m.currentBlock > 0) {
 				m.loseBlock();
 			}
-    	}
-    	if (fuckedUndead) {
+		}
+		if (fuckedUndead) {
 			MISC.addTmpActionToBot(() -> {
 				if (!(r instanceof EventRoom)) {
 					AbstractDungeon.actionManager.clearPostCombatActions();
@@ -188,18 +188,18 @@ public class Hope extends AbstractTestRelic implements ClickableRelic {
 					}
 				}
 			});
-    	}
+		}
 	}
 	
 	public int onAttacked(final DamageInfo info, final int damage) {
 		AbstractRoom r = AbstractDungeon.getCurrRoom();
 		if (info.type == DamageType.NORMAL && damage > 0 && r.phase == RoomPhase.COMBAT && roll(HPRng)) {
-        	show();
+			show();
 			act(r);
-        	return 0;
-        }
+			return 0;
+		}
 		return damage;
-    }
+	}
 	
 	private boolean roll(Random rng) {
 		boolean result = false;

@@ -17,7 +17,7 @@ public class KeyOfTheVoidUp extends AbstractUpgradedRelic implements ClickableRe
 	public void onVictory() {
 		this.counter = -1;
 		this.beginLongPulse();
-    }
+	}
 	
 	public void justEnteredRoom(final AbstractRoom room) {
 		this.onVictory();

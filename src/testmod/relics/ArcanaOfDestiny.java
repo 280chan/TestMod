@@ -14,7 +14,7 @@ public class ArcanaOfDestiny extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		tryApplyDebuff();
-    }
+	}
 
 	public void update() {
 		super.update();

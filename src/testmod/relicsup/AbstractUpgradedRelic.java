@@ -17,7 +17,7 @@ public abstract class AbstractUpgradedRelic extends AbstractTestRelic {
 		flash();
 		if (show && !TestMod.relicIMGPath(TestMod.unMakeID(removePostfixForIMG(this.relicId)))
 				.equals(TestMod.relicIMGPath("relic1")))
-		    this.atb(new RelicAboveCreatureAction(p(), this));
+			this.atb(new RelicAboveCreatureAction(p(), this));
 	}
 	
 	private static String removePostfixForIMG(String id) {

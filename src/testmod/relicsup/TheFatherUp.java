@@ -24,7 +24,7 @@ public class TheFatherUp extends AbstractUpgradedRelic implements TheFatherCount
 		if (this.hasEnemies()) {
 			tryAdd();
 		}
-    }
+	}
 	
 	public void atBattleStart() {
 		if (check(counter + 1)) {
@@ -50,7 +50,7 @@ public class TheFatherUp extends AbstractUpgradedRelic implements TheFatherCount
 	
 	public void atTurnStart() {
 		tryAdd();
-    }
+	}
 
 	private boolean check(int n) {
 		return n > 1 && (Prime.isPrime(n) || Prime.isPrime(Prime.primeFactorOf(n).size()));

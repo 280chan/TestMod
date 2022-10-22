@@ -13,7 +13,7 @@ public class GhostCostumePower extends AbstractPower implements HalloweenMiscMet
 	private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
 	private static final String NAME = powerStrings.NAME;
 	private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
-    public static final String IMG = "halloweenResources/images/image.png";
+	public static final String IMG = "halloweenResources/images/image.png";
 	
 	public GhostCostumePower(AbstractCreature owner, int amount) {
 		this.name = NAME;
@@ -35,12 +35,12 @@ public class GhostCostumePower extends AbstractPower implements HalloweenMiscMet
 	
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
-        this.amount += stackAmount;
+		this.amount += stackAmount;
 	}
-    
-    public void atStartOfTurnPostDraw() {
-    	for (int i = 0; i < this.amount; i++)
-    		this.addRandomPower(this.owner);
+	
+	public void atStartOfTurnPostDraw() {
+		for (int i = 0; i < this.amount; i++)
+			this.addRandomPower(this.owner);
 	}
-    
+
 }

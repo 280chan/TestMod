@@ -13,6 +13,6 @@ public class AssaultLearning extends AbstractTestRelic {
 				this.show();
 			}
 		});
-    }
+	}
 	
 }

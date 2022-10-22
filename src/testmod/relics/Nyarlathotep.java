@@ -97,8 +97,8 @@ public class Nyarlathotep extends AbstractTestRelic {
 	}
 	
 	private void triggerDiscardFor(AbstractCard c) {
-        c.triggerOnManualDiscard();
-        ++GameActionManager.totalDiscardedThisTurn;
+		c.triggerOnManualDiscard();
+		++GameActionManager.totalDiscardedThisTurn;
 		if (AbstractDungeon.actionManager.turnHasEnded)
 			return;
 		p().updateCardsOnDiscard();
@@ -133,13 +133,13 @@ public class Nyarlathotep extends AbstractTestRelic {
 	public void onExhaust(final AbstractCard c) {
 		this.triggerDiscardFor(c);
 		this.show();
-    }
+	}
 	
 	public void onManualDiscard() {
 		if (!p().discardPile.isEmpty()) {
 			this.triggerExhaustFor(p().discardPile.getTopCard());
 			this.show();
 		}
-    }
+	}
 	
 }

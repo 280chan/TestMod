@@ -42,7 +42,7 @@ public class RegisterUp extends AbstractUpgradedRelic{
 		POWERS.stream().filter(this::filterAndChangeAmount).forEach(p -> this.att(apply(p(), prepare(p))));
 		if (!POWERS.isEmpty())
 			this.show();
-    }
+	}
 	
 	public void onVictory() {
 		if (!isActive)

@@ -29,7 +29,7 @@ public class OneHitWonderUp extends AbstractUpgradedRelic {
 		if (AbstractDungeon.currMapNode == null)
 			return;
 		this.tryApplyDebuff();
-    }
+	}
 	
 	public void atTurnStart() {
 		if (this.isActive)
@@ -53,8 +53,8 @@ public class OneHitWonderUp extends AbstractUpgradedRelic {
 	public int onPlayerHeal(final int amount) {
 		this.controlPulse();
 		updateHp(amount);
-        return amount;
-    }
+		return amount;
+	}
 	
 	public void onAttack(final DamageInfo info, final int damageAmount, final AbstractCreature target) {
 		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
@@ -92,9 +92,9 @@ public class OneHitWonderUp extends AbstractUpgradedRelic {
 
 	private void controlPulse() {
 		if (isActive()) {
-		    beginLongPulse();
+			beginLongPulse();
 		} else {
-		    stopPulse();
+			stopPulse();
 		}
 	}
 	

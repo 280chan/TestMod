@@ -27,7 +27,7 @@ public class VentureCapitalUp extends AbstractUpgradedRelic implements CounterKe
 	
 	public void onEquip() {
 		this.counter = 0;
-    }
+	}
 	
 	private void increaseCounter(int gold) {
 		if (this.counter * 1.0 + gold >= LIMIT)

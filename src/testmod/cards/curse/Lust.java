@@ -15,22 +15,22 @@ public class Lust extends AbstractTestCurseCard {
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int BASE_MGC = 1;
+	private static final int BASE_MGC = 1;
 
-    public Lust() {
-    	super(ID, NAME, DESCRIPTION);
-    	this.magicNumber = this.baseMagicNumber = BASE_MGC;
-    }
+	public Lust() {
+		super(ID, NAME, DESCRIPTION);
+		this.magicNumber = this.baseMagicNumber = BASE_MGC;
+	}
 
 	public void triggerOnEndOfPlayerTurn() {
-	    this.addToBot(this.apply(p(), new WeakPower(p(), this.magicNumber, false)));
-	    this.addToBot(this.apply(p(), new FrailPower(p(), this.magicNumber, false)));
-	    this.addToBot(this.apply(p(), new VulnerablePower(p(), this.magicNumber, false)));
+		this.atb(this.apply(p(), new WeakPower(p(), this.magicNumber, false)));
+		this.atb(this.apply(p(), new FrailPower(p(), this.magicNumber, false)));
+		this.atb(this.apply(p(), new VulnerablePower(p(), this.magicNumber, false)));
 	}
-    
-    public AbstractCard makeCopy() {
+	
+	public AbstractCard makeCopy() {
 		if (Sins.isObtained())
-	        return new Lust();
+			return new Lust();
 		return Sins.copyCurse();
-    }
+	}
 }

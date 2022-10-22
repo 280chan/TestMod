@@ -26,7 +26,7 @@ public class GoldenSoulUp extends AbstractUpgradedRevivalRelic implements Counte
 			p().increaseMaxHp(p().gold, true);
 			p().loseGold(p().gold);
 		}
-    }
+	}
 	
 	public int onLoseHpLast(int damage) {
 		if (damage >= p().currentHealth) {

@@ -71,7 +71,7 @@ public class ThousandKnivesUp extends AbstractUpgradedRelic implements Clickable
 			p().gainGold(1);
 			this.show();
 		}
-    }
+	}
 	
 	private void add(AbstractCard c) {
 		this.att(new MakeTempCardInHandAction(c));
@@ -89,7 +89,7 @@ public class ThousandKnivesUp extends AbstractUpgradedRelic implements Clickable
 			tmp.group = this.list;
 			AbstractDungeon.gridSelectScreen.open(tmp, tmp.size(), true, this.DESCRIPTIONS[1]);
 			addTmpActionToTop(() -> reverse(AbstractDungeon.gridSelectScreen.selectedCards).forEach(this::add));
-    	});
+		});
 	}
 
 }

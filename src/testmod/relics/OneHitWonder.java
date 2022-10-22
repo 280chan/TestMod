@@ -28,7 +28,7 @@ public class OneHitWonder extends AbstractTestRelic {
 		if (AbstractDungeon.currMapNode == null)
 			return;
 		this.tryApplyDebuff();
-    }
+	}
 	
 	public void atTurnStart() {
 		if (this.isActive)
@@ -52,8 +52,8 @@ public class OneHitWonder extends AbstractTestRelic {
 	public int onPlayerHeal(final int amount) {
 		this.controlPulse();
 		updateHp(amount);
-        return amount;
-    }
+		return amount;
+	}
 	
 	public void onAttack(final DamageInfo info, final int damageAmount, final AbstractCreature target) {
 		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT)
@@ -91,9 +91,9 @@ public class OneHitWonder extends AbstractTestRelic {
 
 	private void controlPulse() {
 		if (isActive()) {
-		    beginLongPulse();
+			beginLongPulse();
 		} else {
-		    stopPulse();
+			stopPulse();
 		}
 	}
 	

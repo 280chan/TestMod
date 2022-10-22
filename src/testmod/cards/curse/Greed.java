@@ -10,25 +10,25 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class Greed extends AbstractTestCurseCard {
-    public static final String ID = "Greed";
+	public static final String ID = "Greed";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int BASE_MGC = 1;
+	private static final int BASE_MGC = 1;
 
-    public Greed() {
-    	super(ID, NAME, DESCRIPTION);
-    	this.magicNumber = this.baseMagicNumber = BASE_MGC;
-    	this.exhaust = true;
-    }
+	public Greed() {
+		super(ID, NAME, DESCRIPTION);
+		this.magicNumber = this.baseMagicNumber = BASE_MGC;
+		this.exhaust = true;
+	}
 
 	public void triggerWhenDrawn() {
-		this.addToBot(new ApplyPowerAction(p(), p(), new GreedPower(p(), this.magicNumber), this.magicNumber));
+		this.atb(new ApplyPowerAction(p(), p(), new GreedPower(p(), this.magicNumber), this.magicNumber));
 	}
-    
-    public AbstractCard makeCopy() {
+	
+	public AbstractCard makeCopy() {
 		if (Sins.isObtained())
-	        return new Greed();
+			return new Greed();
 		return Sins.copyCurse();
-    }
+	}
 }

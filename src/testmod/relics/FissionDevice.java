@@ -69,16 +69,16 @@ public class FissionDevice extends AbstractTestRelic implements ClickableRelic {
 	
 	public void atTurnStart() {
 		this.playerTurn = true;
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.playerTurn = false;
-    }
+	}
 	
 	public void onVictory() {
 		this.playerTurn = false;
 		this.stopPulse();
-    }
+	}
 	
 	public void onRefreshHand() {
 		if (this.inCombat() && this.playerTurn && p().hand.group.stream().anyMatch(this::check)) {

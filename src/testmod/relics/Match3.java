@@ -13,6 +13,6 @@ public class Match3 extends AbstractTestRelic {
 	public void atTurnStartPostDraw() {
 		act(p().relics.size());
 		act(p().drawPile.size());
-    }
+	}
 
 }

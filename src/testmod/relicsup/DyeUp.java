@@ -28,7 +28,7 @@ public class DyeUp extends AbstractUpgradedRelic implements ClickableRelic {
 		this.used = false;
 		COPY.clear();
 		this.togglePulse(true);
-    }
+	}
 	
 	private void togglePulse(boolean flag) {
 		if (flag && !this.used) {
@@ -46,7 +46,7 @@ public class DyeUp extends AbstractUpgradedRelic implements ClickableRelic {
 	
 	public void onPlayerEndTurn() {
 		this.togglePulse(false);
-    }
+	}
 	
 	public void onVictory() {
 		this.togglePulse(false);

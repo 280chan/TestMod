@@ -35,11 +35,11 @@ public class DreamHouse extends AbstractTestRelic {
 	public void onEquip() {
 		this.addEnergy();
 		this.setTryEquip(true);
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	public void update() {
 		super.update();

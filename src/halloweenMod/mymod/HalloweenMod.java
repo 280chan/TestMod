@@ -80,9 +80,9 @@ public class HalloweenMod implements EditKeywordsSubscriber, EditRelicsSubscribe
 			break;
 		}
 		String pathPrefix = "halloweenResources/localization/" + MOD_PREFIX;
-	    BaseMod.loadCustomStringsFile(RelicStrings.class, pathPrefix + "Relic" + lang);
-	    BaseMod.loadCustomStringsFile(CardStrings.class, pathPrefix + "Card" + lang);
-	    BaseMod.loadCustomStringsFile(PowerStrings.class, pathPrefix + "Power" + lang);
+		BaseMod.loadCustomStringsFile(RelicStrings.class, pathPrefix + "Relic" + lang);
+		BaseMod.loadCustomStringsFile(CardStrings.class, pathPrefix + "Card" + lang);
+		BaseMod.loadCustomStringsFile(PowerStrings.class, pathPrefix + "Power" + lang);
 	}
 
 	@Override

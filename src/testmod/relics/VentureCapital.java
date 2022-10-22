@@ -25,7 +25,7 @@ public class VentureCapital extends AbstractTestRelic {
 		if (p().gold > 0)
 			this.increaseCounter(p().gold);
 		p().loseGold(p().gold);
-    }
+	}
 	
 	private void increaseCounter(int gold) {
 		this.counter += gold;

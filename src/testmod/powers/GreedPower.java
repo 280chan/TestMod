@@ -17,14 +17,14 @@ public class GreedPower extends AbstractTestPower {
 		 this.description = desc(0) + this.amount + desc(1) + this.amount + desc(2);
 	}
 	
-    public void atEndOfTurn(final boolean isPlayer) {
-    	int handLeft = p().hand.size() * this.amount;
-    	int energyLeft = EnergyPanel.totalCount * this.amount;
+	public void atEndOfTurn(final boolean isPlayer) {
+		int handLeft = p().hand.size() * this.amount;
+		int energyLeft = EnergyPanel.totalCount * this.amount;
 		if (handLeft > 0)
-			this.addToBot(this.apply(p(), new DischargePower(p(), this.amount)));
+			this.atb(this.apply(p(), new DischargePower(p(), this.amount)));
 		if (energyLeft > 0)
-			this.addToBot(this.apply(p(), new DrawDownPower(p(), this.amount)));
-    	this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-    }
-    
+			this.atb(this.apply(p(), new DrawDownPower(p(), this.amount)));
+		this.atb(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+	}
+
 }

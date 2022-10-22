@@ -220,7 +220,7 @@ public interface MiscMethods {
 			SkipMonsterIntentPatch.allow = false;
 			AbstractDungeon.actionManager.callEndTurnEarlySequence();
 		});
-    }
+	}
 	
 	@SpirePatch(clz = GameActionManager.class, method = "getNextAction")
 	public static class SkipMonsterIntentPatch {
@@ -271,8 +271,8 @@ public interface MiscMethods {
 			c.calculateCardDamage(m);
 		else
 			c.applyPowers();
-        att(new NewQueueCardAction(c, m, true, true));
-        this.print("添加队列了:" + c.name);
+		att(new NewQueueCardAction(c, m, true, true));
+		this.print("添加队列了:" + c.name);
 	}
 	
 	default void autoplayInOrder(AbstractCard self, ArrayList<AbstractCard> list, AbstractMonster m) {
@@ -323,10 +323,10 @@ public interface MiscMethods {
 		ArrayList<AbstractGameAction> actions = new ArrayList<AbstractGameAction>();
 		actions.addAll(AbstractDungeon.actionManager.actions);
 		m.takeTurn();
-    	AbstractDungeon.actionManager.actions.clear();
-    	AbstractDungeon.actionManager.actions.addAll(actions);
-    	this.addTmpActionToTop(AbstractDungeon.getMonsters()::showIntent);
-    	att(new RollMoveAction(m));
+		AbstractDungeon.actionManager.actions.clear();
+		AbstractDungeon.actionManager.actions.addAll(actions);
+		this.addTmpActionToTop(AbstractDungeon.getMonsters()::showIntent);
+		att(new RollMoveAction(m));
 	}
 	
 	public static class ColorRegister {
@@ -693,17 +693,17 @@ public interface MiscMethods {
 		return t -> {};
 	}
 	
-    default <T> Predicate<T> not(Predicate<T> a) {
-    	return a.negate();
-    }
+	default <T> Predicate<T> not(Predicate<T> a) {
+		return a.negate();
+	}
 
 	default <T> Predicate<T> and(Predicate<T>... list) {
-    	return Stream.of(list).reduce(a -> true, Predicate::and);
-    }
+		return Stream.of(list).reduce(a -> true, Predicate::and);
+	}
 
 	default <T> Predicate<T> or(Predicate<T>... list) {
-    	return Stream.of(list).reduce(a -> false, Predicate::or);
-    }
+		return Stream.of(list).reduce(a -> false, Predicate::or);
+	}
 	
 	default <T> Supplier<T> get(Supplier<T> f) {
 		return f;
@@ -913,12 +913,12 @@ public interface MiscMethods {
 	
 	default DamageRandomEnemyAction randomDamage(int dmg, DamageType type) {
 		AttackEffect effect = AttackEffect.BLUNT_HEAVY;
-	    if (dmg < 6) {
-	      effect = AttackEffect.BLUNT_LIGHT;
-	    } else if (dmg < 10) {
-	      effect = AttackEffect.SMASH;
-	    }
-	    return new DamageRandomEnemyAction(new DamageInfo(p(), dmg, DamageType.THORNS), effect);
+		if (dmg < 6) {
+		  effect = AttackEffect.BLUNT_LIGHT;
+		} else if (dmg < 10) {
+		  effect = AttackEffect.SMASH;
+		}
+		return new DamageRandomEnemyAction(new DamageInfo(p(), dmg, DamageType.THORNS), effect);
 	}
 	
 	default boolean upgraded(AbstractRelic r) {
@@ -947,92 +947,92 @@ public interface MiscMethods {
 	}
 	
 	public static class Prime {
-    	private static final ArrayList<Integer> PRIME = new ArrayList<Integer>();
+		private static final ArrayList<Integer> PRIME = new ArrayList<Integer>();
 
-    	public static void clear() {
-    		PRIME.clear();
-    	}
-    	
-    	static int find(int n) {
-    		if (n < 3)
-    			return n + 1;
-    		if (PRIME.isEmpty()) {
-    			PRIME.add(2);
-    			PRIME.add(3);
-    		}
-    		for (int x = PRIME.get(PRIME.size() - 1); PRIME.size() < n;)
-    			addIfIsPrime(x += 2);
-    		return PRIME.get(n - 1);
-    	}
+		public static void clear() {
+			PRIME.clear();
+		}
+		
+		static int find(int n) {
+			if (n < 3)
+				return n + 1;
+			if (PRIME.isEmpty()) {
+				PRIME.add(2);
+				PRIME.add(3);
+			}
+			for (int x = PRIME.get(PRIME.size() - 1); PRIME.size() < n;)
+				addIfIsPrime(x += 2);
+			return PRIME.get(n - 1);
+		}
 
-    	private static void addIfIsPrime(int x) {
-    		for (int i = 1; PRIME.get(i) <= (int) Math.sqrt(x) && i < PRIME.size(); i++)
-    			if (x % PRIME.get(i) == 0)
-    				return;
-    		PRIME.add(x);
-    	}
+		private static void addIfIsPrime(int x) {
+			for (int i = 1; PRIME.get(i) <= (int) Math.sqrt(x) && i < PRIME.size(); i++)
+				if (x % PRIME.get(i) == 0)
+					return;
+			PRIME.add(x);
+		}
 
-    	private static int indexOf(int start, int num) {
-    		int size = PRIME.size();
-    		if (num < 2 || num > 2147483629)
-    			return -1;
-    		if (size > 0 && PRIME.get(size - 1) >= num) {
-    			for (int i = start; i < size; i++)
-    				if (PRIME.get(i) == num)
-    					return i + 1;
-    			return -1;
-    		}
-    		if (size > 100000000)
-    			find(105097564);
-    		else if (size > 10000000)
-    			find(size + 200000);
-    		else if (size > 1000000)
-    			find(size + 15000);
-    		else if (size > 100000)
-    			find(size + 1000);
-    		else
-    			find(Math.max(size * 2, 10000));
-    		return indexOf(size, num);
-    	}
+		private static int indexOf(int start, int num) {
+			int size = PRIME.size();
+			if (num < 2 || num > 2147483629)
+				return -1;
+			if (size > 0 && PRIME.get(size - 1) >= num) {
+				for (int i = start; i < size; i++)
+					if (PRIME.get(i) == num)
+						return i + 1;
+				return -1;
+			}
+			if (size > 100000000)
+				find(105097564);
+			else if (size > 10000000)
+				find(size + 200000);
+			else if (size > 1000000)
+				find(size + 15000);
+			else if (size > 100000)
+				find(size + 1000);
+			else
+				find(Math.max(size * 2, 10000));
+			return indexOf(size, num);
+		}
 
-    	public static int indexOf(int num) {
-    		return indexOf(0, num);
-    	}
+		public static int indexOf(int num) {
+			return indexOf(0, num);
+		}
 
-    	public static boolean isPrime(int num) {
-    		if (num < 2)
-    			return false;
-    		if (PRIME.size() < 100)
-    			find(100);
-    		if (PRIME.contains(num))
-    			return true;
-    		for (int i = 0; i < PRIME.size() && PRIME.get(i) <= (int) Math.sqrt(num); i++)
-    			if (num % PRIME.get(i) == 0)
-    				return false;
-    		int preSize = PRIME.size();
-    		if (PRIME.get(PRIME.size() - 1) <= (int) Math.sqrt(num)) {
-    			indexOf((int) Math.sqrt(num));
-        		for (int i = preSize; PRIME.get(i) <= (int) Math.sqrt(num) && i < PRIME.size(); i++)
-        			if (num % PRIME.get(i) == 0)
-        				return false;
-    		}
-    		return true;
-    	}
-    	
-    	public static ArrayList<Integer> primeFactorOf(int num) {
-    		if (num < 2 || isPrime(num)) {
-        		ArrayList<Integer> tmp = new ArrayList<Integer>();
-    			tmp.add(num);
-    			return tmp;
-    		}
-    		for (int i = 0, current = 2;; i++, current = PRIME.get(i))
-    			if (num % current == 0)
-    				return combine(current, primeFactorOf(num / current));
-    	}
-    	
-    	private static ArrayList<Integer> combine(int a, ArrayList<Integer> b){
-    		b.add(a);
-    		return b;
-    	}
-    }
+		public static boolean isPrime(int num) {
+			if (num < 2)
+				return false;
+			if (PRIME.size() < 100)
+				find(100);
+			if (PRIME.contains(num))
+				return true;
+			for (int i = 0; i < PRIME.size() && PRIME.get(i) <= (int) Math.sqrt(num); i++)
+				if (num % PRIME.get(i) == 0)
+					return false;
+			int preSize = PRIME.size();
+			if (PRIME.get(PRIME.size() - 1) <= (int) Math.sqrt(num)) {
+				indexOf((int) Math.sqrt(num));
+				for (int i = preSize; PRIME.get(i) <= (int) Math.sqrt(num) && i < PRIME.size(); i++)
+					if (num % PRIME.get(i) == 0)
+						return false;
+			}
+			return true;
+		}
+		
+		public static ArrayList<Integer> primeFactorOf(int num) {
+			if (num < 2 || isPrime(num)) {
+				ArrayList<Integer> tmp = new ArrayList<Integer>();
+				tmp.add(num);
+				return tmp;
+			}
+			for (int i = 0, current = 2;; i++, current = PRIME.get(i))
+				if (num % current == 0)
+					return combine(current, primeFactorOf(num / current));
+		}
+		
+		private static ArrayList<Integer> combine(int a, ArrayList<Integer> b){
+			b.add(a);
+			return b;
+		}
+	}
 }

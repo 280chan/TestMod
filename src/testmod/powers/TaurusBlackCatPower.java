@@ -21,7 +21,7 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 	
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
-        this.amount += stackAmount;
+		this.amount += stackAmount;
 		this.streamIfElse(AbstractDungeon.getMonsters().monsters.stream().filter(m -> !m.isDeadOrEscaped()),
 				TaurusBlackCatEnemyPower::hasThis, this::updateAmount, this::addEnemyPower);
 	}
@@ -65,5 +65,5 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 		AbstractDungeon.getMonsters().monsters.forEach(this::removeEnemyPower);
 		this.removed = true;
 	}
-    
+
 }

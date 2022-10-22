@@ -157,12 +157,12 @@ public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMetho
 			this.addAllCharacterRelics();
 		p().masterMaxOrbs += 1;
 		this.counter = 0;
-    }
+	}
 	
 	public void onUnequip() {
 		if (this.isActive)
 			this.removeAllCharacterRelics();
-    }
+	}
 
 	private void initAction(CardColor c) {
 		action = new DaVinciLibraryAction(this.cards(c), AbstractDungeon.screen);

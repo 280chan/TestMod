@@ -46,7 +46,7 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 			return;
 		this.counter = 0;
 		p().powers.add(new PhasePocketWatchPower());
-    }
+	}
 	
 	public void atTurnStart() {
 		enemyTurn = false;
@@ -64,16 +64,16 @@ public class PhasePocketWatch extends AbstractTestRelic implements ClickableReli
 			this.getIdenticalList(dmg, size).forEach(i -> this.atb(new LoseHPAction(p(), p(), i)));
 			this.counter = 0;
 		}
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		enemyTurn = true;
-    }
+	}
 	
 	public void onVictory() {
 		this.counter = -1;
 		this.enemyTurn = false;
-    }
+	}
 	
 	private class PhasePocketWatchPower extends AbstractTestPower implements InvisiblePower {
 		public PhasePocketWatchPower() {

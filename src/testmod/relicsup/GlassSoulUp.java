@@ -33,7 +33,7 @@ public class GlassSoulUp extends AbstractUpgradedRelic
 				TMP.clear();
 			}
 		}
-    }
+	}
 	
 	public void onEnterRoom(AbstractRoom r) {
 		if (this.isActive && !TMP.isEmpty()) {
@@ -73,12 +73,12 @@ public class GlassSoulUp extends AbstractUpgradedRelic
 			RELICS.clear();
 		if (this.relicStream(GlassSoulUp.class).count() > 1)
 			this.relicStream(GlassSoulUp.class).filter(r -> !r.isActive).limit(1).forEach(r -> r.counter = counter);
-    }
+	}
 	
 	public void atPreBattle() {
 		this.damaged = false;
 		this.stopPulse();
-    }
+	}
 	
 	public void onLoseHp(int amount) {
 		this.damaged |= amount > 0;
@@ -90,6 +90,6 @@ public class GlassSoulUp extends AbstractUpgradedRelic
 				this.counter += this.relicStream(GlassSoulUp.class).count();
 			tryPulse(true);
 		}
-    }
+	}
 
 }

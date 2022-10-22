@@ -38,10 +38,10 @@ public class LaevatainUp extends AbstractUpgradedRelic {
 					.forEach(this::revert));
 			this.show();
 		}
-    }
+	}
 	
 	public void onVictory() {
 		this.counter = -1;
-    }
+	}
 	
 }

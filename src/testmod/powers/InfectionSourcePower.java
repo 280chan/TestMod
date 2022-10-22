@@ -29,9 +29,9 @@ public class InfectionSourcePower extends AbstractTestPower implements Invisible
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
 	}
-    
-    public float atDamageFinalGive(final float damage, final DamageInfo.DamageType type) {
-    	return type == DamageType.NORMAL ? damage * 0.5F : damage;
-    }
+	
+	public float atDamageFinalGive(final float damage, final DamageInfo.DamageType type) {
+		return type == DamageType.NORMAL ? damage * 0.5F : damage;
+	}
 
 }

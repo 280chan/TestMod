@@ -34,7 +34,7 @@ public class GiantKiller extends AbstractTestRelic {
 	public void atPreBattle() {
 		tryApplyDebuff();
 		this.counter = -2;
-    }
+	}
 	
 	public void onVictory() {
 		this.counter = -1;

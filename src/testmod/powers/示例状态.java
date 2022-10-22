@@ -27,7 +27,7 @@ public class 示例状态 extends AbstractTestPower {
 	
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
-        this.amount += stackAmount;
+		this.amount += stackAmount;
 	}
 
 }

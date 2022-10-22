@@ -21,13 +21,13 @@ public class Brilliant extends AbstractTestRelic {
 	public void atBattleStart() {
 		applyDamage();
 		this.show();
-    }
+	}
 	
 	public void onMonsterDeath(final AbstractMonster m) {
 		if (AbstractDungeon.getMonsters().areMonstersBasicallyDead() || AbstractDungeon.getMonsters().areMonstersDead())
 			return;
 		applyDamage();
 		this.show();
-    }
+	}
 
 }

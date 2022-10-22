@@ -24,7 +24,7 @@ public class MistCoreUp extends AbstractUpgradedRelic {
 			p().increaseMaxHp(Math.max(1, p().maxHealth / 20), true);
 			this.flash();
 		}
-    }
+	}
 	
 	public static AbstractRoom getRoom() {
 		if (rng == null)

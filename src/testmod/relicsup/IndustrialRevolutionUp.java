@@ -33,7 +33,7 @@ public class IndustrialRevolutionUp extends AbstractUpgradedRelic implements Cli
 		AbstractDungeon.getMonsters().monsters.stream()
 				.filter(not(m -> m.isDead || m.isDying || m.halfDead || !m.hasPower("Artifact"))).peek(LIST::add)
 				.forEach(m -> m.powers.add(new InorganicPowerUp(m)));
-    }
+	}
 
 	private void tryAdd() {
 		if (!this.hasEnemies())
@@ -58,13 +58,13 @@ public class IndustrialRevolutionUp extends AbstractUpgradedRelic implements Cli
 			if (AbstractDungeon.getMonsters().monsters.stream().allMatch(m -> m.hasPower("Artifact")))
 				this.att(new GainEnergyAction((int) this.relicStream(IndustrialRevolutionUp.class).count()));
 		});
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		if (!isActive)
 			return;
 		tryAdd();
-    }
+	}
 
 	@Override
 	public void onRightClick() {
@@ -109,7 +109,5 @@ public class IndustrialRevolutionUp extends AbstractUpgradedRelic implements Cli
 		public boolean onReceivePower(AbstractPower p, AbstractCreature t, AbstractCreature s) {
 			return !(check(s) && t.equals(this.owner) && p.type == PowerType.BUFF) || InorganicPower.isException(p);
 		}
-	    
 	}
-	
 }

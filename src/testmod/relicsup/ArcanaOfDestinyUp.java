@@ -21,7 +21,7 @@ public class ArcanaOfDestinyUp extends AbstractUpgradedRelic {
 	
 	public void atPreBattle() {
 		tryApplyDebuff();
-    }
+	}
 
 	public void update() {
 		super.update();

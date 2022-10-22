@@ -40,7 +40,7 @@ public class ConstraintPeriapt extends AbstractTestRelic {
 			this.atb(new DamageAllEnemiesAction(p(), DamageInfo.createDamageMatrix(10, true), DamageType.THORNS,
 					AttackEffect.FIRE));
 		}
-    }
+	}
 	
 	private boolean checkPlayable(AbstractPlayer p, AbstractCard c) {
 		EnergyPanel.totalCount = c.costForTurn;

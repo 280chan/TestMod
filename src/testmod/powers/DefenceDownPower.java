@@ -29,11 +29,11 @@ public class DefenceDownPower extends AbstractTestPower {
 		return chain(relicStream(AscensionHeart.class).map(r -> get(this::dmg))).apply(input);
 	}
 	
-    public float atDamageReceive(float damage, DamageType damageType) {
-        return dmgRate(damage);
-    }
-    
-    private boolean single() {
+	public float atDamageReceive(float damage, DamageType damageType) {
+		return dmgRate(damage);
+	}
+	
+	private boolean single() {
 		return relicStream(AscensionHeart.class).count() == 1;
 	}
 }

@@ -56,13 +56,13 @@ public class IWantAllUp extends AbstractUpgradedRelic implements ClickableRelic,
 			mode = 0;
 		}
 		this.updateDescription();
-    }
+	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (this.victory) {
 			this.togglePulse(this, victory = false);
 		}
-    }
+	}
 	
 	private RewardItem copy(RewardItem r) {
 		RewardItem item = new RewardItem(new EscapePotion());

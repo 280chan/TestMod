@@ -15,18 +15,18 @@ import com.megacrit.cardcrawl.monsters.*;
 public class TemporaryDeletion extends AbstractTestCard {
 	private static final UIStrings UI = MISC.uiString();
 
-    public TemporaryDeletion() {
-        super(1, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
-        this.isEthereal = true;
-    }
+	public TemporaryDeletion() {
+		super(1, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
+		this.isEthereal = true;
+	}
 
-    public void use(final AbstractPlayer p, final AbstractMonster m) {
-        this.addTmpActionToBot(() -> {
-        	CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
-        	this.combatCards().forEach(g.group::add);
-            g.removeCard(this);
-            p.hand.group.forEach(AbstractCard::beginGlowing);
-            
+	public void use(final AbstractPlayer p, final AbstractMonster m) {
+		this.addTmpActionToBot(() -> {
+			CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
+			this.combatCards().forEach(g.group::add);
+			g.removeCard(this);
+			p.hand.group.forEach(AbstractCard::beginGlowing);
+			
 			if (g.group.size() == 1) {
 				deleteCard(p, g.getTopCard());
 				return;
@@ -34,12 +34,12 @@ public class TemporaryDeletion extends AbstractTestCard {
 				return;
 			}
 			AbstractDungeon.gridSelectScreen.open(g, 1, UI.TEXT[0], false, false, false, false);
-            this.addTmpActionToTop(() -> {
-    			deleteCard(p, AbstractDungeon.gridSelectScreen.selectedCards.get(0));
-    			AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            });
-        });
-    }
+			this.addTmpActionToTop(() -> {
+				deleteCard(p, AbstractDungeon.gridSelectScreen.selectedCards.get(0));
+				AbstractDungeon.gridSelectScreen.selectedCards.clear();
+			});
+		});
+	}
 	
 	private void deleteCard(AbstractPlayer p, AbstractCard c) {
 		this.addToTop(apply(p, new TemporaryDeletionPower(p, 1, c)));
@@ -52,10 +52,10 @@ public class TemporaryDeletion extends AbstractTestCard {
 		g.group = tmp;
 	}
 
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBaseCost(0);
-        }
-    }
+	public void upgrade() {
+		if (!this.upgraded) {
+			this.upgradeName();
+			this.upgradeBaseCost(0);
+		}
+	}
 }

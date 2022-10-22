@@ -21,6 +21,6 @@ public class GremlinBalance extends AbstractTestRelic {
 			this.atb(new GainEnergyAction(e));
 		if (c > 0)
 			this.atb(new DrawCardAction(c));
-    }
+	}
 
 }

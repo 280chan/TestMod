@@ -16,10 +16,10 @@ public class DischargePower extends AbstractTestPower {
 	public void updateDescription() {
 		 this.description = desc(0) + this.amount + desc(1);
 	}
-    
-    public void atEnergyGain() {
-    	this.addToBot(new LoseEnergyAction(this.amount));
-    	this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-    }
+	
+	public void atEnergyGain() {
+		this.atb(new LoseEnergyAction(this.amount));
+		this.atb(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+	}
 
 }

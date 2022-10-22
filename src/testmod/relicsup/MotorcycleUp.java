@@ -12,11 +12,11 @@ public class MotorcycleUp extends AbstractUpgradedRelic implements ClickableReli
 	public void atPreBattle() {
 		if (!checkBoss())
 			this.beginLongPulse();
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.stopPulse();
-    }
+	}
 	
 	public void onVictory() {
 		this.stopPulse();

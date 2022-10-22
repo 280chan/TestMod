@@ -45,30 +45,30 @@ public class DragonStarHat extends AbstractTestRelic {
 			if (--this.counter == 0)
 				this.stopPulse();
 		}
-    }
+	}
 	
 	public void onRest() {
 		if (!this.isActive || this.relicStream(DragonStarHatUp.class).count() > 0)
 			return;
-	    flash();
-	    maxValue += this.relicStream(DragonStarHat.class).count();
-	    this.relicStream(DragonStarHat.class).forEach(r -> r.counter = maxValue);
-	    this.beginLongPulse();
-    }
+		flash();
+		maxValue += this.relicStream(DragonStarHat.class).count();
+		this.relicStream(DragonStarHat.class).forEach(r -> r.counter = maxValue);
+		this.beginLongPulse();
+	}
 	
 	public void onEnterRestRoom() {
 		if (this.isActive && TestMod.hasSaveData("HatMaxStr")) {
 			maxValue = TestMod.getInt("HatMaxStr");
 			this.relicStream(DragonStarHat.class).forEach(r -> r.counter = maxValue);
 		}
-	    if ((this.counter = maxValue) > 0)
-	    	this.beginLongPulse();
+		if ((this.counter = maxValue) > 0)
+			this.beginLongPulse();
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (this.isActive && !(room instanceof RestRoom || maxValue == TestMod.getInt("HatMaxStr")))
 			save();
-    }
+	}
 	
 	public boolean canSpawn() {
 		return Settings.isEndless || AbstractDungeon.actNum < 2;

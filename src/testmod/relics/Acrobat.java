@@ -32,7 +32,7 @@ public class Acrobat extends AbstractTestRelic {
 		this.increasing = this.counter <= index;
 		this.counter = index;
 		this.updateHandGlow();
-    }
+	}
 	
 	public void onRefreshHand() {
 		if (color == null)
@@ -62,7 +62,7 @@ public class Acrobat extends AbstractTestRelic {
 	public void atTurnStart() {
 		this.counter = -1;
 		this.inited = false;
-    }
+	}
 
 	public void onVictory() {
 		this.stopPulse();

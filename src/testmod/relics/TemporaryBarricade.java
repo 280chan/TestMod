@@ -17,7 +17,7 @@ public class TemporaryBarricade extends AbstractTestRelic implements ClickableRe
 			this.stopPulse();
 			this.atb(apply(p(), new BarricadePower(p())));
 		}
-    }
+	}
 	
 	public static int f(int x) {
 		return (x > 1) ? (int) Math.pow(Math.log(x), 2.5) : 0;
@@ -35,13 +35,13 @@ public class TemporaryBarricade extends AbstractTestRelic implements ClickableRe
 				}
 			}
 		});
-    }
+	}
 
 	public void onVictory() {
 		if (this.active()) {
 			this.beginLongPulse();
 		}
-    }
+	}
 	
 	private boolean active() {
 		return this.counter == -2;

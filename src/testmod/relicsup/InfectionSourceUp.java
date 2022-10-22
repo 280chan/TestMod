@@ -45,14 +45,14 @@ public class InfectionSourceUp extends AbstractUpgradedRelic {
 		public void stackPower(final int stackAmount) {
 			this.fontScale = 8.0f;
 		}
-	    
-	    public int onAttacked(final DamageInfo info, final int dmg) {
+		
+		public int onAttacked(final DamageInfo info, final int dmg) {
 			if (info.type != DamageType.HP_LOSS && dmg > 0) {
 				this.relicStream(InfectionSourceUp.class).peek(r -> r.show())
 						.forEach(r -> att(apply(p(), new PoisonPower(owner, p(), dmg))));
 			}
-	    	return dmg;
-	    }
+			return dmg;
+		}
 
 	}
 

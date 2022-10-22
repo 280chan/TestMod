@@ -15,11 +15,11 @@ public class RestrainedUp extends AbstractUpgradedRelic {
 
 	public void onEquip() {
 		this.addEnergy();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
 		if (c.type == CardType.POWER) {
@@ -33,7 +33,7 @@ public class RestrainedUp extends AbstractUpgradedRelic {
 	
 	public void onPlayCard(final AbstractCard c, final AbstractMonster m) {
 		this.played |= c.type == CardType.POWER;
-    }
+	}
 
 	public void atTurnStart() {
 		this.counter++;
@@ -42,7 +42,7 @@ public class RestrainedUp extends AbstractUpgradedRelic {
 	public void atPreBattle() {
 		this.counter = 0;
 		this.played = false;
-    }
+	}
 
 	public void onVictory() {
 		this.counter = -1;

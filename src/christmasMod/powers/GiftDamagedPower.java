@@ -38,7 +38,7 @@ public class GiftDamagedPower extends AbstractTestPower {
 	public void updateDescription() {
 		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
 	}
-    
+	
 	private boolean isGift(AbstractCard c) {
 		return ChristmasMod.GIFTS.stream().map(a -> a.cardID).anyMatch(c.cardID::equals);
 	}
@@ -63,7 +63,7 @@ public class GiftDamagedPower extends AbstractTestPower {
 		} else if (check(c))
 			modify(c);
 	}
-    
+	
 	public void onUseCard(AbstractCard c, UseCardAction a) {
 		if (isGift(c)) {
 			flash();
@@ -80,5 +80,5 @@ public class GiftDamagedPower extends AbstractTestPower {
 	public void onRemove() {
 		combatCards(false, true).filter(this::isGift).forEach(c -> c.freeToPlayOnce = false);
 	}
-    
+
 }

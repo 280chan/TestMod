@@ -46,19 +46,18 @@ public class AssimilatedRunePower extends AbstractTestPower {
 		return this.upgraded ? this.combatCards() : p().hand.group.stream();
 	}
 	
-    public float atDamageGive(final float damage, final DamageType type) {
-    	return type == DamageType.NORMAL && isActive() ? Math.max(this.maxIn(this.getList(), true), damage) : damage;
-    }
-    
-    public void atEndOfTurn(final boolean isPlayer) {
-    	if (isPlayer) {
-    		this.addToBot(new ReducePowerAction(this.owner, this.owner, this.ID, 1));
-    	}
-    }
-    
-    public float modifyBlock(final float blockAmount) {
-    	return isActive() ? this.maxIn(this.getList(), false) : blockAmount;
-    }
+	public float atDamageGive(final float damage, final DamageType type) {
+		return type == DamageType.NORMAL && isActive() ? Math.max(this.maxIn(this.getList(), true), damage) : damage;
+	}
+	
+	public void atEndOfTurn(final boolean isPlayer) {
+		if (isPlayer) {
+			this.atb(new ReducePowerAction(this.owner, this.owner, this.ID, 1));
+		}
+	}
+	
+	public float modifyBlock(final float blockAmount) {
+		return isActive() ? this.maxIn(this.getList(), false) : blockAmount;
+	}
 
-    
 }

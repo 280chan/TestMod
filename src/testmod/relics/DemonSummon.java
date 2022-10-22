@@ -26,7 +26,7 @@ public class DemonSummon extends AbstractTestRelic {
 		this.counter++;
 		this.att(this.apply(this.p(), demon(p(), this.counter, this.counter)));
 		this.show();
-    }
+	}
 	
 	public static AbstractPower demon(AbstractCreature owner, int amount, int version) {
 		return version <= 1 ? new DemonFormPower(owner, amount) : new DemonSummonPower(owner, amount, version);
@@ -53,7 +53,7 @@ public class DemonSummon extends AbstractTestRelic {
 		
 		public void stackPower(final int stackAmount) {
 			this.fontScale = 8.0f;
-	        this.amount += stackAmount;
+			this.amount += stackAmount;
 		}
 		
 		public void atStartOfTurnPostDraw() {

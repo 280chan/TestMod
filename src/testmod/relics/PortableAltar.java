@@ -69,7 +69,7 @@ public class PortableAltar extends AbstractTestRelic {
 		if (!this.hasStack(AbstractUpgradedRelic.class.getCanonicalName(), "bossObtainLogic")) {
 			p().increaseMaxHp(maxHPLost, true);
 		}
-    }
+	}
 	
 	public void atBattleStart() {
 		if (!isActive)
@@ -102,7 +102,7 @@ public class PortableAltar extends AbstractTestRelic {
 		this.show();
 		this.loseMaxHP(1);
 		this.turn = -1;
-    }
+	}
 	
 	public boolean canSpawn() {
 		return Settings.isEndless || AbstractDungeon.actNum < 2;

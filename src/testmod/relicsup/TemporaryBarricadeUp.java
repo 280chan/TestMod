@@ -20,7 +20,7 @@ public class TemporaryBarricadeUp extends AbstractUpgradedRelic {
 		this.flash();
 		this.stopPulse();
 		this.atb(apply(p(), new BarricadePower(p())));
-    }
+	}
 	
 	public void atTurnStart() {
 		this.addTmpActionToBot(() -> {
@@ -35,6 +35,6 @@ public class TemporaryBarricadeUp extends AbstractUpgradedRelic {
 				this.show();
 			}
 		});
-    }
+	}
 
 }

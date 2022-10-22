@@ -85,7 +85,7 @@ public class Encyclopedia extends AbstractTestRelic {
 		if (AbstractDungeon.getMonsters() != null && AbstractDungeon.getMonsters().monsters != null)
 			AbstractDungeon.getMonsters().monsters.forEach(this::put);
 		start = true;
-    }
+	}
 	
 	public void update() {
 		super.update();
@@ -104,7 +104,7 @@ public class Encyclopedia extends AbstractTestRelic {
 		//save();
 		start = false;
 		victory = true;
-    }
+	}
 	
 	@SpirePatch(clz = AbstractRoom.class, method = "update")
 	public static class StupidSavePatch {

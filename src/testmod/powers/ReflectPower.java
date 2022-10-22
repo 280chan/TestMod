@@ -19,17 +19,17 @@ public class ReflectPower extends AbstractTestPower {
 	public void updateDescription() {
 		 this.description = desc(0) + this.amount + desc(1);
 	}
-    
-    public void atEndOfTurn(final boolean isPlayer) {
-    	if (isPlayer) {
-    	    this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-    	}
-    }
-    
-    private static boolean checkType(CardType t) {
-    	return t != CardType.CURSE && t != CardType.STATUS;
-    }
-    
+	
+	public void atEndOfTurn(final boolean isPlayer) {
+		if (isPlayer) {
+			this.atb(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+		}
+	}
+	
+	private static boolean checkType(CardType t) {
+		return t != CardType.CURSE && t != CardType.STATUS;
+	}
+	
 	public void onUseCard(AbstractCard card, UseCardAction action) {
 		if ((!card.isInAutoplay) && checkType(card.type) && (this.amount > 0)) {
 			flash();
@@ -39,7 +39,7 @@ public class ReflectPower extends AbstractTestPower {
 			}
 			this.playAgain(card, m);
 			if (--this.amount == 0) {
-				this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+				this.att(new RemoveSpecificPowerAction(this.owner, this.owner, this));
 			} else {
 				this.updateDescription();
 			}

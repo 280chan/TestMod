@@ -30,6 +30,6 @@ public class Gather extends AbstractTestRelic {
 			openScreen(false);
 			this.flash();
 		}
-    }
+	}
 
 }

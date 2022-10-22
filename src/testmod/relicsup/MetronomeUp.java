@@ -89,13 +89,13 @@ public class MetronomeUp extends AbstractUpgradedRelic implements CounterKeeper 
 				this.counter = -1;
 			}
 		}
-    }
+	}
 	
 	public void onUnequip() {
 		this.cards.clear();
 		if (this.isActive)
 			save(cards);
-    }
+	}
 	
 	public void atPreBattle() {
 		if (!this.isActive)
@@ -107,13 +107,13 @@ public class MetronomeUp extends AbstractUpgradedRelic implements CounterKeeper 
 			this.beginLongPulse();
 		else
 			this.counter = -1;
-    }
+	}
 	
 	public void onVictory() {
 		this.act();
 		if (this.isActive) {
 			save(set(getList()));
 		}
-    }
+	}
 
 }

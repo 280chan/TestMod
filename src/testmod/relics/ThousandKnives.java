@@ -56,6 +56,6 @@ public class ThousandKnives extends AbstractTestRelic {
 			this.att(new MakeTempCardInHandAction(c.makeStatEquivalentCopy()));
 			this.show();
 		}
-    }
+	}
 
 }

@@ -11,17 +11,17 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 
 public class Wrath extends AbstractTestCurseCard {
 	private static final UIStrings UI = MISC.uiString();
-    public static final String ID = "Wrath";
+	public static final String ID = "Wrath";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final int BASE_MGC = 1;
+	private static final int BASE_MGC = 1;
 
-    public Wrath() {
-    	super(ID, NAME, DESCRIPTION);
-        this.magicNumber = this.baseMagicNumber = BASE_MGC;
-    	this.isEthereal = true;
-    }
+	public Wrath() {
+		super(ID, NAME, DESCRIPTION);
+		this.magicNumber = this.baseMagicNumber = BASE_MGC;
+		this.isEthereal = true;
+	}
 
 	public boolean canPlay(AbstractCard card) {
 		if (this.hasPrudence() || card.type == CardType.ATTACK)

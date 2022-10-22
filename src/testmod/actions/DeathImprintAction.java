@@ -17,10 +17,10 @@ public class DeathImprintAction extends AbstractGameAction {
 
 	public DeathImprintAction(AbstractPlayer p, AbstractMonster m, int damage, DamageType damageType) {
 		this.damage = damage;
-	    this.damageType = damageType;
-	    this.target = m;
-	    this.source = p;
-	    this.duration = Settings.ACTION_DUR_XFAST;
+		this.damageType = damageType;
+		this.target = m;
+		this.source = p;
+		this.duration = Settings.ACTION_DUR_XFAST;
 		this.actionType = ActionType.SPECIAL;
 	}
 	

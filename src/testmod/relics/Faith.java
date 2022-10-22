@@ -41,8 +41,8 @@ public class Faith extends AbstractTestRelic {
 
 	public void updateDescription(PlayerClass c) {
 		this.tips.clear();
-	    this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
-	    initializeTips();
+		this.tips.add(new PowerTip(this.name, this.getUpdatedDescription()));
+		initializeTips();
 	}
 	
 	private void damage(AbstractPlayer p) {
@@ -80,7 +80,7 @@ public class Faith extends AbstractTestRelic {
 			this.stopPulse();
 			this.flash();
 		}
-    }
+	}
 	
 	private void gainGold(AbstractPlayer p) {
 		this.preGold = p.gold;

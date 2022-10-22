@@ -31,7 +31,7 @@ public class EnergyCheckUp extends AbstractUpgradedRelic implements ClickableRel
 	
 	public void atPreBattle() {
 		this.counter = 0;
-    }
+	}
 	
 	public void onVictory() {
 		if (this.counter > p().currentHealth) {
@@ -58,7 +58,7 @@ public class EnergyCheckUp extends AbstractUpgradedRelic implements ClickableRel
 	
 	public void onPlayerEndTurn() {
 		newTurn = true;
-    }
+	}
 
 	@Override
 	public void onRightClick() {

@@ -35,7 +35,7 @@ public class WarPower extends AbstractTestPower {
 	public void updateDescription() {
 		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
 	}
-    
+	
 	private static AbstractGameAction currentAction() {
 		AbstractGameAction a = AbstractDungeon.actionManager.currentAction;
 		if (a instanceof DamageAllEnemiesAction) {
@@ -84,5 +84,5 @@ public class WarPower extends AbstractTestPower {
 			this.canApply = true;
 		}
 	}
-    
+
 }

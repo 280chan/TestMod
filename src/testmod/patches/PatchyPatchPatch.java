@@ -76,7 +76,7 @@ public class PatchyPatchPatch implements MiscMethods {
 				}
 			});
 		});
-    }
+	}
 
 	private static boolean isPatch(CtMethod m) {
 		return isPrefix(m) || isPostfix(m) || (!isLocator(m) && isInsert(m));

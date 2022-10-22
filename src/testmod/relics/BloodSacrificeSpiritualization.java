@@ -21,7 +21,7 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 	
 	private void play(AbstractCard c, boolean purge) {
 		c.purgeOnUse = purge;
-        att(new NewQueueCardAction(c, true, false, true));
+		att(new NewQueueCardAction(c, true, false, true));
 	}
 	
 	private Consumer<AbstractCard> play(int time) {
@@ -41,7 +41,7 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 			CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
 			g.group = this.combatCards().collect(this.toArrayList());
 			p().hand.group.forEach(AbstractCard::beginGlowing);
-	        int amount = Math.max(p().maxHealth / 10, 1);
+			int amount = Math.max(p().maxHealth / 10, 1);
 			if (g.group.isEmpty()) {
 				return;
 			}
@@ -61,7 +61,7 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 				}
 			});
 		});
-    }
+	}
 	
 	private void upgrade(AbstractCard card) {
 		if (card.canUpgrade()) {

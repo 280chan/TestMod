@@ -16,7 +16,7 @@ public class InfectionSource extends AbstractTestRelic {
 						.forEach(m -> m.powers.add(new InfectionPower(m)));
 			this.addPower(new InfectionSourcePower());
 		}
-    }
+	}
 	
 	public void atTurnStart() {
 		if (this.isActive && this.relicStream(InfectionSourceUp.class).count() == 0)

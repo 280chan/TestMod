@@ -57,7 +57,7 @@ public class BrilliantUp extends AbstractUpgradedRelic {
 	public void atBattleStart() {
 		applyDamage();
 		this.show();
-    }
+	}
 	
 	public void onMonsterDeath(final AbstractMonster m) {
 		this.gainTempGold();
@@ -65,6 +65,6 @@ public class BrilliantUp extends AbstractUpgradedRelic {
 			return;
 		applyDamage();
 		this.show();
-    }
+	}
 
 }

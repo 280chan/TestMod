@@ -10,10 +10,10 @@ public class ChristmasGift extends AbstractTestRelic {
 	public void onExhaust(final AbstractCard card) {
 		p().heal(1);
 		this.flash();
-    }
+	}
 	
 	public void atTurnStart() {
 		this.atb(new MakeTempCardInHandAction(ChristmasMod.randomGift(false)));
-    }
+	}
 	
 }

@@ -29,9 +29,9 @@ public class GiftLuckAction extends AbstractGameAction {
 	public void update() {
 		this.isDone = true;
 		int num = AbstractDungeon.miscRng.random(amount, amount + delta);
-		AbstractDungeon.actionManager.addToTop(new MakeTempCardInDiscardAction(new Dazed(), num));
+		addToTop(new MakeTempCardInDiscardAction(new Dazed(), num));
 		for (int i = 0; i < num; i++)
-			AbstractDungeon.actionManager.addToTop(new MakeTempCardInHandAction(ChristmasMod.randomGift(this.upgraded)));
+			addToTop(new MakeTempCardInHandAction(ChristmasMod.randomGift(this.upgraded)));
 	}
 
 }

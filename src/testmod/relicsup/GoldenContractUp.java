@@ -36,7 +36,7 @@ public class GoldenContractUp extends AbstractUpgradedRelic implements CounterKe
 	public void atPreBattle() {
 		if (this.isActive && p().powers.stream().noneMatch(p -> p instanceof GoldenContractPower))
 			p().powers.add(new GoldenContractPower());
-    }
+	}
 	
 	public double gainGold(double amount) {
 		return amount * Math.pow(1.001, this.updateCounter(1));

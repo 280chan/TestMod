@@ -39,7 +39,7 @@ public class EncyclopediaUp extends AbstractUpgradedRelic {
 		if (AbstractDungeon.getMonsters() != null && AbstractDungeon.getMonsters().monsters != null)
 			AbstractDungeon.getMonsters().monsters.forEach(this::put);
 		Encyclopedia.start = true;
-    }
+	}
 	
 	public void update() {
 		super.update();
@@ -58,7 +58,7 @@ public class EncyclopediaUp extends AbstractUpgradedRelic {
 		//save();
 		Encyclopedia.start = false;
 		Encyclopedia.victory = true;
-    }
+	}
 	
 	public static class EncyclopediaPowerUp extends AbstractTestPower {
 		public EncyclopediaPowerUp(AbstractCreature owner, int amount) {

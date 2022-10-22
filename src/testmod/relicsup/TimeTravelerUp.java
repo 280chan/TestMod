@@ -58,13 +58,13 @@ public class TimeTravelerUp extends AbstractUpgradedRelic implements CounterKeep
 	
 	public void onEquip() {
 		this.counter = 100;
-    }
+	}
 	
 	public void onUnequip() {
 		TimeTravelerUp t = this.relicStream(TimeTravelerUp.class).filter(r -> !r.isActive).findFirst().orElse(null);
 		if (t != null)
 			t.counter += this.counter;
-    }
+	}
 	
 	public void onMonsterDeath(AbstractMonster m) {
 		int a = MONSTER_SAN;
@@ -82,5 +82,5 @@ public class TimeTravelerUp extends AbstractUpgradedRelic implements CounterKeep
 	
 	public void onRest() {
 		this.counter += REST_SAN * this.counter;
-    }
+	}
 }

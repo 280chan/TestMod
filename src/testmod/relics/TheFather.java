@@ -24,7 +24,7 @@ public class TheFather extends AbstractTestRelic implements TheFatherCounter {
 		if (this.hasEnemies() && this.relicStream(TheFatherUp.class).count() == 0) {
 			TheFatherUp.tryAdd();
 		}
-    }
+	}
 	
 	public void atBattleStart() {
 		if (Prime.isPrime(counter + 1)) {
@@ -45,7 +45,7 @@ public class TheFather extends AbstractTestRelic implements TheFatherCounter {
 	
 	public void atTurnStart() {
 		TheFatherUp.tryAdd();
-    }
+	}
 	
 	public void count() {
 		this.counter++;

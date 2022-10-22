@@ -69,7 +69,7 @@ public class Temperance extends AbstractTestRelic {
 		if (!isActive)
 			return;
 		counter = 0;
-    }
+	}
 	
 	public boolean canSpawn() {
 		return Settings.isEndless || AbstractDungeon.actNum < 2;

@@ -17,12 +17,12 @@ public class PortablePortal extends AbstractTestRelic implements ClickableRelic 
 	
 	public void onEquip() {
 		this.counter = -2;
-    }
+	}
 	
 	public void onUnequip() {
 		if (this.counter == -3)
 			this.reduceEnergy();
-    }
+	}
 	
 	public void justEnteredRoom(AbstractRoom r) {
 		if (!(r instanceof MonsterRoom) && this.check(r))
@@ -63,11 +63,11 @@ public class PortablePortal extends AbstractTestRelic implements ClickableRelic 
 				room.phase = AbstractRoom.RoomPhase.COMPLETE;
 			AbstractDungeon.nextRoom = new MapRoomNode(-1, 15);
 			AbstractDungeon.nextRoom.room = new MonsterRoomBoss();
-	        CardCrawlGame.music.fadeOutTempBGM();
-	        AbstractDungeon.pathX.add(Integer.valueOf(1));
-	        AbstractDungeon.pathY.add(Integer.valueOf(15));
-	        AbstractDungeon.topLevelEffects.add(new FadeWipeParticle());
-	        AbstractDungeon.nextRoomTransitionStart();
+			CardCrawlGame.music.fadeOutTempBGM();
+			AbstractDungeon.pathX.add(Integer.valueOf(1));
+			AbstractDungeon.pathY.add(Integer.valueOf(15));
+			AbstractDungeon.topLevelEffects.add(new FadeWipeParticle());
+			AbstractDungeon.nextRoomTransitionStart();
 		}
 	}
 

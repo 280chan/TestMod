@@ -11,12 +11,12 @@ import testmod.utils.MiscMethods;
 
 public abstract class AbstractChristmasCard extends CustomCard implements Festival {
 	public static final String ID_PREFIX = "christmas-";
-    public static final String IMG = "christmasResources/images/relic0.png";
+	public static final String IMG = "christmasResources/images/relic0.png";
 	
 	protected static CardStrings Strings(String ID) {
 		return CardCrawlGame.languagePack.getCardStrings(ID_PREFIX + ID);
 	}
-    
+	
 	public AbstractChristmasCard(String id, String name, int cost, String description, CardType type,
 			CardTarget target) {
 		super(ID_PREFIX + id, name, IMG, cost, description, type, CardColor.COLORLESS, CardRarity.SPECIAL, target);

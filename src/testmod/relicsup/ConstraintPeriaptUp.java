@@ -35,7 +35,7 @@ public class ConstraintPeriaptUp extends AbstractUpgradedRelic {
 					DamageInfo.createDamageMatrix(i, true), DamageType.THORNS, AttackEffect.FIRE)));
 			this.counter += amount;
 		}
-    }
+	}
 	
 	private boolean checkPlayable(AbstractCard c) {
 		return AbstractDungeon.getMonsters().monsters.stream().anyMatch(m -> c.canUse(p(), m));

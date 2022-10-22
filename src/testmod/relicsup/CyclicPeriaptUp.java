@@ -61,7 +61,7 @@ public class CyclicPeriaptUp extends AbstractUpgradedRelic implements ClickableR
 		if (this.isActive && tmp > 9)
 			p().heal(tmp / 10);
 		this.counter %= 10;
-    }
+	}
 
 	@Override
 	public void onRightClick() {

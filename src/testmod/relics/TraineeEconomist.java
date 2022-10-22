@@ -56,12 +56,12 @@ public class TraineeEconomist extends AbstractTestRelic implements Economist {
 	
 	public void onEquip() {
 		this.counter = 0;
-    }
+	}
 	
 	public void onMonsterDeath(AbstractMonster m) {
 		this.counter += m.type.ordinal() + 1;
 		this.updateDescription();
-    }
+	}
 	
 	public double gainGold(double amount) {
 		this.flash();

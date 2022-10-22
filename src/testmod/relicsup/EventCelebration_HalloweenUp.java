@@ -11,7 +11,7 @@ import testmod.mymod.TestMod;
 
 public class EventCelebration_HalloweenUp extends AbstractUpgradedRelic {
 	public static final String ID = TestMod.makeID("HalloweenUp");
-    public static final String IMG = "halloweenResources/images/relic.png";
+	public static final String IMG = "halloweenResources/images/relic.png";
 	
 	public static boolean hasThis() {
 		return MISC.relicStream().anyMatch(r -> r instanceof EventCelebration_HalloweenUp);
@@ -40,6 +40,6 @@ public class EventCelebration_HalloweenUp extends AbstractUpgradedRelic {
 	public void onEquip() {
 		HalloweenMod.savedFloorNum = -2;
 		HalloweenMod.changeState();
-    }
+	}
 	
 }

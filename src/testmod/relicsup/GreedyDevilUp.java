@@ -19,7 +19,7 @@ public class GreedyDevilUp extends AbstractUpgradedRelic {
 			this.INFO_MAP.put(info, target);
 			target.powers.add(new GreedyDevilPowerUp(target));
 		}
-    }
+	}
 	
 	public void onVictory() {
 		this.INFO_MAP.clear();
@@ -41,7 +41,7 @@ public class GreedyDevilUp extends AbstractUpgradedRelic {
 		}
 		
 		public int onAttacked(final DamageInfo i, final int damage) {
-	    	if (INFO_MAP.containsKey(i)) {
+			if (INFO_MAP.containsKey(i)) {
 				int dmg = damage - this.owner.currentHealth;
 				if (dmg >= 0) {
 					if (dmg > 0)
@@ -54,7 +54,7 @@ public class GreedyDevilUp extends AbstractUpgradedRelic {
 				TO_REMOVE.add(this);
 			}
 			return damage;
-	    }
+		}
 	}
 
 }

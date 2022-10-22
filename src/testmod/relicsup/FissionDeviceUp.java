@@ -95,18 +95,18 @@ public class FissionDeviceUp extends AbstractUpgradedRelic implements ClickableR
 	
 	public void atTurnStart() {
 		this.playerTurn = true;
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.playerTurn = false;
-    }
+	}
 	
 	public void onVictory() {
 		this.playerTurn = false;
 		this.stopPulse();
 		if (this.isActive)
 			LIST.clear();
-    }
+	}
 	
 	public void onRefreshHand() {
 		if (this.inCombat() && this.playerTurn && p().hand.group.stream().anyMatch(this::check)) {

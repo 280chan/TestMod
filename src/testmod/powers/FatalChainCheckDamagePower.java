@@ -50,9 +50,9 @@ public class FatalChainCheckDamagePower extends AbstractTestPower implements Inv
 		MISC.att(new DamageAllEnemiesAction(MISC.p(), DamageInfo.createDamageMatrix(damage(original, upgrade), true),
 				DamageType.THORNS, AttackEffect.POISON));
 	}
-    
-    public int onAttacked(final DamageInfo info, final int damageAmount) {
-    	if (this.map.containsKey(info)) {
+	
+	public int onAttacked(final DamageInfo info, final int damageAmount) {
+		if (this.map.containsKey(info)) {
 			int dmg = damageAmount - this.map.get(info).currentHealth;
 			if (dmg > 0)
 				applyDamage(dmg, this.upgrade);
@@ -60,6 +60,6 @@ public class FatalChainCheckDamagePower extends AbstractTestPower implements Inv
 			this.toRemove.add(this);
 		}
 		return damageAmount;
-    }
-    
+	}
+
 }

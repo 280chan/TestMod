@@ -28,7 +28,7 @@ public class InfectionPower extends AbstractTestPower implements InvisiblePower 
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
 	}
-    
+	
 	public int onAttacked(final DamageInfo info, final int dmg) {
 		if (info.type == DamageType.NORMAL && dmg > 0) {
 			this.relicStream(InfectionSource.class).peek(r -> r.show())
@@ -36,6 +36,6 @@ public class InfectionPower extends AbstractTestPower implements InvisiblePower 
 			return 1;
 		}
 		return dmg;
-    }
+	}
 
 }

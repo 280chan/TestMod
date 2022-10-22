@@ -9,11 +9,11 @@ public class NegativeEmotionEnhancer extends AbstractTestRelic {
 
 	public void onEquip() {
 		this.addEnergy();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	public void atPreBattle() {
 		this.counter = 0;
@@ -35,7 +35,7 @@ public class NegativeEmotionEnhancer extends AbstractTestRelic {
 			this.atb(apply(p(), new VulnerablePower(p(), 1, false)));
 			break;
 		}
-    }
+	}
 
 	public void onVictory() {
 		p().increaseMaxHp(1, true);

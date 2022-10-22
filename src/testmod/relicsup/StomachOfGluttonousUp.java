@@ -20,7 +20,7 @@ public class StomachOfGluttonousUp extends AbstractUpgradedRelic implements Coun
 		} else if (p().maxHealth > 9) {
 			this.atb(new HealAction(p(), p(), p().maxHealth / 10));
 		}
-    }
+	}
 	
 	public float preChangeMaxHP(float amount) {
 		return (amount > 0) ? (100 + this.counter) * amount / 100 : amount;

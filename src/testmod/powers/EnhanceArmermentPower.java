@@ -31,19 +31,19 @@ public class EnhanceArmermentPower extends AbstractTestPower {
 	}
 	
 	private int multiplier() {
-    	return this.getIdenticalList(2, this.amount).stream().reduce(1, (a, b) -> a * b);
+		return this.getIdenticalList(2, this.amount).stream().reduce(1, (a, b) -> a * b);
 	}
 	
 	public float atDamageFinalGive(float damage, DamageType type) {
 		return type == DamageType.NORMAL ? (this.overflowDamage(damage) ? 2147450000 : damage * this.multiplier())
 				: damage;
 	}
-    
-    public void onUseCard(AbstractCard card, UseCardAction action) {
-    	if (card.type == CardType.ATTACK) {
-    		action.exhaustCard = true;
-    		this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-    	}
-    }
-    
+	
+	public void onUseCard(AbstractCard card, UseCardAction action) {
+		if (card.type == CardType.ATTACK) {
+			action.exhaustCard = true;
+			this.atb(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+		}
+	}
+
 }

@@ -13,28 +13,28 @@ import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 @SuppressWarnings("deprecation")
 public class Sloth extends AbstractTestCurseCard {
 	private static final UIStrings UI = MISC.uiString();
-    public static final String ID = "Sloth";
+	public static final String ID = "Sloth";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-    
-    private static int minNumCardsPlayed = -1;
-    
-    public static void endTurn() {
-    	if (minNumCardsPlayed == -1 || !checkMinimum()) {
-        	minNumCardsPlayed = AbstractDungeon.player.cardsPlayedThisTurn;
-    	}
-    }
-    
-    public static void startBattle() {
-    	minNumCardsPlayed = -1;
-    }
-    
-    public Sloth() {
-        super(ID, NAME, DESCRIPTION);
-    }
-    
+	
+	private static int minNumCardsPlayed = -1;
+	
+	public static void endTurn() {
+		if (minNumCardsPlayed == -1 || !checkMinimum()) {
+			minNumCardsPlayed = AbstractDungeon.player.cardsPlayedThisTurn;
+		}
+	}
+	
+	public static void startBattle() {
+		minNumCardsPlayed = -1;
+	}
+	
+	public Sloth() {
+		super(ID, NAME, DESCRIPTION);
+	}
+	
 	public boolean canPlay(AbstractCard card) {
 		if (this.hasPrudence())
 			return true;

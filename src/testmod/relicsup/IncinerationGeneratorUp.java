@@ -9,11 +9,11 @@ public class IncinerationGeneratorUp extends AbstractUpgradedRelic implements Cl
 	
 	public void onEquip() {
 		this.addEnergy();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	public void atTurnStartPostDraw() {
 		this.counter = -2;

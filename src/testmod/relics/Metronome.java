@@ -74,7 +74,7 @@ public class Metronome extends AbstractTestRelic {
 				this.counter = -1;
 			}
 		}
-    }
+	}
 	
 	public void atPreBattle() {
 		if (!this.isActive)
@@ -86,14 +86,14 @@ public class Metronome extends AbstractTestRelic {
 			this.beginLongPulse();
 		else
 			this.counter = -1;
-    }
+	}
 	
 	public void onVictory() {
 		this.act();
 		if (this.isActive) {
 			save(setList(getList()));
 		}
-    }
+	}
 	
 	public boolean canSpawn() {
 		return Settings.isEndless || AbstractDungeon.actNum < 3;

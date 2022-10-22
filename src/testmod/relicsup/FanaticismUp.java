@@ -17,11 +17,11 @@ public class FanaticismUp extends AbstractUpgradedRelic {
 	
 	public void onEquip() {
 		this.addEnergy();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	private void modifyCounterAndUpdate(int newValue) {
 		this.counter = newValue;
@@ -43,14 +43,14 @@ public class FanaticismUp extends AbstractUpgradedRelic {
 		} else if ("Calm".equals(p().stance.ID)) {
 			this.atb(new ChangeStanceAction("Divinity"));
 		}
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		if (this.isActive && !"Calm".equals(p().stance.ID)) {
 			this.atb(new ChangeStanceAction("Wrath".equals(p().stance.ID) ? "Calm" : "Wrath"));
 			this.flash();
 		}
-    }
+	}
 	
 	public void onLoseHp(int damage) {
 		this.modifyCounterAndUpdate(this.counter + ("Wrath".equals(p().stance.ID) ? 3 * damage : damage));

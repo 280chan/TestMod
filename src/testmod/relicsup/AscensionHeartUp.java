@@ -142,7 +142,7 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 		else if (this.isActive && checkLevel(10))
 			p().hand.group.stream().filter(c -> c.type == CardType.CURSE).forEach(c -> c.exhaust = true);
 		
-    }
+	}
 	
 	private void setEthereal(AbstractCard c) {
 		c.rawDescription += desc27;
@@ -171,7 +171,7 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 	public void onEquip() {
 		this.initCounter();
 		this.updateDescription();
-    }
+	}
 	
 	public void initCounter() {
 		this.counter = Math.max(AbstractDungeon.ascensionLevel, 0) + 25;
@@ -209,7 +209,7 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 				}
 			}
 		}
-    }
+	}
 	
 	public void atTurnStart() {
 		if (!this.isActive)
@@ -222,7 +222,7 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 			if (e > 2)
 				this.addToBot(new GainEnergyAction(e / 3));
 		}
-    }
+	}
 	
 	public void onVictory() {
 		AbstractRoom room = AbstractDungeon.getCurrRoom();
@@ -241,7 +241,7 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 		if (checkLevel(26)) {
 			room.rewards.add(new RewardItem(this.counter));
 		}
-    }
+	}
 	
 	private static boolean eliteSwarm = false;
 	
@@ -310,7 +310,7 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 		if (eliteSwarm) {
 			stopEliteSwarm();
 		}
-    }
+	}
 	
 	public void onUsePotion() {
 		if (checkLevel(11))
@@ -395,11 +395,11 @@ public class AscensionHeartUp extends AbstractUpgradedRelic implements OnPlayerD
 			return chain(relicStream(AscensionHeartUp.class).map(r -> get(this::dmg))).apply(input);
 		}
 		
-	    public float atDamageReceive(float damage, DamageType damageType) {
-	        return dmgRate(damage);
-	    }
-	    
-	    private boolean single() {
+		public float atDamageReceive(float damage, DamageType damageType) {
+			return dmgRate(damage);
+		}
+		
+		private boolean single() {
 			return relicStream(AscensionHeartUp.class).count() == 1;
 		}
 	}

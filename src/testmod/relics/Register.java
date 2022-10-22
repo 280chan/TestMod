@@ -37,7 +37,7 @@ public class Register extends AbstractTestRelic {
 		if (!isActive || this.relicStream(RegisterUp.class).count() > 0)
 			return;
 		clear();
-    }
+	}
 	
 	private static boolean isUp() {
 		return MISC.hasStack(RegisterUp.class.getCanonicalName(), "prepare");
@@ -88,7 +88,7 @@ public class Register extends AbstractTestRelic {
 		}
 		if (!REDUCED.isEmpty())
 			this.show();
-    }
+	}
 	
 	public void onVictory() {
 		if (!isActive || this.relicStream(RegisterUp.class).count() > 0)

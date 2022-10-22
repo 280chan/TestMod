@@ -17,7 +17,7 @@ public class ChristmasGiftUp extends AbstractUpgradedRelic {
 	public void onExhaust(final AbstractCard c) {
 		p().heal(Math.max(1, c.cost == -1 ? EnergyPanel.totalCount : c.costForTurn));
 		this.flash();
-    }
+	}
 	
 	private static int count(int n) {
 		return n < 1 ? 0 : 1 + count(n >> 1);
@@ -38,6 +38,6 @@ public class ChristmasGiftUp extends AbstractUpgradedRelic {
 	
 	public void atTurnStart() {
 		this.atb(new MakeTempCardInHandAction(ChristmasMod.randomGift(true)));
-    }
+	}
 	
 }

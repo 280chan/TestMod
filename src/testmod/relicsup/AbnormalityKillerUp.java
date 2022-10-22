@@ -34,7 +34,7 @@ public class AbnormalityKillerUp extends AbstractUpgradedRelic {
 	
 	public void atPreBattle() {
 		tryAdd();
-    }
+	}
 	
 	public void atTurnStart() {
 		tryAdd();

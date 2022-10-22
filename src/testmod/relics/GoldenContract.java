@@ -40,7 +40,7 @@ public class GoldenContract extends AbstractTestRelic {
 	public void atPreBattle() {
 		if (this.isActive && p().powers.stream().noneMatch(p -> p instanceof GoldenContractPower))
 			p().powers.add(new GoldenContractPower());
-    }
+	}
 	
 	public double gainGold(double amount) {
 		return this.relicStream(GoldenContractUp.class).count() > 0 ? amount

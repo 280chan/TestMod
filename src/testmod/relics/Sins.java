@@ -40,8 +40,8 @@ public class Sins extends AbstractTestRelic {
 	public static final String SAVE_NAME = "preMaxHP";
 	
 	public static int preMaxHP;
-    public static int dontCopy = 0;
-    public static boolean isFull = true;
+	public static int dontCopy = 0;
+	public static boolean isFull = true;
 	public static boolean isSelect;
 	
 	public static int screenQueue = 0;
@@ -54,9 +54,9 @@ public class Sins extends AbstractTestRelic {
 		return preMaxHP != AbstractDungeon.player.maxHealth;
 	}
 	
-    private void save() {
-    	TestMod.save(SAVE_NAME, preMaxHP);
-    }
+	private void save() {
+		TestMod.save(SAVE_NAME, preMaxHP);
+	}
 	
 	private boolean checkFull() {
 		return Stream.of(SINS).allMatch(this::has);
@@ -77,31 +77,31 @@ public class Sins extends AbstractTestRelic {
 	}
 	
 	private void replicate() {
-    	if (hasDarkstonePeriapt()) {
-    		TestMod.info("玩家有黑石护符,下一次不复制暴食");
-    		dontCopy = (int) p().relics.stream().filter(r -> r instanceof DarkstonePeriapt).count();
-    	}
-    	TestMod.info("开始获得暴食");
-    	obtainCard(new Gluttony());
-    	TestMod.info("获得暴食完毕");
+		if (hasDarkstonePeriapt()) {
+			TestMod.info("玩家有黑石护符,下一次不复制暴食");
+			dontCopy = (int) p().relics.stream().filter(r -> r instanceof DarkstonePeriapt).count();
+		}
+		TestMod.info("开始获得暴食");
+		obtainCard(new Gluttony());
+		TestMod.info("获得暴食完毕");
 	}
 	
-    private boolean hasDarkstonePeriapt() {
-    	return p().hasRelic("Darkstone Periapt");
-    }
-    
-    public void checkChangeMaxHP() {
-    	if (p().maxHealth == preMaxHP)
-    		return;
-    	boolean increase = p().maxHealth > preMaxHP;
-    	String tmp = "检测到血量上限变化,旧上限:" + preMaxHP + ",新上限:";
+	private boolean hasDarkstonePeriapt() {
+		return p().hasRelic("Darkstone Periapt");
+	}
+	
+	public void checkChangeMaxHP() {
+		if (p().maxHealth == preMaxHP)
+			return;
+		boolean increase = p().maxHealth > preMaxHP;
+		String tmp = "检测到血量上限变化,旧上限:" + preMaxHP + ",新上限:";
 		preMaxHP = p().maxHealth;
 		TestMod.info(tmp + preMaxHP);
-    	if (increase && hasGluttony()) {
-    		TestMod.info("拥有暴食");
-    		if (dontCopy > 0) {
-    			TestMod.info("暴食引起,不复制暴食");
-    			dontCopy--;
+		if (increase && hasGluttony()) {
+			TestMod.info("拥有暴食");
+			if (dontCopy > 0) {
+				TestMod.info("暴食引起,不复制暴食");
+				dontCopy--;
 			} else if ((p().hasRelic("Omamori"))
 					&& (p().getRelic("Omamori").counter != 0)) {
 				TestMod.info("御守有效,不复制暴食");
@@ -110,16 +110,16 @@ public class Sins extends AbstractTestRelic {
 				TestMod.info("准备复制暴食");
 				replicate();
 			}
-    	}
-    }
-    
-    public void update() {
-    	super.update();
-    	if (!isActive)
-    		return;
+		}
+	}
+	
+	public void update() {
+		super.update();
+		if (!isActive)
+			return;
 		this.checkChangeMaxHP();
-    }
-    
+	}
+	
 	public void onMasterDeckChange() {
 		if (!isActive)
 			return;
@@ -147,7 +147,7 @@ public class Sins extends AbstractTestRelic {
 			return;
 		this.setTryEquip(true);
 		this.checkChangeMaxHP();
-    }
+	}
 	
 	public static boolean isSin(AbstractCard c) {
 		return c instanceof Pride || c instanceof AbstractTestCurseCard;
@@ -175,13 +175,13 @@ public class Sins extends AbstractTestRelic {
 		if (!isActive)
 			return;
 		Sloth.startBattle();
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		if (!isActive)
 			return;
 		Sloth.endTurn();
-    }
+	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (isFull && (room instanceof MonsterRoomBoss || room instanceof TreasureRoomBoss)) {
@@ -195,7 +195,7 @@ public class Sins extends AbstractTestRelic {
 			return;
 		this.save();
 		this.updateFull();
-    }
+	}
 
 	public void onChestOpen(final boolean bossChest) {
 		if (this.isActive) {

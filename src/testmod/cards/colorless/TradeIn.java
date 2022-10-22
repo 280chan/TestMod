@@ -14,15 +14,15 @@ import testmod.cards.AbstractTestCard;
 
 public class TradeIn extends AbstractTestCard {
 	private static final UIStrings UI = MISC.uiString();
-    private static final int BASE_MGC = 1;
+	private static final int BASE_MGC = 1;
 
-    public TradeIn() {
-        super(1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
-        this.magicNumber = this.baseMagicNumber = BASE_MGC;
-        this.exhaust = this.isEthereal = true;
-    }
+	public TradeIn() {
+		super(1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
+		this.magicNumber = this.baseMagicNumber = BASE_MGC;
+		this.exhaust = this.isEthereal = true;
+	}
 
-    public void use(final AbstractPlayer p, final AbstractMonster m) {
+	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpActionToBot(() -> {
 			if (!p.hand.isEmpty()) {
 				AbstractDungeon.handCardSelectScreen.open(UI.TEXT[0], p.hand.size(), true, true, false, false);
@@ -76,10 +76,10 @@ public class TradeIn extends AbstractTestCard {
 		p.hand.refreshHandLayout();
 	}
 
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(1);
-        }
-    }
+	public void upgrade() {
+		if (!this.upgraded) {
+			this.upgradeName();
+			this.upgradeMagicNumber(1);
+		}
+	}
 }

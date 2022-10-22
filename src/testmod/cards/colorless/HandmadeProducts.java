@@ -12,9 +12,9 @@ import basemod.abstracts.CustomSavable;
 import testmod.cards.AbstractTestCard;
 
 public class HandmadeProducts extends AbstractTestCard implements CustomSavable<Integer> {
-    private static final int BASE_DMG = 0;
-    private static final int BASE_MGC = 1;
-    private static final int DELTA_COST = 1;
+	private static final int BASE_DMG = 0;
+	private static final int BASE_MGC = 1;
+	private static final int DELTA_COST = 1;
 
 	@Override
 	public void onLoad(Integer savedCost) {
@@ -25,15 +25,15 @@ public class HandmadeProducts extends AbstractTestCard implements CustomSavable<
 	public Integer onSave() {
 		return this.cost;
 	}
-    
-    public HandmadeProducts() {
-        super(0, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
-        this.baseDamage = BASE_DMG;
-        this.magicNumber = this.baseMagicNumber = BASE_MGC;
-    }
+	
+	public HandmadeProducts() {
+		super(0, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
+		this.baseDamage = BASE_DMG;
+		this.magicNumber = this.baseMagicNumber = BASE_MGC;
+	}
 
-    public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.addTmpActionToBot(() -> {
+	public void use(final AbstractPlayer p, final AbstractMonster m) {
+		this.addTmpActionToBot(() -> {
 			AbstractDungeon.effectList.add(new FlashAtkImgEffect(m.hb.cX, m.hb.cY, AttackEffect.SLASH_DIAGONAL));
 			m.damage(new DamageInfo(p, this.damage, this.damageTypeForTurn));
 			if ((m.isDying || m.currentHealth <= 0) && !m.halfDead) {
@@ -44,8 +44,8 @@ public class HandmadeProducts extends AbstractTestCard implements CustomSavable<
 				AbstractDungeon.actionManager.clearPostCombatActions();
 			}
 		});
-    }
-    
+	}
+	
 	private void modify(AbstractCard c) {
 		if (c.cost > -1)
 			c.updateCost(DELTA_COST);
@@ -53,11 +53,11 @@ public class HandmadeProducts extends AbstractTestCard implements CustomSavable<
 		c.baseDamage = 0;
 	}
 	
-    public void calculateCardDamage(AbstractMonster m) {
+	public void calculateCardDamage(AbstractMonster m) {
 		this.baseDamage = this.product();
 		super.calculateCardDamage(m);
-    }
-    
+	}
+	
 	public void applyPowers() {
 		this.baseDamage = this.product();
 		super.applyPowers();
@@ -68,19 +68,19 @@ public class HandmadeProducts extends AbstractTestCard implements CustomSavable<
 				.map(c -> c.cost == -1 ? EnergyPanel.totalCount : c.costForTurn).map(a -> a + this.magicNumber)
 				.reduce(1, (a, b) -> a * b);
 	}
-    
-    public boolean canUpgrade() {
-    	return true;
-    }
-    
-    public void upgrade() {
-    	this.upgraded = true;
-    	this.name = this.name() + "+" + ++this.timesUpgraded;
-        this.upgradeBaseCost(1);
-    	this.initializeTitle();
-    }
-    
-    protected void upgradeBaseCost(int newBaseCost) {
+	
+	public boolean canUpgrade() {
+		return true;
+	}
+	
+	public void upgrade() {
+		this.upgraded = true;
+		this.name = this.name() + "+" + ++this.timesUpgraded;
+		this.upgradeBaseCost(1);
+		this.initializeTitle();
+	}
+	
+	protected void upgradeBaseCost(int newBaseCost) {
 		int diff = this.costForTurn - this.cost;
 		this.cost = newBaseCost;
 		if (this.costForTurn >= 0) {

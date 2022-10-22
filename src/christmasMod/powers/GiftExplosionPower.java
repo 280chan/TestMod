@@ -31,22 +31,23 @@ public class GiftExplosionPower extends AbstractTestPower {
 	}
 	
 	public void updateDescription() {
-		 this.description = DESCRIPTIONS[0] + this.magicNumber + DESCRIPTIONS[1] + this.count + DESCRIPTIONS[2] + this.amount + DESCRIPTIONS[3];
+		this.description = DESCRIPTIONS[0] + this.magicNumber + DESCRIPTIONS[1] + this.count + DESCRIPTIONS[2]
+				+ this.amount + DESCRIPTIONS[3];
 	}
 	
 	public void stackPower(final int stackAmount) {
 		this.fontScale = 8.0f;
-        this.count++;
+		this.count++;
 	}
-    
-    public void atStartOfTurn() {
-    	this.amount--;
-    	if (this.amount <= 0) {
-    		this.amount = this.magicNumber;
-        	for (int i = 0; i < this.count; i++)
-        		this.addToBot(new ApplyPowerAction(this.owner, this.owner, new TheBombPower(this.owner, BOMB_AMOUNT, 30), BOMB_AMOUNT));
-    	}
-    	this.updateDescription();
+	
+	public void atStartOfTurn() {
+		this.amount--;
+		if (this.amount <= 0) {
+			this.amount = this.magicNumber;
+			for (int i = 0; i < this.count; i++)
+				this.addToBot(new ApplyPowerAction(this.owner, this.owner, new TheBombPower(this.owner, BOMB_AMOUNT, 30), BOMB_AMOUNT));
+		}
+		this.updateDescription();
 	}
-    
+
 }

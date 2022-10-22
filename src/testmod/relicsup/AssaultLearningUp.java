@@ -31,6 +31,6 @@ public class AssaultLearningUp extends AbstractUpgradedRelic {
 			list.forEach(this::upgradeIfPossible);
 			list.clear();
 		});
-    }
+	}
 	
 }

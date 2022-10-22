@@ -29,7 +29,7 @@ public class PlaguePower extends AbstractTestPower {
 	public void updateDescription() {
 		 this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
 	}
-    
+	
 	private void effect() {
 		boolean acted = false;
 		for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
@@ -48,5 +48,5 @@ public class PlaguePower extends AbstractTestPower {
 			effect();
 		return damage;
 	}
-    
+
 }

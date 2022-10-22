@@ -16,11 +16,11 @@ public class CardMagicianUp extends AbstractUpgradedRelic {
 
 	public void onEquip() {
 		this.addEnergy();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	public void atPreBattle() {
 		if (this.isActive)
@@ -42,7 +42,7 @@ public class CardMagicianUp extends AbstractUpgradedRelic {
 		c.purgeOnUse = true;
 		if (m != null)
 			c.calculateCardDamage(m);
-        att(new NewQueueCardAction(c, m, false, true));
+		att(new NewQueueCardAction(c, m, false, true));
 	}
 	
 	private Consumer<AbstractCard> play(AbstractMonster m) {
@@ -64,9 +64,9 @@ public class CardMagicianUp extends AbstractUpgradedRelic {
 	}
 	
 	public void atTurnStart() {
-	    if (!p().discardPile.isEmpty())
-	    	this.atb(new EmptyDeckShuffleAction());
-	    this.atb(new ShuffleAction(p().drawPile));
-    }
+		if (!p().discardPile.isEmpty())
+			this.atb(new EmptyDeckShuffleAction());
+		this.atb(new ShuffleAction(p().drawPile));
+	}
 	
 }

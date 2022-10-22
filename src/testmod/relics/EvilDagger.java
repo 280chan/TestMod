@@ -78,13 +78,13 @@ public class EvilDagger extends AbstractTestRelic {
 		this.killed.clear();
 		this.updateDescription();
 		this.stopPulse();
-    }
+	}
 	
 	public void onMonsterDeath(final AbstractMonster m) {
 		if (this.isActive && !m.hasPower("Minion") && (m.isDead || m.isDying)) {
 			this.killed.add(m);
 		}
-    }
+	}
 	
 	public void onRefreshHand() {
 		if (!this.isActive)

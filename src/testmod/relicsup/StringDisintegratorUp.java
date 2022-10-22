@@ -18,11 +18,11 @@ public class StringDisintegratorUp extends AbstractUpgradedRelic {
 		if (this.isActive && this.inCombat()) {
 			CARDS.clear();
 		}
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	public void atPreBattle() {
 		CARDS.clear();

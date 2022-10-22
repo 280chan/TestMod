@@ -51,7 +51,7 @@ public class BatchProcessingSystemUp extends AbstractUpgradedRelic {
 	
 	public void onEquip() {
 		this.initColor();
-    }
+	}
 	
 	public void onVictory() {
 		this.stopPulse();

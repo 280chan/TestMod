@@ -10,26 +10,26 @@ import com.megacrit.cardcrawl.monsters.*;
 import testmod.cards.AbstractTestCard;
 
 public class MoneyShot extends AbstractTestCard {
-    private static final int BASE_DMG = 0;
+	private static final int BASE_DMG = 0;
 
-    public MoneyShot() {
-        super(0, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
-        this.baseDamage = BASE_DMG;
-    }
-    
-    private ArrayList<Integer> create(int gold) {
-    	this.misc = this.baseDamage;
-    	ArrayList<Integer> tmp = new ArrayList<Integer>();
-    	if (gold > 0) {
-    		while (gold > 0) {
-    			tmp.add(0, gold % 10);
-    			gold /= 10;
-    		}
-    	} else {
-    		tmp.add(0);
-    	}
+	public MoneyShot() {
+		super(0, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
+		this.baseDamage = BASE_DMG;
+	}
+	
+	private ArrayList<Integer> create(int gold) {
+		this.misc = this.baseDamage;
+		ArrayList<Integer> tmp = new ArrayList<Integer>();
+		if (gold > 0) {
+			while (gold > 0) {
+				tmp.add(0, gold % 10);
+				gold /= 10;
+			}
+		} else {
+			tmp.add(0);
+		}
 		return tmp;
-    }
+	}
 	
 	public void use(final AbstractPlayer p, final AbstractMonster a) {
 		this.addTmpActionToBot(() -> create(p.gold).forEach(gold -> m(a).filter(this::alive).forEach(m -> {
@@ -41,7 +41,7 @@ public class MoneyShot extends AbstractTestCard {
 			this.baseDamage = this.misc;
 		})));
 	}
-    
+	
 	private Stream<AbstractMonster> m(AbstractMonster m) {
 		return this.upgraded ? AbstractDungeon.getMonsters().monsters.stream() : Stream.of(m);
 	}
@@ -49,13 +49,13 @@ public class MoneyShot extends AbstractTestCard {
 	private boolean alive(AbstractMonster m) {
 		return !(m.isDead || m.escaped || m.halfDead || m.isDying || m.isEscaping);
 	}
-    
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.target = CardTarget.ALL_ENEMY;
-            this.isMultiDamage = true;
-            this.upDesc();
-        }
-    }
+	
+	public void upgrade() {
+		if (!this.upgraded) {
+			this.upgradeName();
+			this.target = CardTarget.ALL_ENEMY;
+			this.isMultiDamage = true;
+			this.upDesc();
+		}
+	}
 }

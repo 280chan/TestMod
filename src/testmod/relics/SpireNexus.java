@@ -26,7 +26,7 @@ public class SpireNexus extends AbstractTestRelic implements ClickableRelic {
 		if (!(room instanceof EventRoom)) {
 			this.stopPulse();
 		}
-    }
+	}
 
 	private void changePulse() {
 		if (skipEffect)

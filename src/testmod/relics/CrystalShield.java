@@ -9,7 +9,7 @@ public class CrystalShield extends AbstractTestRelic {
 	public void atTurnStart() {
 		this.counter = -1;
 		this.stopPulse();
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		if (this.counter == -2) {
@@ -18,12 +18,12 @@ public class CrystalShield extends AbstractTestRelic {
 		} else {
 			this.counter = -2;
 		}
-    }
+	}
 	
 	public void onVictory() {
 		this.counter = -2;
 		this.stopPulse();
-    }
+	}
 	
 	public int onPlayerGainedBlock(float blockAmount) {
 		int retVal = MathUtils.floor(blockAmount);

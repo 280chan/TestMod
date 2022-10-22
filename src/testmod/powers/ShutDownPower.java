@@ -23,11 +23,11 @@ public class ShutDownPower extends AbstractTestPower {
 		this.description = desc(0) + this.amount + desc(1) + (this.upgraded ? "+" : desc(2));
 	}
 	
-    public void atStartOfTurn() {
-    	AbstractCard c = new Reboot();
-    	if (upgraded)
-    		c.upgrade();
-		this.addToBot(new MakeTempCardInHandAction(c, this.amount));
-    }
-    
+	public void atStartOfTurn() {
+		AbstractCard c = new Reboot();
+		if (upgraded)
+			c.upgrade();
+		this.atb(new MakeTempCardInHandAction(c, this.amount));
+	}
+
 }

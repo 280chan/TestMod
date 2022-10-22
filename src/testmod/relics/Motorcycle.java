@@ -19,11 +19,11 @@ public class Motorcycle extends AbstractTestRelic implements ClickableRelic {
 	public void atPreBattle() {
 		if (loadedFloor < AbstractDungeon.floorNum && !checkBoss())
 			this.beginLongPulse();
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.stopPulse();
-    }
+	}
 	
 	public void onVictory() {
 		this.stopPulse();

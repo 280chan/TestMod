@@ -20,7 +20,7 @@ public class ConjureBladeUp extends AbstractUpgradedRelic {
 		BONUS.clear();
 		if (this.isActive && p().powers.stream().noneMatch(p -> p instanceof ConjureBladePowerUp))
 			p().powers.add(new ConjureBladePowerUp());
-    }
+	}
 	
 	public void onDrawOrDiscard() {
 		if (!this.isActive)

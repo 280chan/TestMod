@@ -11,7 +11,7 @@ public class Recursion extends AbstractTestRelic {
 		if (!isActive)
 			return;
 		p().gameHandSize += 5 * relicAmount();
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		counter++;
@@ -21,6 +21,6 @@ public class Recursion extends AbstractTestRelic {
 		if (!isActive)
 			return;
 		p().gameHandSize += (counter == 0 ? 9 : -1) * relicAmount();
-    }
+	}
 	
 }

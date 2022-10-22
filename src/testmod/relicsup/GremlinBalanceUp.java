@@ -25,6 +25,6 @@ public class GremlinBalanceUp extends AbstractUpgradedRelic {
 			int a = e, b = c;
 			this.addTmpActionToBot(() -> p().increaseMaxHp(a + b, true));
 		}
-    }
+	}
 
 }

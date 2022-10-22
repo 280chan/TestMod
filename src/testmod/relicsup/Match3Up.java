@@ -27,6 +27,6 @@ public class Match3Up extends AbstractUpgradedRelic {
 			this.atb(new GainEnergyAction(s));
 		if (s < 6)
 			this.atb(new DrawCardAction(6 - s));
-    }
+	}
 
 }

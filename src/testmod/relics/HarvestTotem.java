@@ -19,7 +19,7 @@ public class HarvestTotem extends AbstractTestRelic {
 		this.init = true;
 		p().increaseMaxHp(Math.max(1, p().maxHealth), false);
 		this.init = false;
-    }
+	}
 	
 	private static void increaseMaxHp(AbstractCreature m, int amount) {
 		if (!Settings.isEndless) {
@@ -45,7 +45,7 @@ public class HarvestTotem extends AbstractTestRelic {
 		if (!this.hasEnemies())
 			return;
 		AbstractDungeon.getMonsters().monsters.stream().peek(this::increaseaMonsterMaxHp).forEach(DONE::add);
-    }
+	}
 	
 	public void update() {
 		super.update();
@@ -68,15 +68,15 @@ public class HarvestTotem extends AbstractTestRelic {
 	
 	public int onPlayerHeal(int amount) {
 		return this.init ? amount : Math.max(0, Math.min(2 * amount, Integer.MAX_VALUE - p().currentHealth));
-    }
+	}
 	
 	public void atTurnStart() {
 		this.counter = -2;
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.counter = -1;
-    }
+	}
 	
 	public float preChangeMaxHP(float a) {
 		return (a > 0 && !this.init) ? Math.max(0, Math.min(2 * a, Integer.MAX_VALUE - p().maxHealth)) : a;

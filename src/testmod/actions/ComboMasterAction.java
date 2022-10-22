@@ -17,9 +17,9 @@ public class ComboMasterAction extends AbstractGameAction {
 	public ComboMasterAction(AbstractPlayer p, int[] multiDamage, int amount, DamageType damageType) {
 		this.multiDamage = multiDamage;
 		this.amount = amount;
-	    this.damageType = damageType;
-	    this.p = p;
-	    this.duration = Settings.ACTION_DUR_XFAST;
+		this.damageType = damageType;
+		this.p = p;
+		this.duration = Settings.ACTION_DUR_XFAST;
 		this.actionType = ActionType.SPECIAL;
 		this.attackEffect = AttackEffect.SLASH_HORIZONTAL;
 	}

@@ -33,7 +33,7 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 			p().potionSlots++;
 			p().potions.add(new PotionSlot(p().potionSlots - 1));
 		}
-    }
+	}
 	
 	private void toggleState(boolean active) {
 		if (used)
@@ -57,15 +57,15 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 	
 	public void atPreBattle() {
 		this.toggleState(!(this.used = this.timePotionUsed = target = false));
-    }
+	}
 	
 	public void atTurnStart() {
 		this.toggleState(!(this.used = target = false));
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.toggleState(false);
-    }
+	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		this.toggleState(false);
@@ -74,7 +74,7 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 	public void onVictory() {
 		this.toggleState(false);
 		this.timePotionUsed = target = false;
-    }
+	}
 	
 	private Stream<AbstractPotion> potions() {
 		return p().potions.stream().filter(po -> !(po instanceof PotionSlot));

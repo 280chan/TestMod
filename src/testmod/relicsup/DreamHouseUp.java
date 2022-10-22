@@ -32,11 +32,11 @@ public class DreamHouseUp extends AbstractUpgradedRelic {
 	public void onEquip() {
 		this.counter = 0;
 		this.addEnergy();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	public void update() {
 		super.update();

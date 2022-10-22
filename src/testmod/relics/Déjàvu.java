@@ -38,21 +38,21 @@ public class Déjàvu extends AbstractTestRelic {
 	public void atTurnStart() {
 		this.endTurn = false;
 		if (this.active && !this.list.isEmpty()) {
-			this.addToBot(new DéjàvuAction(this, this.list));
+			this.atb(new DéjàvuAction(this, this.list));
 		} else {
 			this.list.clear();
 			this.setState(false);
 		}
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.endTurn = true;
 		if (this.active && EnergyPanel.totalCount > 0)
 			this.setState(false);
-    }
+	}
 	
 	public void onVictory() {
 		this.setState(false);
-    }
+	}
 	
 }

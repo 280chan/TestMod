@@ -23,7 +23,7 @@ public class InjuryResistance extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		this.addPower();
-    }
+	}
 	
 	private void counterPP() {
 		if (this.counter > 0)
@@ -58,13 +58,13 @@ public class InjuryResistance extends AbstractTestRelic {
 			return this.relicStream(InjuryResistance.class);
 		}
 		
-	    public int onLoseHp(int damage) {
-	    	if (damage < 1)
-	    		return damage;
-	    	int tmp = stream().mapToInt(r -> r.counter).sum();
-	    	if (damage > tmp) {
-	    		stream().forEach(r -> r.counterPP());
-	    		return damage - tmp;
+		public int onLoseHp(int damage) {
+			if (damage < 1)
+				return damage;
+			int tmp = stream().mapToInt(r -> r.counter).sum();
+			if (damage > tmp) {
+				stream().forEach(r -> r.counterPP());
+				return damage - tmp;
 			}
 			ArrayList<InjuryResistance> l = stream().sorted((a, b) -> a.counter - b.counter).collect(toArrayList());
 			for (InjuryResistance r : l) {
@@ -77,9 +77,7 @@ public class InjuryResistance extends AbstractTestRelic {
 				}
 			}
 			l.clear();
-	        return 0;
-	    }
-	    
+			return 0;
+		}
 	}
-
 }

@@ -45,7 +45,7 @@ public class HolyLightProtectionUp extends AbstractUpgradedRelic {
 			this.counter = list.size() == 2 ? -3 : -2;
 			addPower();
 		}
-    }
+	}
 	
 	public void update() {
 		super.update();
@@ -61,7 +61,7 @@ public class HolyLightProtectionUp extends AbstractUpgradedRelic {
 		this.list.clear();
 		this.stopPulse();
 		this.checkPulse = false;
-    }
+	}
 	
 	private UnaryOperator<Float> dmg(AbstractCreature source) {
 		int i = list.indexOf(source);

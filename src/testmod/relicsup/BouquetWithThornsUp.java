@@ -16,7 +16,7 @@ public class BouquetWithThornsUp extends AbstractUpgradedRelic {
 	
 	public void atPreBattle() {
 		increaseThorns(1);
-    }
+	}
 	
 	private int calculateAmount(DamageInfo info) {
 		if (info.owner == null)
@@ -29,6 +29,6 @@ public class BouquetWithThornsUp extends AbstractUpgradedRelic {
 			increaseThorns(info.type == DamageType.NORMAL ? calculateAmount(info) : damage);
 		}
 		return damage;
-    }
+	}
 	
 }

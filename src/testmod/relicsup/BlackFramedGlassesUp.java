@@ -33,32 +33,32 @@ public class BlackFramedGlassesUp extends AbstractUpgradedRevivalRelic {
 	
 	public int onAttacked(final DamageInfo info, final int damage) {
 		if (this.isActive && damage >= p().maxHealth / 3.0) {
-        	show();
-        	if (info.owner != null && !info.owner.isPlayer) {
-        		BlackFramedGlassesUp min = min();
-        		min.counter++;
+			show();
+			if (info.owner != null && !info.owner.isPlayer) {
+				BlackFramedGlassesUp min = min();
+				min.counter++;
 				relicStream(BlackFramedGlassesUp.class).forEach(r -> att(new LoseHPAction(info.owner, null, damage)));
 				if (min.counter > p().maxHealth) {
-        			return 1;
-        		}
-        	}
-        	return 0;
-        }
+					return 1;
+				}
+			}
+			return 0;
+		}
 		return damage;
-    }
+	}
 	
 	@Override
 	protected int damageModifyCheck(AbstractPlayer p, DamageInfo info, int damage) {
 		if (this.isActive && info.output >= p.maxHealth / 3.0) {
-        	if (info.owner != null && !info.owner.isPlayer) {
-        		BlackFramedGlassesUp min = min();
-        		min.counter++;
-        		relicStream(BlackFramedGlassesUp.class).forEach(r -> att(new LoseHPAction(info.owner, null, damage)));
-        		if (min.counter > p().maxHealth) {
-        			return 1;
-        		}
-        	}
-        	return 0;
+			if (info.owner != null && !info.owner.isPlayer) {
+				BlackFramedGlassesUp min = min();
+				min.counter++;
+				relicStream(BlackFramedGlassesUp.class).forEach(r -> att(new LoseHPAction(info.owner, null, damage)));
+				if (min.counter > p().maxHealth) {
+					return 1;
+				}
+			}
+			return 0;
 		}
 		return damage;
 	}

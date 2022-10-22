@@ -18,11 +18,11 @@ public class BlackFramedGlasses extends AbstractRevivalRelicToModifyDamage {
 	
 	public int onAttacked(final DamageInfo info, final int damageAmount) {
 		if (this.relicStream(BlackFramedGlassesUp.class).count() == 0 && damageAmount >= p().maxHealth / 2.0) {
-        	show();
-        	return info.owner == null || info.owner.isPlayer ? 0 : 1;
-        }
+			show();
+			return info.owner == null || info.owner.isPlayer ? 0 : 1;
+		}
 		return damageAmount;
-    }
+	}
 	
 	@Override
 	protected int damageModifyCheck(AbstractPlayer p, DamageInfo info, int originalDamage) {

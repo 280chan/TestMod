@@ -28,11 +28,11 @@ public class VoidShardUp extends AbstractUpgradedRelic implements Shard, Clickab
 	public void onEquip() {
 		this.addEnergy();
 		this.counter = 0;
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	private void updatePower() {
 		VoidShardEventDamagePower.getThis().stream().filter(v -> this.equals(v.vs)).forEach(this::removePower);
@@ -42,15 +42,15 @@ public class VoidShardUp extends AbstractUpgradedRelic implements Shard, Clickab
 
 	public void atPreBattle() {
 		this.updatePower();
-    }
+	}
 
 	public void onVictory() {
 		this.updatePower();
-    }
+	}
 
 	public void onEnterRoom(final AbstractRoom room) {
 		this.updatePower();
-    }
+	}
 
 	@Override
 	public void onRightClick() {

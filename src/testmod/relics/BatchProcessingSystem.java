@@ -52,15 +52,15 @@ public class BatchProcessingSystem extends AbstractTestRelic {
 	public void onEquip() {
 		this.reduceEnergy();
 		this.initColor();
-    }
+	}
 	
 	public void onUnequip() {
 		this.addEnergy();
-    }
+	}
 	
 	public void atTurnStart() {
 		this.counter = -1;
-    }
+	}
 	
 	public void onVictory() {
 		this.stopPulse();

@@ -53,25 +53,25 @@ public class BloodBladePower extends AbstractTestPower {
 				.findAny().orElse(null);
 	}
 	
-    public float atDamageGive(final float damage, final DamageType type) {
-    	return type != DamageType.HP_LOSS ? damage * (1 + this.bonus) : damage;
-    }
-    
-    public void onFirstGain() {
-    	this.increaseRate(1 - (1.0f * owner.currentHealth / owner.maxHealth));
-    	this.flash();
-    }
-    
-    private void increaseRate(float rate) {
-    	this.bonus = this.upgraded ? (1 + this.bonus) * (1 + rate) - 1 : this.bonus + rate;
-    	this.updateDescription();
-    }
-    
-    public int onLoseHp(final int damage) {
-    	if (damage > 0) {
-        	this.increaseRate(damage * 1.0f / owner.maxHealth);
-    	}
-        return damage;
-    }
-    
+	public float atDamageGive(final float damage, final DamageType type) {
+		return type != DamageType.HP_LOSS ? damage * (1 + this.bonus) : damage;
+	}
+	
+	public void onFirstGain() {
+		this.increaseRate(1 - (1.0f * owner.currentHealth / owner.maxHealth));
+		this.flash();
+	}
+	
+	private void increaseRate(float rate) {
+		this.bonus = this.upgraded ? (1 + this.bonus) * (1 + rate) - 1 : this.bonus + rate;
+		this.updateDescription();
+	}
+	
+	public int onLoseHp(final int damage) {
+		if (damage > 0) {
+			this.increaseRate(damage * 1.0f / owner.maxHealth);
+		}
+		return damage;
+	}
+
 }

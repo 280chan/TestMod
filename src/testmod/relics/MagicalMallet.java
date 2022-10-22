@@ -13,24 +13,24 @@ public class MagicalMallet extends AbstractTestRelic implements ClickableRelic {
 	
 	public void onEquip() {
 		this.addEnergy();
-    }
+	}
 	
 	public void onUnequip() {
 		this.reduceEnergy();
-    }
+	}
 	
 	public void atPreBattle() {
 		used = false;
-    }
+	}
 	
 	public void atTurnStart() {
 		playerTurn = true;
 		this.togglePulse(this, !used);
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.togglePulse(this, playerTurn = false);
-    }
+	}
 	
 	private IntStream costs(List<AbstractCard> hand) {
 		return hand.stream().filter(c -> c.cost >= 0).mapToInt(c -> c.costForTurn);
@@ -50,7 +50,7 @@ public class MagicalMallet extends AbstractTestRelic implements ClickableRelic {
 					.forEach(c -> c.setCostForTurn(min - c.costForTurn + max));
 			this.show();
 		});
-    }
+	}
 
 	@Override
 	public void onRightClick() {

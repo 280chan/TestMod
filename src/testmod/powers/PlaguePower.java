@@ -34,7 +34,7 @@ public class PlaguePower extends AbstractTestPower {
 	}
 	
 	private void applyPower(int type, AbstractCreature target) {
-		this.addToBot(new ApplyPowerAction(target, this.owner, this.createPower(type, target), this.amount, true));
+		this.atb(new ApplyPowerAction(target, this.owner, this.createPower(type, target), this.amount, true));
 	}
 	
 	public void atStartOfTurn() {
@@ -46,6 +46,6 @@ public class PlaguePower extends AbstractTestPower {
 			applyPower(i, m);
 		}
 		this.flashWithoutSound();
-    }
+	}
 
 }

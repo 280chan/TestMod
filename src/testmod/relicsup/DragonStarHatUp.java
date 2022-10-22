@@ -33,7 +33,7 @@ public class DragonStarHatUp extends AbstractUpgradedRelic {
 				return;
 			this.att(apply(p(), new StrengthPower(p(), relicStream(DragonStarHat.class).mapToInt(this::count).sum())));
 		}
-    }
+	}
 	
 	private int count(DragonStarHat r) {
 		r.show();
@@ -47,21 +47,21 @@ public class DragonStarHatUp extends AbstractUpgradedRelic {
 	
 	public void onRest() {
 		if (this.isActive) {
-		    this.relicStream(DragonStarHatUp.class).forEach(this::incrementCounter);
+			this.relicStream(DragonStarHatUp.class).forEach(this::incrementCounter);
 		}
-	    AbstractDungeon.topLevelEffects.add(new ObtainKeyEffect(ObtainKeyEffect.KeyColor.RED));
-	    flash();
-	    this.stopPulse();
-    }
+		AbstractDungeon.topLevelEffects.add(new ObtainKeyEffect(ObtainKeyEffect.KeyColor.RED));
+		flash();
+		this.stopPulse();
+	}
 	
 	public void onEnterRestRoom() {
-    	this.beginLongPulse();
+		this.beginLongPulse();
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
 		if (room instanceof RestRoom)
 			return;
 		this.stopPulse();
-    }
+	}
 	
 }

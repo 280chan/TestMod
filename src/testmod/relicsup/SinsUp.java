@@ -36,6 +36,6 @@ public class SinsUp extends AbstractUpgradedRelic {
 			tmp.clear();
 		}
 		this.addTmpEffect(() -> l.forEach(r -> TestMod.obtain(p(), r, true)));
-    }
+	}
 
 }

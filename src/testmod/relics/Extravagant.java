@@ -38,15 +38,15 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic, Ha
 			delta = 0;
 			this.updateHandSize(0);
 		}
-    }
+	}
 	
 	public void atTurnStart() {
 		this.up(false);
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.up(true);
-    }
+	}
 	
 	public void onVictory() {
 		this.up(true);
@@ -54,12 +54,12 @@ public class Extravagant extends AbstractTestRelic implements ClickableRelic, Ha
 			this.updateHandSize(delta);
 			delta = 0;
 		}
-    }
+	}
 	
 	private void play(AbstractCard c, boolean purge) {
 		c.exhaust = !purge;
 		c.purgeOnUse = purge;
-        att(new NewQueueCardAction(c, true, false, true));
+		att(new NewQueueCardAction(c, true, false, true));
 	}
 	
 	private Consumer<AbstractCard> play(int time) {

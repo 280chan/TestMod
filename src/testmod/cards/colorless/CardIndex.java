@@ -12,25 +12,25 @@ import java.util.function.Consumer;
 import testmod.cards.AbstractUpdatableCard;
 
 public class CardIndex extends AbstractUpdatableCard {
-    public static final String ID = "CardIndex";
+	public static final String ID = "CardIndex";
 	private static final CardStrings cardStrings = Strings(ID);
 	private static final String NAME = cardStrings.NAME;
 	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
 	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-    private static final int COST = 3;
-    private static final int BASE_MGC = 2;
+	private static final int COST = 3;
+	private static final int BASE_MGC = 2;
 
-    private ArrayList<AbstractCard> cards = new ArrayList<AbstractCard>();
-    
-    public CardIndex() {
-        super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
-        this.magicNumber = this.baseMagicNumber = BASE_MGC;
-    }
+	private ArrayList<AbstractCard> cards = new ArrayList<AbstractCard>();
+	
+	public CardIndex() {
+		super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
+		this.magicNumber = this.baseMagicNumber = BASE_MGC;
+	}
 
-    public void use(final AbstractPlayer p, final AbstractMonster m) {
-    	this.addTmpActionToBot(() -> {
-    		if (this.cards.isEmpty()) {
-        		this.addTmpActionToTop(() -> {
+	public void use(final AbstractPlayer p, final AbstractMonster m) {
+		this.addTmpActionToBot(() -> {
+			if (this.cards.isEmpty()) {
+				this.addTmpActionToTop(() -> {
 					CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);
 					g.group = this.combatCards().collect(this.toArrayList());
 					g.removeCard(this);
@@ -54,36 +54,36 @@ public class CardIndex extends AbstractUpdatableCard {
 							this.removeCard(null);
 						}
 					});
-        		});
-        	} else if (this.cards.size() != 1 || this.cards.get(0) != null) {
-    			this.cards.forEach(this::setXCostEnergy);
-    			this.autoplayInOrder(this, this.cards, m);
-    		}
-    	});
-    }
-    
-    private void removeCard(AbstractCard c) {
-    	if (c != null)
-    		this.getSource(c).removeCard(c);
+				});
+			} else if (this.cards.size() != 1 || this.cards.get(0) != null) {
+				this.cards.forEach(this::setXCostEnergy);
+				this.autoplayInOrder(this, this.cards, m);
+			}
+		});
+	}
+	
+	private void removeCard(AbstractCard c) {
+		if (c != null)
+			this.getSource(c).removeCard(c);
 		this.cards.add(c);
 	}
-    
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(1);
-        }
-    }
-    
-    private boolean active() {
-    	return !(this.cards.isEmpty() || this.cards.get(0) == null);
-    }
+	
+	public void upgrade() {
+		if (!this.upgraded) {
+			this.upgradeName();
+			this.upgradeMagicNumber(1);
+		}
+	}
+	
+	private boolean active() {
+		return !(this.cards.isEmpty() || this.cards.get(0) == null);
+	}
 
-    private void checkActiveActOnCard(Consumer<? super AbstractCard> action) {
+	private void checkActiveActOnCard(Consumer<? super AbstractCard> action) {
 		if (this.active())
 			this.cards.forEach(action);
-    }
-    
+	}
+	
 	@Override
 	public void preApplyPowers(AbstractPlayer p, AbstractMonster m) {
 		if (this.active())
@@ -154,7 +154,7 @@ public class CardIndex extends AbstractUpdatableCard {
 	
 	public void triggerOnCardPlayed(AbstractCard card) {
 		this.checkActiveActOnCard(c -> c.triggerOnCardPlayed(card));
-    }
+	}
 	
 	public void triggerOnScry() {
 		this.checkActiveActOnCard(AbstractCard::triggerOnScry);
@@ -181,7 +181,7 @@ public class CardIndex extends AbstractUpdatableCard {
 		if (!this.active())
 			return this.name;
 		String tmp = this.name + ":[" + this.cards.stream().map(c -> c.name + ",").reduce("", (u, v) -> u + v);
-    	return tmp.substring(0, tmp.length() - 1) + "]";
+		return tmp.substring(0, tmp.length() - 1) + "]";
 	}
 	
 }

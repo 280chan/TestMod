@@ -20,7 +20,7 @@ public class RandomTest extends AbstractTestRelic {
 					ArrayList<AbstractCard> list = p().hand.group.stream()
 							.filter(c -> c.cost > -1 && c.costForTurn != 0 && !c.freeToPlay()).collect(toArrayList());
 					reduceRandom(list.isEmpty() ? p().hand.group : list);
-				    this.show();
+					this.show();
 				}
 			});
 		}
@@ -40,9 +40,9 @@ public class RandomTest extends AbstractTestRelic {
 	
 	public void atPreBattle() {
 		AbstractCard c = randomFrom(TestMod.CARDS).makeCopy();
-	    this.atb(new MakeTempCardInHandAction(c));
-	    this.show();
-    }
+		this.atb(new MakeTempCardInHandAction(c));
+		this.show();
+	}
 	
 	public void onRefreshHand() {
 		if (color == null)

@@ -9,7 +9,7 @@ public class RealStoneCalender extends AbstractTestRelic {
 	
 	public void atBattleStart() {
 		this.counter = 0;
-    }
+	}
 	
 	public void onPlayerEndTurn() {
 		this.counter++;
@@ -23,5 +23,5 @@ public class RealStoneCalender extends AbstractTestRelic {
 	
 	public void onVictory() {
 		this.counter = -1;
-    }
+	}
 }

@@ -14,7 +14,7 @@ public class EnergyCheck extends AbstractTestRelic implements ClickableRelic {
 	
 	public void atPreBattle() {
 		this.counter = 0;
-    }
+	}
 	
 	public void onEnergyRecharge() {
 		if (this.newTurn) {
@@ -31,7 +31,7 @@ public class EnergyCheck extends AbstractTestRelic implements ClickableRelic {
 	
 	public void onPlayerEndTurn() {
 		newTurn = true;
-    }
+	}
 
 	@Override
 	public void onRightClick() {

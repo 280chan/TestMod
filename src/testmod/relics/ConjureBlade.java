@@ -20,7 +20,7 @@ public class ConjureBlade extends AbstractTestRelic {
 		BONUS.clear();
 		if (this.isActive && p().powers.stream().noneMatch(p -> p instanceof ConjureBladePower))
 			p().powers.add(new ConjureBladePower());
-    }
+	}
 	
 	public void onDrawOrDiscard() {
 		if (!this.isActive)

@@ -14,7 +14,7 @@ import testmod.relics.AbstractTestRelic;
 
 public class EventCelebration_Halloween extends AbstractTestRelic {
 	public static final String ID = HalloweenMod.MOD_PREFIX + "Halloween";
-    public static final String IMG = "halloweenResources/images/relic.png";
+	public static final String IMG = "halloweenResources/images/relic.png";
 	public static final String DESCRIPTION = "拾取时获得 #y蓝蜡烛 。战斗奖励掉落的卡牌只能从 #y糖果 、 #y捣乱 、 #y鬼妆 中选择。每当你打出 #y诅咒牌 时，将一张 #y万圣 加入手牌。";//遗物效果的文本描叙。
 	
 	public static boolean hasThis() {
@@ -34,7 +34,7 @@ public class EventCelebration_Halloween extends AbstractTestRelic {
 			this.atb(new MakeTempCardInHandAction(new Halloween()));
 			this.show();
 		}
-    }
+	}
 	
 	public void onEquip() {
 		this.addTmpEffect(() -> TestMod.obtain(p(), new BlueCandle(), false));
@@ -42,7 +42,7 @@ public class EventCelebration_Halloween extends AbstractTestRelic {
 		AbstractDungeon.shopRelicPool.remove(PrismaticShard.ID);
 		HalloweenMod.savedFloorNum = -2;
 		HalloweenMod.changeState();
-    }
+	}
 	
 	public void onUnequip() {
 		if (!p().hasRelic(PrismaticShard.ID) && !AbstractDungeon.shopRelicPool.contains(PrismaticShard.ID))

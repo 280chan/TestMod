@@ -34,8 +34,8 @@ public class Laevatain extends AbstractTestRelic {
 				tmp.clear();
 			}
 		}
-	    AbstractDungeon.gridSelectScreen.openConfirmationGrid(group, UI.TEXT[0]);
-    }
+		AbstractDungeon.gridSelectScreen.openConfirmationGrid(group, UI.TEXT[0]);
+	}
 	
 	public void atPreBattle() {
 		this.counter = 0;
@@ -61,10 +61,10 @@ public class Laevatain extends AbstractTestRelic {
 				this.show();
 			}
 		}
-    }
+	}
 	
 	public void onVictory() {
 		this.counter = -1;
-    }
+	}
 	
 }

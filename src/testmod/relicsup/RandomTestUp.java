@@ -34,16 +34,16 @@ public class RandomTestUp extends AbstractUpgradedRelic {
 	
 	private AbstractCard superFlash(AbstractCard c) {
 		c.superFlash();
-	    this.show();
+		this.show();
 		return c;
 	}
 	
 	public void atPreBattle() {
 		AbstractCard c = randomFrom(TestMod.CARDS).makeCopy();
 		c.upgrade();
-	    this.atb(new MakeTempCardInHandAction(c));
-	    this.show();
-    }
+		this.atb(new MakeTempCardInHandAction(c));
+		this.show();
+	}
 	
 	public void atTurnStartPostDraw() {
 		this.addTmpActionToBot(() -> {
