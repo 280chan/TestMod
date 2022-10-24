@@ -55,7 +55,7 @@ public class TemporaryBarricade extends AbstractTestRelic implements ClickableRe
 	public void onRightClick() {
 		if (AbstractDungeon.currMapNode == null || AbstractDungeon.getCurrRoom().phase != RoomPhase.COMBAT) {
 			this.counter = -3 - this.counter;
-			this.togglePulse(this, this.active());
+			this.togglePulse(this, !(this.grayscale = !this.active()));
 		}
 	}
 

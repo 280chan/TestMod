@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 
@@ -19,6 +20,12 @@ public class Motorcycle extends AbstractTestRelic implements ClickableRelic {
 	public void atPreBattle() {
 		if (loadedFloor < AbstractDungeon.floorNum && !checkBoss())
 			this.beginLongPulse();
+		else
+			this.grayscale = true;
+	}
+
+	public void justEnteredRoom(AbstractRoom room) {
+		this.grayscale = false;
 	}
 	
 	public void onPlayerEndTurn() {

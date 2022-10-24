@@ -42,12 +42,15 @@ public class DragonStarHat extends AbstractTestRelic {
 		if (this.counter > 0) {
 			this.show();
 			this.att(apply(p(), new StrengthPower(p(), this.counter)));
-			if (--this.counter == 0)
+			if (--this.counter == 0) {
 				this.stopPulse();
+				this.grayscale = true;
+			}
 		}
 	}
 	
 	public void onRest() {
+		this.grayscale = false;
 		if (!this.isActive || this.relicStream(DragonStarHatUp.class).count() > 0)
 			return;
 		flash();
@@ -61,8 +64,10 @@ public class DragonStarHat extends AbstractTestRelic {
 			maxValue = TestMod.getInt("HatMaxStr");
 			this.relicStream(DragonStarHat.class).forEach(r -> r.counter = maxValue);
 		}
-		if ((this.counter = maxValue) > 0)
+		if ((this.counter = maxValue) > 0) {
 			this.beginLongPulse();
+			this.grayscale = false;
+		}
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {

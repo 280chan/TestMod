@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import testmod.mymod.TestMod;
 
@@ -61,9 +62,14 @@ public class Metronome extends AbstractTestRelic {
 			return;
 		if (this.counter == this.cards.size() || !this.cards.get(this.counter).equals(c.cardID)) {
 			this.act();
+			this.grayscale = true;
 		} else {
 			this.counter++;
 		}
+	}
+
+	public void justEnteredRoom(AbstractRoom room) {
+		this.grayscale &= this.cards.isEmpty();
 	}
 	
 	public void onEquip() {

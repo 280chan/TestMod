@@ -20,7 +20,7 @@ public class SpireNexusUp extends AbstractUpgradedRelic implements ClickableReli
 	}
 
 	private void changePulse() {
-		if (SpireNexus.skipEffect)
+		if (this.grayscale = SpireNexus.skipEffect)
 			this.stopPulse();
 		else
 			this.beginLongPulse();

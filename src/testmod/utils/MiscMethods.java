@@ -734,9 +734,7 @@ public interface MiscMethods {
 	}
 	
 	default Stream<AbstractRelic> replicaRelicStream() {
-		ArrayList<AbstractRelic> list = new ArrayList<AbstractRelic>();
-		list.addAll(p().relics);
-		return list.stream();
+		return new ArrayList<AbstractRelic>(p().relics).stream();
 	}
 	
 	default Stream<AbstractTestRelic> relicStream() {

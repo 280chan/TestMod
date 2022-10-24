@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import testmod.relicsup.BloodSacrificeSpiritualizationUp;
 
@@ -58,9 +59,14 @@ public class BloodSacrificeSpiritualization extends AbstractTestRelic {
 					}
 					this.play(size).accept(c);
 					AbstractDungeon.gridSelectScreen.selectedCards.clear();
+					this.grayscale = true;
 				}
 			});
 		});
+	}
+
+	public void justEnteredRoom(AbstractRoom room) {
+		this.grayscale = false;
 	}
 	
 	private void upgrade(AbstractCard card) {

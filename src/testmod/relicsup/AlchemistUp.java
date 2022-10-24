@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
+import com.evacipated.cardcrawl.modthespire.lib.Matcher;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
+import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
@@ -18,6 +22,8 @@ import com.megacrit.cardcrawl.ui.panels.PotionPopUp;
 import com.megacrit.cardcrawl.ui.panels.TopPanel;
 
 import basemod.ReflectionHacks;
+import javassist.CannotCompileException;
+import javassist.CtBehavior;
 import testmod.mymod.TestMod;
 import testmod.potions.TimePotion;
 
@@ -147,7 +153,7 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 	
 	@SpirePatch(clz = PotionPopUp.class, method = "updateTargetMode")
 	public static class PotionPopUpPatch {
-		@SpireInsertPatch(rloc = 4)
+		@SpireInsertPatch(locator = Locator.class)
 		public static void Insert(PotionPopUp ui) {
 			if (target) {
 				current.regainUse();
@@ -164,6 +170,13 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 				current.pretendUse(ReflectionHacks.getPrivate(ui, PotionPopUp.class, "potion"));
 			}
 			index = (target &= ui.targetMode) ? index : -1;
+		}
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.FieldAccessMatcher(PotionPopUp.class, "targetMode");
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+			}
 		}
 	}
 	

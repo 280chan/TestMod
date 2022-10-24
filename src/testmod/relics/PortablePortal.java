@@ -56,6 +56,7 @@ public class PortablePortal extends AbstractTestRelic implements ClickableRelic 
 	public void onRightClick() {
 		AbstractRoom room = AbstractDungeon.currMapNode == null ? null: AbstractDungeon.getCurrRoom();
 		if (this.check(room) && !this.inCombat()) {
+			this.grayscale = true;
 			this.addEnergy();
 			this.counter = -3;
 			this.show();

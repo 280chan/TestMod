@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
+import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
+import com.evacipated.cardcrawl.modthespire.lib.Matcher;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
+import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
@@ -18,6 +22,8 @@ import com.megacrit.cardcrawl.ui.panels.PotionPopUp;
 import com.megacrit.cardcrawl.ui.panels.TopPanel;
 
 import basemod.ReflectionHacks;
+import javassist.CannotCompileException;
+import javassist.CtBehavior;
 import testmod.mymod.TestMod;
 
 public class Alchemist extends AbstractTestRelic implements ClickableRelic {
@@ -54,7 +60,7 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	public void atPreBattle() {
-		this.toggleState(!(this.used = target = false));
+		this.toggleState(!(this.used = this.grayscale = target = false));
 	}
 	
 	public void atTurnStart() {
@@ -112,7 +118,7 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	private void pretendUse(AbstractPotion p) {
 		TestMod.info("炼金术士: 使用了" + p.name);
 		this.toggleState(false);
-		this.used = true;
+		this.used = this.grayscale = true;
 	}
 
 	public boolean canSpawn() {
@@ -140,7 +146,7 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	
 	@SpirePatch(clz = PotionPopUp.class, method = "updateTargetMode")
 	public static class PotionPopUpPatch {
-		@SpireInsertPatch(rloc = 4)
+		@SpireInsertPatch(locator = Locator.class)
 		public static void Insert(PotionPopUp ui) {
 			if (target) {
 				current.regainUse();
@@ -157,6 +163,13 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 				current.pretendUse(ReflectionHacks.getPrivate(ui, PotionPopUp.class, "potion"));
 			}
 			index = (target &= ui.targetMode) ? index : -1;
+		}
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.FieldAccessMatcher(PotionPopUp.class, "targetMode");
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+			}
 		}
 	}
 	

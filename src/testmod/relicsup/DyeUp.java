@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
 
 import testmod.relics.Dye;
@@ -17,6 +18,10 @@ public class DyeUp extends AbstractUpgradedRelic implements ClickableRelic {
 	private static final UIStrings UI = Dye.UI;
 	private boolean used = false;
 	private static final ArrayList<AbstractCard> COPY = new ArrayList<AbstractCard>();
+
+	public void justEnteredRoom(AbstractRoom room) {
+		this.grayscale = false;
+	}
 	
 	public void onUseCard(final AbstractCard c, final UseCardAction action) {
 		if (this.isActive && COPY.contains(c)) {
@@ -62,6 +67,7 @@ public class DyeUp extends AbstractUpgradedRelic implements ClickableRelic {
 			this.addTmpActionToTop(() -> {
 				AbstractDungeon.handCardSelectScreen.open(UI.TEXT[0], 1, false, false, false, false);
 				this.addTmpActionToTop(() -> {
+					this.grayscale = true;
 					AbstractCard c = AbstractDungeon.handCardSelectScreen.selectedCards.getTopCard();
 					Stream.of(p().drawPile, p().discardPile).forEach(g -> changeCards(g, c));
 					AbstractDungeon.handCardSelectScreen.wereCardsRetrieved = true;

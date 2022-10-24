@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import testmod.mymod.TestMod;
 import testmod.relics.Metronome;
@@ -77,9 +78,14 @@ public class MetronomeUp extends AbstractUpgradedRelic implements CounterKeeper 
 			return;
 		if (this.counter == this.cards.size() || this.cards.get(this.counter) != c.type) {
 			this.act();
+			this.grayscale = true;
 		} else {
 			this.counter++;
 		}
+	}
+
+	public void justEnteredRoom(AbstractRoom room) {
+		this.grayscale &= this.cards.isEmpty();
 	}
 	
 	public void onEquip() {

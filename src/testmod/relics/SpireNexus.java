@@ -29,7 +29,7 @@ public class SpireNexus extends AbstractTestRelic implements ClickableRelic {
 	}
 
 	private void changePulse() {
-		if (skipEffect)
+		if (this.grayscale = skipEffect)
 			this.stopPulse();
 		else
 			this.beginLongPulse();
