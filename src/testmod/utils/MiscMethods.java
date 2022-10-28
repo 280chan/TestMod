@@ -320,11 +320,6 @@ public interface MiscMethods {
 	}
 	
 	default void rollIntentAction(AbstractMonster m) {
-		ArrayList<AbstractGameAction> actions = new ArrayList<AbstractGameAction>();
-		actions.addAll(AbstractDungeon.actionManager.actions);
-		m.takeTurn();
-		AbstractDungeon.actionManager.actions.clear();
-		AbstractDungeon.actionManager.actions.addAll(actions);
 		this.addTmpActionToTop(AbstractDungeon.getMonsters()::showIntent);
 		att(new RollMoveAction(m));
 	}
