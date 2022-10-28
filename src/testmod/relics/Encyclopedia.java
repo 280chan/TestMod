@@ -15,7 +15,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.megacrit.cardcrawl.saveAndContinue.SaveAndContinue;
+import com.megacrit.cardcrawl.vfx.GameSavedEffect;
 
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
@@ -113,13 +113,12 @@ public class Encyclopedia extends AbstractTestRelic {
 			if (victory)
 				save();
 		}
-	}
-	
-	private static class Locator extends SpireInsertLocator {
-		public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
-			Matcher finalMatcher = new Matcher.MethodCallMatcher(SaveAndContinue.class, "save");
-			int[] raw = LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
-			return new int[] { raw[0] + 1 };
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.NewExprMatcher(GameSavedEffect.class);
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+			}
 		}
 	}
 	

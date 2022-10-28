@@ -7,7 +7,6 @@ import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ModHelper;
 import com.megacrit.cardcrawl.potions.PoisonPotion;
@@ -68,9 +67,7 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 	}
 	
 	private ArrayList<AbstractCard> randomReward() {
-		ArrayList<AbstractCard> retVal = new ArrayList<AbstractCard>();
-		retVal.addAll(ChristmasMod.DISASTERS);
-		AbstractPlayer player = AbstractDungeon.player;
+		ArrayList<AbstractCard> retVal = new ArrayList<AbstractCard>(ChristmasMod.DISASTERS);
 		float cardUpgradedChance = 0.25f * (AbstractDungeon.actNum - 1);
 		if (AbstractDungeon.ascensionLevel >= 12)
 			cardUpgradedChance /= 2f;
@@ -85,11 +82,11 @@ public class GiftOfSatan extends AbstractTestRelic implements ChristmasMiscMetho
 		}
 		Random r = AbstractDungeon.cardRng.copy();
 		for (AbstractCard c : retVal2) {
-			if ((c.type == AbstractCard.CardType.ATTACK) && (player.hasRelic("Molten Egg 2"))) {
+			if ((c.type == AbstractCard.CardType.ATTACK) && (p().hasRelic("Molten Egg 2"))) {
 				c.upgrade();
-			} else if ((c.type == AbstractCard.CardType.SKILL) && (player.hasRelic("Toxic Egg 2"))) {
+			} else if ((c.type == AbstractCard.CardType.SKILL) && (p().hasRelic("Toxic Egg 2"))) {
 				c.upgrade();
-			} else if ((c.type == AbstractCard.CardType.POWER) && (player.hasRelic("Frozen Egg 2"))) {
+			} else if ((c.type == AbstractCard.CardType.POWER) && (p().hasRelic("Frozen Egg 2"))) {
 				c.upgrade();
 			} else if (r.randomBoolean(cardUpgradedChance)) {
 				c.upgrade();

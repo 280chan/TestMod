@@ -46,8 +46,7 @@ public class StupidStatEquivalentCardPatch implements MiscMethods {
 		private static class Locator extends SpireInsertLocator {
 			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
 				Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractCard.class, "name");
-				int[] tmp = LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
-				return new int[] { tmp[0] };
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 			}
 		}
 	}

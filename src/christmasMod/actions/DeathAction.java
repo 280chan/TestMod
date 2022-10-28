@@ -1,6 +1,7 @@
 package christmasMod.actions;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -27,15 +28,11 @@ public class DeathAction extends AbstractGameAction {
 	}
 	
 	private static AbstractCreature randomEnemy() {
-		ArrayList<AbstractCreature> list = new ArrayList<AbstractCreature>();
-		for (AbstractCreature m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-			if (!checkState(m)) {
-				list.add(m);
-			}
-		}
+		ArrayList<AbstractCreature> list = new ArrayList<AbstractCreature>(AbstractDungeon.getMonsters().monsters);
+		list.removeIf(m -> checkState(m));
 		if (list.isEmpty())
 			return null;
-		return list.get((int) (Math.random() * list.size()));
+		return list.get((int) (new Random(AbstractDungeon.cardRandomRng.randomLong()).nextInt(list.size())));
 	}
 	
 	private DeathAction next() {

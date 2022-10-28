@@ -28,8 +28,7 @@ public class RetroFilterPatch {
 		private static class Locator extends SpireInsertLocator {
 			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
 				Matcher finalMatcher = new Matcher.MethodCallMatcher(ArrayList.class, "set");
-				int[] raw = LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
-				return new int[] { raw[0] };
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 			}
 		}
 	}

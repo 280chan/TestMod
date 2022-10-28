@@ -73,8 +73,7 @@ public class GiftOfSatanUp extends AbstractUpgradedRelic implements ClickableRel
 	}
 	
 	private ArrayList<AbstractCard> randomReward() {
-		ArrayList<AbstractCard> retVal = new ArrayList<AbstractCard>();
-		retVal.addAll(ChristmasMod.DISASTERS);
+		ArrayList<AbstractCard> retVal = new ArrayList<AbstractCard>(ChristmasMod.DISASTERS);
 		int numCards = this.getRewardCardNum();
 		ArrayList<AbstractCard> retVal2 = new ArrayList<AbstractCard>();
 		Random rng = new Random(AbstractDungeon.cardRng.copy().randomLong());

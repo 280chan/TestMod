@@ -1,6 +1,7 @@
 package christmasMod.powers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
@@ -58,8 +59,7 @@ public class WarPower extends AbstractTestPower {
 			AttackEffect attackEffect = a.attackEffect;
 			p().powers.forEach(p -> p.onDamageAllEnemies(damage));
 			ArrayList<Integer> dmg = new ArrayList<Integer>();
-			for (int i : damage)
-				dmg.add(i);
+			Arrays.stream(damage).forEach(dmg::add);
 			AbstractDungeon.getMonsters().monsters.stream().filter(m -> !m.isDeadOrEscaped()).forEach(m -> {
 				if (attackEffect == AbstractGameAction.AttackEffect.POISON) {
 					m.tint.color = Color.CHARTREUSE.cpy();

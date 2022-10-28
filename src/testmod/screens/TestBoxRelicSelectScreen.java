@@ -105,9 +105,8 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	@Override
 	protected void addRelics() {
 		AbstractTestRelic pri = this.priority();
-		ArrayList<AbstractRelic> l = new ArrayList<AbstractRelic>();
+		ArrayList<AbstractRelic> l = new ArrayList<AbstractRelic>(TestMod.RELICS);
 		ArrayList<AbstractRelic> result = new ArrayList<AbstractRelic>();
-		l.addAll(TestMod.RELICS);
 		l.removeIf(this::checkIllegal);
 		if (pri != null) {
 			l.removeIf(pri::sameAs);
@@ -121,8 +120,7 @@ public class TestBoxRelicSelectScreen extends RelicSelectScreen implements MiscM
 	}
 
 	private void completeSelection() {
-		p().relics.remove(
-				(this.boxUp ? relicStream(TestBoxUp.class) : relicStream(TestBox.class)).findFirst().orElse(null));
+		p().relics.remove((boxUp ? relicStream(TestBoxUp.class) : relicStream(TestBox.class)).findFirst().orElse(null));
 		p().reorganizeRelics();
 		original.clear();
 	}

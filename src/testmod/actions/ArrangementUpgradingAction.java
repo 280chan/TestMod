@@ -1,8 +1,6 @@
 package testmod.actions;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -17,13 +15,11 @@ public class ArrangementUpgradingAction extends AbstractGameAction implements Mi
 	public static final float DURATION = Settings.ACTION_DUR_FAST;
 	private ArrayList<AbstractCard> cannotUpgrade = new ArrayList<AbstractCard>();
 	private static final UIStrings UI = MISC.uiString();
-	AbstractPlayer p;
 	
 	public ArrangementUpgradingAction(AbstractPlayer p, int x) {
 		this.actionType = AbstractGameAction.ActionType.CARD_MANIPULATION;
 		this.duration = DURATION;
 		this.amount = x;
-		this.p = p;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -34,14 +30,13 @@ public class ArrangementUpgradingAction extends AbstractGameAction implements Mi
 				this.isDone = true;
 				return;
 			}
-			this.cannotUpgrade = this.p.hand.group.stream().filter(not(AbstractCard::canUpgrade))
-					.collect(Collectors.toCollection(ArrayList::new));
-			if (this.cannotUpgrade.size() == this.p.hand.size()) {
+			this.cannotUpgrade = p().hand.group.stream().filter(not(AbstractCard::canUpgrade)).collect(toArrayList());
+			if (this.cannotUpgrade.size() == p().hand.size()) {
 				this.gainEnergy(this.amount);
 				this.isDone = true;
 				return;
 			}
-			this.p.hand.group.removeAll(this.cannotUpgrade);
+			p().hand.group.removeAll(this.cannotUpgrade);
 			AbstractDungeon.handCardSelectScreen.open(UI.TEXT[0] + this.amount + UI.TEXT[1], this.amount, true, true,
 					false, true);
 			tickDuration();
@@ -50,7 +45,7 @@ public class ArrangementUpgradingAction extends AbstractGameAction implements Mi
 		if (!AbstractDungeon.handCardSelectScreen.wereCardsRetrieved) {
 			this.gainEnergy(this.amount - AbstractDungeon.handCardSelectScreen.selectedCards.size());
 			AbstractDungeon.handCardSelectScreen.selectedCards.group
-					.forEach(combine(AbstractCard::upgrade, AbstractCard::superFlash, this.p.hand::addToTop));
+					.forEach(combine(AbstractCard::upgrade, AbstractCard::superFlash, p().hand::addToTop));
 			returnCards();
 			AbstractDungeon.handCardSelectScreen.wereCardsRetrieved = true;
 			AbstractDungeon.handCardSelectScreen.selectedCards.group.clear();
@@ -64,8 +59,8 @@ public class ArrangementUpgradingAction extends AbstractGameAction implements Mi
 	}
 
 	private void returnCards() {
-		this.cannotUpgrade.forEach(this.p.hand::addToTop);
-		this.p.hand.refreshHandLayout();
+		this.cannotUpgrade.forEach(p().hand::addToTop);
+		p().hand.refreshHandLayout();
 	}
 	
 }
