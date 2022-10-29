@@ -14,16 +14,11 @@ public class Lexicography extends AbstractTestCard {
 	private static final int BASE_DMG = 0;
 	private static final AttackEffect EFFECT = AttackEffect.SLASH_DIAGONAL;
 
-	public Lexicography() {
-		super(2, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
-		this.baseDamage = BASE_DMG;
-	}
-
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		if (this.upgraded) {
-			this.addToBot(new DamageAllEnemiesAction(p, this.multiDamage, this.damageTypeForTurn, EFFECT));
+			this.atb(new DamageAllEnemiesAction(p, this.multiDamage, this.damageTypeForTurn, EFFECT));
 		} else {
-			this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), EFFECT));
+			this.atb(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), EFFECT));
 		}
 	}
 	

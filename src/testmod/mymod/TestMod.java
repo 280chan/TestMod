@@ -79,7 +79,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 10/28/2022
+ * @version 10/29/2022
  * @since 6/17/2018
  */
 
@@ -345,16 +345,16 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				Gdx.files.internal(stringsPathFix("upgrade")).readString(String.valueOf(StandardCharsets.UTF_8)));
 	}
 	
-	private void loadRelicStats() {
+	private void loadStats(String type) {
 		BaseMod.loadCustomStrings(UIStrings.class,
-			Gdx.files.internal(stringsPathFix("relicStat")).readString(String.valueOf(StandardCharsets.UTF_8)));
+				Gdx.files.internal(stringsPathFix(type)).readString(String.valueOf(StandardCharsets.UTF_8)));
 	}
 	
 	@Override
 	public void receiveEditStrings() {
 		Stream.of(RelicStrings.class, CardStrings.class, PowerStrings.class, PotionStrings.class, EventStrings.class,
 				UIStrings.class).forEach(this::loadStrings);
-		this.loadRelicStats();
+		Stream.of("relicStat", "cardStat").forEach(this::loadStats);
 		this.loadUpgradedRelicCosts();
 		this.loadUpgradedRelicStrings();
 		SUB_MOD.forEach(TestMod::editSubModStrings);
@@ -827,6 +827,9 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		if (checkHash(CardCrawlGame.playerName, "1023dba2e158f257fba87f85d932b1df69c1989dc87c14389787a681f056cc5e")) {
 			unlockAll();
 			TestCommand.add("test", Test.class);
+			if (Loader.isModLoaded("JsonExporter")) {
+				TestCommand.add("export", ExportJson.class);
+			}
 		}
 		TestCommand.add("relictest", Relic.class);
 		TestCommand.add("handsize", HandSize.class);

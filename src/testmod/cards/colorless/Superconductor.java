@@ -11,11 +11,6 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 public class Superconductor extends AbstractTestCard {
 
-	public Superconductor() {
-		super(-1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
-		this.exhaust = true;
-	}
-
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.atb(new ApplyBulletTimeAction());
 		this.addTmpXCostActionToBot(this, e -> this.att(this.apply(p, new SuperconductorPower(p, e))));

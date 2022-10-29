@@ -10,12 +10,6 @@ import com.megacrit.cardcrawl.monsters.*;
 import testmod.cards.AbstractTestCard;
 
 public class MoneyShot extends AbstractTestCard {
-	private static final int BASE_DMG = 0;
-
-	public MoneyShot() {
-		super(0, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
-		this.baseDamage = BASE_DMG;
-	}
 	
 	private ArrayList<Integer> create(int gold) {
 		this.misc = this.baseDamage;

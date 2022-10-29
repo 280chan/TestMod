@@ -10,11 +10,6 @@ import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.actions.common.*;
 
 public class LifeRuler extends AbstractTestCard {
-	
-	public LifeRuler() {
-		super(1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.ENEMY);
-		this.exhaust = true;
-	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster t) {
 		AbstractDungeon.getMonsters().monsters.stream().filter(not(m -> m.isDead || m.isDying || m.halfDead))

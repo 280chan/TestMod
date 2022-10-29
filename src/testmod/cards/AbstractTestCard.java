@@ -46,6 +46,20 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 	public AbstractTestCard(int cost, CardType type, CardRarity rarity, CardTarget target) {
 		this(shortID(getCardClass()), cost, type, rarity, target);
 	}
+	
+	private AbstractTestCard(CardStats stats) {
+		this(stats.cost, stats.type, stats.rarity, stats.target);
+		this.baseBlock = stats.baseBlock;
+		this.baseDamage = stats.baseDamage;
+		this.magicNumber = this.baseMagicNumber = stats.baseMagic;
+		this.exhaust = stats.exhaust;
+		this.isInnate = stats.innate;
+		this.isEthereal = stats.ethereal;
+	}
+	
+	public AbstractTestCard() {
+		this(stats(getCardClass()));
+	}
 
 	protected static CardStrings Strings(String ID) {
 		if (!CS.containsKey(ID))
@@ -107,12 +121,51 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 		return IDS.get(c);
 	}
 
+	@SuppressWarnings("unchecked")
 	private static <T extends AbstractTestCard> Class<T> getCardClass() {
-		return MISC.get(AbstractTestCard.class);
+		return MISC.get(AbstractTestCard.class, AbstractUpdatableCard.class);
+	}
+	
+	protected static <T extends AbstractTestCard> CardStats stats(Class<T> c) {
+		if (STATS.containsKey(c))
+			return STATS.get(c);
+		STATS.put(c, new CardStats(MISC.uiString(shortID(c) + "Stat").TEXT));
+		return STATS.get(c);
 	}
 
 	private static final HashMap<String, CardStrings> CS = new HashMap<String, CardStrings>();
 	private static final HashMap<Class<? extends AbstractTestCard>, String> IDS = 
 			new HashMap<Class<? extends AbstractTestCard>, String>();
+	private static final HashMap<Class<? extends AbstractTestCard>, CardStats> STATS =
+			new HashMap<Class<? extends AbstractTestCard>, CardStats>();
+	
+	public static class CardStats {
+		private int cost, baseBlock, baseDamage, baseMagic;
+		private boolean exhaust, innate, ethereal;
+		private CardType type;
+		private CardRarity rarity;
+		private CardTarget target;
+		
+		public CardStats(int cost, CardType type, CardRarity rarity, CardTarget target, int block, int damage,
+				int magic, boolean exhaust, boolean innate, boolean ethereal) {
+			this.cost = cost;
+			this.type = type;
+			this.rarity = rarity;
+			this.target = target;
+			this.baseBlock = block;
+			this.baseDamage = damage;
+			this.baseMagic = magic;
+			this.exhaust = exhaust;
+			this.innate = innate;
+			this.ethereal = ethereal;
+		}
+		
+		public CardStats(String[] data) {
+			this(Integer.parseInt(data[0]), CardType.valueOf(data[1]), CardRarity.valueOf(data[2]),
+					CardTarget.valueOf(data[3]), Integer.parseInt(data[4]), Integer.parseInt(data[5]),
+					Integer.parseInt(data[6]), Boolean.valueOf(data[7]), Boolean.valueOf(data[8]),
+					Boolean.valueOf(data[9]));
+		}
+	}
 	
 }

@@ -13,14 +13,9 @@ import testmod.cards.AbstractTestCard;
 
 public class SubstituteBySubterfuge extends AbstractTestCard {
 	private static final UIStrings UI = MISC.uiString();
-
-	public SubstituteBySubterfuge() {
-		super(0, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.NONE);
-		this.exhaust = true;
-	}
 	
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
-		this.addToBot(new GainEnergyAction(1));
+		this.atb(new GainEnergyAction(1));
 		this.addTmpActionToBot(() -> {
 			this.addTmpActionToTop(() -> {
 				p.relics.forEach(AbstractRelic::onShuffle);
@@ -35,7 +30,7 @@ public class SubstituteBySubterfuge extends AbstractTestCard {
 					AbstractDungeon.gridSelectScreen.selectedCards.clear();
 				});
 			}
-			this.addToTop(new MoveCardsAction(p.drawPile, p.discardPile, p.discardPile.size()));
+			this.att(new MoveCardsAction(p.drawPile, p.discardPile, p.discardPile.size()));
 		});
 	}
 

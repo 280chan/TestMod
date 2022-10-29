@@ -50,7 +50,7 @@
 	},
 	"testmod-AutoReboundSystem": {
 		"NAME": "自动弹回系统",
-		"DESCRIPTION": "",
+		"DESCRIPTION": "每回合开始时获得 [E] 并抽 !M! 张牌。你每回合打出的前 !M! 张可被 *弹回 的牌，将回到抽牌堆顶部。",
 		"EXTENDED_DESCRIPTION": [
 			"每回合开始时获得",
 			" 并抽 !M! 张牌。你每回合打出的前 !M! 张可被 *弹回 的牌，将回到抽牌堆顶部。"
@@ -71,7 +71,7 @@
 	},
 	"testmod-BloodShelter": {
 		"NAME": "血之屏障",
-		"DESCRIPTION": "",
+		"DESCRIPTION": "与目标平衡到相同的生命值百分比。使双方获得两者生命值变化量绝对值之和点 格挡 。 消耗 。",
 		"EXTENDED_DESCRIPTION": [
 			"与目标平衡到相同的生命值百分比。使双方获得两者生命值变化量绝对值之和",
 			"点 格挡 。 消耗 。" 

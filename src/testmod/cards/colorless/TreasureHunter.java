@@ -18,13 +18,6 @@ import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
 import testmod.cards.AbstractTestCard;
 
 public class TreasureHunter extends AbstractTestCard {
-	private static final int BASE_DMG = 15;
-
-	public TreasureHunter() {
-		super(2, CardType.ATTACK, CardRarity.RARE, CardTarget.ENEMY);
-		this.baseDamage = BASE_DMG;
-		this.exhaust = true;
-	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpActionToBot(() -> {

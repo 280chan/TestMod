@@ -5,15 +5,13 @@ import java.util.ArrayList;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public abstract class AbstractUpdatableCard extends AbstractEquivalentableCard {
+public abstract class AbstractUpdatableCard extends AbstractTestCard {
 	public static final ArrayList<AbstractUpdatableCard> TO_UPDATE = new ArrayList<AbstractUpdatableCard>();
 	protected boolean onMonster = false;
 	private String originalDesc;
 	
-	public AbstractUpdatableCard(String id, String name, int cost, String desc, CardType type, CardRarity rarity,
-			CardTarget target) {
-		super(id, name, cost, desc, type, rarity, target);
-		this.changeDescription(desc, true);
+	public AbstractUpdatableCard() {
+		this.changeDescription(this.desc(), true);
 	}
 
 	protected boolean isHovered() {

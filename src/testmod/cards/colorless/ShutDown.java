@@ -8,11 +8,8 @@ import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.cards.blue.Reboot;
 
 public class ShutDown extends AbstractTestCard {
-	private static final int BASE_MGC = 1;
 
 	public ShutDown() {
-		super(1, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 		this.cardsToPreview = new Reboot();
 	}
 

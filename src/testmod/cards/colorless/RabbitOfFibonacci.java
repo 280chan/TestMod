@@ -11,8 +11,6 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import testmod.cards.AbstractTestCard;
 
 public class RabbitOfFibonacci extends AbstractTestCard {
-	private static final int BASE_DMG = 1;
-	private static final int BASE_BLK = 1;
 	private static final double ROOT5 = Math.sqrt(5);
 	private static final double LOG_PHI = Math.log((ROOT5 + 1) / 2);
 	private static final ArrayList<RabbitOfFibonacci> PREVIEW = new ArrayList<RabbitOfFibonacci>();
@@ -35,9 +33,6 @@ public class RabbitOfFibonacci extends AbstractTestCard {
 	}
 	
 	private RabbitOfFibonacci(boolean preview) {
-		super(2, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL);
-		this.baseDamage = BASE_DMG;
-		this.baseBlock = BASE_BLK;
 		this.isMultiDamage = true;
 	}
 

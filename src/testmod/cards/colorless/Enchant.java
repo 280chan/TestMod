@@ -12,15 +12,7 @@ import testmod.cards.AbstractTestCard;
 
 public class Enchant extends AbstractTestCard {
 	private static final UIStrings UI = MISC.uiString();
-	private static final int COST = 1;
-	private static final int BASE_MGC = 2;
-
-	public Enchant() {
-		super(COST, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
-		this.exhaust = true;
-	}
-
+	
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpActionToBot(() -> {
 			CardGroup tmp = new CardGroup(CardGroupType.UNSPECIFIED);

@@ -12,8 +12,6 @@ import basemod.abstracts.CustomSavable;
 import testmod.cards.AbstractTestCard;
 
 public class HandmadeProducts extends AbstractTestCard implements CustomSavable<Integer> {
-	private static final int BASE_DMG = 0;
-	private static final int BASE_MGC = 1;
 	private static final int DELTA_COST = 1;
 
 	@Override
@@ -24,12 +22,6 @@ public class HandmadeProducts extends AbstractTestCard implements CustomSavable<
 	@Override
 	public Integer onSave() {
 		return this.cost;
-	}
-	
-	public HandmadeProducts() {
-		super(0, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
-		this.baseDamage = BASE_DMG;
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {

@@ -7,11 +7,6 @@ import testmod.cards.AbstractTestCard;
 
 public class EternalityOfKhronos extends AbstractTestCard {
 
-	public EternalityOfKhronos() {
-		super(2, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
-		this.isEthereal = this.exhaust = true;
-	}
-
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.skipMonsterIntent();
 	}

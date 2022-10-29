@@ -50,10 +50,10 @@
 	},
 	"testmod-AutoReboundSystem": {
 		"NAME": "Auto Rebound System",
-		"DESCRIPTION": "",
+		"DESCRIPTION": "At the start of your turn, Gain [E] and draw !M! cards. Put the first !M! cards you play this turn back on the top of your draw pile.",
 		"EXTENDED_DESCRIPTION": [
 			"At the start of your turn, Gain",
-			" Draw !M! cards. Put the first !M! cards you play this turn back on the top of your draw pile."
+			" and draw !M! cards. Put the first !M! cards you play this turn back on the top of your draw pile."
 		]
 	},
 	"testmod-BackupPower": {
@@ -71,10 +71,10 @@
 	},
 	"testmod-BloodShelter": {
 		"NAME": "Blood Shelter",
-		"DESCRIPTION": "",
+		"DESCRIPTION": "Arrange HP with target to make each has same ratio. Each gain the sum of change in HP amount of Block. Exhaust.",
 		"EXTENDED_DESCRIPTION": [
 			"Arrange HP with target to make each has same ratio. Each gain the sum of change in HP amount",
-			" Block . Exhaust." 
+			" Block. Exhaust." 
 		]
 	},
 	"testmod-Bloodthirsty": {

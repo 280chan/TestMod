@@ -19,17 +19,6 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.badlogic.gdx.math.MathUtils;
 
 public class Arrangement extends AbstractTestCard {
-	private static final int BASE_BLK = 0;
-	private static final int BASE_DMG = 0;
-	private static final int BASE_MGC = 1;
-
-	public Arrangement() {
-		super(-1, CardType.ATTACK, CardRarity.RARE, CardTarget.SELF_AND_ENEMY);
-		this.baseBlock = BASE_BLK;
-		this.baseDamage = BASE_DMG;
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
-		this.exhaust = true;
-	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpXCostActionToBot(this, a -> {

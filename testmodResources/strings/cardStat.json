@@ -1,0 +1,856 @@
+{
+	"testmod-LifeRulerStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"UNCOMMON",
+			"ENEMY",
+			"-1",
+			"-1",
+			"-1",
+			"true",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-WeaknessCounterattackStat": {
+		"TEXT": [
+			"1",
+			"ATTACK",
+			"UNCOMMON",
+			"ALL_ENEMY",
+			"-1",
+			"9",
+			"2",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-SubstituteBySubterfugeStat": {
+		"TEXT": [
+			"0",
+			"SKILL",
+			"UNCOMMON",
+			"NONE",
+			"-1",
+			"-1",
+			"-1",
+			"true",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-SuperconductorStat": {
+		"TEXT": [
+			"-1",
+			"SKILL",
+			"RARE",
+			"NONE",
+			"-1",
+			"-1",
+			"-1",
+			"true",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-EternalityOfKhronosStat": {
+		"TEXT": [
+			"2",
+			"SKILL",
+			"RARE",
+			"NONE",
+			"-1",
+			"-1",
+			"-1",
+			"true",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-AutoReboundSystemStat": {
+		"TEXT": [
+			"3",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-WormholeStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"RARE",
+			"ENEMY",
+			"-1",
+			"-1",
+			"-1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-RepeatFormStat": {
+		"TEXT": [
+			"3",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-SunMoonStat": {
+		"TEXT": [
+			"2",
+			"ATTACK",
+			"RARE",
+			"ALL_ENEMY",
+			"-1",
+			"-1",
+			"-1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-MysteryStat": {
+		"TEXT": [
+			"2",
+			"ATTACK",
+			"UNCOMMON",
+			"ALL_ENEMY",
+			"-1",
+			"4",
+			"1",
+			"true",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-ShutDownStat": {
+		"TEXT": [
+			"1",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-ReflectStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-PocketStoneCalenderStat": {
+		"TEXT": [
+			"0",
+			"ATTACK",
+			"UNCOMMON",
+			"ENEMY",
+			"-1",
+			"0",
+			"2",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-RecapStat": {
+		"TEXT": [
+			"2",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-BloodthirstyStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"UNCOMMON",
+			"ENEMY",
+			"-1",
+			"-1",
+			"5",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-ArrangementStat": {
+		"TEXT": [
+			"-1",
+			"ATTACK",
+			"RARE",
+			"SELF_AND_ENEMY",
+			"0",
+			"0",
+			"1",
+			"true",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-BloodShelterStat": {
+		"TEXT": [
+			"3",
+			"SKILL",
+			"RARE",
+			"ENEMY",
+			"0",
+			"-1",
+			"-1",
+			"true",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-SelfRegulatingSystemStat": {
+		"TEXT": [
+			"2",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-AutomatonStat": {
+		"TEXT": [
+			"1",
+			"ATTACK",
+			"UNCOMMON",
+			"ALL_ENEMY",
+			"-1",
+			"8",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-LimitFlipperStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"UNCOMMON",
+			"SELF",
+			"-1",
+			"-1",
+			"2",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-TemporaryDeletionStat": {
+		"TEXT": [
+			"1",
+			"POWER",
+			"UNCOMMON",
+			"NONE",
+			"-1",
+			"-1",
+			"-1",
+			"false",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-RabbitOfFibonacciStat": {
+		"TEXT": [
+			"2",
+			"ATTACK",
+			"UNCOMMON",
+			"ALL",
+			"1",
+			"1",
+			"-1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-TradeInStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"RARE",
+			"NONE",
+			"-1",
+			"-1",
+			"1",
+			"true",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-ReproduceStat": {
+		"TEXT": [
+			"1",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"true",
+			"false"
+		]
+	},
+
+	"testmod-PainDetonatorStat": {
+		"TEXT": [
+			"1",
+			"ATTACK",
+			"UNCOMMON",
+			"ENEMY",
+			"-1",
+			"0",
+			"50",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-ReverberationStat": {
+		"TEXT": [
+			"3",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-CardIndexStat": {
+		"TEXT": [
+			"3",
+			"SKILL",
+			"RARE",
+			"ENEMY",
+			"-1",
+			"-1",
+			"2",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-PowerStrikeStat": {
+		"TEXT": [
+			"3",
+			"SKILL",
+			"RARE",
+			"ALL_ENEMY",
+			"-1",
+			"-1",
+			"1",
+			"true",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-TaurusBlackCatStat": {
+		"TEXT": [
+			"3",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"80",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-PerfectComboStat": {
+		"TEXT": [
+			"1",
+			"ATTACK",
+			"UNCOMMON",
+			"ENEMY",
+			"-1",
+			"15",
+			"20",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-LexicographyStat": {
+		"TEXT": [
+			"2",
+			"ATTACK",
+			"RARE",
+			"ENEMY",
+			"-1",
+			"0",
+			"-1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-LibrarianStat": {
+		"TEXT": [
+			"-1",
+			"SKILL",
+			"RARE",
+			"NONE",
+			"-1",
+			"-1",
+			"1",
+			"true",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-VirtualRealityStat": {
+		"TEXT": [
+			"0",
+			"SKILL",
+			"UNCOMMON",
+			"SELF",
+			"40",
+			"-1",
+			"-1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-HandmadeProductsStat": {
+		"TEXT": [
+			"0",
+			"ATTACK",
+			"UNCOMMON",
+			"ENEMY",
+			"-1",
+			"0",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-DeathImprintStat": {
+		"TEXT": [
+			"1",
+			"ATTACK",
+			"UNCOMMON",
+			"ENEMY",
+			"-1",
+			"8",
+			"100",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-TreasureHunterStat": {
+		"TEXT": [
+			"2",
+			"ATTACK",
+			"RARE",
+			"ENEMY",
+			"-1",
+			"15",
+			"-1",
+			"true",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-MoneyShotStat": {
+		"TEXT": [
+			"0",
+			"ATTACK",
+			"RARE",
+			"ENEMY",
+			"-1",
+			"0",
+			"-1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-EnchantStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"RARE",
+			"NONE",
+			"-1",
+			"-1",
+			"2",
+			"true",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-FormFormStat": {
+		"TEXT": [
+			"3",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-PortableTranscriptStat": {
+		"TEXT": [
+			"3",
+			"POWER",
+			"RARE",
+			"SELF",
+			"-1",
+			"-1",
+			"1",
+			"false",
+			"true",
+			"false"
+		]
+	},
+
+	"testmod-AdversityCounterattackStat": {
+		"TEXT": [
+			"1",
+			"ATTACK",
+			"RARE",
+			"ENEMY",
+			"0",
+			"0",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-AssimilatedRuneStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"RARE",
+			"SELF",
+			"0",
+			"0",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-BackupPowerStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"UNCOMMON",
+			"NONE",
+			"0",
+			"0",
+			"2",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-BloodBladeStat": {
+		"TEXT": [
+			"1",
+			"POWER",
+			"RARE",
+			"SELF",
+			"0",
+			"0",
+			"0",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-ChaoticCoreStat": {
+		"TEXT": [
+			"3",
+			"POWER",
+			"RARE",
+			"SELF",
+			"0",
+			"0",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-CollectorStat": {
+		"TEXT": [
+			"1",
+			"ATTACK",
+			"UNCOMMON",
+			"ALL_ENEMY",
+			"0",
+			"8",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-ComboMasterStat": {
+		"TEXT": [
+			"1",
+			"ATTACK",
+			"UNCOMMON",
+			"ALL_ENEMY",
+			"0",
+			"1",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-ConditionedReflexStat": {
+		"TEXT": [
+			"1",
+			"POWER",
+			"UNCOMMON",
+			"SELF",
+			"0",
+			"0",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-DisillusionmentEchoStat": {
+		"TEXT": [
+			"-1",
+			"POWER",
+			"RARE",
+			"SELF",
+			"0",
+			"0",
+			"3",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-DreamStat": {
+		"TEXT": [
+			"3",
+			"SKILL",
+			"RARE",
+			"NONE",
+			"0",
+			"0",
+			"0",
+			"true",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-EnhanceArmermentStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"RARE",
+			"NONE",
+			"0",
+			"0",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-FightingIntentionStat": {
+		"TEXT": [
+			"3",
+			"POWER",
+			"RARE",
+			"SELF",
+			"0",
+			"0",
+			"1",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-HeadAttackStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"UNCOMMON",
+			"ENEMY",
+			"0",
+			"0",
+			"2",
+			"false",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-IllusoryStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"RARE",
+			"NONE",
+			"0",
+			"0",
+			"1",
+			"true",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-PlagueStat": {
+		"TEXT": [
+			"-1",
+			"POWER",
+			"RARE",
+			"SELF",
+			"0",
+			"0",
+			"1",
+			"false",
+			"false",
+			"true"
+		]
+	},
+
+	"testmod-ProvocationStat": {
+		"TEXT": [
+			"1",
+			"SKILL",
+			"UNCOMMON",
+			"ENEMY",
+			"0",
+			"0",
+			"6",
+			"false",
+			"false",
+			"false"
+		]
+	},
+
+	"testmod-PulseDistributorStat": {
+		"TEXT": [
+			"3",
+			"POWER",
+			"RARE",
+			"SELF",
+			"0",
+			"0",
+			"0",
+			"false",
+			"false",
+			"false"
+		]
+	}
+}

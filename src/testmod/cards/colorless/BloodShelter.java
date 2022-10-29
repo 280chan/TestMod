@@ -1,45 +1,27 @@
 
 package testmod.cards.colorless;
 
+import java.util.stream.Stream;
 import com.megacrit.cardcrawl.cards.*;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.monsters.*;
-
+import com.megacrit.cardcrawl.actions.common.*;
 import testmod.cards.AbstractUpdatableCard;
 
-import com.megacrit.cardcrawl.localization.CardStrings;
-import com.megacrit.cardcrawl.actions.common.*;
-
-import java.util.stream.Stream;
-
-
 public class BloodShelter extends AbstractUpdatableCard {
-	public static final String ID = "BloodShelter";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-	public static final int COST = 3;
-	private static final int BLOCK = -1;
-	private static final String DESCRIPTION = getDescription(BLOCK, false);
-
-	private static String getDescription(int value, boolean show) {
-		String tmp = EXTENDED_DESCRIPTION[0];
+	
+	private String getDescription(int value, boolean show) {
+		String tmp = exDesc()[0];
 		if (value > -1 && show)
 			tmp += "(" + value + ")";
-		return tmp + EXTENDED_DESCRIPTION[1];
-	}
-	
-	public BloodShelter() {
-		super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
-		this.baseBlock = 0;
-		this.exhaust = true;
+		return tmp + exDesc()[1];
 	}
 	
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.preApplyPowers(p, m);
 		super.applyPowers();
-		Stream.of(p, m).forEach(c -> this.addToBot(new GainBlockAction(c, p, this.block)));
+		Stream.of(p, m).forEach(c -> this.atb(new GainBlockAction(c, p, this.block)));
 		this.addTmpActionToBot(() -> {
 			double rate = Stream.of(p, m).mapToDouble(c -> c.currentHealth * 1.0 / c.maxHealth).sum();
 			Stream.of(p, m).forEach(c -> f(c, rate));

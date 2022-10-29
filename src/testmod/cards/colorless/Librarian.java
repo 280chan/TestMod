@@ -17,13 +17,6 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 
 public class Librarian extends AbstractTestCard {
 	private static final UIStrings UI = MISC.uiString();
-	private static final int BASE_MGC = 1;
-
-	public Librarian() {
-		super(-1, CardType.SKILL, CardRarity.RARE, CardTarget.NONE);
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
-		this.exhaust = true;
-	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpXCostActionToBot(this, e -> {

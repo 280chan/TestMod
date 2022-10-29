@@ -9,18 +9,10 @@ import com.megacrit.cardcrawl.monsters.*;
 import testmod.cards.AbstractTestCard;
 
 public class WeaknessCounterattack extends AbstractTestCard {
-	private static final int BASE_DMG = 9;
-	private static final int BASE_MGC = 2;
-
-	public WeaknessCounterattack() {
-		super(1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
-		this.baseDamage = BASE_DMG;
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
-	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.getIdenticalList(AttackEffect.SLASH_HORIZONTAL, this.magicNumber + calculateBonus())
-				.forEach(e -> this.addToBot(new AttackDamageRandomEnemyAction(this, e)));
+				.forEach(e -> this.atb(new AttackDamageRandomEnemyAction(this, e)));
 	}
 	
 	private int calculateBonus() {

@@ -15,18 +15,10 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.dungeons.*;
 
 public class DeathImprint extends AbstractTestCard {
-	private static final int BASE_DMG = 8;
-	private static final int BASE_MGC = 100;
 	public boolean same = false;
 	@SuppressWarnings("unchecked")
 	private static final Supplier<Boolean> G = () -> AbstractDungeon.getMonsters().monsters.stream()
 			.anyMatch(MISC.and(MISC.not(AbstractMonster::isDeadOrEscaped), DeathImprintPower::hasThis));
-
-	public DeathImprint() {
-		super(1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
-		this.baseDamage = BASE_DMG;
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
-	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addToBot(new DeathImprintAction(p, m, this.damage, this.damageTypeForTurn));

@@ -9,12 +9,8 @@ import com.megacrit.cardcrawl.monsters.*;
 import basemod.helpers.BaseModCardTags;
 
 public class RepeatForm extends AbstractTestCard {
-	private static final int BASE_MGC = 1;
 
 	public RepeatForm() {
-		super(3, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
-		this.isEthereal = true;
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 		this.tags.add(BaseModCardTags.FORM);
 	}
 

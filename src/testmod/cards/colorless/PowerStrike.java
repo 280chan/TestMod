@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.powers.IntangiblePower;
 import testmod.cards.AbstractTestCard;
 
 public class PowerStrike extends AbstractTestCard {
-	private static final int BASE_MGC = 1;
 
 	public void initializeDescription() {
 		if (this.magicNumber > 0) {
@@ -22,9 +21,6 @@ public class PowerStrike extends AbstractTestCard {
 	}
 	
 	public PowerStrike() {
-		super(3, CardType.SKILL, CardRarity.RARE, CardTarget.ALL_ENEMY);
-		this.exhaust = this.isEthereal = true;
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 		this.tags.add(CardTags.STRIKE);
 	}
 

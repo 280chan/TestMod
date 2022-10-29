@@ -8,9 +8,6 @@ import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 
 public class Wormhole extends AbstractTestCard {
-	public Wormhole() {
-		super(1, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
-	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpActionToBot(() -> {

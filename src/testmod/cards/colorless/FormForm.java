@@ -16,12 +16,8 @@ import basemod.helpers.BaseModCardTags;
 import testmod.cards.AbstractTestCard;
 
 public class FormForm extends AbstractTestCard {
-	private static final int COST = 3;
-	private static final int BASE_MGC = 1;
 
 	public FormForm() {
-		super(COST, CardType.POWER, CardRarity.RARE, CardTarget.SELF);
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 		this.tags.add(BaseModCardTags.FORM);
 	}
 

@@ -15,11 +15,6 @@ import com.megacrit.cardcrawl.monsters.*;
 public class TemporaryDeletion extends AbstractTestCard {
 	private static final UIStrings UI = MISC.uiString();
 
-	public TemporaryDeletion() {
-		super(1, CardType.POWER, CardRarity.UNCOMMON, CardTarget.NONE);
-		this.isEthereal = true;
-	}
-
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpActionToBot(() -> {
 			CardGroup g = new CardGroup(CardGroupType.UNSPECIFIED);

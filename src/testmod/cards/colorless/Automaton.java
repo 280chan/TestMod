@@ -12,8 +12,6 @@ import com.megacrit.cardcrawl.helpers.GetAllInBattleInstances;
 import com.megacrit.cardcrawl.actions.unique.SwordBoomerangAction;
 
 public class Automaton extends AbstractTestCard implements CustomSavable<Integer> {
-	private static final int ATTACK_DMG = 8;
-	private static final int BASE_MGC = 1;
 	private static final int DELTA_MGC = 1;
 
 	@Override
@@ -25,12 +23,6 @@ public class Automaton extends AbstractTestCard implements CustomSavable<Integer
 	@Override
 	public Integer onSave() {
 		return this.magicNumber;
-	}
-	
-	public Automaton() {
-		super(1, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ALL_ENEMY);
-		this.baseDamage = ATTACK_DMG;
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
 	}
 	
 	public void use(final AbstractPlayer p, final AbstractMonster m) {

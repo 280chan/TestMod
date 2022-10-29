@@ -6,26 +6,12 @@ import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import testmod.cards.AbstractUpdatableCard;
 
 public class CardIndex extends AbstractUpdatableCard {
-	public static final String ID = "CardIndex";
-	private static final CardStrings cardStrings = Strings(ID);
-	private static final String NAME = cardStrings.NAME;
-	private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-	private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
-	private static final int COST = 3;
-	private static final int BASE_MGC = 2;
-
 	private ArrayList<AbstractCard> cards = new ArrayList<AbstractCard>();
-	
-	public CardIndex() {
-		super(ID, NAME, COST, DESCRIPTION, CardType.SKILL, CardRarity.RARE, CardTarget.ENEMY);
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
-	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.addTmpActionToBot(() -> {
@@ -40,7 +26,7 @@ public class CardIndex extends AbstractUpdatableCard {
 						return;
 					}
 					int size = Math.min(this.magicNumber, g.size());
-					String info = EXTENDED_DESCRIPTION[4] + size + EXTENDED_DESCRIPTION[5];
+					String info = exDesc()[4] + size + exDesc()[5];
 					AbstractDungeon.gridSelectScreen.open(g, size, true, info);
 					this.addTmpActionToTop(() -> {
 						if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
@@ -96,12 +82,12 @@ public class CardIndex extends AbstractUpdatableCard {
 		if (this.cards.isEmpty())
 			return;
 		if (this.cards.get(0) == null) {
-			this.changeDescription(EXTENDED_DESCRIPTION[1], true);
+			this.changeDescription(exDesc()[1], true);
 			return;
 		}
-		String tmp = EXTENDED_DESCRIPTION[0] + this.cards.stream().peek(AbstractCard::applyPowers)
-				.map(c -> c.name + EXTENDED_DESCRIPTION[2]).reduce("", (a, b) -> a + b);
-		this.changeDescription(tmp.substring(0, tmp.length() - 1) + EXTENDED_DESCRIPTION[3], true);
+		String tmp = exDesc()[0] + this.cards.stream().peek(AbstractCard::applyPowers).map(c -> c.name + exDesc()[2])
+				.reduce("", (a, b) -> a + b);
+		this.changeDescription(tmp.substring(0, tmp.length() - 1) + exDesc()[3], true);
 	}
 	
 	public void calculateCardDamage(AbstractMonster m) {

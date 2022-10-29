@@ -11,14 +11,6 @@ import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.*;
 
 public class PocketStoneCalender extends AbstractTestCard {
-	private static final int BASE_DMG = 0;
-	private static final int BASE_MGC = 2;
-
-	public PocketStoneCalender() {
-		super(0, CardType.ATTACK, CardRarity.UNCOMMON, CardTarget.ENEMY);
-		this.baseDamage = BASE_DMG;
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
-	}
 
 	public void triggerWhenDrawn() {
 		this.modifyCostForCombat(-1);

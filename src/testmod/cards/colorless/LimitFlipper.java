@@ -10,13 +10,7 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 import testmod.cards.AbstractTestCard;
 
 public class LimitFlipper extends AbstractTestCard {
-	private static final int BASE_MGC = 2;
 	private boolean active = false;
-	
-	public LimitFlipper() {
-		super(1, CardType.SKILL, CardRarity.UNCOMMON, CardTarget.SELF);
-		this.magicNumber = this.baseMagicNumber = BASE_MGC;
-	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.updateActive(secondLastIfLastIsThis());
