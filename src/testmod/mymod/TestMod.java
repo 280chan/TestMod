@@ -13,6 +13,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import javax.annotation.processing.FilerException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -79,7 +81,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 10/29/2022
+ * @version 10/30/2022
  * @since 6/17/2018
  */
 
@@ -162,7 +164,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	@Override
 	public void receiveEditKeywords() {
 		// TODO
-		Stream.of(new Gson().fromJson(readString("keywords"), Keyword[].class))
+		Stream.of(new Gson().fromJson(readLocalizedString("keywords"), Keyword[].class))
 				.forEach(k -> BaseMod.addKeyword(k.PROPER_NAME, k.NAMES, k.DESCRIPTION));
 		//BaseMod.addKeyword(arg0, arg1, arg2, arg3);
 		
@@ -210,6 +212,16 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 						"77ce59ba93d1f3e3087656846b13cf4b197f693cc21cf2aeaf1197dbf6c2c4a6");
 	}
 	
+	public static boolean isStatSafe(String type, String data) {
+		switch (type) {
+		case "relicStat":
+			return TestMod.checkHash(data, "8ab8640b72aefdc4aa362d94705a61db30259b6639ea09e9f02bde71d9d0695f");
+		case "cardStat":
+			return TestMod.checkHash(data, "cd7ee5abe8340d5ff39feca544891962245c50169a37981ddb5375449bcac33b");
+		}
+		return false;
+	}
+	
 	private static final HashMap<String, String> MAKE_ID_MAP = new HashMap<String, String>();
 	
 	public static String makeID(String id) {
@@ -249,23 +261,6 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	private static void checkOldCardID(String id) {
 		if (UnlockTracker.isCardSeen(unMakeID(id)))
 			UnlockTracker.markCardAsSeen(id);
-	}
-	
-	
-	public static String lanPrefix(String s) {
-		// TODO
-		String tmp = Settings.language.name().toLowerCase() + "/" + s;
-		if (fileExist(stringsPathFix(tmp)))
-			return tmp;
-		return (Settings.language == GameLanguage.ZHT ? "zhs/" : "eng/") + s;
-	}
-	
-	public static String stringsPathFix(String s) {
-		return "testmodResources/strings/" + s + ".json";
-	}
-
-	public static String readString(String type) {
-		return Gdx.files.internal(stringsPathFix(lanPrefix(type))).readString(String.valueOf(StandardCharsets.UTF_8));
 	}
 	
 	/**
@@ -330,24 +325,55 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	public static ArrayList<AbstractTestRelic> MY_RELICS = new ArrayList<AbstractTestRelic>();
 	public static ArrayList<AbstractUpgradedRelic> UP_RELICS = new ArrayList<AbstractUpgradedRelic>();
 	
+	public static String lanPrefix(String s) {
+		// TODO
+		String tmp = Settings.language.name().toLowerCase() + "/" + s;
+		if (fileExist(stringsPathFix(tmp)))
+			return tmp;
+		return (Settings.language == GameLanguage.ZHT ? "zhs/" : "eng/") + s;
+	}
+	
+	public static String stringsPathFix(String s) {
+		return "testmodResources/strings/" + s + ".json";
+	}
+
+	private static String readLocalizedString(String type) {
+		return readString(lanPrefix(type));
+	}
+	
+	private static String readString(String type) {
+		return Gdx.files.internal(stringsPathFix(type)).readString(String.valueOf(StandardCharsets.UTF_8));
+	}
+	
 	private void loadStrings(Class<?> c) {
 		String s = c.getSimpleName().toLowerCase();
-		BaseMod.loadCustomStrings(c, readString(s.substring(0, s.length() - 6)));
+		BaseMod.loadCustomStrings(c, readLocalizedString(s.substring(0, s.length() - 6)));
 	}
 	
 	private void loadUpgradedRelicStrings() {
 		String s = "upgraded" + RelicStrings.class.getSimpleName().toLowerCase();
-		BaseMod.loadCustomStrings(RelicStrings.class, readString(s.substring(0, s.length() - 6)));
+		BaseMod.loadCustomStrings(RelicStrings.class, readLocalizedString(s.substring(0, s.length() - 6)));
 	}
 	
 	private void loadUpgradedRelicCosts() {
-		BaseMod.loadCustomStrings(UIStrings.class,
-				Gdx.files.internal(stringsPathFix("upgrade")).readString(String.valueOf(StandardCharsets.UTF_8)));
+		BaseMod.loadCustomStrings(UIStrings.class, readString("upgrade"));
 	}
 	
 	private void loadStats(String type) {
-		BaseMod.loadCustomStrings(UIStrings.class,
-				Gdx.files.internal(stringsPathFix(type)).readString(String.valueOf(StandardCharsets.UTF_8)));
+		String tmp = readString(type);
+		if (TestMod.isStatSafe(type, tmp)) {
+			BaseMod.loadCustomStrings(UIStrings.class, tmp);
+			return;
+		}
+		final class FileInconsistentException extends RuntimeException {
+			private static final long serialVersionUID = -6091948806780743973L;
+
+			public FileInconsistentException(String message) {
+				super(message);
+			}
+		}
+		throw new FileInconsistentException(
+				"Illegal modification to file \"testmodResources/strings/" + type + ".json\" has been found.");
 	}
 	
 	@Override
