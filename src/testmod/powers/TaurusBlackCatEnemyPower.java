@@ -1,16 +1,22 @@
 package testmod.powers;
 
+import java.util.stream.Stream;
+
+import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
-import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
 
 public class TaurusBlackCatEnemyPower extends AbstractTestPower implements InvisiblePower {
 	private static final int PRIORITY = 100000;
+	public static boolean lock = false;
+	private static boolean mute = false;
 
 	public static boolean hasThis(AbstractCreature owner) {
 		return owner.powers.stream().anyMatch(p -> p instanceof TaurusBlackCatEnemyPower);
@@ -33,17 +39,38 @@ public class TaurusBlackCatEnemyPower extends AbstractTestPower implements Invis
 	}
 
 	private int monsterAmount() {
-		return (int) AbstractDungeon.getMonsters().monsters.stream()
-				.filter(m -> !(m.isDead || m.isDying || m.escaped || m.halfDead)).count();
+		return (int) monsters().count();
+	}
+
+	private Stream<AbstractMonster> monsters() {
+		return AbstractDungeon.getMonsters().monsters.stream()
+				.filter(m -> !(m.isDead || m.isDying || m.escaped || m.halfDead) && m.currentHealth > 0);
 	}
 
 	public int onAttacked(final DamageInfo info, final int damage) {
-		if (info.type != DamageType.HP_LOSS && damage / 100f * this.amount > 1) {
+		if (!lock && damage / 100f * this.amount > 1) {
 			this.addTmpActionToBot(() -> {
 				int d = (int) (damage / 100f / this.monsterAmount() * this.amount);
-				if (d > 0)
-					this.addToTop(new DamageAllEnemiesAction(p(),
-							DamageInfo.createDamageMatrix(d, true), DamageType.HP_LOSS, AttackEffect.POISON, true));
+				if (d < 1)
+					return;
+				this.addTmpActionToTop(() -> {
+					lock = true;
+					int[] dmg = DamageInfo.createDamageMatrix(d, true);
+					p().powers.forEach(p -> p.onDamageAllEnemies(dmg));
+					monsters().forEach(m -> {
+						AbstractDungeon.effectList
+								.add(new FlashAtkImgEffect(m.hb.cX, m.hb.cY, AttackEffect.POISON, mute));
+						mute = true;
+						m.tint.color.set(Color.CHARTREUSE);
+						m.tint.changeColor(Color.WHITE.cpy());
+						m.damage(new DamageInfo(p(), d, DamageType.HP_LOSS));
+					});
+
+					if (AbstractDungeon.getMonsters().areMonstersBasicallyDead()) {
+						AbstractDungeon.actionManager.clearPostCombatActions();
+					}
+					lock = mute = false;
+				});
 			});
 		}
 		return damage;

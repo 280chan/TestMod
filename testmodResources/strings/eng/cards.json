@@ -322,7 +322,7 @@
 	},
 	"testmod-TaurusBlackCat": {
    		"NAME": "Taurus' Black Cat",
-   		"DESCRIPTION": "Whenever you deal non-Lose-HP damage to enemy, all enemies lose !M! % of the damage HP in total."
+   		"DESCRIPTION": "Whenever you deal damage to enemy not through *Taurus' *Black *Cat, all enemies lose !M! % of the damage HP in total."
 	},
 	"testmod-TemporaryDeletion": {
 		"NAME": "Temporary Deletion",

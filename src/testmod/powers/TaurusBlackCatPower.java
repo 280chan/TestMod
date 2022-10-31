@@ -51,6 +51,7 @@ public class TaurusBlackCatPower extends AbstractTestPower {
 	}
 	
 	public void onInitialApplication() {
+		TaurusBlackCatEnemyPower.lock = false;
 		AbstractDungeon.getMonsters().monsters.forEach(this::addEnemyPower);
 	}
 	

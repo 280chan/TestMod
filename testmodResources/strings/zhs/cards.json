@@ -322,7 +322,7 @@
 	},
 	"testmod-TaurusBlackCat": {
 		"NAME": "桃乐丝的黑猫",
-		"DESCRIPTION": "每当你对敌人造成 *失去生命 以外类型的伤害时，使所有敌人均摊失去总共 !M! %其数值的生命。"
+		"DESCRIPTION": "每当你通过 *桃乐丝的黑猫 以外的方式对敌人造成伤害时，使所有敌人均摊失去总共 !M! %其数值的生命。"
 	},
 	"testmod-TemporaryDeletion": {
 		"NAME": "临时删除",

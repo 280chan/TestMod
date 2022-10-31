@@ -287,7 +287,7 @@
 	"testmod-TaurusBlackCatPower": {
 		"NAME": "Taurus' Black Cat",
 		"DESCRIPTIONS": [
-			"Whenever you deal #yNon-Lose-HP damage to enemy, all enemies Lose #b",
+			"Whenever you deal damage to enemy not through #yTaurus' #yBlack #yCat, all enemies Lose #b",
 			"% of the damage HP in total."
 		]
 	},
