@@ -14,11 +14,6 @@ public class AnonymousCard extends AbstractTestCard {
 	private TriConsumer<AnonymousCard, AbstractPlayer, AbstractMonster> use;
 	private Consumer<AnonymousCard> upgrade, init;
 	private String mcid;
-	private int mccost, mcdmg, mcblk, mcmgc;
-	private boolean mcexhaust, mcethereal, mcinnate;
-	private CardType mctype;
-	private CardRarity mcrarity;
-	private CardTarget mctarget;
 	private HashMap<String, Function<ArrayList<Object>, Object>> override =
 			new HashMap<String, Function<ArrayList<Object>, Object>>();
 	private HashMap<String, Boolean> lock = new HashMap<String, Boolean>();
@@ -48,48 +43,24 @@ public class AnonymousCard extends AbstractTestCard {
 		return extendDesc(this.mcid);
 	}
 	
-	public AnonymousCard(String id, int cost, CardType type, CardRarity rarity, CardTarget target, boolean exhaust,
-			boolean ethereal, boolean innate, int dmg, int blk, int mgc,
-			TriConsumer<AnonymousCard, AbstractPlayer, AbstractMonster> use, Consumer<AnonymousCard> upgrade) {
-		super(id, name(id), cost, desc(id), type, rarity, target);
+	public AnonymousCard(String id, TriConsumer<AnonymousCard, AbstractPlayer, AbstractMonster> use,
+			Consumer<AnonymousCard> upgrade) {
+		super(id);
 		this.mcid = id;
-		this.mccost = cost;
-		this.mctype = type;
-		this.mcrarity = rarity;
-		this.mctarget = target;
-		this.exhaust = this.mcexhaust = exhaust;
-		this.isEthereal = this.mcethereal = ethereal;
-		this.isInnate = this.mcinnate = innate;
-		this.baseDamage = this.mcdmg = dmg;
-		this.baseBlock = this.mcblk = blk;
-		this.magicNumber = this.baseMagicNumber = this.mcmgc = mgc;
+		this.magicNumber = this.baseMagicNumber;
 		this.use = use;
 		this.upgrade = upgrade;
 	}
-
-	public AnonymousCard(String id, int cost, CardType type, CardRarity rarity, CardTarget target, int dmg, int blk,
-			int mgc, TriConsumer<AnonymousCard, AbstractPlayer, AbstractMonster> use, Consumer<AnonymousCard> upgrade) {
-		this(id, cost, type, rarity, target, false, false, false, dmg, blk, mgc, use, upgrade);
-	}
 	
-	public AnonymousCard(String id, int cost, CardType type, CardRarity rarity, CardTarget target, int dmg, int blk,
-			int mgc, TriConsumer<AnonymousCard, AbstractPlayer, AbstractMonster> use, Consumer<AnonymousCard> upgrade,
-			Consumer<AnonymousCard> init) {
-		this(id, cost, type, rarity, target, false, false, false, dmg, blk, mgc, use, upgrade, init);
-	}
-	
-	public AnonymousCard(String id, int cost, CardType type, CardRarity rarity, CardTarget target, boolean exhaust,
-			boolean ethereal, boolean innate, int dmg, int blk, int mgc,
-			TriConsumer<AnonymousCard, AbstractPlayer, AbstractMonster> use, Consumer<AnonymousCard> upgrade,
-			Consumer<AnonymousCard> init) {
-		this(id, cost, type, rarity, target, exhaust, ethereal, innate, dmg, blk, mgc, use, upgrade);
+	public AnonymousCard(String id, TriConsumer<AnonymousCard, AbstractPlayer, AbstractMonster> use,
+			Consumer<AnonymousCard> upgrade, Consumer<AnonymousCard> init) {
+		this(id, use, upgrade);
 		this.init = init;
 		this.init();
 	}
 	
 	public AbstractCard makeCopy() {
-		AnonymousCard t = new AnonymousCard(mcid, mccost, mctype, mcrarity, mctarget, mcexhaust, mcethereal, mcinnate,
-				mcdmg, mcblk, mcmgc, use, upgrade, init);
+		AnonymousCard t = new AnonymousCard(mcid, use, upgrade, init);
 		t.override = this.override;
 		t.lock = this.lock;
 		t.glow = this.glow;

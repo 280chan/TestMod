@@ -47,8 +47,8 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 		this(shortID(getCardClass()), cost, type, rarity, target);
 	}
 	
-	private AbstractTestCard(CardStats stats) {
-		this(stats.cost, stats.type, stats.rarity, stats.target);
+	private AbstractTestCard(String shortID, CardStats stats) {
+		this(shortID, stats.cost, stats.type, stats.rarity, stats.target);
 		this.baseBlock = stats.baseBlock;
 		this.baseDamage = stats.baseDamage;
 		this.magicNumber = this.baseMagicNumber = stats.baseMagic;
@@ -57,8 +57,12 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 		this.isEthereal = stats.ethereal;
 	}
 	
+	public AbstractTestCard(String shortID) {
+		this(shortID, stats(shortID));
+	}
+	
 	public AbstractTestCard() {
-		this(stats(getCardClass()));
+		this(shortID(getCardClass()));
 	}
 
 	protected static CardStrings Strings(String ID) {
@@ -126,18 +130,17 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 		return MISC.get(AbstractTestCard.class, AbstractUpdatableCard.class);
 	}
 	
-	protected static <T extends AbstractTestCard> CardStats stats(Class<T> c) {
-		if (STATS.containsKey(c))
-			return STATS.get(c);
-		STATS.put(c, new CardStats(MISC.uiString(shortID(c) + "Stat").TEXT));
-		return STATS.get(c);
+	protected static <T extends AbstractTestCard> CardStats stats(String id) {
+		if (STAT.containsKey(id))
+			return STAT.get(id);
+		STAT.put(id, new CardStats(MISC.uiString(id + "Stat").TEXT));
+		return STAT.get(id);
 	}
 
 	private static final HashMap<String, CardStrings> CS = new HashMap<String, CardStrings>();
 	private static final HashMap<Class<? extends AbstractTestCard>, String> IDS = 
 			new HashMap<Class<? extends AbstractTestCard>, String>();
-	private static final HashMap<Class<? extends AbstractTestCard>, CardStats> STATS =
-			new HashMap<Class<? extends AbstractTestCard>, CardStats>();
+	private static final HashMap<String, CardStats> STAT = new HashMap<String, CardStats>();
 	
 	public static class CardStats {
 		private int cost, baseBlock, baseDamage, baseMagic;
