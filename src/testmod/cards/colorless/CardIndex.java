@@ -8,9 +8,9 @@ import com.megacrit.cardcrawl.monsters.*;
 import com.megacrit.cardcrawl.dungeons.*;
 import java.util.ArrayList;
 import java.util.function.Consumer;
-import testmod.cards.AbstractUpdatableCard;
+import testmod.cards.AbstractTestCard;
 
-public class CardIndex extends AbstractUpdatableCard {
+public class CardIndex extends AbstractTestCard {
 	private ArrayList<AbstractCard> cards = new ArrayList<AbstractCard>();
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
@@ -70,24 +70,19 @@ public class CardIndex extends AbstractUpdatableCard {
 			this.cards.forEach(action);
 	}
 	
-	@Override
-	public void preApplyPowers(AbstractPlayer p, AbstractMonster m) {
-		if (this.active())
-			this.cards.stream().filter(c -> c instanceof AbstractUpdatableCard)
-					.forEach(c -> ((AbstractUpdatableCard) c).preApplyPowers(p, m));
-	}
-	
 	public void applyPowers() {
 		super.applyPowers();
 		if (this.cards.isEmpty())
 			return;
 		if (this.cards.get(0) == null) {
-			this.changeDescription(exDesc()[1], true);
+			this.rawDescription = exDesc()[1];
+			this.initializeDescription();
 			return;
 		}
 		String tmp = exDesc()[0] + this.cards.stream().peek(AbstractCard::applyPowers).map(c -> c.name + exDesc()[2])
 				.reduce("", (a, b) -> a + b);
-		this.changeDescription(tmp.substring(0, tmp.length() - 1) + exDesc()[3], true);
+		this.rawDescription = tmp.substring(0, tmp.length() - 1) + exDesc()[3];
+		this.initializeDescription();
 	}
 	
 	public void calculateCardDamage(AbstractMonster m) {
@@ -117,12 +112,6 @@ public class CardIndex extends AbstractUpdatableCard {
 
 	public void triggerWhenCopied() {
 		this.checkActiveActOnCard(AbstractCard::triggerWhenCopied);
-	}
-	
-	public AbstractCard makeCopy() {
-		CardIndex tmp = new CardIndex();
-		TO_UPDATE.add(tmp);
-		return tmp;
 	}
 	
 	public AbstractCard makeStatEquivalentCopy() {

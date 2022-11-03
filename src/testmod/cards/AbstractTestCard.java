@@ -127,7 +127,7 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 
 	@SuppressWarnings("unchecked")
 	private static <T extends AbstractTestCard> Class<T> getCardClass() {
-		return MISC.get(AbstractTestCard.class, AbstractUpdatableCard.class);
+		return MISC.get(AbstractTestCard.class);
 	}
 	
 	protected static <T extends AbstractTestCard> CardStats stats(String id) {

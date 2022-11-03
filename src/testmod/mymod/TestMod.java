@@ -81,7 +81,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 11/1/2022
+ * @version 11/3/2022
  * @since 6/17/2018
  */
 
@@ -373,7 +373,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			}
 		}
 		throw new FileInconsistentException(
-				"Illegal modification to file \"testmodResources/strings/" + type + ".json\" has been found.");
+				"testmodResources/strings/" + type + ".json is corrupted, please resubscribe.");
 	}
 	
 	@Override
@@ -604,14 +604,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				if (AbstractDungeon.getCurrRoom().phase == RoomPhase.COMBAT) {
 					PerfectCombo.TO_UPDATE.stream().filter(p().hand::contains)
 							.filter(c -> c.magicNumber < c.countUpgrades() + c.misc).forEach(c -> c.applyPowers());
-					AbstractUpdatableCard.TO_UPDATE.stream().filter(p().hand::contains)
-							.peek(c -> c.preApplyPowers(p(), AbstractDungeon.getMonsters().hoveredMonster))
-							.forEach(c -> c.applyPowers());
-					AbstractUpdatableCard.TO_UPDATE.stream().filter(not(p().hand::contains))
-							.forEach(c -> c.resetDescription());
 				} else {
 					PerfectCombo.TO_UPDATE.clear();
-					AbstractUpdatableCard.TO_UPDATE.clear();
 				}
 			}
 			
