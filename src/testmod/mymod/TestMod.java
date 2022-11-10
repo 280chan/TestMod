@@ -81,7 +81,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 11/3/2022
+ * @version 11/9/2022
  * @since 6/17/2018
  */
 

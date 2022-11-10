@@ -8,14 +8,14 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 
 public abstract class AbstractXCostAction extends AbstractGameAction {
-	private boolean freeToPlayOnce;
+	private boolean freeToPlay;
 	private int energyOnUse;
 	private Consumer<Integer> action;
 	protected AbstractCard c;
 
 	public AbstractXCostAction(AbstractCard c) {
 		this.actionType = ActionType.SPECIAL;
-		this.freeToPlayOnce = c.freeToPlayOnce;
+		this.freeToPlay = c.freeToPlay();
 		this.energyOnUse = c.energyOnUse;
 		this.c = c;
 	}
@@ -40,7 +40,7 @@ public abstract class AbstractXCostAction extends AbstractGameAction {
 				this.action.accept(this.amount);
 			else
 				this.action();
-			if (!this.freeToPlayOnce)
+			if (!this.freeToPlay)
 				AbstractDungeon.player.energy.use(EnergyPanel.totalCount);
 		}
 	}

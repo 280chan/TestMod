@@ -641,9 +641,7 @@ public interface MiscMethods {
 			@Override
 			public void update() {
 				this.isDone = true;
-				ArrayList<AbstractGameAction> list = new ArrayList<AbstractGameAction>();
-				Stream.of(actions).forEach(a -> list.add(0, a));
-				list.forEach(MISC::att);
+				MISC.reverse(actions).forEach(MISC::att);
 			}
 		});
 	}
@@ -653,9 +651,7 @@ public interface MiscMethods {
 			@Override
 			public void update() {
 				this.isDone = true;
-				ArrayList<AbstractGameAction> list = new ArrayList<AbstractGameAction>();
-				Stream.of(actions).forEach(a -> list.add(0, a));
-				list.forEach(MISC::att);
+				MISC.reverse(actions).forEach(MISC::att);
 			}
 		});
 	}
@@ -668,19 +664,19 @@ public interface MiscMethods {
 		atb(new AbstractXCostAction(c, action) {});
 	}
 	
-	public static void addToTop(AbstractGameAction a) {
-		AbstractDungeon.actionManager.addToTop(a);
-	}
-	
-	public static void addToBot(AbstractGameAction a) {
-		AbstractDungeon.actionManager.addToBottom(a);
-	}
-	
 	default void att(AbstractGameAction a) {
 		AbstractDungeon.actionManager.addToTop(a);
 	}
 	
 	default void atb(AbstractGameAction a) {
+		AbstractDungeon.actionManager.addToBottom(a);
+	}
+	
+	public static void addToTop(AbstractGameAction a) {
+		AbstractDungeon.actionManager.addToTop(a);
+	}
+	
+	public static void addToBot(AbstractGameAction a) {
 		AbstractDungeon.actionManager.addToBottom(a);
 	}
 	
@@ -861,6 +857,13 @@ public interface MiscMethods {
 			return 0;
 		int amount = ReflectionHacks.getPrivate(m, AbstractMonster.class, "intentMultiAmt");
 		return amount > 1 ? amount : 1;
+	}
+	
+	default <T> Stream<T> reverse(T[] a) {
+		Stream.Builder<T> b = Stream.builder();
+		for (int i = a.length - 1; i > -1; i--)
+			b.add(a[i]);
+		return b.build();
 	}
 	
 	default <T> ArrayList<T> reverse(ArrayList<T> l) {
