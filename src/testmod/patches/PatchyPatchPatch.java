@@ -22,11 +22,10 @@ import javassist.CtBehavior;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.NotFoundException;
-import testmod.utils.MiscMethods;
 import testmod.utils.PatchyTrigger;
 
 @SpirePatch(clz = com.megacrit.cardcrawl.core.CardCrawlGame.class, method = "render")
-public class PatchyPatchPatch implements MiscMethods {
+public class PatchyPatchPatch {
 	private static final String[] ANNOTATION = { SpirePatch.class.getName(), SpirePatches.class.getName(),
 			SpirePatch2.class.getName(), SpirePatches2.class.getName() };
 	public static final String CCG = CardCrawlGame.class.getName();
