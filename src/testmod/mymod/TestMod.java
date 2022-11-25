@@ -81,7 +81,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 11/9/2022
+ * @version 11/15/2022
  * @since 6/17/2018
  */
 
@@ -361,10 +361,11 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	
 	private void loadStats(String type) {
 		String tmp = readString(type);
-		if (TestMod.isStatSafe(type, tmp)) {
-			BaseMod.loadCustomStrings(UIStrings.class, tmp);
-			return;
+		if (!TestMod.isStatSafe(type, tmp)) {
+			TestMod.info("testmodResources/strings/" + type + ".json is corrupted, might encounter problems.");
 		}
+		BaseMod.loadCustomStrings(UIStrings.class, tmp);
+		/*return;
 		final class FileInconsistentException extends RuntimeException {
 			private static final long serialVersionUID = -6091948806780743973L;
 
@@ -373,7 +374,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			}
 		}
 		throw new FileInconsistentException(
-				"testmodResources/strings/" + type + ".json is corrupted, please resubscribe.");
+				"testmodResources/strings/" + type + ".json is corrupted, please resubscribe.");*/
 	}
 	
 	@Override
