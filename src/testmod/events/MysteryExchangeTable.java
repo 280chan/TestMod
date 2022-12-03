@@ -36,6 +36,7 @@ public class MysteryExchangeTable extends AbstractTestEvent {
 			this.imageEventText.updateBodyText(desc()[2]);
 			break;
 		case 1:
+			lose.onUnequip();
 			p().relics.remove(lose);
 			p().reorganizeRelics();
 			new MysteryExchangeTableSelectScreen(this).open();

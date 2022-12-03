@@ -50,6 +50,7 @@ public class MysteryExchangeTableSelectScreen extends RelicSelectScreen implemen
 	@Override
 	protected void afterSelected() {
 		if (!gain) {
+			MAP.get(this.selectedRelic).onUnequip();
 			p().relics.remove(MAP.get(this.selectedRelic));
 			p().reorganizeRelics();
 			e.setLose(MAP.get(this.selectedRelic));
