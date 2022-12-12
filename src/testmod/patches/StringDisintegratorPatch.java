@@ -1,15 +1,23 @@
 package testmod.patches;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
+import com.evacipated.cardcrawl.modthespire.lib.Matcher;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
+import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 import basemod.ReflectionHacks;
+import javassist.CannotCompileException;
+import javassist.CtBehavior;
 import testmod.mymod.TestMod;
 import testmod.relics.StringDisintegrator;
 import testmod.relicsup.StringDisintegratorUp;
@@ -57,9 +65,16 @@ public class StringDisintegratorPatch implements MiscMethods {
 	
 	@SpirePatch(clz = SingleCardViewPopup.class, method = "renderCost")
 	public static class RenderCostPatch {
-		@SpireInsertPatch(rloc = 32)
+		@SpireInsertPatch(locator = Locator.class)
 		public static SpireReturn Insert(SingleCardViewPopup scvp, SpriteBatch sb) {
 			return costType(setReturn());
+		}
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractCard.class, "isCostModified");
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+			}
 		}
 	}
 	

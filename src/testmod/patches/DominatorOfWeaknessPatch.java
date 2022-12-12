@@ -1,13 +1,19 @@
 package testmod.patches;
 
+import java.util.ArrayList;
+import javassist.CannotCompileException;
+import javassist.CtBehavior;
+import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
+import com.evacipated.cardcrawl.modthespire.lib.Matcher;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
+import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.cards.DamageInfo.DamageType;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
-
 import testmod.relics.DominatorOfWeakness;
 import testmod.relicsup.DominatorOfWeaknessUp;
 import testmod.utils.MiscMethods;
@@ -39,22 +45,37 @@ public class DominatorOfWeaknessPatch {
 	
 	@SpirePatch(clz = VulnerablePower.class, method = "atDamageReceive")
 	public static class VulnerablePowerPatch {
-		@SpireInsertPatch(rloc = 7)
+		@SpireInsertPatch(locator = Locator.class)
 		public static SpireReturn<Float> Insert(VulnerablePower p, float damage, DamageType type) {
 			if (!hasRelic() || p.amount < 2 || p.owner.isPlayer)
 				return SpireReturn.Continue();
 			return SpireReturn.Return((float) finalRate(hasFrog(p) ? 0.75 : 0.5, p.amount) * damage);
 		}
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractDungeon.class, "player");
+				int[] arr = LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+				return new int[] { arr[1] };
+			}
+		}
 	}
 	
 	@SpirePatch(clz = WeakPower.class, method = "atDamageGive")
 	public static class WeakPowerPatch {
-		@SpireInsertPatch(rloc = 1)
+		@SpireInsertPatch(locator = Locator.class)
 		public static SpireReturn<Float> Insert(WeakPower p, float damage, DamageType type) {
 			if (!hasRelic() || p.amount < 2 || p.owner.isPlayer)
 				return SpireReturn.Continue();
 			return SpireReturn
 					.Return((float) (damage * Math.pow((hasCrane(p) ? 0.6F : 0.75F), p.amount * amount() + amount1())));
+		}
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractDungeon.class, "player");
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+			}
 		}
 	}
 }
