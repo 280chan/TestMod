@@ -700,6 +700,10 @@ public interface MiscMethods {
 		return f;
 	}
 	
+	default <T, R> UnaryOperator<T> get(Function<T, R> f, Function<R, T> trans) {
+		return f.andThen(trans)::apply;
+	}
+	
 	default <T> UnaryOperator<T> get(UnaryOperator<T> f) {
 		return f;
 	}
