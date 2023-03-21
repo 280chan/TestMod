@@ -35,8 +35,7 @@ public class 药水模板 extends AbstractTestPotion {
 	}
 
 	public void use(AbstractCreature target) {
-		this.addToBot(new ApplyPowerAction(target, p(), new WeakPower(target, this.potency, false),
-				this.potency));
+		this.atb(new ApplyPowerAction(target, p(), new WeakPower(target, this.potency, false), this.potency));
 	}
 
 	public int getPotency(int ascensionLevel) {

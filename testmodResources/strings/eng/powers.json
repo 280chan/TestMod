@@ -16,6 +16,13 @@
 			" cards you play back on the top of your draw pile."
 		]
 	},
+	"testmod-BarkSapPower":{
+		"NAME":"Bark Sap",
+		"DESCRIPTIONS":[
+			"Increase effectiveness of potions to #b",
+			" times for this combat. (descriptions of some potion might not correctly represent effect.)"
+		]
+	},
 	"testmod-BloodBladePower": {
 		"NAME": "Blood Blade",
 		"DESCRIPTIONS": [

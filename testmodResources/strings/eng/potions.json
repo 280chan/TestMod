@@ -36,6 +36,14 @@
 		" times.",
 		" NL Last potion: NL "
 	]
+},
+
+"testmod-BarkSap": {
+	"NAME": "Bark Sap",
+	"DESCRIPTIONS": [
+		"If use in a combat, double the effectiveness of potions for this combat. Otherwise increase the effectiveness of non #yBark #ySap potions by #b",
+		" for this run. (descriptions of some potion might not correctly represent effect.)"
+	]
 }
 
 }

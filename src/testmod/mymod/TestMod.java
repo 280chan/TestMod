@@ -487,6 +487,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			ManifoldPotion.clear();
 			PortableAltar.reset();
 			PortablePortalUp.resetCoop();
+			BarkSap.clear();
 		}
 	}
 
@@ -648,6 +649,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		DEFAULT.setProperty(Encyclopedia.SAVE_NAME, "0");
 		DEFAULT.setProperty(ManifoldPotion.POTION_ID, "");
 		DEFAULT.setProperty(PortablePortalUp.SAVE_NAME, "0");
+		DEFAULT.setProperty(BarkSap.POTION_ID, "0");
 
 		if (Loader.isModLoaded("RelicUpgradeLib")) {
 			Stream.of(AllUpgradeRelic.MultiKey.SAVE_NAME).forEach(s -> DEFAULT.setProperty(s, "0"));
@@ -730,6 +732,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 		ManifoldPotion.load();
 		PortablePortalUp.load();
 		PatchyTrigger.load();
+		BarkSap.load();
 	}
 	
 	public static boolean hasSaveData(String key) {
@@ -825,7 +828,8 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 	}
 
 	private static void addPotions() {
-		Stream.of(EscapePotion.class, TimePotion.class, SpacePotion.class, TestPotion.class, ManifoldPotion.class)
+		Stream.of(EscapePotion.class, TimePotion.class, SpacePotion.class, TestPotion.class, ManifoldPotion.class,
+				BarkSap.class)
 				.forEach(c -> BaseMod.addPotion(c, null, null, null, ReflectionHacks.getPrivateStatic(c, "POTION_ID")));
 	}
 	

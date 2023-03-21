@@ -16,6 +16,13 @@
 			" 张可被弹回的牌，将回到抽牌堆顶部。"
 		]
 	},
+	"testmod-BarkSapPower":{
+		"NAME":"树皮原液",
+		"DESCRIPTIONS":[
+			"药水的效果在本场战斗中变为 #b",
+			" 倍。(药水的描述可能不会正确显示，但实际效果会增加。)"
+		]
+	},
 	"testmod-BloodBladePower":{
 		"NAME":"血气之刃",
 		"DESCRIPTIONS":[
