@@ -2,6 +2,7 @@ package testmod.potions;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.modthespire.lib.ByRef;
 import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
 import com.evacipated.cardcrawl.modthespire.lib.Matcher;
@@ -28,16 +29,23 @@ public class BarkSap extends AbstractTestPotion {
 	private static final PotionStrings PS = Strings(POTION_ID);
 	private static final String NAME = PS.NAME;
 	private static final String[] DESCRIPTIONS = PS.DESCRIPTIONS;
+	private static final ArrayList<AbstractPotion> POTIONS = new ArrayList<AbstractPotion>();
 	private static int usedAmount = 0;
+	private static int lastLoad = 0;
 
 	public static void clear() {
-		usedAmount = 0;
+		lastLoad = usedAmount = 0;
 		save();
+		POTIONS.clear();
 	}
 	
 	public static void load() {
+		if (lastLoad > 0) {
+			POTIONS.removeAll(POTIONS.stream().limit(lastLoad).collect(MISC.toArrayList()));
+		}
 		usedAmount = TestMod.getInt(POTION_ID);
-		MISC.p().potions.forEach(AbstractPotion::initializeData);
+		POTIONS.forEach(AbstractPotion::initializeData);
+		lastLoad = POTIONS.size();
 	}
 
 	private static void save() {
@@ -65,10 +73,10 @@ public class BarkSap extends AbstractTestPotion {
 	public void use(AbstractCreature target) {
 		if (this.inCombat()) {
 			this.atb(apply(p(), new BarkSapPower()));
-			this.addTmpActionToBot(() -> p().potions.forEach(AbstractPotion::initializeData));
+			this.addTmpActionToBot(() -> POTIONS.forEach(AbstractPotion::initializeData));
 		} else {
 			usedAmount += this.potency;
-			p().potions.stream().filter(p -> !(p instanceof BarkSap)).forEach(AbstractPotion::initializeData);
+			POTIONS.stream().filter(p -> !(p instanceof BarkSap)).forEach(AbstractPotion::initializeData);
 		}
 	}
 
@@ -86,6 +94,11 @@ public class BarkSap extends AbstractTestPotion {
 
 		public void updateDescription() {
 			this.description = desc(0) + (1 << this.amount) + desc(1);
+		}
+		
+		public void onVictory() {
+			this.amount = 0;
+			POTIONS.forEach(AbstractPotion::initializeData);
 		}
 	}
 
@@ -115,6 +128,26 @@ public class BarkSap extends AbstractTestPotion {
 	public static class SaveAndContinuePatch {
 		public static void Postfix(SaveFile save) {
 			save();
+		}
+	}
+
+	@SpirePatch(clz = AbstractPotion.class, method = "<ctor>", paramtypez = { String.class, String.class,
+			PotionRarity.class, PotionSize.class, PotionColor.class })
+	public static class NewPotionPatch {
+		public static void Postfix(AbstractPotion __instance, String name, String id, PotionRarity rarity,
+				PotionSize size, PotionColor color) {
+			if (!POTIONS.contains(__instance))
+				POTIONS.add(__instance);
+		}
+	}
+
+	@SpirePatch(clz = AbstractPotion.class, method = "<ctor>", paramtypez = { String.class, String.class,
+			PotionRarity.class, PotionSize.class, PotionEffect.class, Color.class, Color.class, Color.class })
+	public static class NewPotionPatch1 {
+		public static void Postfix(AbstractPotion __instance, String name, String id, PotionRarity rarity,
+				PotionSize size, PotionEffect effect, Color liquidColor, Color hybridColor, Color spotsColor) {
+			if (!POTIONS.contains(__instance))
+				POTIONS.add(__instance);
 		}
 	}
 	
