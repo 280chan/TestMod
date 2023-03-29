@@ -103,7 +103,7 @@ public class EvilDaggerUp extends AbstractUpgradedRelic {
 	}
 	
 	public void onMonsterDeath(final AbstractMonster m) {
-		if (this.isActive && !m.hasPower("Minion") && (m.isDead || m.isDying)) {
+		if (this.isActive && !m.hasPower("Minion") && (m.isDead || m.isDying) && !m.halfDead) {
 			killed.add(m);
 		}
 	}

@@ -81,7 +81,7 @@ import testmod.utils.GetRelicTrigger.RelicGetManager;
 
 /**
  * @author 彼君不触
- * @version 3/26/2023
+ * @version 3/28/2023
  * @since 6/17/2018
  */
 
@@ -475,7 +475,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 			if (this.relicStream(TestBox.class).count() < 1) {
 				obtain(p(), new TestBox());
 				TestMod.info("礼物盒小于1，添加");
-			} else if (Stream.of("c870968e2499df3ec4a1e386c21f19628af4cef6e5aaa8aa6da2071ab1fba5e4",
+			}/* else if (Stream.of("c870968e2499df3ec4a1e386c21f19628af4cef6e5aaa8aa6da2071ab1fba5e4",
 							"a4e624d686e03ed2767c0abd85c14426b0b1157d2ce81d27bb4fe4f6f01d688a",
 							"342840f6340d15691f4be1c0e0157fb0983992c4f436c18267d41dbe6bb74a2")
 					.anyMatch(s -> TestMod.checkHash(CardCrawlGame.playerName, s))) {
@@ -483,7 +483,7 @@ public class TestMod implements EditRelicsSubscriber, EditCardsSubscriber, EditS
 				p().relics.set(p().relics.indexOf(this.relicStream(TestBox.class).findFirst().get()), r);
 				p().reorganizeRelics();
 				r.onEquip();
-			}
+			}*/
 			ManifoldPotion.clear();
 			PortableAltar.reset();
 			PortablePortalUp.resetCoop();

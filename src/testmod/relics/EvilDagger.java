@@ -2,6 +2,16 @@ package testmod.relics;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Color;
+import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
+import com.evacipated.cardcrawl.modthespire.lib.Matcher;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.defect.FTLAction;
+import com.megacrit.cardcrawl.actions.unique.SkewerAction;
+import com.megacrit.cardcrawl.actions.unique.WhirlwindAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
@@ -12,7 +22,10 @@ import com.megacrit.cardcrawl.vfx.GainPennyEffect;
 import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 
+import javassist.CannotCompileException;
+import javassist.CtBehavior;
 import testmod.mymod.TestMod;
+import testmod.relicsup.EvilDaggerUp;
 
 public class EvilDagger extends AbstractTestRelic {
 	private ArrayList<AbstractMonster> killed = new ArrayList<AbstractMonster>();
@@ -81,7 +94,7 @@ public class EvilDagger extends AbstractTestRelic {
 	}
 	
 	public void onMonsterDeath(final AbstractMonster m) {
-		if (this.isActive && !m.hasPower("Minion") && (m.isDead || m.isDying)) {
+		if (this.isActive && !m.hasPower("Minion") && (m.isDead || m.isDying) && !m.halfDead) {
 			this.killed.add(m);
 		}
 	}
@@ -101,6 +114,70 @@ public class EvilDagger extends AbstractTestRelic {
 		} else if (this.c != null) {
 			this.removeFromGlowList(this.c, COLOR);
 			this.stopPulse();
+		}
+	}
+	
+	public static class StupidAddToBotPatch {
+		private static ArrayList<AbstractGameAction> actions() {
+			return AbstractDungeon.actionManager.actions;
+		}
+		
+		private static boolean active() {
+			return MISC.relicStream().anyMatch(r -> r instanceof EvilDagger || r instanceof EvilDaggerUp);
+		}
+		
+		private static void alt() {
+			MISC.att(actions().remove(actions().size() - 1));
+		}
+		
+		@SpirePatch(clz = FTLAction.class, method = "update")
+		public static class FTLActionPatch {
+			@SpireInsertPatch(locator = Locator.class)
+			public static void Insert(FTLAction __instance) {
+				if (active())
+					alt();
+			}
+			
+			private static class Locator extends SpireInsertLocator {
+				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+					Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractDungeon.class, "actionManager");
+					return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+				}
+			}
+		}
+		
+		@SpirePatch(clz = SkewerAction.class, method = "update")
+		public static class SkewerActionPatch {
+			@SpireInsertPatch(locator = Locator.class, localvars = { "effect" })
+			public static void Insert(SkewerAction __instance, int effect) {
+				if (active())
+					for (int i = 0; i < effect; i++)
+						alt();
+			}
+			
+			private static class Locator extends SpireInsertLocator {
+				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+					Matcher finalMatcher = new Matcher.FieldAccessMatcher(SkewerAction.class, "freeToPlayOnce");
+					return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+				}
+			}
+		}
+		
+		@SpirePatch(clz = WhirlwindAction.class, method = "update")
+		public static class WhirlwindActionPatch {
+			@SpireInsertPatch(locator = Locator.class, localvars = { "effect" })
+			public static void Insert(WhirlwindAction __instance, int effect) {
+				if (active())
+					for (int i = 0; i < 3 * effect + 2; i++)
+						alt();
+			}
+			
+			private static class Locator extends SpireInsertLocator {
+				public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+					Matcher finalMatcher = new Matcher.FieldAccessMatcher(WhirlwindAction.class, "freeToPlayOnce");
+					return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+				}
+			}
 		}
 	}
 
