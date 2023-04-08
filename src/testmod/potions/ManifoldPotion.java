@@ -71,7 +71,8 @@ public class ManifoldPotion extends AbstractTestPotion {
 	}
 
 	public void use(AbstractCreature target) {
-		for (int i = 0; i < this.potency; i++) {
+		int p = this.potency;
+		for (int i = 0; i < p; i++) {
 			last.use(target);
 		}
 	}
