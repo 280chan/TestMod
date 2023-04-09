@@ -2,13 +2,15 @@ package testmod.potions;
 
 import java.util.function.Consumer;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.shrines.WeMeetAgain;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase;
+import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 
 import testmod.mymod.TestMod;
 import testmod.relics.Alchemist;
@@ -29,17 +31,27 @@ public class SpacePotion extends AbstractTestPotion {
 		return DESCRIPTIONS[0] + this.potency + DESCRIPTIONS[1];
 	}
 	
-	private static class RandomPotionAction extends AbstractGameAction {
+	private static class RandomPotionAction extends AbstractGameEffect {
 		private Consumer<Integer> action;
+		private int amount;
 		public RandomPotionAction(int amount, Consumer<Integer> action) {
+			this.color = Color.BLACK.cpy();
 			this.amount = amount;
 			this.action = action;
 		}
 
 		@Override
 		public void update() {
+			super.update();
 			this.isDone = true;
 			this.action.accept(this.amount);
+		}
+
+		@Override
+		public void dispose() {
+		}
+		@Override
+		public void render(SpriteBatch var1) {
 		}
 	}
 
@@ -57,7 +69,7 @@ public class SpacePotion extends AbstractTestPotion {
 				p().getRelic("Sozu").flash();
 				break;
 			} else {
-				this.atb(new RandomPotionAction(tmp + 1, t -> {
+				AbstractDungeon.topLevelEffectsQueue.add(new RandomPotionAction(tmp + 1, t -> {
 					while (t > 0 && p().potions.stream().anyMatch(s -> s instanceof PotionSlot)) {
 						t--;
 						p().obtainPotion(AbstractDungeon.returnRandomPotion(true));
