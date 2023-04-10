@@ -56,11 +56,11 @@ public class AlchemistUp extends AbstractUpgradedRelic implements ClickableRelic
 	}
 	
 	private boolean canUse() {
-		return (this.counter == -2 || (!this.inCombat() && AbstractDungeon.screen != CurrentScreen.MAP)) && !used;
+		return (this.counter == -2 || !this.inCombat()) && AbstractDungeon.screen != CurrentScreen.MAP && !used;
 	}
 	
 	private boolean canSwap() {
-		return !this.inCombat() && AbstractDungeon.screen == CurrentScreen.MAP;
+		return AbstractDungeon.screen == CurrentScreen.MAP;
 	}
 	
 	public void atPreBattle() {
