@@ -258,7 +258,7 @@
 	"testmod-AlchemistUp":{
 		"NAME": "The Alchemist+",
 		"FLAVOR": "无法无中生有，却可以复制一个已有的样本。",
-		"DESCRIPTIONS":["Upon pickup, gain #b1 #yPotion slot. During each of your turn, you have #b1 chance to right click on this relic to use your first usable #yPotion without consume it. #gEssence #gof #gKronos can only be used by this relic once each combat. Outside combat, right click on this relic to change the order of your potions."]
+		"DESCRIPTIONS":["Upon pickup, gain #b1 #yPotion slot. During each of your turn, you have #b1 chance to right click on this relic to use your first usable #yPotion without consume it. #gEssence #gof #gKronos can only be used by this relic once each combat. You can also use this relic outside combat, once per room. Outside combat, right click on this relic when in map view screen to change the order of your potions."]
 	},
 	
 	"testmod-StringDisintegratorUp":{

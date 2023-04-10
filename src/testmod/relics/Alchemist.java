@@ -15,6 +15,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon.CurrentScreen;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -37,6 +38,7 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 			p().potionSlots++;
 			p().potions.add(new PotionSlot(p().potionSlots - 1));
 		}
+		this.beginLongPulse();
 	}
 	
 	private void toggleState(boolean active) {
@@ -52,11 +54,11 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	private boolean canUse() {
-		return this.counter == -2 && !used;
+		return (this.counter == -2 || (!this.inCombat() && AbstractDungeon.screen != CurrentScreen.MAP)) && !used;
 	}
 	
 	private boolean canSwap() {
-		return !this.inCombat();
+		return !this.inCombat() && AbstractDungeon.screen == CurrentScreen.MAP;
 	}
 	
 	public void atPreBattle() {
@@ -72,11 +74,14 @@ public class Alchemist extends AbstractTestRelic implements ClickableRelic {
 	}
 	
 	public void onEnterRoom(final AbstractRoom room) {
-		this.toggleState(false);
+		this.toggleState(this.used = this.grayscale = false);
+		this.beginLongPulse();
 	}
 	
 	public void onVictory() {
 		this.toggleState(false);
+		if (!this.used)
+			this.beginLongPulse();
 		target = false;
 	}
 	
