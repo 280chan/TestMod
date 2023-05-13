@@ -46,10 +46,10 @@ public class Register extends AbstractTestRelic {
 	public static AbstractPower prepare(AbstractPower pow) {
 		AbstractPower p = pow;
 		if (p instanceof CombustPower)
-			p = new CombustPower(MISC.p(), 1, isUp() ? Math.max(5, p.amount / 2) : 5);
+			p = new CombustPower(MISC.p(), 1, isUp() ? Math.max(1, p.amount / 2) : 1);
 		else if (p instanceof PanachePower)
 			p = new PanachePower(MISC.p(),
-					isUp() ? (int) ReflectionHacks.getPrivate(p, PanachePower.class, "damage") / 2 : 10);
+					isUp() ? Math.max((int) ReflectionHacks.getPrivate(p, PanachePower.class, "damage") / 2, 10) : 10);
 		else if (p instanceof ThornsPower)
 			p.stackPower(0);
 		else if (p instanceof TimeMazePower)

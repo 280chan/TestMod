@@ -339,7 +339,11 @@
 	},
 	"testmod-VirtualReality": {
 		"NAME": "Virtual Reality",
-		"DESCRIPTION": "Gain !B! Block. Lose Block by amount of Block you gained last turn."
+		"DESCRIPTION": "Gain !B! Block. Lose Block by amount of Block you gained last turn.",
+		"EXTENDED_DESCRIPTION": [
+			"Gain !B! Block. Lose Block by amount of Block you gained last turn (",
+			")"
+		]
 	},
 	"testmod-Wormhole": {
 		"NAME": "Wormhole",

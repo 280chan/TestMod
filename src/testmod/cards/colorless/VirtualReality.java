@@ -22,6 +22,16 @@ public class VirtualReality extends AbstractTestCard {
 		blockGainLastTurn = blockGainThisTurn;
 		blockGainThisTurn = 0;
 	}
+	
+	public void applyPowers() {
+		super.applyPowers();
+		this.upDesc(this.exDesc()[0] + blockGainLastTurn + this.exDesc()[1]);
+	}
+	
+	public void calculateCardDamage(AbstractMonster m) {
+		super.calculateCardDamage(m);
+		this.upDesc(this.exDesc()[0] + blockGainLastTurn + this.exDesc()[1]);
+	}
 
 	public void use(final AbstractPlayer p, final AbstractMonster m) {
 		this.atb(new GainBlockAction(p, p, this.block));

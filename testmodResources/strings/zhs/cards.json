@@ -339,7 +339,11 @@
 	},
 	"testmod-VirtualReality": {
 		"NAME": "虚实",
-		"DESCRIPTION": "获得 !B! 点 格挡 。失去你上回合获得的 格挡 量的 格挡 。"
+		"DESCRIPTION": "获得 !B! 点 格挡 。失去你上回合获得的 格挡 量的 格挡 。",
+		"EXTENDED_DESCRIPTION": [
+			"获得 !B! 点 格挡 。失去你上回合获得的 格挡 量(",
+			")点 格挡 。"
+		]
 	},
 	"testmod-Wormhole": {
 		"NAME": "虫洞",
