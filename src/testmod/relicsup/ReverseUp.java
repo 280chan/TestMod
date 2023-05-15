@@ -74,14 +74,14 @@ public class ReverseUp extends AbstractUpgradedRelic implements OnReceivePowerRe
 			p().heal(p().maxHealth);
 			this.stopPulse();
 			this.show();
-			return true;
-		} else if (this.counter < -2 * AbstractDungeon.actNum) {
 			return false;
+		} else if (this.counter < -2 * AbstractDungeon.actNum) {
+			return true;
 		}
 		this.counter = -2 * AbstractDungeon.actNum - 1;
 		this.show();
 		this.stopPulse();
-		return true;
+		return false;
 	}
 	
 }
