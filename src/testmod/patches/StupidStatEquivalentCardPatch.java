@@ -1,6 +1,8 @@
 package testmod.patches;
 
 import java.util.ArrayList;
+
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
 import com.evacipated.cardcrawl.modthespire.lib.Matcher;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
@@ -13,26 +15,61 @@ import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.red.SearingBlow;
 
+import basemod.abstracts.AbstractCardModifier;
+import basemod.helpers.CardModifierManager;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
 import testmod.utils.MiscMethods;
 
 public class StupidStatEquivalentCardPatch implements MiscMethods {
+
+	@SpirePatch(clz = CardModifierManager.class, method = "copyModifiers")
+	public static class LoadoutUnexhaustModPatch {
+		private static boolean loadoutUnexhaustTriggered = false;
+		
+		@SpireInsertPatch(locator = Locator.class, localvars = { "newMod" })
+		public static void Insert(AbstractCard oldCard, AbstractCard newCard, boolean includeInherent, boolean replace,
+				boolean removeOld, AbstractCardModifier newMod) {
+			if (MakeStatEquivalentCopyPatch.prefixStart) {
+				try {
+					loadoutUnexhaustTriggered |= Class.forName("loadout.cardmods.UnexhaustMod") == newMod.getClass();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				MakeStatEquivalentCopyPatch.prefixStart = false;
+			}
+		}
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractCardModifier.class, "onInitialApplication");
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+			}
+		}
+	}
 	
 	@SpirePatch(clz = AbstractCard.class, method = "makeStatEquivalentCopy")
 	public static class MakeStatEquivalentCopyPatch {
 		private static final String MN = "[Missing Name]";
 		private static String tmpName = MN;
+		private static boolean prefixStart = false;
+		
+		@SpirePrefixPatch
+		public static void Prefix(AbstractCard __instance) {
+			prefixStart = Loader.isModLoaded("loadout");
+		}
 		
 		@SpirePostfixPatch
 		public static AbstractCard Postfix(AbstractCard _return, AbstractCard __instance) {
 			_return.magicNumber = __instance.magicNumber;
-			_return.exhaust = __instance.exhaust;
+			if (!LoadoutUnexhaustModPatch.loadoutUnexhaustTriggered)
+				_return.exhaust = __instance.exhaust;
 			_return.exhaustOnUseOnce = __instance.exhaustOnUseOnce;
 			_return.isEthereal = __instance.isEthereal;
 			_return.selfRetain = __instance.selfRetain;
 			__instance.name = tmpName;
 			tmpName = MN;
+			LoadoutUnexhaustModPatch.loadoutUnexhaustTriggered = false;
 			return _return;
 		}
 
