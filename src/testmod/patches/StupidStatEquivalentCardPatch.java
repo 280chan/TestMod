@@ -23,16 +23,16 @@ import testmod.utils.MiscMethods;
 
 public class StupidStatEquivalentCardPatch implements MiscMethods {
 
-	@SpirePatch(clz = CardModifierManager.class, method = "copyModifiers")
+	@SpirePatch(clz = CardModifierManager.class, method = "lambda$copyModifiers$5")
 	public static class LoadoutUnexhaustModPatch {
 		private static boolean loadoutUnexhaustTriggered = false;
 		
-		@SpireInsertPatch(locator = Locator.class, localvars = { "newMod" })
-		public static void Insert(AbstractCard oldCard, AbstractCard newCard, boolean includeInherent, boolean replace,
-				boolean removeOld, AbstractCardModifier newMod) {
+		@SpireInsertPatch(locator = Locator.class)
+		public static void Insert(boolean removeOld, final AbstractCard oldCard, final AbstractCard newCard,
+				final ArrayList<AbstractCardModifier> applied, AbstractCardModifier mod) {
 			if (MakeStatEquivalentCopyPatch.prefixStart) {
 				try {
-					loadoutUnexhaustTriggered |= Class.forName("loadout.cardmods.UnexhaustMod") == newMod.getClass();
+					loadoutUnexhaustTriggered |= Class.forName("loadout.cardmods.UnexhaustMod") == mod.getClass();
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -42,7 +42,7 @@ public class StupidStatEquivalentCardPatch implements MiscMethods {
 		
 		private static class Locator extends SpireInsertLocator {
 			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
-				Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractCardModifier.class, "onInitialApplication");
+				Matcher finalMatcher = new Matcher.MethodCallMatcher(CardModifierManager.class, "modifiers");
 				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 			}
 		}
