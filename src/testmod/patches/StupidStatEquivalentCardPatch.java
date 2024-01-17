@@ -29,7 +29,7 @@ public class StupidStatEquivalentCardPatch implements MiscMethods {
 		
 		@SpireInsertPatch(locator = Locator.class)
 		public static void Insert(boolean removeOld, final AbstractCard oldCard, final AbstractCard newCard,
-				final ArrayList<AbstractCardModifier> applied, AbstractCardModifier mod) {
+				AbstractCardModifier mod) {
 			if (MakeStatEquivalentCopyPatch.prefixStart) {
 				try {
 					loadoutUnexhaustTriggered |= Class.forName("loadout.cardmods.UnexhaustMod") == mod.getClass();

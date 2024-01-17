@@ -114,8 +114,6 @@ public abstract class AbstractTestCard extends CustomCard implements MiscMethods
 		return name(shortID());
 	}
 	
-	public static boolean print = true;
-	
 	protected String shortID() {
 		return shortID(this.getClass());
 	}
