@@ -187,6 +187,7 @@ public class HeartOfDaVinciUp extends AbstractUpgradedRelic implements MiscMetho
 					TestMod.info(name + r.name + "可升级，进行升级");
 					r.onUnequip();
 					AbstractRelic u = this.tryUpgrade(r);
+					this.upgradeFunction(r).accept(r, u);
 					COPY.add(u);
 					p().relics.set(i, u);
 					u.onEquip();

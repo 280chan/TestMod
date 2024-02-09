@@ -3,6 +3,7 @@ package testmod.relicsup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -140,6 +141,10 @@ public class AllUpgradeRelic implements MiscMethods {
 	
 	public static boolean isUpgraded(AbstractRelic r) {
 		return ProxyManager.upgradeRelics.containsKey(r.relicId);
+	}
+	
+	public static BiConsumer<AbstractRelic, AbstractRelic> getUpgradeFunction(AbstractRelic r) {
+		return ProxyManager.getProxyByRelic(r).braches.get(0).obtainedFunc;
 	}
 	
 	public static int keyCount() {

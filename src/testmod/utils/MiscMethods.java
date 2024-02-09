@@ -46,6 +46,7 @@ import javassist.expr.ExprEditor;
 import javassist.expr.FieldAccess;
 import javassist.expr.Instanceof;
 import javassist.expr.MethodCall;
+import relicupgradelib.arch.ProxyManager;
 import testmod.actions.AbstractXCostAction;
 import testmod.mymod.TestMod;
 import testmod.powers.AbstractTestPower;
@@ -939,6 +940,15 @@ public interface MiscMethods {
 		if (r instanceof AbstractTestRelic && ((AbstractTestRelic) r).canUpgrade())
 			return ((AbstractTestRelic) r).upgrade();
 		return r;
+	}
+	
+	default BiConsumer<AbstractRelic, AbstractRelic> upgradeFunction(AbstractRelic r) {
+		BiConsumer<AbstractRelic, AbstractRelic> f, empty = (a, b) -> {};
+		if (Loader.isModLoaded("RelicUpgradeLib") && AllUpgradeRelic.upgradable(r))
+			return (f = AllUpgradeRelic.getUpgradeFunction(r)) != null ? f : empty;
+		if (r instanceof CounterKeeper && ((AbstractTestRelic) r).canUpgrade())
+			return (a, b) -> ((CounterKeeper) r).run(a, (AbstractUpgradedRelic) b);
+		return empty;
 	}
 	
 	default void updateHandSize(int delta) {
