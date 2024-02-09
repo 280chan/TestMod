@@ -19,7 +19,8 @@ public class EncyclopediaUp extends AbstractUpgradedRelic {
 		int c = (int) CURR.keySet().stream().filter(a -> a.id.equals(m.id)).count();
 		CURR.put(m, c);
 		int amount = SEEN.getOrDefault(m.id, 0) + c;
-		if (amount > 0 && m.powers.stream().noneMatch(p -> p instanceof EncyclopediaPower)) {
+		if (amount > 0 && m.powers.stream().noneMatch(p -> p instanceof EncyclopediaPower)
+				&& this.relicStream(Encyclopedia.class).count() > 0) {
 			m.powers.add(new EncyclopediaPower(m, amount * 50));
 		}
 		if (amount > 0 && m.powers.stream().noneMatch(p -> p instanceof EncyclopediaPowerUp)) {
