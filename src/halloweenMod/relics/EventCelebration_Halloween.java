@@ -18,7 +18,7 @@ public class EventCelebration_Halloween extends AbstractTestRelic {
 	public static final String DESCRIPTION = "拾取时获得 #y蓝蜡烛 。战斗奖励掉落的卡牌只能从 #y糖果 、 #y捣乱 、 #y鬼妆 中选择。每当你打出 #y诅咒牌 时，将一张 #y万圣 加入手牌。";//遗物效果的文本描叙。
 	
 	public static boolean hasThis() {
-		return AbstractDungeon.player.hasRelic(ID);
+		return MISC.relicStream().anyMatch(r -> r instanceof EventCelebration_Halloween);
 	}
 	
 	public static EventCelebration_Halloween getThis() {
