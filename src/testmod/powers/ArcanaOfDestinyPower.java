@@ -60,6 +60,9 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 	}
 	
 	public int onAttacked(DamageInfo info, int damage) {
+		if (!(this.owner instanceof AbstractMonster)) {
+			return damage;
+		}
 		if (damage > 0) {
 			this.addTmpActionToTop(() -> ((AbstractMonster) this.owner).applyPowers());
 			return repeat(this::attack).apply(damage * 1f).intValue();
@@ -68,7 +71,7 @@ public class ArcanaOfDestinyPower extends AbstractTestPower implements Invisible
 	}
 	
 	public int onHeal(int amount) {
-		if (amount > 0) {
+		if (amount > 0 && this.owner instanceof AbstractMonster) {
 			this.addTmpActionToTop(() -> ((AbstractMonster) this.owner).applyPowers());
 		}
 		return amount;

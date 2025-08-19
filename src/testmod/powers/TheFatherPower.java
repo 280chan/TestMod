@@ -85,7 +85,7 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	}
 	
 	public int onAttacked(final DamageInfo info, int damage) {
-		if (INFO.remove(info) && this.noUp())
+		if (!(this.owner instanceof AbstractMonster) || (INFO.remove(info) && this.noUp()))
 			return damage;
 		if (Prime.isPrime(damage)) {
 			AbstractDungeon.getMonsters().monsters.stream().filter(m -> !(m.equals(this.owner) || m.isDeadOrEscaped()))
@@ -98,7 +98,8 @@ public class TheFatherPower extends AbstractTestPower implements InvisiblePower 
 	}
 	
 	public void onDeath() {
-		clearDamageActions((AbstractMonster) this.owner);
+		if (this.owner instanceof AbstractMonster)
+			clearDamageActions((AbstractMonster) this.owner);
 	}
 
 	public static void clear() {
