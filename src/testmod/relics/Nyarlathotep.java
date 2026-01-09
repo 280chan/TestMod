@@ -21,17 +21,20 @@ public class Nyarlathotep extends AbstractTestRelic {
 	public static final String[] CARD_IDs = { "Force Field" };
 	public static final String[] POWER_IDs = { "testmod-PlagueActPower", "Amplify", "Heatsink", "Storm", "Curiosity",
 			"Recycle_Bin_Power", "reliquary:StormPlus", "VUPShionMod:TwoPowerPower", "VUPShionMod:ThreePowerPower",
-			"VUPShionMod:FourPowerPower" };
+			"VUPShionMod:FourPowerPower", "Balatro:Photograph", "Balatro:ScaryFace" };
+	public static final String[] POWER_ON_PLAY_IDS = {"Balatro:BusinessCard", "Balatro:ToDoList"};
 	public static final String[] RELIC_IDs = { "testmod-MaizeUp", "testmod-MuramasaUp", "testmod-RestrainedUp", "Clover",
 			"Bird Faced Urn", "Mummified Hand", "OrangePellets", "SynthVMod:C4", "paleoftheancients:SoulOfTheDefect",
 			"Replay:Rubber Ducky", "Dota2Spire:ArcaneBoots", "Dota2Spire:EtherealBlade", "DemoExt:GalacticMedalOfValor",
 			"Dota2Spire:OrchidMalevolence", "Dota2Spire:AghanimScepter", "Steelbody", "SynthVMod:MejaisSoulstealer",
 			"youkari:Boundary_crack", "BirthdayGift-Icosahedron", "RU OrangePellets", "RU Bronze Scales",
-			"RU Bird Faced Urn", "Kaltsit_LearningSimulationPower" };
+			"RU Bird Faced Urn", "Kaltsit_LearningSimulationPower", "Balatro:Flushed" };
 	public static final String[] RELIC_ON_PLAY_IDs = { "reliquary:IridiumChain" };
 	public static final ArrayList<String> CARD_LIST = new ArrayList<String>();
 	public static final ArrayList<String> POWER_LIST = new ArrayList<String>();
+	public static final ArrayList<String> POWER_ON_PLAY_LIST = new ArrayList<String>();
 	public static final ArrayList<String> RELIC_LIST = new ArrayList<String>();
+	public static final ArrayList<String> RELIC_ON_PLAY_LIST = new ArrayList<String>();
 	
 	private static void addToList(ArrayList<String> target, String id) {
 		if (!target.contains(id))
@@ -122,10 +125,14 @@ public class Nyarlathotep extends AbstractTestRelic {
 		tmp.type = CardType.POWER;
 		Stream.concat(Stream.of(POWER_IDs), POWER_LIST.stream()).distinct().filter(p()::hasPower)
 				.flatMap(id -> get(p().powers, id)).forEach(p -> p.onUseCard(tmp, a));
+		Stream.concat(Stream.of(POWER_ON_PLAY_IDS), POWER_ON_PLAY_LIST.stream()).distinct().filter(p()::hasPower)
+				.flatMap(id -> get(p().powers, id)).forEach(p -> p.onPlayCard(tmp,
+						(a.target instanceof AbstractMonster) ? (AbstractMonster) a.target : null));
 		Stream.concat(Stream.of(RELIC_IDs), RELIC_LIST.stream()).distinct().filter(p()::hasRelic)
 				.flatMap(id -> get(p().relics, id)).forEach(r -> r.onUseCard(tmp, a));
-		Stream.of(RELIC_ON_PLAY_IDs).filter(p()::hasRelic).flatMap(id -> get(p().relics, id)).forEach(
-				r -> r.onPlayCard(tmp, (a.target instanceof AbstractMonster) ? (AbstractMonster) a.target : null));
+		Stream.concat(Stream.of(RELIC_ON_PLAY_IDs), RELIC_ON_PLAY_LIST.stream()).filter(p()::hasRelic)
+				.flatMap(id -> get(p().relics, id)).forEach(r -> r.onPlayCard(tmp,
+						(a.target instanceof AbstractMonster) ? (AbstractMonster) a.target : null));
 		this.combatCards().filter(this::valid).forEach(b -> b.triggerOnCardPlayed(c));
 		p().hand.group.forEach(b -> b.triggerOnOtherCardPlayed(c));
 	}

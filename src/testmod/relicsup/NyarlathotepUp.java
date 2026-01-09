@@ -19,11 +19,14 @@ import testmod.relics.Nyarlathotep;
 public class NyarlathotepUp extends AbstractUpgradedRelic {
 	private static final String[] CARD_IDs = Nyarlathotep.CARD_IDs;
 	private static final String[] POWER_IDs = Nyarlathotep.POWER_IDs;
+	private static final String[] POWER_ON_PLAY_IDS = Nyarlathotep.POWER_ON_PLAY_IDS;
 	private static final String[] RELIC_IDs = Nyarlathotep.RELIC_IDs;
 	private static final String[] RELIC_ON_PLAY_IDs = Nyarlathotep.RELIC_ON_PLAY_IDs;
 	private static final ArrayList<String> CARD_LIST = Nyarlathotep.CARD_LIST;
 	private static final ArrayList<String> POWER_LIST = Nyarlathotep.POWER_LIST;
+	private static final ArrayList<String> POWER_ON_PLAY_LIST = Nyarlathotep.POWER_ON_PLAY_LIST;
 	private static final ArrayList<String> RELIC_LIST = Nyarlathotep.RELIC_LIST;
+	private static final ArrayList<String> RELIC_ON_PLAY_LIST = Nyarlathotep.RELIC_ON_PLAY_LIST;
 	
 	private boolean valid(AbstractCard c) {
 		return Stream.of(CARD_IDs).anyMatch(c.cardID::equals) || CARD_LIST.stream().anyMatch(c.cardID::equals);
@@ -86,10 +89,14 @@ public class NyarlathotepUp extends AbstractUpgradedRelic {
 		tmp.type = CardType.POWER;
 		Stream.concat(Stream.of(POWER_IDs), POWER_LIST.stream()).distinct().filter(p()::hasPower)
 				.flatMap(id -> get(p().powers, id)).forEach(p -> p.onUseCard(tmp, a));
+		Stream.concat(Stream.of(POWER_ON_PLAY_IDS), POWER_ON_PLAY_LIST.stream()).distinct().filter(p()::hasPower)
+				.flatMap(id -> get(p().powers, id)).forEach(p -> p.onPlayCard(tmp,
+						(a.target instanceof AbstractMonster) ? (AbstractMonster) a.target : null));
 		Stream.concat(Stream.of(RELIC_IDs), RELIC_LIST.stream()).distinct().filter(p()::hasRelic)
 				.flatMap(id -> get(p().relics, id)).forEach(r -> r.onUseCard(tmp, a));
-		Stream.of(RELIC_ON_PLAY_IDs).filter(p()::hasRelic).flatMap(id -> get(p().relics, id)).forEach(
-				r -> r.onPlayCard(tmp, (a.target instanceof AbstractMonster) ? (AbstractMonster) a.target : null));
+		Stream.concat(Stream.of(RELIC_ON_PLAY_IDs), RELIC_ON_PLAY_LIST.stream()).filter(p()::hasRelic)
+				.flatMap(id -> get(p().relics, id)).forEach(r -> r.onPlayCard(tmp,
+						(a.target instanceof AbstractMonster) ? (AbstractMonster) a.target : null));
 		this.combatCards().filter(this::valid).forEach(b -> b.triggerOnCardPlayed(c));
 		p().hand.group.forEach(b -> b.triggerOnOtherCardPlayed(c));
 	}
