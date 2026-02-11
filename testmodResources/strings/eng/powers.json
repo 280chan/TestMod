@@ -152,6 +152,13 @@
 			" [E] next turn."
 		]
 	},
+	"testmod-HyperRegenerationPower":{
+		"NAME":"Hyper Regeneration",
+		"DESCRIPTIONS":[
+			"When losing HP, gain #b",
+			" #yRegen ."
+		]
+	},
 	"testmod-InorganicPower": {
 		"NAME": "Inorganic",
 		"DESCRIPTIONS": [

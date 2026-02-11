@@ -162,6 +162,10 @@
 		"NAME": "头部攻击",
 		"DESCRIPTION": "使敌人意图改变为其下一回合的意图。抽 !M! 张牌。 虚无 。"
 	},
+	"testmod-HyperRegeneration": {
+		"NAME": "超速再生",
+		"DESCRIPTION": "每当你失去生命，获得 !M! 层 再生 。"
+	},
 	"testmod-Illusory": {
 		"NAME": "虚无缥缈",
 		"DESCRIPTION": "抽 !M! 张牌，然后将抽牌堆中所有牌附加 虚无 。其中每有一张牌已有 虚无 ，获得 [E] 。 消耗 。 虚无 。",

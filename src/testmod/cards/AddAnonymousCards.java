@@ -35,6 +35,7 @@ import testmod.powers.ConditionedReflexPower;
 import testmod.powers.DisillusionmentEchoPower;
 import testmod.powers.EnhanceArmermentPower;
 import testmod.powers.FightingIntentionPower;
+import testmod.powers.HyperRegenerationPower;
 import testmod.powers.PlagueActPower;
 import testmod.powers.PlaguePower;
 import testmod.powers.PulseDistributorPower;
@@ -151,6 +152,9 @@ public class AddAnonymousCards implements MiscMethods {
 		add(new AnonymousCard("HeadAttack", (c, p, m) -> {
 			att(new DrawCardAction(p, c.magicNumber));
 			this.rollIntentAction(m);
+		}, c -> c.upMGC(1)));
+		add(new AnonymousCard("HyperRegeneration", (c, p, m) -> {
+			att(apply(p, new HyperRegenerationPower(p, c.magicNumber)));
 		}, c -> c.upMGC(1)));
 		add(new AnonymousCard("Illusory", (a, p, m) -> {
 			addTmpActionToTop(() -> p.drawPile.group.stream().filter(c -> !c.isEthereal).forEach(c -> {

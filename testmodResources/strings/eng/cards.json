@@ -162,6 +162,10 @@
 		"NAME": "Head Attack",
 		"DESCRIPTION": "Change enemy's intention to next turn. Draw !M! cards. Ethereal."
 	},
+	"testmod-HyperRegeneration": {
+		"NAME": "Hyper Regeneration",
+		"DESCRIPTION": "When you lose HP, gain !M! Regen."
+	},
 	"testmod-Illusory": {
 		"NAME": "Illusory",
 		"DESCRIPTION": "Draw !M! cards, all cards in draw pile become Ethereal. For each card was Ethereal, Gain [E]. Exhaust. Ethereal.",

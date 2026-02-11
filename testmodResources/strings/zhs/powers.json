@@ -152,6 +152,13 @@
 			" 点能量。"
 		]
 	},
+	"testmod-HyperRegenerationPower":{
+		"NAME":"超速再生",
+		"DESCRIPTIONS":[
+			"失去生命时，获得 #b",
+			" 层 #y再生 。"
+		]
+	},
 	"testmod-InorganicPower":{
 		"NAME":"无机物",
 		"DESCRIPTIONS":[

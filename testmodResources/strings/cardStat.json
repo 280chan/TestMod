@@ -852,5 +852,20 @@
 			"false",
 			"false"
 		]
+	},
+
+	"testmod-HyperRegenerationStat": {
+		"TEXT": [
+			"2",
+			"POWER",
+			"RARE",
+			"SELF",
+			"0",
+			"0",
+			"4",
+			"false",
+			"false",
+			"false"
+		]
 	}
 }
